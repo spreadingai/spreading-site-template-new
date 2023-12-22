@@ -1,0 +1,82 @@
+---
+title: 'Quickstart1122'
+description: 'Start building awesome documentation in under 5 minutes'
+toc:
+  - title: "第一章"
+    url: "#chapter-1"
+    level: "1"
+    children:
+      - title: "第一节"
+        url: "#section-1-1"
+        level: "2"
+      - title: "第二节"
+        url: "#section-1-2"
+        level: "2"
+  - title: "第二章"
+    url: "#chapter-2"
+    level: "1"
+    children:
+      - title: "第一节"
+        url: "#section-2-1"
+        level: "2"
+      - title: "第二节"
+        url: "#section-2-2"
+        level: "2"
+        children:
+          - title: "小节1"
+            url: "#section-2-2-1"
+            level: "3"
+          - title: "小节2"
+            url: "#section-2-2-2"
+            level: "3"
+---
+
+# GFM
+
+## Autolink literals
+
+www.example.com, https://example.com, and contact@example.com.
+
+## Footnote
+
+A note[^1]
+
+[^1]: Big note.
+
+## Strikethrough
+
+~one~ or ~~two~~ tildes.
+
+## Table
+
+| a | b  |  c |  d  |
+| - | :- | -: | :-: |
+
+## Tasklist
+
+* [ ] to do
+* [x] done
+
+<img
+  style={{ borderRadius: '0.5rem' }}
+  src="https://mintlify-assets.b-cdn.net/bigbend.jpg"
+/>
+
+{/* Whether to contain slash or. Either way, but it has to be under public */}
+<img
+  style={{ borderRadius: '0.5rem' }}
+  src="./logo_white_public.png"
+/>
+<img
+  style={{ borderRadius: '0.5rem' }}
+  src="/logo_white_public.png"
+/>
+<img
+  style={{ borderRadius: '0.5rem' }}
+  src="logo_white_public.png"
+/>
+
+{/* Whether to contain slash or. Either way, but it has to be under public */}
+![Docuo logo](/logo_white_public.png 'LOGO')
+![Docuo logo](./logo_white_public.png 'LOGO')
+![Docuo logo](logo_white_public.png 'LOGO')
