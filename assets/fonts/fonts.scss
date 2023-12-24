@@ -1,0 +1,77 @@
+@font-face {
+  font-family: LexendDeca-Light;
+  font-display: swap;
+  font-style: normal;
+  font-weight: 300;
+  src: url("./lexend-deca-v21-latin-300.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: LexendDeca-Regular;
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+  src: url("./lexend-deca-v21-latin-regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: LexendDeca;
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+  src: url("./lexend-deca-v21-latin-regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: LexendDeca-Medium;
+  font-display: swap;
+  font-style: normal;
+  font-weight: 500;
+  src: url("./lexend-deca-v21-latin-500.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: LexendDeca-SemiBold;
+  font-display: swap;
+  font-style: normal;
+  font-weight: 600;
+  src: url("./lexend-deca-v21-latin-600.woff2") format("woff2");
+}
+@font-face {
+  font-display: swap;
+  font-family: RobotoMono-Light;
+  font-style: normal;
+  font-weight: 300;
+  src: url("./roboto-mono-v22-latin-300.woff2") format("woff2");
+}
+@font-face {
+  font-display: swap;
+  font-family: RobotoMono;
+  font-style: normal;
+  font-weight: 400;
+  src: url("./roboto-mono-v22-latin-regular.woff2") format("woff2");
+}
+@font-face {
+  font-display: swap;
+  font-family: RobotoMono-Regular;
+  font-style: normal;
+  font-weight: 400;
+  src: url("./roboto-mono-v22-latin-regular.woff2") format("woff2");
+}
+@font-face {
+  font-display: swap;
+  font-family: RobotoMono-Medium;
+  font-style: normal;
+  font-weight: 500;
+  src: url("./roboto-mono-v22-latin-500.woff2") format("woff2");
+}
+@font-face {
+  font-display: swap;
+  font-family: RobotoMono-Bold;
+  font-style: normal;
+  font-weight: 600;
+  src: url("./roboto-mono-v22-latin-600.woff2") format("woff2");
+}
+html body {
+  font-family: LexendDeca, sans-serif;
+}
