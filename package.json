@@ -9,8 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@mdx-js/loader": "^3.0.0",
-    "@mdx-js/react": "^3.0.0",
     "@next/mdx": "^14.0.4",
     "@svgr/webpack": "^8.1.0",
     "@types/mdx": "^2.0.10",
@@ -22,10 +20,8 @@
     "prismjs": "^1.29.0",
     "react": "^18",
     "react-dom": "^18",
-    "remark-frontmatter": "^5.0.0",
     "remark-gfm": "^4.0.0",
     "remark-images": "^4.0.0",
-    "remark-mdx-frontmatter": "^4.0.0",
     "remark-mdx-images": "^3.0.0",
     "unist-util-visit": "^5.0.0",
     "usehooks-ts": "^2.9.1"
