@@ -1,0 +1,8 @@
+<svg width="26px" height="26px" viewBox="0 0 26 26">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect fill="#D8D8D8" opacity="0" x="0" y="0" width="26" height="26"></rect>
+        <line x1="6" y1="6" x2="20" y2="20" stroke="#FFFFFF" stroke-width="2"></line>
+        <line x1="6" y1="6" x2="20" y2="20" stroke="#FFFFFF" stroke-width="2"
+            transform="translate(13.000000, 13.000000) scale(-1, 1) translate(-13.000000, -13.000000) "></line>
+    </g>
+</svg>

@@ -7,6 +7,9 @@ import type { TreeProps } from "antd/es/tree";
 import { Breadcrumb, Anchor, Drawer } from "antd";
 import { IconFileClose } from "./icons";
 import Link from "next/link";
+import Header from "./header";
+import Footer from "./footer";
+import ArticlePager from "./articlePager";
 import { createPortal } from "react-dom";
 
 const { DirectoryTree } = Tree;
@@ -433,7 +436,8 @@ const PreviewLayout = ({
 
   return (
     <div className="preview-screen">
-      <header className="preview-header">
+      <Header></Header>
+      {/* <header className="preview-header">
         <div
           className="logo"
           onClick={() => {
@@ -446,7 +450,7 @@ const PreviewLayout = ({
           <img src={`${proxyPath}/logo.png`} alt={siteInfo.title || "docuo"} />
           <span className="title">{siteInfo.title || "Docuo"}</span>
         </div>
-      </header>
+      </header> */}
       <main className="preview-main">
         <div className="preview-sider">
           <DirectoryTree
@@ -615,6 +619,7 @@ const PreviewLayout = ({
           </div>
         </Drawer>
       </main>
+      <Footer socials={[]} links={[]} />
     </div>
   );
 };

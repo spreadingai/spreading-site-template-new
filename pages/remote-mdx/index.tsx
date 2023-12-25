@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-import PreviewLayout from "@/components/PreviewLayout";
+import PreviewLayout from "@/components/preview-layout";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import remarkMdxImages from "remark-mdx-images";

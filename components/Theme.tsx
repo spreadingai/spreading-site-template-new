@@ -37,11 +37,29 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
           borderRadius: 0,
           colorBorder: "#d2d2d2",
         },
+        Dropdown: {
+          borderRadiusLG: 6,
+          borderRadiusSM: 6,
+          boxShadowSecondary: "0px 4px 24px 0px rgba(0,0,0,0.12);",
+          paddingXXS: "12px 16px",
+          paddingBlock: 10,
+          controlPaddingHorizontal: 16,
+          lineHeight: 1.2857142857142858,
+        },
+        Collapse: {
+          fontHeight: 44,
+          headerPadding: "0",
+          contentPadding: "0",
+          colorText: "rgb(102, 102, 102)",
+          lineHeight: 1.6428571428571428,
+          paddingSM: 0,
+          fontSize: 16,
+        },
       },
     }),
     []
   );
-
+  // @ts-ignore
   return <ConfigProvider theme={theme}>{children}</ConfigProvider>;
 };
-export default ThemeProvider;
+export { ThemeProvider };

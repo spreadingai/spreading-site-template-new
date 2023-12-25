@@ -1,0 +1,56 @@
+{
+  "name": "listen-test-ui",
+  "version": "0.0.24",
+  "description": "test react ui components",
+  "author": "leanwang <leanwang@zego.im>",
+  "homepage": "",
+  "license": "ISC",
+  "types": "./dist/index.d.ts",
+  "main": "./dist/index.esm.js",
+  "exports": {
+    ".": {
+      "import": "./dist/index.esm.js",
+      "require": "./dist/index.umd.js"
+    }
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "rollup -c rollup.config.js --watch",
+    "build": "rm -fr dist && set NODE_ENV=production&& rollup -c rollup.config.js",
+    "prepublishOnly": "npm run build",
+    "format": "prettier --write ."
+  },
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://git.e.coding.zego.cloud/dev/solution_os/zdocs-frontend.git"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.5",
+    "@babel/preset-env": "^7.22.5",
+    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-commonjs": "^25.0.2",
+    "@rollup/plugin-eslint": "^9.0.4",
+    "@rollup/plugin-node-resolve": "^15.1.0",
+    "@rollup/plugin-url": "^8.0.1",
+    "@svgr/rollup": "^8.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.60.0",
+    "@typescript-eslint/parser": "^5.60.0",
+    "eslint": "^8.42.0",
+    "rollup": "^3.25.1",
+    "rollup-plugin-postcss": "^4.0.2",
+    "rollup-plugin-typescript2": "^0.34.1"
+  },
+  "dependencies": {
+    "lodash": "^4.17.21",
+    "prismjs": "^1.29.0",
+    "resize-observer-polyfill": "^1.5.1",
+    "toggle-selection": "^1.0.6"
+  }
+}

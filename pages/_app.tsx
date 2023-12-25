@@ -5,7 +5,7 @@ import "@/styles/editor.scss";
 import "tailwindcss/tailwind.css";
 import "@/tailwind.config";
 import "prismjs/themes/prism-okaidia.min.css";
-import ThemeProvider from "@/components/Theme";
+import { ThemeProvider } from "@/components/Theme";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   // Use the layout defined at the page level, if available

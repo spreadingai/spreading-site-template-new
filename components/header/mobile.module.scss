@@ -1,0 +1,37 @@
+.mobile-container {
+  .mobile-mask,
+  .mobile-menus {
+    margin-top: 50px; // TODO: header height
+    position: fixed;
+    z-index: 1000;
+  }
+  .mobile-mask {
+    width: 100vw;
+    height: calc(100vh - 50px);
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+  }
+  .mobile-menus {
+    top: 0;
+    left: 0;
+    right: 0;
+    background: #ffffff;
+    padding: 20px;
+    .mobile-item,
+    .mobile-items {
+      font-size: 16px;
+      font-family: LexendDeca-Medium, LexendDeca;
+      font-weight: 500;
+      color: #28292e;
+      line-height: 23px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 44px;
+      .mobile-item {
+        color: #666666;
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+.mobile-footer-container {
+  width: 100%;
+  .mobile-items-title {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-family: LexendDeca-Light, LexendDeca;
+    font-weight: 300;
+    color: rgba($color: #ffffff, $alpha: 0.9);
+    line-height: 24px;
+  }
+  .mobile-item {
+    width: 100%;
+    height: 44px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-family: LexendDeca-Light, LexendDeca;
+    font-weight: 300;
+    color: rgba($color: #ffffff, $alpha: 0.7);
+    line-height: 24px;
+  }
+  .collapse-item {
+    margin-bottom: 2px;
+  }
+}

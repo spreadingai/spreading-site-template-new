@@ -1,0 +1,13 @@
+<svg width="18px" height="18px" viewBox="0 0 18 18">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <circle fill="#171717" cx="9" cy="9" r="9"></circle>
+        <g transform="translate(4.000000, 4.000000)">
+            <rect x="0" y="0" width="10" height="10"></rect>
+            <polyline stroke="#FFFFFF" stroke-width="1.4"
+                transform="translate(6.875000, 5.000000) rotate(-270.000000) translate(-6.875000, -5.000000) "
+                points="3.75 6.5625 6.875 3.4375 10 6.5625"></polyline>
+            <line x1="0.638367804" y1="5" x2="8.45970869" y2="5" stroke="#FFFFFF"
+                stroke-width="1.4"></line>
+        </g>
+    </g>
+</svg>
