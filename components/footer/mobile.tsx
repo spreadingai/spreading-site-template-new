@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { FooterLinkGroup } from "./@types";
 import Link from "next/link";
 import styles from "./mobile.module.scss";
-import IconArrowRight from "assets/icons/iconArrowDown.svg";
+import IconArrowRight from "@assets/icons/iconArrowDown.svg";
 import { Collapse, CollapseProps } from "antd";
 const FooterMobile: FC<{ items: FooterLinkGroup[] }> = ({ items }) => {
   const data: CollapseProps["items"] = items.map((item, index) => {

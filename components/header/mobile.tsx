@@ -1,7 +1,7 @@
 import React, { FC, useMemo, useState } from "react";
-import IconBurgerMenu from "assets/icons/iconBurgerMenu.svg";
-import IconBurgerMenuClose from "assets/icons/iconBurgerMenuClose.svg";
-import IconArrowRight from "assets/icons/iconArrowRight.svg";
+import IconBurgerMenu from "@/assets/icons/iconBurgerMenu.svg";
+import IconBurgerMenuClose from "@/assets/icons/iconBurgerMenuClose.svg";
+import IconArrowRight from "@/assets/icons/iconArrowRight.svg";
 import styles from "./mobile.module.scss";
 import { Collapse } from "antd";
 import Link from "next/link";

@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import styles from "./styles.module.scss";
 import classNames from "classnames";
-import IconNext from "assets/icons/iconNext.svg";
+import IconNext from "@/assets/icons/iconNext.svg";
 import Link from "next/link";
 interface ArticlePagerProps {
   prev?: {

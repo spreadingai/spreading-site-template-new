@@ -1,11 +1,11 @@
 import React, { FC, useEffect } from "react";
 import styles from "./styles.module.scss";
-import defaultLogo from "assets/images/logo.png";
+import defaultLogo from "@/assets/images/logo.png";
 import Image from "next/image";
 import Link from "next/link";
 import { Dropdown, MenuProps } from "antd";
 import { useMediaQuery } from "usehooks-ts";
-import IconBurgerMenu from "assets/icons/iconBurgerMenu.svg";
+import IconBurgerMenu from "@/assets/icons/iconBurgerMenu.svg";
 import Mobile from "./mobile";
 import DropdownItem from "./DropdownItem";
 import { NavbarLink } from "./@types";

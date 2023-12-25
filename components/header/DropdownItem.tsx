@@ -1,7 +1,7 @@
 import { Dropdown, MenuProps, Space } from "antd";
 import React, { FC, useMemo } from "react";
 import styles from "./styles.module.scss";
-import IconArrowRight from "assets/icons/iconArrowRight.svg";
+import IconArrowRight from "@/assets/icons/iconArrowRight.svg";
 import Link from "next/link";
 import { NavbarLink } from "./@types";
 
