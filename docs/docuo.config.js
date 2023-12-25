@@ -1,7 +1,9 @@
+/** @type {import("@/@types/docuoConfig.d.ts").docuoConfigType} */
 const config = {
   title: "My Site",
   favicon: "image/favicon.ico",
-  logo: "image/logo.png",
+  // logo: "image/logo.png",
+  logo: null,
   //   logo: {
   //     dark: "image/logo.png",
   //     light: "image/logo.png",
@@ -101,24 +103,101 @@ const config = {
       caption: "",
       links: [
         {
-          title: "Docs",
+          title: "Products",
           items: [
             {
-              label: "foo",
-              to: "/docs/foo",
-              href: "https://app.spreading.ai",
+              label: "Voice call",
+              to: "/link1",
             },
             {
-              label: "bar",
-              to: "/docs/bar",
-              href: "https://app.spreading.ai",
+              label: "Video call",
+              to: "/link2",
+            },
+            {
+              label: "Live Streaming",
+              to: "/link2",
+            },
+          ],
+        },
+        {
+          title: "Solutions",
+          items: [
+            {
+              label: "Social",
+              href: "https://example.com/link3",
+            },
+            {
+              label: "Education",
+              href: "https://example.com/link4",
+            },
+            {
+              label: "Telehealth",
+              href: "https://example.com/link4",
+            },
+          ],
+        },
+        {
+          title: "Company",
+          items: [
+            {
+              label: "About",
+              href: "https://example.com/link3",
+            },
+            {
+              label: "Blog",
+              href: "https://example.com/link4",
+            },
+            {
+              label: "Partners",
+              href: "https://example.com/link4",
+            },
+          ],
+        },
+        {
+          title: "Developers",
+          items: [
+            {
+              label: "Documentation",
+              href: "https://example.com/link3",
+            },
+            {
+              label: "Demo Apps",
+              href: "https://example.com/link4",
+            },
+            {
+              label: "Code Store",
+              href: "https://example.com/link4",
             },
           ],
         },
       ],
       socials: [
         {
-          logo: "image/logo.png",
+          logo: "Linkedin",
+          href: "https://example.com/social1",
+        },
+        {
+          logo: "Twitter",
+          href: "https://example.com/social2",
+        },
+        {
+          logo: "Facebook",
+          href: "https://example.com/social2",
+        },
+        {
+          logo: "Youtube",
+          href: "https://example.com/social2",
+        },
+        {
+          logo: "Github",
+          href: "https://example.com/social2",
+        },
+        {
+          logo: "Discord",
+          href: "https://example.com/social2",
+        },
+        {
+          logo: "/image/logo.png",
           //   logo: {
           //     dark: "image/logo.png",
           //     light: "image/logo.png",

@@ -3,51 +3,18 @@ import styles from "./styles.module.scss";
 import defaultLogo from "@/assets/images/logo.png";
 import Image from "next/image";
 import Link from "next/link";
-import { Dropdown, MenuProps } from "antd";
 import { useMediaQuery } from "usehooks-ts";
-import IconBurgerMenu from "@/assets/icons/iconBurgerMenu.svg";
 import Mobile from "./mobile";
 import DropdownItem from "./DropdownItem";
-import { NavbarLink } from "./@types";
-
-const items: NavbarLink[] = [
-  {
-    label: "Documentation 01",
-    href: "https://www.baidu.com",
-  },
-  {
-    label: "Documentation 02",
-    href: "https://www.baidu.com",
-  },
-];
-const menus: NavbarLink[] = [
-  {
-    label: "Price",
-    href: "https://www.baidu.com",
-  },
-  {
-    label: "Blog",
-    href: "https://www.google.com",
-  },
-  {
-    type: "dropdown",
-    label: "Documentation",
-    href: "https://www.google.com",
-    items: items,
-  },
-  {
-    type: "dropdown",
-    label: "Documentation2",
-    href: "https://www.google.com",
-    items: items,
-  },
-];
+import DocuoConfig from "@/docs/docuo.config";
 
 const Header: FC = () => {
+  const { items } = DocuoConfig.themeConfig.navbar;
   const [width, setWidth] = React.useState(0);
   const matches = useMediaQuery(`(max-width: ${Math.max(width, 375)}px)`); // mobile
   const menusRef = React.useRef<HTMLDivElement>(null);
   const logoRef = React.useRef<HTMLAnchorElement>(null);
+  console.log(items, "items");
 
   useEffect(() => {
     // compute the width of the hamburger menu
@@ -68,10 +35,10 @@ const Header: FC = () => {
         <span className={styles["logo-title"]}>{"Untitled"}</span>
       </Link>
       {matches ? (
-        <Mobile menus={menus} />
+        <Mobile menus={items} />
       ) : (
         <div className={styles["menus"]} ref={menusRef}>
-          {menus.map((menu, index) => {
+          {items.filter(item=>item.label).map((menu, index) => {
             if (menu.type === "dropdown") {
               return <DropdownItem menu={menu} key={index} />;
             }
@@ -79,7 +46,8 @@ const Header: FC = () => {
               <Link
                 key={index}
                 className={styles["item"]}
-                href={menu.href}
+                // href={"#"}
+                href={menu.href || { pathname: menu.to }}
                 // target={menu.target}
               >
                 {menu.label}
