@@ -196,14 +196,6 @@ const config = {
           logo: "Discord",
           href: "https://example.com/social2",
         },
-        {
-          logo: "/image/logo.png",
-          //   logo: {
-          //     dark: "image/logo.png",
-          //     light: "image/logo.png",
-          //   },
-          href: "https://app.spreading.ai",
-        },
       ],
     },
   },

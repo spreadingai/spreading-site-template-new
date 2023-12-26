@@ -2,7 +2,6 @@ import React, { FC, useEffect, useRef } from "react";
 import styles from "./styles.module.scss";
 import Image from "next/image";
 import defaultLogo from "@/assets/images/logo.png";
-// import IconDiscord from "@/assets/icons/iconDiscord.svg";
 import IconDiscord from "@/assets/icons/social/Discord.svg";
 import IconFacebook from "@/assets/icons/social/Facebook.svg";
 import IconGithub from "@/assets/icons/social/GitHub.svg";
@@ -72,7 +71,7 @@ const Footer: FC<footerProps> = (props) => {
             {footer.socials.map((social, index) => {
               return (
                 <a key={index} href={social.href} target="_blank">
-                  {getSocial(social.logo)}
+                  <span className={styles["social-item"]}>{getSocial(social.logo)}</span>
                   {/* <Image src={social.logo} alt={"logo"} /> */}
                   {/* {<IconDiscord />} */}
                 </a>
