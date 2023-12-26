@@ -46,7 +46,6 @@ const Header: FC = () => {
               <Link
                 key={index}
                 className={styles["item"]}
-                // href={"#"}
                 href={menu.href || { pathname: menu.to }}
                 // target={menu.target}
               >
