@@ -14,14 +14,8 @@ const config = {
     {
       id: "callkit",
       label: "callkit",
-      path: "docs",
-      routeBasePath: "docs",
-    },
-    {
-      id: "roomkit",
-      label: "roomkit",
-      path: "roomkit_docs",
-      routeBasePath: "docs",
+      path: "callkit_docs",
+      routeBasePath: "callkit",
     },
   ],
   themeConfig: {
