@@ -12,6 +12,12 @@ const config = {
   // This file does not exist by default
   instances: [
     {
+      id: "main",
+      label: "docs",
+      path: "docs",
+      routeBasePath: "docs",
+    },
+    {
       id: "callkit",
       label: "callkit",
       path: "callkit_docs",

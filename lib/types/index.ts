@@ -86,7 +86,7 @@ export interface SidebarItem {
   dirName?: string;
   label?: string;
   id?: string;
-  items?: SidebarItem[];
+  items?: (string | SidebarItem)[];
   to?: string;
   href?: string;
 

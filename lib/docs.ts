@@ -2,8 +2,12 @@ import fs from "fs";
 import path from "path";
 import docuoConfig from "@/docs/docuo.config";
 import { DocInstance, SidebarItem, SidebarItemType, Sidebars } from "./types";
+import { visit } from "unist-util-visit";
+import { serialize } from "next-mdx-remote/serialize";
+import remarkImages from "remark-images";
 
 const entityRootDirectory = "docs";
+const UUID = "37e7bcb6-4fa7-431d-b11c-df9a1c26cf62";
 
 export function getDocuoConfig() {
   // Complete the default value
@@ -117,22 +121,132 @@ export function getAllVersions(instanceID: string) {
 }
 
 export function getAllSlugs() {
-  let allSlugs = [];
+  let allSlugs: {
+    params: { slug: string[]; instanceID: string; version: string };
+  }[] = [];
   const { instances } = docuoConfig;
   for (const instance of instances) {
-    const slugs = getSlugs(instance.id);
+    const slugs = getSlugs(instance.id, instance.routeBasePath);
     allSlugs = allSlugs.concat(slugs);
   }
+  console.log(`[lib/docs]getAllSlugs: `, JSON.stringify(allSlugs));
   return allSlugs;
 }
 
-function getSlugs(instanceID: string) {
+export async function readDoc(instanceID, slug) {
+  const { instances } = docuoConfig;
+  const instance = instances.find((i) => i.id === instanceID);
+  const { version, mdxFileID } = extractInfoFromSlug(slug);
+  let mdxFileUrl = `${entityRootDirectory}/${
+    instance.id === "main" ? "" : instance.id + "_"
+  }docs/${mdxFileID}`;
+  if (version) {
+    mdxFileUrl = `${entityRootDirectory}/${
+      instance.id === "main" ? "" : instance.id + "_"
+    }versioned_docs/version-${version}/${mdxFileID}`;
+  }
+  let originContent = fs.readFileSync(
+    path.resolve("./public", "..", mdxFileUrl),
+    "utf8"
+  );
+  originContent = originContent
+    .replace(
+      /```(\S*?\s)([\s\S]*?)(```)(?=\n<\/SCodeBlock>)/gm,
+      (_, lang, code) => {
+        code = code.replace(/```/g, UUID);
+        return "```" + lang + code + "```";
+      }
+    )
+    .replaceAll("&nbsp;", " ");
+  const mdxSource = await serialize(originContent, {
+    mdxOptions: {
+      remarkPlugins: [remarkImages, myRemarkPlugin],
+      rehypePlugins: [],
+      format: "mdx",
+      useDynamicImport: true,
+    },
+    parseFrontmatter: true,
+  });
+  return {
+    slug,
+    mdxSource,
+  };
+}
+
+const myRemarkPlugin = () => {
+  return function (tree) {
+    visit(tree, "code", function (node) {
+      if (typeof node.value === "string") {
+        node.value = node.value.replaceAll(UUID, "```");
+      }
+    });
+  };
+};
+
+function extractInfoFromSlug(slug: string[]) {
+  const routeBasePath = slug[0];
+  const version = slug[1];
+  const mdxFileID = slug.slice(1).join("/");
+  const mdxFileName = slug[slug.length - 1];
+  return { routeBasePath, version, mdxFileID, mdxFileName };
+}
+
+function getSlugs(instanceID: string, routeBasePath: string) {
   //eg: instance routeBasePath/version/folder/filename
-  let slugs: string[] = [];
+  let slugs: {
+    params: { slug: string[]; instanceID: string; version: string };
+  }[] = [];
   const versions = getVersions(instanceID);
   for (const version of versions) {
+    const sidebars = getSidebars(instanceID, version);
+    const sidebarIds = Object.keys(sidebars);
+    for (const sidebarId of sidebarIds) {
+      const sidebarItemList = sidebars[sidebarId] as SidebarItem[];
+      slugs = slugs.concat(
+        traverseChildren(instanceID, version, sidebarItemList, [
+          routeBasePath,
+          version,
+        ])
+      );
+    }
   }
+  console.log(`[lib/docs]getSlugs: `, JSON.stringify(slugs));
   return slugs;
+}
+
+function traverseChildren(
+  instanceID: string,
+  version: string,
+  sidebarItemList: SidebarItem[],
+  preSlug: string[]
+) {
+  const result: {
+    params: { slug: string[]; instanceID: string; version: string };
+  }[] = [];
+  for (const sidebarItem of sidebarItemList) {
+    if (sidebarItem.items) {
+      result.push(
+        ...traverseChildren(
+          instanceID,
+          version,
+          sidebarItem.items as SidebarItem[],
+          preSlug
+        )
+      );
+    }
+    if (sidebarItem.type === SidebarItemType.Doc) {
+      const itemSlug = sidebarItem.id.split("/");
+      const slug = [...preSlug, ...itemSlug];
+      result.push({
+        params: {
+          instanceID,
+          version,
+          slug,
+        },
+      });
+    }
+  }
+  return result;
 }
 
 function generatedSidebar(rootUrl: string, dirName: string) {
