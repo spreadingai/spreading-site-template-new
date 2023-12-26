@@ -1,7 +1,13 @@
 @import "./site.scss";
 
+.dark.editor-container {
+	// 站点主题变量
+	--text-primary: #fff;
+}
+
 .editor-wrapper,
 .editor-container {
+	--text-primary: #171717;
 	$text-primary: #171717;
 	$tableBorderColor: #eaeaea;
 	$tableHeaderBgColor: #f1f1f1;
@@ -17,6 +23,11 @@
 	color: #171717;
 	line-height: 25px;
 	// word-break: break-word;
+
+	.katex-html[aria-hidden="true"] {
+		display: none;
+	}
+
 	p,
 	b,
 	strong,
@@ -24,8 +35,7 @@
 		margin: 24px 0;
 	}
 	//标题
-	h1[id^="h-"],
-	h1[id^="h-"] p {
+	h1 {
 		font-size: 26px;
 		line-height: 39px;
 		font-weight: 600;
@@ -33,18 +43,18 @@
 		color: #000000;
 		margin-top: 36px;
 		margin-bottom: 24px;
+
+		code {
+			font-size: 24px;
+			font-family: RobotoMono-Bold, RobotoMono;
+			font-weight: bold;
+			color: #000000;
+			line-height: 24px;
+			background: #e9e9e9;
+			padding: 3px 12px;
+		}
 	}
-	h1[id^="h-"] code {
-		font-size: 24px;
-		font-family: RobotoMono-Bold, RobotoMono;
-		font-weight: bold;
-		color: #000000;
-		line-height: 24px;
-		background: #e9e9e9;
-		padding: 3px 12px;
-	}
-	h2[id^="h-"],
-	h2[id^="h-"] p {
+	h2 {
 		font-size: 22px;
 		font-weight: 600;
 		font-family: LexendDeca-SemiBold, LexendDeca;
@@ -52,16 +62,17 @@
 		line-height: 33px;
 		margin-top: 32px;
 		margin-bottom: 24px;
+
+		code {
+			font-size: 20px;
+			font-family: RobotoMono-Bold, RobotoMono;
+			font-weight: bold;
+			color: #000000;
+			line-height: 20px;
+		}
 	}
-	h2[id^="h-"] code {
-		font-size: 20px;
-		font-family: RobotoMono-Bold, RobotoMono;
-		font-weight: bold;
-		color: #000000;
-		line-height: 20px;
-	}
-	h3[id^="h-"],
-	h3[id^="h-"] p {
+
+	h3 {
 		font-size: 20px;
 		line-height: 32px;
 		font-weight: 600;
@@ -70,13 +81,14 @@
 		line-height: 32px;
 		margin-top: 32px;
 		margin-bottom: 24px;
-	}
-	h3[id^="h-"] code {
-		font-size: 18px;
-		font-family: RobotoMono-Bold, RobotoMono;
-		font-weight: bold;
-		color: #000000;
-		line-height: 18px;
+
+		code {
+			font-size: 18px;
+			font-family: RobotoMono-Bold, RobotoMono;
+			font-weight: bold;
+			color: #000000;
+			line-height: 18px;
+		}
 	}
 	// 分割线
 	p:has(+ hr) {
@@ -99,17 +111,16 @@
 		color: $text-primary;
 		padding-inline-start: 28px;
 		& > li {
-			& > p {
-				margin: initial;
-				font-size: 14px;
-				line-height: 25px;
-				font-weight: 300;
-				padding: 8px 0;
-				& p {
-					padding: 0;
-					margin: 0;
-				}
+			margin: initial;
+			font-size: 14px;
+			line-height: 25px;
+			font-weight: 300;
+			padding: 8px 0;
+
+			& > p:first-child {
+				margin-top: 0;
 			}
+
 			& > ul,
 			& > ol {
 				margin-top: 0;
@@ -647,7 +658,7 @@
 	div[data-autowrap="true"] {
 		pre code {
 			white-space: break-spaces;
-			// word-break: break-word;
+			word-break: break-word;
 		}
 	}
 
