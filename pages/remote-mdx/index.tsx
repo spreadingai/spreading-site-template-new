@@ -10,7 +10,7 @@ import { useState } from "react";
 import remarkGfm from "remark-gfm";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
-import remarkMdxImages from "remark-mdx-images";
+// import remarkMdxImages from "remark-mdx-images";
 import remarkImages from "remark-images";
 import { rehypeCodeBlocks, rehypeCodeGroup } from "@/plugins";
 
@@ -43,7 +43,7 @@ const readDoc = async () => {
         remarkMath,
         remarkImages,
         // @ts-ignore
-        remarkMdxImages,
+        // remarkMdxImages,
         // myRemarkPlugin,
       ],
       rehypePlugins: [
