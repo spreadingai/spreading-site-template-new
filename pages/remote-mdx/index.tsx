@@ -14,15 +14,7 @@ import remarkMath from "remark-math";
 import remarkImages from "remark-images";
 import { rehypeCodeBlocks, rehypeCodeGroup } from "@/plugins";
 
-import {
-  CodeBlock,
-  CodeGroup,
-  SH,
-  SQuote,
-  SCallout,
-  SCalloutHeader,
-  SCalloutContent,
-} from "docuo-mdx-component";
+import { CodeBlock, CodeGroup, Callout, Frame, Video } from "docuo-mdx-component";
 
 import {
   getDocuoConfig,
@@ -36,11 +28,12 @@ import { getFolderTreeData as getFolderTreeDataNew } from "@/lib/folder-tree";
 const components = {
   CodeBlock,
   CodeGroup,
-  Blockquote: SQuote,
-  SH,
-  SCallout,
-  SCalloutHeader,
-  SCalloutContent,
+  Tip: Callout.Tip,
+  Note: Callout.Note,
+  Warning: Callout.Warning,
+  Error: Callout.Error,
+  Frame,
+  Video,
 };
 
 interface Props {
