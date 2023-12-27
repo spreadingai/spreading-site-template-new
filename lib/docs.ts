@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import docuoConfig from "@/docs/docuo.config";
-import { DocInstance, SidebarItem, SidebarItemType, Sidebars } from "./types";
+import { DocuoConfig, SidebarItem, SidebarItemType, Sidebars } from "./types";
 import { visit } from "unist-util-visit";
 import { serialize } from "next-mdx-remote/serialize";
 import remarkImages from "remark-images";
@@ -21,12 +21,12 @@ export function getDocuoConfig() {
       },
     ];
   }
-  return docuoConfig;
+  return docuoConfig as DocuoConfig;
 }
 
 export function getSidebars(instanceID: string, version?: string) {
   let result: Sidebars = null;
-  const { instances } = docuoConfig;
+  const { instances } = getDocuoConfig();
   const instance = instances.find((i) => i.id === instanceID);
   let rootUrl = `${entityRootDirectory}/${
     instance.id === "main" ? "" : instance.id + "_"
@@ -79,7 +79,7 @@ export function getSidebars(instanceID: string, version?: string) {
 }
 
 export function getVersions(instanceID: string) {
-  const { instances } = docuoConfig;
+  const { instances } = getDocuoConfig();
   const instance = instances.find((i) => i.id === instanceID);
   const versionsUrl = `${entityRootDirectory}/${
     instance.id === "main" ? "" : instance.id + "_"
@@ -91,12 +91,12 @@ export function getVersions(instanceID: string) {
   } else {
     versions = getAllVersions(instanceID);
   }
-  console.error(`[lib/docs]getVersions: `, versions);
+  console.log(`[lib/docs]getVersions: `, versions);
   return versions;
 }
 
 export function getAllVersions(instanceID: string) {
-  const { instances } = docuoConfig;
+  const { instances } = getDocuoConfig();
   const instance = instances.find((i) => i.id === instanceID);
   const versionedUrl = `${entityRootDirectory}/${
     instance.id === "main" ? "" : instance.id + "_"
@@ -124,7 +124,7 @@ export function getAllSlugs() {
   let allSlugs: {
     params: { slug: string[]; instanceID: string; version: string };
   }[] = [];
-  const { instances } = docuoConfig;
+  const { instances } = getDocuoConfig();
   for (const instance of instances) {
     const slugs = getSlugs(instance.id, instance.routeBasePath);
     allSlugs = allSlugs.concat(slugs);
@@ -133,17 +133,15 @@ export function getAllSlugs() {
   return allSlugs;
 }
 
-export async function readDoc(instanceID, slug) {
-  const { instances } = docuoConfig;
-  const instance = instances.find((i) => i.id === instanceID);
-  const { version, mdxFileID } = extractInfoFromSlug(slug);
+export async function readDoc(slug: string[]) {
+  const { version, mdxFileID, instanceID } = extractInfoFromSlug(slug);
   let mdxFileUrl = `${entityRootDirectory}/${
-    instance.id === "main" ? "" : instance.id + "_"
+    instanceID === "main" ? "" : instanceID + "_"
   }docs/${mdxFileID}`;
   if (version) {
     mdxFileUrl = `${entityRootDirectory}/${
-      instance.id === "main" ? "" : instance.id + "_"
-    }versioned_docs/version-${version}/${mdxFileID}`;
+      instanceID === "main" ? "" : instanceID + "_"
+    }versioned_docs/version-${version}/${mdxFileID}.mdx`;
   }
   let originContent = fs.readFileSync(
     path.resolve("./public", "..", mdxFileUrl),
@@ -183,16 +181,20 @@ const myRemarkPlugin = () => {
   };
 };
 
-function extractInfoFromSlug(slug: string[]) {
+export function extractInfoFromSlug(slug: string[]) {
+  const docuoConfig = getDocuoConfig();
   const routeBasePath = slug[0];
+  const instanceID = docuoConfig.instances.find(
+    (instance) => instance.routeBasePath === routeBasePath
+  ).id;
   const version = slug[1];
-  const mdxFileID = slug.slice(1).join("/");
+  const mdxFileID = slug.slice(2).join("/");
   const mdxFileName = slug[slug.length - 1];
-  return { routeBasePath, version, mdxFileID, mdxFileName };
+  return { instanceID, routeBasePath, version, mdxFileID, mdxFileName };
 }
 
 function getSlugs(instanceID: string, routeBasePath: string) {
-  //eg: instance routeBasePath/version/folder/filename
+  // eg: instance routeBasePath/version/folder/filename
   let slugs: {
     params: { slug: string[]; instanceID: string; version: string };
   }[] = [];

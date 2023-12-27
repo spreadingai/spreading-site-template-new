@@ -24,6 +24,15 @@ import {
   SCalloutContent,
 } from "docuo-mdx-component";
 
+import {
+  getDocuoConfig,
+  getSidebars,
+  getVersions,
+  getAllVersions,
+  getAllSlugs,
+} from "@/lib/docs";
+import { getFolderTreeData as getFolderTreeDataNew } from "@/lib/folder-tree";
+
 const components = {
   CodeBlock,
   CodeGroup,

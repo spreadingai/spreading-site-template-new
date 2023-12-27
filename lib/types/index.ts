@@ -8,7 +8,7 @@ export interface DocuoConfig {
         light?: string;
       };
   baseUrl?: string;
-  metadata?: [];
+  metadata?: Record<string, string>[];
   instances: DocInstance[];
   themeConfig: {
     navbar: NavbarConfig;
@@ -53,7 +53,7 @@ export interface FooterLink {
   items: FooterItem[];
 }
 export interface SocialItem {
-  label: string;
+  logo: string;
   href: string;
 }
 export interface FooterConfig {

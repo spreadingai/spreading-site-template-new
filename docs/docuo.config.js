@@ -7,17 +7,17 @@ const config = {
   //     dark: "image/logo.png",
   //     light: "image/logo.png",
   //   },
-  baseUrl: "/", // TODO:No need?
+  baseUrl: "", // TODO:No need?
   // The following 1.2 is not implemented
   metadata: [],
   // This file does not exist by default
   instances: [
-    {
-      id: "main",
-      label: "docs",
-      path: "docs",
-      routeBasePath: "docs",
-    },
+    // {
+    //   id: "main",
+    //   label: "docs",
+    //   path: "docs",
+    //   routeBasePath: "docs",
+    // },
     {
       id: "callkit",
       label: "callkit",

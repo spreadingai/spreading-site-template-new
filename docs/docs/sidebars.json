@@ -34,7 +34,7 @@
         "folder1/foo11",
         {
           "type": "doc",
-          "id": "forder2/bar21",
+          "id": "folder2/bar21",
           "label": "bar21"
         },
         {
