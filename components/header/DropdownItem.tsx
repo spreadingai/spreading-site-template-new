@@ -12,10 +12,12 @@ const DropdownItem: FC<{ menu: NavbarLink }> = ({ menu }) => {
       return {
         ...item,
         key: index,
-        label: <Link href={item.href}>{item.label}</Link>,
+        label: (
+          <Link href={item.href || { pathname: menu.to }}>{item.label}</Link>
+        ),
       };
     });
-  }, []);
+  }, [menu.items, menu.to]);
   return (
     <Dropdown
       menu={{ items: DropdownList, className: styles["popup"] }}

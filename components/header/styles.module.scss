@@ -30,8 +30,9 @@
     color: #fff;
     display: flex;
     align-items: center;
-    gap: 0px 38px;
+    gap: 0px 6px;
     .item {
+      padding: 10px 16px;
       font-size: 14px;
       font-family: LexendDeca-Light, LexendDeca;
       font-weight: 300;
@@ -44,6 +45,13 @@
     .items-container {
       display: flex;
       align-items: center;
+      padding: 10px 8px 10px 16px;
+      &:hover .items {
+        color: #fff;
+        & + .icon {
+          color: #fff;
+        }
+      }
     }
     .items {
       font-size: 14px;
@@ -51,18 +59,12 @@
       font-weight: 300;
       color: rgba($color: #ffffff, $alpha: 0.7);
       line-height: 18px;
-      padding: 6px 0;
       cursor: pointer;
-      &:hover {
-        color: #fff;
-        & + .icon {
-          color: #fff;
-        }
-      }
       & + .icon {
         font-size: 12px;
         margin-left: 6px;
         color: #666666;
+        transition: all 0.3s;
         // transition: transform .3s;
       }
     }

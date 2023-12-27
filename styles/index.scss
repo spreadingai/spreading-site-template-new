@@ -81,7 +81,7 @@ html > body {
   position: sticky;
   top: 0;
   left: 0;
-  z-index: 1000;
+  z-index: 100;
   height: calc(100vh - var(--preview-header-height));
 
   .generate-desc {

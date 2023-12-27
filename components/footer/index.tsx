@@ -2,7 +2,6 @@ import React, { FC, useEffect, useRef } from "react";
 import styles from "./styles.module.scss";
 import Image from "next/image";
 import defaultLogo from "@/assets/images/logo.png";
-// import IconDiscord from "@/assets/icons/iconDiscord.svg";
 import IconDiscord from "@/assets/icons/social/Discord.svg";
 import IconFacebook from "@/assets/icons/social/Facebook.svg";
 import IconGithub from "@/assets/icons/social/GitHub.svg";
@@ -14,113 +13,12 @@ import type { footerProps } from "./@types";
 import { useMediaQuery } from "usehooks-ts";
 import FooterMobile from "./mobile";
 import classNames from "classnames";
-
-const footerData: footerProps = {
-  logo: "https://example.com/logo.png",
-  copyright: "© 2022 Your Company",
-  caption:
-    "Effortlessly write then publish technical, product documentation in a customer-facing portal, no code.",
-  links: [
-    {
-      title: "Products",
-      items: [
-        {
-          label: "Voice call",
-          to: "/link1",
-        },
-        {
-          label: "Video call",
-          to: "/link2",
-        },
-        {
-          label: "Live Streaming",
-          to: "/link2",
-        },
-      ],
-    },
-    {
-      title: "Solutions",
-      items: [
-        {
-          label: "Social",
-          href: "https://example.com/link3",
-        },
-        {
-          label: "Education",
-          href: "https://example.com/link4",
-        },
-        {
-          label: "Telehealth",
-          href: "https://example.com/link4",
-        },
-      ],
-    },
-    // {
-    //   title: "Company",
-    //   items: [
-    //     {
-    //       label: "About",
-    //       href: "https://example.com/link3",
-    //     },
-    //     {
-    //       label: "Blog",
-    //       href: "https://example.com/link4",
-    //     },
-    //     {
-    //       label: "Partners",
-    //       href: "https://example.com/link4",
-    //     },
-    //   ],
-    // },
-    // {
-    //   title: "Developers",
-    //   items: [
-    //     {
-    //       label: "Documentation",
-    //       href: "https://example.com/link3",
-    //     },
-    //     {
-    //       label: "Demo Apps",
-    //       href: "https://example.com/link4",
-    //     },
-    //     {
-    //       label: "Code Store",
-    //       href: "https://example.com/link4",
-    //     },
-    //   ],
-    // },
-  ],
-  socials: [
-    {
-      logo: "Linkedin",
-      href: "https://example.com/social1",
-    },
-    {
-      logo: "Twitter",
-      href: "https://example.com/social2",
-    },
-    {
-      logo: "Facebook",
-      href: "https://example.com/social2",
-    },
-    {
-      logo: "Youtube",
-      href: "https://example.com/social2",
-    },
-    {
-      logo: "Github",
-      href: "https://example.com/social2",
-    },
-    {
-      logo: "Discord",
-      href: "https://example.com/social2",
-    },
-  ],
-};
+import DocuoConfig from "@/docs/docuo.config";
 
 const Footer: FC<footerProps> = (props) => {
+  const { footer } = DocuoConfig.themeConfig;
   const itemWidth = 200;
-  const len = footerData.links.slice(0, 4).length;
+  const len = footer.links.slice(0, 4).length;
   const [width, setWidth] = React.useState(0);
   const [towRowWidth, setTowRowWidth] = React.useState(0);
   const rightRef = useRef<HTMLDivElement>(null);
@@ -168,12 +66,12 @@ const Footer: FC<footerProps> = (props) => {
             <Image className={styles.logo} src={defaultLogo} alt={"logo"} />
             {/* <div className={styles["logo-title"]}>{"Untitled"}</div> */}
           </div>
-          <div className={styles["description"]}>{footerData.caption}</div>
+          <div className={styles["description"]}>{footer.caption}</div>
           <div className={styles["social"]}>
-            {footerData.socials.map((social, index) => {
+            {footer.socials.map((social, index) => {
               return (
                 <a key={index} href={social.href} target="_blank">
-                  {getSocial(social.logo)}
+                  <span className={styles["social-item"]}>{getSocial(social.logo)}</span>
                   {/* <Image src={social.logo} alt={"logo"} /> */}
                   {/* {<IconDiscord />} */}
                 </a>
@@ -191,9 +89,9 @@ const Footer: FC<footerProps> = (props) => {
           ref={rightRef}
         >
           {isShowMobile ? (
-            <FooterMobile items={footerData.links} />
+            <FooterMobile items={footer.links} />
           ) : (
-            footerData.links.slice(0, 4).map((group, index, arr) => {
+            footer.links.slice(0, 4).map((group, index, arr) => {
               return (
                 <div key={index} className={`${styles["group"]}`}>
                   <div className={styles["group-title"]}>{group.title}</div>
@@ -203,7 +101,7 @@ const Footer: FC<footerProps> = (props) => {
                         <Link
                           key={index}
                           className={styles["group-item"]}
-                          href={item.href || item.to}
+                          href={item.href || { pathname: item.to }}
                           target="_blank"
                         >
                           {item.label}
@@ -217,8 +115,8 @@ const Footer: FC<footerProps> = (props) => {
           )}
         </div>
       </div>
-      {footerData["copyright"] && (
-        <div className={styles["copyright"]}>{footerData["copyright"]}</div>
+      {footer["copyright"] && (
+        <div className={styles["copyright"]}>{footer["copyright"]}</div>
       )}
     </footer>
   );
