@@ -418,10 +418,16 @@ const PreviewLayout = ({
   };
 
   const titleRenderHandle = (nodeData: any) => {
+    const arr = nodeData.key.split("/");
+    arr.pop();
+    let href = arr?.pop();
+    if (href === "Introduction") {
+      href = "/home";
+    }
     return (
       <div className="custom-node-title">
         {nodeData.type === "file" ? (
-          <Link className="title" href={nodeData.key}>
+          <Link className="title" href={href}>
             {nodeData.title}
           </Link>
         ) : (

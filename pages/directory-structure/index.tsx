@@ -40,7 +40,7 @@ interface Props {
 
 const readDoc = async () => {
   let originContent = fs.readFileSync(
-    path.resolve("./mdxs", "guide/introduction.mdx"),
+    path.resolve("./mdxs", "guide/page.mdx"),
     "utf8"
   );
 
@@ -70,9 +70,8 @@ const readDoc = async () => {
       "test project7",
       "main",
       "Novel.sh",
-      "Overview",
       "Introduction",
-      "c2f32c16",
+      "d22677f7",
     ],
     mdxSource,
   };

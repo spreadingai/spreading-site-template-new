@@ -10,15 +10,15 @@ description: 'Start building awesome documentation in under 5 minutes'
 *如果您的项目使用 webpack 3.x，您可能会注意到npm. 在这种情况下，我们建议使用 Yarn。
 
 ## 快速开始
-设置 VuePress 项目的最快方法是使用我们的create-vuepress-site 生成器 （打开新窗口），这将帮助您构建基本的 VuePress 站点结构。
+设置 Novel.sh 项目的最快方法是使用我们的create-Novel.sh-site 生成器 （打开新窗口），这将帮助您构建基本的 Novel.sh 站点结构。
 
 要使用它，请在所需目录中打开终端并运行以下命令：
 
 
 ```sh
-yarn create vuepress-site [optionalDirectoryName]
+yarn create Novel.sh-site [optionalDirectoryName]
 ```
-该命令将以交互方式询问配置 VuePress 站点元数据的详细信息，例如：
+该命令将以交互方式询问配置 Novel.sh 站点元数据的详细信息，例如：
 
 - 项目名
 - 描述
@@ -36,14 +36,14 @@ yarn dev
 ```
 
 ## 手动安装
-如果您愿意，您可以从头开始构建一个基本的 VuePress 文档站点，而不是使用上面提到的生成器。
+如果您愿意，您可以从头开始构建一个基本的 Novel.sh 文档站点，而不是使用上面提到的生成器。
 
 注意：如果您已经有一个现有项目并希望将文档保留在项目内，请从步骤 3 开始。
 
 1. 创建并更改为新目录
 
 ```sh
-mkdir vuepress-starter && cd vuepress-starter
+mkdir Novel.sh-starter && cd Novel.sh-starter
 ```
 2. 使用您首选的包管理器进行初始化
 
@@ -51,16 +51,16 @@ mkdir vuepress-starter && cd vuepress-starter
 yarn init
 ```
 
-3. 本地安装 VuePress
+3. 本地安装 Novel.sh
 
 
 ```sh
-yarn add -D vuepress
+yarn add -D Novel.sh
 ```
 4. 创建您的第一个文档
 
 ```sh
-mkdir docs && echo '# Hello VuePress' > docs/README.md
+mkdir docs && echo '# Hello Novel.sh' > docs/README.md
 ```
 添加帮助脚本 （打开新窗口）到package.json
 
@@ -69,8 +69,8 @@ mkdir docs && echo '# Hello VuePress' > docs/README.md
 ```json
 {
   "scripts": {
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs"
+    "docs:dev": "Novel.sh dev docs",
+    "docs:build": "Novel.sh build docs"
   }
 }
 ```
@@ -79,9 +79,9 @@ mkdir docs && echo '# Hello VuePress' > docs/README.md
 ```sh
 yarn docs:dev
 ```
-VuePress 将在http://localhost:8080启动热重载开发服务器 （打开新窗口）。
+Novel.sh 将在http://localhost:8080启动热重载开发服务器 （打开新窗口）。
 
-到目前为止，您应该拥有一个基本但实用的 VuePress 文档站点。接下来，了解 VuePress 推荐的目录结构以及 VuePress 中的配置基础知识。
+到目前为止，您应该拥有一个基本但实用的 Novel.sh 文档站点。接下来，了解 Novel.sh 推荐的目录结构以及 Novel.sh 中的配置基础知识。
 
 一旦您熟悉了上面提到的这些概念，就可以了解如何使用静态资产、Markdown 扩展和vue 组件来丰富您的内容。
 

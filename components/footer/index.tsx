@@ -64,7 +64,7 @@ const Footer: FC<footerProps> = (props) => {
         <div className={styles["left"]}>
           <div className={styles["logo-container"]}>
             <Image className={styles.logo} src={defaultLogo} alt={"logo"} />
-            {/* <div className={styles["logo-title"]}>{"Untitled"}</div> */}
+            <div className={styles["logo-title"]}>{"Novel.sh"}</div>
           </div>
           <div className={styles["description"]}>{footer.caption}</div>
           <div className={styles["social"]}>
