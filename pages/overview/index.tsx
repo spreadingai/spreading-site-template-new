@@ -127,7 +127,7 @@ const getFolderTreeData = () => {
                           children: [],
                         },
                         {
-                          title: "TypeScript 配置",
+                          title: "内置组件",
                           type: "file",
                           key: "test project7/main/Novel.sh/Overview/typescript-as-config/d22677f7",
                           isContentVisible: true,
@@ -148,7 +148,7 @@ const getFolderTreeData = () => {
                           children: [],
                         },
                         {
-                          title: "在 Markdown 中使用 React",
+                          title: "主题",
                           type: "file",
                           key: "test project7/main/Novel.sh/Overview/using-vue/d22677f7",
                           isContentVisible: true,

@@ -1,6 +1,9 @@
+---
+title: '内置组件 | Novel.sh'
+description: 'Start building awesome documentation in under 5 minutes'
+---
 # 内置组件
 
-<NpmBadge package="@Novel.sh/theme-default" />
 
 ## Badge <Badge text="badge" />
 
