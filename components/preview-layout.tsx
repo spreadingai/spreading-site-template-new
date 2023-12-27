@@ -300,7 +300,7 @@ const PreviewLayout = ({
     folderTreeData[0],
     slugWithoutProxy
   );
-  console.log("[Site]currentCollectionDataObj", currentCollectionDataObj[0]);
+  // console.log("[Site]currentCollectionDataObj", currentCollectionDataObj[0]);
 
   // The key of tree node contains the project name, but not the proxy
   const defaultURL = [`${(slug as string[]).join("/")}`];
