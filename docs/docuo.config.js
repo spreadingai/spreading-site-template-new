@@ -36,40 +36,42 @@ const config = {
       items: [
         {
           type: "default",
-          to: "/blog",
-          href: "https://app.spreading.ai",
-          label: "Blog",
+          href: "https://www.spreading.ai/blog",
+          label: "博客",
           position: "left", // 'left' | 'right'
         },
         {
           type: "docSidebar",
-          sidebarIds: ["mySidebar"], // Use the "path" attribute of the "instance" field above
-          label: "NavItem1",
+          // sidebarIds: ["mySidebar"], // Use the "path" attribute of the "instance" field above
+          label: "价格",
+          href: "https://www.spreading.ai/pricing",
           position: "left", // 'left' | 'right'
           docsInstanceId: "callkit",
         },
-        {
-          type: "docSidebar",
-          sidebarIds: ["mySidebar"], // Use the "path" attribute of the "instance" field above
-          label: "NavItem2",
-          position: "left", // 'left' | 'right'
-          docsInstanceId: "callkit",
-        },
+        // {
+        //   type: "docSidebar",
+        //   sidebarIds: ["mySidebar"], // Use the "path" attribute of the "instance" field above
+        //   label: "Tools",
+        //   position: "left", // 'left' | 'right'
+        //   docsInstanceId: "callkit",
+        // },
         {
           type: "dropdown",
-          label: "Dropdown1",
+          label: "工具",
           items: [
             {
               type: "docSidebar",
               sidebarIds: ["mySidebar"], // Use the "path" attribute of the "instance" field above
-              label: "NavItem1",
+              label: "Code Share",
+              href: "https://www.spreading.ai/tools/codeshare",
               position: "left", // 'left' | 'right'
               docsInstanceId: "callkit",
             },
             {
               type: "docSidebar",
               sidebarIds: ["mySidebar"], // Use the "path" attribute of the "instance" field above
-              label: "NavItem2",
+              label: "Code Shot",
+              href: "https://app.spreading.ai/tools/codeshot",
               position: "left", // 'left' | 'right'
               docsInstanceId: "callkit",
             },
@@ -123,15 +125,15 @@ const config = {
           items: [
             {
               label: "Social",
-              href: "https://example.com/link3",
+              href: "https://www.spreading.ai/link3",
             },
             {
               label: "Education",
-              href: "https://example.com/link4",
+              href: "https://www.spreading.ai/link4",
             },
             {
               label: "Telehealth",
-              href: "https://example.com/link4",
+              href: "https://www.spreading.ai/link4",
             },
           ],
         },
@@ -140,15 +142,15 @@ const config = {
           items: [
             {
               label: "About",
-              href: "https://example.com/link3",
+              href: "https://www.spreading.ai/link3",
             },
             {
               label: "Blog",
-              href: "https://example.com/link4",
+              href: "https://www.spreading.ai/link4",
             },
             {
               label: "Partners",
-              href: "https://example.com/link4",
+              href: "https://www.spreading.ai/link4",
             },
           ],
         },
@@ -157,15 +159,15 @@ const config = {
           items: [
             {
               label: "Documentation",
-              href: "https://example.com/link3",
+              href: "https://www.spreading.ai/link3",
             },
             {
               label: "Demo Apps",
-              href: "https://example.com/link4",
+              href: "https://www.spreading.ai/link4",
             },
             {
               label: "Code Store",
-              href: "https://example.com/link4",
+              href: "https://www.spreading.ai/link4",
             },
           ],
         },
@@ -173,27 +175,27 @@ const config = {
       socials: [
         {
           logo: "Linkedin",
-          href: "https://example.com/social1",
+          href: "https://www.spreading.ai/social1",
         },
         {
           logo: "Twitter",
-          href: "https://example.com/social2",
+          href: "https://www.spreading.ai/social2",
         },
         {
           logo: "Facebook",
-          href: "https://example.com/social2",
+          href: "https://www.spreading.ai/social2",
         },
         {
           logo: "Youtube",
-          href: "https://example.com/social2",
+          href: "https://www.spreading.ai/social2",
         },
         {
           logo: "Github",
-          href: "https://example.com/social2",
+          href: "https://www.spreading.ai/social2",
         },
         {
           logo: "Discord",
-          href: "https://example.com/social2",
+          href: "https://www.spreading.ai/social2",
         },
       ],
     },
