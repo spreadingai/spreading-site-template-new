@@ -14,7 +14,15 @@ import remarkMath from "remark-math";
 import remarkImages from "remark-images";
 import { rehypeCodeBlocks, rehypeCodeGroup } from "@/plugins";
 
-import { CodeBlock, CodeGroup, SH, SQuote, SCallout, SCalloutHeader, SCalloutContent } from "docuo-mdx-component";
+import {
+  CodeBlock,
+  CodeGroup,
+  SH,
+  SQuote,
+  SCallout,
+  SCalloutHeader,
+  SCalloutContent,
+} from "docuo-mdx-component";
 
 const components = {
   CodeBlock,
@@ -207,7 +215,7 @@ export default function RemoteMdxPage({ mdxSource }: Props) {
   return (
     <>
       <Head>
-        <title>{(mdxSource as any)?.frontmatter?.title || ''}</title>
+        <title>{(mdxSource as any)?.frontmatter?.title || ""}</title>
         <meta
           name="description"
           content={(mdxSource as any)?.frontmatter?.description}

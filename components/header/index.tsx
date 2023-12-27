@@ -35,24 +35,28 @@ const Header: FC = () => {
         <span className={styles["logo-title"]}>{"Untitled"}</span>
       </Link>
       {matches ? (
+        // @ts-ignore
         <Mobile menus={items} />
       ) : (
         <div className={styles["menus"]} ref={menusRef}>
-          {items.filter(item=>item.label).map((menu, index) => {
-            if (menu.type === "dropdown") {
-              return <DropdownItem menu={menu} key={index} />;
-            }
-            return (
-              <Link
-                key={index}
-                className={styles["item"]}
-                href={menu.href || { pathname: menu.to }}
-                // target={menu.target}
-              >
-                {menu.label}
-              </Link>
-            );
-          })}
+          {items
+            .filter((item) => item.label)
+            .map((menu, index) => {
+              if (menu.type === "dropdown") {
+                // @ts-ignore
+                return <DropdownItem menu={menu} key={index} />;
+              }
+              return (
+                <Link
+                  key={index}
+                  className={styles["item"]}
+                  href={menu.href || { pathname: menu.to }}
+                  // target={menu.target}
+                >
+                  {menu.label}
+                </Link>
+              );
+            })}
         </div>
       )}
     </header>

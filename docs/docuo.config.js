@@ -1,4 +1,3 @@
-/** @type {import("@/@types/docuoConfig.d.ts").docuoConfigType} */
 const config = {
   title: "My Site",
   favicon: "image/favicon.ico",
