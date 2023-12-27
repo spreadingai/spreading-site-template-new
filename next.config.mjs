@@ -40,18 +40,6 @@ const nextConfig = {
 
     return config;
   },
-  async rewrites() {
-    return [
-      {
-        source: "/",
-        destination: "/home",
-      },
-      {
-        source: "/preview",
-        destination: "/home/preview",
-      },
-    ];
-  },
 };
 
 export default nextConfig;
