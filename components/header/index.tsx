@@ -32,7 +32,7 @@ const Header: FC = () => {
     <header className={styles["header-container"]}>
       <Link className={styles["logo-container"]} href={"/"} ref={logoRef}>
         <Image className={styles.logo} src={defaultLogo} alt={"logo"} />
-        <span className={styles["logo-title"]}>{"Untitled"}</span>
+        <span className={styles["logo-title"]}>{"Novel.sh"}</span>
       </Link>
       {matches ? (
         // @ts-ignore
