@@ -11,15 +11,31 @@ const UUID = "37e7bcb6-4fa7-431d-b11c-df9a1c26cf62";
 
 export function getDocuoConfig() {
   // Complete the default value
+  const defaultInstance = {
+    id: "default", // Host instance
+    label: "docs",
+    path: "docs",
+    routeBasePath: "docs",
+  };
   if (!docuoConfig.instances) {
-    docuoConfig.instances = [
-      {
-        id: "main", // Host instance
-        label: "docs",
-        path: "docs",
-        routeBasePath: "docs",
-      },
-    ];
+    docuoConfig.instances = [defaultInstance];
+  } else {
+    docuoConfig.instances.forEach((instance) => {
+      if (!instance.id || instance.id === "default") {
+        // Host instance
+        instance.id = defaultInstance.id;
+        instance.label = defaultInstance.label;
+        instance.path = defaultInstance.path;
+        instance.routeBasePath = defaultInstance.routeBasePath;
+      }
+    });
+    const result = docuoConfig.instances.find(
+      (instance) => instance.id === "default"
+    );
+    if (!result) {
+      // Insert host instance
+      docuoConfig.instances.unshift(defaultInstance);
+    }
   }
   return docuoConfig as DocuoConfig;
 }
@@ -29,11 +45,11 @@ export function getSidebars(instanceID: string, version?: string) {
   const { instances } = getDocuoConfig();
   const instance = instances.find((i) => i.id === instanceID);
   let rootUrl = `${entityRootDirectory}/${
-    instance.id === "main" ? "" : instance.id + "_"
+    instance.id === "default" ? "" : instance.id + "_"
   }docs`;
   if (version) {
     rootUrl = `${entityRootDirectory}/${
-      instance.id === "main" ? "" : instance.id + "_"
+      instance.id === "default" ? "" : instance.id + "_"
     }versioned_docs/version-${version}`;
   }
   const rootPath = path.resolve("./public", "..", rootUrl);
@@ -78,28 +94,28 @@ export function getSidebars(instanceID: string, version?: string) {
   return result;
 }
 
-export function getVersions(instanceID: string) {
+export function getUsedVersions(instanceID: string) {
   const { instances } = getDocuoConfig();
   const instance = instances.find((i) => i.id === instanceID);
   const versionsUrl = `${entityRootDirectory}/${
-    instance.id === "main" ? "" : instance.id + "_"
+    instance.id === "default" ? "" : instance.id + "_"
   }versions.json`;
   const versionsPath = path.resolve("./public", "..", versionsUrl);
   let versions: string[] = [];
   if (fs.existsSync(versionsPath)) {
     versions = JSON.parse(fs.readFileSync(versionsPath, "utf8"));
   } else {
-    versions = getAllVersions(instanceID);
+    versions = getActualVersions(instanceID);
   }
-  console.log(`[lib/docs]getVersions: `, versions);
+  console.log(`[lib/docs]getUsedVersions: `, versions);
   return versions;
 }
 
-export function getAllVersions(instanceID: string) {
+export function getActualVersions(instanceID: string) {
   const { instances } = getDocuoConfig();
   const instance = instances.find((i) => i.id === instanceID);
   const versionedUrl = `${entityRootDirectory}/${
-    instance.id === "main" ? "" : instance.id + "_"
+    instance.id === "default" ? "" : instance.id + "_"
   }versioned_docs`;
   const versionedPath = path.resolve("./public", "..", versionedUrl);
   let versioned: string[] = [];
@@ -111,12 +127,13 @@ export function getAllVersions(instanceID: string) {
       return temp.join("-");
     });
   } else {
+    // There is only one default version
     console.error(
-      `[lib/docs]getAllVersions: No version is currently defined `,
+      `[lib/docs]getActualVersions: No version is currently defined `,
       instanceID
     );
   }
-  console.error(`[lib/docs]getAllVersions: `, versioned);
+  console.error(`[lib/docs]getActualVersions: `, versioned);
   return versioned;
 }
 
@@ -134,13 +151,14 @@ export function getAllSlugs() {
 }
 
 export async function readDoc(slug: string[]) {
+  console.log(`[lib/docs]readDoc `, slug);
   const { version, mdxFileID, instanceID } = extractInfoFromSlug(slug);
   let mdxFileUrl = `${entityRootDirectory}/${
-    instanceID === "main" ? "" : instanceID + "_"
-  }docs/${mdxFileID}`;
+    instanceID === "default" ? "" : instanceID + "_"
+  }docs/${mdxFileID}.mdx`;
   if (version) {
     mdxFileUrl = `${entityRootDirectory}/${
-      instanceID === "main" ? "" : instanceID + "_"
+      instanceID === "default" ? "" : instanceID + "_"
     }versioned_docs/version-${version}/${mdxFileID}.mdx`;
   }
   let originContent = fs.readFileSync(
@@ -187,9 +205,14 @@ export function extractInfoFromSlug(slug: string[]) {
   const instanceID = docuoConfig.instances.find(
     (instance) => instance.routeBasePath === routeBasePath
   ).id;
-  const version = slug[1];
-  const mdxFileID = slug.slice(2).join("/");
+  const versions = getUsedVersions(instanceID);
+  let version = slug[1];
+  let mdxFileID = slug.slice(2).join("/");
   const mdxFileName = slug[slug.length - 1];
+  if (!versions.includes(version)) {
+    version = "";
+    mdxFileID = slug.slice(1).join("/");
+  }
   return { instanceID, routeBasePath, version, mdxFileID, mdxFileName };
 }
 
@@ -198,17 +221,26 @@ function getSlugs(instanceID: string, routeBasePath: string) {
   let slugs: {
     params: { slug: string[]; instanceID: string; version: string };
   }[] = [];
-  const versions = getVersions(instanceID);
+  const versions = getUsedVersions(instanceID);
+  if (!versions.length) {
+    // Currently there is only one version
+    versions.push("");
+  }
   for (const version of versions) {
     const sidebars = getSidebars(instanceID, version);
     const sidebarIds = Object.keys(sidebars);
     for (const sidebarId of sidebarIds) {
       const sidebarItemList = sidebars[sidebarId] as SidebarItem[];
+      let preSlug = [routeBasePath];
+      version && (preSlug = preSlug.concat([version]));
       slugs = slugs.concat(
-        traverseChildren(instanceID, version, sidebarItemList, [
-          routeBasePath,
+        traverseChildren(
+          instanceID,
           version,
-        ])
+          sidebarId,
+          sidebarItemList,
+          preSlug
+        )
       );
     }
   }
@@ -216,14 +248,20 @@ function getSlugs(instanceID: string, routeBasePath: string) {
   return slugs;
 }
 
-function traverseChildren(
+export function traverseChildren(
   instanceID: string,
   version: string,
+  sidebarId: string,
   sidebarItemList: SidebarItem[],
   preSlug: string[]
 ) {
   const result: {
-    params: { slug: string[]; instanceID: string; version: string };
+    params: {
+      slug: string[];
+      instanceID: string;
+      version: string;
+      sidebarId: string;
+    };
   }[] = [];
   for (const sidebarItem of sidebarItemList) {
     if (sidebarItem.items) {
@@ -231,6 +269,7 @@ function traverseChildren(
         ...traverseChildren(
           instanceID,
           version,
+          sidebarId,
           sidebarItem.items as SidebarItem[],
           preSlug
         )
@@ -243,6 +282,7 @@ function traverseChildren(
         params: {
           instanceID,
           version,
+          sidebarId,
           slug,
         },
       });

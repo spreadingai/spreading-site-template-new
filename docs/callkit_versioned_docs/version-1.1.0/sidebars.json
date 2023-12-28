@@ -2,11 +2,6 @@
   "sidebar1": [
     "foo",
     {
-      "type": "doc",
-      "id": "bar",
-      "label": "bar"
-    },
-    {
       "type": "link",
       "label": "Google",
       "href": "https://google.com"
@@ -15,8 +10,6 @@
       "type": "category",
       "label": "category",
       "items": [
-        "folder1/bar11",
-        "folder1/foo11",
         {
           "type": "doc",
           "id": "folder2/bar21",
@@ -31,8 +24,11 @@
     }
   ],
   "sidebar2": [
-    "foo",
-    "bar",
+    {
+      "type": "doc",
+      "id": "bar",
+      "label": "bar"
+    },
     {
       "type": "category",
       "label": "category",

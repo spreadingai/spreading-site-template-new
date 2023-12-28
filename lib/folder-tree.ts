@@ -1,5 +1,5 @@
-import { getVersions, getSidebars } from "@/lib/docs";
-import { SidebarItem, SidebarItemType } from "./types";
+import { getUsedVersions, getSidebars } from "@/lib/docs";
+import { NavBarItemType, SidebarItem, SidebarItemType } from "./types";
 import { getDocuoConfig, extractInfoFromSlug } from "@/lib/docs";
 
 export const getFolderTreeData = () => {
@@ -13,19 +13,25 @@ export const getFolderTreeData = () => {
       key: instance.routeBasePath,
       children: [],
     };
-    const versions = getVersions(instance.id);
+    const versions = getUsedVersions(instance.id);
+    if (!versions.length) {
+      // Currently there is only one version
+      versions.push("");
+    }
     for (const version of versions) {
       const versionObj = {
         version,
         title: version,
         type: "folder",
-        key: `${instance.routeBasePath}/${version}`,
+        key: `${instance.routeBasePath}${version ? "/" : ""}${version}`,
         children: [],
       };
       const sidebars = getSidebars(instance.id, version);
       const sidebarIds = Object.keys(sidebars);
       for (const sidebarId of sidebarIds) {
-        const prefixKey = `${instance.routeBasePath}/${version}/${sidebarId}`;
+        const prefixKey = `${instance.routeBasePath}${
+          version ? "/" : ""
+        }${version}/${sidebarId}`;
         const sidebarObj = {
           sidebarId,
           title: sidebarId,
@@ -34,8 +40,7 @@ export const getFolderTreeData = () => {
           children: getChildrenFromChildren(
             sidebars[sidebarId] as SidebarItem[],
             prefixKey,
-            instance.routeBasePath,
-            version
+            `${instance.routeBasePath}${version ? "/" : ""}${version}`
           ),
         };
         versionObj.children.push(sidebarObj);
@@ -50,34 +55,48 @@ export const getFolderTreeData = () => {
 
 export const getFolderTreeDataBySlug = (slug: string[]) => {
   const { instanceID, routeBasePath, version } = extractInfoFromSlug(slug);
-  const sidebars = getSidebars(instanceID, version);
-  const sidebarIds = Object.keys(sidebars);
-  // TODO: Now take the first one
-  const sidebarId = sidebarIds[0];
-  const sidebar = sidebars[sidebarId];
-  const tree = getChildrenFromChildren(
-    sidebar as SidebarItem[],
-    `${routeBasePath}/${version}`,
-    routeBasePath,
-    version
+  const { themeConfig } = getDocuoConfig();
+  const { navbar } = themeConfig;
+  // Now take the first one
+  const docNavBarItem = navbar.items.filter(
+    (item) =>
+      item.type === NavBarItemType.DocSidebar &&
+      item.docsInstanceId === instanceID
+  )[0];
+  console.log(
+    `[lib/folder-tree]getFolderTreeDataBySlug sidebarIds: `,
+    docNavBarItem.sidebarIds
   );
+  const sidebars = getSidebars(instanceID, version);
+  let tree = [];
+  // Now take the first one
+  docNavBarItem.sidebarIds.slice(0, 1).forEach((sidebarId) => {
+    const sidebar = sidebars[sidebarId];
+    tree = tree.concat(
+      getChildrenFromChildren(
+        sidebar as SidebarItem[],
+        `${routeBasePath}${version ? "/" : ""}${version}/${sidebarId}`,
+        `${routeBasePath}${version ? "/" : ""}${version}`
+      )
+    );
+  });
   console.log(
     `[lib/folder-tree]getFolderTreeDataBySlug: `,
     instanceID,
     version,
-    sidebarId,
+    docNavBarItem.sidebarIds,
     JSON.stringify(tree)
   );
   return tree;
 };
 
-function getChildrenFromChildren(
+export const getChildrenFromChildren = (
   sidebarItems: SidebarItem[],
   prefixKey: string,
-  routeBasePath: string,
-  version: string
-) {
+  idPrefixKey
+) => {
   prefixKey = prefixKey || "";
+  idPrefixKey = idPrefixKey || "";
   const result = [];
   for (const item of sidebarItems) {
     let children;
@@ -85,8 +104,7 @@ function getChildrenFromChildren(
       children = getChildrenFromChildren(
         item.items as SidebarItem[],
         `${prefixKey}${prefixKey ? "/" : ""}${item.label}`,
-        routeBasePath,
-        version
+        idPrefixKey
       );
     }
     if (
@@ -100,7 +118,7 @@ function getChildrenFromChildren(
       };
       children && (temp.children = children);
       item.type === SidebarItemType.Doc &&
-        (temp.id = `${routeBasePath}/${version}/${item.id}`);
+        (temp.id = `${idPrefixKey}/${item.id}`);
       result.push(temp);
     } else {
       result.push({
@@ -112,4 +130,4 @@ function getChildrenFromChildren(
     }
   }
   return result;
-}
+};

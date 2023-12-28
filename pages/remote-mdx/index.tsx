@@ -14,13 +14,21 @@ import remarkMath from "remark-math";
 import remarkImages from "remark-images";
 import { rehypeCodeBlocks, rehypeCodeGroup } from "@/plugins";
 
-import { CodeBlock, CodeGroup, Callout, Frame, Video } from "docuo-mdx-component";
+import {
+  CodeBlock,
+  CodeGroup,
+  // Callout,
+  // Frame,
+  // Video,
+  STitle,
+  SH,
+} from "docuo-mdx-component";
 
 import {
   getDocuoConfig,
   getSidebars,
-  getVersions,
-  getAllVersions,
+  getUsedVersions,
+  getActualVersions,
   getAllSlugs,
 } from "@/lib/docs";
 import { getFolderTreeData as getFolderTreeDataNew } from "@/lib/folder-tree";
@@ -28,12 +36,14 @@ import { getFolderTreeData as getFolderTreeDataNew } from "@/lib/folder-tree";
 const components = {
   CodeBlock,
   CodeGroup,
-  Tip: Callout.Tip,
-  Note: Callout.Note,
-  Warning: Callout.Warning,
-  Error: Callout.Error,
-  Frame,
-  Video,
+  // Tip: Callout.Tip,
+  // Note: Callout.Note,
+  // Warning: Callout.Warning,
+  // Error: Callout.Error,
+  // Frame,
+  // Video,
+  STitle,
+  SH,
 };
 
 interface Props {
@@ -42,7 +52,7 @@ interface Props {
 
 const readDoc = async () => {
   let originContent = fs.readFileSync(
-    path.resolve("./mdxs", "test_default.mdx"),
+    path.resolve("./mdxs", "test.mdx"),
     "utf8"
   );
 
@@ -196,6 +206,8 @@ const getProxyPath = () => {
 };
 
 export async function getStaticProps() {
+  getUsedVersions("default");
+  getActualVersions("default");
   const postData = await readDoc();
   const folderTreeData = getFolderTreeData();
   const siteInfo = getSiteInfo();

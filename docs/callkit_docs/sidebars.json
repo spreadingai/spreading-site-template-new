@@ -1,7 +1,6 @@
 {
   "sidebar1": [
     "foo",
-    "bar",
     {
       "type": "category",
       "label": "category",
@@ -9,7 +8,6 @@
     }
   ],
   "sidebar2": [
-    "foo",
     {
       "type": "doc",
       "id": "bar",
@@ -24,8 +22,6 @@
       "type": "category",
       "label": "category",
       "items": [
-        "folder1/bar11",
-        "folder1/foo11",
         {
           "type": "doc",
           "id": "folder2/bar21",

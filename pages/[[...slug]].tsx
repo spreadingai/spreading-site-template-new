@@ -11,7 +11,7 @@ import {
   STitle,
 } from "docuo-mdx-component";
 import { getAllSlugs, getDocuoConfig, readDoc } from "@/lib/docs";
-import { getFolderTreeData, getFolderTreeDataBySlug } from "@/lib/folder-tree";
+import { getFolderTreeDataBySlug } from "@/lib/folder-tree";
 
 const components = {
   CodeBlock,
@@ -32,16 +32,21 @@ interface Props {
 export const getStaticProps = async ({
   params,
 }: {
-  params: { slug: string[]; instanceID: string; version: string };
+  params: {
+    slug: string[];
+    instanceID: string; // Can not get
+    version: string; // Can not get
+    sidebarId: string; // Can not get
+  };
 }) => {
   console.log(
     new Date().toISOString().slice(0, 23),
     "[Spreading] getStaticProps:",
     params
   );
-  const postData = await readDoc(params.slug);
   const folderTreeData = getFolderTreeDataBySlug(params.slug);
   const docuoConfig = getDocuoConfig();
+  const postData = await readDoc(params.slug);
   return {
     props: {
       ...postData,
@@ -57,6 +62,7 @@ export function getStaticPaths() {
     "[Spreading] getStaticPaths..."
   );
   const paths = getAllSlugs();
+
   return {
     paths,
     fallback: true,

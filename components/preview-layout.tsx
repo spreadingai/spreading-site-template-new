@@ -100,7 +100,10 @@ const PreviewLayout = ({
       if (arr.length - 1 === index) return { title: item.title };
       return {
         title: item.title,
-        href: `/${item.id || slug[0] + "/" + slug[1] + "/" + item.title}`,
+        href: `/${
+          item.id ||
+          slug[0] + "/" + slug[1] + "/" + item.key.split("/").slice(3).join("/")
+        }`,
       };
     });
   };

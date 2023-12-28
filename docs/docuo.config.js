@@ -7,17 +7,16 @@ const config = {
   //     dark: "image/logo.png",
   //     light: "image/logo.png",
   //   },
-  baseUrl: "", // TODO:No need?
   // The following 1.2 is not implemented
   metadata: [],
   // This file does not exist by default
   instances: [
-    // {
-    //   id: "main",
-    //   label: "docs",
-    //   path: "docs",
-    //   routeBasePath: "docs",
-    // },
+    {
+      id: "default",
+      label: "docs",
+      path: "docs",
+      routeBasePath: "docs",
+    },
     {
       id: "callkit",
       label: "callkit",
@@ -43,14 +42,14 @@ const config = {
         },
         {
           type: "docSidebar",
-          sidebarIds: ["mySidebar"], // Use the "path" attribute of the "instance" field above
+          sidebarIds: ["sidebar1"], // Use the "path" attribute of the "instance" field above
           label: "NavItem1",
           position: "left", // 'left' | 'right'
-          docsInstanceId: "callkit",
+          docsInstanceId: "default",
         },
         {
           type: "docSidebar",
-          sidebarIds: ["mySidebar"], // Use the "path" attribute of the "instance" field above
+          sidebarIds: ["sidebar1", "sidebar2"], // Use the "path" attribute of the "instance" field above
           label: "NavItem2",
           position: "left", // 'left' | 'right'
           docsInstanceId: "callkit",
