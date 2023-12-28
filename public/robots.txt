@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://spreading-site-template-new.vercel.app
+
+# Sitemaps
+Sitemap: https://spreading-site-template-new.vercel.app/sitemap.xml

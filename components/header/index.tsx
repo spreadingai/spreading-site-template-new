@@ -7,6 +7,8 @@ import { useMediaQuery } from "usehooks-ts";
 import Mobile from "./mobile";
 import DropdownItem from "./DropdownItem";
 import DocuoConfig from "@/docs/docuo.config";
+import { DocSearch } from '@docsearch/react';
+import '@docsearch/css';
 
 const Header: FC = () => {
   const { items } = DocuoConfig.themeConfig.navbar;
@@ -34,6 +36,12 @@ const Header: FC = () => {
         <Image className={styles.logo} src={defaultLogo} alt={"logo"} />
         <span className={styles["logo-title"]}>{"Novel.sh"}</span>
       </Link>
+      <div>
+      <DocSearch
+        appId="UMXLR3E546"
+        indexName="zdiggingking"
+        apiKey="8636604c27bbb59d73421c038036020f"
+      />
       {matches ? (
         // @ts-ignore
         <Mobile menus={items} />
@@ -59,6 +67,7 @@ const Header: FC = () => {
             })}
         </div>
       )}
+      </div> 
     </header>
   );
 };
