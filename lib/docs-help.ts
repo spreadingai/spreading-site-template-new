@@ -71,8 +71,8 @@ class DocsController {
   getSidebars(instanceID: string, version?: string) {
     if (
       !this._sidebarsMap ||
-      this._sidebarsMap[instanceID] ||
-      this._sidebarsMap[instanceID][version]
+      !this._sidebarsMap[instanceID] ||
+      !this._sidebarsMap[instanceID][version]
     ) {
       let result: Sidebars = null;
       const { instances } = this.getDocuoConfig();
