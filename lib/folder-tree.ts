@@ -57,12 +57,14 @@ export const getFolderTreeDataBySlug = (slug: string[]) => {
   const { instanceID, routeBasePath, version } = extractInfoFromSlug(slug);
   const { themeConfig } = getDocuoConfig();
   const { navbar } = themeConfig;
-  // Now take the first one
+  // Only one item is allowed per instance
   const docNavBarItem = navbar.items.filter(
     (item) =>
       item.type === NavBarItemType.DocSidebar &&
       item.docsInstanceId === instanceID
   )[0];
+  if (!docNavBarItem) return [];
+
   console.log(
     `[lib/folder-tree]getFolderTreeDataBySlug sidebarIds: `,
     docNavBarItem.sidebarIds

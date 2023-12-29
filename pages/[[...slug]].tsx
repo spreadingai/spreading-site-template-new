@@ -10,8 +10,7 @@ import {
   SCalloutContent,
   STitle,
 } from "docuo-mdx-component";
-import { getAllSlugs, getDocuoConfig, readDoc } from "@/lib/docs";
-import { getFolderTreeDataBySlug } from "@/lib/folder-tree";
+import DocsControllerImpl from "@/lib/docs-help";
 
 const components = {
   CodeBlock,
@@ -44,9 +43,11 @@ export const getStaticProps = async ({
     "[Spreading] getStaticProps:",
     params
   );
-  const folderTreeData = getFolderTreeDataBySlug(params.slug);
-  const docuoConfig = getDocuoConfig();
-  const postData = await readDoc(params.slug);
+  const folderTreeData = DocsControllerImpl.getFolderTreeDataBySlug(
+    params.slug
+  );
+  const docuoConfig = DocsControllerImpl.getDocuoConfig();
+  const postData = await DocsControllerImpl.readDoc(params.slug);
   return {
     props: {
       ...postData,
@@ -61,7 +62,7 @@ export function getStaticPaths() {
     new Date().toISOString().slice(0, 23),
     "[Spreading] getStaticPaths..."
   );
-  const paths = getAllSlugs();
+  const paths = DocsControllerImpl.getAllSlugs();
 
   return {
     paths,

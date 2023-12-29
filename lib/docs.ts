@@ -28,6 +28,9 @@ export function getDocuoConfig() {
         instance.path = defaultInstance.path;
         instance.routeBasePath = defaultInstance.routeBasePath;
       }
+      if (!instance.routeBasePath) {
+        instance.routeBasePath = instance.path;
+      }
     });
     const result = docuoConfig.instances.find(
       (instance) => instance.id === "default"
@@ -226,9 +229,11 @@ function getSlugs(instanceID: string, routeBasePath: string) {
     // Currently there is only one version
     versions.push("");
   }
+
   for (const version of versions) {
     const sidebars = getSidebars(instanceID, version);
     const sidebarIds = Object.keys(sidebars);
+    // Use only the sidebarId that is used
     for (const sidebarId of sidebarIds) {
       const sidebarItemList = sidebars[sidebarId] as SidebarItem[];
       let preSlug = [routeBasePath];
