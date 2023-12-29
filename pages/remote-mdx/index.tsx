@@ -17,11 +17,9 @@ import { rehypeCodeBlocks, rehypeCodeGroup } from "@/plugins";
 import {
   CodeBlock,
   CodeGroup,
-  // Callout,
-  // Frame,
-  // Video,
-  STitle,
-  SH,
+  Callout,
+  Frame,
+  Video,
 } from "docuo-mdx-component";
 
 import {
@@ -36,14 +34,12 @@ import { getFolderTreeData as getFolderTreeDataNew } from "@/lib/folder-tree";
 const components = {
   CodeBlock,
   CodeGroup,
-  // Tip: Callout.Tip,
-  // Note: Callout.Note,
-  // Warning: Callout.Warning,
-  // Error: Callout.Error,
-  // Frame,
-  // Video,
-  STitle,
-  SH,
+  Tip: Callout.Tip,
+  Note: Callout.Note,
+  Warning: Callout.Warning,
+  Error: Callout.Error,
+  Frame,
+  Video,
 };
 
 interface Props {
@@ -52,7 +48,7 @@ interface Props {
 
 const readDoc = async () => {
   let originContent = fs.readFileSync(
-    path.resolve("./mdxs", "test.mdx"),
+    path.resolve("./mdxs", "test_default.mdx"),
     "utf8"
   );
 
