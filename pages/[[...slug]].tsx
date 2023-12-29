@@ -3,24 +3,21 @@ import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import {
   CodeBlock,
   CodeGroup,
-  SH,
-  SQuote,
-  SCallout,
-  SCalloutHeader,
-  SCalloutContent,
-  STitle,
+  Callout,
+  Frame,
+  Video,
 } from "docuo-mdx-component";
 import DocsControllerImpl from "@/lib/docs-help";
 
 const components = {
   CodeBlock,
   CodeGroup,
-  Blockquote: SQuote,
-  SH,
-  SCallout,
-  SCalloutHeader,
-  SCalloutContent,
-  STitle,
+  Tip: Callout.Tip,
+  Note: Callout.Note,
+  Warning: Callout.Warning,
+  Error: Callout.Error,
+  Frame,
+  Video,
 };
 
 interface Props {

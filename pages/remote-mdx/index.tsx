@@ -48,7 +48,7 @@ interface Props {
 
 const readDoc = async () => {
   let originContent = fs.readFileSync(
-    path.resolve("./mdxs", "test_default.mdx"),
+    path.resolve("./docs/docs", "foo1.mdx"),
     "utf8"
   );
 
