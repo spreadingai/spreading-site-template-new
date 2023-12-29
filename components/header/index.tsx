@@ -14,7 +14,6 @@ const Header: FC = () => {
   const matches = useMediaQuery(`(max-width: ${Math.max(width, 375)}px)`); // mobile
   const menusRef = React.useRef<HTMLDivElement>(null);
   const logoRef = React.useRef<HTMLAnchorElement>(null);
-  console.log(items, "items");
 
   useEffect(() => {
     // compute the width of the hamburger menu

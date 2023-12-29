@@ -5,6 +5,7 @@ import { DocuoConfig, SidebarItem, SidebarItemType, Sidebars } from "./types";
 import { visit } from "unist-util-visit";
 import { serialize } from "next-mdx-remote/serialize";
 import remarkImages from "remark-images";
+import { rehypeImages } from "@/plugins";
 
 const entityRootDirectory = "docs";
 const UUID = "37e7bcb6-4fa7-431d-b11c-df9a1c26cf62";
@@ -177,7 +178,9 @@ export async function readDoc(slug: string[]) {
   const mdxSource = await serialize(originContent, {
     mdxOptions: {
       remarkPlugins: [remarkImages, myRemarkPlugin],
-      rehypePlugins: [],
+      rehypePlugins: [
+        [rehypeImages, { baseDir: process.cwd(), filePath: mdxFileUrl }],
+      ],
       format: "mdx",
       useDynamicImport: true,
     },
