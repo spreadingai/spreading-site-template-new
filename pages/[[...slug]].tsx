@@ -34,7 +34,7 @@ export const getStaticProps = async ({
   params: {
     slug: string[];
     instanceID: string; // Can not get
-    version: string; // Can not get
+    slugVersion: string; // Can not get
     sidebarId: string; // Can not get
   };
 }) => {
@@ -43,10 +43,10 @@ export const getStaticProps = async ({
     "[Spreading] getStaticProps:",
     params
   );
+  const docuoConfig = DocsControllerImpl.getDocuoConfig();
   const folderTreeData = DocsControllerImpl.getFolderTreeDataBySlug(
     params.slug
   );
-  const docuoConfig = DocsControllerImpl.getDocuoConfig();
   const postData = await DocsControllerImpl.readDoc(params.slug);
   return {
     props: {

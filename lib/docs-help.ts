@@ -3,6 +3,7 @@ import path from "path";
 import inputDocuoConfig from "@/docs/docuo.config";
 import {
   DocuoConfig,
+  NavBarItem,
   NavBarItemType,
   SidebarItem,
   SidebarItemType,
@@ -21,8 +22,10 @@ class DocsController {
   _usedVersionsMap: Record<string, string[]> = {};
   _actualVersionsMap: Record<string, string[]> = {};
   _allSlugs: {
-    params: { slug: string[]; instanceID: string; version: string };
-  }[] = [];
+    params: { slug: string[]; instanceID: string; slugVersion: string };
+  }[];
+  _usedSidebarIdsMap: Record<string, string[]> = {};
+  _defaultVersion = "next";
   static getInstance() {
     return (
       DocsController._instance ||
@@ -68,22 +71,20 @@ class DocsController {
     }
     return this._docuoConfig;
   }
-  getSidebars(instanceID: string, version?: string) {
+  getSidebars(instanceID: string, docVersion?: string) {
     if (
       !this._sidebarsMap ||
       !this._sidebarsMap[instanceID] ||
-      !this._sidebarsMap[instanceID][version]
+      !this._sidebarsMap[instanceID][docVersion]
     ) {
       let result: Sidebars = null;
-      const { instances } = this.getDocuoConfig();
-      const instance = instances.find((i) => i.id === instanceID);
       let rootUrl = `${this._entityRootDirectory}/${
-        instance.id === "default" ? "" : instance.id + "_"
+        instanceID === "default" ? "" : instanceID + "_"
       }docs`;
-      if (version) {
+      if (docVersion) {
         rootUrl = `${this._entityRootDirectory}/${
-          instance.id === "default" ? "" : instance.id + "_"
-        }versioned_docs/version-${version}`;
+          instanceID === "default" ? "" : instanceID + "_"
+        }versioned_docs/version-${docVersion}`;
       }
       const rootPath = path.resolve("./public", "..", rootUrl);
 
@@ -119,20 +120,20 @@ class DocsController {
         }
       } else {
         console.error(
-          `[lib/docs]getSidebars: The document directory for the instance was not found `,
+          `[DocsController]getSidebars: The document directory for the instance was not found `,
           instanceID
         );
       }
-      console.log(`[lib/docs]getSidebars: `, JSON.stringify(result));
+      console.log(`[DocsController]getSidebars: `, JSON.stringify(result));
       this._sidebarsMap = this._sidebarsMap || {};
       this._sidebarsMap[instanceID] = this._sidebarsMap[instanceID] || {};
-      this._sidebarsMap[instanceID][version] = result;
+      this._sidebarsMap[instanceID][docVersion] = result;
     }
-    return this._sidebarsMap[instanceID][version];
+    return this._sidebarsMap[instanceID][docVersion];
   }
   generatedSidebar(rootUrl: string, dirName: string) {
     const dirPath = path.resolve("./public", "..", rootUrl, dirName);
-    console.log(`[lib/docs]generatedSidebar: `, rootUrl, dirPath);
+    console.log(`[DocsController]generatedSidebar: `, rootUrl, dirPath);
     const loop = (dirPath: string) => {
       const stats = fs.statSync(dirPath);
       if (!stats.isDirectory()) {
@@ -165,7 +166,7 @@ class DocsController {
     };
     const sidebar = (loop(dirPath) as SidebarItem).items;
     console.log(
-      `[lib/docs]generatedSidebar sidebar: `,
+      `[DocsController]generatedSidebar sidebar: `,
       JSON.stringify(sidebar)
     );
     return sidebar;
@@ -189,6 +190,7 @@ class DocsController {
     loop(sidebar);
   }
   getUsedVersions(instanceID: string) {
+    // Use the external current version if the file is not present or the list is empty
     if (!this._usedVersionsMap[instanceID]) {
       const { instances } = this.getDocuoConfig();
       const instance = instances.find((i) => i.id === instanceID);
@@ -199,13 +201,11 @@ class DocsController {
       let versions: string[] = [];
       if (fs.existsSync(versionsPath)) {
         versions = JSON.parse(fs.readFileSync(versionsPath, "utf8"));
-      } else {
-        versions = this.getActualVersions(instanceID);
       }
-      console.log(`[lib/docs]getUsedVersions: `, versions);
+      console.log(`[DocsController]getUsedVersions: `, versions);
       this._usedVersionsMap[instanceID] = versions;
     }
-    return this._usedVersionsMap[instanceID];
+    return JSON.parse(JSON.stringify(this._usedVersionsMap[instanceID]));
   }
   getActualVersions(instanceID: string) {
     if (!this._actualVersionsMap[instanceID]) {
@@ -226,53 +226,104 @@ class DocsController {
       } else {
         // There is only one default version
         console.error(
-          `[lib/docs]getActualVersions: No version is currently defined `,
+          `[DocsController]getActualVersions: No version is currently defined `,
           instanceID
         );
       }
-      console.error(`[lib/docs]getActualVersions: `, versioned);
+      console.error(`[DocsController]getActualVersions: `, versioned);
       this._actualVersionsMap[instanceID] = versioned;
     }
     return this._actualVersionsMap[instanceID];
   }
+  getUsedSidebarIds(instanceID: string) {
+    if (!this._usedSidebarIdsMap[instanceID]) {
+      const { themeConfig } = this.getDocuoConfig();
+      const { navbar } = themeConfig;
+      const usedSidebarIds = [];
+      const loop = (items: NavBarItem[], usedSidebarIds: string[]) => {
+        for (const item of items) {
+          !item.docsInstanceId && (item.docsInstanceId = "default");
+          if (
+            item.type === NavBarItemType.DocSidebar &&
+            item.docsInstanceId === instanceID
+          ) {
+            usedSidebarIds.push(...item.sidebarIds);
+          }
+          if (item.items) {
+            loop(item.items, usedSidebarIds);
+          }
+        }
+      };
+      loop(navbar.items, usedSidebarIds);
+      // Remove duplicate elements
+      this._usedSidebarIdsMap[instanceID] = usedSidebarIds.reduce(
+        (prev, curr) => {
+          if (!prev.includes(curr)) {
+            prev.push(curr);
+          }
+          return prev;
+        },
+        []
+      );
+    }
+    console.log(
+      `[DocsController]getUsedSidebarIds: `,
+      instanceID,
+      this._usedSidebarIdsMap[instanceID]
+    );
+    return this._usedSidebarIdsMap[instanceID];
+  }
   getAllSlugs() {
     if (!this._allSlugs) {
       let allSlugs: {
-        params: { slug: string[]; instanceID: string; version: string };
+        params: { slug: string[]; instanceID: string; slugVersion: string };
       }[] = [];
       const { instances } = this.getDocuoConfig();
       for (const instance of instances) {
-        const slugs = this.getSlugs(instance.id, instance.routeBasePath);
+        const slugs = this.getSlugs(instance.id);
         allSlugs = allSlugs.concat(slugs);
       }
-      console.log(`[lib/docs]getAllSlugs: `, JSON.stringify(allSlugs));
+      console.log(`[DocsController]getAllSlugs: `, JSON.stringify(allSlugs));
       this._allSlugs = allSlugs;
     }
     return this._allSlugs;
   }
-  getSlugs(instanceID: string, routeBasePath: string) {
+  getSlugs(instanceID: string) {
     // eg: instance routeBasePath/version/folder/filename
+    const { instances } = this.getDocuoConfig();
+    const instance = instances.find((i) => i.id === instanceID);
+    const usedSidebarIds = this.getUsedSidebarIds(instanceID);
     let slugs: {
-      params: { slug: string[]; instanceID: string; version: string };
+      params: { slug: string[]; instanceID: string; slugVersion: string };
     }[] = [];
-    const versions = this.getUsedVersions(instanceID);
-    if (!versions.length) {
-      // Currently there is only one version
-      versions.push("");
+    const slugVersions = this.getUsedVersions(instanceID);
+    if (!slugVersions.length) {
+      // [""]
+      slugVersions.push("");
+    } else {
+      // ["next", "1.1.0", "1.0.0"]
+      slugVersions.unshift(this._defaultVersion);
+      slugVersions[1] = this.docVersionToSlugVersion(
+        instanceID,
+        slugVersions[1]
+      );
     }
+    console.log(`[DocsController]getSlugs slugVersions: `, slugVersions);
 
-    for (const version of versions) {
-      const sidebars = this.getSidebars(instanceID, version);
-      const sidebarIds = Object.keys(sidebars);
-      // Use only the sidebarId that is used
-      for (const sidebarId of sidebarIds) {
+    for (let index = 0, len = slugVersions.length; index < len; index++) {
+      let preSlug = [instance.routeBasePath];
+      const slugVersion = slugVersions[index];
+      slugVersion && (preSlug = preSlug.concat([slugVersion]));
+      const sidebars = this.getSidebars(
+        instanceID,
+        this.slugVersionToDocVersion(instanceID, slugVersion)
+      );
+      for (const sidebarId of usedSidebarIds) {
         const sidebarItemList = sidebars[sidebarId] as SidebarItem[];
-        let preSlug = [routeBasePath];
-        version && (preSlug = preSlug.concat([version]));
         slugs = slugs.concat(
           this.traverseChildren(
             instanceID,
-            version,
+            slugVersion,
             sidebarId,
             sidebarItemList,
             preSlug
@@ -280,12 +331,12 @@ class DocsController {
         );
       }
     }
-    console.log(`[lib/docs]getSlugs: `, JSON.stringify(slugs));
+    console.log(`[DocsController]getSlugs: `, JSON.stringify(slugs));
     return slugs;
   }
   traverseChildren(
     instanceID: string,
-    version: string,
+    slugVersion: string,
     sidebarId: string,
     sidebarItemList: SidebarItem[],
     preSlug: string[]
@@ -294,7 +345,7 @@ class DocsController {
       params: {
         slug: string[];
         instanceID: string;
-        version: string;
+        slugVersion: string;
         sidebarId: string;
       };
     }[] = [];
@@ -303,7 +354,7 @@ class DocsController {
         result.push(
           ...this.traverseChildren(
             instanceID,
-            version,
+            slugVersion,
             sidebarId,
             sidebarItem.items as SidebarItem[],
             preSlug
@@ -316,7 +367,7 @@ class DocsController {
         result.push({
           params: {
             instanceID,
-            version,
+            slugVersion,
             sidebarId,
             slug,
           },
@@ -326,15 +377,16 @@ class DocsController {
     return result;
   }
   async readDoc(slug: string[]) {
-    console.log(`[lib/docs]readDoc `, slug);
-    const { version, mdxFileID, instanceID } = this.extractInfoFromSlug(slug);
+    console.log(`[DocsController]readDoc `, slug);
+    const { docVersion, mdxFileID, instanceID } =
+      this.extractInfoFromSlug(slug);
     let mdxFileUrl = `${this._entityRootDirectory}/${
       instanceID === "default" ? "" : instanceID + "_"
     }docs/${mdxFileID}.mdx`;
-    if (version) {
+    if (docVersion) {
       mdxFileUrl = `${this._entityRootDirectory}/${
         instanceID === "default" ? "" : instanceID + "_"
-      }versioned_docs/version-${version}/${mdxFileID}.mdx`;
+      }versioned_docs/version-${docVersion}/${mdxFileID}.mdx`;
     }
     let originContent = fs.readFileSync(
       path.resolve("./public", "..", mdxFileUrl),
@@ -373,106 +425,76 @@ class DocsController {
     };
   }
   extractInfoFromSlug(slug: string[]) {
+    // eg1: /docs/path/to/doc => The current version when there is no version list
+    // eg2: /docs/path/to/doc => The latest version when the version list is available
+    // eg3: /docs/next/path/to/doc => The current version when the version list is available
+    // eg4: /docs/1.0.0/path/to/doc => The specified version when there is a version list
     const docuoConfig = this.getDocuoConfig();
     const routeBasePath = slug[0];
     const instanceID = docuoConfig.instances.find(
       (instance) => instance.routeBasePath === routeBasePath
     ).id;
     const versions = this.getUsedVersions(instanceID);
-    let version = slug[1];
+    let slugVersion = slug[1];
     let mdxFileID = slug.slice(2).join("/");
     const mdxFileName = slug[slug.length - 1];
-    if (!versions.includes(version)) {
-      version = "";
+    if (!versions.length) {
+      slugVersion = "";
       mdxFileID = slug.slice(1).join("/");
-    }
-    return { instanceID, routeBasePath, version, mdxFileID, mdxFileName };
-  }
-  getFolderTreeData() {
-    const tree = [];
-    const { instances } = this.getDocuoConfig();
-    for (const instance of instances) {
-      const instanceObj = {
-        instanceID: instance.id,
-        title: instance.label,
-        type: "folder",
-        key: instance.routeBasePath,
-        children: [],
-      };
-      const versions = this.getUsedVersions(instance.id);
-      if (!versions.length) {
-        // Currently there is only one version
-        versions.push("");
-      }
-      for (const version of versions) {
-        const versionObj = {
-          version,
-          title: version,
-          type: "folder",
-          key: `${instance.routeBasePath}${version ? "/" : ""}${version}`,
-          children: [],
-        };
-        const sidebars = this.getSidebars(instance.id, version);
-        const sidebarIds = Object.keys(sidebars);
-        for (const sidebarId of sidebarIds) {
-          const prefixKey = `${instance.routeBasePath}${
-            version ? "/" : ""
-          }${version}/${sidebarId}`;
-          const sidebarObj = {
-            sidebarId,
-            title: sidebarId,
-            type: "folder",
-            key: prefixKey,
-            children: this.getChildrenFromChildren(
-              sidebars[sidebarId] as SidebarItem[],
-              prefixKey,
-              `${instance.routeBasePath}${version ? "/" : ""}${version}`
-            ),
-          };
-          versionObj.children.push(sidebarObj);
+    } else {
+      if (slugVersion !== this._defaultVersion) {
+        if (!versions.includes(slugVersion)) {
+          slugVersion = "";
+          mdxFileID = slug.slice(1).join("/");
         }
-        instanceObj.children.push(versionObj);
       }
-      tree.push(instanceObj);
     }
-    console.log(`[lib/folder-tree]getFolderTreeData: `, JSON.stringify(tree));
-    return tree;
+    return {
+      instanceID,
+      routeBasePath,
+      slugVersion,
+      docVersion: this.slugVersionToDocVersion(instanceID, slugVersion),
+      mdxFileID,
+      mdxFileName,
+    };
   }
   getFolderTreeDataBySlug(slug: string[]) {
-    const { instanceID, routeBasePath, version } =
+    const { instanceID, routeBasePath, docVersion, slugVersion } =
       this.extractInfoFromSlug(slug);
-    const { themeConfig } = this.getDocuoConfig();
-    const { navbar } = themeConfig;
-    // Only one item is allowed per instance
-    const docNavBarItem = navbar.items.filter(
-      (item) =>
-        item.type === NavBarItemType.DocSidebar &&
-        item.docsInstanceId === instanceID
-    )[0];
-    if (!docNavBarItem) return [];
-
     console.log(
-      `[lib/folder-tree]getFolderTreeDataBySlug sidebarIds: `,
-      docNavBarItem.sidebarIds
+      `[DocsController]getFolderTreeDataBySlug slug `,
+      slug,
+      this.extractInfoFromSlug(slug)
     );
-    const sidebars = this.getSidebars(instanceID, version);
+    const usedSidebarIds = this.getUsedSidebarIds(instanceID);
+    const sidebars = this.getSidebars(instanceID, docVersion);
     let tree = [];
     // Now take the first one
-    docNavBarItem.sidebarIds.slice(0, 1).forEach((sidebarId) => {
-      const sidebar = sidebars[sidebarId];
+    usedSidebarIds.slice(0, 1).forEach((sidebarId) => {
+      const sidebarItems = sidebars[sidebarId];
+      const prefixKey = `${routeBasePath}${
+        slugVersion ? "/" : ""
+      }${slugVersion}/${sidebarId}`;
+      const idPrefixKey = `${routeBasePath}${
+        slugVersion ? "/" : ""
+      }${slugVersion}`;
       tree = tree.concat(
         this.getChildrenFromChildren(
-          sidebar as SidebarItem[],
-          `${routeBasePath}${version ? "/" : ""}${version}/${sidebarId}`,
-          `${routeBasePath}${version ? "/" : ""}${version}`
+          sidebarItems as SidebarItem[],
+          prefixKey,
+          idPrefixKey,
+          instanceID,
+          docVersion,
+          slugVersion
         )
       );
     });
     console.log(
       `[lib/folder-tree]getFolderTreeDataBySlug: `,
       instanceID,
-      version,
-      docNavBarItem.sidebarIds,
+      docVersion,
+      slugVersion,
+      usedSidebarIds,
       JSON.stringify(tree)
     );
     return tree;
@@ -480,7 +502,10 @@ class DocsController {
   getChildrenFromChildren(
     sidebarItems: SidebarItem[],
     prefixKey: string,
-    idPrefixKey
+    idPrefixKey,
+    instanceID,
+    docVersion,
+    slugVersion
   ) {
     prefixKey = prefixKey || "";
     idPrefixKey = idPrefixKey || "";
@@ -491,7 +516,10 @@ class DocsController {
         children = this.getChildrenFromChildren(
           item.items as SidebarItem[],
           `${prefixKey}${prefixKey ? "/" : ""}${item.label}`,
-          idPrefixKey
+          idPrefixKey,
+          instanceID,
+          docVersion,
+          slugVersion
         );
       }
       if (
@@ -502,6 +530,9 @@ class DocsController {
           title: item.label,
           type: item.type,
           key: `${prefixKey}${prefixKey ? "/" : ""}${item.label}`,
+          instanceID,
+          docVersion,
+          slugVersion,
         };
         children && (temp.children = children);
         item.type === SidebarItemType.Doc &&
@@ -513,10 +544,53 @@ class DocsController {
           type: item.type,
           key: `${prefixKey}${prefixKey ? "/" : ""}${item.label}`,
           link: item.href || item.to,
+          instanceID,
+          docVersion,
+          slugVersion,
         });
       }
     }
     return result;
+  }
+  slugVersionToDocVersion(instanceID: string, slugVersion: string) {
+    // slugVersion: "next", ""("1.1.0"), "1.0.0",
+    const versions = this.getUsedVersions(instanceID);
+    let docVersion;
+    if (versions.length) {
+      if (!slugVersion) {
+        docVersion = versions[0];
+      } else if (slugVersion === this._defaultVersion) {
+        docVersion = "";
+      } else {
+        docVersion = slugVersion;
+      }
+    } else {
+      docVersion = "";
+    }
+    return docVersion;
+  }
+  docVersionToSlugVersion(instanceID: string, docVersion: string) {
+    // docVersion: "", "1.1.0", "1.0.0"
+    const versions = this.getUsedVersions(instanceID);
+    let slugVersion;
+    if (versions.length) {
+      if (docVersion === versions[0]) {
+        slugVersion = "";
+      } else if (!docVersion) {
+        slugVersion = this._defaultVersion;
+      } else {
+        slugVersion = docVersion;
+      }
+    } else {
+      slugVersion = "";
+    }
+    console.log(
+      `[DocsController]getSlugs docVersionToSlugVersion: `,
+      versions,
+      docVersion,
+      slugVersion
+    );
+    return slugVersion;
   }
 }
 

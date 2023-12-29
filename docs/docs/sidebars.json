@@ -12,7 +12,7 @@
     {
       "type": "category",
       "label": "category",
-      "items": ["folder1/bar11", "folder1/foo11"]
+      "items": ["folder1/bar11", "folder1/foo11", "foo"]
     }
   ],
   "sidebar2": [
