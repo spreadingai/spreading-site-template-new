@@ -12,6 +12,7 @@ import {
 import { visit } from "unist-util-visit";
 import { serialize } from "next-mdx-remote/serialize";
 import remarkImages from "remark-images";
+import { rehypeImages } from "@/plugins";
 
 class DocsController {
   static _instance: DocsController;
@@ -427,7 +428,9 @@ class DocsController {
     const mdxSource = await serialize(originContent, {
       mdxOptions: {
         remarkPlugins: [remarkImages, myRemarkPlugin],
-        rehypePlugins: [],
+        rehypePlugins: [
+          [rehypeImages, { baseDir: process.cwd(), filePath: mdxFileUrl }],
+        ],
         format: "mdx",
         useDynamicImport: true,
       },

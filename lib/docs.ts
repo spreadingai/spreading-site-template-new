@@ -189,6 +189,8 @@ export async function readDoc(slug: string[]) {
     },
     parseFrontmatter: true,
   });
+  console.log("[lib/docs]readDoc: ", mdxSource);
+  
   return {
     slug,
     mdxSource,
