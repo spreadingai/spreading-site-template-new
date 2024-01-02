@@ -43,6 +43,20 @@ const readDoc = async () => {
     "utf8"
   );
 
+  // <Snippet file="my-snippet.mdx" />
+  originContent = originContent.replace(/<Snippet file=["'](\S+?)["'][\S\s]*?\/>/gm, (_, filename) => {
+    let snippetContent = "";
+    try {
+      snippetContent = fs.readFileSync(
+        path.resolve("./mdxs", filename),
+        "utf8"
+      );
+    } catch (error) {
+      snippetContent = "";
+    }
+    return snippetContent;
+  });
+
   const mdxSource = await serialize(originContent, {
     mdxOptions: {
       remarkPlugins: [
