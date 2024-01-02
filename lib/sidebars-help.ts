@@ -125,7 +125,10 @@ class SidebarsController {
       if (!stats.isDirectory()) {
         const relativePath = path.relative(rootUrl, dirPath);
         const parsedPath = path.parse(relativePath);
-        if (parsedPath.ext !== ".json") {
+        if (
+          parsedPath.ext.toLocaleLowerCase() === "mdx" ||
+          parsedPath.ext.toLocaleLowerCase() === "md"
+        ) {
           return {
             type: "doc",
             id: path.join(parsedPath.dir, parsedPath.name),
