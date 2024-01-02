@@ -75,6 +75,33 @@ class DocsController {
       mdxSource,
     };
   }
+  copyStaticFile() {
+    const staticFileUrl = `${LibControllerImpl.getEntityRootDirectory()}/static`;
+    const staticFilePath = path.resolve("./public", "..", staticFileUrl);
+    const targetFileUrl = "public";
+    const targetFilePath = path.resolve("./public", "..", targetFileUrl);
+
+    function loop(source, target) {
+      if (!fs.existsSync(source)) {
+        return;
+      }
+      if (!fs.existsSync(target)) {
+        fs.mkdirSync(target);
+      }
+      const files = fs.readdirSync(source);
+      files.forEach((file) => {
+        const sourcePath = path.join(source, file);
+        const targetPath = path.join(target, file);
+
+        if (fs.statSync(sourcePath).isDirectory()) {
+          loop(sourcePath, targetPath);
+        } else {
+          fs.copyFileSync(sourcePath, targetPath);
+        }
+      });
+    }
+    loop(staticFilePath, targetFilePath);
+  }
 }
 
 export default DocsController.getInstance();

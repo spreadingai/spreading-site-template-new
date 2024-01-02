@@ -63,7 +63,7 @@ export function getStaticPaths() {
     "[Spreading] getStaticPaths..."
   );
   const paths = SlugControllerImpl.getAllSlugs();
-
+  DocsControllerImpl.copyStaticFile();
   return {
     paths,
     fallback: true,
