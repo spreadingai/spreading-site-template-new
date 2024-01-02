@@ -3,6 +3,7 @@ import Meta from "@/components/meta";
 import Script from "next/script";
 
 export default function Document() {
+  console.log("mode==", process?.env?.mode);
   return (
     <Html lang="en">
       <Head>
@@ -13,17 +14,19 @@ export default function Document() {
         <NextScript />
         {
           process?.env?.mode === "preview" && (
-            <>
-              <Script strategy="beforeInteractive" src="/socket.io/socket.io.js"></Script>
-              <Script strategy="afterInteractive" id="socket" dangerouslySetInnerHTML={{
-                __html: `
-                var socket = io();
-                socket.on("reload", function() {
-                  window.location.reload();
-                });
-                `
-              }}></Script>
-            </>
+            <Script strategy="beforeInteractive" src="/socket.io/socket.io.js"></Script>              
+          )
+        }
+        {
+          process?.env?.mode === "preview" && (            
+            <Script strategy="afterInteractive" id="socket" dangerouslySetInnerHTML={{
+              __html: `
+              var socket = io();
+              socket.on("reload", function() {
+                window.location.reload();
+              });
+              `
+            }}></Script>
           )
         }
       </body>
