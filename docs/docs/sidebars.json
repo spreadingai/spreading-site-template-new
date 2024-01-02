@@ -17,6 +17,7 @@
   ],
   "sidebar2": [
     "foo",
+    "foo1",
     {
       "type": "doc",
       "id": "bar",
@@ -31,7 +32,6 @@
       "type": "category",
       "label": "category",
       "items": [
-        "folder1/bar11",
         "folder1/foo11",
         {
           "type": "doc",
@@ -40,8 +40,14 @@
         },
         {
           "type": "category",
-          "label": "category",
-          "items": ["folder3/folder31/bar311", "folder3/folder31/foo312"]
+          "label": "category1",
+          "id": "folder1/bar11",
+          "items": ["folder3/folder31/foo312"]
+        },
+        {
+          "type": "category",
+          "label": "category2",
+          "items": ["folder3/folder31/bar311"]
         }
       ]
     }

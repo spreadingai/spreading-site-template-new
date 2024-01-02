@@ -162,14 +162,14 @@ const PreviewLayout = ({
   const titleRenderHandle = (nodeData: TreeDataObject) => {
     return (
       <div className="custom-node-title">
-        {nodeData.type === SidebarItemType.Doc ? (
+        {nodeData.id ? (
           <Link className="title" href={nodeData.id}>
             {nodeData.title}
           </Link>
         ) : (
           <span className="title">{nodeData.title}</span>
         )}
-        {nodeData.type === "link" ? (
+        {nodeData.type === SidebarItemType.Link ? (
           <img src={`/icon_outlink.png`} alt="link" />
         ) : null}
       </div>

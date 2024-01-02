@@ -83,6 +83,7 @@ class TreeController {
           slugVersion
         );
       }
+
       if (
         item.type === SidebarItemType.Doc ||
         item.type === SidebarItemType.Category
@@ -96,10 +97,10 @@ class TreeController {
           slugVersion,
         };
         children && (temp.children = children);
-        item.type === SidebarItemType.Doc &&
-          (temp.id = `${idPrefixKey}/${item.id}`);
+        item.id && (temp.id = `${idPrefixKey}/${item.id}`);
         result.push(temp);
       } else {
+        // SidebarItemType.Link
         result.push({
           title: item.label,
           type: item.type,
