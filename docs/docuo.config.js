@@ -49,7 +49,7 @@ const config = {
         },
         {
           type: "docSidebar",
-          sidebarIds: ["sidebar1"], // Use the "path" attribute of the "instance" field above
+          sidebarIds: ["sidebar1", "sidebar2"], // Use the "path" attribute of the "instance" field above
           label: "NavItem2",
           position: "left", // 'left' | 'right'
           docsInstanceId: "callkit",

@@ -200,12 +200,16 @@ class DocsController {
       const versionsPath = path.resolve("./public", "..", versionsUrl);
       let versions: string[] = [];
       if (fs.existsSync(versionsPath)) {
-        versions = JSON.parse(fs.readFileSync(versionsPath, "utf8"));
+        versions = (
+          JSON.parse(fs.readFileSync(versionsPath, "utf8")) as string[]
+        ).filter((version) => version);
       }
       console.log(`[DocsController]getUsedVersions: `, versions);
       this._usedVersionsMap[instanceID] = versions;
     }
-    return JSON.parse(JSON.stringify(this._usedVersionsMap[instanceID]));
+    return JSON.parse(
+      JSON.stringify(this._usedVersionsMap[instanceID])
+    ) as string[];
   }
   getActualVersions(instanceID: string) {
     if (!this._actualVersionsMap[instanceID]) {
@@ -378,20 +382,30 @@ class DocsController {
   }
   async readDoc(slug: string[]) {
     console.log(`[DocsController]readDoc `, slug);
-    const { docVersion, mdxFileID, instanceID } =
+    const { docVersion, mdxFileID, instanceID, slugVersion } =
       this.extractInfoFromSlug(slug);
-    let mdxFileUrl = `${this._entityRootDirectory}/${
-      instanceID === "default" ? "" : instanceID + "_"
-    }docs/${mdxFileID}.mdx`;
-    if (docVersion) {
-      mdxFileUrl = `${this._entityRootDirectory}/${
+    const versions = this.getUsedVersions(instanceID);
+
+    let originContent =
+      "The conversion of the article content encountered an exception and cannot be displayed.";
+
+    if (!slugVersion || slugVersion !== versions[0]) {
+      let mdxFileUrl = `${this._entityRootDirectory}/${
         instanceID === "default" ? "" : instanceID + "_"
-      }versioned_docs/version-${docVersion}/${mdxFileID}.mdx`;
+      }docs/${mdxFileID}.mdx`;
+      if (docVersion) {
+        mdxFileUrl = `${this._entityRootDirectory}/${
+          instanceID === "default" ? "" : instanceID + "_"
+        }versioned_docs/version-${docVersion}/${mdxFileID}.mdx`;
+      }
+      const mdxFilePath = path.resolve("./public", "..", mdxFileUrl);
+      if (fs.existsSync(mdxFilePath)) {
+        originContent = fs.readFileSync(
+          path.resolve("./public", "..", mdxFileUrl),
+          "utf8"
+        );
+      }
     }
-    let originContent = fs.readFileSync(
-      path.resolve("./public", "..", mdxFileUrl),
-      "utf8"
-    );
     originContent = originContent
       .replace(
         /```(\S*?\s)([\s\S]*?)(```)(?=\n<\/SCodeBlock>)/gm,
@@ -466,35 +480,39 @@ class DocsController {
       slug,
       this.extractInfoFromSlug(slug)
     );
-    const usedSidebarIds = this.getUsedSidebarIds(instanceID);
-    const sidebars = this.getSidebars(instanceID, docVersion);
     let tree = [];
-    // Now take the first one
-    usedSidebarIds.slice(0, 1).forEach((sidebarId) => {
-      const sidebarItems = sidebars[sidebarId];
-      const prefixKey = `${routeBasePath}${
-        slugVersion ? "/" : ""
-      }${slugVersion}/${sidebarId}`;
-      const idPrefixKey = `${routeBasePath}${
-        slugVersion ? "/" : ""
-      }${slugVersion}`;
-      tree = tree.concat(
-        this.getChildrenFromChildren(
-          sidebarItems as SidebarItem[],
-          prefixKey,
-          idPrefixKey,
-          instanceID,
-          docVersion,
-          slugVersion
-        )
-      );
-    });
+
+    const versions = this.getUsedVersions(instanceID);
+    if (slugVersion && slugVersion === versions[0]) {
+      tree = [];
+    } else {
+      const usedSidebarIds = this.getUsedSidebarIds(instanceID);
+      const sidebars = this.getSidebars(instanceID, docVersion);
+      usedSidebarIds.forEach((sidebarId) => {
+        const sidebarItems = sidebars[sidebarId];
+        const prefixKey = `${routeBasePath}${
+          slugVersion ? "/" : ""
+        }${slugVersion}/${sidebarId}`;
+        const idPrefixKey = `${routeBasePath}${
+          slugVersion ? "/" : ""
+        }${slugVersion}`;
+        tree = tree.concat(
+          this.getChildrenFromChildren(
+            sidebarItems as SidebarItem[],
+            prefixKey,
+            idPrefixKey,
+            instanceID,
+            docVersion,
+            slugVersion
+          )
+        );
+      });
+    }
     console.log(
       `[lib/folder-tree]getFolderTreeDataBySlug: `,
       instanceID,
       docVersion,
       slugVersion,
-      usedSidebarIds,
       JSON.stringify(tree)
     );
     return tree;

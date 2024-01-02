@@ -1,10 +1,15 @@
 {
-  "sidebar1": ["foo"],
+  "sidebar1": ["foo", "bar"],
   "sidebar2": [
     {
       "type": "doc",
       "id": "bar",
       "label": "bar"
+    },
+    {
+      "type": "doc",
+      "id": "foo",
+      "label": "foo"
     }
   ]
 }
