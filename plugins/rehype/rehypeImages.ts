@@ -5,7 +5,7 @@ import fs from "fs";
 export function rehypeImages(options) {
   return function transformer(tree, file) {
     visit(tree, "element", (node) => {
-      if(!options.filePath) return
+      if (!options.filePath) return;
       if (
         node.tagName === "img" &&
         node.properties.src &&
@@ -25,16 +25,16 @@ export function rehypeImages(options) {
         // Get the relative path of the image and
         const publicPath = path.relative("docs", imagePath);
         // Create the public directory (if it does not exist)
-        fs.mkdirSync("public", { recursive: true });
+        fs.mkdirSync("public/docs", { recursive: true });
         // Create the same folder structure in the public directory
-        fs.mkdirSync(path.join("public", path.dirname(publicPath)), {
+        fs.mkdirSync(path.join("public/docs", path.dirname(publicPath)), {
           recursive: true,
         });
         // Copy the image to the public directory
-        const destPath = path.join("public", publicPath);
+        const destPath = path.join("public/docs", publicPath);
         fs.copyFileSync(imagePath, destPath);
         // Update the image path in the AST
-        node.properties.src = `/${path.join(publicPath)}`;
+        node.properties.src = `/docs/${path.join(publicPath)}`;
       }
     });
   };
