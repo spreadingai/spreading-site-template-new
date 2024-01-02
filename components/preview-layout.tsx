@@ -12,6 +12,12 @@ import ArticlePager from "./articlePager";
 import { createPortal } from "react-dom";
 import { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { DocuoConfig, SidebarItemType } from "@/lib/types";
+import Image from "next/image";
+import IconOutlink from "@/assets/images/icon_outlink.png";
+import IconList from "@/assets/images/icon_list.png";
+import IconPackUp from "@/assets/images/icon_pack_up.png";
+import IconThisPage from "@/assets/images/icon_this_page.png";
+import LogoGrey from "@/assets/images/logo_grey.png";
 
 const { DirectoryTree } = Tree;
 
@@ -170,7 +176,7 @@ const PreviewLayout = ({
           <span className="title">{nodeData.title}</span>
         )}
         {nodeData.type === SidebarItemType.Link ? (
-          <img src={`/img/icon_outlink.png`} alt="link" />
+          <Image src={IconOutlink} alt={"link"} />
         ) : null}
       </div>
     );
@@ -197,7 +203,7 @@ const PreviewLayout = ({
           <div className="generate-desc">
             <span>Powered By</span>
             <a href="https://www.spreading.ai/" target="_blank">
-              <img src={`/img/logo_grey.png`} alt="spreading" />
+              <Image src={LogoGrey} alt={"spreading"} />
             </a>
           </div>
         </div>
@@ -211,7 +217,7 @@ const PreviewLayout = ({
                     setDrawerOpen(true);
                   }}
                 >
-                  <img src={`/img/icon_list.png`} alt="directory" />
+                  <Image src={IconList} alt={"directory"} />
                 </span>
                 <Breadcrumb items={breadCrumbData} />
               </div>
@@ -225,7 +231,7 @@ const PreviewLayout = ({
                           onClick={() => setIsExpand(!isExpand)}
                         >
                           <span className="left-icon">
-                            <img src={`/img/icon_this_page.png`} />
+                            <Image src={IconThisPage} alt={""} />
                             ON THIS PAGE
                           </span>
                           <IconFileClose className={`right-icon "expand"`} />
@@ -253,7 +259,7 @@ const PreviewLayout = ({
                         onClick={() => setIsExpand(!isExpand)}
                       >
                         <span className="left-icon">
-                          <img src={`/img/icon_this_page.png`} />
+                          <Image src={IconThisPage} alt={""} />
                           ON THIS PAGE
                         </span>
                         <IconFileClose className={`right-icon "expand"`} />
@@ -293,7 +299,7 @@ const PreviewLayout = ({
                     onClick={() => setIsExpand(!isExpand)}
                   >
                     <span className="left-icon">
-                      <img src={`/img/icon_this_page.png`} />
+                      <Image src={IconThisPage} alt={""} />
                       ON THIS PAGE
                     </span>
                   </div>
@@ -310,7 +316,7 @@ const PreviewLayout = ({
                   />
                   <div className="right-anchor-divide"></div>
                   <div className="back-to-top" onClick={scrollToTop}>
-                    <img src={`/img/icon_pack_up.png`} />
+                    <Image src={IconPackUp} alt={""} />
                     Back to top
                   </div>
                 </>
@@ -342,7 +348,7 @@ const PreviewLayout = ({
           <div className="generate-desc">
             <span>Powered By</span>
             <a href="https://www.spreading.ai/" target="_blank">
-              <img src={`/img/logo_grey.png`} alt="spreading" />
+              <Image src={LogoGrey} alt={"spreading"} />
             </a>
           </div>
         </Drawer>

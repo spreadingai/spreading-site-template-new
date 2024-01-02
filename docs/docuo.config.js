@@ -1,8 +1,7 @@
 const config = {
   title: "My Site",
   favicon: "image/favicon.ico",
-  // logo: "image/logo.png",
-  logo: null,
+  logo: "image/logo.png",
   //   logo: {
   //     dark: "image/logo.png",
   //     light: "image/logo.png",

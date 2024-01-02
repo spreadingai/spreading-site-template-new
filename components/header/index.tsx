@@ -1,6 +1,5 @@
 import React, { FC, useEffect } from "react";
 import styles from "./styles.module.scss";
-import defaultLogo from "@/assets/images/logo.png";
 import Image from "next/image";
 import Link from "next/link";
 import { useMediaQuery } from "usehooks-ts";
@@ -30,7 +29,11 @@ const Header: FC = () => {
   return (
     <header className={styles["header-container"]}>
       <Link className={styles["logo-container"]} href={"/"} ref={logoRef}>
-        <Image className={styles.logo} src={defaultLogo} alt={"logo"} />
+        <img
+          className={styles.logo}
+          src={`/${DocuoConfig.logo}`}
+          alt={"logo"}
+        />
         <span className={styles["logo-title"]}>{"Untitled"}</span>
       </Link>
       {matches ? (
