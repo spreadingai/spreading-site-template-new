@@ -170,7 +170,7 @@ const PreviewLayout = ({
           <span className="title">{nodeData.title}</span>
         )}
         {nodeData.type === SidebarItemType.Link ? (
-          <img src={`/icon_outlink.png`} alt="link" />
+          <img src={`/img/icon_outlink.png`} alt="link" />
         ) : null}
       </div>
     );
@@ -197,7 +197,7 @@ const PreviewLayout = ({
           <div className="generate-desc">
             <span>Powered By</span>
             <a href="https://www.spreading.ai/" target="_blank">
-              <img src={`/logo_grey.png`} alt="spreading" />
+              <img src={`/img/logo_grey.png`} alt="spreading" />
             </a>
           </div>
         </div>
@@ -211,7 +211,7 @@ const PreviewLayout = ({
                     setDrawerOpen(true);
                   }}
                 >
-                  <img src={`/icon_list.png`} alt="directory" />
+                  <img src={`/img/icon_list.png`} alt="directory" />
                 </span>
                 <Breadcrumb items={breadCrumbData} />
               </div>
@@ -225,7 +225,7 @@ const PreviewLayout = ({
                           onClick={() => setIsExpand(!isExpand)}
                         >
                           <span className="left-icon">
-                            <img src={`/icon_this_page.png`} />
+                            <img src={`/img/icon_this_page.png`} />
                             ON THIS PAGE
                           </span>
                           <IconFileClose className={`right-icon "expand"`} />
@@ -253,7 +253,7 @@ const PreviewLayout = ({
                         onClick={() => setIsExpand(!isExpand)}
                       >
                         <span className="left-icon">
-                          <img src={`/icon_this_page.png`} />
+                          <img src={`/img/icon_this_page.png`} />
                           ON THIS PAGE
                         </span>
                         <IconFileClose className={`right-icon "expand"`} />
@@ -293,7 +293,7 @@ const PreviewLayout = ({
                     onClick={() => setIsExpand(!isExpand)}
                   >
                     <span className="left-icon">
-                      <img src={`/icon_this_page.png`} />
+                      <img src={`/img/icon_this_page.png`} />
                       ON THIS PAGE
                     </span>
                   </div>
@@ -310,7 +310,7 @@ const PreviewLayout = ({
                   />
                   <div className="right-anchor-divide"></div>
                   <div className="back-to-top" onClick={scrollToTop}>
-                    <img src={`/icon_pack_up.png`} />
+                    <img src={`/img/icon_pack_up.png`} />
                     Back to top
                   </div>
                 </>
@@ -342,7 +342,7 @@ const PreviewLayout = ({
           <div className="generate-desc">
             <span>Powered By</span>
             <a href="https://www.spreading.ai/" target="_blank">
-              <img src={`/logo_grey.png`} alt="spreading" />
+              <img src={`/img/logo_grey.png`} alt="spreading" />
             </a>
           </div>
         </Drawer>
