@@ -7,7 +7,10 @@ import {
   Frame,
   Video,
 } from "docuo-mdx-component";
+import LibControllerImpl from "@/lib";
 import DocsControllerImpl from "@/lib/docs-help";
+import TreeControllerImpl from "@/lib/tree-help";
+import SlugControllerImpl from "@/lib/slug-help";
 
 const components = {
   CodeBlock,
@@ -40,8 +43,8 @@ export const getStaticProps = async ({
     "[Spreading] getStaticProps:",
     params
   );
-  const docuoConfig = DocsControllerImpl.getDocuoConfig();
-  const folderTreeData = DocsControllerImpl.getFolderTreeDataBySlug(
+  const docuoConfig = LibControllerImpl.getDocuoConfig();
+  const folderTreeData = TreeControllerImpl.getFolderTreeDataBySlug(
     params.slug
   );
   const postData = await DocsControllerImpl.readDoc(params.slug);
@@ -59,7 +62,7 @@ export function getStaticPaths() {
     new Date().toISOString().slice(0, 23),
     "[Spreading] getStaticPaths..."
   );
-  const paths = DocsControllerImpl.getAllSlugs();
+  const paths = SlugControllerImpl.getAllSlugs();
 
   return {
     paths,

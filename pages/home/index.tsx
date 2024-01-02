@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import DocsControllerImpl from "@/lib/docs-help";
+import SlugControllerImpl from "@/lib/slug-help";
 
 interface Props {
   slug: string[];
@@ -10,7 +10,7 @@ export const getStaticProps = async () => {
     new Date().toISOString().slice(0, 23),
     "[Spreading] Home getStaticProps:"
   );
-  const allSlugs = DocsControllerImpl.getAllSlugs();
+  const allSlugs = SlugControllerImpl.getAllSlugs();
   return {
     props: {
       slug: allSlugs[0].params.slug,
