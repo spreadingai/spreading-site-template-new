@@ -389,9 +389,9 @@ class DocsController {
 
     let originContent =
       "The conversion of the article content encountered an exception and cannot be displayed.";
-
+    let mdxFileUrl = "";
     if (!slugVersion || slugVersion !== versions[0]) {
-      let mdxFileUrl = `${this._entityRootDirectory}/${
+      mdxFileUrl = `${this._entityRootDirectory}/${
         instanceID === "default" ? "" : instanceID + "_"
       }docs/${mdxFileID}.mdx`;
       if (docVersion) {
@@ -428,9 +428,7 @@ class DocsController {
     const mdxSource = await serialize(originContent, {
       mdxOptions: {
         remarkPlugins: [remarkImages, myRemarkPlugin],
-        rehypePlugins: [
-          [rehypeImages, { baseDir: process.cwd(), filePath: mdxFileUrl }],
-        ],
+        rehypePlugins: [[rehypeImages, { filePath: mdxFileUrl }]],
         format: "mdx",
         useDynamicImport: true,
       },

@@ -181,16 +181,14 @@ export async function readDoc(slug: string[]) {
   const mdxSource = await serialize(originContent, {
     mdxOptions: {
       remarkPlugins: [remarkImages, myRemarkPlugin],
-      rehypePlugins: [
-        [rehypeImages, { baseDir: process.cwd(), filePath: mdxFileUrl }],
-      ],
+      rehypePlugins: [[rehypeImages, { filePath: mdxFileUrl }]],
       format: "mdx",
       useDynamicImport: true,
     },
     parseFrontmatter: true,
   });
   console.log("[lib/docs]readDoc: ", mdxSource);
-  
+
   return {
     slug,
     mdxSource,

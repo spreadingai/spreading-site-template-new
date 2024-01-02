@@ -5,6 +5,7 @@ import fs from "fs";
 export function rehypeImages(options) {
   return function transformer(tree, file) {
     visit(tree, "element", (node) => {
+      if(!options.filePath) return
       if (
         node.tagName === "img" &&
         node.properties.src &&
