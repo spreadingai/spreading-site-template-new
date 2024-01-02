@@ -22,15 +22,6 @@ import {
   Video,
 } from "docuo-mdx-component";
 
-import {
-  getDocuoConfig,
-  getSidebars,
-  getUsedVersions,
-  getActualVersions,
-  getAllSlugs,
-} from "@/lib/docs";
-import { getFolderTreeData as getFolderTreeDataNew } from "@/lib/folder-tree";
-
 const components = {
   CodeBlock,
   CodeGroup,
@@ -202,8 +193,6 @@ const getProxyPath = () => {
 };
 
 export async function getStaticProps() {
-  getUsedVersions("default");
-  getActualVersions("default");
   const postData = await readDoc();
   const folderTreeData = getFolderTreeData();
   const siteInfo = getSiteInfo();
