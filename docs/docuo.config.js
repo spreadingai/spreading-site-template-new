@@ -41,7 +41,7 @@ const config = {
         },
         {
           type: "docSidebar",
-          sidebarIds: ["sidebar2"], // Use the "path" attribute of the "instance" field above
+          sidebarIds: ["sidebar1"], // Use the "path" attribute of the "instance" field above
           label: "NavItem1",
           position: "left", // 'left' | 'right'
           docsInstanceId: "default",

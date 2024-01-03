@@ -11,6 +11,7 @@ import LibControllerImpl from "@/lib";
 import DocsControllerImpl from "@/lib/docs-help";
 import TreeControllerImpl from "@/lib/tree-help";
 import SlugControllerImpl from "@/lib/slug-help";
+import Link from "next/link";
 
 const components = {
   CodeBlock,
@@ -21,6 +22,7 @@ const components = {
   Error: Callout.Error,
   Frame,
   Video,
+  a: Link,
 };
 
 interface Props {
@@ -77,6 +79,7 @@ export default function DocPage({ mdxSource, slug }: Props) {
   return (
     <div className="prose" style={{ maxWidth: "unset" }}>
       <article className="editor-wrapper">
+        {/* @ts-ignore */}
         <MDXRemote {...mdxSource} components={components} />
       </article>
     </div>

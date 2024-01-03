@@ -3,7 +3,7 @@ import path from "path";
 import { visit } from "unist-util-visit";
 import { serialize } from "next-mdx-remote/serialize";
 import remarkImages from "remark-images";
-import { rehypeImages } from "@/plugins";
+import { rehypeImages, rehypeLink } from "@/plugins";
 import LibControllerImpl from "./index";
 import SlugControllerImpl from "./slug-help";
 import VersionsControllerImpl from "./versions-help";
@@ -19,28 +19,39 @@ class DocsController {
   }
   async readDoc(slug: string[]) {
     console.log(`[DocsController]readDoc `, slug);
-    const { docVersion, mdxFileID, instanceID, slugVersion } =
+    const { docVersion, mdxFileID, instanceID, slugVersion, routeBasePath } =
       SlugControllerImpl.extractInfoFromSlug(slug);
     const versions = VersionsControllerImpl.getUsedVersions(instanceID);
 
     let originContent =
       "The conversion of the article content encountered an exception and cannot be displayed.";
     let mdxFileUrl = "";
+    let rootUrl = "";
     if (!slugVersion || slugVersion !== versions[0]) {
-      mdxFileUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
+      rootUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
         instanceID === "default" ? "" : instanceID + "_"
-      }docs/${mdxFileID}.mdx`;
+      }docs`;
       if (docVersion) {
-        mdxFileUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
+        rootUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
           instanceID === "default" ? "" : instanceID + "_"
-        }versioned_docs/version-${docVersion}/${mdxFileID}.mdx`;
+        }versioned_docs/version-${docVersion}`;
       }
-      const mdxFilePath = path.resolve("./public", "..", mdxFileUrl);
+      mdxFileUrl = `${rootUrl}/${mdxFileID}.md`;
+      let mdxFilePath = path.resolve("./public", "..", mdxFileUrl);
       if (fs.existsSync(mdxFilePath)) {
         originContent = fs.readFileSync(
           path.resolve("./public", "..", mdxFileUrl),
           "utf8"
         );
+      } else {
+        mdxFileUrl = `${mdxFileUrl}x`;
+        mdxFilePath = `${mdxFilePath}x`;
+        if (fs.existsSync(mdxFilePath)) {
+          originContent = fs.readFileSync(
+            path.resolve("./public", "..", mdxFilePath),
+            "utf8"
+          );
+        }
       }
     }
     originContent = originContent
@@ -64,7 +75,17 @@ class DocsController {
     const mdxSource = await serialize(originContent, {
       mdxOptions: {
         remarkPlugins: [remarkImages, myRemarkPlugin],
-        rehypePlugins: [[rehypeImages, { filePath: mdxFileUrl }]],
+        rehypePlugins: [
+          [rehypeImages, { filePath: mdxFileUrl }],
+          [
+            rehypeLink,
+            {
+              rootUrl: `${rootUrl}`,
+              filePath: mdxFileUrl,
+              prefix: `${routeBasePath}${slugVersion ? "/" : ""}${slugVersion}`,
+            },
+          ],
+        ],
         format: "mdx",
         useDynamicImport: true,
       },

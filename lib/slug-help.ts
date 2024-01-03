@@ -142,7 +142,7 @@ class SlugController {
         }
       }
     }
-    return {
+    const result = {
       instanceID,
       routeBasePath,
       slugVersion,
@@ -150,6 +150,8 @@ class SlugController {
       mdxFileID,
       mdxFileName,
     };
+    console.log(`[SlugController]extractInfoFromSlug `, result);
+    return result;
   }
   slugVersionToDocVersion(instanceID: string, slugVersion: string) {
     // slugVersion: "next", ""("1.1.0"), "1.0.0",

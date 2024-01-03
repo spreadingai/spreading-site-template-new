@@ -58,6 +58,7 @@ const PreviewLayout = ({
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  // All articles must have an id
   const docID = slug.join("/");
 
   // Get default selected, expanded keys
@@ -184,6 +185,7 @@ const PreviewLayout = ({
 
   return (
     <div className="preview-screen">
+      {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
       <Header></Header>
       <main className="preview-main">
         <div className="preview-sider">

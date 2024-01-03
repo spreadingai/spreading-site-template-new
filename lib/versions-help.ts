@@ -66,6 +66,12 @@ class VersionsController {
   getDefaultVersion() {
     return this._defaultVersion;
   }
+  getDisplayVersions(instanceID: string) {
+    const usedVersions = this.getUsedVersions(instanceID);
+    if (usedVersions.length) {
+      usedVersions.unshift(this._defaultVersion);
+    }
+  }
 }
 
 export default VersionsController.getInstance();
