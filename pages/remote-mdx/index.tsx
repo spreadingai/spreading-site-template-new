@@ -5,6 +5,8 @@ import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
 import Head from "next/head";
 import { useState } from "react";
+import { useRouter } from "next/router";
+import Script from "next/script";
 
 // plugins
 import remarkGfm from "remark-gfm";
@@ -223,6 +225,8 @@ export async function getStaticProps() {
 }
 
 export default function RemoteMdxPage({ mdxSource }: Props) {
+  const router = useRouter();
+  console.log('router=', router);
   const [darkMode, setDarkMode] = useState(false);
   console.log(`[RemoteMdxPage]frontmatter `, mdxSource.frontmatter);
   return (
@@ -233,6 +237,23 @@ export default function RemoteMdxPage({ mdxSource }: Props) {
           name="description"
           content={(mdxSource as any)?.frontmatter?.description}
         />
+        {
+          router?.query?.preview === "true" && (
+            <Script strategy="beforeInteractive" src="/socket.io/socket.io.js"></Script>              
+          )
+        }
+        {
+          router?.query?.preview === "true" && (            
+            <Script strategy="afterInteractive" id="socket" dangerouslySetInnerHTML={{
+              __html: `
+              var socket = io();
+              socket.on("reload", function() {
+                window.location.reload();
+              });
+              `
+            }}></Script>
+          )
+        }
       </Head>
       <div className="prose" style={{ maxWidth: "unset" }}>
         {/* <button onClick={() => setDarkMode(!darkMode)}>{ darkMode ? 'light' : 'dark' }</button> */}
