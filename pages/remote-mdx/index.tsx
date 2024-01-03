@@ -3,8 +3,8 @@ import path from "path";
 import PreviewLayout from "@/components/preview-layout";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { serialize } from "next-mdx-remote/serialize";
-import Head from "next/head";
 import { useState } from "react";
+import { NextSeo } from "next-seo";
 
 // plugins
 import remarkGfm from "remark-gfm";
@@ -33,8 +33,20 @@ const components = {
   Video,
 };
 
+type FrontmatterType = {
+  id?: string;
+  slug?: string;
+  url?: string;
+  title?: string;
+  description?: string;
+  image?: string;
+  keywords?: string[];
+  toc?: any[];
+}
+
 interface Props {
   mdxSource: MDXRemoteSerializeResult;
+  frontmatter?: FrontmatterType;
 }
 
 const readDoc = async () => {
@@ -208,18 +220,21 @@ export async function getStaticProps() {
   };
 }
 
-export default function RemoteMdxPage({ mdxSource }: Props) {
+export default function RemoteMdxPage({ mdxSource, frontmatter }: Props) {
   const [darkMode, setDarkMode] = useState(false);
-  console.log(`[RemoteMdxPage]frontmatter `, mdxSource.frontmatter);
+  console.log(`[RemoteMdxPage]frontmatter `, frontmatter);
   return (
     <>
-      <Head>
-        <title>{(mdxSource as any)?.frontmatter?.title || ""}</title>
-        <meta
-          name="description"
-          content={(mdxSource as any)?.frontmatter?.description}
-        />
-      </Head>
+      <NextSeo
+        title={frontmatter.title}
+        description={frontmatter.description}
+        openGraph={{
+          // TODO 同docuo.config.js中的title
+          siteName: "SiteName",
+          title: frontmatter.title,
+          description: frontmatter.description,
+        }}
+      />
       <div className="prose" style={{ maxWidth: "unset" }}>
         {/* <button onClick={() => setDarkMode(!darkMode)}>{ darkMode ? 'light' : 'dark' }</button> */}
         <article className="editor-wrapper">
