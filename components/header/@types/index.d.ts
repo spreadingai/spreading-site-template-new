@@ -5,6 +5,7 @@ interface NavBarItem {
   href?: string;
   items?: NavbarLink[];
   position?: "left" | "right";
+  defaultLink?: string;
   // target?: string; TODO: is this it need?
 }
 export type NavbarLink = NavBarItem &

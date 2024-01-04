@@ -42,12 +42,20 @@
         {
           "type": "category",
           "label": "category1",
-          "id": "folder1/bar11",
-          "items": ["folder3/folder31/foo312"]
+          "collapsible": true,
+          "collapsed": true,
+          "items": [
+            {
+              "type": "doc",
+              "id": "folder3/folder31/foo312",
+              "label": "foo312"
+            }
+          ]
         },
         {
           "type": "category",
           "label": "category2",
+          "id": "folder1/bar11",
           "items": ["folder3/folder31/bar311"]
         }
       ]

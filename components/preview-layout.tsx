@@ -196,8 +196,7 @@ const PreviewLayout = ({
 
   return (
     <div className="preview-screen">
-      {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-      <Header></Header>
+      <Header docuoConfig={docuoConfig}></Header>
       <main className="preview-main">
         <div className="preview-sider">
           <DirectoryTree

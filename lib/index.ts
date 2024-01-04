@@ -1,5 +1,5 @@
 import inputDocuoConfig from "@/docs/docuo.config";
-import { DocuoConfig } from "./types";
+import { DocuoConfig, NavBarItem, NavBarItemType, SlugData } from "./types";
 
 class LibController {
   static _instance: LibController;
@@ -52,6 +52,38 @@ class LibController {
   }
   getEntityRootDirectory() {
     return this._entityRootDirectory;
+  }
+  getFirstSlug(allSlugs: SlugData[], instanceID: string, sidebarIds: string[]) {
+    let firstSlug: string[] = [];
+    const targetSlug = allSlugs.find(
+      (item) =>
+        item.params.instanceID === instanceID &&
+        item.params.sidebarId === sidebarIds[0]
+    );
+    targetSlug && (firstSlug = targetSlug.params.slug);
+    return firstSlug;
+  }
+  addDefaultLink(allSlugs: SlugData[]) {
+    const docuoConfig = this.getDocuoConfig();
+    const { navbar } = docuoConfig.themeConfig;
+    // Add a default jump link to all docSidebar type items
+    const loop = (items: NavBarItem[]) => {
+      for (const item of items) {
+        !item.docsInstanceId && (item.docsInstanceId = "default");
+        if (item.type === NavBarItemType.DocSidebar) {
+          const firstSlug = this.getFirstSlug(
+            allSlugs,
+            item.docsInstanceId,
+            item.sidebarIds
+          );
+          item.defaultLink = `/${firstSlug.join("/")}`;
+        }
+        if (item.items) {
+          loop(item.items);
+        }
+      }
+    };
+    loop(navbar.items);
   }
 }
 

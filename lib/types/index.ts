@@ -32,6 +32,7 @@ export interface NavBarItem {
   sidebarIds: string[];
   docsInstanceId: string;
   items: NavBarItem[];
+  defaultLink?: string;
 }
 export interface NavbarConfig {
   title: string;

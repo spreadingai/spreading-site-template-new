@@ -5,10 +5,16 @@ import Link from "next/link";
 import { useMediaQuery } from "usehooks-ts";
 import Mobile from "./mobile";
 import DropdownItem from "./DropdownItem";
-import DocuoConfig from "@/docs/docuo.config";
+import { DocuoConfig } from "@/lib/types";
 
-const Header: FC = () => {
-  const { items } = DocuoConfig.themeConfig.navbar;
+interface Props {
+  docuoConfig: DocuoConfig;
+}
+
+const Header = (props: Props) => {
+  const { docuoConfig } = props;
+  const { items } = docuoConfig.themeConfig.navbar;
+  console.log(`Header`, items);
   const [width, setWidth] = React.useState(0);
   const matches = useMediaQuery(`(max-width: ${Math.max(width, 375)}px)`); // mobile
   const menusRef = React.useRef<HTMLDivElement>(null);
@@ -31,7 +37,7 @@ const Header: FC = () => {
       <Link className={styles["logo-container"]} href={"/"} ref={logoRef}>
         <img
           className={styles.logo}
-          src={`/${DocuoConfig.logo}`}
+          src={`/${docuoConfig.logo}`}
           alt={"logo"}
         />
         <span className={styles["logo-title"]}>{"Untitled"}</span>
@@ -52,7 +58,7 @@ const Header: FC = () => {
                 <Link
                   key={index}
                   className={styles["item"]}
-                  href={menu.href || { pathname: menu.to }}
+                  href={menu.defaultLink || menu.href || { pathname: menu.to }}
                   // target={menu.target}
                 >
                   {menu.label}
