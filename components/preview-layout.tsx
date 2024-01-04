@@ -11,7 +11,7 @@ import Footer from "./footer";
 import ArticlePager from "./articlePager";
 import { createPortal } from "react-dom";
 import { MDXRemoteSerializeResult } from "next-mdx-remote";
-import { DocuoConfig, SidebarItemType } from "@/lib/types";
+import { DisplayVersion, DocuoConfig, SidebarItemType } from "@/lib/types";
 import Image from "next/image";
 import IconOutlink from "@/assets/images/icon_outlink.png";
 import IconList from "@/assets/images/icon_list.png";
@@ -24,9 +24,11 @@ const { DirectoryTree } = Tree;
 type Props = {
   children: React.ReactNode;
   slug?: string[];
+  instanceID: string[];
   mdxSource: MDXRemoteSerializeResult;
   folderTreeData: TreeDataObject[];
   docuoConfig: DocuoConfig;
+  displayVersions: DisplayVersion[];
 };
 
 type TreeDataObject = {
@@ -41,12 +43,21 @@ type TreeDataObject = {
 const PreviewLayout = ({
   children,
   slug,
+  instanceID,
   mdxSource,
   folderTreeData,
   docuoConfig,
+  displayVersions,
 }: Props) => {
   // slug eg: instance routeBasePath/version/folder/filename
-  console.log("[Site]init params", slug, folderTreeData, docuoConfig);
+  console.log(
+    "[Site]init params",
+    slug,
+    instanceID,
+    folderTreeData,
+    docuoConfig,
+    displayVersions
+  );
 
   if (!slug) {
     return null;

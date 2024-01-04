@@ -13,11 +13,11 @@ class TreeController {
   }
   getFolderTreeDataBySlug(slug: string[]) {
     const { instanceID, routeBasePath, docVersion, slugVersion } =
-      SlugControllerImpl.extractInfoFromSlug(slug);
+      SlugControllerImpl.getExtractInfoFromSlug(slug);
     console.log(
       `[DocsController]getFolderTreeDataBySlug slug `,
       slug,
-      SlugControllerImpl.extractInfoFromSlug(slug)
+      SlugControllerImpl.getExtractInfoFromSlug(slug)
     );
     let tree = [];
 

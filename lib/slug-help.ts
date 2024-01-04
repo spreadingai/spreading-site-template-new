@@ -1,13 +1,11 @@
 import LibControllerImpl from "./index";
-import { SidebarItem, SidebarItemType } from "./types";
+import { SidebarItem, SidebarItemType, SlugData } from "./types";
 import VersionsControllerImpl from "./versions-help";
 import SidebarsControllerImpl from "./sidebars-help";
 
 class SlugController {
   static _instance: SlugController;
-  _allSlugs: {
-    params: { slug: string[]; instanceID: string; slugVersion: string };
-  }[];
+  _allSlugs: SlugData[];
   static getInstance() {
     return (
       SlugController._instance ||
@@ -16,9 +14,7 @@ class SlugController {
   }
   getAllSlugs() {
     if (!this._allSlugs) {
-      let allSlugs: {
-        params: { slug: string[]; instanceID: string; slugVersion: string };
-      }[] = [];
+      let allSlugs: SlugData[] = [];
       const { instances } = LibControllerImpl.getDocuoConfig();
       for (const instance of instances) {
         const slugs = this.getSlugs(instance.id);
@@ -34,10 +30,9 @@ class SlugController {
     const { instances } = LibControllerImpl.getDocuoConfig();
     const instance = instances.find((i) => i.id === instanceID);
     const usedSidebarIds = SidebarsControllerImpl.getUsedSidebarIds(instanceID);
-    let slugs: {
-      params: { slug: string[]; instanceID: string; slugVersion: string };
-    }[] = [];
+    let slugs: SlugData[] = [];
     const slugVersions = VersionsControllerImpl.getUsedVersions(instanceID);
+    // Convert to slug version
     if (!slugVersions.length) {
       // [""]
       slugVersions.push("");
@@ -82,14 +77,7 @@ class SlugController {
     sidebarItemList: SidebarItem[],
     preSlug: string[]
   ) {
-    const result: {
-      params: {
-        slug: string[];
-        instanceID: string;
-        slugVersion: string;
-        sidebarId: string;
-      };
-    }[] = [];
+    const result: SlugData[] = [];
     for (const sidebarItem of sidebarItemList) {
       if (sidebarItem.items) {
         result.push(
@@ -117,7 +105,7 @@ class SlugController {
     }
     return result;
   }
-  extractInfoFromSlug(slug: string[]) {
+  getExtractInfoFromSlug(slug: string[]) {
     // eg1: /docs/path/to/doc => The current version when there is no version list
     // eg2: /docs/path/to/doc => The latest version when the version list is available
     // eg3: /docs/next/path/to/doc => The current version when the version list is available
@@ -150,8 +138,16 @@ class SlugController {
       mdxFileID,
       mdxFileName,
     };
-    console.log(`[SlugController]extractInfoFromSlug `, result);
+    console.log(`[SlugController]getExtractInfoFromSlug `, result);
     return result;
+  }
+  getInstanceIDFromSlug(slug: string[]) {
+    const docuoConfig = LibControllerImpl.getDocuoConfig();
+    const routeBasePath = slug[0];
+    const instanceID = docuoConfig.instances.find(
+      (instance) => instance.routeBasePath === routeBasePath
+    ).id;
+    return instanceID;
   }
   slugVersionToDocVersion(instanceID: string, slugVersion: string) {
     // slugVersion: "next", ""("1.1.0"), "1.0.0",
@@ -175,7 +171,10 @@ class SlugController {
     const versions = VersionsControllerImpl.getUsedVersions(instanceID);
     let slugVersion;
     if (versions.length) {
-      if (docVersion === versions[0]) {
+      if (docVersion === VersionsControllerImpl.getDefaultVersion()) {
+        // No conversion required
+        slugVersion = docVersion;
+      } else if (docVersion === versions[0]) {
         slugVersion = "";
       } else if (!docVersion) {
         slugVersion = VersionsControllerImpl.getDefaultVersion();

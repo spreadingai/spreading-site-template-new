@@ -20,7 +20,7 @@ class DocsController {
   async readDoc(slug: string[]) {
     console.log(`[DocsController]readDoc `, slug);
     const { docVersion, mdxFileID, instanceID, slugVersion, routeBasePath } =
-      SlugControllerImpl.extractInfoFromSlug(slug);
+      SlugControllerImpl.getExtractInfoFromSlug(slug);
     const versions = VersionsControllerImpl.getUsedVersions(instanceID);
 
     let originContent =

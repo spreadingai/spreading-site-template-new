@@ -1,6 +1,8 @@
 import fs from "fs";
 import path from "path";
 import LibControllerImpl from "./index";
+import SlugControllerImpl from "./slug-help";
+import { DisplayVersion } from "./types";
 
 class VersionsController {
   static _instance: VersionsController;
@@ -66,11 +68,32 @@ class VersionsController {
   getDefaultVersion() {
     return this._defaultVersion;
   }
-  getDisplayVersions(instanceID: string) {
+  getDisplayVersions(slug: string[]) {
+    const result: DisplayVersion[] = [];
+    const instanceID = SlugControllerImpl.getInstanceIDFromSlug(slug);
     const usedVersions = this.getUsedVersions(instanceID);
     if (usedVersions.length) {
-      usedVersions.unshift(this._defaultVersion);
+      const allSlugs = SlugControllerImpl.getAllSlugs();
+      // ["", "1.1.0", "1.0.0"]
+      usedVersions.unshift("");
+      usedVersions.forEach((docVersion) => {
+        const slugVersion = SlugControllerImpl.docVersionToSlugVersion(
+          instanceID,
+          docVersion
+        );
+        const targetSlug = allSlugs.find(
+          (item) =>
+            item.params.instanceID === instanceID &&
+            item.params.slugVersion === slugVersion
+        );
+        result.push({
+          version: slugVersion || docVersion, // Here's the latest version to show
+          firstSlug: targetSlug.params.slug,
+        });
+      });
     }
+    console.log(`[VersionsController]getDisplayVersions `, result);
+    return result;
   }
 }
 

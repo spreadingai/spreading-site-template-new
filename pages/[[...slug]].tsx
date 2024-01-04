@@ -11,7 +11,9 @@ import LibControllerImpl from "@/lib";
 import DocsControllerImpl from "@/lib/docs-help";
 import TreeControllerImpl from "@/lib/tree-help";
 import SlugControllerImpl from "@/lib/slug-help";
+import VersionsControllerImpl from "@/lib/versions-help";
 import Link from "next/link";
+import { SlugData } from "@/lib/types";
 
 const components = {
   CodeBlock,
@@ -30,31 +32,29 @@ interface Props {
   slug: string[];
 }
 
-export const getStaticProps = async ({
-  params,
-}: {
-  params: {
-    slug: string[];
-    instanceID: string; // Can not get
-    slugVersion: string; // Can not get
-    sidebarId: string; // Can not get
-  };
-}) => {
+export const getStaticProps = async ({ params }: SlugData) => {
+  // Reason: `undefined` cannot be serialized as JSON. Please use `null` or omit this value.
   console.log(
     new Date().toISOString().slice(0, 23),
     "[Spreading] getStaticProps:",
     params
   );
   const docuoConfig = LibControllerImpl.getDocuoConfig();
+  const instanceID = SlugControllerImpl.getInstanceIDFromSlug(params.slug);
   const folderTreeData = TreeControllerImpl.getFolderTreeDataBySlug(
+    params.slug
+  );
+  const displayVersions = VersionsControllerImpl.getDisplayVersions(
     params.slug
   );
   const postData = await DocsControllerImpl.readDoc(params.slug);
   return {
     props: {
       ...postData,
+      instanceID,
       folderTreeData,
       docuoConfig,
+      displayVersions,
     },
   };
 };

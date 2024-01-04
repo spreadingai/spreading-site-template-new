@@ -96,3 +96,15 @@ export interface SidebarItem {
 export interface Sidebars {
   [index: string]: (string | SidebarItem)[];
 }
+export interface DisplayVersion {
+  version: string;
+  firstSlug: string[];
+}
+export interface SlugData {
+  params: {
+    slug: string[];
+    instanceID: string;
+    slugVersion: string;
+    sidebarId: string;
+  };
+}
