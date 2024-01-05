@@ -33,7 +33,11 @@ const Header = (props: Props) => {
 
   return (
     <header className={styles["header-container"]}>
-      <Link className={styles["logo-container"]} href={"/"} ref={logoRef}>
+      <Link
+        className={styles["logo-container"]}
+        href={docuoConfig.url}
+        ref={logoRef}
+      >
         <img
           className={styles.logo}
           src={`/${docuoConfig.logo}`}

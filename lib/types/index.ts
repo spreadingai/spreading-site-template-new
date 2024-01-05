@@ -7,7 +7,7 @@ export interface DocuoConfig {
         dark?: string;
         light?: string;
       };
-  baseUrl?: string;
+  url?: string;
   metadata?: Record<string, string>[];
   instances: DocInstance[];
   themeConfig: {
