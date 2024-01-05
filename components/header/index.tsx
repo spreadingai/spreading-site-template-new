@@ -35,7 +35,7 @@ const Header = (props: Props) => {
     <header className={styles["header-container"]}>
       <Link
         className={styles["logo-container"]}
-        href={docuoConfig.url}
+        href={process.env.SITE_URL}
         ref={logoRef}
       >
         <img

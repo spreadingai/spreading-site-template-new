@@ -1,7 +1,7 @@
 const config = {
   title: "My Site",
   favicon: "image/favicon.ico",
-  url: "https://www.spreading.ai",
+  iconRedirectUrl: "https://www.spreading.ai",
   logo: "image/logo.png",
   //   logo: {
   //     dark: "image/logo.png",
