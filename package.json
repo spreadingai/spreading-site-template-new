@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "deploy": "sh ./build.sh && pnpm build",
     "postbuild": "next-sitemap",
     "start": "next start",
     "lint": "next lint"
