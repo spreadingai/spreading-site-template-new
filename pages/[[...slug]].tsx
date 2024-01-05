@@ -34,22 +34,15 @@ interface Props {
 
 export const getStaticProps = async ({ params }: SlugData) => {
   // Reason: `undefined` cannot be serialized as JSON. Please use `null` or omit this value.
-  console.log(
-    new Date().toISOString().slice(0, 23),
-    "[Spreading] getStaticProps:",
-    params
-  );
+  const docuoConfig = LibControllerImpl.getDocuoConfig();
+  const allSlugs = SlugControllerImpl.getAllSlugs();
+  LibControllerImpl.addDefaultLink(allSlugs);
   const instanceID = SlugControllerImpl.getInstanceIDFromSlug(params.slug);
   const folderTreeData = TreeControllerImpl.getFolderTreeDataBySlug(
     params.slug
   );
   const displayVersions = VersionsControllerImpl.getDisplayVersions(
     params.slug
-  );
-  const docuoConfig = LibControllerImpl.getDocuoConfig();
-  console.log(
-    "[Spreading] getStaticProps docuoConfig",
-    JSON.stringify(docuoConfig)
   );
   const postData = await DocsControllerImpl.readDoc(params.slug);
   return {
@@ -70,7 +63,6 @@ export function getStaticPaths() {
   );
   const paths = SlugControllerImpl.getAllSlugs();
   DocsControllerImpl.copyStaticFile();
-  LibControllerImpl.addDefaultLink(paths);
   return {
     paths,
     fallback: true,

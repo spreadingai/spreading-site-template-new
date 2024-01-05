@@ -20,11 +20,6 @@ class SidebarsController {
     );
   }
   getSidebars(instanceID: string, docVersion?: string) {
-    // if (
-    //   !this._sidebarsMap ||
-    //   !this._sidebarsMap[instanceID] ||
-    //   !this._sidebarsMap[instanceID][docVersion]
-    // ) {
     let result: Sidebars = null;
     let rootUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
       instanceID === "default" ? "" : instanceID + "_"
@@ -72,44 +67,40 @@ class SidebarsController {
         instanceID
       );
     }
-    console.log(`[DocsController]getSidebars: `, JSON.stringify(result));
     this._sidebarsMap = this._sidebarsMap || {};
     this._sidebarsMap[instanceID] = this._sidebarsMap[instanceID] || {};
     this._sidebarsMap[instanceID][docVersion] = result;
-    // }
     return this._sidebarsMap[instanceID][docVersion];
   }
   getUsedSidebarIds(instanceID: string) {
-    if (!this._usedSidebarIdsMap[instanceID]) {
-      const { themeConfig } = LibControllerImpl.getDocuoConfig();
-      const { navbar } = themeConfig;
-      const usedSidebarIds = [];
-      const loop = (items: NavBarItem[], usedSidebarIds: string[]) => {
-        for (const item of items) {
-          !item.docsInstanceId && (item.docsInstanceId = "default");
-          if (
-            item.type === NavBarItemType.DocSidebar &&
-            item.docsInstanceId === instanceID
-          ) {
-            usedSidebarIds.push(...item.sidebarIds);
-          }
-          if (item.items) {
-            loop(item.items, usedSidebarIds);
-          }
+    const { themeConfig } = LibControllerImpl.getDocuoConfig();
+    const { navbar } = themeConfig;
+    const usedSidebarIds = [];
+    const loop = (items: NavBarItem[], usedSidebarIds: string[]) => {
+      for (const item of items) {
+        !item.docsInstanceId && (item.docsInstanceId = "default");
+        if (
+          item.type === NavBarItemType.DocSidebar &&
+          item.docsInstanceId === instanceID
+        ) {
+          usedSidebarIds.push(...item.sidebarIds);
         }
-      };
-      loop(navbar.items, usedSidebarIds);
-      // Remove duplicate elements
-      this._usedSidebarIdsMap[instanceID] = usedSidebarIds.reduce(
-        (prev, curr) => {
-          if (!prev.includes(curr)) {
-            prev.push(curr);
-          }
-          return prev;
-        },
-        []
-      );
-    }
+        if (item.items) {
+          loop(item.items, usedSidebarIds);
+        }
+      }
+    };
+    loop(navbar.items, usedSidebarIds);
+    // Remove duplicate elements
+    this._usedSidebarIdsMap[instanceID] = usedSidebarIds.reduce(
+      (prev, curr) => {
+        if (!prev.includes(curr)) {
+          prev.push(curr);
+        }
+        return prev;
+      },
+      []
+    );
     console.log(
       `[DocsController]getUsedSidebarIds: `,
       instanceID,
@@ -119,15 +110,14 @@ class SidebarsController {
   }
   generatedSidebar(rootUrl: string, dirName: string) {
     const dirPath = path.resolve("./public", "..", rootUrl, dirName);
-    console.log(`[DocsController]generatedSidebar: `, rootUrl, dirPath);
     const loop = (dirPath: string) => {
       const stats = fs.statSync(dirPath);
       if (!stats.isDirectory()) {
         const relativePath = path.relative(rootUrl, dirPath);
         const parsedPath = path.parse(relativePath);
         if (
-          parsedPath.ext.toLocaleLowerCase() === "mdx" ||
-          parsedPath.ext.toLocaleLowerCase() === "md"
+          parsedPath.ext.toLocaleLowerCase() === ".mdx" ||
+          parsedPath.ext.toLocaleLowerCase() === ".md"
         ) {
           return {
             type: "doc",
@@ -150,14 +140,9 @@ class SidebarsController {
         const childTreeData = loop(filePath);
         childTreeData && sidebar.items.push(childTreeData);
       });
-
       return sidebar;
     };
     const sidebar = (loop(dirPath) as SidebarItem).items;
-    console.log(
-      `[DocsController]generatedSidebar sidebar: `,
-      JSON.stringify(sidebar)
-    );
     return sidebar;
   }
   transSidebarItemStringToObj(sidebar: (string | SidebarItem)[]) {

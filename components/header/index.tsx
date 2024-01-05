@@ -14,7 +14,6 @@ interface Props {
 const Header = (props: Props) => {
   const { docuoConfig } = props;
   const { items } = docuoConfig.themeConfig.navbar;
-  console.log(`Header`, items);
   const [width, setWidth] = React.useState(0);
   const matches = useMediaQuery(`(max-width: ${Math.max(width, 375)}px)`); // mobile
   const menusRef = React.useRef<HTMLDivElement>(null);

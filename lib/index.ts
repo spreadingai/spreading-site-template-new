@@ -10,10 +10,9 @@ class LibController {
       LibController._instance || (LibController._instance = new LibController())
     );
   }
-
   getDocuoConfig() {
+    // Complete the default value
     if (!this._docuoConfig) {
-      // Complete the default value
       const docuoConfig: DocuoConfig = JSON.parse(
         JSON.stringify(inputDocuoConfig)
       );

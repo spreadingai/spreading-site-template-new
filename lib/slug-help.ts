@@ -21,8 +21,10 @@ class SlugController {
         const slugs = this.getSlugs(instance.id);
         allSlugs = allSlugs.concat(slugs);
       }
-      console.log(`[DocsController]getAllSlugs: `, JSON.stringify(allSlugs));
       this._allSlugs = allSlugs;
+      console.log(`[SlugController]getAllSlugs generate`);
+    } else {
+      console.log(`[SlugController]getAllSlugs cache`);
     }
     return this._allSlugs;
   }
@@ -45,8 +47,6 @@ class SlugController {
         slugVersions[1]
       );
     }
-    console.log(`[DocsController]getSlugs slugVersions: `, slugVersions);
-
     for (let index = 0, len = slugVersions.length; index < len; index++) {
       let preSlug = [instance.routeBasePath];
       const slugVersion = slugVersions[index];
@@ -68,7 +68,6 @@ class SlugController {
         );
       }
     }
-    console.log(`[DocsController]getSlugs: `, JSON.stringify(slugs));
     return slugs;
   }
   traverseChildren(
@@ -139,7 +138,6 @@ class SlugController {
       mdxFileID,
       mdxFileName,
     };
-    console.log(`[SlugController]getExtractInfoFromSlug `, result);
     return result;
   }
   getInstanceIDFromSlug(slug: string[]) {
@@ -185,12 +183,6 @@ class SlugController {
     } else {
       slugVersion = "";
     }
-    console.log(
-      `[DocsController]getSlugs docVersionToSlugVersion: `,
-      versions,
-      docVersion,
-      slugVersion
-    );
     return slugVersion;
   }
 }

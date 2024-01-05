@@ -54,7 +54,6 @@ const PreviewLayout = ({
     "[Site]init params",
     slug,
     instanceID,
-    folderTreeData,
     docuoConfig,
     displayVersions
   );

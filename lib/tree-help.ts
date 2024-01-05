@@ -51,13 +51,6 @@ class TreeController {
         );
       });
     }
-    console.log(
-      `[lib/folder-tree]getFolderTreeDataBySlug: `,
-      instanceID,
-      docVersion,
-      slugVersion,
-      JSON.stringify(tree)
-    );
     return tree;
   }
   getChildrenFromChildren(
