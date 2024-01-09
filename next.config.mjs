@@ -10,6 +10,7 @@ const nextConfig = {
   experimental: {
     // Defaults to 50MB
     isrMemoryCacheSize: 0,
+    webpackBuildWorker: true,
   },
   output: "standalone",
   basePath: process.env.BASE_PATH || "",
@@ -39,14 +40,6 @@ const nextConfig = {
     fileLoaderRule.exclude = /\.svg$/i;
 
     return config;
-  },
-  async rewrites() {
-    return [
-      {
-        source: "/",
-        destination: "/home",
-      },
-    ];
   },
 };
 
