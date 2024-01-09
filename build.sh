@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 
 # 取环境变量
 echo $token_3th
