@@ -1,16 +1,20 @@
 import fs from "fs";
 import path from "path";
-import { visit } from "unist-util-visit";
 import { serialize } from "next-mdx-remote/serialize";
+
+// plugins
+import remarkGfm from "remark-gfm";
+import rehypeKatex from "rehype-katex";
+import remarkMath from "remark-math";
 import remarkImages from "remark-images";
-import { rehypeImages, rehypeLink } from "@/plugins";
+import { rehypeImages, rehypeLink, rehypeCodeBlocks, rehypeCodeGroup } from "@/plugins";
+
 import LibControllerImpl from "./index";
 import SlugControllerImpl from "./slug-help";
 import VersionsControllerImpl from "./versions-help";
 
 class DocsController {
   static _instance: DocsController;
-  _UUID = "37e7bcb6-4fa7-431d-b11c-df9a1c26cf62";
   static getInstance() {
     return (
       DocsController._instance ||
@@ -54,28 +58,18 @@ class DocsController {
         }
       }
     }
-    originContent = originContent
-      .replace(
-        /```(\S*?\s)([\s\S]*?)(```)(?=\n<\/SCodeBlock>)/gm,
-        (_, lang, code) => {
-          code = code.replace(/```/g, this._UUID);
-          return "```" + lang + code + "```";
-        }
-      )
-      .replaceAll("&nbsp;", " ");
-    const myRemarkPlugin = () => {
-      return (tree) => {
-        visit(tree, "code", (node) => {
-          if (typeof node.value === "string") {
-            node.value = node.value.replaceAll(this._UUID, "```");
-          }
-        });
-      };
-    };
     const mdxSource = await serialize(originContent, {
       mdxOptions: {
-        remarkPlugins: [remarkImages, myRemarkPlugin],
+        remarkPlugins: [
+          remarkGfm,
+          remarkMath,
+          remarkImages,
+        ],
         rehypePlugins: [
+          // @ts-ignore
+          rehypeKatex,
+          rehypeCodeBlocks,
+          rehypeCodeGroup,
           [rehypeImages, { filePath: mdxFileUrl }],
           [
             rehypeLink,
