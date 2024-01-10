@@ -36,18 +36,25 @@ export function createCodeBlock(code) {
   let filename = undefined;
   let focus = "";
   let hideLineNumbers = false;
-  if (code.data?.meta && typeof code.data.meta === "string") {
+  const meta = code.data?.meta;
+  if (meta && typeof meta === "string") {
     const attrs = code.data.meta.split(" ");
     // filename
-    filename = !attrs[0]?.startsWith("{") && attrs[0] !== "hideLineNumbers" ? attrs[0] : "";
+    const filenameMatchRes = meta.match(/title="([\s\S]+)"/);
+    if (filenameMatchRes) {
+      filename = filenameMatchRes[1];
+    } else {
+      const firstStr = meta.split(" ")[0];
+      filename = !firstStr.startsWith("{") && firstStr !== "hideLineNumbers" ? firstStr : "";
+    }
 
     // hideLineNumbers
-    hideLineNumbers = attrs.includes("hideLineNumbers");
+    hideLineNumbers = meta.includes("hideLineNumbers");
 
     // focus
-    const focusFormat = attrs.find(str => str && /^\{[\d,-]+\}$/.test(str));
-    if (focusFormat) {
-      focus = focusFormat.slice(1, -1);
+    const focusMatchRes = meta.match(/\{[\d,-]+\}/);
+    if (focusMatchRes) {
+      focus = focusMatchRes[0].slice(1, -1);
     }
   }
   const codeBlock = {
