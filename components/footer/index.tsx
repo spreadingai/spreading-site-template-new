@@ -12,7 +12,7 @@ import type { footerProps } from "./@types";
 import { useMediaQuery } from "usehooks-ts";
 import FooterMobile from "./mobile";
 import classNames from "classnames";
-import DocuoConfig from "@/docs/docuo.config";
+import DocuoConfig from "@/docs/docuo.config.json";
 
 const Footer: FC<footerProps> = (props) => {
   const { footer } = DocuoConfig.themeConfig;

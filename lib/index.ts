@@ -1,4 +1,4 @@
-import inputDocuoConfig from "@/docs/docuo.config";
+import inputDocuoConfig from "@/docs/docuo.config.json";
 import { DocuoConfig, NavBarItem, NavBarItemType, SlugData } from "./types";
 
 class LibController {
