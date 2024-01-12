@@ -41,6 +41,14 @@ const nextConfig = {
 
     return config;
   },
+  rewrites() {
+    return [
+      {
+        source: "/",
+        destination: "/home",
+      },
+    ];
+  },
 };
 
 export default nextConfig;

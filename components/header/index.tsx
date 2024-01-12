@@ -13,7 +13,8 @@ interface Props {
 
 const Header = (props: Props) => {
   const { docuoConfig } = props;
-  const { items } = docuoConfig.themeConfig.navbar;
+  const { navbar } = docuoConfig.themeConfig;
+  const { items } = navbar;
   const [width, setWidth] = React.useState(0);
   const matches = useMediaQuery(`(max-width: ${Math.max(width, 375)}px)`); // mobile
   const menusRef = React.useRef<HTMLDivElement>(null);
@@ -35,15 +36,11 @@ const Header = (props: Props) => {
     <header className={styles["header-container"]}>
       <Link
         className={styles["logo-container"]}
-        href={process.env.SITE_URL || ""}
+        href={navbar.iconRedirectUrl || process.env.SITE_URL || ""}
         ref={logoRef}
       >
-        <img
-          className={styles.logo}
-          src={`/${docuoConfig.logo}`}
-          alt={"logo"}
-        />
-        <span className={styles["logo-title"]}>{"Untitled"}</span>
+        <img className={styles.logo} src={`/${navbar.logo}`} alt={"logo"} />
+        <span className={styles["logo-title"]}>{navbar.title}</span>
       </Link>
       {matches ? (
         // @ts-ignore

@@ -42,6 +42,7 @@ export interface NavbarConfig {
         dark?: string;
         light?: string;
       };
+  iconRedirectUrl: string;
   items: NavBarItem[];
 }
 export interface FooterItem {

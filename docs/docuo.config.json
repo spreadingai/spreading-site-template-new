@@ -1,8 +1,6 @@
 {
   "title": "My Site",
   "favicon": "image/favicon.ico",
-  "iconRedirectUrl": "https://www.spreading.ai",
-  "logo": "image/logo.png",
   "metadata": [],
   "instances": [
     {
@@ -22,6 +20,7 @@
     "navbar": {
       "title": "My Site",
       "logo": "image/logo.png",
+      "iconRedirectUrl": "https://www.spreading.ai",
       "items": [
         {
           "type": "default",
