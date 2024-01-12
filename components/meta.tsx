@@ -4,7 +4,11 @@ import LibControllerImpl from "@/lib/index";
 
 const Meta = () => {
   const docuoConfig = LibControllerImpl.getDocuoConfig();
-  const favicon = `/${docuoConfig.favicon}` || "/favicon/favicon.ico";
+  const favicon = docuoConfig.favicon
+    ? docuoConfig.favicon.includes("http")
+      ? docuoConfig.favicon
+      : `/${docuoConfig.favicon}`
+    : "/favicon/favicon.ico";
   console.log(`Meta favicon`, favicon);
   return (
     <>

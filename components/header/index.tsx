@@ -34,14 +34,24 @@ const Header = (props: Props) => {
 
   return (
     <header className={styles["header-container"]}>
-      <Link
-        className={styles["logo-container"]}
-        href={navbar.iconRedirectUrl || process.env.SITE_URL || ""}
-        ref={logoRef}
-      >
-        <img className={styles.logo} src={`/${navbar.logo}`} alt={"logo"} />
-        <span className={styles["logo-title"]}>{navbar.title}</span>
-      </Link>
+      {navbar.logo ? (
+        <Link
+          className={styles["logo-container"]}
+          href={navbar.iconRedirectUrl || process.env.SITE_URL || ""}
+          ref={logoRef}
+        >
+          <img
+            className={styles.logo}
+            src={
+              (navbar.logo as string).includes("http")
+                ? "navbar.logo"
+                : `/${navbar.logo}`
+            }
+            alt={"logo"}
+          />
+          <span className={styles["logo-title"]}>{navbar.title}</span>
+        </Link>
+      ) : null}
       {matches ? (
         // @ts-ignore
         <Mobile menus={items} />
