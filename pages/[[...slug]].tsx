@@ -13,7 +13,9 @@ import TreeControllerImpl from "@/lib/tree-help";
 import SlugControllerImpl from "@/lib/slug-help";
 import VersionsControllerImpl from "@/lib/versions-help";
 import Link from "next/link";
-import { SlugData } from "@/lib/types";
+import { SlugData, DocuoConfig } from "@/lib/types";
+import Head from "next/head";
+import { CMS_NAME } from "@/lib/constants";
 
 const components = {
   CodeBlock,
@@ -30,6 +32,7 @@ const components = {
 interface Props {
   mdxSource: MDXRemoteSerializeResult;
   slug: string[];
+  docuoConfig: DocuoConfig;
 }
 
 export const getStaticProps = async ({ params }: SlugData) => {
@@ -69,12 +72,20 @@ export function getStaticPaths() {
   };
 }
 
-export default function DocPage({ mdxSource, slug }: Props) {
+export default function DocPage({ mdxSource, slug, docuoConfig }: Props) {
   if (!slug) {
     return null;
   }
+  const title = (mdxSource?.frontmatter?.title as string) || docuoConfig.title || "";
+  const description =
+    (mdxSource?.frontmatter?.description as string) ||
+    `A statically generated blog example using Next.js and ${CMS_NAME}.`;
   return (
     <div className="prose" style={{ maxWidth: "unset" }}>
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content={description} />
+      </Head>
       <article className="editor-wrapper">
         {/* @ts-ignore */}
         <MDXRemote {...mdxSource} components={components} />
