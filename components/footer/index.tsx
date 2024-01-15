@@ -97,7 +97,7 @@ const Footer: FC<footerProps> = (props) => {
                 <div key={index} className={`${styles["group"]}`}>
                   <div className={styles["group-title"]}>{group.title}</div>
                   <div className={styles["group-items"]}>
-                    {group.items.map((item, index) => {
+                    {group.items.map((item: any, index) => {
                       return (
                         <Link
                           key={index}
