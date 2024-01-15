@@ -44,7 +44,7 @@ const Header = (props: Props) => {
             className={styles.logo}
             src={
               (navbar.logo as string).includes("http")
-                ? "navbar.logo"
+                ? navbar.logo
                 : `/${navbar.logo}`
             }
             alt={"logo"}

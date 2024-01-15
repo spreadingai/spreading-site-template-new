@@ -7,7 +7,12 @@ import remarkGfm from "remark-gfm";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 import remarkImages from "remark-images";
-import { rehypeImages, rehypeLink, rehypeCodeBlocks, rehypeCodeGroup } from "@/plugins";
+import {
+  rehypeImages,
+  rehypeLink,
+  rehypeCodeBlocks,
+  rehypeCodeGroup,
+} from "@/plugins";
 
 import LibControllerImpl from "./index";
 import SlugControllerImpl from "./slug-help";
@@ -31,6 +36,11 @@ class DocsController {
       "The conversion of the article content encountered an exception and cannot be displayed.";
     let mdxFileUrl = "";
     let rootUrl = "";
+    console.log(
+      `[DocsController]readDoc slugVersion、versions`,
+      slugVersion,
+      versions
+    );
     if (!slugVersion || slugVersion !== versions[0]) {
       rootUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
         instanceID === "default" ? "" : instanceID + "_"
@@ -42,6 +52,12 @@ class DocsController {
       }
       mdxFileUrl = `${rootUrl}/${mdxFileID}.md`;
       let mdxFilePath = path.resolve("./public", "..", mdxFileUrl);
+
+      console.log(
+        `[DocsController]readDoc mdxFilePath`,
+        mdxFileID,
+        mdxFilePath
+      );
       if (fs.existsSync(mdxFilePath)) {
         originContent = fs.readFileSync(
           path.resolve("./public", "..", mdxFileUrl),
@@ -60,11 +76,7 @@ class DocsController {
     }
     const mdxSource = await serialize(originContent, {
       mdxOptions: {
-        remarkPlugins: [
-          remarkGfm,
-          remarkMath,
-          remarkImages,
-        ],
+        remarkPlugins: [remarkGfm, remarkMath, remarkImages],
         rehypePlugins: [
           // @ts-ignore
           rehypeKatex,
