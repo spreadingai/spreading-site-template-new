@@ -31,7 +31,7 @@ class TreeController {
         instanceID,
         docVersion
       );
-      usedSidebarIds.forEach((sidebarId) => {
+      usedSidebarIds.forEach((sidebarId, index) => {
         const sidebarItems = sidebars[sidebarId];
         const prefixKey = `${routeBasePath}${
           slugVersion ? "/" : ""
@@ -41,6 +41,7 @@ class TreeController {
         }${slugVersion}`;
         tree = tree.concat(
           this.getChildrenFromChildren(
+            `${index}`,
             sidebarItems as SidebarItem[],
             prefixKey,
             idPrefixKey,
@@ -54,6 +55,7 @@ class TreeController {
     return tree;
   }
   getChildrenFromChildren(
+    level: string,
     sidebarItems: SidebarItem[],
     prefixKey: string,
     idPrefixKey,
@@ -64,12 +66,14 @@ class TreeController {
     prefixKey = prefixKey || "";
     idPrefixKey = idPrefixKey || "";
     const result = [];
-    for (const item of sidebarItems) {
+    for (let index = 0; index < sidebarItems.length; index++) {
+      const item = sidebarItems[index];
       let children;
       if (item.items) {
         children = this.getChildrenFromChildren(
+          `${level}-${index}`,
           item.items as SidebarItem[],
-          `${prefixKey}${prefixKey ? "/" : ""}${item.label}`,
+          `${prefixKey}${prefixKey ? "/" : ""}${item.label}${level}-${index}`,
           idPrefixKey,
           instanceID,
           docVersion,
@@ -84,7 +88,9 @@ class TreeController {
         const temp: any = {
           title: item.label,
           type: item.type,
-          key: `${prefixKey}${prefixKey ? "/" : ""}${item.label}`,
+          key: `${prefixKey}${prefixKey ? "/" : ""}${
+            item.label
+          }${level}-${index}`,
           instanceID,
           docVersion,
           slugVersion,
@@ -97,7 +103,9 @@ class TreeController {
         result.push({
           title: item.label,
           type: item.type,
-          key: `${prefixKey}${prefixKey ? "/" : ""}${item.label}`,
+          key: `${prefixKey}${prefixKey ? "/" : ""}${
+            item.label
+          }${level}-${index}`,
           link: item.href || item.to,
           instanceID,
           docVersion,
