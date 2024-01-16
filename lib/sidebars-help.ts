@@ -35,9 +35,15 @@ class SidebarsController {
       const sidebarsUrl = `${rootUrl}/sidebars.json`;
       const sidebarsPath = path.resolve("./public", "..", sidebarsUrl);
       if (fs.existsSync(sidebarsPath)) {
-        const sidebarsObj: Sidebars = JSON.parse(
+        let sidebarsObj: Sidebars = JSON.parse(
           fs.readFileSync(sidebarsPath, "utf8")
         );
+        if (Array.isArray(sidebarsObj)) {
+          sidebarsObj = {
+            mySidebar: JSON.parse(JSON.stringify(sidebarsObj)),
+          };
+        }
+        console.log(`[SidebarsController]getSidebars sidebarsObj`, sidebarsObj);
         Object.keys(sidebarsObj).forEach((key) => {
           this.transSidebarItem(rootUrl, sidebarsObj[key]);
         });
@@ -139,7 +145,9 @@ class SidebarsController {
         let sidebarItem = items[index];
         if (typeof sidebarItem === "string") {
           // Remove suffix
-          sidebarItem = sidebarItem.slice(0, sidebarItem.lastIndexOf("."));
+          const suffixIndex = sidebarItem.lastIndexOf(".");
+          suffixIndex !== -1 &&
+            (sidebarItem = sidebarItem.slice(0, suffixIndex));
           items[index] = {
             type: SidebarItemType.Doc,
             id: sidebarItem,
@@ -159,10 +167,9 @@ class SidebarsController {
           } else {
             if (sidebarItem.id) {
               // Remove suffix
-              sidebarItem.id = sidebarItem.id.slice(
-                0,
-                sidebarItem.id.lastIndexOf(".")
-              );
+              const suffixIndex = sidebarItem.id.lastIndexOf(".");
+              suffixIndex !== -1 &&
+                (sidebarItem.id = sidebarItem.id.slice(0, suffixIndex));
             }
             if (sidebarItem.items) {
               loop(sidebarItem.items);
@@ -173,5 +180,6 @@ class SidebarsController {
     };
     loop(sidebar);
   }
+  isAbbreviation() {}
 }
 export default SidebarsController.getInstance();

@@ -55,12 +55,12 @@ class DocsController {
 
       console.log(
         `[DocsController]readDoc mdxFilePath`,
-        mdxFileID,
+        mdxFileUrl,
         mdxFilePath
       );
       if (fs.existsSync(mdxFilePath)) {
         originContent = fs.readFileSync(
-          path.resolve("./public", "..", mdxFileUrl),
+          path.resolve("./public", "..", mdxFilePath),
           "utf8"
         );
       } else {

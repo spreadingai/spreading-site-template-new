@@ -125,10 +125,6 @@ const PreviewLayout = ({
     const { node } = info as any;
     if (node.type === SidebarItemType.Doc) {
       setDrawerOpen(false);
-    } else if (node.type === SidebarItemType.Link) {
-      if (typeof window !== "undefined") {
-        window.open(node.key, "_blank");
-      }
     }
   };
 
@@ -174,6 +170,10 @@ const PreviewLayout = ({
       <div className="custom-node-title">
         {nodeData.id ? (
           <Link className="title" href={nodeData.id}>
+            {nodeData.title}
+          </Link>
+        ) : nodeData.type === SidebarItemType.Link ? (
+          <Link className="title" href={nodeData.link} target="_blank">
             {nodeData.title}
           </Link>
         ) : (
