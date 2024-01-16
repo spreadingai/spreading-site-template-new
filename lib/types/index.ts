@@ -110,3 +110,11 @@ export interface SlugData {
     sidebarId: string;
   };
 }
+
+export interface TocItem {
+  id: string;
+  level: number;
+  title: string;
+  children: TocItem[];
+  index?: number;
+}

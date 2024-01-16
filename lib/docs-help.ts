@@ -12,6 +12,7 @@ import {
   rehypeLink,
   rehypeCodeBlocks,
   rehypeCodeGroup,
+  remarkToc,
 } from "@/plugins";
 
 import LibControllerImpl from "./index";
@@ -78,9 +79,15 @@ class DocsController {
         }
       }
     }
+    const tocRef: any = {};
     const mdxSource = await serialize(originContent, {
       mdxOptions: {
-        remarkPlugins: [remarkGfm, remarkMath, remarkImages],
+        remarkPlugins: [
+          remarkGfm,
+          remarkMath,
+          remarkImages,
+          [remarkToc, { exportRef: tocRef }]
+        ],
         rehypePlugins: [
           // @ts-ignore
           rehypeKatex,
@@ -104,6 +111,7 @@ class DocsController {
     return {
       slug,
       mdxSource,
+      toc: tocRef.toc || [],
     };
   }
   copyStaticFile() {

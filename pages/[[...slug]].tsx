@@ -6,6 +6,7 @@ import {
   Callout,
   Frame,
   Video,
+  Heading,
 } from "docuo-mdx-component";
 import LibControllerImpl from "@/lib";
 import DocsControllerImpl from "@/lib/docs-help";
@@ -13,7 +14,7 @@ import TreeControllerImpl from "@/lib/tree-help";
 import SlugControllerImpl from "@/lib/slug-help";
 import VersionsControllerImpl from "@/lib/versions-help";
 import Link from "next/link";
-import { SlugData, DocuoConfig } from "@/lib/types";
+import { SlugData, DocuoConfig, TocItem } from "@/lib/types";
 import Head from "next/head";
 import { CMS_NAME } from "@/lib/constants";
 
@@ -26,11 +27,13 @@ const components = {
   Error: Callout.Error,
   Frame,
   Video,
+  Heading,
   a: Link,
 };
 
 interface Props {
   mdxSource: MDXRemoteSerializeResult;
+  toc: TocItem[];
   slug: string[];
   docuoConfig: DocuoConfig;
 }

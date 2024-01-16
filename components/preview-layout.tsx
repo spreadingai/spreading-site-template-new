@@ -11,7 +11,7 @@ import Footer from "./footer";
 import ArticlePager from "./articlePager";
 import { createPortal } from "react-dom";
 import { MDXRemoteSerializeResult } from "next-mdx-remote";
-import { DisplayVersion, DocuoConfig, SidebarItemType } from "@/lib/types";
+import { DisplayVersion, DocuoConfig, SidebarItemType, TocItem } from "@/lib/types";
 import Image from "next/image";
 import IconOutlink from "@/assets/images/icon_outlink.png";
 import IconList from "@/assets/images/icon_list.png";
@@ -26,6 +26,7 @@ type Props = {
   slug?: string[];
   instanceID: string[];
   mdxSource: MDXRemoteSerializeResult;
+  toc: TocItem[];
   folderTreeData: TreeDataObject[];
   docuoConfig: DocuoConfig;
   displayVersions: DisplayVersion[];
@@ -44,7 +45,7 @@ const PreviewLayout = ({
   children,
   slug,
   instanceID,
-  mdxSource,
+  toc,
   folderTreeData,
   docuoConfig,
   displayVersions,
@@ -134,8 +135,8 @@ const PreviewLayout = ({
     return data.map((item) => {
       const newItem = { ...item };
 
-      newItem.href = newItem.url;
-      delete newItem.url;
+      newItem.href = `#${newItem.id}`;
+      delete newItem.id;
       newItem.key = key++;
 
       if (newItem.children) {
@@ -228,7 +229,7 @@ const PreviewLayout = ({
               {titleElement ? (
                 createPortal(
                   <div className="article-anchor-top">
-                    {mdxSource.frontmatter.toc ? (
+                    {toc?.length ? (
                       <>
                         <div
                           className="drop-expand"
@@ -244,7 +245,7 @@ const PreviewLayout = ({
                         <Anchor
                           className={`drop-anchor ${isExpand ? "expand" : ""}`}
                           items={formatFrontmatterTocForAntdAnchor(
-                            mdxSource.frontmatter.toc,
+                            toc,
                             0
                           )}
                           affix={false}
@@ -256,7 +257,7 @@ const PreviewLayout = ({
                 )
               ) : (
                 <div className="article-anchor-top">
-                  {mdxSource.frontmatter.toc ? (
+                  {toc?.length ? (
                     <>
                       <div
                         className="drop-expand"
@@ -272,7 +273,7 @@ const PreviewLayout = ({
                       <Anchor
                         className={`drop-anchor ${isExpand ? "expand" : ""}`}
                         items={formatFrontmatterTocForAntdAnchor(
-                          mdxSource.frontmatter.toc,
+                          toc,
                           0
                         )}
                         affix={false}
@@ -296,7 +297,7 @@ const PreviewLayout = ({
             </div>
 
             <div className="article-anchor-right">
-              {mdxSource.frontmatter.toc ? (
+              {toc?.length ? (
                 <>
                   <div
                     className="drop-expand"
@@ -311,7 +312,7 @@ const PreviewLayout = ({
                     className={`drop-anchor ${isExpand ? "expand" : ""}`}
                     targetOffset={10}
                     items={formatFrontmatterTocForAntdAnchor(
-                      mdxSource.frontmatter.toc,
+                      toc,
                       0
                     )}
                     getContainer={() => document.body}
