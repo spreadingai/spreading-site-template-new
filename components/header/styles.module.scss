@@ -74,6 +74,8 @@
   display: flex;
   flex-direction: column;
   gap: 4px 0;
+  max-height: 280px;
+  overflow: auto;
 }
 
 @media screen and (max-width: 768px) {

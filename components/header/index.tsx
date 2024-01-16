@@ -60,7 +60,7 @@ const Header = (props: Props) => {
           {items
             .filter((item) => item.label)
             .map((menu, index) => {
-              if (menu.type === "dropdown") {
+              if ((menu?.type === "dropdown") || Array.isArray(menu.items)) {
                 // @ts-ignore
                 return <DropdownItem menu={menu} key={index} />;
               }
