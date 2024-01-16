@@ -12,7 +12,12 @@ import Footer from "./footer";
 import ArticlePager from "./articlePager";
 import { createPortal } from "react-dom";
 import { MDXRemoteSerializeResult } from "next-mdx-remote";
-import { DisplayVersion, DocuoConfig, SidebarItemType, TocItem } from "@/lib/types";
+import {
+  DisplayVersion,
+  DocuoConfig,
+  SidebarItemType,
+  TocItem,
+} from "@/lib/types";
 import Image from "next/image";
 import IconOutlink from "@/assets/images/icon_outlink.png";
 import IconList from "@/assets/images/icon_list.png";
@@ -63,6 +68,7 @@ const PreviewLayout = ({
   if (!slug) {
     return null;
   }
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter();
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [titleElement, setTitleElement] = useState<HTMLElement | null>(null);
@@ -71,6 +77,7 @@ const PreviewLayout = ({
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [drawerOpen, setDrawerOpen] = useState(false);
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     document.body.scrollTo({ top: 0 });
   }, [router]);
@@ -250,10 +257,7 @@ const PreviewLayout = ({
                         <div className={`top-anchor-divide expand`}></div>
                         <Anchor
                           className={`drop-anchor ${isExpand ? "expand" : ""}`}
-                          items={formatFrontmatterTocForAntdAnchor(
-                            toc,
-                            0
-                          )}
+                          items={formatFrontmatterTocForAntdAnchor(toc, 0)}
                           affix={false}
                         />
                       </>
@@ -278,10 +282,7 @@ const PreviewLayout = ({
                       <div className={`top-anchor-divide expand`}></div>
                       <Anchor
                         className={`drop-anchor ${isExpand ? "expand" : ""}`}
-                        items={formatFrontmatterTocForAntdAnchor(
-                          toc,
-                          0
-                        )}
+                        items={formatFrontmatterTocForAntdAnchor(toc, 0)}
                         affix={false}
                       />
                     </>
@@ -317,10 +318,7 @@ const PreviewLayout = ({
                   <Anchor
                     className={`drop-anchor ${isExpand ? "expand" : ""}`}
                     targetOffset={10}
-                    items={formatFrontmatterTocForAntdAnchor(
-                      toc,
-                      0
-                    )}
+                    items={formatFrontmatterTocForAntdAnchor(toc, 0)}
                     getContainer={() => document.body}
                     affix={false}
                     onClick={handleAnchorClick}
