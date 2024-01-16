@@ -66,7 +66,8 @@ class LibController {
     const docuoConfig = this.getDocuoConfig();
     const { navbar } = docuoConfig.themeConfig;
     // Add a default jump link to all docSidebar type items
-    const loop = (items: NavBarItem[]) => {
+    const loop = (items: NavBarItem[] = []) => {
+      if(items.length === 0) return
       for (const item of items) {
         !item.docsInstanceId && (item.docsInstanceId = "default");
         if (item.type === NavBarItemType.DocSidebar) {

@@ -70,7 +70,8 @@ class SidebarsController {
     const { themeConfig } = LibControllerImpl.getDocuoConfig();
     const { navbar } = themeConfig;
     const usedSidebarIds = [];
-    const loop = (items: NavBarItem[], usedSidebarIds: string[]) => {
+    const loop = (items: NavBarItem[] = [], usedSidebarIds: string[]) => {
+      if (items.length === 0) return
       for (const item of items) {
         !item.docsInstanceId && (item.docsInstanceId = "default");
         if (
