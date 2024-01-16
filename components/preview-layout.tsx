@@ -1,11 +1,12 @@
 // TODO antd cause lambda very slow!!!!!!!!!!!!!! It will take more 7s!!!!!!!!
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AnchorProps, Tree } from "antd";
 import type { TreeProps } from "antd/es/tree";
 import { Breadcrumb, Anchor, Drawer } from "antd";
 import { IconFileClose } from "./icons";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import Header from "./header";
 import Footer from "./footer";
 import ArticlePager from "./articlePager";
@@ -62,12 +63,17 @@ const PreviewLayout = ({
   if (!slug) {
     return null;
   }
+  const router = useRouter();
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [titleElement, setTitleElement] = useState<HTMLElement | null>(null);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [isExpand, setIsExpand] = useState(true);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [drawerOpen, setDrawerOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.scrollTo({ top: 0 });
+  }, [router]);
 
   // All articles must have an id
   const docID = slug.join("/");
