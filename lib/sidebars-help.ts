@@ -194,5 +194,8 @@ class SidebarsController {
       Array.isArray(sidebarItem[key]);
     return result ? key : "";
   }
+  convertString(str: string) {
+    // Quick
+  }
 }
 export default SidebarsController.getInstance();

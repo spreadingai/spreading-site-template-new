@@ -31,7 +31,10 @@ class TreeController {
         instanceID,
         docVersion
       );
-      usedSidebarIds.forEach((sidebarId, index) => {
+      const temp = usedSidebarIds.length
+        ? usedSidebarIds
+        : Object.keys(sidebars);
+      temp.forEach((sidebarId, index) => {
         const sidebarItems = sidebars[sidebarId];
         const prefixKey = `${routeBasePath}${
           slugVersion ? "/" : ""

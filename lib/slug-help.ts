@@ -55,7 +55,10 @@ class SlugController {
         instanceID,
         this.slugVersionToDocVersion(instanceID, slugVersion)
       );
-      for (const sidebarId of usedSidebarIds) {
+      const temp = usedSidebarIds.length
+        ? usedSidebarIds
+        : Object.keys(sidebars);
+      for (const sidebarId of temp) {
         const sidebarItemList = sidebars[sidebarId] as SidebarItem[];
         slugs = slugs.concat(
           this.traverseChildren(
