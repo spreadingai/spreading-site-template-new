@@ -155,7 +155,7 @@
       ],
       "socials": [
         {
-          "logo": "Linkedin",
+          "logo": "LinkedIn",
           "href": "https://example.com/social1"
         },
         {
@@ -167,7 +167,7 @@
           "href": "https://example.com/social2"
         },
         {
-          "logo": "Youtube",
+          "logo": "YouTube",
           "href": "https://example.com/social2"
         },
         {
@@ -175,7 +175,10 @@
           "href": "https://example.com/social2"
         },
         {
-          "logo": "Discord",
+          "logo": {
+            "light": "DiscordLight",
+            "dark": "DiscordDark"
+          },
           "href": "https://example.com/social2"
         }
       ]

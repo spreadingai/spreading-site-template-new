@@ -9,10 +9,11 @@ import IconX from "@/assets/icons/social/X.svg";
 import IconYoutube from "@/assets/icons/social/YouTube.svg";
 import Link from "next/link";
 import type { footerProps } from "./@types";
-import { useMediaQuery } from "usehooks-ts";
+import { useMediaQuery, useDarkMode } from "usehooks-ts";
 import FooterMobile from "./mobile";
 import classNames from "classnames";
 import DocuoConfig from "@/docs/docuo.config.json";
+import { getSocial } from "./utils";
 
 const Footer: FC<footerProps> = (props) => {
   const { footer } = DocuoConfig.themeConfig;
@@ -25,37 +26,15 @@ const Footer: FC<footerProps> = (props) => {
   const isWrap = useMediaQuery(`(max-width: ${towRowWidth}px)`);
   const isShowMobile = useMediaQuery(`(max-width: 375px)`);
   const isSMWrap = useMediaQuery(`(max-width: ${3 * 200 + 64}px)`);
-
+  const { isDarkMode } = useDarkMode(false);
+  
   useEffect(() => {
     const towColWidth = 40 * 2 + 320 + 40 + len * itemWidth;
     const rowWidth = 40 * 2 + 320 + 40 + 2 * itemWidth;
 
     setWidth(towColWidth);
     setTowRowWidth(rowWidth);
-  }, []);
-
-  const getSocial = (logo: string) => {
-    switch (logo) {
-      case "Linkedin":
-        return <IconLinkedIn />;
-      case "X":
-        return <IconX />;
-      case "Twitter":
-        return <IconX />;
-      case "Facebook":
-        return <IconFacebook />;
-      case "Youtube":
-        return <IconYoutube />;
-      case "Github":
-        return <IconGithub />;
-      case "Discord":
-        return <IconDiscord />;
-      default:
-        return (
-          <Image src={logo} width={20} height={20} alt={"custom social"} />
-        );
-    }
-  };
+  }, [len]);
 
   return (
     <footer className={styles["footer-container"]}>
@@ -71,7 +50,7 @@ const Footer: FC<footerProps> = (props) => {
               return (
                 <a key={index} href={social.href} target="_blank">
                   <span className={styles["social-item"]}>
-                    {getSocial(social.logo)}
+                    {getSocial(social.logo, isDarkMode)}
                   </span>
                   {/* <Image src={social.logo} alt={"logo"} /> */}
                   {/* {<IconDiscord />} */}
