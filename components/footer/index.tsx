@@ -18,7 +18,8 @@ import { getSocial } from "./utils";
 const Footer: FC<footerProps> = (props) => {
   const { footer } = DocuoConfig.themeConfig;
   const itemWidth = 200;
-  const len = footer.links.slice(0, 4).length;
+  const links = footer.links || [];
+  const len = links.slice(0, 4).length;
   const [width, setWidth] = React.useState(0);
   const [towRowWidth, setTowRowWidth] = React.useState(0);
   const rightRef = useRef<HTMLDivElement>(null);
@@ -27,7 +28,7 @@ const Footer: FC<footerProps> = (props) => {
   const isShowMobile = useMediaQuery(`(max-width: 375px)`);
   const isSMWrap = useMediaQuery(`(max-width: ${3 * 200 + 64}px)`);
   const { isDarkMode } = useDarkMode(false);
-  
+
   useEffect(() => {
     const towColWidth = 40 * 2 + 320 + 40 + len * itemWidth;
     const rowWidth = 40 * 2 + 320 + 40 + 2 * itemWidth;
@@ -69,9 +70,9 @@ const Footer: FC<footerProps> = (props) => {
           ref={rightRef}
         >
           {isShowMobile ? (
-            <FooterMobile items={footer.links} />
+            <FooterMobile items={links} />
           ) : (
-            footer.links.slice(0, 4).map((group, index, arr) => {
+            links.slice(0, 4).map((group, index, arr) => {
               return (
                 <div key={index} className={`${styles["group"]}`}>
                   <div className={styles["group-title"]}>{group.title}</div>
