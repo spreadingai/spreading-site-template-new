@@ -50,20 +50,24 @@ class DocsController {
           instanceID === "default" ? "" : instanceID + "_"
         }versioned_docs/version-${docVersion}`;
       }
+
+      // Test md suffix
       mdxFileUrl = `${rootUrl}/${mdxFileID}.md`;
       let mdxFilePath = path.resolve("./public", "..", mdxFileUrl);
-
       console.log(
         `[DocsController]readDoc mdxFilePath`,
+        mdxFileID,
         mdxFileUrl,
         mdxFilePath
       );
+
       if (fs.existsSync(mdxFilePath)) {
         originContent = fs.readFileSync(
           path.resolve("./public", "..", mdxFilePath),
           "utf8"
         );
       } else {
+        // Test mdx suffix
         mdxFileUrl = `${mdxFileUrl}x`;
         mdxFilePath = `${mdxFilePath}x`;
         if (fs.existsSync(mdxFilePath)) {
@@ -129,6 +133,7 @@ class DocsController {
     }
     loop(staticFilePath, targetFilePath);
   }
+  convertDocID(str: string) {}
 }
 
 export default DocsController.getInstance();

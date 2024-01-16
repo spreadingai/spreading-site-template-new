@@ -84,7 +84,7 @@ class SidebarsController {
         }
       }
     };
-    loop(navbar.items, usedSidebarIds);
+    loop(navbar.items || [], usedSidebarIds);
     // Remove duplicate elements
     this._usedSidebarIdsMap[instanceID] = usedSidebarIds.reduce(
       (prev, curr) => {
@@ -113,9 +113,11 @@ class SidebarsController {
           parsedPath.ext.toLocaleLowerCase() === ".mdx" ||
           parsedPath.ext.toLocaleLowerCase() === ".md"
         ) {
+          let id = path.join(parsedPath.dir, parsedPath.name);
+          id = this.convertDocID(id);
           return {
             type: "doc",
-            id: path.join(parsedPath.dir, parsedPath.name),
+            id,
             label: parsedPath.name,
           };
         } else {
@@ -148,6 +150,7 @@ class SidebarsController {
           const suffixIndex = sidebarItem.lastIndexOf(".");
           suffixIndex !== -1 &&
             (sidebarItem = sidebarItem.slice(0, suffixIndex));
+          sidebarItem = this.convertDocID(sidebarItem);
           items[index] = {
             type: SidebarItemType.Doc,
             id: sidebarItem,
@@ -172,6 +175,7 @@ class SidebarsController {
               const suffixIndex = sidebarItem.id.lastIndexOf(".");
               suffixIndex !== -1 &&
                 (sidebarItem.id = sidebarItem.id.slice(0, suffixIndex));
+              sidebarItem.id = this.convertDocID(sidebarItem.id);
             }
             if (sidebarItem.items) {
               loop(sidebarItem.items);
@@ -194,8 +198,16 @@ class SidebarsController {
       Array.isArray(sidebarItem[key]);
     return result ? key : "";
   }
-  convertString(str: string) {
-    // Quick
+  convertDocID(str: string) {
+    // Quick Start, Quick-Start
+    // Quick start, Quick-start
+    // Quick start/Overview
+    const result = [];
+    const temp = str.split("/");
+    temp.forEach((path) => {
+      result.push(path.toLowerCase().replace(/\s+/g, "-"));
+    });
+    return result.join("/");
   }
 }
 export default SidebarsController.getInstance();

@@ -120,6 +120,7 @@ class SlugController {
     ).id;
     const versions = VersionsControllerImpl.getUsedVersions(instanceID);
     let slugVersion = slug[1];
+    // mdxFileID: docs/docs/complex-components/test1/link_test.md
     let mdxFileID = slug.slice(2).join("/");
     const mdxFileName = slug[slug.length - 1];
     if (!versions.length) {
