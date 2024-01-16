@@ -76,7 +76,7 @@ class TreeController {
         children = this.getChildrenFromChildren(
           `${level}-${index}`,
           item.items as SidebarItem[],
-          `${prefixKey}${prefixKey ? "/" : ""}${item.label}${level}-${index}`,
+          `${prefixKey}${prefixKey ? "/" : ""}${item.label}-${level}-${index}`,
           idPrefixKey,
           instanceID,
           docVersion,
@@ -93,7 +93,7 @@ class TreeController {
           type: item.type,
           key: `${prefixKey}${prefixKey ? "/" : ""}${
             item.label
-          }${level}-${index}`,
+          }-${level}-${index}`,
           instanceID,
           docVersion,
           slugVersion,
@@ -108,7 +108,7 @@ class TreeController {
           type: item.type,
           key: `${prefixKey}${prefixKey ? "/" : ""}${
             item.label
-          }${level}-${index}`,
+          }-${level}-${index}`,
           link: item.href || item.to,
           instanceID,
           docVersion,

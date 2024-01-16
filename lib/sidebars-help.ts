@@ -71,7 +71,7 @@ class SidebarsController {
     const { navbar } = themeConfig;
     const usedSidebarIds = [];
     const loop = (items: NavBarItem[] = [], usedSidebarIds: string[]) => {
-      if (items.length === 0) return
+      if (items.length === 0) return;
       for (const item of items) {
         !item.docsInstanceId && (item.docsInstanceId = "default");
         if (
@@ -114,8 +114,8 @@ class SidebarsController {
           parsedPath.ext.toLocaleLowerCase() === ".mdx" ||
           parsedPath.ext.toLocaleLowerCase() === ".md"
         ) {
-          let id = path.join(parsedPath.dir, parsedPath.name);
-          id = this.convertDocID(id);
+          const originID = path.join(parsedPath.dir, parsedPath.name);
+          const id = this.convertDocID(originID);
           return {
             type: "doc",
             id,

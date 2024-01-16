@@ -52,31 +52,9 @@ class DocsController {
         }versioned_docs/version-${docVersion}`;
       }
 
-      // Test md suffix
-      mdxFileUrl = `${rootUrl}/${mdxFileID}.md`;
-      let mdxFilePath = path.resolve("./public", "..", mdxFileUrl);
-      console.log(
-        `[DocsController]readDoc mdxFilePath`,
-        mdxFileID,
-        mdxFileUrl,
-        mdxFilePath
-      );
-
-      if (fs.existsSync(mdxFilePath)) {
-        originContent = fs.readFileSync(
-          path.resolve("./public", "..", mdxFilePath),
-          "utf8"
-        );
-      } else {
-        // Test mdx suffix
-        mdxFileUrl = `${mdxFileUrl}x`;
-        mdxFilePath = `${mdxFilePath}x`;
-        if (fs.existsSync(mdxFilePath)) {
-          originContent = fs.readFileSync(
-            path.resolve("./public", "..", mdxFilePath),
-            "utf8"
-          );
-        }
+      const actualMdxFilePath = this.getActualMdxFilePath(rootUrl, mdxFileID);
+      if (actualMdxFilePath) {
+        originContent = fs.readFileSync(actualMdxFilePath, "utf8");
       }
     }
     const tocRef: any = {};
@@ -86,7 +64,7 @@ class DocsController {
           remarkGfm,
           remarkMath,
           remarkImages,
-          [remarkToc, { exportRef: tocRef }]
+          [remarkToc, { exportRef: tocRef }],
         ],
         rehypePlugins: [
           // @ts-ignore
@@ -141,7 +119,58 @@ class DocsController {
     }
     loop(staticFilePath, targetFilePath);
   }
-  convertDocID(str: string) {}
+  getActualMdxFilePath(rootUrl: string, mdxFileID: string) {
+    const rootPath = path.resolve("./public", "..", rootUrl);
+    const levels = mdxFileID.split("/");
+
+    const loop = (sourcePath: string, level: number) => {
+      if (!fs.existsSync(sourcePath)) {
+        return;
+      }
+      const files = fs.readdirSync(sourcePath);
+      for (let index = 0; index < files.length; index++) {
+        const file = files[index];
+        const joinPath = path.join(sourcePath, file);
+        const stat = fs.statSync(joinPath);
+        if (stat.isDirectory()) {
+          if (level <= levels.length) {
+            const targetPath = path.join(sourcePath, file);
+            const result = loop(targetPath, level + 1);
+            if (result) return result;
+          } else {
+            console.log(
+              `[DocsController]getActualMdxFilePath exceed level`,
+              level
+            );
+          }
+        } else {
+          let relativePath = path.relative(rootPath, joinPath);
+          const suffixIndex = relativePath.lastIndexOf(".");
+          const temp =
+            suffixIndex !== -1
+              ? relativePath.slice(0, suffixIndex)
+              : relativePath;
+          if (this.convertDocID(temp) === mdxFileID) {
+            return joinPath;
+          }
+        }
+      }
+    };
+    const actualMdxFilePath = loop(rootPath, 1);
+    console.log(`getActualMdxFilePath actualMdxFilePath`, actualMdxFilePath);
+    return actualMdxFilePath;
+  }
+  convertDocID(str: string) {
+    // Quick Start, Quick-Start
+    // Quick start, Quick-start
+    // Quick start/Overview
+    const result = [];
+    const temp = str.split("/");
+    temp.forEach((path) => {
+      result.push(path.toLowerCase().replace(/\s+/g, "-"));
+    });
+    return result.join("/");
+  }
 }
 
 export default DocsController.getInstance();
