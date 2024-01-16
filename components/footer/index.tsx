@@ -19,6 +19,7 @@ const Footer: FC<footerProps> = (props) => {
   const { footer } = DocuoConfig.themeConfig;
   const itemWidth = 200;
   const links = footer.links || [];
+  const socials = footer.socials || [];
   const len = links.slice(0, 4).length;
   const [width, setWidth] = React.useState(0);
   const [towRowWidth, setTowRowWidth] = React.useState(0);
@@ -47,7 +48,7 @@ const Footer: FC<footerProps> = (props) => {
           </div>
           <div className={styles["description"]}>{footer.caption}</div>
           <div className={styles["social"]}>
-            {footer.socials.map((social, index) => {
+            {socials.map((social, index) => {
               return (
                 <a key={index} href={social.href} target="_blank">
                   <span className={styles["social-item"]}>
