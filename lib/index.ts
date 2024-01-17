@@ -26,12 +26,14 @@ class LibController {
         docuoConfig.instances = [defaultInstance];
       } else {
         docuoConfig.instances.forEach((instance) => {
-          if (!instance.id || instance.id === "default") {
-            // Host instance
+          if (!instance.id) {
             instance.id = defaultInstance.id;
-            instance.label = defaultInstance.label;
+          }
+          if (!instance.path) {
             instance.path = defaultInstance.path;
-            instance.routeBasePath = defaultInstance.routeBasePath;
+          }
+          if (!instance.label) {
+            instance.label = defaultInstance.label;
           }
           if (!instance.routeBasePath) {
             instance.routeBasePath = instance.path;
@@ -67,7 +69,7 @@ class LibController {
     const { navbar } = docuoConfig.themeConfig;
     // Add a default jump link to all docSidebar type items
     const loop = (items: NavBarItem[] = []) => {
-      if(items.length === 0) return
+      if (items.length === 0) return;
       for (const item of items) {
         !item.docsInstanceId && (item.docsInstanceId = "default");
         if (item.type === NavBarItemType.DocSidebar) {
