@@ -54,7 +54,11 @@ const Footer: FC<footerProps> = (props) => {
             <div className={styles["logo-container"]}>
               <img
                 className={styles.logo}
-                src={`/${footer.logo}`}
+                src={
+                  (footer.logo as string).includes("http")
+                    ? `${footer.logo}`
+                    : `/${footer.logo}`
+                }
                 alt={"logo"}
               />
               {/* <div className={styles["logo-title"]}>{"Untitled"}</div> */}
