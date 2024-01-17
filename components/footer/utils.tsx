@@ -36,7 +36,12 @@ const getSocial = (
   const current = typeof logo === "string" ? logo : logo[mode];
   return (
     Social[current] || (
-      <img src={current} width={20} height={20} alt={"social"} />
+      <img
+        src={current.includes("http") ? current : `/${current}`}
+        width={20}
+        height={20}
+        alt={"social"}
+      />
     )
   );
 };
