@@ -13,7 +13,10 @@ const DropdownItem: FC<{ menu: NavbarLink }> = ({ menu }) => {
         ...item,
         key: index,
         label: (
-          <Link href={item.defaultLink || item.href || { pathname: menu.to }}>
+          <Link
+            href={item.defaultLink || item.href || { pathname: menu.to }}
+            target={item.href ? "_blank" : "_self"}
+          >
             {item.label}
           </Link>
         ),
