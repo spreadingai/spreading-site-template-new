@@ -31,6 +31,12 @@
           "label": "Blog"
         },
         {
+          "type": "default",
+          "href": "https://app.spreading.ai",
+          "label": "spreading",
+          "position": "left"
+        },
+        {
           "type": "docSidebar",
           "sidebarIds": ["mySidebar"],
           "label": "11"
