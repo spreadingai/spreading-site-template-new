@@ -31,6 +31,7 @@ const Footer: FC<footerProps> = (props) => {
   const len = links.slice(0, 4).length;
   const [width, setWidth] = React.useState(0);
   const [towRowWidth, setTowRowWidth] = React.useState(0);
+  const [isMobile, setIsMobile] = React.useState(false);
   const rightRef = useRef<HTMLDivElement>(null);
   const isShowTwoCol = useMediaQuery(`(max-width: ${width}px)`);
   const isWrap = useMediaQuery(`(max-width: ${towRowWidth}px)`);
@@ -45,6 +46,11 @@ const Footer: FC<footerProps> = (props) => {
     setWidth(towColWidth);
     setTowRowWidth(rowWidth);
   }, [len]);
+
+  useEffect(() => {
+    setIsMobile(isShowMobile);
+  }, [isShowMobile]);
+
   if (!footer) return null;
   return (
     <footer className={styles["footer-container"]}>
@@ -93,7 +99,7 @@ const Footer: FC<footerProps> = (props) => {
           })}
           ref={rightRef}
         >
-          {isShowMobile ? (
+          {isMobile ? (
             <FooterMobile items={links} />
           ) : (
             links.slice(0, 4).map((group, index, arr) => {

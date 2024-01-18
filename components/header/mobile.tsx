@@ -23,7 +23,7 @@ const Mobile: FC<Props> = ({ menus }) => {
           onClick={() => setOpen(() => false)}
         />
         <div className={styles["mobile-menus"]}>
-          {menus.map((menu, index) => {
+          {menus.map((menu, index, arr) => {
             if (menu.items) {
               const items = [
                 {
@@ -32,19 +32,18 @@ const Mobile: FC<Props> = ({ menus }) => {
                     <div className={styles["mobile-item"]}>{menu.label}</div>
                   ),
                   children: (
-                    <div className="mobile-item2">
+                    <div className={styles["mobile-down-items"]}>
                       {menu.items.map((child, index) => (
-                        <div
+                        <Link
                           key={index}
-                          style={{
-                            height: 44,
-                            fontSize: 14,
-                            display: "flex",
-                            alignItems: "center",
-                          }}
+                          className={styles["mobile-down-item"]}
+                          href={
+                            menu.defaultLink ||
+                            menu.href || { pathname: menu.to }
+                          }
                         >
                           {child.label}
-                        </div>
+                        </Link>
                       ))}
                     </div>
                   ),
@@ -85,14 +84,16 @@ const Mobile: FC<Props> = ({ menus }) => {
               );
             }
             return (
-              <Link
-                key={index}
-                className={styles["mobile-item"]}
-                href={menu.href}
-                // target={menu.target}
-              >
-                {menu.label}
-              </Link>
+              <React.Fragment key={index}>
+                <Link
+                  className={styles["mobile-item"]}
+                  href={menu.defaultLink || menu.href || { pathname: menu.to }}
+                  // target={menu.target}
+                >
+                  {menu.label}
+                </Link>
+                {arr.length - 1 !== index && <div className={styles["line"]} />}
+              </React.Fragment>
             );
           })}
         </div>

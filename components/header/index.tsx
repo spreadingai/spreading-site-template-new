@@ -16,9 +16,14 @@ const Header = (props: Props) => {
   const { navbar } = docuoConfig.themeConfig;
   const { items } = navbar;
   const [width, setWidth] = React.useState(0);
+  const [isMobile, setIsMobile] = React.useState(false);
   const matches = useMediaQuery(`(max-width: ${Math.max(width, 375)}px)`); // mobile
   const menusRef = React.useRef<HTMLDivElement>(null);
   const logoRef = React.useRef<HTMLAnchorElement>(null);
+
+  useEffect(() => {
+    setIsMobile(matches);
+  }, [matches]);
 
   useEffect(() => {
     // compute the width of the hamburger menu
@@ -52,9 +57,9 @@ const Header = (props: Props) => {
           <span className={styles["logo-title"]}>{navbar.title}</span>
         </Link>
       ) : null}
-      {matches ? (
+      {isMobile ? (
         // @ts-ignore
-        <Mobile menus={items} />
+        <Mobile menus={items.filter((item) => item.label)} />
       ) : (
         <div className={styles["menus"]} ref={menusRef}>
           {items
