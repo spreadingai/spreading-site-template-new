@@ -1,103 +1,174 @@
 {
-  "title": "My Site",
+  "title": "sunliying site",
   "favicon": "image/favicon.ico",
-  "metadata": [],
   "instances": [
     {
       "id": "default",
       "label": "docs",
       "path": "docs",
-      "routeBasePath": "docs"
-    },
-    {
-      "id": "callkit",
-      "label": "callkit",
-      "path": "callkit_docs",
-      "routeBasePath": "callkit"
+      "routeBasePath": "sunliying"
     }
   ],
   "themeConfig": {
     "navbar": {
-      "title": "My Site",
+      "title": "hhhahahh zhejhs hdhe",
       "logo": "image/logo.png",
-      "iconRedirectUrl": "https://www.spreading.ai",
+      "iconRedirectUrl": "https://www.zego.im",
       "items": [
         {
           "type": "default",
-          "to": "/blog",
           "href": "https://app.spreading.ai",
-          "label": "Blog",
-          "position": "left"
+          "label": "Blog"
+        },
+        {
+          "type": "default",
+          "href": "https://app.spreading.ai",
+          "label": "Blog"
+        },
+        {
+          "type": "default",
+          "href": "https://app.spreading.ai",
+          "label": "Blog"
         },
         {
           "type": "docSidebar",
           "sidebarIds": ["mySidebar"],
-          "label": "NavItem1",
-          "position": "left",
-          "docsInstanceId": "default"
+          "label": "11"
         },
         {
           "type": "docSidebar",
-          "sidebarIds": ["sidebar1", "sidebar2"],
-          "label": "NavItem2",
-          "position": "left",
-          "docsInstanceId": "callkit"
+          "sidebarIds": ["mySidebar"],
+          "label": "pneumonoultramicroscopicsilicovolcanoconiosis"
         },
         {
-          "type": "dropdown",
           "label": "Dropdown1",
           "items": [
             {
               "type": "docSidebar",
-              "sidebarIds": ["sidebar1"],
-              "label": "NavItem1",
-              "position": "left",
-              "docsInstanceId": "callkit"
+              "sidebarIds": ["mySidebar"],
+              "label": "NavItem3"
             },
             {
               "type": "docSidebar",
-              "sidebarIds": ["sidebar2"],
-              "label": "NavItem2",
-              "position": "left",
-              "docsInstanceId": "callkit"
+              "sidebarIds": ["mySidebar"],
+              "label": "pneumonoultramicroscopicsilicovolcanoconiosis"
             }
-          ],
-          "position": "left"
+          ]
         },
         {
-          "type": "docsVersionDropdown",
-          "position": "left",
-          "docsInstanceId": "callkit"
-        },
-        {
-          "type": "docsInstanceDropdown",
-          "position": "left"
-        },
-        {
-          "type": "search",
-          "position": "left"
+          "type": "dropdown",
+          "label": "zhegde",
+          "items": [
+            {
+              "type": "default",
+              "href": "https://feedeo.spreading.ai",
+              "label": "feedeo Blog"
+            },
+            {
+              "type": "default",
+              "href": "https://app.spreading.ai",
+              "label": "youdehdeb app"
+            },
+            {
+              "type": "default",
+              "href": "https://www.baidu.com",
+              "label": "baidu hdehde  dhdhe"
+            },
+            {
+              "type": "default",
+              "href": "https://app.spreading.ai",
+              "label": "Blog"
+            },
+            {
+              "type": "default",
+              "href": "https://app.spreading.ai",
+              "label": "Blog11111111"
+            },
+            {
+              "type": "default",
+              "href": "https://app.spreading.ai",
+              "label": "Blog2222222222"
+            },
+            {
+              "type": "default",
+              "href": "https://app.spreading.ai",
+              "label": "hhah dhehde dhehd edeh de "
+            },
+            {
+              "href": "https://feedeo.spreading.ai",
+              "label": "feedeo"
+            },
+            {
+              "type": "default",
+              "href": "https://app.spreading.ai",
+              "label": "Blog"
+            },
+            {
+              "type": "default",
+              "href": "https://app.spreading.ai",
+              "label": "Blog11111111"
+            },
+            {
+              "type": "default",
+              "href": "https://app.spreading.ai",
+              "label": "Blog2222222222"
+            },
+            {
+              "type": "default",
+              "href": "https://app.spreading.ai",
+              "label": "hhah dhehde dhehd edeh de "
+            },
+            {
+              "href": "https://feedeo.spreading.ai",
+              "label": "feedeo"
+            },
+            {
+              "type": "default",
+              "href": "https://app.spreading.ai",
+              "label": "great-granddaughter"
+            },
+            {
+              "type": "default",
+              "href": "https://app.spreading.ai",
+              "label": "Blog11111111"
+            },
+            {
+              "type": "default",
+              "href": "https://app.spreading.ai",
+              "label": "pneumonoultramicroscopicsilicovolcanoconiosis"
+            },
+            {
+              "type": "default",
+              "href": "https://app.spreading.ai",
+              "label": "hhah dhehde dhehd edeh de "
+            },
+            {
+              "href": "https://feedeo.spreading.ai",
+              "label": "Documentation description"
+            }
+          ]
         }
       ]
     },
     "footer": {
       "logo": "image/logo.png",
-      "copyright": "Copyright @2023 SPREADING. All Rights Reserved",
-      "caption": "",
+      "copyright": "Copyright @2024 SPREADING. All Rights Reserved",
+      "caption": "mbed high-quality real-time video into your applications with ZEGOCLOUD's live video call API.",
       "links": [
         {
-          "title": "Products",
+          "title": "pneumonoultra",
           "items": [
             {
-              "label": "Voice call",
-              "to": "/link1"
+              "label": "Products ",
+              "href": "https://www.zegocloud.com/product/video-call"
             },
             {
-              "label": "Video call",
-              "to": "/link2"
+              "label": "Voice call2345678",
+              "href": "https://www.zegocloud.com/product/video-call"
             },
             {
-              "label": "Live Streaming",
-              "to": "/link2"
+              "label": "Voice call456789",
+              "href": "https://www.zegocloud.com/product/video-call"
             }
           ]
         },
@@ -105,16 +176,8 @@
           "title": "Solutions",
           "items": [
             {
-              "label": "Social",
-              "href": "https://example.com/link3"
-            },
-            {
-              "label": "Education",
-              "href": "https://example.com/link4"
-            },
-            {
-              "label": "Telehealth",
-              "href": "https://example.com/link4"
+              "label": "pneumonoultramicroscopic",
+              "href": "https://www.zegocloud.com/product/voice-call"
             }
           ]
         },
@@ -123,15 +186,7 @@
           "items": [
             {
               "label": "About",
-              "href": "https://example.com/link3"
-            },
-            {
-              "label": "Blog",
-              "href": "https://example.com/link4"
-            },
-            {
-              "label": "Partners",
-              "href": "https://example.com/link4"
+              "href": "https://www.zegocloud.com/product/voice-call"
             }
           ]
         },
@@ -143,12 +198,74 @@
               "href": "https://example.com/link3"
             },
             {
-              "label": "Demo Apps",
-              "href": "https://example.com/link4"
+              "label": "Documentation 11111",
+              "href": "https://example.com/link31111"
             },
             {
-              "label": "Code Store",
-              "href": "https://example.com/link4"
+              "label": "Documentation",
+              "href": "https://example.com/link3"
+            },
+            {
+              "label": "Documentation 11111",
+              "href": "https://example.com/link31111"
+            },
+            {
+              "label": "Documentation",
+              "href": "https://example.com/link3"
+            },
+            {
+              "label": "Documentation 11111",
+              "href": "https://example.com/link31111"
+            },
+            {
+              "label": "Documentation",
+              "href": "https://example.com/link3"
+            },
+            {
+              "label": "Documentation 11111",
+              "href": "https://example.com/link31111"
+            },
+            {
+              "label": "Documentation",
+              "href": "https://example.com/link3"
+            },
+            {
+              "label": "Documentation 11111",
+              "href": "https://example.com/link31111"
+            },
+            {
+              "label": "Documentation",
+              "href": "https://example.com/link3"
+            },
+            {
+              "label": "Documentation 11111",
+              "href": "https://example.com/link31111"
+            }
+          ]
+        },
+        {
+          "title": "Developers222",
+          "items": [
+            {
+              "label": "Documentation",
+              "href": "https://example.com/link3"
+            },
+            {
+              "label": "Documentation 11111",
+              "href": "https://example.com/link31111"
+            }
+          ]
+        },
+        {
+          "title": "Developers222333",
+          "items": [
+            {
+              "label": "Documentation",
+              "href": "https://example.com/link3"
+            },
+            {
+              "label": "Documentation 11111",
+              "href": "https://example.com/link31111"
             }
           ]
         }
@@ -156,7 +273,7 @@
       "socials": [
         {
           "logo": "LinkedIn",
-          "href": "https://example.com/social1"
+          "href": "https://www.baidu.com"
         },
         {
           "logo": "Twitter",
@@ -175,11 +292,12 @@
           "href": "https://example.com/social2"
         },
         {
-          "logo": {
-            "light": "DiscordLight",
-            "dark": "DiscordDark"
-          },
+          "logo": "Discord",
           "href": "https://example.com/social2"
+        },
+        {
+          "logo": "X",
+          "href": "https://www.baidu.com"
         }
       ]
     }

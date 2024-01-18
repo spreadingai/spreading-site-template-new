@@ -65,22 +65,18 @@ const PreviewLayout = ({
     displayVersions
   );
 
-  if (!slug) {
-    return null;
-  }
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const router = useRouter();
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [titleElement, setTitleElement] = useState<HTMLElement | null>(null);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [isExpand, setIsExpand] = useState(true);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [drawerOpen, setDrawerOpen] = useState(false);
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     document.body.scrollTo({ top: 0 });
   }, [router]);
+
+  if (!slug) {
+    return null;
+  }
 
   // All articles must have an id
   const docID = slug.join("/");

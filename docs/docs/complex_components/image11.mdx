@@ -1,0 +1,53 @@
+# image
+
+## 静态路径
+
+![The San Juan Mountains are beautiful!](image/logo.png)
+
+## 链接路径
+
+![An old rock in the desert](https://www.markdown.xyz/assets/images/tux.png)
+
+比较高的图片
+![比较高的图片1](https://images.pexels.com/photos/19736966/pexels-photo-19736966.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2 "this is description when you hover at this image")
+![比较高的图片2](https://images.pexels.com/photos/18071362/pexels-photo-18071362.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2)
+
+
+
+比较宽的图片
+![比较宽的图片1](https://images.pexels.com/photos/19708337/pexels-photo-19708337.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2 "347687")
+![比较宽的图片2](https://images.pexels.com/photos/19696637/pexels-photo-19696637.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)
+
+## 图片外框
+
+### 简单设置 - 静态图片 - 不设置宽高
+<Frame>
+  <img src="../static/image/logo.png" />
+</Frame>
+
+### 简单设置 - 链接图片 - 不设置宽高
+<Frame>
+  <img src="https://www.markdown.xyz/assets/images/tux.png" />
+</Frame>
+
+
+### 简单设置 - 链接图片 - 设置宽高auto - 不设置 caption
+<Frame  width="auto" height="auto">
+  <img src="https://images.pexels.com/photos/19696637/pexels-photo-19696637.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" />
+</Frame>
+
+
+### 较小宽高，100 较短caption
+<Frame width="100" height="100" caption="image100px" >
+  <img src="https://images.pexels.com/photos/19696637/pexels-photo-19696637.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"  />
+</Frame>
+
+### 较大宽高， 1000
+<Frame width="1000" height="1000" caption="image1000px" >
+  <img src="https://images.pexels.com/photos/19696637/pexels-photo-19696637.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"  />
+</Frame>
+
+### 不一样的宽高， 较长caption
+<Frame width="100" height="200" caption="We have a quick guide that will show you how to create your first repository and earn more green squares!" >
+  <img src="https://images.pexels.com/photos/19696637/pexels-photo-19696637.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"  />
+</Frame>

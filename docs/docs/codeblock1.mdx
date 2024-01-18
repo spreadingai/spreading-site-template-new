@@ -1,0 +1,426 @@
+# codeblock
+
+## 不带任何参数 codeblock
+
+```
+//  Created by www.runoob.com on 15/11/9.
+//  Copyright © 2015年 菜鸟教程. All rights reserved.
+#include<stdio.h>
+#include<stdlib.h>
+typedef struct{
+    int ID;
+    int math;
+    int English;
+    int C;
+    int avargrade;
+    char name[20];
+}Stu;
+int main()
+{
+    FILE*fp;
+    Stu stu[5];
+    int i,avargrade=0;
+    printf("请输入5个同学的信息：学生号，姓名，3门成绩:\n");
+    for(i=0;i<5;i++)
+    {
+        scanf("%d %s %d %d %d",&(stu[i].ID),stu[i].name,&(stu[i].math),&(stu[i].English),&(stu[i].C));
+        stu[i].avargrade=(stu[i].math+stu[i].English+stu[i].C)/3;
+    }
+
+    if((fp=fopen("stud","w"))==NULL)
+    {
+        printf("error :cannot open file!\n");
+        exit(0);
+    }
+    for(i=0;i<5;i++)
+        fprintf(fp,"%d %s %d %d %d %d\n",stu[i].ID,stu[i].name,stu[i].math,stu[i].English,stu[i].C,stu[i].avargrade);
+    fclose(fp);
+    // system("pause");
+    return 0;
+}
+```
+
+## 带上语言参数 codeblock
+
+### html
+
+```html
+<form action="/" method="post">
+    <!-- 文本输入框 -->
+    <label for="name">用户名:</label>
+    <input type="text" id="name" name="name" required>
+
+    <br>
+
+    <!-- 密码输入框 -->
+    <label for="password">密码:</label>
+    <input type="password" id="password" name="password" required>
+
+    <br>
+
+    <!-- 单选按钮 -->
+    <label>性别:</label>
+    <input type="radio" id="male" name="gender" value="male" checked>
+    <label for="male">男</label>
+    <input type="radio" id="female" name="gender" value="female">
+    <label for="female">女</label>
+
+    <br>
+
+    <!-- 复选框 -->
+    <input type="checkbox" id="subscribe" name="subscribe" checked>
+    <label for="subscribe">订阅推送信息</label>
+
+    <br>
+
+    <!-- 下拉列表 -->
+    <label for="country">国家:</label>
+    <select id="country" name="country">
+        <option value="cn">CN</option>
+        <option value="usa">USA</option>
+        <option value="uk">UK</option>
+    </select>
+
+    <br>
+
+    <!-- 提交按钮 -->
+    <input type="submit" value="提交">
+</form>
+```
+
+### swift
+
+```swift
+func initWithAppID(_ appID: UInt32, appSign: String?) {
+    let zimConfig: ZIMAppConfig = ZIMAppConfig()
+    zimConfig.appID = appID
+    zimConfig.appSign = appSign ?? ""
+    self.zim = ZIM.shared()
+    if self.zim == nil {
+        self.zim = ZIM.create(with: zimConfig)
+    }
+    self.zim?.setEventHandler(self)
+}
+
+// explaination
+func zim(_ zim: ZIM, receiveRoomMessage messageList: [ZIMMessage], fromRoomID: String) {
+    //...
+}
+```
+
+## 不同方式设置名称
+
+### 不带title参数 ，没有后缀 -- 语言+title-单空格
+
+```swift helloworld
+func initWithAppID(_ appID: UInt32, appSign: String?) {
+    let zimConfig: ZIMAppConfig = ZIMAppConfig()
+    zimConfig.appID = appID
+    zimConfig.appSign = appSign ?? ""
+    self.zim = ZIM.shared()
+    if self.zim == nil {
+        self.zim = ZIM.create(with: zimConfig)
+    }
+    self.zim?.setEventHandler(self)
+}
+
+// explaination
+func zim(_ zim: ZIM, receiveRoomMessage messageList: [ZIMMessage], fromRoomID: String) {
+    //...
+}
+```
+
+### 不带title参数 ，有后缀 -- 只有title， 单空格
+
+``` helloworld.swift
+func initWithAppID(_ appID: UInt32, appSign: String?) {
+    let zimConfig: ZIMAppConfig = ZIMAppConfig()
+    zimConfig.appID = appID
+    zimConfig.appSign = appSign ?? ""
+    self.zim = ZIM.shared()
+    if self.zim == nil {
+        self.zim = ZIM.create(with: zimConfig)
+    }
+    self.zim?.setEventHandler(self)
+}
+
+// explaination
+func zim(_ zim: ZIM, receiveRoomMessage messageList: [ZIMMessage], fromRoomID: String) {
+    //...
+}
+```
+
+### 带title参数 -- 语言+title -多空格
+
+```handlebars    title="handlebars title"
+{{#> layout}}
+  {{#*inline "nav"}}
+    My Nav
+  {{/inline}}
+  {{#*inline "content"}}
+    My Content
+  {{/inline}}
+{{/layout}}
+```
+
+## 高亮设置
+
+### 使用逗号分隔
+
+``` {1,3,6,8,10,12,15}
+enum Crud {
+  Create(id:String, data:Any);
+  Read(id:String);
+  Update(id:String, data:Any);
+  Delete(id:String);
+}
+enum abstract ReadAndUpdate(Crud) to Crud {
+  final ReadData = Read;
+  final UpdateData = Update;
+}
+/**
+    Multi-line comments for documentation.
+**/
+class Main {
+    static public function main():Void {
+        // Single line comment
+        trace("Hello World");
+    }
+}
+```
+
+
+### 使用连接符 - 单空格
+
+``` {1-12}
+enum Crud {
+  Create(id:String, data:Any);
+  Read(id:String);
+  Update(id:String, data:Any);
+  Delete(id:String);
+}
+enum abstract ReadAndUpdate(Crud) to Crud {
+  final ReadData = Read;
+  final UpdateData = Update;
+}
+/**
+    Multi-line comments for documentation.
+**/
+class Main {
+    static public function main():Void {
+        // Single line comment
+        trace("Hello World");
+    }
+}
+```
+
+
+### 使用逗号和连接符- 多空格
+
+```     {1,3-12,15}
+enum Crud {
+  Create(id:String, data:Any);
+  Read(id:String);
+  Update(id:String, data:Any);
+  Delete(id:String);
+}
+enum abstract ReadAndUpdate(Crud) to Crud {
+  final ReadData = Read;
+  final UpdateData = Update;
+}
+/**
+    Multi-line comments for documentation.
+**/
+class Main {
+    static public function main():Void {
+        // Single line comment
+        trace("Hello World");
+    }
+}
+```
+
+## 行号设置
+
+### 只设置行号 -单空格
+
+``` hideLineNumbers
+enum Crud {
+  Create(id:String, data:Any);
+  Read(id:String);
+  Update(id:String, data:Any);
+  Delete(id:String);
+}
+enum abstract ReadAndUpdate(Crud) to Crud {
+  final ReadData = Read;
+  final UpdateData = Update;
+}
+```
+
+### 只设置行号 - 多空格
+
+```     hideLineNumbers
+enum Crud {
+  Create(id:String, data:Any);
+  Read(id:String);
+  Update(id:String, data:Any);
+  Delete(id:String);
+}
+enum abstract ReadAndUpdate(Crud) to Crud {
+  final ReadData = Read;
+  final UpdateData = Update;
+}
+```
+
+### 设置语言和高亮
+
+```http {2-6,10}
+HTTP/1.1 200 OK
+Date: Mon, 27 Jul 2009 12:28:53 GMT
+Server: Apache
+Last-Modified: Wed, 22 Jul 2009 19:15:56 GMT
+ETag: "34aa387-d-1568eb00"
+Accept-Ranges: bytes
+Content-Length: 51
+Vary: Accept-Encoding
+Content-Type: text/plain
+
+GET /hello.txt HTTP/1.1
+User-Agent: curl/7.16.3 libcurl/7.16.3 OpenSSL/0.9.7l zlib/1.2.3
+Host: www.example.com
+Accept-Language: en, mi
+```
+
+### 设置语言和隐藏行号
+
+```perl hideLineNumbers
+my $variables = {
+    scalar  =>  {
+                 description => "single item",
+                 sigil => '$',
+                },
+    array   =>  {
+                 description => "ordered list of items",
+                 sigil => '@',
+                },
+    hash    =>  {
+                 description => "key/value pairs",
+                 sigil => '%',
+                },
+};
+
+print "Scalars begin with a $variables->{'scalar'}->{'sigil'}\n";
+
+foreach (@array) {
+    print "This element is $_\n";
+}
+
+print $list[$_] foreach 0 .. $max;
+
+# you don't have to use the default $_ either...
+foreach my $key (keys %hash) {
+    print "The value of $key is $hash{$key}\n";
+}
+open(my $in,  "<",  "input.txt")  or die "Can't open input.txt: $!";
+open(my $out, ">",  "output.txt") or die "Can't open output.txt: $!";
+open(my $log, ">>", "my.log")     or die "Can't open my.log: $!";
+```
+
+### 设置名称和高亮
+
+``` perl.perl  {2-3,5} 
+perl.perl  {2-3,5} 
+
+print $list[$_] foreach 0 .. $max;
+
+# you don't have to use the default $_ either...
+foreach my $key (keys %hash) {
+    print "The value of $key is $hash{$key}\n";
+}
+open(my $in,  "<",  "input.txt")  or die "Can't open input.txt: $!";
+open(my $out, ">",  "output.txt") or die "Can't open output.txt: $!";
+open(my $log, ">>", "my.log")     or die "Can't open my.log: $!";
+```
+
+### 设置名称和隐藏行号
+
+``` perl.perl hideLineNumbers
+ perl.perl hideLineNumbers
+
+print $list[$_] foreach 0 .. $max;
+
+# you don't have to use the default $_ either...
+foreach my $key (keys %hash) {
+    print "The value of $key is $hash{$key}\n";
+}
+open(my $in,  "<",  "input.txt")  or die "Can't open input.txt: $!";
+open(my $out, ">",  "output.txt") or die "Can't open output.txt: $!";
+open(my $log, ">>", "my.log")     or die "Can't open my.log: $!";
+```
+
+
+### 设置 高亮和隐藏行号  {2-3,5}  hideLineNumbers
+``` {2-3,5}  hideLineNumbers
+curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
+      type = "l", xname = "x", xlab = xname, ylab = NULL,
+      log = NULL, xlim = NULL, …)
+
+# S3 函数的方法
+plot(x, y = 0, to = 1, from = y, xlim = NULL, ylab = NULL, …)
+```
+
+
+### 设置语言名称和高亮
+```markdown tablename.md {2-3,4}
+| Syntax      | Description | Test Text     |
+| :---        |    :----:   |          ---: |
+| Header      | Title       | Here's this   |
+| Paragraph   | Text        | And more      |
+```
+
+
+### 设置语言名称和隐藏行号
+```markdown tablename.md hideLineNumbers
+| Syntax      | Description | Test Text     |
+| :---        |    :----:   |          ---: |
+| Header      | Title       | Here's this   |
+| Paragraph   | Text        | And more      |
+```
+
+### 设置名称、高亮和隐藏行号
+
+``` tablename.md {2-4} hideLineNumbers
+设置名称、高亮和隐藏行号
+tablename.md {2-4} hideLineNumbers
+
+| Syntax      | Description | Test Text     |
+| :---        |    :----:   |          ---: |
+| Header      | Title       | Here's this   |
+| Paragraph   | Text        | And more      |
+```
+
+### 设置语言、名称、高亮和隐藏行号  json title="site name.json" {2-4} hideLineNumbers
+
+```json title="site name.json" {2-4} hideLineNumbers
+设置名称、高亮和隐藏行号  json title="site name.json" {2-4} hideLineNumbers
+{
+    "sites": [
+    { "name":"菜鸟教程" , "url":"www.runoob.com" },
+    { "name":"google" , "url":"www.google.com" },
+    { "name":"微博" , "url":"www.weibo.com" }
+    ]
+}
+```
+
+
+### 更换高亮和隐藏行号的顺序 json title="site name.json" hideLineNumbers {2-4}
+
+```json title="site name.json" hideLineNumbers {2-4}
+更换高亮和隐藏行号的顺序 json title="site name.json" hideLineNumbers {2-4}
+{
+    "sites": [
+    { "name":"菜鸟教程" , "url":"www.runoob.com" },
+    { "name":"google" , "url":"www.google.com" },
+    { "name":"微博" , "url":"www.weibo.com" }
+    ]
+}
+```

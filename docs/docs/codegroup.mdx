@@ -1,0 +1,217 @@
+
+# CodeGroup
+
+
+## CodeGroup 有一个codeblock且没有参数设置
+
+<CodeGroup>
+
+```
+更换高亮和隐藏行号的顺序 json title="site name.json"  {2-4}
+{
+    "sites": [
+    { "name":"菜鸟教程" , "url":"www.runoob.com" },
+    { "name":"google" , "url":"www.google.com" },
+    { "name":"微博" , "url":"www.weibo.com" }
+    ]
+}
+```
+</CodeGroup>
+
+## CodeGroup 有一个codeblock且有所有参数设置
+
+<CodeGroup>
+
+```json title="site name.json"  {2-4}
+更换高亮和隐藏行号的顺序 json title="site name.json" hideLineNumbers {2-4}
+{
+    "sites": [
+    { "name":"菜鸟教程" , "url":"www.runoob.com" },
+    { "name":"google" , "url":"www.google.com" },
+    { "name":"微博" , "url":"www.weibo.com" }
+    ]
+}
+```
+
+</CodeGroup>
+
+
+## CodeGroup 有多个codeblock且都不设置参数
+
+<CodeGroup>
+
+```
+curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
+      type = "l", xname = "x", xlab = xname, ylab = NULL,
+      log = NULL, xlim = NULL, …)
+
+# S3 函数的方法
+plot(x, y = 0, to = 1, from = y, xlim = NULL, ylab = NULL, …)
+```
+
+```
+| Syntax      | Description | Test Text     |
+| :---        |    :----:   |          ---: |
+| Header      | Title       | Here's this   |
+| Paragraph   | Text        | And more      |
+```
+
+``` 
+
+| Syntax      | Description | Test Text     |
+| :---        |    :----:   |          ---: |
+| Header      | Title       | Here's this   |
+| Paragraph   | Text        | And more      |
+```
+
+```
+{
+    "sites": [
+    { "name":"菜鸟教程" , "url":"www.runoob.com" },
+    { "name":"google" , "url":"www.google.com" },
+    { "name":"微博" , "url":"www.weibo.com" }
+    ]
+}
+```
+
+```
+{
+    "sites": [
+    { "name":"菜鸟教程" , "url":"www.runoob.com" },
+    { "name":"google" , "url":"www.google.com" },
+    { "name":"微博" , "url":"www.weibo.com" }
+    ]
+}
+```
+
+</CodeGroup>
+
+
+## CodeGroup 有多个codeblock且有不同的参数设置， 有些设置行号隐藏， 有些不设置行号隐藏
+
+<CodeGroup>
+
+```r title="不设置行号隐藏" {2-3,5}  
+curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
+      type = "l", xname = "x", xlab = xname, ylab = NULL,
+      log = NULL, xlim = NULL, …)
+
+# S3 函数的方法
+plot(x, y = 0, to = 1, from = y, xlim = NULL, ylab = NULL, …)
+```
+
+``` title="设置行号隐藏" {2-3,5}  hideLineNumbers
+设置 高亮和隐藏行号  {2-3,5}  hideLineNumbers
+curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
+      type = "l", xname = "x", xlab = xname, ylab = NULL,
+      log = NULL, xlim = NULL, …)
+
+# S3 函数的方法
+plot(x, y = 0, to = 1, from = y, xlim = NULL, ylab = NULL, …)
+```
+
+```markdown tablename.md hideLineNumbers
+设置语言名称和隐藏行号 markdown tablename.md hideLineNumbers
+| Syntax      | Description | Test Text     |
+| :---        |    :----:   |          ---: |
+| Header      | Title       | Here's this   |
+| Paragraph   | Text        | And more      |
+```
+
+``` tablename.md {2-4} hideLineNumbers
+设置名称、高亮和隐藏行号 tablename.md {2-4} hideLineNumbers
+tablename.md {2-4} hideLineNumbers
+
+| Syntax      | Description | Test Text     |
+| :---        |    :----:   |          ---: |
+| Header      | Title       | Here's this   |
+| Paragraph   | Text        | And more      |
+```
+
+```json title="site name.json"  hideLineNumbers
+设置名称、高亮和隐藏行号  json title="site name.json" {2-4} hideLineNumbers
+{
+    "sites": [
+    { "name":"菜鸟教程" , "url":"www.runoob.com" },
+    { "name":"google" , "url":"www.google.com" },
+    { "name":"微博" , "url":"www.weibo.com" }
+    ]
+}
+```
+
+```json title="site name.json"  {2-4}
+更换高亮和隐藏行号的顺序 json title="site name.json" hideLineNumbers {2-4}
+{
+    "sites": [
+    { "name":"菜鸟教程" , "url":"www.runoob.com" },
+    { "name":"google" , "url":"www.google.com" },
+    { "name":"微博" , "url":"www.weibo.com" }
+    ]
+}
+```
+
+``` {2-3,5}  hideLineNumbers
+curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
+      type = "l", xname = "x", xlab = xname, ylab = NULL,
+      log = NULL, xlim = NULL, …)
+
+# S3 函数的方法
+plot(x, y = 0, to = 1, from = y, xlim = NULL, ylab = NULL, …)
+```
+
+``` perl.perl hideLineNumbers
+ perl.perl hideLineNumbers
+
+print $list[$_] foreach 0 .. $max;
+
+# you don't have to use the default $_ either...
+foreach my $key (keys %hash) {
+    print "The value of $key is $hash{$key}\n";
+}
+open(my $in,  "<",  "input.txt")  or die "Can't open input.txt: $!";
+open(my $out, ">",  "output.txt") or die "Can't open output.txt: $!";
+open(my $log, ">>", "my.log")     or die "Can't open my.log: $!";
+```
+
+```perl hideLineNumbers
+my $variables = {
+    scalar  =>  {
+                 description => "single item",
+                 sigil => '$',
+                },
+    array   =>  {
+                 description => "ordered list of items",
+                 sigil => '@',
+                },
+    hash    =>  {
+                 description => "key/value pairs",
+                 sigil => '%',
+                },
+};
+
+print "Scalars begin with a $variables->{'scalar'}->{'sigil'}\n";
+
+foreach (@array) {
+    print "This element is $_\n";
+}
+
+print $list[$_] foreach 0 .. $max;
+
+# you don't have to use the default $_ either...
+foreach my $key (keys %hash) {
+    print "The value of $key is $hash{$key}\n";
+}
+open(my $in,  "<",  "input.txt")  or die "Can't open input.txt: $!";
+open(my $out, ">",  "output.txt") or die "Can't open output.txt: $!";
+open(my $log, ">>", "my.log")     or die "Can't open my.log: $!";
+```
+
+```powershell
+Start-Sleep -m 500
+New-Item D:\temp\test\test.html -ItemType File
+Set-Content D:\temp\test\test.html '<html>Welcome to TutorialsPoint</html>'
+Get-Content D:\temp\test\test.html
+```
+
+
+</CodeGroup>

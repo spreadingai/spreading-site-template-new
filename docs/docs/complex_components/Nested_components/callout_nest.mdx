@@ -1,0 +1,171 @@
+
+# 下面是一个callout 嵌套了所有内容
+
+<Error title="Error text">
+
+
+
+# Welcome to my MDX page!
+## Welcome to my MDX page!
+### Welcome to my MDX page!
+#### Welcome to my MDX page!
+##### Welcome to my MDX page!
+###### Welcome to my MDX page!
+
+
+I really like using Markdown.
+
+I think I'll use it to format all of my documents from now on.
+
+
+# Emphasis
+
+I just love **bold text**.
+
+Italicized text is the *cat's meow*.
+
+This text is ***really important***.
+
+删除线 ~~删除~~
+
+
+# Blockquotes
+
+单段落引用
+
+> Dorothy followed her through many of the beautiful rooms in her castle.
+
+多段落引用
+
+> Dorothy followed her through many of the beautiful rooms in her castle.
+>
+> The Witch bade her clean the pots and kettles and sweep the floor and keep the fire fed with wood.
+
+
+
+## 有序list
+
+1. First item
+2. Second item
+3. Third item
+    1. Indented item
+    2. Indented item
+4. Fourth item
+
+## 无序list
+
+- First item
+- Second item
+- Third item
+    - Indented item
+    - Indented item
+- Fourth item
+
+
+# code inline
+ And here's the `npm install docuo`  third list item
+
+
+# 分割线
+
+分割线1
+***
+分割线2
+===
+分割线3
+---
+
+[Markdown Guide](https://www.markdownguide.org)
+
+[基本语法](./基本语法1.mdx)
+
+
+## youtube
+
+<Video src="https://www.youtube.com/watch?v=uL34Z-RgduI"/>
+
+## vimeo
+
+<Video src="https://vimeo.com/783455878"/>
+
+## loom
+
+<Video src="https://www.loom.com/share/9d9ea1f5a90c461595b7c4e0104327e9?sid=bf524e49-c532-4dee-a34c-6bfee93a2b9a"/>
+
+
+<Tip title="Tip text">This suggests a helpful tip</Tip>
+
+<Note title="Note text">This adds a note in the content</Note>
+
+<Warning title="Warning text">This raises a warning to watch out for</Warning>
+
+<Error title="Error text">This raises a error to watch out for</Error>
+
+
+```json title="site name.json" {2-4} hideLineNumbers
+设置名称、高亮和隐藏行号  json title="site name.json" {2-4} hideLineNumbers
+{
+    "sites": [
+    { "name":"菜鸟教程" , "url":"www.runoob.com" },
+    { "name":"google" , "url":"www.google.com" },
+    { "name":"微博" , "url":"www.weibo.com" }
+    ]
+}
+```
+
+
+<CodeGroup>
+
+```r title="不设置行号隐藏" {2-3,5}  
+curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
+      type = "l", xname = "x", xlab = xname, ylab = NULL,
+      log = NULL, xlim = NULL, …)
+
+# S3 函数的方法
+plot(x, y = 0, to = 1, from = y, xlim = NULL, ylab = NULL, …)
+```
+
+``` title="设置行号隐藏" {2-3,5}  hideLineNumbers
+设置 高亮和隐藏行号  {2-3,5}  hideLineNumbers
+curve(expr, from = NULL, to = NULL, n = 101, add = FALSE,
+      type = "l", xname = "x", xlab = xname, ylab = NULL,
+      log = NULL, xlim = NULL, …)
+
+# S3 函数的方法
+plot(x, y = 0, to = 1, from = y, xlim = NULL, ylab = NULL, …)
+```
+
+```markdown tablename.md hideLineNumbers
+设置语言名称和隐藏行号 markdown tablename.md hideLineNumbers
+| Syntax      | Description | Test Text     |
+| :---        |    :----:   |          ---: |
+| Header      | Title       | Here's this   |
+| Paragraph   | Text        | And more      |
+```
+
+</CodeGroup>
+
+
+
+
+| Syntax      | Description | Test Text     |
+| :---        |    :----:   |          ---: |
+| Header      | Title       | Here's this   |
+| Paragraph   | Text        | And more      |
+
+
+
+<Frame width="100px" height="200px" caption="We have a quick guide that will show you how to create your first repository and earn more green squares!" >
+  <img src="https://images.pexels.com/photos/19696637/pexels-photo-19696637.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"  />
+</Frame>
+
+![The San Juan Mountains are beautiful!](../static/image/logo.png)
+
+## 链接路径
+
+![An old rock in the desert](https://www.markdown.xyz/assets/images/tux.png)
+
+
+
+
+</Error>

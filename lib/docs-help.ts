@@ -54,6 +54,7 @@ class DocsController {
 
       const actualMdxFilePath = this.getActualMdxFilePath(rootUrl, mdxFileID);
       if (actualMdxFilePath) {
+        mdxFileUrl = actualMdxFilePath;
         originContent = fs.readFileSync(actualMdxFilePath, "utf8");
       }
     }
