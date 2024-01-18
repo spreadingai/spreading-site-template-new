@@ -69,6 +69,8 @@ const PreviewLayout = ({
   const [titleElement, setTitleElement] = useState<HTMLElement | null>(null);
   const [isExpand, setIsExpand] = useState(true);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [selectedKeys, setSelectedKeys] = useState([]);
+  const [expandedKeys, setExpandedKeys] = useState([]);
 
   useEffect(() => {
     document.body.scrollTo({ top: 0 });
@@ -81,15 +83,16 @@ const PreviewLayout = ({
   // All articles must have an id
   const docID = slug.join("/");
 
-  // Get default selected, expanded keys
-  const getDefaultKeys = () => {
-    const defaultSelectedKeys: string[] = [];
-    let defaultExpandedKeys = [];
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    const docID = slug.join("/");
+    const selectedKeys: string[] = [];
+    let expandedKeys = [];
     const loop = (children: TreeDataObject[], parentKeys: string[]) => {
       for (const element of children) {
         if (element.id === docID) {
           // Find the first
-          defaultExpandedKeys = parentKeys.concat(element.key);
+          expandedKeys = parentKeys.concat(element.key);
           return element.key;
         }
         if (element.children) {
@@ -98,12 +101,11 @@ const PreviewLayout = ({
         }
       }
     };
-    const defaultSelectedKey = loop(folderTreeData, []);
-    defaultSelectedKeys.push(defaultSelectedKey);
-    return [defaultSelectedKeys, defaultExpandedKeys];
-  };
-  const [defaultSelectedKeys, defaultExpandedKeys] = getDefaultKeys();
-  console.log("[Site]getDefaultKeys", defaultSelectedKeys, defaultExpandedKeys);
+    const selectedKey = loop(folderTreeData, []);
+    selectedKeys.push(selectedKey);
+    setSelectedKeys(selectedKeys);
+    setExpandedKeys(oldVal => Array.from(new Set(oldVal.concat(expandedKeys))));
+  }, [slug]);
 
   // Update bread crumb data
   const getBreadCrumbData = () => {
@@ -196,6 +198,10 @@ const PreviewLayout = ({
     );
   };
 
+  const onExpand = (expandedKeys) => {
+    setExpandedKeys(expandedKeys);
+  }
+
   return (
     <div className="preview-screen">
       <Header docuoConfig={docuoConfig}></Header>
@@ -209,10 +215,11 @@ const PreviewLayout = ({
             switcherIcon={<IconFileClose style={{ fontSize: "18px" }} />}
             showIcon={false}
             titleRender={titleRenderHandle}
-            defaultSelectedKeys={defaultSelectedKeys}
             onSelect={fileSelectHandle}
             treeData={folderTreeData}
-            defaultExpandedKeys={defaultExpandedKeys}
+            selectedKeys={selectedKeys}
+            expandedKeys={expandedKeys}
+            onExpand={onExpand}
           />
           <div className="generate-desc">
             <span>Powered By</span>
@@ -345,10 +352,11 @@ const PreviewLayout = ({
             switcherIcon={<IconFileClose style={{ fontSize: "18px" }} />}
             showIcon={false}
             titleRender={titleRenderHandle}
-            defaultSelectedKeys={defaultSelectedKeys}
             onSelect={fileSelectHandle}
             treeData={folderTreeData}
-            defaultExpandedKeys={defaultExpandedKeys}
+            selectedKeys={selectedKeys}
+            expandedKeys={expandedKeys}
+            onExpand={onExpand}
           />
           <div className="generate-desc">
             <span>Powered By</span>
