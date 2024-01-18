@@ -88,7 +88,7 @@ const Mobile: FC<Props> = ({ menus }) => {
                 <Link
                   className={styles["mobile-item"]}
                   href={menu.defaultLink || menu.href || { pathname: menu.to }}
-                  // target={menu.target}
+                  target={menu.href ? "_blank" : "_self"}
                 >
                   {menu.label}
                 </Link>

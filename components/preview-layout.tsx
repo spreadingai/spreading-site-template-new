@@ -104,7 +104,9 @@ const PreviewLayout = ({
     const selectedKey = loop(folderTreeData, []);
     selectedKeys.push(selectedKey);
     setSelectedKeys(selectedKeys);
-    setExpandedKeys(oldVal => Array.from(new Set(oldVal.concat(expandedKeys))));
+    setExpandedKeys((oldVal) =>
+      Array.from(new Set(oldVal.concat(expandedKeys)))
+    );
   }, [slug]);
 
   // Update bread crumb data
@@ -200,7 +202,7 @@ const PreviewLayout = ({
 
   const onExpand = (expandedKeys) => {
     setExpandedKeys(expandedKeys);
-  }
+  };
 
   return (
     <div className="preview-screen">

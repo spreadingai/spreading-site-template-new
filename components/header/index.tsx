@@ -65,7 +65,7 @@ const Header = (props: Props) => {
           {items
             .filter((item) => item.label)
             .map((menu, index) => {
-              if ((menu?.type === "dropdown") || Array.isArray(menu.items)) {
+              if (menu?.type === "dropdown" || Array.isArray(menu.items)) {
                 // @ts-ignore
                 return <DropdownItem menu={menu} key={index} />;
               }
@@ -74,7 +74,7 @@ const Header = (props: Props) => {
                   key={index}
                   className={styles["item"]}
                   href={menu.defaultLink || menu.href || { pathname: menu.to }}
-                  // target={menu.target}
+                  target={menu.href ? "_blank" : "_self"}
                 >
                   {menu.label}
                 </Link>
