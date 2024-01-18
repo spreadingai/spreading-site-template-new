@@ -54,7 +54,7 @@ const Header = (props: Props) => {
             }
             alt={"logo"}
           />
-          <span className={styles["logo-title"]}>{navbar.title}</span>
+          <span className={styles["logo-title"]}>{decodeURI(navbar.title)}</span>
         </Link>
       ) : null}
       {isMobile ? (
