@@ -39,33 +39,33 @@
     },
     {
       "type": "category",
-      "label": "Edit your docs",
+      "label": "Editing docs",
       "items": [
         {
           "type": "doc",
-          "id": "edit-your-docs/manange-your-docs",
+          "id": "editing-docs/manange-your-docs",
           "label": "Manange your docs"
         },
         {
           "type": "doc",
-          "id": "edit-your-docs/docs-components",
+          "id": "editing-docs/docs-components",
           "label": "Docs components"
         }
       ]
     },
     {
       "type": "category",
-      "label": "Customize",
+      "label": "Customizing",
       "items": [
         {
           "type": "doc",
-          "id": "customize/customization",
-          "label": "Customization"
+          "id": "customizing/customize-with-json-file",
+          "label": "Customize with json file"
         },
         {
           "type": "doc",
-          "id": "customize/theme-customization",
-          "label": "Theme Customization"
+          "id": "customizing/customize-through-platform",
+          "label": "Customize through platform"
         }
       ]
     }

@@ -1,8 +1,8 @@
 # Configuration
 
-<Note title="INFO">
-Check the `docuo.config.json` [**API reference**](../customize/customization.md) for an exhaustive list of options.
-</Note>
+<Tip title="INFO">
+Check the `docuo.config.json` [**API reference**](../Customizing/Customize%20with%20json%20file.mdx) for an exhaustive list of options.
+</Tip>
 
 Docuo has a unique take on configurations. We encourage you to congregate information about your site into one place. We guard the fields of this file and facilitate making this data object accessible across your site.
 
@@ -74,8 +74,8 @@ The `docuo.config.json` file is run in Node.js and should returns a standard jso
 
 The high-level overview of Docuo configuration can be categorized into:
 
-- [Site metadata](../getting-started/configuration#site-metadata)
-- [Theme configurations](../getting-started/configuration#theme-configurations)
+- [Site metadata](./Configuration.mdx#site-metadata)
+- [Theme configurations](./Configuration.mdx#theme-configurations)
 
 ### Site metadata
 
@@ -83,11 +83,13 @@ Site metadata contains the essential global metadata such as `title` and `favico
 
 They are used in several places such as your site's title and headings, browser tab icon, social sharing (Facebook, Twitter) information.
 
-It is recommended to check the [sitemeta docs](../customize/customization#title) for more information.
+It is recommended to check the [sitemeta docs](../Customizing/Customize%20with%20json%20file.mdx#title) for more information.
 
 ### Theme configurations
 
-Theme config 包括生成站点主题所需要的所有配置，主要包括布局和样式两大类，其中样式配置暂不支持，敬请期待
-对于布局控制：`navbar`、`footer` 配置项可控制顶部导航栏及页脚元素布局，还可以定义`anchors`和`tabs`来控制文档内容的分组显示
+Theme config includes all the configurations needed to generate site themes, mainly including layout and site style.
 
-It is recommended to check the [themeConfig docs](../customize/customization#themeconfig) for more information.
+To set the layout, `navbar` and `footer`  can control the layout of header navbar and site footer items. You can also set the group display of your documentation using `anchors `and `tabs`
+
+Check [Theme Customization](../Customizing/Customize%20with%20json%20file.mdx#themeconfig) for more information.
+

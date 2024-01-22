@@ -21,7 +21,10 @@ export function rehypeLink(options: {
       // while href does not start with 'http'
       const href = node.properties.href;
       const parsedPath = path.parse(href);
-      const targetHref = `${parsedPath.dir}/${parsedPath.name}`;
+      console.log(`[rehypeLink]updateLinkTag parsedPath`, parsedPath);
+      let targetHref = `${parsedPath.dir}/${parsedPath.name}`;
+      parsedPath.ext.includes("#") &&
+        (targetHref += `#${parsedPath.ext.split("#")[1]}`);
       const imagePath = path.resolve(
         path.dirname(options.filePath),
         targetHref
@@ -34,7 +37,9 @@ export function rehypeLink(options: {
         const result = [];
         const temp = str.split("/");
         temp.forEach((path) => {
-          result.push(path.toLowerCase().replace(/\s+/g, "-"));
+          result.push(
+            path.toLowerCase().replace(/%20/g, " ").replace(/\s+/g, "-")
+          );
         });
         return result.join("/");
       };

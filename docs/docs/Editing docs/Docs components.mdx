@@ -159,11 +159,11 @@ The rendered output looks like this:
 
 - Error
 ```markdown
-<Error title="Note">This raises a error to watch out for<Error>
+<Error title="ERROR">This raises a error to watch out for</Error>
 ```
 
 The rendered output looks like this:
-<Error title="Note">This raises a error to watch out for</Error>
+<Error title="ERROR">This raises a error to watch out for</Error>
 
 ## Code blocks
 ### Inline code blocks
@@ -191,7 +191,7 @@ helloWorld();
 
 You can put the name of your programming language after the first three backticks to get syntax highlighting. Or you can indicate the lines to be highlighted in curly brackets.
 
-````
+````markdown
 ```jsx {1,4-6,11}
 import React from 'react';
 
@@ -252,6 +252,7 @@ function MyComponent(props) {
 export default MyComponent;
 ```
 ````
+
 ```jsx helloWorld.js {1,4-6,11} hideLineNumbers
 import React from 'react';
 
@@ -266,19 +267,12 @@ function MyComponent(props) {
 export default MyComponent;
 ```
 
-
-
 ### Code groups
 
 Use `<CodeGroup>` to aggregate multiple code blocks into one code group.
 
-
-
-
-
-````
+````markdown
 <CodeGroup>
-
 ```javascript helloWorld.js
 console.log("Hello World");
 ```
@@ -325,7 +319,7 @@ class HelloWorld {
 
 ## Images
 We support displaying images through repository path or by adding image path
-```
+```markdown
 <Frame width="300" height="auto" caption="image description text">
   <img src="/path/image.jpg" />
 </Frame>
@@ -342,7 +336,7 @@ We support displaying images through repository path or by adding image path
 ## Videos
 
 We support displaying Youtube，vimeo, and Loom online videos.
-```markdown
+```HTML
 <Video src="https://youtube.com/xxxxxx"/>
 ```
 

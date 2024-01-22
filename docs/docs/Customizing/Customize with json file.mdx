@@ -1,6 +1,142 @@
-# Theme configuration
+# Customize with json file
 
-## Navbar
+<Note title="INFO">
+Refer to the Getting Started [**Configuration**](../Getting%20started/Configuration.mdx) for examples.
+</Note>
+
+## Overview
+
+`docuo.config.json` contains configurations for your site and is placed in the root directory of your site.
+This file is run in Node.js and should returns a standard json format of content.
+
+Here's an example:
+
+<CodeGroup>
+
+```json docuo.config
+{
+  "title": "Your site title",
+  "favicon": "Your site favicon"
+}
+```
+
+</CodeGroup>
+
+<Tip title="TIP">
+Refer to [**Syntax to declare**](../Getting%20started/Configuration.mdx#syntax-to-declare-docuoconfigjson) `docuo.config.json` for a more exhaustive list of examples and explanations.
+</Tip>
+
+### Required fields
+
+#### `title`
+
+- Type: `string`
+
+Title for your website. Will be used in metadata and as browser tab title.
+
+<CodeGroup>
+
+```json docuo.config
+{
+  "title": "Your site title"
+}
+```
+
+</CodeGroup>
+
+#### `themeConfig`
+
+- Type: `Object`
+
+The [theme configuration](../customizing/customize-with-json-file#theme configuration) object to customize your site UI like navbar and footer.
+
+Example:
+
+<CodeGroup>
+
+```json docuo.config
+{
+  "themeConfig": {
+    "navbar": {
+      "title": "Your navbar title",
+      "logo": "Your navbar logo",
+      "items": [
+        {
+          "type": "docSidebar",
+          "sidebarIds": ["mySidebar"],
+          "label": "Documentation",
+          "position": "left"
+        }
+      ]
+    },
+    "footer": {
+      "logo": "Your footer logo",
+      "caption": "Your caption",
+      "links": [
+        {
+          "title": "Product",
+          "items": [
+            {
+              "label": "documentation",
+              "to": "/"
+            }
+          ]
+        }
+      ],
+      "socials": [
+        {
+          "logo": "Twitter",
+          "href": "Your twitter url"
+        },
+        {
+          "logo": "LinkedIn",
+          "href": "Your linkedin url"
+        },
+        {
+          "logo": "Discord",
+          "href": "Your discord url"
+        },
+        {
+          "logo": "Github",
+          "href": "Your github url"
+        }
+      ]
+  	} 
+  }
+}
+```
+
+</CodeGroup>
+
+
+
+### Optional fields
+
+#### `favicon`
+
+- Type: `string | undefined`
+
+Path to your site favicon; must be a URL that can be used in link's href. For example, if your favicon is in `static/image/favicon.ico`:
+
+<Tip title="TIP">
+docuo 内部默认`static`目录是静态目录，Files under these paths will be copied to the build output as-is，即绝对路径
+</Tip>
+
+<CodeGroup>
+
+```json docuo.config
+{
+  "favicon": "image/favicon.ico"
+}
+```
+
+</CodeGroup>
+
+
+
+## Theme configuration
+
+### Navbar
 
 Accepted fields:
 
@@ -11,12 +147,14 @@ Accepted fields:
 | `iconRedirectUrl` | `string`       | `undefined` | Link to navigate to when the logo is clicked.    |
 | `items`           | `NavbarItem[]` | `[]`        | A list of navbar items. See specification below. |
 
-### Navbar logo
+
+
+#### Navbar logo
 
 The logo can be placed in static folder.
 
 <Tip title="TIP">
-docuo 内部默认`static`目录是静态目录，Files under these paths will be copied to the build output as-is，即绝对路径
+The default `static` direcory is  a static directory. The files under the paths will be copied to the build output as-is，which are absolute paths.
 </Tip>
 
 Example configuration:
@@ -36,9 +174,9 @@ Example configuration:
 
 </CodeGroup>
 
-### Navbar iconRedirectUrl
+#### Navbar iconRedirectUrl
 
-Logo URL is set to base URL of your site by default if you don't set it. Although you can specify your own URL for the logo, if it is an external link, it will open in a new tab.
+The default URL of your logo will be  redirected to your base URL of your site. You can specify your own logo redirect URL. If the URL is an external link, it will open in a new tab.
 
 Example configuration:
 
@@ -58,9 +196,11 @@ Example configuration:
 
 </CodeGroup>
 
-### Navbar items
 
-You can add items to the navbar via `themeConfig.navbar.items`.
+
+#### Navbar items
+
+You can add items to the navbar using `themeConfig.navbar.items`.
 
 <CodeGroup>
 
@@ -108,19 +248,21 @@ You can add items to the navbar via `themeConfig.navbar.items`.
 
 The items can have different behaviors based on the `type` field. The sections below will introduce you to all the types of navbar items available.
 
-#### Navbar link
+
+
+- **Navbar link**
 
 By default, Navbar items are regular links (internal or external).
 
 Accepted fields:
 
-| Name       | Type                 | Default      | Description                                                                                                        |
-| ---------- | -------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------ |
-| `type`     | `"default"`          | Optional     | Sets the type of this item to a link.                                                                              |
-| `label`    | `string`             | **Required** | The name to be shown for this item.                                                                                |
-| `to`       | `string`             | **Required** | Client-side routing, used for navigating within the website.                                                       |
+| Name       | Type                 | Default      | Description                                                  |
+| ---------- | -------------------- | ------------ | ------------------------------------------------------------ |
+| `type`     | `"default"`          | Optional     | Sets the type of this item to a link.                        |
+| `label`    | `string`             | **Required** | The name to be shown for this item.                          |
+| `to`       | `string`             | **Required** | Client-side routing, used for navigating within the website. |
 | `href`     | `string`             | **Required** | A full-page navigation, used for navigating outside of the website. **Only one of `to` or `href` should be used.** |
-| `position` | `"left"  \| "right"` | `"left"`     | The side of the navbar this item should appear on.                                                                 |
+| `position` | `"left"  \| "right"` | `"left"`     | The side of the navbar this item should appear on.           |
 
 Example configuration:
 
@@ -146,16 +288,16 @@ Example configuration:
 
 </CodeGroup>
 
-#### Navbar dropdown
+- **Navbar dropdown**
 
 Navbar items of the type `dropdown` has the additional `items` field, an inner array of navbar items.
 
 Navbar dropdown items only accept the following **"link-like" item types**:
 
-- [Navbar link](../customize/theme-customization#navbar-link)
-- [Navbar doc sidebar](../customize/theme-customization#navbar-doc-sidebar)
+- [Navbar link](./Customize%20with%20json%20file.mdx#navbar-link)
+- [Navbar doc sidebar](./Customize%20with%20json%20file.mdx#navbar-doc-sidebar)
 
-Note that the dropdown base item is a clickable link as well, so this item can receive any of the props of a [plain navbar link](../customize/theme-customization#navbar-link).
+Note that the dropdown base item is a clickable link as well, so this item can receive any of the props of a [plain navbar link](./Customize%20with%20json%20file.mdx#navbar-link).
 
 Accepted fields:
 
@@ -200,19 +342,19 @@ Example configuration:
 
 </CodeGroup>
 
-#### Navbar linked to a sidebar
+- **Navbar linked to a sidebar**
 
 You can link a navbar item to the first document link (which can be a doc link or a generated category index) of a given sidebar without having to hardcode a doc ID.
 
 Accepted fields:
 
-| Name             | Type                      | Default                             | Description                                                                  |
-| ---------------- | ------------------------- | ----------------------------------- | ---------------------------------------------------------------------------- |
-| `type`           | `"docSidebar"`            | **Required**                        | Sets the type of this navbar item to a sidebar's first document.             |
+| Name             | Type                      | Default                             | Description                                                  |
+| ---------------- | ------------------------- | ----------------------------------- | ------------------------------------------------------------ |
+| `type`           | `"docSidebar"`            | **Required**                        | Sets the type of this navbar item to a sidebar's first document. |
 | `sidebarIds`     | `string[]`                | **Required**                        | The ID list of the sidebar that this item is linked to.目前只支持设置一个 ID |
-| `label`          | `string`                  | First document link's sidebar label | The name to be shown for this item.                                          |
-| `position`       | `"left"       \| "right"` | `"left"`                            | The side of the navbar this item should appear on.                           |
-| `docsInstanceId` | `string`                  | `"default"`                         | The ID of the docs plugin that the sidebar belongs to.                       |
+| `label`          | `string`                  | First document link's sidebar label | The name to be shown for this item.                          |
+| `position`       | `"left"       \| "right"` | `"left"`                            | The side of the navbar this item should appear on.           |
+| `docsInstanceId` | `string`                  | `"default"`                         | The ID of the docs plugin that the sidebar belongs to.       |
 
 <Tip title="TIP">
 Use this navbar item type if your sidebar is updated often and the order is not stable.
@@ -258,23 +400,25 @@ navbar item 的 sidebarId 对应下面 sidebars 的其中一个 sidebar 选项 k
 
 </CodeGroup>
 
-## Footer
+
+
+### Footer
 
 You can add logo and a copyright to the footer via `themeConfig.footer`. Logo can be placed in static folder. Logo URL works in the same way of the navbar logo.
 
 <Tip title="TIP">
-docuo 内部默认`static`目录是静态目录，Files under these paths will be copied to the build output as-is，即绝对路径
+The default `static` direcory is  a static directory. The files under the paths will be copied to the build output as-is，which are absolute paths.
 </Tip>
 
 Accepted fields:
 
-| Name        | Type           | Default     | Description                                                                                                 |
-| ----------- | -------------- | ----------- | ----------------------------------------------------------------------------------------------------------- |
-| `logo`      | `Logo`         | `undefined` | Customization of the logo url. See [Navbar logo](../customize/theme-customization#navbar-logo) for details. |
-| `copyright` | `string`       | `undefined` | The copyright message to be displayed at the bottom.                                                        |
-| `caption`   | `string`       | `undefined` | The caption message to be displayed at the bottom.                                                          |
-| `links`     | `FooterLink[]` | `[]`        | The link groups to be present.                                                                              |
-| `socials`   | `SocialItem[]` | `[]`        | The social link groups to be present.                                                                       |
+| Name        | Type           | Default     | Description                                                  |
+| ----------- | -------------- | ----------- | ------------------------------------------------------------ |
+| `logo`      | `Logo`         | `undefined` | Customization of the logo url. See [Navbar logo](./Customize%20with%20json%20file.mdx#navbar-logo) for details. |
+| `copyright` | `string`       | `undefined` | The copyright message to be displayed at the bottom.         |
+| `caption`   | `string`       | `undefined` | The caption message to be displayed at the bottom.           |
+| `links`     | `FooterLink[]` | `[]`        | The link groups to be present.                               |
+| `socials`   | `SocialItem[]` | `[]`        | The social link groups to be present.                        |
 
 Example configuration:
 
@@ -294,7 +438,7 @@ Example configuration:
 
 </CodeGroup>
 
-### Footer Links
+#### Footer links
 
 You can add links to the footer via `themeConfig.footer.links`. There are two types of footer configurations: **multi-column footers** and **simple footers**.
 
@@ -307,10 +451,10 @@ Multi-column footer links have a `title` and a list of `FooterItem`s for each co
 
 Accepted fields of each `FooterItem`:
 
-| Name    | Type     | Default      | Description                                                                                                        |
-| ------- | -------- | ------------ | ------------------------------------------------------------------------------------------------------------------ |
-| `label` | `string` | **Required** | Text to be displayed for this link.                                                                                |
-| `to`    | `string` | **Required** | Client-side routing, used for navigating within the website.                                                       |
+| Name    | Type     | Default      | Description                                                  |
+| ------- | -------- | ------------ | ------------------------------------------------------------ |
+| `label` | `string` | **Required** | Text to be displayed for this link.                          |
+| `to`    | `string` | **Required** | Client-side routing, used for navigating within the website. |
 | `href`  | `string` | **Required** | A full-page navigation, used for navigating outside of the website. **Only one of `to` or `href` should be used.** |
 
 Example multi-column configuration:
@@ -362,18 +506,20 @@ Example simple configuration:
 
 </CodeGroup>
 
-### Footer Socials
+
+
+#### Footer socials
 
 You can add socials to the footer via `themeConfig.footer.socials`.
 
 Accepted fields of each `SocialItem`:
 
-| Name   | Type                           | Default      | Description                                                                                                                                     |
-| ------ | ------------------------------ | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| `logo` | `Logo    \| DefaultSocialName` | **Required** | Customization of the logo url. See [Navbar logo](../customize/theme-customization#navbar-logo) for details.<br />或者内部自带的社交媒体图标名称 |
-| `href` | `string`                       | **Required** | A full-page navigation, used for navigating outside of the website.                                                                             |
+| Name   | Type                           | Default      | Description                                                  |
+| ------ | ------------------------------ | ------------ | ------------------------------------------------------------ |
+| `logo` | `Logo    \| DefaultSocialName` | **Required** | Customization of the logo url. See [Navbar logo](./Customize%20with%20json%20file.mdx#navbar-logo) for details.<br />或者内部自带的社交媒体图标名称 |
+| `href` | `string`                       | **Required** | A full-page navigation, used for navigating outside of the website. |
 
-`DefaultSocialName`的默认值有：“LinkedIn”、“Twitter”、“Facebook”、“Facebook”、“GitHub”、“Discord”
+The default items of`DefaultSocialName` include：“LinkedIn”、“Twitter”、“Facebook”、“Facebook”、“GitHub”、“Discord”
 
 <CodeGroup>
 
