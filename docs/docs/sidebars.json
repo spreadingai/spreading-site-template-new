@@ -1,0 +1,73 @@
+{
+  "mySidebar": [
+    {
+      "type": "category",
+      "label": "Overview",
+      "items": [
+        {
+          "type": "doc",
+          "id": "overview/introduction",
+          "label": "Introduction"
+        },
+        {
+          "type": "doc",
+          "id": "overview/basic-features",
+          "label": "Basic features"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Getting started",
+      "items": [
+        {
+          "type": "doc",
+          "id": "getting-started/quickstart",
+          "label": "Quickstart"
+        },
+        {
+          "type": "doc",
+          "id": "getting-started/set-up-your-first-project",
+          "label": "Set up your first project"
+        },
+        {
+          "type": "doc",
+          "id": "getting-started/configuration",
+          "label": "Configuration"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Edit your docs",
+      "items": [
+        {
+          "type": "doc",
+          "id": "edit-your-docs/manange-your-docs",
+          "label": "Manange your docs"
+        },
+        {
+          "type": "doc",
+          "id": "edit-your-docs/docs-components",
+          "label": "Docs components"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Customize",
+      "items": [
+        {
+          "type": "doc",
+          "id": "customize/customization",
+          "label": "Customization"
+        },
+        {
+          "type": "doc",
+          "id": "customize/theme-customization",
+          "label": "Theme Customization"
+        }
+      ]
+    }
+  ]
+}
