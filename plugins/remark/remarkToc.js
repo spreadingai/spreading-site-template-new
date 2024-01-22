@@ -3,10 +3,10 @@ import { slug } from "github-slugger";
 import { toString } from "mdast-util-to-string";
 import { parseHeadingsToTocs } from "../utils";
 
-// 标记标题出现次数
-const uniqueId = {};
-
 export const remarkToc = (options) => {
+  // 标记标题出现次数
+  const uniqueId = {};
+  
   return (tree) => {
     const headings = [];
     visit(tree, "heading", (node, i, parent) => {
