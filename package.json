@@ -13,7 +13,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.2.6",
     "@next/mdx": "^14.0.4",
-    "@spreading/docuo-mdx-component": "^1.0.0-beta",
+    "@spreading/docuo-mdx-component": "^1.0.0-beta.1",
     "@svgr/webpack": "^8.1.0",
     "@types/mdx": "^2.0.10",
     "antd": "^5.12.4",
