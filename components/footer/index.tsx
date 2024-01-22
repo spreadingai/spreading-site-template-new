@@ -24,7 +24,11 @@ const defaultFooter = {
 };
 
 const Footer: FC<footerProps> = (props) => {
-  const footer = DocuoConfig?.themeConfig?.footer || defaultFooter;
+  const footer = Object.assign(
+    {},
+    defaultFooter,
+    DocuoConfig?.themeConfig?.footer || {}
+  );
   const itemWidth = 200;
   const links = footer?.links || [];
   const socials = footer?.socials || [];
