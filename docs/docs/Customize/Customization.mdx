@@ -1,0 +1,132 @@
+# `docuo.config.json`
+
+<Note title="INFO">
+Refer to the Getting Started [**Configuration**](../getting-started/configuration) for examples.
+</Note>
+
+## Overview
+
+`docuo.config.json` contains configurations for your site and is placed in the root directory of your site.
+This file is run in Node.js and should returns a standard json format of content.
+
+Examples:
+
+<CodeGroup>
+
+```json docuo.config
+{
+  "title": "Your site title",
+  "favicon": "Your site favicon"
+}
+```
+
+</CodeGroup>
+
+<Tip title="TIP">
+Refer to [**Syntax to declare**](../getting-started/configuration#syntax-to-declare-docuoconfigjson) `docuo.config.json` for a more exhaustive list of examples and explanations.
+</Tip>
+
+## Required fields
+
+### `title`
+
+- Type: `string`
+
+Title for your website. Will be used in metadata and as browser tab title.
+
+<CodeGroup>
+
+```json docuo.config
+{
+  "title": "Your site title"
+}
+```
+
+</CodeGroup>
+
+### `themeConfig`
+
+- Type: `Object`
+
+The [theme configuration](../customize/theme-customization) object to customize your site UI like navbar and footer.
+
+Example:
+
+<CodeGroup>
+
+```json docuo.config
+{
+  "themeConfig": {
+    "navbar": {
+      "title": "Your navbar title",
+      "logo": "Your navbar logo",
+      "items": [
+        {
+          "type": "docSidebar",
+          "sidebarIds": ["mySidebar"],
+          "label": "Documentation",
+          "position": "left"
+        }
+      ]
+    },
+    "footer": {
+      "logo": "Your footer logo",
+      "caption": "Your caption",
+      "links": [
+        {
+          "title": "Product",
+          "items": [
+            {
+              "label": "documentation",
+              "to": "/"
+            }
+          ]
+        }
+      ],
+      "socials": [
+        {
+          "logo": "Twitter",
+          "href": "Your twitter url"
+        },
+        {
+          "logo": "LinkedIn",
+          "href": "Your linkedin url"
+        },
+        {
+          "logo": "Discord",
+          "href": "Your discord url"
+        },
+        {
+          "logo": "Github",
+          "href": "Your github url"
+        }
+      ]
+  	} 
+  }
+}
+```
+
+</CodeGroup>
+
+## Optional fields
+
+### `favicon`
+
+- Type: `string | undefined`
+
+Path to your site favicon; must be a URL that can be used in link's href. For example, if your favicon is in `static/image/favicon.ico`:
+
+<Tip title="TIP">
+docuo 内部默认`static`目录是静态目录，Files under these paths will be copied to the build output as-is，即绝对路径
+</Tip>
+
+<CodeGroup>
+
+```json docuo.config
+{
+  "favicon": "image/favicon.ico"
+}
+```
+
+</CodeGroup>
+

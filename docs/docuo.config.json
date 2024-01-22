@@ -1,309 +1,49 @@
 {
-  "title": "sunliying site",
+  "title": "My site",
   "favicon": "image/favicon.ico",
-  "instances": [
-    {
-      "id": "default",
-      "label": "docs",
-      "path": "docs",
-      "routeBasePath": "sunliying"
-    }
-  ],
   "themeConfig": {
     "navbar": {
-      "title": "hhhahahh zhejhs hdhe",
+      "title": "My project",
       "logo": "image/logo.png",
-      "iconRedirectUrl": "https://www.zego.im",
       "items": [
         {
-          "type": "default",
-          "href": "https://app.spreading.ai",
-          "label": "Blog"
-        },
-        {
-          "type": "default",
-          "href": "https://app.spreading.ai",
-          "label": "Blog"
-        },
-        {
-          "type": "default",
-          "href": "https://app.spreading.ai",
-          "label": "Blog"
-        },
-        {
-          "type": "default",
-          "href": "https://app.spreading.ai",
-          "label": "spreading",
+          "type": "docSidebar",
+          "sidebarIds": ["mySidebar"],
+          "label": "Documentation",
           "position": "left"
-        },
-        {
-          "type": "docSidebar",
-          "sidebarIds": ["mySidebar"],
-          "label": "11"
-        },
-        {
-          "type": "docSidebar",
-          "sidebarIds": ["mySidebar"],
-          "label": "pneumonoultramicroscopicsilicovolcanoconiosis"
-        },
-        {
-          "label": "Dropdown1",
-          "items": [
-            {
-              "type": "docSidebar",
-              "sidebarIds": ["mySidebar"],
-              "label": "NavItem3"
-            },
-            {
-              "type": "docSidebar",
-              "sidebarIds": ["mySidebar"],
-              "label": "pneumonoultramicroscopicsilicovolcanoconiosis"
-            }
-          ]
-        },
-        {
-          "type": "dropdown",
-          "label": "zhegde",
-          "items": [
-            {
-              "type": "default",
-              "href": "https://feedeo.spreading.ai",
-              "label": "feedeo Blog"
-            },
-            {
-              "type": "default",
-              "href": "https://app.spreading.ai",
-              "label": "youdehdeb app"
-            },
-            {
-              "type": "default",
-              "href": "https://www.baidu.com",
-              "label": "baidu hdehde  dhdhe"
-            },
-            {
-              "type": "default",
-              "href": "https://app.spreading.ai",
-              "label": "Blog"
-            },
-            {
-              "type": "default",
-              "href": "https://app.spreading.ai",
-              "label": "Blog11111111"
-            },
-            {
-              "type": "default",
-              "href": "https://app.spreading.ai",
-              "label": "Blog2222222222"
-            },
-            {
-              "type": "default",
-              "href": "https://app.spreading.ai",
-              "label": "hhah dhehde dhehd edeh de "
-            },
-            {
-              "href": "https://feedeo.spreading.ai",
-              "label": "feedeo"
-            },
-            {
-              "type": "default",
-              "href": "https://app.spreading.ai",
-              "label": "Blog"
-            },
-            {
-              "type": "default",
-              "href": "https://app.spreading.ai",
-              "label": "Blog11111111"
-            },
-            {
-              "type": "default",
-              "href": "https://app.spreading.ai",
-              "label": "Blog2222222222"
-            },
-            {
-              "type": "default",
-              "href": "https://app.spreading.ai",
-              "label": "hhah dhehde dhehd edeh de "
-            },
-            {
-              "href": "https://feedeo.spreading.ai",
-              "label": "feedeo"
-            },
-            {
-              "type": "default",
-              "href": "https://app.spreading.ai",
-              "label": "great-granddaughter"
-            },
-            {
-              "type": "default",
-              "href": "https://app.spreading.ai",
-              "label": "Blog11111111"
-            },
-            {
-              "type": "default",
-              "href": "https://app.spreading.ai",
-              "label": "pneumonoultramicroscopicsilicovolcanoconiosis"
-            },
-            {
-              "type": "default",
-              "href": "https://app.spreading.ai",
-              "label": "hhah dhehde dhehd edeh de "
-            },
-            {
-              "href": "https://feedeo.spreading.ai",
-              "label": "Documentation description"
-            }
-          ]
         }
       ]
     },
     "footer": {
       "logo": "image/logo.png",
-      "copyright": "Copyright @2024 SPREADING. All Rights Reserved",
-      "caption": "mbed high-quality real-time video into your applications with ZEGOCLOUD's live video call API.",
+      "caption": "My project",
       "links": [
         {
-          "title": "pneumonoultra",
+          "title": "Product",
           "items": [
             {
-              "label": "Products ",
-              "href": "https://www.zegocloud.com/product/video-call"
-            },
-            {
-              "label": "Voice call2345678",
-              "href": "https://www.zegocloud.com/product/video-call"
-            },
-            {
-              "label": "Voice call456789",
-              "href": "https://www.zegocloud.com/product/video-call"
-            }
-          ]
-        },
-        {
-          "title": "Solutions",
-          "items": [
-            {
-              "label": "pneumonoultramicroscopic",
-              "href": "https://www.zegocloud.com/product/voice-call"
-            }
-          ]
-        },
-        {
-          "title": "Company",
-          "items": [
-            {
-              "label": "About",
-              "href": "https://www.zegocloud.com/product/voice-call"
-            }
-          ]
-        },
-        {
-          "title": "Developers",
-          "items": [
-            {
-              "label": "Documentation",
-              "href": "https://example.com/link3"
-            },
-            {
-              "label": "Documentation 11111",
-              "href": "https://example.com/link31111"
-            },
-            {
-              "label": "Documentation",
-              "href": "https://example.com/link3"
-            },
-            {
-              "label": "Documentation 11111",
-              "href": "https://example.com/link31111"
-            },
-            {
-              "label": "Documentation",
-              "href": "https://example.com/link3"
-            },
-            {
-              "label": "Documentation 11111",
-              "href": "https://example.com/link31111"
-            },
-            {
-              "label": "Documentation",
-              "href": "https://example.com/link3"
-            },
-            {
-              "label": "Documentation 11111",
-              "href": "https://example.com/link31111"
-            },
-            {
-              "label": "Documentation",
-              "href": "https://example.com/link3"
-            },
-            {
-              "label": "Documentation 11111",
-              "href": "https://example.com/link31111"
-            },
-            {
-              "label": "Documentation",
-              "href": "https://example.com/link3"
-            },
-            {
-              "label": "Documentation 11111",
-              "href": "https://example.com/link31111"
-            }
-          ]
-        },
-        {
-          "title": "Developers222",
-          "items": [
-            {
-              "label": "Documentation",
-              "href": "https://example.com/link3"
-            },
-            {
-              "label": "Documentation 11111",
-              "href": "https://example.com/link31111"
-            }
-          ]
-        },
-        {
-          "title": "Developers222333",
-          "items": [
-            {
-              "label": "Documentation",
-              "href": "https://example.com/link3"
-            },
-            {
-              "label": "Documentation 11111",
-              "href": "https://example.com/link31111"
+              "label": "documentation",
+              "to": "/"
             }
           ]
         }
       ],
       "socials": [
         {
-          "logo": "LinkedIn",
-          "href": "https://www.baidu.com"
-        },
-        {
           "logo": "Twitter",
-          "href": "https://example.com/social2"
+          "href": "https://twitter.com/docuo_team"
         },
         {
-          "logo": "Facebook",
-          "href": "https://example.com/social2"
-        },
-        {
-          "logo": "YouTube",
-          "href": "https://example.com/social2"
-        },
-        {
-          "logo": "Github",
-          "href": "https://example.com/social2"
+          "logo": "LinkedIn",
+          "href": "https://www.linkedin.com/company/spreadingai"
         },
         {
           "logo": "Discord",
-          "href": "https://example.com/social2"
+          "href": "https://discord.gg/W8p93wcR"
         },
         {
-          "logo": "X",
-          "href": "https://www.baidu.com"
+          "logo": "Github",
+          "href": "https://github.com/spreadingai"
         }
       ]
     }
