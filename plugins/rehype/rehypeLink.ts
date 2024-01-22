@@ -27,15 +27,27 @@ export function rehypeLink(options: {
         targetHref
       );
       const publicPath = path.relative(options.rootUrl, imagePath);
+      const convertDocID = (str: string) => {
+        // Quick Start, Quick-Start
+        // Quick start, Quick-start
+        // Quick start/Overview
+        const result = [];
+        const temp = str.split("/");
+        temp.forEach((path) => {
+          result.push(path.toLowerCase().replace(/\s+/g, "-"));
+        });
+        return result.join("/");
+      };
       console.log(
         `[rehypeLink]updateLinkTag`,
         options.prefix,
         options.rootUrl,
+        options.filePath,
         imagePath,
         targetHref,
         publicPath
       );
-      node.properties.href = `${options.prefix}/${publicPath}`;
+      node.properties.href = `${options.prefix}/${convertDocID(publicPath)}`;
     });
   };
 }
