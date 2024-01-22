@@ -106,7 +106,7 @@ const Footer: FC<footerProps> = (props) => {
           {isMobile ? (
             <FooterMobile items={links} />
           ) : (
-            links.slice(0, 4).map((group, index, arr) => {
+            links.map((group, index, arr) => {
               return (
                 <div key={index} className={`${styles["group"]}`}>
                   <div className={styles["group-title"]}>{group.title}</div>
