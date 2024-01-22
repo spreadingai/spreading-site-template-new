@@ -7,7 +7,7 @@ import {
   Frame,
   Video,
   Heading,
-} from "docuo-mdx-component";
+} from "@spreading/docuo-mdx-component";
 import LibControllerImpl from "@/lib";
 import DocsControllerImpl from "@/lib/docs-help";
 import TreeControllerImpl from "@/lib/tree-help";
