@@ -54,15 +54,17 @@ const Header = (props: Props) => {
             }
             alt={"logo"}
           />
-          <span className={styles["logo-title"]}>{decodeURI(navbar.title)}</span>
+          <span className={styles["logo-title"]}>
+            {decodeURI(navbar.title)}
+          </span>
         </Link>
       ) : null}
       {isMobile ? (
         // @ts-ignore
-        <Mobile menus={items.filter((item) => item.label)} />
+        <Mobile menus={(items || []).filter((item) => item.label)} />
       ) : (
         <div className={styles["menus"]} ref={menusRef}>
-          {items
+          {(items || [])
             .filter((item) => item.label)
             .map((menu, index) => {
               if (menu?.type === "dropdown" || Array.isArray(menu.items)) {
