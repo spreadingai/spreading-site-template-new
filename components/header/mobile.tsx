@@ -38,9 +38,10 @@ const Mobile: FC<Props> = ({ menus }) => {
                           key={index}
                           className={styles["mobile-down-item"]}
                           href={
-                            menu.defaultLink ||
-                            menu.href || { pathname: menu.to }
+                            child.defaultLink ||
+                            child.href || { pathname: child.to }
                           }
+                          target={child.href ? "_blank" : "_self"}
                         >
                           {child.label}
                         </Link>
