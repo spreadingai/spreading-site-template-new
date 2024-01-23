@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://www.spreading.ai
+Host: https://spreading.ai
 
 # Sitemaps
-Sitemap: https://www.spreading.ai/sitemap.xml
+Sitemap: https://spreading.ai/sitemap.xml
