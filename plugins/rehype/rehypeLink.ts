@@ -16,6 +16,9 @@ export function rehypeLink(options: {
         node.properties.target = "_blank";
         return;
       }
+      if (node.properties.href.includes(":")) {
+        return;
+      }
       //   console.log("rehypeLink ", node.tagName, node.properties);
       if (!options.rootUrl || !options.filePath) return;
       // while href does not start with 'http'
