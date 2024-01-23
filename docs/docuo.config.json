@@ -1,5 +1,5 @@
 {
-  "title": "Docuo",
+  "title": "Docuo - documentation",
   "favicon": "image/favicon.ico",
   "themeConfig": {
     "navbar": {
@@ -73,6 +73,10 @@
         {
           "logo": "Discord",
           "href": "https://discord.gg/pgJFhUwzAU"
+        },
+        {
+          "logo": "GitHub",
+          "href": "https://github.com/spreadingai"
         }
       ]
     }
