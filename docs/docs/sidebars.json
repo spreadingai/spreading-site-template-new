@@ -68,6 +68,43 @@
           "label": "Customize through platform"
         }
       ]
+    },
+    {
+      "type": "category",
+      "label": "Updating website",
+      "items": [
+        {
+          "type": "doc",
+          "id": "updating-website/make-an-update",
+          "label": "Make an update"
+        },
+        {
+          "type": "doc",
+          "id": "updating-website/activity-history",
+          "label": "Activity history"
+        },
+        {
+          "type": "doc",
+          "id": "updating-website/project-settings",
+          "label": "Project settings"
+        }
+      ]
+    },
+    {
+      "type": "category",
+      "label": "Account management",
+      "items": [
+        {
+          "type": "doc",
+          "id": "account-management/account-settings",
+          "label": "Account settings"
+        },
+        {
+          "type": "doc",
+          "id": "account-management/workspace-settings",
+          "label": "Workspace settings"
+        }
+      ]
     }
   ]
 }
