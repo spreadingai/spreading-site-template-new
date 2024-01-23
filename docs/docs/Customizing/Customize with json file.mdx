@@ -48,7 +48,7 @@ Title for your website. Will be used in metadata and as browser tab title.
 
 - Type: `Object`
 
-The [theme configuration](../customizing/customize-with-json-file#theme configuration) object to customize your site UI like navbar and footer.
+The [theme configuration](./Customize%20with%20json%20file.mdx#theme-configuration) object to customize your site UI like navbar and footer.
 
 Example:
 
@@ -119,7 +119,7 @@ Example:
 Path to your site favicon; must be a URL that can be used in link's href. For example, if your favicon is in `static/image/favicon.ico`:
 
 <Tip title="TIP">
-docuo 内部默认`static`目录是静态目录，Files under these paths will be copied to the build output as-is，即绝对路径
+The default `static` direcory is  a static directory. The files under the paths will be copied to the build output as-is，which are absolute paths.
 </Tip>
 
 <CodeGroup>
@@ -383,7 +383,7 @@ Example configuration:
 
 </CodeGroup>
 
-navbar item 的 sidebarId 对应下面 sidebars 的其中一个 sidebar 选项 key，即 "mySidebar"
+The sidebarId of the navbar item corresponds to one of the sidebar option keys of the sidebars below, namely "mySidebar".
 
 <CodeGroup>
 
@@ -516,7 +516,7 @@ Accepted fields of each `SocialItem`:
 
 | Name   | Type                           | Default      | Description                                                  |
 | ------ | ------------------------------ | ------------ | ------------------------------------------------------------ |
-| `logo` | `Logo    \| DefaultSocialName` | **Required** | Customization of the logo url. See [Navbar logo](./Customize%20with%20json%20file.mdx#navbar-logo) for details.<br />或者内部自带的社交媒体图标名称 |
+| `logo` | `Logo    \| DefaultSocialName` | **Required** | Customization of the logo url. See [Navbar logo](./Customize%20with%20json%20file.mdx#navbar-logo) for details.<br />Or the name of the built-in social media icon |
 | `href` | `string`                       | **Required** | A full-page navigation, used for navigating outside of the website. |
 
 The default items of`DefaultSocialName` include：“LinkedIn”、“Twitter”、“Facebook”、“Facebook”、“GitHub”、“Discord”
