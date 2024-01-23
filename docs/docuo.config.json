@@ -1,29 +1,62 @@
 {
-  "title": "My site",
+  "title": "Docuo",
   "favicon": "image/favicon.ico",
   "themeConfig": {
     "navbar": {
-      "title": "My project",
+      "title": "",
       "logo": "image/logo.png",
       "items": [
         {
           "type": "docSidebar",
           "sidebarIds": ["mySidebar"],
-          "label": "Documentation",
-          "position": "left"
+          "label": "Documentation"
+        },
+        {
+          "type": "default",
+          "label": "Homepage",
+          "href": "https://www.spreading.ai"
         }
       ]
     },
     "footer": {
       "logo": "image/logo.png",
-      "caption": "My project",
+      "copyright": "Copyright @2024 SPREADING. All Rights Reserved",
       "links": [
         {
           "title": "Product",
           "items": [
             {
-              "label": "documentation",
-              "to": "/"
+              "label": "Blog",
+              "href": "https://www.spreading.ai/blog"
+            },
+            {
+              "label": "Pricing",
+              "href": "https://www.spreading.ai/pricing"
+            },
+            {
+              "label": "Sign up",
+              "href": "https://app.spreading.ai/signup"
+            },
+            {
+              "label": "Log in",
+              "href": "https://app.spreading.ai/login"
+            }
+          ]
+        },
+        {
+          "title": "Resources",
+          "items": [
+            {
+              "label": "Privacy policy",
+              "href": "https://www.spreading.ai/privacy-policy"
+            },
+            {
+              "label": "Terms of use",
+              "href": "https://www.spreading.ai/terms"
+            },
+            {
+              "label": "Cookie notice",
+              "href": "https://www.spreading.ai/cookie-notice"
             }
           ]
         }
@@ -40,10 +73,6 @@
         {
           "logo": "Discord",
           "href": "https://discord.gg/pgJFhUwzAU"
-        },
-        {
-          "logo": "GitHub",
-          "href": "https://github.com/spreadingai"
         }
       ]
     }
