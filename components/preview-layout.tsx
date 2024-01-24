@@ -13,6 +13,7 @@ import ArticlePager from "./articlePager";
 import { createPortal } from "react-dom";
 import { MDXRemoteSerializeResult } from "next-mdx-remote";
 import {
+  DisplayInstance,
   DisplayVersion,
   DocuoConfig,
   SidebarItemType,
@@ -31,11 +32,13 @@ type Props = {
   children: React.ReactNode;
   slug?: string[];
   instanceID: string[];
+  docVersion: string;
   mdxSource: MDXRemoteSerializeResult;
   toc: TocItem[];
   folderTreeData: TreeDataObject[];
   docuoConfig: DocuoConfig;
   displayVersions: DisplayVersion[];
+  displayInstances: DisplayInstance[];
 };
 
 type TreeDataObject = {
@@ -51,18 +54,22 @@ const PreviewLayout = ({
   children,
   slug,
   instanceID,
+  docVersion,
   toc,
   folderTreeData,
   docuoConfig,
   displayVersions,
+  displayInstances,
 }: Props) => {
   // slug eg: instance routeBasePath/version/folder/filename
   console.log(
     "[Site]init params",
     slug,
     instanceID,
+    docVersion,
     docuoConfig,
-    displayVersions
+    displayVersions,
+    displayInstances
   );
 
   const router = useRouter();

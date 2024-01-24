@@ -1,10 +1,18 @@
 import inputDocuoConfig from "@/docs/docuo.config.json";
-import { DocuoConfig, NavBarItem, NavBarItemType, SlugData } from "./types";
+import SlugControllerImpl from "./slug-help";
+import {
+  DisplayInstance,
+  DocuoConfig,
+  NavBarItem,
+  NavBarItemType,
+  SlugData,
+} from "./types";
 
 class LibController {
   static _instance: LibController;
   _docuoConfig: DocuoConfig;
   _entityRootDirectory = "docs";
+  _instances: DisplayInstance[];
   static getInstance() {
     return (
       LibController._instance || (LibController._instance = new LibController())
@@ -86,6 +94,21 @@ class LibController {
       }
     };
     loop(navbar.items);
+  }
+  getDisplayInstances(): DisplayInstance[] {
+    if (!this._docuoConfig) return [];
+    const allSlugs = SlugControllerImpl.getAllSlugs();
+    console.log("getDisplayInstances", this._docuoConfig.instances, allSlugs);
+    return this._docuoConfig.instances.map((instance) => {
+      const targetSlug = allSlugs.find((item) => {
+        return item.params.instanceID === instance.id;
+      });
+      return {
+        instance,
+        firstSlug: targetSlug.params.slug,
+        defaultLink: `/${targetSlug.params.slug.join("/")}`,
+      };
+    });
   }
 }
 

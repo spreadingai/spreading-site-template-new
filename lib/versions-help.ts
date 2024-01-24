@@ -69,7 +69,8 @@ class VersionsController {
   }
   getDisplayVersions(slug: string[]) {
     const result: DisplayVersion[] = [];
-    const instanceID = SlugControllerImpl.getInstanceIDFromSlug(slug);
+    const { instanceID, routeBasePath, mdxFileID } =
+      SlugControllerImpl.getExtractInfoFromSlug(slug);
     const usedVersions = this.getUsedVersions(instanceID);
     if (usedVersions.length) {
       const allSlugs = SlugControllerImpl.getAllSlugs();
@@ -85,9 +86,14 @@ class VersionsController {
             item.params.instanceID === instanceID &&
             item.params.slugVersion === slugVersion
         );
+        const version = slugVersion || docVersion; // Here's the latest version to show
         result.push({
-          version: slugVersion || docVersion, // Here's the latest version to show
+          version,
           firstSlug: targetSlug.params.slug,
+          defaultLink: `/${routeBasePath}/${slugVersion}${
+            slugVersion ? "/" + mdxFileID : mdxFileID
+          }`,
+          firstLink: `/${targetSlug.params.slug.join("/")}`,
         });
       });
     }

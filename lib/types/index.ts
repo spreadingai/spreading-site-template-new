@@ -101,6 +101,13 @@ export interface Sidebars {
 export interface DisplayVersion {
   version: string;
   firstSlug: string[];
+  defaultLink: string;
+  firstLink: string;
+}
+export interface DisplayInstance {
+  instance: DocInstance;
+  firstSlug: string[];
+  defaultLink: string;
 }
 export interface SlugData {
   params: {

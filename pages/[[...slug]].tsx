@@ -43,21 +43,26 @@ export const getStaticProps = async ({ params }: SlugData) => {
   const docuoConfig = LibControllerImpl.getDocuoConfig();
   const allSlugs = SlugControllerImpl.getAllSlugs();
   LibControllerImpl.addDefaultLink(allSlugs);
-  const instanceID = SlugControllerImpl.getInstanceIDFromSlug(params.slug);
+  const { instanceID, docVersion } = SlugControllerImpl.getExtractInfoFromSlug(
+    params.slug
+  );
   const folderTreeData = TreeControllerImpl.getFolderTreeDataBySlug(
     params.slug
   );
   const displayVersions = VersionsControllerImpl.getDisplayVersions(
     params.slug
   );
+  const displayInstances = LibControllerImpl.getDisplayInstances();
   const postData = await DocsControllerImpl.readDoc(params.slug);
   return {
     props: {
       ...postData,
       instanceID,
+      docVersion,
       folderTreeData,
       docuoConfig,
       displayVersions,
+      displayInstances,
     },
   };
 };
@@ -79,7 +84,8 @@ export default function DocPage({ mdxSource, slug, docuoConfig }: Props) {
   if (!slug) {
     return null;
   }
-  const title = (mdxSource?.frontmatter?.title as string) || docuoConfig.title || "";
+  const title =
+    (mdxSource?.frontmatter?.title as string) || docuoConfig.title || "";
   const description =
     (mdxSource?.frontmatter?.description as string) ||
     `A statically generated blog example using Next.js and ${CMS_NAME}.`;
