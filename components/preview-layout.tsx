@@ -39,6 +39,11 @@ type Props = {
   docuoConfig: DocuoConfig;
   displayVersions: DisplayVersion[];
   displayInstances: DisplayInstance[];
+  algolia?: {
+    appId: string;
+    apiKey: string;
+    indexName: string;
+  };
 };
 
 type TreeDataObject = {
@@ -60,6 +65,7 @@ const PreviewLayout = ({
   docuoConfig,
   displayVersions,
   displayInstances,
+  algolia,
 }: Props) => {
   // slug eg: instance routeBasePath/version/folder/filename
   console.log(

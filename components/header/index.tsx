@@ -7,6 +7,9 @@ import Mobile from "./mobile";
 import DropdownItem from "./DropdownItem";
 import { DisplayInstance, DisplayVersion, DocuoConfig } from "@/lib/types";
 import { NavBarItem, NavbarLink } from "./@types";
+import { DocSearch } from "@docsearch/react";
+
+import "@docsearch/css";
 
 interface Props {
   docuoConfig: DocuoConfig;
@@ -24,8 +27,10 @@ const Header = (props: Props) => {
     displayInstances,
     displayVersions,
   } = props;
-  const { navbar } = docuoConfig.themeConfig;
+  const { themeConfig, search } = docuoConfig;
+  const { navbar } = themeConfig;
   const { items } = navbar;
+  const { algolia } = search || {};
   const [width, setWidth] = React.useState(0);
   const [isMobile, setIsMobile] = React.useState(false);
   const matches = useMediaQuery(`(max-width: ${Math.max(width, 375)}px)`); // mobile
@@ -51,7 +56,7 @@ const Header = (props: Props) => {
 
   // @ts-ignore
   const versions = useMemo<NavBarItem>(() => {
-    console.log(displayVersions,currentVersion, "displayVersions");
+    console.log(displayVersions, currentVersion, "displayVersions");
     return {
       label: currentVersion,
       type: "dropdown",
@@ -77,6 +82,11 @@ const Header = (props: Props) => {
     };
   }, [currentInstance, displayInstances]);
 
+  const DocSearchComponent = useMemo(() => {
+    if (!algolia) return null;
+    return <DocSearch {...algolia} />;
+  }, [algolia]);
+
   return (
     <header className={styles["header-container"]}>
       {navbar.logo ? (
@@ -100,8 +110,11 @@ const Header = (props: Props) => {
         </Link>
       ) : null}
       {isMobile ? (
-        // @ts-ignore
-        <Mobile menus={(items || []).filter((item) => item.label)} />
+        <div className={styles["menus"]}>
+          {DocSearchComponent}
+          {/*  @ts-ignore */}
+          <Mobile menus={(items || []).filter((item) => item.label)} />
+        </div>
       ) : (
         <div className={styles["menus"]} ref={menusRef}>
           {/* @ts-ignore */}
@@ -126,6 +139,7 @@ const Header = (props: Props) => {
                 </Link>
               );
             })}
+          {DocSearchComponent}
         </div>
       )}
     </header>
