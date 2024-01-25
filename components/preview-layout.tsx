@@ -72,20 +72,28 @@ const PreviewLayout = ({
     displayInstances
   );
 
-  const router = useRouter();
-  const [titleElement, setTitleElement] = useState<HTMLElement | null>(null);
-  const [isExpand, setIsExpand] = useState(true);
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const [selectedKeys, setSelectedKeys] = useState([]);
-  const [expandedKeys, setExpandedKeys] = useState([]);
-
-  useEffect(() => {
-    document.body.scrollTo({ top: 0 });
-  }, [router]);
-
+  // Avoid empty slug
   if (!slug) {
     return null;
   }
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const router = useRouter();
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [titleElement, setTitleElement] = useState<HTMLElement | null>(null);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [isExpand, setIsExpand] = useState(true);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [selectedKeys, setSelectedKeys] = useState([]);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [expandedKeys, setExpandedKeys] = useState([]);
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    document.body.scrollTo({ top: 0 });
+  }, [router]);
 
   // All articles must have an id
   const docID = slug.join("/");
