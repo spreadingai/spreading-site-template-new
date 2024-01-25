@@ -1,82 +1,182 @@
 {
-  "title": "Docuo - documentation",
+  "title": "My Site",
   "favicon": "image/favicon.ico",
+  "metadata": [],
+  "instances": [
+    {
+      "id": "default",
+      "label": "docs",
+      "path": "docs",
+      "routeBasePath": ""
+    },
+    {
+      "id": "callkit",
+      "label": "callkit",
+      "path": "callkit_docs",
+      "routeBasePath": "callkit"
+    }
+  ],
   "themeConfig": {
     "navbar": {
-      "title": "",
+      "title": "My Site",
       "logo": "image/logo.png",
+      "iconRedirectUrl": "https://www.spreading.ai",
       "items": [
+        {
+          "type": "default",
+          "to": "/blog",
+          "href": "https://app.spreading.ai",
+          "label": "Blog",
+          "position": "left"
+        },
         {
           "type": "docSidebar",
           "sidebarIds": ["mySidebar"],
-          "label": "Documentation"
+          "label": "NavItem1",
+          "position": "left",
+          "docsInstanceId": "default"
         },
         {
-          "type": "default",
-          "label": "Homepage",
-          "href": "https://www.spreading.ai"
+          "type": "docSidebar",
+          "sidebarIds": ["sidebar1", "sidebar2"],
+          "label": "NavItem2",
+          "position": "left",
+          "docsInstanceId": "callkit"
+        },
+        {
+          "type": "dropdown",
+          "label": "Dropdown1",
+          "items": [
+            {
+              "type": "docSidebar",
+              "sidebarIds": ["sidebar1"],
+              "label": "NavItem1",
+              "position": "left",
+              "docsInstanceId": "callkit"
+            },
+            {
+              "type": "docSidebar",
+              "sidebarIds": ["sidebar2"],
+              "label": "NavItem2",
+              "position": "left",
+              "docsInstanceId": "callkit"
+            }
+          ],
+          "position": "left"
+        },
+        {
+          "type": "docsVersionDropdown",
+          "position": "left",
+          "docsInstanceId": "callkit"
+        },
+        {
+          "type": "docsInstanceDropdown",
+          "position": "left"
+        },
+        {
+          "type": "search",
+          "position": "left"
         }
       ]
     },
     "footer": {
       "logo": "image/logo.png",
-      "copyright": "Copyright @2024 SPREADING. All Rights Reserved",
+      "copyright": "Copyright @2023 SPREADING. All Rights Reserved",
+      "caption": "",
       "links": [
         {
-          "title": "Product",
+          "title": "Products",
           "items": [
             {
-              "label": "Blog",
-              "href": "https://www.spreading.ai/blog"
+              "label": "Voice call",
+              "to": "/link1"
             },
             {
-              "label": "Pricing",
-              "href": "https://www.spreading.ai/pricing"
+              "label": "Video call",
+              "to": "/link2"
             },
             {
-              "label": "Sign up",
-              "href": "https://app.spreading.ai/signup"
-            },
-            {
-              "label": "Log in",
-              "href": "https://app.spreading.ai/login"
+              "label": "Live Streaming",
+              "to": "/link2"
             }
           ]
         },
         {
-          "title": "Resources",
+          "title": "Solutions",
           "items": [
             {
-              "label": "Privacy policy",
-              "href": "https://www.spreading.ai/privacy-policy"
+              "label": "Social",
+              "href": "https://example.com/link3"
             },
             {
-              "label": "Terms of use",
-              "href": "https://www.spreading.ai/terms"
+              "label": "Education",
+              "href": "https://example.com/link4"
             },
             {
-              "label": "Cookie notice",
-              "href": "https://www.spreading.ai/cookie-notice"
+              "label": "Telehealth",
+              "href": "https://example.com/link4"
+            }
+          ]
+        },
+        {
+          "title": "Company",
+          "items": [
+            {
+              "label": "About",
+              "href": "https://example.com/link3"
+            },
+            {
+              "label": "Blog",
+              "href": "https://example.com/link4"
+            },
+            {
+              "label": "Partners",
+              "href": "https://example.com/link4"
+            }
+          ]
+        },
+        {
+          "title": "Developers",
+          "items": [
+            {
+              "label": "Documentation",
+              "href": "https://example.com/link3"
+            },
+            {
+              "label": "Demo Apps",
+              "href": "https://example.com/link4"
+            },
+            {
+              "label": "Code Store",
+              "href": "https://example.com/link4"
             }
           ]
         }
       ],
       "socials": [
         {
-          "logo": "Twitter",
-          "href": "https://twitter.com/docuo_team"
+          "logo": "Linkedin",
+          "href": "https://example.com/social1"
         },
         {
-          "logo": "LinkedIn",
-          "href": "https://www.linkedin.com/company/spreadingai"
+          "logo": "Twitter",
+          "href": "https://example.com/social2"
+        },
+        {
+          "logo": "Facebook",
+          "href": "https://example.com/social2"
+        },
+        {
+          "logo": "Youtube",
+          "href": "https://example.com/social2"
+        },
+        {
+          "logo": "Github",
+          "href": "https://example.com/social2"
         },
         {
           "logo": "Discord",
-          "href": "https://discord.gg/pgJFhUwzAU"
-        },
-        {
-          "logo": "GitHub",
-          "href": "https://github.com/spreadingai"
+          "href": "https://example.com/social2"
         }
       ]
     }

@@ -1,0 +1,38 @@
+{
+  "sidebar1": [
+    "foo",
+    {
+      "type": "link",
+      "label": "Google",
+      "href": "https://google.com"
+    },
+    {
+      "type": "category",
+      "label": "category",
+      "items": [
+        {
+          "type": "doc",
+          "id": "folder2/bar21",
+          "label": "bar21"
+        },
+        {
+          "type": "category",
+          "label": "category",
+          "items": ["folder3/folder31/bar311", "folder3/folder31/foo312"]
+        }
+      ]
+    }
+  ],
+  "sidebar2": [
+    {
+      "type": "doc",
+      "id": "bar",
+      "label": "bar"
+    },
+    {
+      "type": "category",
+      "label": "category",
+      "items": ["folder1/bar11", "folder1/foo11"]
+    }
+  ]
+}

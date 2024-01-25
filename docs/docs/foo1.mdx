@@ -1,0 +1,62 @@
+---
+id: welcome-page
+slug: /new/path/intro
+url: https://www.google.com
+title: 'Welcome to my MDX page!'
+description: 'Start building awesome documentation in under 5 minutes'
+image: a thumbnail image to be shown in social media cards
+keywords: [keywords, describing, the main topics]
+toc: 
+  - title: "第一章"
+    url: "#h-chapter-1"
+    level: "1"
+    children:
+      - title: "第一节"
+        url: "#h-section-1-1"
+        level: "2"
+      - title: "第二节"
+        url: "#h-section-1-2"
+        level: "2"
+  - title: "第二章"
+    url: "#h-chapter-2"
+    level: "1"
+    children:
+      - title: "第一节"
+        url: "#h-section-2-1"
+        level: "2"
+      - title: "第二节"
+        url: "#h-section-2-2"
+        level: "2"
+        children:
+          - title: "小节1"
+            url: "#h-section-2-2-1"
+            level: "3"
+          - title: "小节2"
+            url: "#h-section-2-2-2"
+            level: "3"
+---
+
+
+<CodeBlock language="plaintext" focus="" filename="Universal" tabid="0">
+
+```plaintext
+npm i novel
+```
+</CodeBlock>
+
+
+
+<CodeBlock language="plaintext" focus="" filename="Universal" tabid="0">
+
+```plaintext
+import { Editor } from "novel";
+
+export default function App() {
+  return ;
+}
+```
+</CodeBlock>
+
+The <code>Editor</code> component is used to render a text editor for creating and editing novel content. It is ​&#8203;imported from the "novel" package.
+
+Parameters

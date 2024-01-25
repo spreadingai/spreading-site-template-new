@@ -90,9 +90,9 @@ class VersionsController {
         result.push({
           version,
           firstSlug: targetSlug.params.slug,
-          defaultLink: `/${routeBasePath}/${slugVersion}${
-            slugVersion ? "/" + mdxFileID : mdxFileID
-          }`,
+          defaultLink: `${
+            routeBasePath ? "/" + routeBasePath : ""
+          }/${slugVersion}${slugVersion ? "/" + mdxFileID : mdxFileID}`,
           firstLink: `/${targetSlug.params.slug.join("/")}`,
         });
       });

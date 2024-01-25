@@ -28,7 +28,7 @@ class LibController {
         id: "default", // Host instance
         label: "docs",
         path: "docs",
-        routeBasePath: "docs",
+        routeBasePath: "",
       };
       if (!docuoConfig.instances) {
         docuoConfig.instances = [defaultInstance];
@@ -44,7 +44,7 @@ class LibController {
             instance.label = defaultInstance.label;
           }
           if (!instance.routeBasePath) {
-            instance.routeBasePath = instance.path;
+            instance.routeBasePath = "";
           }
         });
         const result = docuoConfig.instances.find(

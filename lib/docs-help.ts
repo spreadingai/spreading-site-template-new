@@ -78,7 +78,13 @@ class DocsController {
             {
               rootUrl: `${rootUrl}`,
               filePath: mdxFileUrl,
-              prefix: `${routeBasePath}${slugVersion ? "/" : ""}${slugVersion}`,
+              prefix: `${
+                slugVersion
+                  ? routeBasePath
+                    ? routeBasePath + "/"
+                    : ""
+                  : routeBasePath
+              }${slugVersion}`,
             },
           ],
         ],

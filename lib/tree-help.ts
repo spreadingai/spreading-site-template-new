@@ -36,12 +36,14 @@ class TreeController {
         : Object.keys(sidebars);
       temp.forEach((sidebarId, index) => {
         const sidebarItems = sidebars[sidebarId];
-        const prefixKey = `${routeBasePath}${
-          slugVersion ? "/" : ""
-        }${slugVersion}/${sidebarId}`;
-        const idPrefixKey = `${routeBasePath}${
-          slugVersion ? "/" : ""
+        const idPrefixKey = `${
+          slugVersion
+            ? routeBasePath
+              ? routeBasePath + "/"
+              : ""
+            : routeBasePath
         }${slugVersion}`;
+        const prefixKey = `${idPrefixKey}${idPrefixKey ? "/" : ""}${sidebarId}`;
         tree = tree.concat(
           this.getChildrenFromChildren(
             `${index}`,
@@ -99,7 +101,8 @@ class TreeController {
           slugVersion,
         };
         children && (temp.children = children);
-        item.id && (temp.id = `${idPrefixKey}/${item.id}`);
+        item.id &&
+          (temp.id = `${idPrefixKey}${idPrefixKey ? "/" : ""}${item.id}`);
         result.push(temp);
       } else {
         // SidebarItemType.Link

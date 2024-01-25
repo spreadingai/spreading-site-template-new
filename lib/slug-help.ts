@@ -48,7 +48,7 @@ class SlugController {
       );
     }
     for (let index = 0, len = slugVersions.length; index < len; index++) {
-      let preSlug = [instance.routeBasePath];
+      let preSlug = instance.routeBasePath ? [instance.routeBasePath] : [];
       const slugVersion = slugVersions[index];
       slugVersion && (preSlug = preSlug.concat([slugVersion]));
       const sidebars = SidebarsControllerImpl.getSidebars(
@@ -114,23 +114,32 @@ class SlugController {
     // eg3: /docs/next/path/to/doc => The current version when the version list is available
     // eg4: /docs/1.0.0/path/to/doc => The specified version when there is a version list
     const docuoConfig = LibControllerImpl.getDocuoConfig();
-    const routeBasePath = slug[0];
-    const instanceID = docuoConfig.instances.find(
-      (instance) => instance.routeBasePath === routeBasePath
-    ).id;
-    const versions = VersionsControllerImpl.getUsedVersions(instanceID);
+    let routeBasePath = slug[0];
     let slugVersion = slug[1];
+    let targetInstance = docuoConfig.instances.find(
+      (instance) => instance.routeBasePath === routeBasePath
+    );
+    if (!targetInstance) {
+      // No basic path
+      routeBasePath = "";
+      targetInstance = docuoConfig.instances.find(
+        (instance) => !instance.routeBasePath
+      );
+      slugVersion = slug[0];
+    }
+    const instanceID = targetInstance.id;
+    const versions = VersionsControllerImpl.getUsedVersions(instanceID);
     // mdxFileID: complex-components/test1/link_test.md
-    let mdxFileID = slug.slice(2).join("/");
+    let mdxFileID = slug.slice(routeBasePath ? 2 : 1).join("/");
     const mdxFileName = slug[slug.length - 1];
     if (!versions.length) {
       slugVersion = "";
-      mdxFileID = slug.slice(1).join("/");
+      mdxFileID = slug.slice(routeBasePath ? 1 : 0).join("/");
     } else {
       if (slugVersion !== VersionsControllerImpl.getDefaultVersion()) {
         if (!versions.includes(slugVersion)) {
           slugVersion = "";
-          mdxFileID = slug.slice(1).join("/");
+          mdxFileID = slug.slice(routeBasePath ? 1 : 0).join("/");
         }
       }
     }
@@ -147,9 +156,16 @@ class SlugController {
   getInstanceIDFromSlug(slug: string[]) {
     const docuoConfig = LibControllerImpl.getDocuoConfig();
     const routeBasePath = slug[0];
-    const instanceID = docuoConfig.instances.find(
+    let targetInstance = docuoConfig.instances.find(
       (instance) => instance.routeBasePath === routeBasePath
-    ).id;
+    );
+    if (!targetInstance) {
+      // No basic path
+      targetInstance = docuoConfig.instances.find(
+        (instance) => !instance.routeBasePath
+      );
+    }
+    const instanceID = targetInstance.id;
     return instanceID;
   }
   slugVersionToDocVersion(instanceID: string, slugVersion: string) {
