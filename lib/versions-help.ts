@@ -69,11 +69,11 @@ class VersionsController {
   }
   getDisplayVersions(slug: string[]) {
     const result: DisplayVersion[] = [];
-    const { instanceID, routeBasePath, mdxFileID } =
+    const { instanceID, routeBasePath, mdxFileID, slugVersion } =
       SlugControllerImpl.getExtractInfoFromSlug(slug);
     const usedVersions = this.getUsedVersions(instanceID);
+    const allSlugs = SlugControllerImpl.getAllSlugs();
     if (usedVersions.length) {
-      const allSlugs = SlugControllerImpl.getAllSlugs();
       // ["", "1.1.0", "1.0.0"]
       usedVersions.unshift("");
       usedVersions.forEach((docVersion) => {
@@ -95,6 +95,19 @@ class VersionsController {
           }/${slugVersion}${slugVersion ? "/" + mdxFileID : mdxFileID}`,
           firstLink: `/${targetSlug.params.slug.join("/")}`,
         });
+      });
+    } else {
+      // There is actually no version or the user has not defined the display version list
+      const targetSlug = allSlugs.find(
+        (item) =>
+          item.params.instanceID === instanceID &&
+          item.params.slugVersion === slugVersion
+      );
+      result.push({
+        version: this._defaultVersion,
+        firstSlug: targetSlug.params.slug,
+        defaultLink: `/${slug.join("/")}`,
+        firstLink: `/${targetSlug.params.slug.join("/")}`,
       });
     }
     console.log(`[VersionsController]getDisplayVersions `, result);

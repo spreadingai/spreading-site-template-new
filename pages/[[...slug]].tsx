@@ -61,9 +61,7 @@ export const getStaticProps = async ({ params }: SlugData) => {
       docVersion: docVersion || slugVersion || defaultVersion,
       folderTreeData,
       docuoConfig,
-      displayVersions: displayVersions.length
-        ? displayVersions
-        : [defaultVersion],
+      displayVersions,
       displayInstances,
     },
   };
