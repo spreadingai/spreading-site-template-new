@@ -31,7 +31,7 @@ const { DirectoryTree } = Tree;
 type Props = {
   children: React.ReactNode;
   slug?: string[];
-  instanceID: string[];
+  instanceID: string;
   docVersion: string;
   mdxSource: MDXRemoteSerializeResult;
   toc: TocItem[];
