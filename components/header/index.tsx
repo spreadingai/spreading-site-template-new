@@ -63,8 +63,12 @@ const Header = (props: Props) => {
   }, [currentVersion, displayVersions]);
   // @ts-ignore
   const instances = useMemo<NavBarItem>(() => {
+    const currentInstanceLabel = displayInstances.find((item) => {
+      return item.instance.id === currentInstance;
+    });
+
     return {
-      label: currentInstance,
+      label: currentInstanceLabel.instance.label,
       type: "dropdown",
       items: displayInstances.map((item) => ({
         ...item,
