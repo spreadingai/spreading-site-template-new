@@ -43,9 +43,9 @@ export const getStaticProps = async ({ params }: SlugData) => {
   const docuoConfig = LibControllerImpl.getDocuoConfig();
   const allSlugs = SlugControllerImpl.getAllSlugs();
   LibControllerImpl.addDefaultLink(allSlugs);
-  const { instanceID, docVersion } = SlugControllerImpl.getExtractInfoFromSlug(
-    params.slug
-  );
+  const { instanceID, slugVersion, docVersion } =
+    SlugControllerImpl.getExtractInfoFromSlug(params.slug);
+  const defaultVersion = VersionsControllerImpl.getDefaultVersion();
   const folderTreeData = TreeControllerImpl.getFolderTreeDataBySlug(
     params.slug
   );
@@ -58,10 +58,12 @@ export const getStaticProps = async ({ params }: SlugData) => {
     props: {
       ...postData,
       instanceID,
-      docVersion,
+      docVersion: docVersion || slugVersion || defaultVersion,
       folderTreeData,
       docuoConfig,
-      displayVersions,
+      displayVersions: displayVersions.length
+        ? displayVersions
+        : [defaultVersion],
       displayInstances,
     },
   };
