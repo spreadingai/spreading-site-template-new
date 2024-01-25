@@ -64,11 +64,11 @@ const PreviewLayout = ({
   // slug eg: instance routeBasePath/version/folder/filename
   console.log(
     "[Site]init params",
-    slug,
+    // slug,
     instanceID,
-    docVersion,
-    docuoConfig,
-    displayVersions,
+    // docVersion,
+    // docuoConfig,
+    // displayVersions,
     displayInstances
   );
 
@@ -221,7 +221,13 @@ const PreviewLayout = ({
 
   return (
     <div className="preview-screen">
-      <Header docuoConfig={docuoConfig}></Header>
+      <Header
+        docuoConfig={docuoConfig}
+        currentVersion={docVersion}
+        currentInstance={instanceID}
+        displayInstances={displayInstances}
+        displayVersions={displayVersions}
+      ></Header>
       <main className="preview-main">
         <div className="preview-sider">
           <DirectoryTree
