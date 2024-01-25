@@ -1,18 +1,29 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useMemo } from "react";
 import styles from "./styles.module.scss";
 import Image from "next/image";
 import Link from "next/link";
 import { useMediaQuery } from "usehooks-ts";
 import Mobile from "./mobile";
 import DropdownItem from "./DropdownItem";
-import { DocuoConfig } from "@/lib/types";
+import { DisplayInstance, DisplayVersion, DocuoConfig } from "@/lib/types";
+import { NavBarItem, NavbarLink } from "./@types";
 
 interface Props {
   docuoConfig: DocuoConfig;
+  currentVersion: string;
+  currentInstance: string;
+  displayInstances: DisplayInstance[];
+  displayVersions: DisplayVersion[];
 }
 
 const Header = (props: Props) => {
-  const { docuoConfig } = props;
+  const {
+    docuoConfig,
+    currentVersion,
+    currentInstance,
+    displayInstances,
+    displayVersions,
+  } = props;
   const { navbar } = docuoConfig.themeConfig;
   const { items } = navbar;
   const [width, setWidth] = React.useState(0);
@@ -20,6 +31,7 @@ const Header = (props: Props) => {
   const matches = useMediaQuery(`(max-width: ${Math.max(width, 375)}px)`); // mobile
   const menusRef = React.useRef<HTMLDivElement>(null);
   const logoRef = React.useRef<HTMLAnchorElement>(null);
+  console.log(items, "items");
 
   useEffect(() => {
     setIsMobile(matches);
@@ -36,6 +48,30 @@ const Header = (props: Props) => {
       setWidth(width);
     }
   }, []);
+
+  // @ts-ignore
+  const versions = useMemo<NavBarItem>(() => {
+    console.log(displayVersions,currentVersion, "displayVersions");
+    return {
+      label: currentVersion,
+      type: "dropdown",
+      items: displayVersions.map((item) => ({
+        ...item,
+        label: item.version,
+      })),
+    };
+  }, [currentVersion, displayVersions]);
+  // @ts-ignore
+  const instances = useMemo<NavBarItem>(() => {
+    return {
+      label: currentInstance,
+      type: "dropdown",
+      items: displayInstances.map((item) => ({
+        ...item,
+        label: item.instance.label,
+      })),
+    };
+  }, [currentInstance, displayInstances]);
 
   return (
     <header className={styles["header-container"]}>
@@ -64,6 +100,10 @@ const Header = (props: Props) => {
         <Mobile menus={(items || []).filter((item) => item.label)} />
       ) : (
         <div className={styles["menus"]} ref={menusRef}>
+          {/* @ts-ignore */}
+          {instances && <DropdownItem menu={instances} />}
+          {/* @ts-ignore */}
+          {versions && <DropdownItem menu={versions} />}
           {(items || [])
             .filter((item) => item.label)
             .map((menu, index) => {
