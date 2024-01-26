@@ -25,6 +25,7 @@ import IconList from "@/assets/images/icon_list.png";
 import IconPackUp from "@/assets/images/icon_pack_up.png";
 import IconThisPage from "@/assets/images/icon_this_page.png";
 import LogoGrey from "@/assets/images/logo_grey.png";
+import Head from "next/head";
 
 const { DirectoryTree } = Tree;
 
@@ -235,6 +236,10 @@ const PreviewLayout = ({
 
   return (
     <div className="preview-screen">
+      <Head>
+        <meta name="docsearch:version" content={docVersion} />
+        <meta name="docsearch:instance" content={instanceID} />
+      </Head>
       <Header
         docuoConfig={docuoConfig}
         currentVersion={docVersion}
