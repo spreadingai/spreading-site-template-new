@@ -1,7 +1,10 @@
 {
   "git": {
     "deploymentEnabled": {
-      "main": false
+      "main": false,
+      "dev": false,
+      "feature/search": false,
+      "feature/multi-version": false
     }
   }
 }
