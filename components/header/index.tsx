@@ -84,8 +84,18 @@ const Header = (props: Props) => {
 
   const DocSearchComponent = useMemo(() => {
     if (!algolia) return null;
-    return <DocSearch {...algolia} />;
-  }, [algolia]);
+    return (
+      <DocSearch
+        {...algolia}
+        searchParameters={{
+          facetFilters: [
+            `version:${currentVersion}`,
+            `instance:${currentInstance}`,
+          ],
+        }}
+      />
+    );
+  }, [algolia, currentVersion, currentInstance]);
 
   return (
     <header className={styles["header-container"]}>
