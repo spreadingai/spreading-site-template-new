@@ -244,10 +244,11 @@ const PreviewLayout = ({
       ></Header>
       <main className="preview-main">
         <div className="preview-sider">
-          <Tree
+          <DirectoryTree
             key="1"
             showLine
             blockNode
+            defaultExpandAll
             // @ts-ignore
             switcherIcon={<IconFileClose style={{ fontSize: "18px" }} />}
             showIcon={false}
@@ -255,7 +256,7 @@ const PreviewLayout = ({
             onSelect={fileSelectHandle}
             treeData={folderTreeData}
             selectedKeys={selectedKeys}
-            expandedKeys={expandedKeys}
+            // expandedKeys={expandedKeys}
             onExpand={onExpand}
           />
           <div className="generate-desc">
@@ -381,10 +382,11 @@ const PreviewLayout = ({
           key="left"
           getContainer={false}
         >
-          <Tree
+          <DirectoryTree
             key="2"
             showLine
             blockNode
+            defaultExpandAll
             // @ts-ignore
             switcherIcon={<IconFileClose style={{ fontSize: "18px" }} />}
             showIcon={false}
@@ -392,7 +394,7 @@ const PreviewLayout = ({
             onSelect={fileSelectHandle}
             treeData={folderTreeData}
             selectedKeys={selectedKeys}
-            expandedKeys={expandedKeys}
+            // expandedKeys={expandedKeys}
             onExpand={onExpand}
           />
           <div className="generate-desc">
