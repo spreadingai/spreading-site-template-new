@@ -144,6 +144,14 @@ const PreviewLayout = ({
   const fileSelectHandle: TreeProps["onSelect"] = (selectedKeys, info) => {
     console.log("[Site]fileSelectHandle", selectedKeys, info);
     const { node } = info as any;
+    if (node.type === SidebarItemType.Category) {
+      setExpandedKeys((oldVal) => {
+        if (oldVal.includes(node.key)) {
+          return oldVal.filter((key) => key !== node.key);
+        }
+        return [...oldVal, node.key];
+      });
+    }
     if (node.type === SidebarItemType.Doc) {
       setDrawerOpen(false);
     }
@@ -216,7 +224,7 @@ const PreviewLayout = ({
       <Header docuoConfig={docuoConfig}></Header>
       <main className="preview-main">
         <div className="preview-sider">
-          <DirectoryTree
+          <Tree
             key="1"
             showLine
             blockNode
@@ -353,7 +361,7 @@ const PreviewLayout = ({
           key="left"
           getContainer={false}
         >
-          <DirectoryTree
+          <Tree
             key="2"
             showLine
             blockNode
