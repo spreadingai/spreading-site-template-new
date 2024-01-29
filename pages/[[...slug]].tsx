@@ -17,7 +17,6 @@ import Link from "next/link";
 import { SlugData, DocuoConfig, TocItem } from "@/lib/types";
 import Head from "next/head";
 import { CMS_NAME } from "@/lib/constants";
-import pluginOpenAPIDocs from "@/lib/packages/docusaurus-plugin-openapi-docs/src/index";
 
 const components = {
   CodeBlock,
