@@ -115,7 +115,7 @@ class SidebarsController {
           parsedPath.ext.toLocaleLowerCase() === ".md"
         ) {
           const originID = path.join(parsedPath.dir, parsedPath.name);
-          const id = this.convertDocID(originID);
+          const id = this.convertDocID(path.normalize(originID));
           return {
             type: "doc",
             id,
@@ -151,7 +151,7 @@ class SidebarsController {
           const suffixIndex = sidebarItem.lastIndexOf(".");
           suffixIndex !== -1 &&
             (sidebarItem = sidebarItem.slice(0, suffixIndex));
-          sidebarItem = this.convertDocID(sidebarItem);
+          sidebarItem = this.convertDocID(path.normalize(sidebarItem));
           items[index] = {
             type: SidebarItemType.Doc,
             id: sidebarItem,
@@ -176,7 +176,7 @@ class SidebarsController {
               const suffixIndex = sidebarItem.id.lastIndexOf(".");
               suffixIndex !== -1 &&
                 (sidebarItem.id = sidebarItem.id.slice(0, suffixIndex));
-              sidebarItem.id = this.convertDocID(sidebarItem.id);
+              sidebarItem.id = this.convertDocID(path.normalize(sidebarItem.id));
             }
             if (sidebarItem.items) {
               loop(sidebarItem.items);
@@ -203,6 +203,10 @@ class SidebarsController {
     // Quick Start, Quick-Start
     // Quick start, Quick-start
     // Quick start/Overview
+    console.log("@@@####", str, process.platform, path.sep)
+    if (process.platform.includes("win")) {
+      str = str.replace(/\\/g, "/");
+    }
     const result = [];
     const temp = str.split("/");
     temp.forEach((path) => {

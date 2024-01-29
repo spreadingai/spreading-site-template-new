@@ -43,14 +43,13 @@ class DocsController {
       versions
     );
     if (!slugVersion || slugVersion !== versions[0]) {
-      rootUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
-        instanceID === "default" ? "" : instanceID + "_"
-      }docs`;
+      rootUrl = path.join(LibControllerImpl.getEntityRootDirectory(), (instanceID === "default" ? "" : (instanceID + "_")) + "docs");
       if (docVersion) {
-        rootUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
+        rootUrl = path.join(LibControllerImpl.getEntityRootDirectory(), `${
           instanceID === "default" ? "" : instanceID + "_"
-        }versioned_docs/version-${docVersion}`;
+        }versioned_docs`, `version-${docVersion}`);
       }
+      console.log("@@@@#####", rootUrl);
 
       const actualMdxFilePath = this.getActualMdxFilePath(rootUrl, mdxFileID);
       if (actualMdxFilePath) {
@@ -171,12 +170,16 @@ class DocsController {
     // Quick Start, Quick-Start
     // Quick start, Quick-start
     // Quick start/Overview
+    let sp = "/";
+    if (process.platform.includes("win")) {
+      str = str.replace(/\\/g, "/");
+    }
     const result = [];
-    const temp = str.split("/");
+    const temp = str.split(sp);
     temp.forEach((path) => {
       result.push(path.toLowerCase().replace(/\s+/g, "-"));
     });
-    return result.join("/");
+    return result.join(sp);
   }
 }
 
