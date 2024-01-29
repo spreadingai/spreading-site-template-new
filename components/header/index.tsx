@@ -5,7 +5,12 @@ import Link from "next/link";
 import { useMediaQuery } from "usehooks-ts";
 import Mobile from "./mobile";
 import DropdownItem from "./DropdownItem";
-import { DisplayInstance, DisplayVersion, DocuoConfig } from "@/lib/types";
+import {
+  DisplayInstance,
+  DisplayVersion,
+  DocuoConfig,
+  NavBarItemType,
+} from "@/lib/types";
 import { NavBarItem, NavbarLink } from "./@types";
 import { DocSearch } from "@docsearch/react";
 
@@ -87,12 +92,12 @@ const Header = (props: Props) => {
     return (
       <DocSearch
         {...algolia}
-        searchParameters={{
-          facetFilters: [
-            `version:${currentVersion}`,
-            `instance:${currentInstance}`,
-          ],
-        }}
+        // searchParameters={{
+        //   facetFilters: [
+        //     `version:${currentVersion}`,
+        //     `instance:${currentInstance}`,
+        //   ],
+        // }}
       />
     );
   }, [algolia, currentVersion, currentInstance]);
@@ -127,28 +132,35 @@ const Header = (props: Props) => {
         </div>
       ) : (
         <div className={styles["menus"]} ref={menusRef}>
-          {/* @ts-ignore */}
-          {instances && <DropdownItem menu={instances} />}
-          {/* @ts-ignore */}
-          {versions && <DropdownItem menu={versions} />}
-          {(items || [])
-            .filter((item) => item.label)
-            .map((menu, index) => {
-              if (menu?.type === "dropdown" || Array.isArray(menu.items)) {
-                // @ts-ignore
-                return <DropdownItem menu={menu} key={index} />;
-              }
-              return (
-                <Link
-                  key={index}
-                  className={styles["item"]}
-                  href={menu.defaultLink || menu.href || { pathname: menu.to }}
-                  target={menu.href ? "_blank" : "_self"}
-                >
-                  {menu.label}
-                </Link>
-              );
-            })}
+          {(items || []).map((menu, index) => {
+            if (!menu) return null;
+            if (menu?.type === NavBarItemType.DocsInstanceDropdown) {
+              // @ts-ignore
+              return <DropdownItem key={index} menu={instances} />;
+            }
+
+            if (menu?.type === NavBarItemType.DocsVersionDropdown) {
+              // @ts-ignore
+              return <DropdownItem key={index} menu={versions} />;
+            }
+            if (
+              menu?.type === NavBarItemType.Dropdown ||
+              Array.isArray(menu.items)
+            ) {
+              // @ts-ignore
+              return <DropdownItem menu={menu} key={index} />;
+            }
+            return (
+              <Link
+                key={index}
+                className={styles["item"]}
+                href={menu.defaultLink || menu.href || { pathname: menu.to }}
+                target={menu.href ? "_blank" : "_self"}
+              >
+                {menu.label}
+              </Link>
+            );
+          })}
           {DocSearchComponent}
         </div>
       )}
