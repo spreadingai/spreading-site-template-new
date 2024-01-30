@@ -21,7 +21,7 @@ dependencies:
     specifier: ^2.0.10
     version: 2.0.10
   antd:
-    specifier: ^5.12.4
+    specifier: ^5.12.5
     version: 5.12.5(react-dom@18.2.0)(react@18.2.0)
   classnames:
     specifier: ^2.3.2
@@ -30,7 +30,7 @@ dependencies:
     specifier: ^2.0.0
     version: 2.0.0
   next:
-    specifier: 14.1.0
+    specifier: ^14.1.0
     version: 14.1.0(@babel/core@7.23.6)(react-dom@18.2.0)(react@18.2.0)(sass@1.69.5)
   next-mdx-remote:
     specifier: ^4.4.1
@@ -45,16 +45,16 @@ dependencies:
     specifier: ^1.29.0
     version: 1.29.0
   react:
-    specifier: ^18
+    specifier: ^18.2.0
     version: 18.2.0
   react-dom:
-    specifier: ^18
+    specifier: ^18.2.0
     version: 18.2.0(react@18.2.0)
   rehype-katex:
     specifier: ^7.0.0
     version: 7.0.0
   remark-gfm:
-    specifier: ^3.0.0
+    specifier: ^3.0.1
     version: 3.0.1
   remark-images:
     specifier: ^4.0.0
@@ -74,31 +74,31 @@ dependencies:
 
 devDependencies:
   '@types/node':
-    specifier: ^20
+    specifier: ^20.10.5
     version: 20.10.5
   '@types/react':
-    specifier: ^18
+    specifier: ^18.2.45
     version: 18.2.45
   '@types/react-dom':
-    specifier: ^18
+    specifier: ^18.2.18
     version: 18.2.18
   autoprefixer:
-    specifier: ^10.0.1
+    specifier: ^10.4.16
     version: 10.4.16(postcss@8.4.32)
   eslint:
-    specifier: ^8
+    specifier: ^8.56.0
     version: 8.56.0
   eslint-config-next:
     specifier: 14.0.4
     version: 14.0.4(eslint@8.56.0)(typescript@5.3.3)
   postcss:
-    specifier: ^8
+    specifier: ^8.4.32
     version: 8.4.32
   sass:
     specifier: ^1.69.5
     version: 1.69.5
   tailwindcss:
-    specifier: ^3.3.0
+    specifier: ^3.4.0
     version: 3.4.0
   typescript:
     specifier: ^5.3.3
