@@ -55,6 +55,7 @@ export const getStaticProps = async ({ params }: SlugData) => {
   const displayInstances = LibControllerImpl.getDisplayInstances();
   const postData = await DocsControllerImpl.readDoc(params.slug);
   return {
+    notFound: postData.notFound,
     props: {
       ...postData,
       instanceID,
@@ -81,6 +82,7 @@ export function getStaticPaths() {
 }
 
 export default function DocPage({ mdxSource, slug, docuoConfig }: Props) {
+  console.log(mdxSource, slug, docuoConfig, "pageProps");
   if (!slug) {
     return null;
   }
