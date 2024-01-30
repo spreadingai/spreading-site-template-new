@@ -10,7 +10,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@ant-design/icons": "^5.2.6",
     "@docsearch/react": "^3.5.2",
     "@next/mdx": "^14.0.4",
     "@spreading/docuo-mdx-component": "^1.0.0",

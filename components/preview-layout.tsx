@@ -2,9 +2,9 @@
 
 import React, { useState, useEffect } from "react";
 import { AnchorProps, Tree } from "antd";
-import type { TreeProps } from "antd/es/tree";
+import type { AntTreeNodeProps, TreeProps } from "antd/es/tree";
 import { Breadcrumb, Anchor, Drawer } from "antd";
-import { IconFileClose } from "./icons";
+import IconFileClose from "@/assets/icons/IconFileClose.svg";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Header from "./header";
@@ -255,7 +255,16 @@ const PreviewLayout = ({
             blockNode
             defaultExpandAll
             // @ts-ignore
-            switcherIcon={<IconFileClose style={{ fontSize: "18px" }} />}
+            // switcherIcon={<IconFileClose style={{ fontSize: "18px" }} />}
+            switcherIcon={(props: AntTreeNodeProps) => (
+              <IconFileClose
+                style={{
+                  fontSize: "18px",
+                  transform: props.expanded ? "rotate(-90deg)" : "rotate(0deg)",
+                  transition: "transform 0.3s ease",
+                }}
+              />
+            )}
             showIcon={false}
             titleRender={titleRenderHandle}
             onSelect={fileSelectHandle}
@@ -393,7 +402,14 @@ const PreviewLayout = ({
             blockNode
             defaultExpandAll
             // @ts-ignore
-            switcherIcon={<IconFileClose style={{ fontSize: "18px" }} />}
+            switcherIcon={(props: AntTreeNodeProps) => (
+              <IconFileClose
+                style={{
+                  fontSize: "18px",
+                  transform: props.expanded ? "rotate(90deg)" : "rotate(0deg)",
+                }}
+              />
+            )}
             showIcon={false}
             titleRender={titleRenderHandle}
             onSelect={fileSelectHandle}
