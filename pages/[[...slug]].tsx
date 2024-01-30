@@ -55,7 +55,6 @@ export const getStaticProps = async ({ params }: SlugData) => {
   const displayInstances = LibControllerImpl.getDisplayInstances();
   const postData = await DocsControllerImpl.readDoc(params.slug);
   return {
-    notFound: postData.notFound,
     props: {
       ...postData,
       instanceID,

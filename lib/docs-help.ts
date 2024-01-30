@@ -29,7 +29,6 @@ class DocsController {
   }
   async readDoc(slug: string[]) {
     console.log(`[DocsController]readDoc `, slug);
-    let notFound = true
     const { docVersion, mdxFileID, instanceID, slugVersion, routeBasePath } =
       SlugControllerImpl.getExtractInfoFromSlug(slug);
     const versions = VersionsControllerImpl.getUsedVersions(instanceID);
@@ -54,7 +53,6 @@ class DocsController {
 
       const actualMdxFilePath = this.getActualMdxFilePath(rootUrl, mdxFileID);
       if (actualMdxFilePath) {
-        notFound = false
         mdxFileUrl = actualMdxFilePath;
         originContent = fs.readFileSync(actualMdxFilePath, "utf8");
       }
@@ -98,7 +96,6 @@ class DocsController {
       slug,
       mdxSource,
       toc: tocRef.toc || [],
-      notFound,
     };
   }
   copyStaticFile() {
