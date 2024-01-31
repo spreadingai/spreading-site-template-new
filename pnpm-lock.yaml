@@ -13,7 +13,7 @@ importers:
         version: 5.2.6(react-dom@18.2.0)(react@18.2.0)
       '@next/mdx':
         specifier: ^14.0.4
-        version: 14.1.0
+        version: 14.0.4
       '@spreading/docuo-mdx-component':
         specifier: ^1.0.0
         version: 1.0.0(react-dom@18.2.0)(react@18.2.0)
@@ -3008,7 +3008,7 @@ packages:
       '@docusaurus/types':
         optional: true
     dependencies:
-      '@docusaurus/types': 2.4.3(react-dom@18.2.0)(react@18.2.0)
+      '@docusaurus/types': 2.4.3(react-dom@17.0.2)(react@18.2.0)
       tslib: 2.6.2
     dev: false
 
@@ -3102,7 +3102,7 @@ packages:
         optional: true
     dependencies:
       '@docusaurus/logger': 2.4.3
-      '@docusaurus/types': 2.4.3(react-dom@18.2.0)(react@18.2.0)
+      '@docusaurus/types': 2.4.3(react-dom@17.0.2)(react@18.2.0)
       '@svgr/webpack': 6.5.1
       escape-string-regexp: 4.0.0
       file-loader: 6.2.0(webpack@5.90.0)
@@ -3473,8 +3473,8 @@ packages:
       glob: 7.1.7
     dev: true
 
-  /@next/mdx@14.1.0:
-    resolution: {integrity: sha512-YLYsViq91+H8+3oCtK1iuMWdeN14K70Hy6/tYScY+nfo5bQ84A/A+vA6UdNC9MkbWQ/373hQubx2p4JvUjlb2Q==}
+  /@next/mdx@14.0.4:
+    resolution: {integrity: sha512-w0b+A2LRdlqqTIzmaeqPOaafid2cYYYjETA+G+3ZFwkNbBQjvZp57P1waOexF3MGHzcCEoXEnhYpAc+FO6S0Rg==}
     peerDependencies:
       '@mdx-js/loader': '>=0.15.0'
       '@mdx-js/react': '>=0.15.0'
