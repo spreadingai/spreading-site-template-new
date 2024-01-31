@@ -25,6 +25,7 @@ import IconList from "@/assets/images/icon_list.png";
 import IconPackUp from "@/assets/images/icon_pack_up.png";
 import IconThisPage from "@/assets/images/icon_this_page.png";
 import LogoGrey from "@/assets/images/logo_grey.png";
+import Head from "next/head";
 
 const { DirectoryTree } = Tree;
 
@@ -39,6 +40,11 @@ type Props = {
   docuoConfig: DocuoConfig;
   displayVersions: DisplayVersion[];
   displayInstances: DisplayInstance[];
+  algolia?: {
+    appId: string;
+    apiKey: string;
+    indexName: string;
+  };
 };
 
 type TreeDataObject = {
@@ -60,6 +66,7 @@ const PreviewLayout = ({
   docuoConfig,
   displayVersions,
   displayInstances,
+  algolia,
 }: Props) => {
   // slug eg: instance routeBasePath/version/folder/filename
   console.log(
@@ -152,6 +159,14 @@ const PreviewLayout = ({
   const fileSelectHandle: TreeProps["onSelect"] = (selectedKeys, info) => {
     console.log("[Site]fileSelectHandle", selectedKeys, info);
     const { node } = info as any;
+    if (node.type === SidebarItemType.Category) {
+      setExpandedKeys((oldVal) => {
+        if (oldVal.includes(node.key)) {
+          return oldVal.filter((key) => key !== node.key);
+        }
+        return [...oldVal, node.key];
+      });
+    }
     if (node.type === SidebarItemType.Doc) {
       setDrawerOpen(false);
     }
@@ -221,6 +236,10 @@ const PreviewLayout = ({
 
   return (
     <div className="preview-screen">
+      <Head>
+        <meta name="docsearch:version" content={docVersion} />
+        <meta name="docsearch:instance" content={instanceID} />
+      </Head>
       <Header
         docuoConfig={docuoConfig}
         currentVersion={docVersion}
@@ -234,6 +253,7 @@ const PreviewLayout = ({
             key="1"
             showLine
             blockNode
+            defaultExpandAll
             // @ts-ignore
             switcherIcon={<IconFileClose style={{ fontSize: "18px" }} />}
             showIcon={false}
@@ -241,7 +261,7 @@ const PreviewLayout = ({
             onSelect={fileSelectHandle}
             treeData={folderTreeData}
             selectedKeys={selectedKeys}
-            expandedKeys={expandedKeys}
+            // expandedKeys={expandedKeys}
             onExpand={onExpand}
           />
           <div className="generate-desc">
@@ -371,6 +391,7 @@ const PreviewLayout = ({
             key="2"
             showLine
             blockNode
+            defaultExpandAll
             // @ts-ignore
             switcherIcon={<IconFileClose style={{ fontSize: "18px" }} />}
             showIcon={false}
@@ -378,7 +399,7 @@ const PreviewLayout = ({
             onSelect={fileSelectHandle}
             treeData={folderTreeData}
             selectedKeys={selectedKeys}
-            expandedKeys={expandedKeys}
+            // expandedKeys={expandedKeys}
             onExpand={onExpand}
           />
           <div className="generate-desc">

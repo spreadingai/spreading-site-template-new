@@ -14,6 +14,13 @@ export interface DocuoConfig {
     navbar: NavbarConfig;
     footer: FooterConfig;
   };
+  search?: {
+    algolia?: {
+      appId: string;
+      apiKey: string;
+      indexName: string;
+    };
+  };
 }
 export enum NavBarItemType {
   Default = "default",
