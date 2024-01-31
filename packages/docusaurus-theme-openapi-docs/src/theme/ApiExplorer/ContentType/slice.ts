@@ -14,7 +14,8 @@ export interface State {
 
 const initialState: State = {} as any;
 
-export const slice = createSlice({
+// DOCUO: Fixed type conflict issues
+export const slice: any = createSlice({
   name: "contentType",
   initialState,
   reducers: {

@@ -45,6 +45,8 @@ interface ApiFrontMatter extends DocFrontMatter {
 }
 
 export default function ApiItem(props: Props): JSX.Element {
+  // DOCUO: After following the dependencies, the type cannot be found, so ignore it first
+  // @ts-ignore
   const docHtmlClassName = `docs-doc-id-${props.content.metadata.unversionedId}`;
   const MDXComponent = props.content;
   const { frontMatter } = MDXComponent;

@@ -7,7 +7,7 @@
     "target": "ESNext",
     "noEmit": false,
     "outDir": "lib",
-    "jsx": "react",
+    "jsx": "react"
   },
   "include": ["src"],
 }

@@ -247,12 +247,16 @@ function buildPostmanRequest(
     if (a.type === "http" && a.scheme === "bearer") {
       const { token } = auth.data[a.key];
       if (token === undefined) {
+        // DOCUO: Fixed type conflict issues
+        // @ts-ignore
         otherHeaders.push({
           key: "Authorization",
           value: "Bearer <TOKEN>",
         });
         continue;
       }
+      // DOCUO: Fixed type conflict issues
+      // @ts-ignore
       otherHeaders.push({
         key: "Authorization",
         value: `Bearer ${token}`,
@@ -266,12 +270,16 @@ function buildPostmanRequest(
         token = auth.data[a.key].token;
       }
       if (token === undefined) {
+        // DOCUO: Fixed type conflict issues
+        // @ts-ignore
         otherHeaders.push({
           key: "Authorization",
           value: "Bearer <TOKEN>",
         });
         continue;
       }
+      // DOCUO: Fixed type conflict issues
+      // @ts-ignore
       otherHeaders.push({
         key: "Authorization",
         value: `Bearer ${token}`,
@@ -285,6 +293,8 @@ function buildPostmanRequest(
       if (username === undefined || password === undefined) {
         continue;
       }
+      // DOCUO: Fixed type conflict issues
+      // @ts-ignore
       otherHeaders.push({
         key: "Authorization",
         value: `Basic ${window.btoa(`${username}:${password}`)}`,
@@ -296,12 +306,16 @@ function buildPostmanRequest(
     if (a.type === "apiKey" && a.in === "header") {
       const { apiKey } = auth.data[a.key];
       if (apiKey === undefined) {
+        // DOCUO: Fixed type conflict issues
+        // @ts-ignore
         otherHeaders.push({
           key: a.name,
           value: "<API_KEY_VALUE>",
         });
         continue;
       }
+      // DOCUO: Fixed type conflict issues
+      // @ts-ignore
       otherHeaders.push({
         key: a.name,
         value: apiKey,

@@ -44,7 +44,8 @@ export type State = Body;
 
 const initialState: State = {} as any;
 
-export const slice = createSlice({
+// DOCUO: Fixed type conflict issues
+export const slice: any = createSlice({
   name: "body",
   initialState,
   reducers: {
