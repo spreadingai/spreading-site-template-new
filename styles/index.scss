@@ -17,7 +17,6 @@ body {
 
 html > body {
   overflow: auto;
-  margin-top: var(--preview-header-height);
   height: calc(100vh - var(--preview-header-height));
 }
 

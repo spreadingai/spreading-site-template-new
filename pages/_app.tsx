@@ -2,6 +2,7 @@ import { AppProps } from "next/app";
 import "@/styles/index.scss";
 import "@/assets/fonts/fonts.scss";
 import "@/styles/editor.scss";
+import "@/styles/docsearch.scss";
 import "tailwindcss/tailwind.css";
 import "@/tailwind.config";
 import "prismjs/themes/prism-okaidia.min.css";

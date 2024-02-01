@@ -14,7 +14,7 @@ import {
 import { NavBarItem, NavbarLink } from "./@types";
 import { DocSearch } from "@docsearch/react";
 
-import "@docsearch/css";
+// import "@docsearch/css";
 
 interface Props {
   docuoConfig: DocuoConfig;
@@ -42,6 +42,7 @@ const Header = (props: Props) => {
   const menusRef = React.useRef<HTMLDivElement>(null);
   const logoRef = React.useRef<HTMLAnchorElement>(null);
   console.log(items, "items");
+  console.log("algolia", algolia);
 
   useEffect(() => {
     setIsMobile(matches);
@@ -92,6 +93,11 @@ const Header = (props: Props) => {
     return (
       <DocSearch
         {...algolia}
+        translations={{
+          button: {
+            buttonText: "Quick search...",
+          },
+        }}
         // searchParameters={{
         //   facetFilters: [
         //     `version:${currentVersion}`,
@@ -104,66 +110,69 @@ const Header = (props: Props) => {
 
   return (
     <header className={styles["header-container"]}>
-      {navbar.logo ? (
-        <Link
-          className={styles["logo-container"]}
-          href={navbar.iconRedirectUrl || process.env.SITE_URL || ""}
-          ref={logoRef}
-        >
-          <img
-            className={styles.logo}
-            src={
-              (navbar.logo as string).includes("http")
-                ? `${navbar.logo}`
-                : `/${navbar.logo}`
-            }
-            alt={"logo"}
-          />
-          <span className={styles["logo-title"]}>
-            {decodeURI(navbar.title)}
-          </span>
-        </Link>
-      ) : null}
-      {isMobile ? (
-        <div className={styles["menus"]}>
-          {DocSearchComponent}
-          {/*  @ts-ignore */}
-          <Mobile menus={(items || []).filter((item) => item.label)} />
-        </div>
-      ) : (
-        <div className={styles["menus"]} ref={menusRef}>
-          {(items || []).map((menu, index) => {
-            if (!menu) return null;
-            if (menu?.type === NavBarItemType.DocsInstanceDropdown) {
-              // @ts-ignore
-              return <DropdownItem key={index} menu={instances} />;
-            }
+      <div className={styles.container}>
+        {navbar.logo ? (
+          <Link
+            className={styles["logo-container"]}
+            href={navbar.iconRedirectUrl || process.env.SITE_URL || ""}
+            ref={logoRef}
+          >
+            <img
+              className={styles.logo}
+              src={
+                (navbar.logo as string).includes("http")
+                  ? `${navbar.logo}`
+                  : `/${navbar.logo}`
+              }
+              alt={"logo"}
+            />
+            <span className={styles["logo-title"]}>
+              {decodeURI(navbar.title)}
+            </span>
+            {!isMobile && DocSearchComponent}
+          </Link>
+        ) : null}
+        {isMobile ? (
+          <div className={styles["menus"]}>
+            {DocSearchComponent}
+            {/*  @ts-ignore */}
+            <Mobile menus={(items || []).filter((item) => item.label)} />
+          </div>
+        ) : (
+          // <div className={styles["menus"]} ref={menusRef}>
+          //   {(items || []).map((menu, index) => {
+          //     if (!menu) return null;
+          //     if (menu?.type === NavBarItemType.DocsInstanceDropdown) {
+          //       // @ts-ignore
+          //       return <DropdownItem key={index} menu={instances} />;
+          //     }
 
-            if (menu?.type === NavBarItemType.DocsVersionDropdown) {
-              // @ts-ignore
-              return <DropdownItem key={index} menu={versions} />;
-            }
-            if (
-              menu?.type === NavBarItemType.Dropdown ||
-              Array.isArray(menu.items)
-            ) {
-              // @ts-ignore
-              return <DropdownItem menu={menu} key={index} />;
-            }
-            return (
-              <Link
-                key={index}
-                className={styles["item"]}
-                href={menu.defaultLink || menu.href || { pathname: menu.to }}
-                target={menu.href ? "_blank" : "_self"}
-              >
-                {menu.label}
-              </Link>
-            );
-          })}
-          {DocSearchComponent}
-        </div>
-      )}
+          //     if (menu?.type === NavBarItemType.DocsVersionDropdown) {
+          //       // @ts-ignore
+          //       return <DropdownItem key={index} menu={versions} />;
+          //     }
+          //     if (
+          //       menu?.type === NavBarItemType.Dropdown ||
+          //       Array.isArray(menu.items)
+          //     ) {
+          //       // @ts-ignore
+          //       return <DropdownItem menu={menu} key={index} />;
+          //     }
+          //     return (
+          //       <Link
+          //         key={index}
+          //         className={styles["item"]}
+          //         href={menu.defaultLink || menu.href || { pathname: menu.to }}
+          //         target={menu.href ? "_blank" : "_self"}
+          //       >
+          //         {menu.label}
+          //       </Link>
+          //     );
+          //   })}
+          // </div>
+          ""
+        )}
+      </div>
     </header>
   );
 };
