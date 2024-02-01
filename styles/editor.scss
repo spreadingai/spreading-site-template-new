@@ -640,25 +640,6 @@
 		line-height: 14px;
 		font-size: 95%;
 	}
-	pre code {
-		background: unset;
-		border: unset;
-		line-height: 22px !important;
-		font-weight: unset;
-		color: unset;
-		padding: unset;
-		font-family: RobotoMono-Regular, RobotoMono;
-		font-weight: 400;
-		white-space: pre;
-		font-size: 12px;
-	}
-
-	div[data-autowrap="true"] {
-		pre code {
-			white-space: break-spaces;
-			word-break: break-word;
-		}
-	}
 
 	// video
 	table,

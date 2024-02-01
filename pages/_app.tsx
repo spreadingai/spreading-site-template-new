@@ -5,7 +5,7 @@ import "@/styles/editor.scss";
 import "@/styles/docsearch.scss";
 import "tailwindcss/tailwind.css";
 import "@/tailwind.config";
-import "prismjs/themes/prism-okaidia.min.css";
+import "@/styles/prism.token.scss";
 import { ThemeProvider } from "@/components/Theme";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
