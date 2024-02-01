@@ -15,6 +15,7 @@ interface TreeNodeProps {
   showLines?: boolean;
   level?: number;
   selectedKeys?: string[];
+  defaultExpandAll?: boolean;
   onSelect?: (selectedKeys: string[], node: TreeNode) => void;
   titleRender?: (node: TreeNode) => React.ReactNode;
 }
@@ -24,12 +25,15 @@ const TreeNode: FC<TreeNodeProps> = ({
   showLines,
   level = 0,
   selectedKeys,
+  defaultExpandAll = false,
   onSelect,
   titleRender,
 }) => {
   const hasChildren = node.children && node.children.length > 0;
 
-  const [isOpen, setIsOpen] = useState(level !== 0 ? !!node.isOpen : true);
+  const [isOpen, setIsOpen] = useState(
+    level !== 0 ? (defaultExpandAll ? defaultExpandAll : !!node.isOpen) : true
+  );
 
   const toggleNode = () => {
     if (hasChildren && level !== 0) {
@@ -60,7 +64,8 @@ const TreeNode: FC<TreeNodeProps> = ({
               node.type === SidebarItemType.Link,
             "pl-[14px] text-opacity-90": level > 0,
             "font-inter-bold font-semibold text-sidebar-primary": level === 0,
-            "text-sidebar-secondary": !selectedKeys?.includes(node.key) && level > 0,
+            "text-sidebar-secondary":
+              !selectedKeys?.includes(node.key) && level > 0,
             "font-inter-bold font-semibold border-l-2 border-s-sidebar-active text-sidebar-active -translate-x-[2px]":
               selectedKeys?.includes(node.key),
           })}
@@ -104,6 +109,7 @@ const TreeNode: FC<TreeNodeProps> = ({
               showLines={showLines}
               level={level + 1}
               selectedKeys={selectedKeys}
+              defaultExpandAll={defaultExpandAll}
               onSelect={onSelect}
               titleRender={titleRender}
             />

@@ -26,8 +26,10 @@ import IconPackUp from "@/assets/images/icon_pack_up.png";
 import IconThisPage from "@/assets/images/icon_this_page.png";
 import LogoGrey from "@/assets/images/logo_grey.png";
 import Head from "next/head";
-import DocuoTree from "./tree";
-import TreeNode from "./tree/node";
+import DocuoTree from "./Tree";
+import TreeNode from "./Tree/TreeNode";
+import DocuoAnchor from "./Anchor";
+import AnchorNode from "./Anchor/Anchor";
 
 const { DirectoryTree } = Tree;
 
@@ -172,7 +174,7 @@ const PreviewLayout = ({
     }
   };
 
-  const formatFrontmatterTocForAntdAnchor = (data, k) => {
+  const formatFormatterTocForAntdAnchor = (data, k): AnchorNode[] => {
     let key = k;
 
     return data.map((item) => {
@@ -183,7 +185,7 @@ const PreviewLayout = ({
       newItem.key = key++;
 
       if (newItem.children) {
-        newItem.children = formatFrontmatterTocForAntdAnchor(
+        newItem.children = formatFormatterTocForAntdAnchor(
           newItem.children,
           key
         );
@@ -317,11 +319,11 @@ const PreviewLayout = ({
                           <IconFileClose className={`right-icon "expand"`} />
                         </div>
                         <div className={`top-anchor-divide expand`}></div>
-                        <Anchor
+                        {/* <Anchor
                           className={`drop-anchor ${isExpand ? "expand" : ""}`}
                           items={formatFrontmatterTocForAntdAnchor(toc, 0)}
                           affix={false}
-                        />
+                        /> */}
                       </>
                     ) : null}
                   </div>,
@@ -342,11 +344,11 @@ const PreviewLayout = ({
                         <IconFileClose className={`right-icon "expand"`} />
                       </div>
                       <div className={`top-anchor-divide expand`}></div>
-                      <Anchor
+                      {/* <Anchor
                         className={`drop-anchor ${isExpand ? "expand" : ""}`}
-                        items={formatFrontmatterTocForAntdAnchor(toc, 0)}
+                        items={formatFormatterTocForAntdAnchor(toc, 0)}
                         affix={false}
-                      />
+                      /> */}
                     </>
                   ) : null}
                 </div>
@@ -367,27 +369,34 @@ const PreviewLayout = ({
 
             <div className="article-anchor-right">
               {toc?.length ? (
-                <>
-                  <div
-                    className="drop-expand"
+                <div className="pt-[28px] pb-10 ml-8">
+                  <p
+                    className="mb-2.5 font-inter-bold font-semibold text-sm text-sidebar-primary"
                     onClick={() => setIsExpand(!isExpand)}
                   >
-                    <span className=" font-inter-bold font-semibold text-sm text-sidebar-primary">ON THIS PAGE</span>
+                    On this page
+                  </p>
+                  <div className="overflow-auto pr-6 max-h-[75vh]">
+                    <DocuoAnchor
+                      data={formatFormatterTocForAntdAnchor(toc, 0)}
+                      offsetTop={68}
+                    />
                   </div>
-                  <Anchor
+
+                  {/* <Anchor
                     className={`drop-anchor ${isExpand ? "expand" : ""}`}
                     targetOffset={10}
                     items={formatFrontmatterTocForAntdAnchor(toc, 0)}
                     getContainer={() => document.body}
                     affix={false}
                     onClick={handleAnchorClick}
-                  />
+                  /> */}
                   <div className="right-anchor-divide"></div>
                   <div className="back-to-top" onClick={scrollToTop}>
                     <Image src={IconPackUp} alt={""} />
                     Back to top
                   </div>
-                </>
+                </div>
               ) : null}
             </div>
           </div>
@@ -400,7 +409,12 @@ const PreviewLayout = ({
           key="left"
           getContainer={false}
         >
-          <DocuoTree data={folderTreeData} />
+          <DocuoTree
+            data={folderTreeData}
+            selectedKeys={selectedKeys}
+            onSelect={fileSelectHandle}
+            titleRender={titleRenderHandle}
+          />
           {/* <DirectoryTree
             key="2"
             showLine

@@ -17,7 +17,7 @@ body {
 
 html > body {
   overflow: auto;
-  height: calc(100vh - var(--preview-header-height));
+  // height: calc(100vh - var(--preview-header-height));
 }
 
 #__next {
@@ -28,6 +28,7 @@ html > body {
   min-height: calc(100vh - var(--preview-header-height));
   display: flex;
   flex-direction: column;
+  margin-top: var(--preview-header-height);
 }
 
 .preview-header {
@@ -55,7 +56,7 @@ html > body {
     }
 
     .title {
-      font-family: LexendDeca-SemiBold, LexendDeca;
+      font-family: Inter-SemiBold, Inter;
       font-weight: 600;
       color: #ffffff;
     }
@@ -67,7 +68,8 @@ html > body {
   flex-direction: row;
   position: relative;
   flex: 1;
-  // padding-top: var(--preview-header-height);
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .preview-sider {
@@ -79,7 +81,7 @@ html > body {
   background: #FFFFFF;
   // border-right: 1px solid #efefef;
   position: sticky;
-  top: 0;
+  top: var(--preview-header-height);
   left: 0;
   z-index: 99;
   height: calc(100vh - var(--preview-header-height));
@@ -88,7 +90,7 @@ html > body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: LexendDeca-Regular, LexendDeca;
+    font-family: Inter-Regular, Inter;
     font-weight: 400;
     color: rgba(102, 102, 102, 0.5);
 
@@ -161,7 +163,7 @@ html > body {
     }
 
     .ant-tree-treenode .ant-tree-node-content-wrapper.ant-tree-node-selected {
-      font-family: LexendDeca-Regular, LexendDeca;
+      font-family: Inter-Regular, Inter;
       color: #171717;
     }
 
@@ -171,7 +173,7 @@ html > body {
     }
 
     .ant-tree-treenode .ant-tree-node-content-wrapper:hover {
-      font-family: LexendDeca-Regular, LexendDeca;
+      font-family: Inter-Regular, Inter;
     }
   }
 }
@@ -189,9 +191,9 @@ html > body {
     margin: 0 auto;
   }
 
-  .article {
-    width: 75%;
-  }
+  // .article {
+  //   // width: 75%;
+  // }
 
   .article-breadcrumb {
     display: flex;
@@ -224,7 +226,7 @@ html > body {
   .drop-expand {
     display: flex;
     align-items: center;
-    font-family: LexendDeca-SemiBold;
+    font-family: Inter-SemiBold;
     font-weight: 600;
     color: #171717;
     cursor: pointer;
@@ -268,13 +270,13 @@ html > body {
   .article-anchor-right,
   .article-anchor-top {
     .ant-anchor-link-title:hover {
-      font-family: LexendDeca-Regular, LexendDeca;
+      font-family: Inter-Regular, Inter;
       font-weight: 400;
       color: #171717;
     }
 
     .ant-anchor-link-active > .ant-anchor-link-title {
-      font-family: LexendDeca-Regular, LexendDeca;
+      font-family: Inter-Regular, Inter;
       font-weight: 400;
       color: #171717;
     }
@@ -348,9 +350,9 @@ html > body {
   }
 
   .preview-content-wrap {
-    .preview-content {
-      max-width: 1200px;
-    }
+    // .preview-content {
+    //   max-width: 1200px;
+    // }
 
     .article {
       padding-right: 60px;
@@ -368,14 +370,13 @@ html > body {
     .article-anchor-right {
       display: flex;
       flex-direction: column;
-      width: 25%;
-      max-width: 300px;
-      height: calc(100% - 100px);
-      padding: 44px 24px 40px 0;
+      width: 312px;
+      height: calc(100vh - var(--preview-header-height));
       border: none;
       position: sticky;
-      top: 0;
+      top: var(--preview-header-height);
       flex: none;
+      overflow: auto;
 
       .ant-anchor::before {
         display: none;
@@ -389,23 +390,22 @@ html > body {
     }
 
     .right-anchor-divide {
-      margin-bottom: 19px;
+      margin-bottom: 20px;
       margin-top: 20px;
       width: 100%;
       height: 1px;
-      background: #eeeeee;
+      background: rgba($color: #e5e7eb, $alpha: 0.8);
     }
 
     .back-to-top {
       display: flex;
       align-items: center;
-      font-family: LexendDeca-Regular;
-      font-weight: 400;
-      font-size: 13px;
-      color: #000000;
-      letter-spacing: 0;
       cursor: pointer;
-
+      font-size: 14px;
+      font-family: Inter-Medium;
+      font-weight: 500;
+      color: #515869;
+      line-height: 24px;
       img {
         height: 12px;
         width: 12px;
@@ -605,7 +605,7 @@ html > body {
     position: fixed;
 
     .ant-drawer-content-wrapper {
-      width: 320px !important;
+      width: 312px !important;
     }
 
     .ant-drawer-header {
