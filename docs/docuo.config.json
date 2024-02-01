@@ -1,0 +1,60 @@
+{
+  "title": "GNS UI",
+  "favicon": "image/favicon.ico",
+  "instances": [
+    {
+      "id": "default",
+      "label": "docs",
+      "path": "docs",
+      "routeBasePath": ""
+    },
+    {
+      "id": "navsh",
+      "label": "navsh",
+      "path": "navsh_docs",
+      "routeBasePath": "navsh"
+    }
+  ],
+  "themeConfig": {
+    "navbar": {
+      "title": "GNS UI",
+      "logo": "image/logo.png",
+      "items": [
+        {
+          "type": "docSidebar",
+          "sidebarIds": ["mySidebar"],
+          "label": "Documentation",
+          "position": "left"
+        },
+        {
+          "type": "docsVersionDropdown"
+        },
+        {
+          "type": "docsInstanceDropdown"
+        }
+      ]
+    },
+    "footer": {
+      "logo": "image/logo.png",
+      "caption": "GNS UI",
+      "links": [
+        {
+          "title": "Product",
+          "items": [
+            {
+              "label": "documentation",
+              "to": "/"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "search": {
+    "algolia": {
+      "appId": "4TC1Z0S4I2",
+      "apiKey": "4931865248d4ed6ec59dc60f3db682ef",
+      "indexName": "spreading--template-new"
+    }
+  }
+}
