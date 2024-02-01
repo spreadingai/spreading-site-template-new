@@ -26,6 +26,8 @@ import IconPackUp from "@/assets/images/icon_pack_up.png";
 import IconThisPage from "@/assets/images/icon_this_page.png";
 import LogoGrey from "@/assets/images/logo_grey.png";
 import Head from "next/head";
+import DocuoTree from "./tree";
+import TreeNode from "./tree/node";
 
 const { DirectoryTree } = Tree;
 
@@ -50,7 +52,7 @@ type Props = {
 type TreeDataObject = {
   key: string;
   title: string;
-  type: string;
+  type: SidebarItemType;
   link?: string;
   id?: string;
   children?: TreeDataObject[];
@@ -156,9 +158,7 @@ const PreviewLayout = ({
   const breadCrumbData = getBreadCrumbData();
   console.log("[Site]breadCrumbData", breadCrumbData);
 
-  const fileSelectHandle: TreeProps["onSelect"] = (selectedKeys, info) => {
-    console.log("[Site]fileSelectHandle", selectedKeys, info);
-    const { node } = info as any;
+  const fileSelectHandle = (selectedKeys, node) => {
     if (node.type === SidebarItemType.Category) {
       setExpandedKeys((oldVal) => {
         if (oldVal.includes(node.key)) {
@@ -210,6 +210,7 @@ const PreviewLayout = ({
   };
 
   const titleRenderHandle = (nodeData: TreeDataObject) => {
+    console.log(nodeData, "nodeData");
     return (
       <div className="custom-node-title">
         {nodeData.id ? (
@@ -249,7 +250,13 @@ const PreviewLayout = ({
       ></Header>
       <main className="preview-main">
         <div className="preview-sider">
-          <DirectoryTree
+          <DocuoTree
+            data={folderTreeData}
+            selectedKeys={selectedKeys}
+            onSelect={fileSelectHandle}
+            titleRender={titleRenderHandle}
+          />
+          {/* <DirectoryTree
             key="1"
             showLine
             blockNode
@@ -272,13 +279,13 @@ const PreviewLayout = ({
             selectedKeys={selectedKeys}
             // expandedKeys={expandedKeys}
             onExpand={onExpand}
-          />
-          <div className="generate-desc">
+          /> */}
+          {/* <div className="generate-desc">
             <span>Powered By</span>
             <a href="https://www.spreading.ai/" target="_blank">
               <Image src={LogoGrey} alt={"spreading"} />
             </a>
-          </div>
+          </div> */}
         </div>
         <div className="preview-content-wrap">
           <div className="preview-content">
@@ -365,10 +372,7 @@ const PreviewLayout = ({
                     className="drop-expand"
                     onClick={() => setIsExpand(!isExpand)}
                   >
-                    <span className="left-icon">
-                      <Image src={IconThisPage} alt={""} />
-                      ON THIS PAGE
-                    </span>
+                    <span className=" font-inter-bold font-semibold text-sm text-sidebar-primary">ON THIS PAGE</span>
                   </div>
                   <Anchor
                     className={`drop-anchor ${isExpand ? "expand" : ""}`}
@@ -396,7 +400,8 @@ const PreviewLayout = ({
           key="left"
           getContainer={false}
         >
-          <DirectoryTree
+          <DocuoTree data={folderTreeData} />
+          {/* <DirectoryTree
             key="2"
             showLine
             blockNode
@@ -417,13 +422,13 @@ const PreviewLayout = ({
             selectedKeys={selectedKeys}
             // expandedKeys={expandedKeys}
             onExpand={onExpand}
-          />
-          <div className="generate-desc">
+          /> */}
+          {/* <div className="generate-desc">
             <span>Powered By</span>
             <a href="https://www.spreading.ai/" target="_blank">
               <Image src={LogoGrey} alt={"spreading"} />
             </a>
-          </div>
+          </div> */}
         </Drawer>
       </main>
       <Footer socials={[]} links={[]} />

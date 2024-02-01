@@ -1,6 +1,6 @@
 :root {
-  --preview-header-height: 50px;
-  --preview-sider-width: 320px;
+  --preview-header-height: 68px;
+  --preview-sider-width: 312px;
 }
 
 html {
@@ -73,15 +73,16 @@ html > body {
 
 .preview-sider {
   display: flex;
-  overflow: auto;
-  background: #f7f7f7;
-  border-right: 1px solid #efefef;
   flex-direction: column;
   flex-shrink: 0;
+  justify-content: space-between;
+  overflow: auto;
+  background: #FFFFFF;
+  // border-right: 1px solid #efefef;
   position: sticky;
   top: 0;
   left: 0;
-  z-index: 100;
+  z-index: 99;
   height: calc(100vh - var(--preview-header-height));
 
   .generate-desc {
