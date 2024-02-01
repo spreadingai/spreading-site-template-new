@@ -105,7 +105,7 @@ class SidebarsController {
   }
   generatedSidebar(rootUrl: string, dirName: string) {
     const dirPath = path.resolve("./public", "..", rootUrl, dirName);
-    const loop = (dirPath: string) => {
+    const loop = (dirPath: string): SidebarItem => {
       const stats = fs.statSync(dirPath);
       if (!stats.isDirectory()) {
         const relativePath = path.relative(rootUrl, dirPath);
@@ -117,7 +117,7 @@ class SidebarsController {
           const originID = path.join(parsedPath.dir, parsedPath.name);
           const id = this.convertDocID(path.normalize(originID));
           return {
-            type: "doc",
+            type: SidebarItemType.Doc,
             id,
             label: parsedPath.name,
           };
@@ -126,8 +126,8 @@ class SidebarsController {
         }
       }
       const files = fs.readdirSync(dirPath);
-      const sidebar = {
-        type: "category",
+      const sidebar: SidebarItem  = {
+        type: SidebarItemType.Category,
         label: path.basename(dirPath, path.extname(dirPath)),
         items: [],
       };
@@ -135,7 +135,7 @@ class SidebarsController {
       files.forEach((file) => {
         const filePath = path.join(dirPath, file);
         const childTreeData = loop(filePath);
-        childTreeData && sidebar.items.push(childTreeData);
+        childTreeData && ((childTreeData.items && childTreeData.items.length) || !childTreeData.items) && sidebar.items.push(childTreeData);
       });
       return sidebar;
     };
