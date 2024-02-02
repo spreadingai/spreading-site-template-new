@@ -32,6 +32,7 @@ import DocuoAnchor from "./Anchor";
 import AnchorNode from "./Anchor/Anchor";
 import gradientFixed from "@/assets/images/gradient_fixed.png";
 import IconBackTop from "@/assets/icons/anchor/IconBackTop.svg";
+import IconBreadcrumbArrow from "@/assets/icons/breadcrumb/arrow.svg";
 const { DirectoryTree } = Tree;
 
 type Props = {
@@ -281,7 +282,7 @@ const PreviewLayout = ({
         </div>
       </div>
       <main className="preview-main">
-        <div className="preview-sider">
+        <div className="preview-sider scrollbar-thin scrollbar-thumb-sidebar-scrollbar scrollbar-track-transparent">
           <DocuoTree
             data={folderTreeData}
             selectedKeys={selectedKeys}
@@ -331,7 +332,10 @@ const PreviewLayout = ({
                 >
                   <Image src={IconList} alt={"directory"} />
                 </span>
-                <Breadcrumb items={breadCrumbData} />
+                <Breadcrumb
+                  items={breadCrumbData}
+                  separator={<IconBreadcrumbArrow className="m-auto" />}
+                />
               </div>
               {titleElement ? (
                 createPortal(
@@ -388,8 +392,6 @@ const PreviewLayout = ({
                 ref={(current) => {
                   const titleElement =
                     current?.querySelector("h1[class*='title']");
-                  console.log(titleElement, "titleElement");
-
                   setTitleElement(titleElement as HTMLElement);
                 }}
               >
@@ -406,7 +408,7 @@ const PreviewLayout = ({
                   >
                     On this page
                   </p>
-                  <div className="overflow-auto pr-6 max-h-[75vh]">
+                  <div className="overflow-auto pr-6 max-h-[75vh] scrollbar-thin scrollbar-thumb-sidebar-scrollbar scrollbar-track-transparent">
                     <DocuoAnchor
                       data={formatFormatterTocForAntdAnchor(toc, 0)}
                       offsetTop={68}

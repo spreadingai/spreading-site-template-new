@@ -31,6 +31,7 @@ const config: Config = {
           secondary: "#515869",
           active: "#1ABD00",
           hover: "#1ABD00",
+          scrollbar: "rgba(81,88,105,0.2)",
         },
       },
       borderColor: {
@@ -47,6 +48,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [],
+  plugins: [require("tailwind-scrollbar")],
 };
 export default config;

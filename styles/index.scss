@@ -77,7 +77,7 @@ html > body {
   flex-shrink: 0;
   justify-content: space-between;
   overflow: auto;
-  background: #FFFFFF;
+  background: #ffffff;
   // border-right: 1px solid #efefef;
   position: sticky;
   top: var(--preview-header-height);
@@ -100,7 +100,9 @@ html > body {
     }
   }
 }
-
+.ant-breadcrumb-separator {
+  display: flex;
+}
 .mobile-tree-container {
   display: none;
 }
@@ -225,8 +227,6 @@ html > body {
 
   .preview-sider {
     width: var(--preview-sider-width);
-    padding: 0 0 16px 0;
-
     .ant-tree {
       padding-top: 33px;
       .custom-node-title {

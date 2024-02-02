@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import IconTreeArrow from "@/assets/icons/tree/sidebar_arrow_open.svg";
 import { SidebarItemType } from "@/lib/types";
 
@@ -18,6 +18,7 @@ interface TreeNodeProps {
   defaultExpandAll?: boolean;
   onSelect?: (selectedKeys: string[], node: TreeNode) => void;
   titleRender?: (node: TreeNode) => React.ReactNode;
+  onExpand?: () => void;
 }
 
 const TreeNode: FC<TreeNodeProps> = ({
@@ -28,12 +29,22 @@ const TreeNode: FC<TreeNodeProps> = ({
   defaultExpandAll = false,
   onSelect,
   titleRender,
+  onExpand,
 }) => {
   const hasChildren = node.children && node.children.length > 0;
 
   const [isOpen, setIsOpen] = useState(
     level !== 0 ? (defaultExpandAll ? defaultExpandAll : !!node.isOpen) : true
   );
+
+  useEffect(() => {
+    node.children?.forEach((child) => {
+      if (selectedKeys?.includes(child.key)) {
+        setIsOpen(true);
+        onExpand && onExpand();
+      }
+    });
+  }, [node.children, node.key, onExpand, selectedKeys]);
 
   const toggleNode = () => {
     if (hasChildren && level !== 0) {
@@ -112,6 +123,10 @@ const TreeNode: FC<TreeNodeProps> = ({
               defaultExpandAll={defaultExpandAll}
               onSelect={onSelect}
               titleRender={titleRender}
+              onExpand={() => {
+                setIsOpen(true);
+                onExpand && onExpand();
+              }}
             />
           ))}
         </div>
