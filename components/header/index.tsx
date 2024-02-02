@@ -141,38 +141,37 @@ const Header = (props: Props) => {
             <Mobile menus={(items || []).filter((item) => item.label)} />
           </div>
         ) : (
-          // <div className={styles["menus"]} ref={menusRef}>
-          //   {(items || []).map((menu, index) => {
-          //     if (!menu) return null;
-          //     if (menu?.type === NavBarItemType.DocsInstanceDropdown) {
-          //       // @ts-ignore
-          //       return <DropdownItem key={index} menu={instances} />;
-          //     }
+          <div className={styles["menus"]} ref={menusRef}>
+            {(items || []).map((menu, index) => {
+              if (!menu) return null;
+              if (menu?.type === NavBarItemType.DocsInstanceDropdown) {
+                // @ts-ignore
+                return <DropdownItem key={index} menu={instances} />;
+              }
 
-          //     if (menu?.type === NavBarItemType.DocsVersionDropdown) {
-          //       // @ts-ignore
-          //       return <DropdownItem key={index} menu={versions} />;
-          //     }
-          //     if (
-          //       menu?.type === NavBarItemType.Dropdown ||
-          //       Array.isArray(menu.items)
-          //     ) {
-          //       // @ts-ignore
-          //       return <DropdownItem menu={menu} key={index} />;
-          //     }
-          //     return (
-          //       <Link
-          //         key={index}
-          //         className={styles["item"]}
-          //         href={menu.defaultLink || menu.href || { pathname: menu.to }}
-          //         target={menu.href ? "_blank" : "_self"}
-          //       >
-          //         {menu.label}
-          //       </Link>
-          //     );
-          //   })}
-          // </div>
-          ""
+              if (menu?.type === NavBarItemType.DocsVersionDropdown) {
+                // @ts-ignore
+                return <DropdownItem key={index} menu={versions} />;
+              }
+              if (
+                menu?.type === NavBarItemType.Dropdown ||
+                Array.isArray(menu.items)
+              ) {
+                // @ts-ignore
+                return <DropdownItem menu={menu} key={index} />;
+              }
+              return (
+                <Link
+                  key={index}
+                  className={styles["item"]}
+                  href={menu.defaultLink || menu.href || { pathname: menu.to }}
+                  target={menu.href ? "_blank" : "_self"}
+                >
+                  {menu.label}
+                </Link>
+              );
+            })}
+          </div>
         )}
       </div>
     </header>
