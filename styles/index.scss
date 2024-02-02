@@ -28,7 +28,6 @@ html > body {
   min-height: calc(100vh - var(--preview-header-height));
   display: flex;
   flex-direction: column;
-  margin-top: var(--preview-header-height);
 }
 
 .preview-header {
@@ -69,7 +68,7 @@ html > body {
   position: relative;
   flex: 1;
   max-width: 1440px;
-  margin: 0 auto;
+  margin: var(--preview-header-height) auto 0;
 }
 
 .preview-sider {
@@ -98,82 +97,6 @@ html > body {
       margin-left: 5px;
       width: 66px;
       height: 18px;
-    }
-  }
-}
-
-.ant-tree {
-  background: #f7f7f7;
-  flex: 1;
-  overflow-y: auto;
-
-  .ant-tree-switcher {
-    order: 3;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-  }
-
-  .ant-tree-switcher.ant-tree-switcher-noop {
-    display: none;
-  }
-
-  .ant-tree-node-content-wrapper {
-    overflow-x: hidden;
-    padding-right: 33px;
-    &.ant-tree-node-content-wrapper-close,
-    &.ant-tree-node-content-wrapper-open {
-      padding-right: 0;
-    }
-  }
-
-  .ant-tree-title {
-    overflow-x: hidden;
-  }
-
-  .custom-node-title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    overflow-x: hidden;
-
-    .title {
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow-x: hidden;
-      flex: 1;
-      &:hover,
-      &:active {
-        color: #171717;
-      }
-    }
-
-    .action {
-      margin-left: 15px;
-    }
-  }
-
-  &.ant-tree-directory {
-    .ant-tree-treenode::before {
-      top: 4px;
-    }
-
-    .ant-tree-treenode-selected::before {
-      background: transparent;
-    }
-
-    .ant-tree-treenode .ant-tree-node-content-wrapper.ant-tree-node-selected {
-      font-family: Inter-Regular, Inter;
-      color: #171717;
-    }
-
-    .ant-tree-treenode-selected:hover::before,
-    .ant-tree-treenode-selected::before {
-      background: transparent;
-    }
-
-    .ant-tree-treenode .ant-tree-node-content-wrapper:hover {
-      font-family: Inter-Regular, Inter;
     }
   }
 }
@@ -577,7 +500,7 @@ html > body {
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   :root {
     --preview-sider-width: 0px;
   }

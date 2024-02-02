@@ -89,7 +89,8 @@ const AnchorNode: FC<AnchorNodeProps> = ({
       </div>
       {hasChildren && (
         <div
-          className={classNames("ml-4 mt-1", {
+          className={classNames(" mt-1", {
+            "ml-4": level !== 0,
             "border-l-2 border-s-sidebar-default": true,
           })}
         >

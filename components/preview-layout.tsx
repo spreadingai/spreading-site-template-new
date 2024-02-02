@@ -30,7 +30,8 @@ import DocuoTree from "./Tree";
 import TreeNode from "./Tree/TreeNode";
 import DocuoAnchor from "./Anchor";
 import AnchorNode from "./Anchor/Anchor";
-
+import gradientFixed from "@/assets/images/gradient_fixed.png";
+import IconBackTop from "@/assets/icons/anchor/IconBackTop.svg";
 const { DirectoryTree } = Tree;
 
 type Props = {
@@ -250,6 +251,35 @@ const PreviewLayout = ({
         displayInstances={displayInstances}
         displayVersions={displayVersions}
       ></Header>
+      <div className="absolute z-20 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
+        <div className="w-[108rem] flex-none flex justify-end">
+          <Image
+            src={gradientFixed}
+            alt=""
+            className="w-[71.75rem] flex-none max-w-none dark:hidden"
+            decoding="async"
+          />
+          {/* <picture>
+            <source
+              srcSet="/_next/static/media/docs@30.8b9a76a2.avif"
+              type="image/avif"
+            />
+            
+          </picture>
+          <picture>
+            <source
+              srcSet="/_next/static/media/docs-dark@30.1a9f8cbf.avif"
+              type="image/avif"
+            />
+            <Image
+              src={gradientFixed}
+              alt=""
+              className="w-[90rem] flex-none max-w-none hidden dark:block"
+              decoding="async"
+            />
+          </picture> */}
+        </div>
+      </div>
       <main className="preview-main">
         <div className="preview-sider">
           <DocuoTree
@@ -393,7 +423,9 @@ const PreviewLayout = ({
                   /> */}
                   <div className="right-anchor-divide"></div>
                   <div className="back-to-top" onClick={scrollToTop}>
-                    <Image src={IconPackUp} alt={""} />
+                    <div className="flex flex-shrink-0 items-center justify-center w-6 h-6 rounded-md bg-white opacity-60 border-backtop-default border mr-2.5">
+                      <IconBackTop />
+                    </div>
                     Back to top
                   </div>
                 </div>

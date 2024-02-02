@@ -37,6 +37,10 @@
     "footer": {
       "logo": "image/logo.png",
       "caption": "GNS UI",
+      "socials": [{
+        "logo": "GitHub",
+        "href": "https://github.com/spreading/next-mdx-app"
+      }],
       "links": [
         {
           "title": "Product",

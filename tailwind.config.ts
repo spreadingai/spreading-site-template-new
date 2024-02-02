@@ -39,6 +39,11 @@ const config: Config = {
           default: "#ECECEC",
           active: "#1ECE01",
         },
+        backtop: {
+          hover: "#1ECE01",
+          default: "#DDE3EB",
+          active: "#1ECE01",
+        },
       },
     },
   },

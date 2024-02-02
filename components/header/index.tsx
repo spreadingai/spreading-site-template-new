@@ -112,25 +112,27 @@ const Header = (props: Props) => {
     <header className={styles["header-container"]}>
       <div className={styles.container}>
         {navbar.logo ? (
-          <Link
-            className={styles["logo-container"]}
-            href={navbar.iconRedirectUrl || process.env.SITE_URL || ""}
-            ref={logoRef}
-          >
-            <img
-              className={styles.logo}
-              src={
-                (navbar.logo as string).includes("http")
-                  ? `${navbar.logo}`
-                  : `/${navbar.logo}`
-              }
-              alt={"logo"}
-            />
-            <span className={styles["logo-title"]}>
-              {decodeURI(navbar.title)}
-            </span>
+          <div className="flex items-center">
+            <Link
+              className={styles["logo-container"]}
+              href={navbar.iconRedirectUrl || process.env.SITE_URL || ""}
+              ref={logoRef}
+            >
+              <img
+                className={styles.logo}
+                src={
+                  (navbar.logo as string).includes("http")
+                    ? `${navbar.logo}`
+                    : `/${navbar.logo}`
+                }
+                alt={"logo"}
+              />
+              <span className={styles["logo-title"]}>
+                {decodeURI(navbar.title)}
+              </span>
+            </Link>
             {!isMobile && DocSearchComponent}
-          </Link>
+          </div>
         ) : null}
         {isMobile ? (
           <div className={styles["menus"]}>
