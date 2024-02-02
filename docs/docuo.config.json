@@ -46,12 +46,90 @@
           "title": "Product",
           "items": [
             {
-              "label": "documentation",
+              "label": "Documentation",
+              "to": "/"
+            },
+            {
+              "label": "Documentation",
+              "to": "/"
+            },
+            {
+              "label": "Documentation",
+              "to": "/"
+            }
+          ]
+        },
+        {
+          "title": "Product",
+          "items": [
+            {
+              "label": "Documentation",
+              "to": "/"
+            },
+            {
+              "label": "Documentation",
+              "to": "/"
+            },
+            {
+              "label": "Documentation",
+              "to": "/"
+            }
+          ]
+        },
+        {
+          "title": "Product",
+          "items": [
+            {
+              "label": "Documentation",
+              "to": "/"
+            },
+            {
+              "label": "Documentation",
+              "to": "/"
+            },
+            {
+              "label": "Documentation",
+              "to": "/"
+            }
+          ]
+        },
+        {
+          "title": "Product",
+          "items": [
+            {
+              "label": "Documentation",
+              "to": "/"
+            },
+            {
+              "label": "Documentation",
+              "to": "/"
+            },
+            {
+              "label": "Documentation",
               "to": "/"
             }
           ]
         }
-      ]
+      ],
+      "socials": [
+        {
+          "logo": "Twitter",
+          "href": "https://twitter.com/docuo_team"
+        },
+        {
+          "logo": "LinkedIn",
+          "href": "https://www.linkedin.com/company/spreadingai"
+        },
+        {
+          "logo": "Discord",
+          "href": "https://discord.gg/W8p93wcR"
+        },
+        {
+          "logo": "GitHub",
+          "href": "https://github.com/spreadingai"
+        }
+      ],
+      "copyright": "Copyright © 2022 ZEGOCLOUD. All Rights Reserved."
     }
   },
   "search": {

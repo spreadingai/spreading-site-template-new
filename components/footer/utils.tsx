@@ -33,6 +33,8 @@ const getSocial = (
   isDarkMode: boolean
 ) => {
   const mode = isDarkMode ? "dark" : "light";
+  console.log("mode", mode);
+
   const current = typeof logo === "string" ? logo : logo[mode];
   return (
     Social[current] || (

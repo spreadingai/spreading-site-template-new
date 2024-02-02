@@ -41,7 +41,8 @@ const Footer: FC<footerProps> = (props) => {
   const isWrap = useMediaQuery(`(max-width: ${towRowWidth}px)`);
   const isShowMobile = useMediaQuery(`(max-width: 375px)`);
   const isSMWrap = useMediaQuery(`(max-width: ${3 * 200 + 64}px)`);
-  const { isDarkMode } = useDarkMode(false);
+  const { isDarkMode } = useDarkMode(true);
+  console.log("isDarkMode", isDarkMode);
 
   useEffect(() => {
     const towColWidth = 40 * 2 + 320 + 40 + len * itemWidth;
@@ -57,82 +58,86 @@ const Footer: FC<footerProps> = (props) => {
 
   if (!footer) return null;
   return (
-    <footer className={styles["footer-container"]}>
-      <div className={styles["footer-wrapper"]}>
-        <div className={styles["left"]}>
-          {footer.logo && (
-            <div className={styles["logo-container"]}>
-              <img
-                className={styles.logo}
-                src={
-                  (footer.logo as string).includes("http")
-                    ? `${footer.logo}`
-                    : `/${footer.logo}`
-                }
-                alt={"logo"}
-              />
-              {/* <div className={styles["logo-title"]}>{"Untitled"}</div> */}
-            </div>
-          )}
+    <footer
+      className={`${styles["footer-container"]} w-full flex items-center justify-center`}
+    >
+      <div className={styles["container"]}>
+        <div className={styles["footer-wrapper"]}>
+          <div className={styles["left"]}>
+            {footer.logo && (
+              <div className={styles["logo-container"]}>
+                <img
+                  className={styles.logo}
+                  src={
+                    (footer.logo as string).includes("http")
+                      ? `${footer.logo}`
+                      : `/${footer.logo}`
+                  }
+                  alt={"logo"}
+                />
+                {/* <div className={styles["logo-title"]}>{"Untitled"}</div> */}
+              </div>
+            )}
 
-          {footer.caption && (
-            <div className={styles["description"]}>{footer.caption}</div>
-          )}
-          {socials.length > 0 && (
-            <div className={styles["social"]}>
-              {socials.map((social, index) => {
+            {footer.caption && (
+              <div className={styles["description"]}>{footer.caption}</div>
+            )}
+            {socials.length > 0 && (
+              <div className={styles["social"]}>
+                {socials.map((social, index) => {
+                  return (
+                    <a key={index} href={social.href} target="_blank">
+                      <span className={styles["social-item"]}>
+                        {getSocial(social.logo, true)}
+                      </span>
+                      {/* <Image src={social.logo} alt={"logo"} /> */}
+                      {/* {<IconDiscord />} */}
+                    </a>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          <div
+            className={classNames(styles["right"], {
+              [styles["two-row"]]: isWrap,
+              [styles["two-col"]]: isShowTwoCol,
+              [styles["sm-wrap"]]: isSMWrap,
+            })}
+            ref={rightRef}
+          >
+            {isMobile ? (
+              <FooterMobile items={links} />
+            ) : (
+              links.map((group, index, arr) => {
                 return (
-                  <a key={index} href={social.href} target="_blank">
-                    <span className={styles["social-item"]}>
-                      {getSocial(social.logo, isDarkMode)}
-                    </span>
-                    {/* <Image src={social.logo} alt={"logo"} /> */}
-                    {/* {<IconDiscord />} */}
-                  </a>
-                );
-              })}
-            </div>
-          )}
-        </div>
-
-        <div
-          className={classNames(styles["right"], {
-            [styles["two-row"]]: isWrap,
-            [styles["two-col"]]: isShowTwoCol,
-            [styles["sm-wrap"]]: isSMWrap,
-          })}
-          ref={rightRef}
-        >
-          {isMobile ? (
-            <FooterMobile items={links} />
-          ) : (
-            links.map((group, index, arr) => {
-              return (
-                <div key={index} className={`${styles["group"]}`}>
-                  <div className={styles["group-title"]}>{group.title}</div>
-                  <div className={styles["group-items"]}>
-                    {group.items.map((item: any, index) => {
-                      return (
-                        <Link
-                          key={index}
-                          className={styles["group-item"]}
-                          href={item.href || { pathname: item.to }}
-                          target="_blank"
-                        >
-                          {item.label}
-                        </Link>
-                      );
-                    })}
+                  <div key={index} className={`${styles["group"]}`}>
+                    <div className={styles["group-title"]}>{group.title}</div>
+                    <div className={styles["group-items"]}>
+                      {group.items.map((item: any, index) => {
+                        return (
+                          <Link
+                            key={index}
+                            className={styles["group-item"]}
+                            href={item.href || { pathname: item.to }}
+                            target="_blank"
+                          >
+                            {item.label}
+                          </Link>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              );
-            })
-          )}
+                );
+              })
+            )}
+          </div>
         </div>
+        {footer["copyright"] && (
+          <div className={styles["copyright"]}>{footer["copyright"]}</div>
+        )}
       </div>
-      {footer["copyright"] && (
-        <div className={styles["copyright"]}>{footer["copyright"]}</div>
-      )}
     </footer>
   );
 };
