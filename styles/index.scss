@@ -227,6 +227,7 @@ html > body {
 
   .preview-sider {
     width: var(--preview-sider-width);
+    padding-right: 8px;
     .ant-tree {
       padding-top: 33px;
       .custom-node-title {
