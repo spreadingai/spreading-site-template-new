@@ -401,14 +401,14 @@ const PreviewLayout = ({
 
             <div className="article-anchor-right">
               {toc?.length ? (
-                <div className="pt-[28px] pb-10 ml-8">
+                <div className="pt-[28px] h-full pb-10 ml-8">
                   <p
                     className="mb-2.5 font-inter-bold font-semibold text-sm text-sidebar-primary"
                     onClick={() => setIsExpand(!isExpand)}
                   >
                     On this page
                   </p>
-                  <div className="overflow-auto pr-6 max-h-[75vh] scrollbar-thin scrollbar-thumb-sidebar-scrollbar scrollbar-track-transparent">
+                  <div className="overflow-auto pr-6 h-full max-h-[70vh] scrollbar-thin scrollbar-thumb-sidebar-scrollbar scrollbar-track-transparent">
                     <DocuoAnchor
                       data={formatFormatterTocForAntdAnchor(toc, 0)}
                       offsetTop={68}
