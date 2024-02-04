@@ -20,17 +20,21 @@ const DropdownItem: FC<{ menu: NavbarLink }> = ({ menu }) => {
             {item.label}
           </Link>
         ),
+        className: styles["popup-list-items"],
       };
     });
   }, [menu.items, menu.to]);
   return (
     <Dropdown
-      menu={{ items: DropdownList, className: styles["popup"] }}
+      menu={{
+        items: DropdownList,
+        className: styles["popup"],
+      }}
       open={open}
       onOpenChange={setOpen}
     >
       <div className={styles["items-container"]}>
-        <span className={styles["items"]}>{menu.label}</span>
+        <span className={`${styles["items"]} pop-overlay`}>{menu.label}</span>
         {open ? (
           <IconArrowRight
             className={styles["icon"]}

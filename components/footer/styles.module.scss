@@ -16,7 +16,7 @@
       flex-shrink: 0;
       // margin-left: 32px;
       .logo-container {
-        height: 30px;
+        height: 40px;
         display: flex;
         align-items: center;
 
@@ -34,7 +34,7 @@
         font-size: 14px;
         font-family: Inter, Inter;
         font-weight: 400;
-        color: #515869;
+        color: rgba($color: #515869, $alpha: 0.7);
         line-height: 24px;
       }
       .social {
@@ -56,7 +56,7 @@
       display: flex;
       flex-wrap: wrap;
       gap: 40px 0;
-      margin-bottom: 56px;
+      margin-bottom: 61px;
       margin-top: 9px;
       &.two-col {
         width: 400px;
@@ -87,13 +87,12 @@
           margin-top: 32px;
           display: flex;
           flex-direction: column;
-          gap: 20px 0;
+          gap: 21px 0;
           .group-item {
             height: 18px;
             font-size: 14px;
             // white-space: nowrap;
             width: 100%;
-            width: 63px;
             height: 17px;
             font-size: 14px;
             font-family: Inter, Inter;
@@ -112,7 +111,9 @@
   .copyright {
     display: flex;
     align-items: center;
-    padding: 19px 0 28px 0;
+    padding: 19px 0px 28px;
+    max-width: calc(100% - 64px);
+    margin-left: 32px;
     font-size: 12px;
     font-family: Inter, Inter;
     font-weight: 400;

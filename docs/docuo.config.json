@@ -27,6 +27,24 @@
           "position": "left"
         },
         {
+          "type": "dropdown",
+          "label": "aslkjdkalsjdaks",
+          "items": [
+            {
+              "label": "Documentation",
+              "to": "/"
+            },
+            {
+              "label": "Documentation",
+              "to": "/"
+            },
+            {
+              "label": "Documentation",
+              "to": "/"
+            }
+          ]
+        },
+        {
           "type": "docsVersionDropdown"
         },
         {
@@ -36,11 +54,13 @@
     },
     "footer": {
       "logo": "image/logo.png",
-      "caption": "GNS UI",
-      "socials": [{
-        "logo": "GitHub",
-        "href": "https://github.com/spreading/next-mdx-app"
-      }],
+      "caption": "Effortlessly write then publish technical, product documentation in a customer-facing portal, no code.",
+      "socials": [
+        {
+          "logo": "GitHub",
+          "href": "https://github.com/spreading/next-mdx-app"
+        }
+      ],
       "links": [
         {
           "title": "Product",

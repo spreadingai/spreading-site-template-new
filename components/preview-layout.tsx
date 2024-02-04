@@ -337,56 +337,29 @@ const PreviewLayout = ({
                   separator={<IconBreadcrumbArrow className="m-auto" />}
                 />
               </div>
-              {titleElement ? (
-                createPortal(
-                  <div className="article-anchor-top">
-                    {toc?.length ? (
-                      <>
-                        <div
-                          className="drop-expand"
-                          onClick={() => setIsExpand(!isExpand)}
-                        >
-                          <span className="left-icon">
-                            <Image src={IconThisPage} alt={""} />
-                            ON THIS PAGE
-                          </span>
-                          <IconFileClose className={`right-icon "expand"`} />
-                        </div>
-                        <div className={`top-anchor-divide expand`}></div>
-                        {/* <Anchor
-                          className={`drop-anchor ${isExpand ? "expand" : ""}`}
-                          items={formatFrontmatterTocForAntdAnchor(toc, 0)}
-                          affix={false}
-                        /> */}
-                      </>
-                    ) : null}
-                  </div>,
-                  titleElement
-                )
-              ) : (
-                <div className="article-anchor-top">
-                  {toc?.length ? (
-                    <>
-                      <div
-                        className="drop-expand"
-                        onClick={() => setIsExpand(!isExpand)}
-                      >
-                        <span className="left-icon">
-                          <Image src={IconThisPage} alt={""} />
-                          ON THIS PAGE
-                        </span>
-                        <IconFileClose className={`right-icon "expand"`} />
-                      </div>
-                      <div className={`top-anchor-divide expand`}></div>
-                      {/* <Anchor
+
+              <div className="article-anchor-top">
+                {toc?.length ? (
+                  <>
+                    <div
+                      className="drop-expand"
+                      onClick={() => setIsExpand(!isExpand)}
+                    >
+                      <span className="left-icon">
+                        <Image src={IconThisPage} alt={""} />
+                        ON THIS PAGE
+                      </span>
+                      <IconFileClose className={`right-icon "expand"`} />
+                    </div>
+                    <div className={`top-anchor-divide expand`}></div>
+                    {/* <Anchor
                         className={`drop-anchor ${isExpand ? "expand" : ""}`}
                         items={formatFormatterTocForAntdAnchor(toc, 0)}
                         affix={false}
                       /> */}
-                    </>
-                  ) : null}
-                </div>
-              )}
+                  </>
+                ) : null}
+              </div>
               <div
                 className="article-content"
                 ref={(current) => {

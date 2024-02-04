@@ -38,7 +38,7 @@ const Header = (props: Props) => {
   const { algolia } = search || {};
   const [width, setWidth] = React.useState(0);
   const [isMobile, setIsMobile] = React.useState(false);
-  const matches = useMediaQuery(`(max-width: ${Math.max(width, 375)}px)`); // mobile
+  const matches = useMediaQuery(`(max-width: ${Math.max(width, 1024)}px)`); // mobile
   const menusRef = React.useRef<HTMLDivElement>(null);
   const logoRef = React.useRef<HTMLAnchorElement>(null);
   console.log(items, "items");
@@ -91,20 +91,22 @@ const Header = (props: Props) => {
   const DocSearchComponent = useMemo(() => {
     if (!algolia) return null;
     return (
-      <DocSearch
-        {...algolia}
-        translations={{
-          button: {
-            buttonText: "Quick search...",
-          },
-        }}
-        // searchParameters={{
-        //   facetFilters: [
-        //     `version:${currentVersion}`,
-        //     `instance:${currentInstance}`,
-        //   ],
-        // }}
-      />
+      <>
+        <DocSearch
+          {...algolia}
+          translations={{
+            button: {
+              buttonText: "Quick search...",
+            },
+          }}
+          // searchParameters={{
+          //   facetFilters: [
+          //     `version:${currentVersion}`,
+          //     `instance:${currentInstance}`,
+          //   ],
+          // }}
+        />
+      </>
     );
   }, [algolia, currentVersion, currentInstance]);
 
@@ -131,12 +133,12 @@ const Header = (props: Props) => {
                 {decodeURI(navbar.title)}
               </span>
             </Link>
-            {!isMobile && DocSearchComponent}
+            {DocSearchComponent}
           </div>
         ) : null}
         {isMobile ? (
           <div className={styles["menus"]}>
-            {DocSearchComponent}
+            {/* {DocSearchComponent} */}
             {/*  @ts-ignore */}
             <Mobile menus={(items || []).filter((item) => item.label)} />
           </div>
@@ -144,15 +146,15 @@ const Header = (props: Props) => {
           <div className={styles["menus"]} ref={menusRef}>
             {(items || []).map((menu, index) => {
               if (!menu) return null;
-              if (menu?.type === NavBarItemType.DocsInstanceDropdown) {
-                // @ts-ignore
-                return <DropdownItem key={index} menu={instances} />;
-              }
+              // if (menu?.type === NavBarItemType.DocsInstanceDropdown) {
+              //   // @ts-ignore
+              //   return <DropdownItem key={index} menu={instances} />;
+              // }
 
-              if (menu?.type === NavBarItemType.DocsVersionDropdown) {
-                // @ts-ignore
-                return <DropdownItem key={index} menu={versions} />;
-              }
+              // if (menu?.type === NavBarItemType.DocsVersionDropdown) {
+              //   // @ts-ignore
+              //   return <DropdownItem key={index} menu={versions} />;
+              // }
               if (
                 menu?.type === NavBarItemType.Dropdown ||
                 Array.isArray(menu.items)

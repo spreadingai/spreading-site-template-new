@@ -593,6 +593,11 @@ svg.DocSearch-Hit-Select-Icon {
   border: 0;
   width: 20px;
 }
+@media (max-width: 1024px) {
+  .DocSearch-Button {
+    display: none;
+  }
+}
 @media (max-width: 768px) {
   :root {
     --docsearch-spacing: 10px;

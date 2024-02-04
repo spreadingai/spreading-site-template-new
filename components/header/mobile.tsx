@@ -1,6 +1,7 @@
 import React, { FC, useMemo, useState } from "react";
 import IconBurgerMenu from "@/assets/icons/iconBurgerMenu.svg";
 import IconBurgerMenuClose from "@/assets/icons/iconBurgerMenuClose.svg";
+import IconMenuSearch from "@/assets/icons/iconMenuSearch.svg";
 import IconArrowRight from "@/assets/icons/iconArrowRight.svg";
 import styles from "./mobile.module.scss";
 import { Collapse } from "antd";
@@ -104,12 +105,17 @@ const Mobile: FC<Props> = ({ menus }) => {
 
   return (
     <div>
-      <div className={styles["mobile-menus-switch"]}>
-        {open ? (
-          <IconBurgerMenuClose onClick={() => setOpen(() => false)} />
-        ) : (
-          <IconBurgerMenu onClick={() => setOpen(() => true)} />
-        )}
+      <div className={`${styles["mobile-menus-switch"]} flex gap-4`}>
+        <IconMenuSearch
+          onClick={() => {
+            const el: HTMLButtonElement =
+              document.querySelector(".DocSearch-Button");
+            console.log("el", el);
+
+            el && el.click();
+          }}
+        />
+        <IconBurgerMenu onClick={() => setOpen((value) => !value)} />
       </div>
       {open &&
         createPortal(DropdownList, document.body, "mobile-menu-container")}
