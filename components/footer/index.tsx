@@ -39,10 +39,9 @@ const Footer: FC<footerProps> = (props) => {
   const rightRef = useRef<HTMLDivElement>(null);
   const isShowTwoCol = useMediaQuery(`(max-width: ${width}px)`);
   const isWrap = useMediaQuery(`(max-width: ${towRowWidth}px)`);
-  const isShowMobile = useMediaQuery(`(max-width: 375px)`);
+  const isShowMobile = useMediaQuery(`(max-width: 1024px)`);
   const isSMWrap = useMediaQuery(`(max-width: ${3 * 200 + 64}px)`);
-  const { isDarkMode } = useDarkMode(true);
-  console.log("isDarkMode", isDarkMode);
+  const { isDarkMode } = useDarkMode(false);
 
   useEffect(() => {
     const towColWidth = 40 * 2 + 320 + 40 + len * itemWidth;
@@ -59,7 +58,7 @@ const Footer: FC<footerProps> = (props) => {
   if (!footer) return null;
   return (
     <footer
-      className={`${styles["footer-container"]} w-full flex items-center justify-center`}
+      className={`${styles["footer-container"]} w-full flex  justify-center`}
     >
       <div className={styles["container"]}>
         <div className={styles["footer-wrapper"]}>
@@ -88,7 +87,7 @@ const Footer: FC<footerProps> = (props) => {
                   return (
                     <a key={index} href={social.href} target="_blank">
                       <span className={styles["social-item"]}>
-                        {getSocial(social.logo, true)}
+                        {getSocial(social.logo, isDarkMode)}
                       </span>
                       {/* <Image src={social.logo} alt={"logo"} /> */}
                       {/* {<IconDiscord />} */}
