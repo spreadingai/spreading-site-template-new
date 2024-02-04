@@ -1,16 +1,16 @@
 .footer-container {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
   min-height: 319px;
-  background: #010101;
-  .footer-wrapper {
+  background: rgba(229, 231, 235, 0.5);
+  .container {
+    max-width: 1440px;
     width: 100%;
+  }
+  .footer-wrapper {
     display: flex;
     gap: 40px;
     justify-content: space-between;
     flex-wrap: wrap;
-    padding: 40px 32px 0;
+    padding: 37px 32px 0;
     .left {
       width: 320px;
       flex-shrink: 0;
@@ -30,12 +30,12 @@
         }
       }
       .description {
+        margin-top: 13px;
         font-size: 14px;
-        font-family: LexendDeca-Light, LexendDeca;
-        font-weight: 300;
-        color: rgba($color: #ffffff, $alpha: 0.7);
+        font-family: Inter, Inter;
+        font-weight: 400;
+        color: #515869;
         line-height: 24px;
-        margin-top: 16px;
       }
       .social {
         display: flex;
@@ -57,6 +57,7 @@
       flex-wrap: wrap;
       gap: 40px 0;
       margin-bottom: 56px;
+      margin-top: 9px;
       &.two-col {
         width: 400px;
         &.two-row {
@@ -77,9 +78,9 @@
         width: 200px;
         .group-title {
           font-size: 16px;
-          font-family: LexendDeca-Medium, LexendDeca;
-          font-weight: 500;
-          color: #ffffff;
+          font-family: Inter, Inter;
+          font-weight: normal;
+          color: #171717;
           line-height: 24px;
         }
         .group-items {
@@ -88,17 +89,19 @@
           flex-direction: column;
           gap: 20px 0;
           .group-item {
-            width: 66px;
             height: 18px;
             font-size: 14px;
-            font-family: LexendDeca-Light, LexendDeca;
-            font-weight: 300;
-            color: rgba($color: #ffffff, $alpha: 0.7);
-            line-height: 18px;
             // white-space: nowrap;
             width: 100%;
+            width: 63px;
+            height: 17px;
+            font-size: 14px;
+            font-family: Inter, Inter;
+            font-weight: 400;
+            color: rgba($color: #353c4e, $alpha: 0.7);
+            line-height: 16px;
             &:hover {
-              color: #fff;
+              color: #1abd00;
             }
           }
         }
@@ -107,17 +110,15 @@
   }
 
   .copyright {
-    // width: 100%;
-    height: 62px;
     display: flex;
     align-items: center;
-    padding: 0 32px;
+    padding: 19px 0 28px 0;
     font-size: 12px;
-    font-family: LexendDeca-Light, LexendDeca;
-    font-weight: 300;
-    border-top: 1px solid #27272a;
-    color: rgba($color: #ffffff, $alpha: 0.4);
-    line-height: 15px;
+    font-family: Inter, Inter;
+    font-weight: 400;
+    border-top: 1px solid #e5e7eb;
+    color: rgba($color: #353c4e, $alpha: 0.4);
+    line-height: 14px;
   }
 }
 

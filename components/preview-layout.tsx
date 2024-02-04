@@ -288,6 +288,7 @@ const PreviewLayout = ({
             selectedKeys={selectedKeys}
             onSelect={fileSelectHandle}
             titleRender={titleRenderHandle}
+            setDrawerOpen={setDrawerOpen}
           />
           {/* <DirectoryTree
             key="1"
@@ -448,6 +449,7 @@ const PreviewLayout = ({
             selectedKeys={selectedKeys}
             onSelect={fileSelectHandle}
             titleRender={titleRenderHandle}
+            setDrawerOpen={setDrawerOpen}
           />
           {/* <DirectoryTree
             key="2"
