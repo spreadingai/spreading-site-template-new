@@ -97,3 +97,128 @@ The rendered output looks like this:
 ```markdown
 helloWorld();
 ```
+
+You can put the name of your programming language after the first three backticks to get syntax highlighting. Or you can indicate the lines to be highlighted in curly brackets.
+
+````markdown
+```jsx {1,4-6,11}
+import React from 'react';
+
+function MyComponent(props) {
+  if (props.isBar) {
+    return <div>Bar</div>;
+  }
+
+  return <div>Foo</div>;
+}
+
+export default MyComponent;
+```
+````
+```jsx {1,4-6,11}
+import React from 'react';
+
+function MyComponent(props) {
+  if (props.isBar) {
+    return <div>Bar</div>;
+  }
+
+  return <div>Foo</div>;
+}
+
+export default MyComponent;
+```
+
+
+
+
+You can add more text after the programming language to set the name of your code example. The text can be anything as long as its all in one line.
+````markdown
+```javascript helloWorld.js
+console.log("Hello World");
+```
+````
+```javascript helloWorld.js
+console.log("Hello World");
+```
+
+
+
+Code blocks show line numbers by default. If you want to hide line numbers, you can add `hideLineNumbers` at the end of the first three backticks.
+
+````markdown
+```jsx helloWorld.js {1,4-6,11} hideLineNumbers
+import React from 'react';
+
+function MyComponent(props) {
+  if (props.isBar) {
+    return <div>Bar</div>;
+  }
+
+  return <div>Foo</div>;
+}
+
+export default MyComponent;
+```
+````
+
+```jsx helloWorld.js {1,4-6,11} hideLineNumbers
+import React from 'react';
+
+function MyComponent(props) {
+  if (props.isBar) {
+    return <div>Bar</div>;
+  }
+
+  return <div>Foo</div>;
+}
+
+export default MyComponent;
+```
+
+### Code groups
+
+Use `<CodeGroup>` to aggregate multiple code blocks into one code group.
+
+````markdown
+<CodeGroup>
+```javascript helloWorld.js
+console.log("Hello World");
+```
+
+```python hello_world.py
+print('Hello World!')
+```
+
+```java HelloWorld.java
+class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}
+```
+</CodeGroup>
+````
+
+
+
+The rendered output looks like this:
+
+<CodeGroup>
+
+```javascript helloWorld.js
+console.log("Hello World");
+```
+
+```python hello_world.py
+print('Hello World!')
+```
+
+```java HelloWorld.java
+class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+}
+```
+</CodeGroup>
