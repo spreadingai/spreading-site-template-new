@@ -112,10 +112,22 @@
   }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .header-container {
+    flex-direction: column;
+    padding: 16px 0 26px 0;
+
     .container {
       padding: 0 1.25rem 0 1.5rem;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    .toc-font {
+      font-size: 14px;
+      font-family: Inter-SemiBold, Inter;
+      font-weight: normal;
+      color: #171717;
+      line-height: 24px;
     }
   }
 }

@@ -250,6 +250,7 @@ const PreviewLayout = ({
         currentInstance={instanceID}
         displayInstances={displayInstances}
         displayVersions={displayVersions}
+        setDrawerOpen={setDrawerOpen}
       ></Header>
       <div className="absolute z-20 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
         <div className="w-[108rem] flex-none flex justify-end">
@@ -324,14 +325,14 @@ const PreviewLayout = ({
           <div className="preview-content">
             <div className="article">
               <div className="article-breadcrumb">
-                <span
+                {/* <span
                   className="drawer-switch"
                   onClick={() => {
                     setDrawerOpen(true);
                   }}
                 >
                   <Image src={IconList} alt={"directory"} />
-                </span>
+                </span> */}
                 <Breadcrumb
                   items={breadCrumbData}
                   separator={<IconBreadcrumbArrow className="m-auto" />}

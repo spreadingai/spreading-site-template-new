@@ -127,13 +127,22 @@
     .footer-wrapper {
       flex-direction: column;
       padding: 37px 20px 0;
+      gap: 48px;
       .right {
+        margin-top: 0;
+        margin-bottom: 50px;
         &.two-col {
           width: 100%;
         }
       }
       .left {
         width: 100%;
+        .description {
+          margin-top: 9px;
+        }
+        .social {
+          margin-top: 18px;
+        }
       }
     }
     .copyright {

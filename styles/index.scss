@@ -5,6 +5,7 @@
 
 html {
   overflow: hidden;
+  font-size: 16px;
 }
 
 html,
@@ -506,6 +507,7 @@ html > body {
 @media screen and (max-width: 1024px) {
   :root {
     --preview-sider-width: 0px;
+    --preview-header-height: 128px;
   }
   .preview-main {
     position: relative;

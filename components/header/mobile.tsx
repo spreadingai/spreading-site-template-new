@@ -105,7 +105,7 @@ const Mobile: FC<Props> = ({ menus }) => {
 
   return (
     <div>
-      <div className={`${styles["mobile-menus-switch"]} flex gap-4`}>
+      <div className={`cursor-pointer flex gap-4`}>
         <IconMenuSearch
           onClick={() => {
             const el: HTMLButtonElement =

@@ -5,6 +5,9 @@ import Link from "next/link";
 import { useMediaQuery } from "usehooks-ts";
 import Mobile from "./mobile";
 import DropdownItem from "./DropdownItem";
+import IconMenu from "@/assets/icons/iconMenu.svg";
+import IconArrowRight from "@/assets/icons/iconArrowDown.svg";
+
 import {
   DisplayInstance,
   DisplayVersion,
@@ -22,6 +25,7 @@ interface Props {
   currentInstance: string;
   displayInstances: DisplayInstance[];
   displayVersions: DisplayVersion[];
+  setDrawerOpen: (value: boolean) => void;
 }
 
 const Header = (props: Props) => {
@@ -31,6 +35,7 @@ const Header = (props: Props) => {
     currentInstance,
     displayInstances,
     displayVersions,
+    setDrawerOpen,
   } = props;
   const { themeConfig, search } = docuoConfig;
   const { navbar } = themeConfig;
@@ -176,6 +181,34 @@ const Header = (props: Props) => {
           </div>
         )}
       </div>
+      {isMobile && (
+        <div
+          style={{ paddingLeft: 22, paddingRight: 22 }}
+          className="w-full toc-bar flex justify-between"
+        >
+          <span
+            style={{ padding: 5, marginRight: 14 }}
+            className="w-10 h-10 cursor-pointer block border border-gray-200/80 rounded-md"
+            onClick={() => setDrawerOpen(true)}
+          >
+            <IconMenu />
+          </span>
+          <div
+            style={{ paddingLeft: 14, paddingRight: 12 }}
+            className="w-full border bg-white border-gray-200/80 rounded-md toc flex items-center justify-between  h-10"
+          >
+            <span className={styles["toc-font"]}>On this page</span>
+            <IconArrowRight
+              style={{
+                fontSize: 24,
+                color: "#8f939d",
+                transition: "transform 0.3s",
+                transform: "rotate(-180deg)",
+              }}
+            />
+          </div>
+        </div>
+      )}
     </header>
   );
 };
