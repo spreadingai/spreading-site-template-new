@@ -35,7 +35,7 @@ const DocuoTree: FC<TreeProps> = ({
     <div className={classNames("pt-[28px] pb-10 pl-8 pr-6", className)}>
       <span
         onClick={handleClose}
-        className="w-6 absolute right-5 top-5 cursor-pointer z-1 preview-side-close-btn"
+        className="w-6 absolute right-5 top-5 cursor-pointer z-10 preview-side-close-btn"
       >
         <IconClose />
       </span>

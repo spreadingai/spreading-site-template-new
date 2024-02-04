@@ -128,23 +128,17 @@
       flex-direction: column;
       padding: 37px 20px 0;
       .right {
+        &.two-col {
+          width: 100%;
+        }
+      }
+      .left {
+        width: 100%;
       }
     }
     .copyright {
       margin: 0 20px;
-      padding: 0;
-    }
-  }
-}
-
-@media screen and (max-width: 768px) {
-  .footer-container {
-    .footer-wrapper {
-      padding: 40px 20px 0;
-    }
-    .copyright {
-      margin: 0 20px;
-      padding: 0;
+      padding: 24px 0;
     }
   }
 }
