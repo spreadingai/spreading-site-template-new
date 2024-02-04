@@ -215,7 +215,7 @@ html > body {
   }
 }
 
-@media screen and (min-width: 1025px) {
+@media screen and (min-width: 1281px) {
   .preview-header {
     padding: 0 40px 0 20px;
 
@@ -282,6 +282,7 @@ html > body {
     // }
 
     .article {
+      flex: 1;
       padding-right: 60px;
       padding-left: 60px;
     }
