@@ -62,7 +62,7 @@ const AnchorNode: FC<AnchorNodeProps> = ({
     >
       <div className={classNames("text-sm flex items-center")}>
         <span
-          className={classNames({
+          className={classNames("text-sidebar-secondary", {
             "hover:border-l-2 hover:border-s-sidebar-hover hover:-translate-x-[2px]":
               level !== 0,
             "border-l-2 border-s-sidebar-active  -translate-x-[2px]":
