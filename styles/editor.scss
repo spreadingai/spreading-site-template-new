@@ -11,6 +11,8 @@
 	font-weight: 300;
 	color: var(--text-primary);
 	line-height: 25px;
+	// 如果单词太长无法装进容器里，允许在任意位置断行
+	word-wrap: break-word;
 
 	.katex-html[aria-hidden="true"] {
 		display: none;
