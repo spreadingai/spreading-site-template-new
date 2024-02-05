@@ -65,8 +65,9 @@ const TreeNode: FC<TreeNodeProps> = ({
       <div
         className={classNames("text-sm flex items-center", {
           "mb-2.5": level === 0,
-          "mb-2": level > 0
+          "mb-2 cursor-pointer": level > 0
         })}
+        onClick={level > 0 ? toggleNode : undefined}
       >
         <span
           className={classNames({
@@ -83,7 +84,7 @@ const TreeNode: FC<TreeNodeProps> = ({
               level > 0 && selectedKeys?.includes(node.key),
           })}
         >
-          <span className={classNames({ "cursor-pointer": level > 0 })} onClick={level > 0 ? toggleNode : undefined}>
+          <span>
             {titleRender ? titleRender(node) : node.title}
           </span>
         </span>

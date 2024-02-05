@@ -120,10 +120,6 @@ html > body {
     margin: 0 auto;
   }
 
-  // .article {
-  //   // width: 75%;
-  // }
-
   .article-breadcrumb {
     display: flex;
     // align-items: center;
@@ -286,8 +282,8 @@ html > body {
 
     .article {
       width: calc(100% - 312px);
-      padding-right: 60px;
-      padding-left: 60px;
+      padding-left: 24px;
+      padding-right: 32px;
     }
 
     .article-breadcrumb {
@@ -437,8 +433,8 @@ html > body {
   .preview-content-wrap {
     .article {
       width: 100%;
-      padding-right: 40px;
-      padding-left: 40px;
+      padding-left: 24px;
+      padding-right: 32px;
     }
 
     .article-breadcrumb {
