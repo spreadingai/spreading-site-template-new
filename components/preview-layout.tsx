@@ -11,6 +11,7 @@ import Header from "./header";
 import Footer from "./footer";
 import ArticlePager from "./articlePager";
 import { createPortal } from "react-dom";
+
 import { MDXRemoteSerializeResult } from "next-mdx-remote";
 import {
   DisplayInstance,
@@ -32,6 +33,8 @@ import AnchorNode from "./Anchor/Anchor";
 import gradientFixed from "@/assets/images/gradient_fixed.png";
 import IconBackTop from "@/assets/icons/anchor/IconBackTop.svg";
 import IconBreadcrumbArrow from "@/assets/icons/breadcrumb/arrow.svg";
+import AnChorMobile from "./Anchor/AnchorMobile";
+
 const { DirectoryTree } = Tree;
 
 type Props = {
@@ -328,7 +331,7 @@ const PreviewLayout = ({
         <div className="preview-content-wrap">
           <div className="preview-content">
             <div className="article">
-              <div className="article-breadcrumb">
+              <div className="article-breadcrumb flex justify-between	items-center">
                 {/* <span
                   className="drawer-switch"
                   onClick={() => {
@@ -341,6 +344,9 @@ const PreviewLayout = ({
                   items={breadCrumbData}
                   separator={<IconBreadcrumbArrow className="m-auto" />}
                 />
+                <div className={"middle__show bg-white relative"}>
+                  <AnChorMobile tocFormatData={tocFormatData} />
+                </div>
               </div>
 
               {/*<div className="article-anchor-top">

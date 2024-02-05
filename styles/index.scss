@@ -216,6 +216,9 @@ html > body {
 }
 
 @media screen and (min-width: 1281px) {
+  .middle__show {
+    display: none;
+  }
   .preview-header {
     padding: 0 40px 0 20px;
 
@@ -367,6 +370,9 @@ html > body {
 }
 
 @media screen and (max-width: 1280px) {
+  .middle__show {
+    display: block;
+  }
   .preview-header {
     padding: 0 40px 0 20px;
 
@@ -508,6 +514,9 @@ html > body {
   :root {
     --preview-sider-width: 0px;
     --preview-header-height: 128px;
+  }
+  .middle__show {
+    display: none;
   }
   .preview-main {
     position: relative;

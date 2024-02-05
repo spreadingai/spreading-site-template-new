@@ -7,8 +7,7 @@ import Mobile from "./mobile";
 import DropdownItem from "./DropdownItem";
 import IconMenu from "@/assets/icons/iconMenu.svg";
 import IconArrowRight from "@/assets/icons/iconArrowDown.svg";
-import DocuoAnchor from "../Anchor";
-import { createPortal } from "react-dom";
+import AnChorMobile from "../Anchor/AnchorMobile";
 
 import {
   DisplayInstance,
@@ -192,40 +191,12 @@ const Header = (props: Props) => {
         >
           <span
             style={{ padding: 5, marginRight: 14 }}
-            className="w-10 h-10 cursor-pointer block border border-gray-200/80 rounded-md"
+            className="w-10 h-10 cursor-pointer block border border-gray-200/80 rounded-md bg-white"
             onClick={() => setDrawerOpen(true)}
           >
             <IconMenu />
           </span>
-          <div
-            onClick={() => {
-              setOpenToc((value) => !value);
-              console.log(1);
-            }}
-            style={{ paddingLeft: 14, paddingRight: 12 }}
-            className="w-full border bg-white border-gray-200/80 rounded-md toc flex items-center justify-between  h-10"
-          >
-            <span className={styles["toc-font"]}>On this page</span>
-            <IconArrowRight
-              style={{
-                fontSize: 24,
-                color: "#8f939d",
-                transition: "transform 0.3s",
-                transform: "rotate(-180deg)",
-              }}
-            />
-            {openToc &&
-              createPortal(
-                <div>
-                  <div className={styles["mobile-toc-mask"]}></div>
-                  <div className={styles["mobile-toc-container"]}>
-                    <DocuoAnchor data={tocFormatData} offsetTop={68} />
-                  </div>
-                </div>,
-                document.body,
-                "mobile-menu-container"
-              )}
-          </div>
+          <AnChorMobile tocFormatData={tocFormatData} />
         </div>
       )}
     </header>
