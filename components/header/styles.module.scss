@@ -130,4 +130,35 @@
       line-height: 24px;
     }
   }
+
+  .mobile-toc-container {
+    margin-top: 114px;
+    position: fixed;
+    z-index: 101;
+    top: 0;
+    right: auto;
+    left: 15px;
+    width: calc(100% - 35px);
+    background: #ffffff;
+    padding: 20px;
+    padding-top: 16px;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 202px);
+    overflow: auto;
+    background: #ffffff;
+    box-shadow: 0px 1px 12px 0px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(229, 231, 235, 0.6);
+  }
+  .mobile-toc-mask {
+    margin-top: 54px; // TODO: header height
+    position: fixed;
+    z-index: 100;
+    width: 100vw;
+    height: calc(100vh - 50px);
+    inset: 0;
+    background-color: transparent;
+    overflow: hidden;
+  }
 }

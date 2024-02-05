@@ -1,6 +1,6 @@
 // TODO antd cause lambda very slow!!!!!!!!!!!!!! It will take more 7s!!!!!!!!
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { AnchorProps, Tree } from "antd";
 import type { AntTreeNodeProps, TreeProps } from "antd/es/tree";
 import { Breadcrumb, Anchor, Drawer } from "antd";
@@ -136,6 +136,31 @@ const PreviewLayout = ({
     );
   }, [slug]);
 
+  const formatFormatterTocForAntdAnchor = (data, k): AnchorNode[] => {
+    let key = k;
+    return data.map((item) => {
+      const newItem = { ...item };
+
+      newItem.href = `#${newItem.id}`;
+      delete newItem.id;
+      newItem.key = key++;
+
+      if (newItem.children) {
+        newItem.children = formatFormatterTocForAntdAnchor(
+          newItem.children,
+          key
+        );
+      }
+
+      return newItem;
+    });
+  };
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const tocFormatData = useMemo(() => {
+    return formatFormatterTocForAntdAnchor(toc, 0);
+  }, [toc]);
+
   // Update bread crumb data
   const getBreadCrumbData = () => {
     let result: TreeDataObject[] = [];
@@ -159,7 +184,6 @@ const PreviewLayout = ({
     });
   };
   const breadCrumbData = getBreadCrumbData();
-  console.log("[Site]breadCrumbData", breadCrumbData);
 
   const fileSelectHandle = (selectedKeys, node) => {
     if (node.type === SidebarItemType.Category) {
@@ -173,27 +197,6 @@ const PreviewLayout = ({
     if (node.type === SidebarItemType.Doc) {
       setDrawerOpen(false);
     }
-  };
-
-  const formatFormatterTocForAntdAnchor = (data, k): AnchorNode[] => {
-    let key = k;
-
-    return data.map((item) => {
-      const newItem = { ...item };
-
-      newItem.href = `#${newItem.id}`;
-      delete newItem.id;
-      newItem.key = key++;
-
-      if (newItem.children) {
-        newItem.children = formatFormatterTocForAntdAnchor(
-          newItem.children,
-          key
-        );
-      }
-
-      return newItem;
-    });
   };
 
   const scrollToTop = () => {
@@ -248,6 +251,7 @@ const PreviewLayout = ({
         docuoConfig={docuoConfig}
         currentVersion={docVersion}
         currentInstance={instanceID}
+        tocFormatData={tocFormatData}
         displayInstances={displayInstances}
         displayVersions={displayVersions}
         setDrawerOpen={setDrawerOpen}
@@ -339,7 +343,7 @@ const PreviewLayout = ({
                 />
               </div>
 
-              <div className="article-anchor-top">
+              {/*<div className="article-anchor-top">
                 {toc?.length ? (
                   <>
                     <div
@@ -353,14 +357,14 @@ const PreviewLayout = ({
                       <IconFileClose className={`right-icon "expand"`} />
                     </div>
                     <div className={`top-anchor-divide expand`}></div>
-                    {/* <Anchor
+                    {<Anchor
                         className={`drop-anchor ${isExpand ? "expand" : ""}`}
                         items={formatFormatterTocForAntdAnchor(toc, 0)}
                         affix={false}
-                      /> */}
+                      }
                   </>
                 ) : null}
-              </div>
+              </div> */}
               <div
                 className="article-content"
                 ref={(current) => {
@@ -383,10 +387,7 @@ const PreviewLayout = ({
                     On this page
                   </p>
                   <div className="overflow-auto pr-6 h-full max-h-[70vh] scrollbar-thin scrollbar-thumb-sidebar-scrollbar scrollbar-track-transparent">
-                    <DocuoAnchor
-                      data={formatFormatterTocForAntdAnchor(toc, 0)}
-                      offsetTop={68}
-                    />
+                    <DocuoAnchor data={tocFormatData} offsetTop={68} />
                   </div>
 
                   {/* <Anchor

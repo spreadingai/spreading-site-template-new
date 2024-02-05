@@ -7,6 +7,8 @@ import Mobile from "./mobile";
 import DropdownItem from "./DropdownItem";
 import IconMenu from "@/assets/icons/iconMenu.svg";
 import IconArrowRight from "@/assets/icons/iconArrowDown.svg";
+import DocuoAnchor from "../Anchor";
+import { createPortal } from "react-dom";
 
 import {
   DisplayInstance,
@@ -16,6 +18,7 @@ import {
 } from "@/lib/types";
 import { NavBarItem, NavbarLink } from "./@types";
 import { DocSearch } from "@docsearch/react";
+import AnchorNode from "../Anchor/Anchor";
 
 // import "@docsearch/css";
 
@@ -23,6 +26,7 @@ interface Props {
   docuoConfig: DocuoConfig;
   currentVersion: string;
   currentInstance: string;
+  tocFormatData: AnchorNode[];
   displayInstances: DisplayInstance[];
   displayVersions: DisplayVersion[];
   setDrawerOpen: (value: boolean) => void;
@@ -33,6 +37,7 @@ const Header = (props: Props) => {
     docuoConfig,
     currentVersion,
     currentInstance,
+    tocFormatData,
     displayInstances,
     displayVersions,
     setDrawerOpen,
@@ -42,12 +47,11 @@ const Header = (props: Props) => {
   const { items } = navbar;
   const { algolia } = search || {};
   const [width, setWidth] = React.useState(0);
+  const [openToc, setOpenToc] = React.useState(false);
   const [isMobile, setIsMobile] = React.useState(false);
   const matches = useMediaQuery(`(max-width: ${Math.max(width, 1024)}px)`); // mobile
   const menusRef = React.useRef<HTMLDivElement>(null);
   const logoRef = React.useRef<HTMLAnchorElement>(null);
-  console.log(items, "items");
-  console.log("algolia", algolia);
 
   useEffect(() => {
     setIsMobile(matches);
@@ -194,6 +198,10 @@ const Header = (props: Props) => {
             <IconMenu />
           </span>
           <div
+            onClick={() => {
+              setOpenToc((value) => !value);
+              console.log(1);
+            }}
             style={{ paddingLeft: 14, paddingRight: 12 }}
             className="w-full border bg-white border-gray-200/80 rounded-md toc flex items-center justify-between  h-10"
           >
@@ -206,6 +214,17 @@ const Header = (props: Props) => {
                 transform: "rotate(-180deg)",
               }}
             />
+            {openToc &&
+              createPortal(
+                <div>
+                  <div className={styles["mobile-toc-mask"]}></div>
+                  <div className={styles["mobile-toc-container"]}>
+                    <DocuoAnchor data={tocFormatData} offsetTop={68} />
+                  </div>
+                </div>,
+                document.body,
+                "mobile-menu-container"
+              )}
           </div>
         </div>
       )}

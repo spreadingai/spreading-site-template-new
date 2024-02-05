@@ -11,6 +11,7 @@ const config: Config = {
       fontFamily: {
         sans: ["LexendDeca", "sans-serif"],
         serif: ["RobotoMono", "serif"],
+        "inter-regular": ["Inter-Regular", "sans-serif"],
         "inter-light": ["Inter-Light", "sans-serif"],
         "inter-medium": ["Inter-Medium", "sans-serif"],
         "inter-bold": ["Inter-SemiBold", "sans-serif"],

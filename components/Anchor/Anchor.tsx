@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import {
+import React, {
   FC,
   MouseEvent,
   MouseEventHandler,
@@ -9,6 +9,7 @@ import {
 import IconTreeArrow from "@/assets/icons/tree/sidebar_arrow_open.svg";
 import { SidebarItemType } from "@/lib/types";
 import AnchorContext from "./context";
+import { useMediaQuery } from "usehooks-ts";
 
 interface AnchorNode {
   key: string;
@@ -39,12 +40,19 @@ const AnchorNode: FC<AnchorNodeProps> = ({
 
   const hasChildren = node.children && node.children.length > 0;
 
+  const [isMobile, setIsMobile] = React.useState(false);
+  const isShowMobile = useMediaQuery(`(max-width: 1024px)`);
+
   useEffect(() => {
     registerLink(node.href);
     return () => {
       unregisterLink(node.href);
     };
   }, [node.href]);
+
+  useEffect(() => {
+    setIsMobile(isShowMobile);
+  }, [isShowMobile]);
 
   const toggleNode: MouseEventHandler<HTMLAnchorElement> = (e) => {
     e.preventDefault();
@@ -56,25 +64,38 @@ const AnchorNode: FC<AnchorNodeProps> = ({
 
   return (
     <div
-      className={classNames({
-        "mb-1 last:mb-0": level !== 0,
-      })}
+      className={classNames(
+        isMobile
+          ? { "mb-2.5 last:mb-0": level !== 0 }
+          : {
+              "mb-1 last:mb-0": level !== 0,
+            }
+      )}
     >
-      <div className={classNames("text-sm flex items-center")}>
+      <div
+        className={classNames(
+          isMobile ? "text-base flex items-center" : "text-sm flex items-center"
+        )}
+      >
         <span
-          className={classNames("text-sidebar-secondary", {
-            "hover:border-l-2 hover:border-s-sidebar-hover hover:-translate-x-[2px]":
+          className={classNames({
+            "text-secondary/80 hover:border-l-2 hover:border-s-sidebar-hover hover:-translate-x-[2px]":
               level !== 0,
             "border-l-2 border-s-sidebar-active  -translate-x-[2px]":
               activeLink === node.href && level !== 0,
+            "active:text-sidebar-active": level !== 0,
+            "text-secondary/80": level === 0,
+            "mb-2.5": isMobile,
           })}
         >
           <a
             href={node.href}
             className={classNames(
               "cursor-pointer block",
-              "text-opacity-80",
               "hover:text-sidebar-hover",
+              "active:text-sidebar-active",
+
+              "font-inter-regular",
               {
                 "pl-[14px]": level !== 0,
                 "font-inter-bold font-semibold text-sidebar-active":
