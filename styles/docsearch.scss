@@ -140,7 +140,8 @@ html[data-theme="dark"] {
   }
 }
 .DocSearch--active {
-  overflow: hidden !important;
+  // 会导致滚动条消失，内容往右偏移
+  // overflow: hidden !important;
 }
 .DocSearch-Container,
 .DocSearch-Container * {
