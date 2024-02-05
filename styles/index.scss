@@ -298,7 +298,7 @@ html > body {
       display: flex;
       flex-direction: column;
       width: 312px;
-      height: calc(100vh - var(--preview-header-height));
+      max-height: calc(100vh - var(--preview-header-height));
       border: none;
       position: sticky;
       top: var(--preview-header-height);

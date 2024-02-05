@@ -63,13 +63,10 @@ const AnchorNode: FC<AnchorNodeProps> = ({
   };
 
   return (
-    <div
-      className={isMobile ? "mb-2.5 last:mb-0" : "mb-1 last:mb-0"}
-    >
+    <div className={isMobile ? "mb-2.5 last:mb-0" : "mb-1 last:mb-0"}>
       <div
-        className={classNames(
-          isMobile ? "text-base flex items-center" : "text-sm flex items-center"
-        )}
+        className={`flex items-center font-inter-regular`}
+        style={{ fontSize: 13, lineHeight: "22px" }}
       >
         <span
           className={classNames({

@@ -30,12 +30,12 @@ const AnchorNodeMobile: FC<AnchorNodeProps> = ({ tocFormatData }) => {
           fontSize: 24,
           color: "#8f939d",
           transition: "transform 0.3s",
+          transform: "rotate(-180deg)",
         }
       : {
           fontSize: 24,
           color: "#8f939d",
           transition: "transform 0.3s",
-          transform: "rotate(-180deg)",
         };
   }, [openToc]);
   useEffect(() => {

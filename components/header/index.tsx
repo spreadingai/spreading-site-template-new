@@ -190,7 +190,7 @@ const Header = (props: Props) => {
           className="w-full toc-bar flex justify-between"
         >
           <span
-            style={{ padding: 5, marginRight: 14 }}
+            style={{ padding: 4, marginRight: 14 }}
             className="w-10 h-10 cursor-pointer block border border-gray-200/80 rounded-md bg-white"
             onClick={() => setDrawerOpen(true)}
           >
