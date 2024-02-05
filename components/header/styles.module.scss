@@ -7,12 +7,12 @@
   max-width: 100%;
   width: 100%;
   height: var(--preview-header-height);
-  background: rgba(255, 255, 255, 0.4);
   border-bottom: 1px solid rgba($color: #e5e7eb, $alpha: 0.8);
   backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 
   .container {
     max-width: 1440px;
@@ -34,7 +34,7 @@
     .logo-title {
       color: #fff;
       font-size: 20px;
-      font-family: Inter-SemiBold;
+      font-family: Inter-Medium;
       font-weight: bolder;
       color: #171717;
       margin-left: 8px;
@@ -114,6 +114,7 @@
 
 @media screen and (max-width: 1024px) {
   .header-container {
+    background: #fff;
     flex-direction: column;
     padding: 16px 0 26px 0;
 

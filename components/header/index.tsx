@@ -51,6 +51,7 @@ const Header = (props: Props) => {
   const matches = useMediaQuery(`(max-width: ${Math.max(width, 1024)}px)`); // mobile
   const menusRef = React.useRef<HTMLDivElement>(null);
   const logoRef = React.useRef<HTMLAnchorElement>(null);
+  const [scrollLength, setScrollLength] = React.useState(0);
 
   useEffect(() => {
     setIsMobile(matches);
@@ -62,10 +63,20 @@ const Header = (props: Props) => {
       const menuWidth = menusRef.current.clientWidth;
       const logoWidth = logoRef.current?.clientWidth ?? 0;
       const width = menuWidth + logoWidth + 32 * 2 + 40;
-      console.log("[header] width", width);
-
       setWidth(width);
     }
+    const handleScroll = () => {
+      setScrollLength(
+        () => document.documentElement.scrollTop || document.body.scrollTop
+      );
+    };
+    window.addEventListener("scroll", handleScroll, true);
+    // localStorage.setItem(' TWILIO_BAR_KEY', 'dotShow');
+
+    return () => {
+      window?.removeEventListener("scroll", handleScroll);
+    };
+    // return window.removeEventListener("scroll", handleScroll, true);
   }, []);
 
   // @ts-ignore
@@ -119,7 +130,11 @@ const Header = (props: Props) => {
   }, [algolia, currentVersion, currentInstance]);
 
   return (
-    <header className={styles["header-container"]}>
+    <header
+      className={`${styles["header-container"]} ${
+        scrollLength === 0 ? "bg-white/60" : "bg-white"
+      }`}
+    >
       <div className={styles.container}>
         {navbar.logo ? (
           <div className="flex items-center">

@@ -66,7 +66,11 @@ const AnchorNode: FC<AnchorNodeProps> = ({
     <div className={isMobile ? "mb-2.5 last:mb-0" : "mb-1 last:mb-0"}>
       <div
         className={`flex items-center font-inter-regular`}
-        style={{ fontSize: 13, lineHeight: "22px" }}
+        style={
+          isMobile
+            ? { fontSize: 16, lineHeight: "28px", marginBottom: 10 }
+            : { fontSize: 13, lineHeight: "22px" }
+        }
       >
         <span
           className={classNames({
@@ -76,7 +80,6 @@ const AnchorNode: FC<AnchorNodeProps> = ({
               activeLink === node.href && level !== 0,
             "active:text-sidebar-active": level !== 0,
             "text-secondary/80": level === 0,
-            "mb-2.5": isMobile,
           })}
         >
           <a

@@ -215,6 +215,7 @@ html > body {
   .middle__show {
     display: none;
   }
+
   .preview-header {
     padding: 0 40px 0 20px;
 
@@ -366,6 +367,9 @@ html > body {
 }
 
 @media screen and (max-width: 1280px) {
+  .only_pc__show {
+    display: none !important;
+  }
   .middle__show {
     display: block;
   }
@@ -618,7 +622,7 @@ html > body {
     }
 
     .article-breadcrumb {
-      margin: 40px 0;
+      margin: 28px 0 0 0;
 
       .drawer-switch {
         display: flex;
@@ -684,7 +688,7 @@ html > body {
   }
 
   .article-breadcrumb {
-    margin-top: 30px;
+    // margin-top: 30px;
 
     .drawer-switch {
       margin-left: 3px;

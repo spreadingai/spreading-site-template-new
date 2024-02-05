@@ -2,15 +2,11 @@
 
 import React, { useState, useEffect, useMemo } from "react";
 import { AnchorProps, Tree } from "antd";
-import type { AntTreeNodeProps, TreeProps } from "antd/es/tree";
 import { Breadcrumb, Anchor, Drawer } from "antd";
-import IconFileClose from "@/assets/icons/IconFileClose.svg";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Header from "./header";
 import Footer from "./footer";
-import ArticlePager from "./articlePager";
-import { createPortal } from "react-dom";
 
 import { MDXRemoteSerializeResult } from "next-mdx-remote";
 import {
@@ -22,10 +18,7 @@ import {
 } from "@/lib/types";
 import Image from "next/image";
 import IconOutlink from "@/assets/images/icon_outlink.png";
-import IconList from "@/assets/images/icon_list.png";
-import IconPackUp from "@/assets/images/icon_pack_up.png";
-import IconThisPage from "@/assets/images/icon_this_page.png";
-import LogoGrey from "@/assets/images/logo_grey.png";
+
 import Head from "next/head";
 import DocuoTree from "./tree";
 import DocuoAnchor from "./Anchor";
@@ -259,7 +252,7 @@ const PreviewLayout = ({
         displayVersions={displayVersions}
         setDrawerOpen={setDrawerOpen}
       ></Header>
-      <div className="absolute z-0 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
+      <div className="only_pc__show absolute z-0 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
         <div className="w-[108rem] flex-none flex justify-end">
           <Image
             src={gradientFixed}
@@ -267,25 +260,6 @@ const PreviewLayout = ({
             className="w-[71.75rem] flex-none max-w-none dark:hidden"
             decoding="async"
           />
-          {/* <picture>
-            <source
-              srcSet="/_next/static/media/docs@30.8b9a76a2.avif"
-              type="image/avif"
-            />
-            
-          </picture>
-          <picture>
-            <source
-              srcSet="/_next/static/media/docs-dark@30.1a9f8cbf.avif"
-              type="image/avif"
-            />
-            <Image
-              src={gradientFixed}
-              alt=""
-              className="w-[90rem] flex-none max-w-none hidden dark:block"
-              decoding="async"
-            />
-          </picture> */}
         </div>
       </div>
       <main className="preview-main">

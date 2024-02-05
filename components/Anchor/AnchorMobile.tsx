@@ -22,6 +22,7 @@ interface AnchorNodeProps {
 const AnchorNodeMobile: FC<AnchorNodeProps> = ({ tocFormatData }) => {
   const [isMobile, setIsMobile] = React.useState(false);
   const [openToc, setOpenToc] = React.useState(false);
+  const [loaded, setLoaded] = React.useState(false);
 
   const isShowMobile = useMediaQuery(`(max-width: 1024px)`);
   const iconStyles = useMemo(() => {
@@ -40,6 +41,7 @@ const AnchorNodeMobile: FC<AnchorNodeProps> = ({ tocFormatData }) => {
   }, [openToc]);
   useEffect(() => {
     setIsMobile(isShowMobile);
+    setLoaded(true);
   }, [isShowMobile]);
 
   return (
@@ -52,9 +54,9 @@ const AnchorNodeMobile: FC<AnchorNodeProps> = ({ tocFormatData }) => {
     >
       <span className={styles["toc-font"]}>On this page</span>
       <IconArrowRight style={iconStyles} />
-      {openToc &&
+      {loaded &&
         createPortal(
-          <div>
+          <div style={{ display: openToc ? "block" : "none" }}>
             <div className={styles["mobile-toc-mask"]}></div>
             <div className={styles["mobile-toc-container"]}>
               <DocuoAnchor data={tocFormatData} offsetTop={68} />

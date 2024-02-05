@@ -1,5 +1,6 @@
 import React, { FC, useMemo, useState } from "react";
 import IconBurgerMenu from "@/assets/icons/iconBurgerMenu.svg";
+import IconNavMore from "@/assets/icons/IconNavMore.svg";
 import IconBurgerMenuClose from "@/assets/icons/iconBurgerMenuClose.svg";
 import IconMenuSearch from "@/assets/icons/iconMenuSearch.svg";
 import IconArrowRight from "@/assets/icons/iconArrowRight.svg";
@@ -115,7 +116,9 @@ const Mobile: FC<Props> = ({ menus }) => {
             el && el.click();
           }}
         />
-        <IconBurgerMenu onClick={() => setOpen((value) => !value)} />
+        <span onClick={() => setOpen((value) => !value)}>
+          {open ? <IconBurgerMenu /> : <IconNavMore />}
+        </span>
       </div>
       {open &&
         createPortal(DropdownList, document.body, "mobile-menu-container")}
