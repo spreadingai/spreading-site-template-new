@@ -3,7 +3,7 @@ import "@/styles/index.scss";
 import "@/assets/fonts/fonts.scss";
 import "@/styles/editor.scss";
 import "@/styles/docsearch.scss";
-import "tailwindcss/tailwind.css";
+import "@/styles/tailwind.css";
 import "@/tailwind.config";
 import "@/styles/prism.token.scss";
 import { ThemeProvider } from "@/components/Theme";
