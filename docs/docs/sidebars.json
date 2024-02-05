@@ -1,5 +1,6 @@
 {
   "mySidebar": [
+    "demo",
     {
       "type": "category",
       "label": "Overview",
