@@ -73,9 +73,9 @@ const AnchorNode: FC<AnchorNodeProps> = ({
       >
         <span
           className={classNames({
-            "text-secondary/80 hover:border-l-2 hover:border-s-sidebar-hover hover:-translate-x-[2px]":
+            "text-secondary/80 hover:border-l hover:border-s-sidebar-hover hover:-translate-x-[1px]":
               level !== 0,
-            "border-l-2 border-s-sidebar-active  -translate-x-[2px]":
+            "border-l border-s-sidebar-active  -translate-x-[1px]":
               activeLink === node.href && level !== 0,
             "active:text-sidebar-active": level !== 0,
             "text-secondary/80": level === 0,
@@ -91,7 +91,7 @@ const AnchorNode: FC<AnchorNodeProps> = ({
 
               "font-inter-regular",
               {
-                "pl-[14px]": level !== 0,
+                "pl-[13px]": level !== 0,
                 "font-inter-bold font-semibold text-sidebar-active":
                   activeLink === node.href,
               }
@@ -106,7 +106,7 @@ const AnchorNode: FC<AnchorNodeProps> = ({
         <div
           className={classNames(" mt-1", {
             "ml-4": level !== 0,
-            "border-l-2 border-s-sidebar-default": true,
+            "border-l border-s-sidebar-default": true,
           })}
         >
           {node.children.map((child, index) => (

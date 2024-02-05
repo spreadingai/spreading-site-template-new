@@ -59,45 +59,49 @@ const TreeNode: FC<TreeNodeProps> = ({
     <div
       className={classNames({
         "mb-7": level == 0,
-        relative: showLines
+        relative: showLines,
       })}
     >
       <div
         className={classNames("text-sm flex items-center", {
           "mb-2.5": level === 0,
-          "mb-2 cursor-pointer": level > 0
+          "mb-2 cursor-pointer": level > 0,
         })}
         onClick={level > 0 ? toggleNode : undefined}
       >
         <span
           className={classNames({
-            "hover:text-sidebar-hover": node.type === SidebarItemType.Doc || node.type === SidebarItemType.Link,
-            "hover:border-s-sidebar-hover hover:-translate-x-[2px] hover:border-l-2":
-              level > 0 && (node.type === SidebarItemType.Doc || node.type === SidebarItemType.Link),
+            "hover:text-sidebar-hover":
+              node.type === SidebarItemType.Doc ||
+              node.type === SidebarItemType.Link,
+            "hover:border-s-sidebar-hover hover:-translate-x-[1px] hover:border-l":
+              level > 0 &&
+              (node.type === SidebarItemType.Doc ||
+                node.type === SidebarItemType.Link),
             "pl-[14px] text-opacity-90": level > 0,
             // 选中粗体绿色
-            "font-inter-bold font-semibold text-sidebar-active": selectedKeys?.includes(node.key),
+            "font-inter-bold font-semibold text-sidebar-active":
+              selectedKeys?.includes(node.key),
             // 第一层级粗体
             "font-inter-bold font-semibold": level === 0,
-            "text-sidebar-secondary": !selectedKeys?.includes(node.key) && level > 0,
-            "border-l-2 border-s-sidebar-active -translate-x-[2px]":
+            "text-sidebar-secondary":
+              !selectedKeys?.includes(node.key) && level > 0,
+            "border-l border-s-sidebar-active -translate-x-[1px]":
               level > 0 && selectedKeys?.includes(node.key),
           })}
         >
-          <span>
-            {titleRender ? titleRender(node) : node.title}
-          </span>
+          <span>{titleRender ? titleRender(node) : node.title}</span>
         </span>
 
         {hasChildren && level > 0 ? (
           <span
             className={classNames("duration-200 ml-1.5", {
-              "rotate-90": isOpen
+              "rotate-90": isOpen,
             })}
           >
             <IconTreeArrow
               style={{
-                fontSize: "18px"
+                fontSize: "18px",
               }}
             />
           </span>
@@ -110,7 +114,7 @@ const TreeNode: FC<TreeNodeProps> = ({
           className={classNames("mt-2.5", {
             "ml-4": level > 0,
             hidden: !isOpen,
-            "border-l-2 border-s-sidebar-default": showLines
+            "border-l border-s-sidebar-default": showLines,
           })}
         >
           {node.children.map((child, index) => (

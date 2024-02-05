@@ -245,7 +245,7 @@ const PreviewLayout = ({
   };
 
   return (
-    <div className="preview-screen">
+    <div className="preview-screen relative">
       <Head>
         <meta name="docsearch:version" content={docVersion} />
         <meta name="docsearch:instance" content={instanceID} />
@@ -259,7 +259,7 @@ const PreviewLayout = ({
         displayVersions={displayVersions}
         setDrawerOpen={setDrawerOpen}
       ></Header>
-      <div className="absolute z-20 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
+      <div className="absolute z-0 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
         <div className="w-[108rem] flex-none flex justify-end">
           <Image
             src={gradientFixed}
@@ -344,7 +344,7 @@ const PreviewLayout = ({
                   items={breadCrumbData}
                   separator={<IconBreadcrumbArrow className="m-auto" />}
                 />
-                <div className={"middle__show bg-white relative"}>
+                <div className={"middle__show  relative"}>
                   <AnChorMobile tocFormatData={tocFormatData} />
                 </div>
               </div>

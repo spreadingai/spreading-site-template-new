@@ -54,7 +54,7 @@ html[data-theme="dark"] {
   width: 340px;
   align-items: center;
   border: 0;
-  background-color: rgba(229, 231, 235, 0.2) !important;
+  background-color: #fafafb !important;
   border-radius: 6px !important;
   color: var(--docsearch-muted-color);
   cursor: pointer;
@@ -65,7 +65,7 @@ html[data-theme="dark"] {
   margin: 0 0 0 42px;
   padding: 0 11px;
   user-select: none;
-  border: 1px solid rgba(229, 231, 235, 0.5);
+  border: 1px solid #f2f3f5;
 }
 .DocSearch-Button:active,
 .DocSearch-Button:focus,
@@ -73,7 +73,7 @@ html[data-theme="dark"] {
   box-shadow: unset;
   color: unset;
   outline: none;
-  background: rgba(229, 231, 235, 0.2);
+  background: #f6f6f8;
   border: 1px solid #e5e7eb;
 }
 .DocSearch-Button-Container {
