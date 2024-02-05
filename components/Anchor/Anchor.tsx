@@ -41,7 +41,7 @@ const AnchorNode: FC<AnchorNodeProps> = ({
   const hasChildren = node.children && node.children.length > 0;
 
   const [isMobile, setIsMobile] = React.useState(false);
-  const isShowMobile = useMediaQuery(`(max-width: 1024px)`);
+  const isShowMobile = useMediaQuery(`(max-width: 1280px)`);
 
   useEffect(() => {
     registerLink(node.href);
