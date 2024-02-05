@@ -45,13 +45,17 @@
     color: #fff;
     display: flex;
     align-items: center;
-    gap: 0px 32px;
+    // gap: 0px 32px;
     .item {
       font-size: 14px;
       font-family: Inter-Medium, Inter;
       font-weight: 500;
       color: #171717;
       line-height: 24px;
+      margin-right: 32px;
+      &:last-of-type {
+        margin-right: 0;
+      }
       &:hover {
         color: #1abd00;
       }

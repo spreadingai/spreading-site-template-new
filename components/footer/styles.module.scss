@@ -7,7 +7,6 @@
   }
   .footer-wrapper {
     display: flex;
-    gap: 40px;
     justify-content: space-between;
     flex-wrap: wrap;
     padding: 37px 32px 0;
@@ -15,6 +14,7 @@
       width: 320px;
       flex-shrink: 0;
       // margin-left: 32px;
+      margin-right: 40px;
       .logo-container {
         height: 40px;
         display: flex;
@@ -60,9 +60,9 @@
     .right {
       display: flex;
       flex-wrap: wrap;
-      gap: 40px 0;
       margin-bottom: 61px;
       margin-top: 9px;
+      gap: 40px 0;
       &.two-col {
         width: 400px;
         &.two-row {
@@ -136,7 +136,6 @@
     .footer-wrapper {
       flex-direction: column;
       padding: 37px 20px 0;
-      gap: 48px;
       .right {
         margin-top: 0;
         margin-bottom: 50px;
@@ -146,6 +145,7 @@
       }
       .left {
         width: 100%;
+        margin-bottom: 40px;
         .description {
           margin-top: 9px;
         }
