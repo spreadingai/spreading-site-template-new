@@ -7,7 +7,7 @@ export default function Document() {
       <Head>
         <Meta />
       </Head>
-      <body className="scrollbar-thin scrollbar-thumb-sidebar-scrollbar scrollbar-track-transparent">
+      <body>
         <Main />
         <NextScript />
       </body>

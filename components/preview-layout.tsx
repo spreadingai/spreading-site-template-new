@@ -289,7 +289,7 @@ const PreviewLayout = ({
         </div>
       </div>
       <main className="preview-main">
-        <div className="preview-sider scrollbar-thin scrollbar-thumb-sidebar-scrollbar scrollbar-track-transparent">
+        <div className="preview-sider">
           <DocuoTree
             data={folderTreeData}
             selectedKeys={selectedKeys}
@@ -392,7 +392,7 @@ const PreviewLayout = ({
                   >
                     On this page
                   </p>
-                  <div className="overflow-auto pr-6 h-full max-h-[70vh] scrollbar-thin scrollbar-thumb-sidebar-scrollbar scrollbar-track-transparent">
+                  <div className="overflow-auto pr-6 h-full max-h-[70vh]">
                     <DocuoAnchor data={tocFormatData} offsetTop={68} />
                   </div>
 
