@@ -64,13 +64,7 @@ const AnchorNode: FC<AnchorNodeProps> = ({
 
   return (
     <div
-      className={classNames(
-        isMobile
-          ? { "mb-2.5 last:mb-0": level !== 0 }
-          : {
-              "mb-1 last:mb-0": level !== 0,
-            }
-      )}
+      className={isMobile ? "mb-2.5 last:mb-0" : "mb-1 last:mb-0"}
     >
       <div
         className={classNames(
