@@ -83,15 +83,7 @@ const DocuoAnchor: FC<TreeProps> = ({
       };
 
       const currentActiveLink = getInternalCurrentAnchor(links, 68);
-      if (currentActiveLink) {
-        setCurrentActiveLink(currentActiveLink);
-        const wrapper = document.querySelector(".article-anchor-right");
-        if (!wrapper) return;
-        const anchor = wrapper.querySelector(`a[href="${currentActiveLink}"]`);
-        if (!anchor) return;
-        // @ts-ignore
-        anchor.scrollIntoViewIfNeeded();
-      }
+      setCurrentActiveLink(currentActiveLink);
     }, 200),
     [links, setCurrentActiveLink]
   );
