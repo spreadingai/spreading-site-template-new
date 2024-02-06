@@ -1,16 +1,13 @@
 // TODO antd cause lambda very slow!!!!!!!!!!!!!! It will take more 7s!!!!!!!!
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { AnchorProps, Tree } from "antd";
-import type { AntTreeNodeProps, TreeProps } from "antd/es/tree";
 import { Breadcrumb, Anchor, Drawer } from "antd";
-import IconFileClose from "@/assets/icons/IconFileClose.svg";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Header from "./header";
 import Footer from "./footer";
-import ArticlePager from "./articlePager";
-import { createPortal } from "react-dom";
+
 import { MDXRemoteSerializeResult } from "next-mdx-remote";
 import {
   DisplayInstance,
@@ -21,11 +18,15 @@ import {
 } from "@/lib/types";
 import Image from "next/image";
 import IconOutlink from "@/assets/images/icon_outlink.png";
-import IconList from "@/assets/images/icon_list.png";
-import IconPackUp from "@/assets/images/icon_pack_up.png";
-import IconThisPage from "@/assets/images/icon_this_page.png";
-import LogoGrey from "@/assets/images/logo_grey.png";
+
 import Head from "next/head";
+import DocuoTree from "./tree";
+import DocuoAnchor from "./Anchor";
+import AnchorNode from "./Anchor/Anchor";
+import gradientFixed from "@/assets/images/gradient_fixed.png";
+import IconBackTop from "@/assets/icons/anchor/IconBackTop.svg";
+import IconBreadcrumbArrow from "@/assets/icons/breadcrumb/arrow.svg";
+import AnChorMobile from "./Anchor/AnchorMobile";
 
 const { DirectoryTree } = Tree;
 
@@ -50,7 +51,7 @@ type Props = {
 type TreeDataObject = {
   key: string;
   title: string;
-  type: string;
+  type: SidebarItemType;
   link?: string;
   id?: string;
   children?: TreeDataObject[];
@@ -131,6 +132,31 @@ const PreviewLayout = ({
     );
   }, [slug]);
 
+  const formatFormatterTocForAntdAnchor = (data, k): AnchorNode[] => {
+    let key = k;
+    return data.map((item) => {
+      const newItem = { ...item };
+
+      newItem.href = `#${newItem.id}`;
+      delete newItem.id;
+      newItem.key = key++;
+
+      if (newItem.children) {
+        newItem.children = formatFormatterTocForAntdAnchor(
+          newItem.children,
+          key
+        );
+      }
+
+      return newItem;
+    });
+  };
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const tocFormatData = useMemo(() => {
+    return formatFormatterTocForAntdAnchor(toc, 0);
+  }, [toc]);
+
   // Update bread crumb data
   const getBreadCrumbData = () => {
     let result: TreeDataObject[] = [];
@@ -154,11 +180,8 @@ const PreviewLayout = ({
     });
   };
   const breadCrumbData = getBreadCrumbData();
-  console.log("[Site]breadCrumbData", breadCrumbData);
 
-  const fileSelectHandle: TreeProps["onSelect"] = (selectedKeys, info) => {
-    console.log("[Site]fileSelectHandle", selectedKeys, info);
-    const { node } = info as any;
+  const fileSelectHandle = (selectedKeys, node) => {
     if (node.type === SidebarItemType.Category) {
       setExpandedKeys((oldVal) => {
         if (oldVal.includes(node.key)) {
@@ -170,27 +193,6 @@ const PreviewLayout = ({
     if (node.type === SidebarItemType.Doc) {
       setDrawerOpen(false);
     }
-  };
-
-  const formatFrontmatterTocForAntdAnchor = (data, k) => {
-    let key = k;
-
-    return data.map((item) => {
-      const newItem = { ...item };
-
-      newItem.href = `#${newItem.id}`;
-      delete newItem.id;
-      newItem.key = key++;
-
-      if (newItem.children) {
-        newItem.children = formatFrontmatterTocForAntdAnchor(
-          newItem.children,
-          key
-        );
-      }
-
-      return newItem;
-    });
   };
 
   const scrollToTop = () => {
@@ -210,6 +212,7 @@ const PreviewLayout = ({
   };
 
   const titleRenderHandle = (nodeData: TreeDataObject) => {
+    console.log(nodeData, "nodeData");
     return (
       <div className="custom-node-title">
         {nodeData.id ? (
@@ -235,7 +238,7 @@ const PreviewLayout = ({
   };
 
   return (
-    <div className="preview-screen">
+    <div className="preview-screen relative">
       <Head>
         <meta name="docsearch:version" content={docVersion} />
         <meta name="docsearch:instance" content={instanceID} />
@@ -244,113 +247,49 @@ const PreviewLayout = ({
         docuoConfig={docuoConfig}
         currentVersion={docVersion}
         currentInstance={instanceID}
+        tocFormatData={tocFormatData}
         displayInstances={displayInstances}
         displayVersions={displayVersions}
+        setDrawerOpen={setDrawerOpen}
       ></Header>
+      <div className="only_pc__show absolute z-0 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
+        <div className="w-[108rem] flex-none flex justify-end">
+          <Image
+            src={gradientFixed}
+            alt=""
+            className="w-[71.75rem] flex-none max-w-none dark:hidden"
+            decoding="async"
+          />
+        </div>
+      </div>
       <main className="preview-main">
         <div className="preview-sider">
-          <DirectoryTree
-            key="1"
-            showLine
-            blockNode
-            defaultExpandAll
-            // @ts-ignore
-            // switcherIcon={<IconFileClose style={{ fontSize: "18px" }} />}
-            switcherIcon={(props: AntTreeNodeProps) => (
-              <IconFileClose
-                style={{
-                  fontSize: "18px",
-                  transform: props.expanded ? "rotate(-90deg)" : "rotate(0deg)",
-                  transition: "transform 0.3s ease",
-                }}
-              />
-            )}
-            showIcon={false}
-            titleRender={titleRenderHandle}
-            onSelect={fileSelectHandle}
-            treeData={folderTreeData}
+          <DocuoTree
+            data={folderTreeData}
             selectedKeys={selectedKeys}
-            // expandedKeys={expandedKeys}
-            onExpand={onExpand}
+            onSelect={fileSelectHandle}
+            titleRender={titleRenderHandle}
+            setDrawerOpen={setDrawerOpen}
           />
-          <div className="generate-desc">
-            <span>Powered By</span>
-            <a href="https://www.spreading.ai/" target="_blank">
-              <Image src={LogoGrey} alt={"spreading"} />
-            </a>
-          </div>
         </div>
         <div className="preview-content-wrap">
           <div className="preview-content">
             <div className="article">
-              <div className="article-breadcrumb">
-                <span
-                  className="drawer-switch"
-                  onClick={() => {
-                    setDrawerOpen(true);
-                  }}
-                >
-                  <Image src={IconList} alt={"directory"} />
-                </span>
-                <Breadcrumb items={breadCrumbData} />
-              </div>
-              {titleElement ? (
-                createPortal(
-                  <div className="article-anchor-top">
-                    {toc?.length ? (
-                      <>
-                        <div
-                          className="drop-expand"
-                          onClick={() => setIsExpand(!isExpand)}
-                        >
-                          <span className="left-icon">
-                            <Image src={IconThisPage} alt={""} />
-                            ON THIS PAGE
-                          </span>
-                          <IconFileClose className={`right-icon "expand"`} />
-                        </div>
-                        <div className={`top-anchor-divide expand`}></div>
-                        <Anchor
-                          className={`drop-anchor ${isExpand ? "expand" : ""}`}
-                          items={formatFrontmatterTocForAntdAnchor(toc, 0)}
-                          affix={false}
-                        />
-                      </>
-                    ) : null}
-                  </div>,
-                  titleElement
-                )
-              ) : (
-                <div className="article-anchor-top">
-                  {toc?.length ? (
-                    <>
-                      <div
-                        className="drop-expand"
-                        onClick={() => setIsExpand(!isExpand)}
-                      >
-                        <span className="left-icon">
-                          <Image src={IconThisPage} alt={""} />
-                          ON THIS PAGE
-                        </span>
-                        <IconFileClose className={`right-icon "expand"`} />
-                      </div>
-                      <div className={`top-anchor-divide expand`}></div>
-                      <Anchor
-                        className={`drop-anchor ${isExpand ? "expand" : ""}`}
-                        items={formatFrontmatterTocForAntdAnchor(toc, 0)}
-                        affix={false}
-                      />
-                    </>
-                  ) : null}
+              <div className="article-breadcrumb flex justify-between	items-center">
+                <Breadcrumb
+                  items={breadCrumbData}
+                  separator={<IconBreadcrumbArrow className="m-auto" />}
+                />
+                <div className={"middle__show  relative"}>
+                  <AnChorMobile tocFormatData={tocFormatData} />
                 </div>
-              )}
+              </div>
+
               <div
                 className="article-content"
                 ref={(current) => {
                   const titleElement =
                     current?.querySelector("h1[class*='title']");
-                  console.log(titleElement, "titleElement");
-
                   setTitleElement(titleElement as HTMLElement);
                 }}
               >
@@ -360,30 +299,25 @@ const PreviewLayout = ({
 
             <div className="article-anchor-right">
               {toc?.length ? (
-                <>
-                  <div
-                    className="drop-expand"
+                <div className="pt-[28px]  pb-10 ml-8">
+                  <p
+                    className="mb-2.5 font-inter-bold font-semibold text-sm text-sidebar-primary"
                     onClick={() => setIsExpand(!isExpand)}
                   >
-                    <span className="left-icon">
-                      <Image src={IconThisPage} alt={""} />
-                      ON THIS PAGE
-                    </span>
+                    On this page
+                  </p>
+                  <div className="overflow-auto pr-6 max-h-[70vh]">
+                    <DocuoAnchor data={tocFormatData} offsetTop={68} />
                   </div>
-                  <Anchor
-                    className={`drop-anchor ${isExpand ? "expand" : ""}`}
-                    targetOffset={10}
-                    items={formatFrontmatterTocForAntdAnchor(toc, 0)}
-                    getContainer={() => document.body}
-                    affix={false}
-                    onClick={handleAnchorClick}
-                  />
+
                   <div className="right-anchor-divide"></div>
                   <div className="back-to-top" onClick={scrollToTop}>
-                    <Image src={IconPackUp} alt={""} />
+                    <div className="flex flex-shrink-0 items-center justify-center w-6 h-6 rounded-md bg-white opacity-60 border-backtop-default border mr-2.5">
+                      <IconBackTop />
+                    </div>
                     Back to top
                   </div>
-                </>
+                </div>
               ) : null}
             </div>
           </div>
@@ -396,7 +330,14 @@ const PreviewLayout = ({
           key="left"
           getContainer={false}
         >
-          <DirectoryTree
+          <DocuoTree
+            data={folderTreeData}
+            selectedKeys={selectedKeys}
+            onSelect={fileSelectHandle}
+            titleRender={titleRenderHandle}
+            setDrawerOpen={setDrawerOpen}
+          />
+          {/* <DirectoryTree
             key="2"
             showLine
             blockNode
@@ -417,13 +358,13 @@ const PreviewLayout = ({
             selectedKeys={selectedKeys}
             // expandedKeys={expandedKeys}
             onExpand={onExpand}
-          />
-          <div className="generate-desc">
+          /> */}
+          {/* <div className="generate-desc">
             <span>Powered By</span>
             <a href="https://www.spreading.ai/" target="_blank">
               <Image src={LogoGrey} alt={"spreading"} />
             </a>
-          </div>
+          </div> */}
         </Drawer>
       </main>
       <Footer socials={[]} links={[]} />

@@ -5,27 +5,28 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
   const theme = useMemo(
     () => ({
       token: {
-        fontFamily: "LexendDeca",
+        fontFamily: "Inter",
         colorText: "#171717",
       },
       components: {
         Breadcrumb: {
-          fontSize: 13,
-          fontFamily: "LexendDeca-Light, LexendDeca",
-          itemColor: "#999999",
-          lastItemColor: "#000000",
+          fontSize: 14,
+          fontFamily: "Inter-Medium",
+          fontBold: "500",
+          itemColor: "rgba(81,88,105,0.8)",
+          lastItemColor: "#1ABD00",
           separatorColor: "#D0D0D0",
-          separatorMargin: 7,
+          separatorMargin: 4,
         },
         Anchor: {
           fontSize: 13,
-          fontFamily: "LexendDeca-Light, LexendDeca",
+          fontFamily: "Inter-Light, Inter",
           colorText: "#444444",
           linkPaddingBlock: 6,
           linkPaddingInlineStart: 18,
         },
         Tree: {
-          fontFamily: "LexendDeca-Light, LexendDeca",
+          fontFamily: "Inter-Light, Inter",
           directoryNodeSelectedBg: "transparent",
           directoryNodeSelectedColor: "#171717",
           nodeHoverBg: "transparent",

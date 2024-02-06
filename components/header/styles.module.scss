@@ -1,28 +1,43 @@
 .header-container {
   position: fixed;
   top: 0;
+  left: 0;
+  right: 0;
   z-index: 100;
+  max-width: 100%;
   width: 100%;
-  height: 50px;
-  background: rgba(23, 23, 23, 0.92);
-  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.16);
-  backdrop-filter: blur(3px);
+  height: var(--preview-header-height);
+  border-bottom: 1px solid rgba($color: #e5e7eb, $alpha: 0.8);
+  backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0 32px;
+  justify-content: center;
+  transition: background-color 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+
+  .container {
+    max-width: 1440px;
+    width: 1440px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 32px;
+  }
   .logo-container {
     display: flex;
     align-items: center;
     height: 100%;
     .logo {
-      height: 100%;
-      padding: 8px 0;
+      width: 25px;
+      height: auto;
       object-fit: contain;
     }
     .logo-title {
       color: #fff;
       font-size: 20px;
+      font-family: Inter-Medium;
+      font-weight: bolder;
+      color: #171717;
+      margin-left: 8px;
     }
     // .title{}
   }
@@ -30,16 +45,19 @@
     color: #fff;
     display: flex;
     align-items: center;
-    gap: 0px 6px;
+    // gap: 0px 32px;
     .item {
-      padding: 10px 16px;
       font-size: 14px;
-      font-family: LexendDeca-Light, LexendDeca;
-      font-weight: 300;
-      color: rgba($color: #ffffff, $alpha: 0.7);
-      line-height: 18px;
+      font-family: Inter-Medium, Inter;
+      font-weight: 500;
+      color: #171717;
+      line-height: 24px;
+      margin-right: 32px;
+      &:last-of-type {
+        margin-right: 0;
+      }
       &:hover {
-        color: #fff;
+        color: #1abd00;
       }
     }
     .items-container {
@@ -47,39 +65,105 @@
       align-items: center;
       padding: 10px 8px 10px 16px;
       &:hover .items {
-        color: #fff;
+        color: #1abd00;
         & + .icon {
-          color: #fff;
+          color: #1abd00;
         }
       }
     }
     .items {
       font-size: 14px;
-      font-family: LexendDeca-Light, LexendDeca;
-      font-weight: 300;
-      color: rgba($color: #ffffff, $alpha: 0.7);
-      line-height: 18px;
+      font-family: Inter-Medium;
+      font-weight: 500;
+      color: #171717;
+      line-height: 24px;
       cursor: pointer;
+
       & + .icon {
         font-size: 12px;
         margin-left: 6px;
         color: #666666;
-        transition: all 0.3s;
-        // transition: transform .3s;
+        transition: transform 0.3s;
       }
     }
   }
 }
+
 .popup {
   display: flex;
   flex-direction: column;
-  gap: 4px 0;
+  gap: 0;
   max-height: 280px;
   overflow: auto;
+  padding: 10px 10px 10px 8px !important;
+  box-shadow: 0px 1px 12px 0px rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+  border: 1px solid rgba(229, 231, 235, 0.6);
+}
+.popup-list-items {
+  padding: 6px 8px !important;
+  font-size: 14px;
+  font-family: Inter-Medium;
+  font-weight: 500;
+  color: #171717;
+  line-height: 28px;
+  border-radius: 4px;
+  transition: unset !important;
+
+  &:hover {
+    background: rgba(229, 231, 235, 0.25);
+    color: #1abd00 !important;
+  }
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .header-container {
-    padding: 0 20px;
+    background: #fff;
+    flex-direction: column;
+    padding: 16px 0 26px 0;
+
+    .container {
+      padding: 0 1.25rem 0 1.5rem;
+      width: 100%;
+      margin-bottom: 20px;
+    }
+    .toc-font {
+      font-size: 14px;
+      font-family: Inter-SemiBold, Inter;
+      font-weight: normal;
+      color: #171717;
+      line-height: 24px;
+    }
+  }
+
+  .mobile-toc-container {
+    margin-top: 114px;
+    position: fixed;
+    z-index: 101;
+    top: 0;
+    right: auto;
+    left: 15px;
+    width: calc(100% - 35px);
+    background: #ffffff;
+    padding: 20px;
+    padding-top: 16px;
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 202px);
+    overflow: auto;
+    background: #ffffff;
+    box-shadow: 0px 1px 12px 0px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(229, 231, 235, 0.6);
+  }
+  .mobile-toc-mask {
+    margin-top: 54px; // TODO: header height
+    position: fixed;
+    z-index: 100;
+    width: 100vw;
+    height: calc(100vh - 50px);
+    inset: 0;
+    background-color: transparent;
+    overflow: hidden;
   }
 }
