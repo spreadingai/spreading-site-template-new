@@ -271,49 +271,11 @@ const PreviewLayout = ({
             titleRender={titleRenderHandle}
             setDrawerOpen={setDrawerOpen}
           />
-          {/* <DirectoryTree
-            key="1"
-            showLine
-            blockNode
-            defaultExpandAll
-            // @ts-ignore
-            // switcherIcon={<IconFileClose style={{ fontSize: "18px" }} />}
-            switcherIcon={(props: AntTreeNodeProps) => (
-              <IconFileClose
-                style={{
-                  fontSize: "18px",
-                  transform: props.expanded ? "rotate(-90deg)" : "rotate(0deg)",
-                  transition: "transform 0.3s ease",
-                }}
-              />
-            )}
-            showIcon={false}
-            titleRender={titleRenderHandle}
-            onSelect={fileSelectHandle}
-            treeData={folderTreeData}
-            selectedKeys={selectedKeys}
-            // expandedKeys={expandedKeys}
-            onExpand={onExpand}
-          /> */}
-          {/* <div className="generate-desc">
-            <span>Powered By</span>
-            <a href="https://www.spreading.ai/" target="_blank">
-              <Image src={LogoGrey} alt={"spreading"} />
-            </a>
-          </div> */}
         </div>
         <div className="preview-content-wrap">
           <div className="preview-content">
             <div className="article">
               <div className="article-breadcrumb flex justify-between	items-center">
-                {/* <span
-                  className="drawer-switch"
-                  onClick={() => {
-                    setDrawerOpen(true);
-                  }}
-                >
-                  <Image src={IconList} alt={"directory"} />
-                </span> */}
                 <Breadcrumb
                   items={breadCrumbData}
                   separator={<IconBreadcrumbArrow className="m-auto" />}
@@ -323,28 +285,6 @@ const PreviewLayout = ({
                 </div>
               </div>
 
-              {/*<div className="article-anchor-top">
-                {toc?.length ? (
-                  <>
-                    <div
-                      className="drop-expand"
-                      onClick={() => setIsExpand(!isExpand)}
-                    >
-                      <span className="left-icon">
-                        <Image src={IconThisPage} alt={""} />
-                        ON THIS PAGE
-                      </span>
-                      <IconFileClose className={`right-icon "expand"`} />
-                    </div>
-                    <div className={`top-anchor-divide expand`}></div>
-                    {<Anchor
-                        className={`drop-anchor ${isExpand ? "expand" : ""}`}
-                        items={formatFormatterTocForAntdAnchor(toc, 0)}
-                        affix={false}
-                      }
-                  </>
-                ) : null}
-              </div> */}
               <div
                 className="article-content"
                 ref={(current) => {
@@ -370,14 +310,6 @@ const PreviewLayout = ({
                     <DocuoAnchor data={tocFormatData} offsetTop={68} />
                   </div>
 
-                  {/* <Anchor
-                    className={`drop-anchor ${isExpand ? "expand" : ""}`}
-                    targetOffset={10}
-                    items={formatFrontmatterTocForAntdAnchor(toc, 0)}
-                    getContainer={() => document.body}
-                    affix={false}
-                    onClick={handleAnchorClick}
-                  /> */}
                   <div className="right-anchor-divide"></div>
                   <div className="back-to-top" onClick={scrollToTop}>
                     <div className="flex flex-shrink-0 items-center justify-center w-6 h-6 rounded-md bg-white opacity-60 border-backtop-default border mr-2.5">

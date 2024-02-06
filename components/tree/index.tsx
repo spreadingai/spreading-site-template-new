@@ -2,6 +2,8 @@ import { FC, useState } from "react";
 import TreeNode from "./TreeNode";
 import classNames from "classnames";
 import IconClose from "@/assets/icons/tree/m_navclose.svg";
+import LogoGrey from "@/assets/images/logo_grey.png";
+import Image from "next/image";
 
 interface TreeProps {
   className?: string;
@@ -50,6 +52,12 @@ const DocuoTree: FC<TreeProps> = ({
           defaultExpandAll={defaultExpandAll}
         />
       ))}
+      <div className="powered-by">
+        <span>Powered By</span>
+        <a href="https://www.spreading.ai/" target="_blank">
+          <Image src={LogoGrey} alt={"spreading"} />
+        </a>
+      </div>
     </div>
   );
 };
