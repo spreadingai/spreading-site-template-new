@@ -169,15 +169,15 @@ const Header = (props: Props) => {
           <div className={styles["menus"]} ref={menusRef}>
             {(items || []).map((menu, index) => {
               if (!menu) return null;
-              // if (menu?.type === NavBarItemType.DocsInstanceDropdown) {
-              //   // @ts-ignore
-              //   return <DropdownItem key={index} menu={instances} />;
-              // }
+              if (menu?.type === NavBarItemType.DocsInstanceDropdown) {
+                // @ts-ignore
+                return <DropdownItem key={index} menu={instances} />;
+              }
 
-              // if (menu?.type === NavBarItemType.DocsVersionDropdown) {
-              //   // @ts-ignore
-              //   return <DropdownItem key={index} menu={versions} />;
-              // }
+              if (menu?.type === NavBarItemType.DocsVersionDropdown) {
+                // @ts-ignore
+                return <DropdownItem key={index} menu={versions} />;
+              }
               if (
                 menu?.type === NavBarItemType.Dropdown ||
                 Array.isArray(menu.items)
