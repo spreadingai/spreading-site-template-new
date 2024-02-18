@@ -306,7 +306,7 @@ const PreviewLayout = ({
                   >
                     On this page
                   </p>
-                  <div className="overflow-auto pr-6 max-h-[70vh]">
+                  <div className="overflow-auto relative pr-6 max-h-[70vh]">
                     <DocuoAnchor data={tocFormatData} offsetTop={68} />
                   </div>
 

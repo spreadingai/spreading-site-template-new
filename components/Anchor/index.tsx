@@ -33,6 +33,7 @@ const DocuoAnchor: FC<TreeProps> = ({
   const [links, setLinks] = useState<string[]>([]);
   const [activeLink, setActiveLink] = useState<string>();
   const activeLinkRef = useRef<string | null>(activeLink);
+  const wrapperRef = useRef<HTMLElement | null>(null);
 
   const onExpand = (expandedKeys) => {
     setExpandedKeys(expandedKeys);
@@ -83,10 +84,33 @@ const DocuoAnchor: FC<TreeProps> = ({
       };
 
       const currentActiveLink = getInternalCurrentAnchor(links, 68);
-      setCurrentActiveLink(currentActiveLink);
+      if (currentActiveLink) {
+        setCurrentActiveLink(currentActiveLink);
+        scrollIntoViewIfNeeded(currentActiveLink);
+      }
     }, 200),
     [links, setCurrentActiveLink]
   );
+
+  const scrollIntoViewIfNeeded = (currentActiveLink) => {
+    const pcAnchorContainer = document.querySelector(".article-anchor-right");
+    const wrapper = wrapperRef.current;
+    // 移动端直接 return
+    if (!pcAnchorContainer.contains(wrapper)) return;
+    const scrollContainer = wrapper?.parentElement;
+    if (!scrollContainer) return;
+    const anchor: HTMLElement = wrapper.querySelector(`a[href="${currentActiveLink}"]`);
+    if (!anchor) return;
+    const { top: visibleTop, bottom: visibleBottom, height } = scrollContainer.getBoundingClientRect();
+    const { top: anchorTop, bottom: anchorBottom } = anchor.getBoundingClientRect();
+    if (
+      (anchorTop > visibleTop && anchorTop < visibleBottom) ||
+      (anchorBottom > visibleTop && anchorBottom < visibleBottom)
+    ) {
+      return;
+    }
+    scrollContainer.scrollTo(0, anchor.offsetTop - height / 2);
+  }
 
   useEffect(() => {
     const scrollContainer = getDefaultTarget();
@@ -156,7 +180,7 @@ const DocuoAnchor: FC<TreeProps> = ({
 
   return (
     <AnchorContext.Provider value={memoizedContextValue}>
-      <div className={classNames(className)}>
+      <div ref={el => (wrapperRef.current = el)} className={classNames(className)}>
         {data.map((node, index) => (
           <AnchorNode key={index} node={node} onClick={onSelect || onExpand} />
         ))}
