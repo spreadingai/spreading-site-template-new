@@ -12,6 +12,17 @@ const nextConfig = {
     isrMemoryCacheSize: 0,
     webpackBuildWorker: true,
   },
+  transpilePackages: [
+    "antd",
+    "rc-util",
+    "@babel/runtime",
+    "@ant-design/icons",
+    "@ant-design/icons-svg",
+    "rc-pagination",
+    "rc-picker",
+    "rc-tree",
+    "rc-table",
+  ],
   output: "standalone",
   basePath: process.env.BASE_PATH || "",
   webpack(config) {

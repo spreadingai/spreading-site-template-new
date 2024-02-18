@@ -38,7 +38,7 @@ const FooterMobile: FC<{ items: FooterLinkGroup[] }> = ({ items }) => {
               <IconArrowRight
                 style={{
                   fontSize: 24,
-                  color: "#FFF",
+                  color: "#8f939d",
                   transition: "transform 0.3s",
                   transform: "rotate(-180deg)",
                 }}
@@ -49,7 +49,7 @@ const FooterMobile: FC<{ items: FooterLinkGroup[] }> = ({ items }) => {
             <IconArrowRight
               style={{
                 fontSize: 24,
-                color: "#FFF",
+                color: "#8f939d",
                 transition: "transform 0.3s",
               }}
             />

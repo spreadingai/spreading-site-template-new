@@ -1,22 +1,22 @@
 .footer-container {
-  display: flex;
-  justify-content: space-between;
-  flex-direction: column;
   min-height: 319px;
-  background: #010101;
-  .footer-wrapper {
+  background: rgba(229, 231, 235, 0.5);
+  .container {
+    max-width: 1440px;
     width: 100%;
+  }
+  .footer-wrapper {
     display: flex;
-    gap: 40px;
     justify-content: space-between;
     flex-wrap: wrap;
-    padding: 40px 32px 0;
+    padding: 37px 32px 0;
     .left {
       width: 320px;
       flex-shrink: 0;
       // margin-left: 32px;
+      margin-right: 40px;
       .logo-container {
-        height: 30px;
+        height: 40px;
         display: flex;
         align-items: center;
 
@@ -30,19 +30,24 @@
         }
       }
       .description {
+        margin-top: 13px;
         font-size: 14px;
-        font-family: LexendDeca-Light, LexendDeca;
-        font-weight: 300;
-        color: rgba($color: #ffffff, $alpha: 0.7);
+        font-family: Inter-Regular, Inter;
+        font-weight: 400;
+        color: rgba($color: #515869, $alpha: 0.7);
         line-height: 24px;
-        margin-top: 16px;
       }
       .social {
         display: flex;
         flex-wrap: wrap;
         align-items: center;
-        gap: 20px;
         margin-top: 24px;
+        a {
+          margin-right: 20px;
+          &:last-of-type {
+            margin-right: 0;
+          }
+        }
         .social-item {
           color: #fff;
           opacity: 0.7;
@@ -55,8 +60,9 @@
     .right {
       display: flex;
       flex-wrap: wrap;
+      margin-bottom: 61px;
+      margin-top: 9px;
       gap: 40px 0;
-      margin-bottom: 56px;
       &.two-col {
         width: 400px;
         &.two-row {
@@ -77,28 +83,33 @@
         width: 200px;
         .group-title {
           font-size: 16px;
-          font-family: LexendDeca-Medium, LexendDeca;
-          font-weight: 500;
-          color: #ffffff;
+          font-family: Inter-SemiBold, Inter;
+          font-weight: normal;
+          color: #171717;
           line-height: 24px;
         }
         .group-items {
           margin-top: 32px;
           display: flex;
           flex-direction: column;
-          gap: 20px 0;
+
           .group-item {
-            width: 66px;
             height: 18px;
             font-size: 14px;
-            font-family: LexendDeca-Light, LexendDeca;
-            font-weight: 300;
-            color: rgba($color: #ffffff, $alpha: 0.7);
-            line-height: 18px;
             // white-space: nowrap;
             width: 100%;
+            height: 17px;
+            font-size: 14px;
+            font-family: Inter-Regular, Inter;
+            font-weight: 400;
+            color: rgba($color: #353c4e, $alpha: 0.7);
+            line-height: 16px;
+            margin-bottom: 21px;
+            &:last-of-type {
+              margin-bottom: 0;
+            }
             &:hover {
-              color: #fff;
+              color: #1abd00;
             }
           }
         }
@@ -107,28 +118,45 @@
   }
 
   .copyright {
-    // width: 100%;
-    height: 62px;
     display: flex;
     align-items: center;
-    padding: 0 32px;
+    padding: 19px 0px 28px;
+    max-width: calc(100% - 64px);
+    margin-left: 32px;
     font-size: 12px;
-    font-family: LexendDeca-Light, LexendDeca;
-    font-weight: 300;
-    border-top: 1px solid #27272a;
-    color: rgba($color: #ffffff, $alpha: 0.4);
-    line-height: 15px;
+    font-family: Inter-Regular, Inter;
+    font-weight: 400;
+    border-top: 1px solid #e5e7eb;
+    color: rgba($color: #353c4e, $alpha: 0.4);
+    line-height: 14px;
   }
 }
-
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1024px) {
   .footer-container {
     .footer-wrapper {
-      padding: 40px 20px 0;
+      flex-direction: column;
+      padding: 37px 20px 0;
+      .right {
+        margin-top: 0;
+        margin-bottom: 50px;
+        &.two-col {
+          width: 100%;
+        }
+      }
+      .left {
+        width: 100%;
+        margin-bottom: 40px;
+        .description {
+          margin-top: 9px;
+        }
+        .social {
+          margin-top: 18px;
+        }
+      }
     }
     .copyright {
       margin: 0 20px;
-      padding: 0;
+      padding: 24px 0;
     }
   }
 }

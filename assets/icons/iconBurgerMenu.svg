@@ -1,8 +1,11 @@
-<svg width="26px" height="26px" viewBox="0 0 26 26">
-    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <line x1="4" y1="7" x2="22" y2="7" stroke="#FFFFFF" stroke-width="1.92592593"></line>
-        <line x1="4" y1="13" x2="22" y2="13" stroke="#FFFFFF" stroke-width="1.92592593"></line>
-        <line x1="4" y1="19" x2="22" y2="19" stroke="#FFFFFF"
-            stroke-width="1.92592593"></line>
-    </g>
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="m_nav_more">
+<rect x="-3.05176e-05" width="32" height="32" rx="6" fill="white" fill-opacity="0.5"/>
+<rect x="0.499969" y="0.5" width="31" height="31" rx="5.5" stroke="#E5E7EB" stroke-opacity="0.5"/>
+<g id="icon">
+<path id="Vector" d="M15.625 11.25C16.5225 11.25 17.25 10.5225 17.25 9.625C17.25 8.72754 16.5225 8 15.625 8C14.7275 8 14 8.72754 14 9.625C14 10.5225 14.7275 11.25 15.625 11.25Z" fill="#515869"/>
+<path id="Vector_2" d="M15.625 17.75C16.5225 17.75 17.25 17.0225 17.25 16.125C17.25 15.2275 16.5225 14.5 15.625 14.5C14.7275 14.5 14 15.2275 14 16.125C14 17.0225 14.7275 17.75 15.625 17.75Z" fill="#515869"/>
+<path id="Vector_3" d="M15.625 23.7083C16.5225 23.7083 17.25 22.9807 17.25 22.0833C17.25 21.1858 16.5225 20.4583 15.625 20.4583C14.7275 20.4583 14 21.1858 14 22.0833C14 22.9807 14.7275 23.7083 15.625 23.7083Z" fill="#515869"/>
+</g>
+</g>
 </svg>

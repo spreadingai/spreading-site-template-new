@@ -1,0 +1,162 @@
+{
+  "title": "GNS UI",
+  "favicon": "image/favicon.ico",
+  "instances": [
+    {
+      "id": "default",
+      "label": "docs",
+      "path": "docs",
+      "routeBasePath": ""
+    },
+    {
+      "id": "navsh",
+      "label": "navsh",
+      "path": "navsh_docs",
+      "routeBasePath": "navsh"
+    }
+  ],
+  "themeConfig": {
+    "navbar": {
+      "title": "GNS UI",
+      "logo": "image/logo.png",
+      "items": [
+        {
+          "type": "docSidebar",
+          "sidebarIds": ["mySidebar"],
+          "label": "Documentation",
+          "position": "left"
+        },
+        {
+          "type": "dropdown",
+          "label": "aslkjdkalsjdaks",
+          "items": [
+            {
+              "label": "Documentation",
+              "to": "/"
+            },
+            {
+              "label": "Documentation",
+              "to": "/"
+            },
+            {
+              "label": "Documentation",
+              "to": "/"
+            }
+          ]
+        },
+        {
+          "type": "docsVersionDropdown"
+        },
+        {
+          "type": "docsInstanceDropdown"
+        }
+      ]
+    },
+    "footer": {
+      "logo": "image/logo.png",
+      "caption": "Effortlessly write then publish technical, product documentation in a customer-facing portal, no code.",
+      "socials": [
+        {
+          "logo": "GitHub",
+          "href": "https://github.com/spreading/next-mdx-app"
+        }
+      ],
+      "links": [
+        {
+          "title": "Product",
+          "items": [
+            {
+              "label": "Documentation",
+              "to": "/"
+            },
+            {
+              "label": "Documentation",
+              "to": "/"
+            },
+            {
+              "label": "Documentation",
+              "to": "/"
+            }
+          ]
+        },
+        {
+          "title": "Product",
+          "items": [
+            {
+              "label": "Documentation",
+              "to": "/"
+            },
+            {
+              "label": "Documentation",
+              "to": "/"
+            },
+            {
+              "label": "Documentation",
+              "to": "/"
+            }
+          ]
+        },
+        {
+          "title": "Product",
+          "items": [
+            {
+              "label": "Documentation",
+              "to": "/"
+            },
+            {
+              "label": "Documentation",
+              "to": "/"
+            },
+            {
+              "label": "Documentation",
+              "to": "/"
+            }
+          ]
+        },
+        {
+          "title": "Product",
+          "items": [
+            {
+              "label": "Documentation",
+              "to": "/"
+            },
+            {
+              "label": "Documentation",
+              "to": "/"
+            },
+            {
+              "label": "Documentation",
+              "to": "/"
+            }
+          ]
+        }
+      ],
+      "socials": [
+        {
+          "logo": "Twitter",
+          "href": "https://twitter.com/docuo_team"
+        },
+        {
+          "logo": "LinkedIn",
+          "href": "https://www.linkedin.com/company/spreadingai"
+        },
+        {
+          "logo": "Discord",
+          "href": "https://discord.gg/W8p93wcR"
+        },
+        {
+          "logo": "GitHub",
+          "href": "https://github.com/spreadingai"
+        }
+      ],
+      "copyright": "Copyright © 2022 ZEGOCLOUD. All Rights Reserved."
+    }
+  },
+  "search": {
+    "algolia": {
+      "appId": "4TC1Z0S4I2",
+      "apiKey": "4931865248d4ed6ec59dc60f3db682ef",
+      "indexName": "spreading--template-new"
+    }
+  }
+}

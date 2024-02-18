@@ -1,10 +1,11 @@
 .mobile-container {
   .mobile-mask,
   .mobile-menus {
-    margin-top: 50px; // TODO: header height
+    margin-top: 54px; // TODO: header height
     position: fixed;
     z-index: 100;
   }
+
   .line {
     width: 100%;
     height: 1px;
@@ -14,34 +15,49 @@
     width: 100vw;
     height: calc(100vh - 50px);
     inset: 0;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: transparent;
     overflow: hidden;
   }
   .mobile-menus {
     top: 0;
-    left: 0;
-    right: 0;
+    right: auto;
+    left: 15px;
+    width: calc(100% - 35px);
     background: #ffffff;
     padding: 20px;
-    gap: 10px 0;
+    padding-top: 18px;
+    gap: 6px 0;
     display: flex;
     flex-direction: column;
     max-height: 100vh;
     overflow: auto;
+    background: #ffffff;
+    box-shadow: 0px 1px 12px 0px rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    border: 1px solid rgba(229, 231, 235, 0.5);
     .mobile-item,
     .mobile-items {
       font-size: 16px;
-      font-family: LexendDeca-Medium, LexendDeca;
       font-weight: 500;
-      color: #28292e;
+      color: #171717;
       line-height: 23px;
       display: flex;
+      font-family: Inter-SemiBold;
       align-items: center;
       justify-content: space-between;
       height: 44px;
+
       .mobile-item {
-        color: #666666;
+        color: #171717;
+        line-height: 28px;
       }
+    }
+    .mobile-items {
+      font-size: 14px;
+      font-family: Inter-Regular, Inter;
+      font-weight: 400;
+      color: rgba($color: #515869, $alpha: 0.9);
+      line-height: 28px;
     }
     .mobile-down-items {
       max-height: 280px;
@@ -51,9 +67,9 @@
         display: flex;
         align-items: center;
         font-size: 14px;
-        font-family: LexendDeca-Medium, LexendDeca;
+        font-family: Inter-Regular, Inter;
         font-weight: 500;
-        color: #666666;
+        color: rgba($color: #515869, $alpha: 0.9);
         line-height: 23px;
       }
     }

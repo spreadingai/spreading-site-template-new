@@ -3,9 +3,10 @@ import "infima/dist/css/default/default.css";
 import "@/styles/index.scss";
 import "@/assets/fonts/fonts.scss";
 import "@/styles/editor.scss";
-import "tailwindcss/tailwind.css";
+import "@/styles/docsearch.scss";
+import "@/styles/tailwind.css";
 import "@/tailwind.config";
-import "prismjs/themes/prism-okaidia.min.css";
+import "@/styles/prism.token.scss";
 import { ThemeProvider } from "@/components/Theme";
 import "@/components/docuoOpenapi/theme/styles.scss";
 
