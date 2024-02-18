@@ -17,22 +17,8 @@ import Link from "next/link";
 import { SlugData, DocuoConfig, TocItem } from "@/lib/types";
 import Head from "next/head";
 import { CMS_NAME } from "@/lib/constants";
-import Test from "@/components/test";
-
-// import ApiItem from "docusaurus-theme-openapi-docs";
-
-// import ApiTabs from "@theme/ApiTabs";
-// import DiscriminatorTabs from "@theme/DiscriminatorTabs";
-// import MethodEndpoint from "@theme/ApiExplorer/MethodEndpoint";
-// import SecuritySchemes from "@theme/ApiExplorer/SecuritySchemes";
-// import MimeTabs from "@theme/MimeTabs";
-// import ParamsItem from "@theme/ParamsItem";
-// import ResponseSamples from "@theme/ResponseSamples";
-// import SchemaItem from "@theme/SchemaItem";
-// import SchemaTabs from "@theme/SchemaTabs";
-// import Markdown from "@theme/Markdown";
-// import OperationTabs from "@theme/OperationTabs";
-// import TabItem from "@theme/TabItem";
+import ApiItem from "@/components/docuoOpenapi/theme/ApiItem";
+import MethodEndpoint from "@/components/docuoOpenapi/theme/ApiExplorer/MethodEndpoint";
 
 const components = {
   CodeBlock,
@@ -45,19 +31,7 @@ const components = {
   Video,
   Heading,
   a: Link,
-  // ApiTabs,
-  // DiscriminatorTabs,
-  // MethodEndpoint,
-  // SecuritySchemes,
-  // MimeTabs,
-  // ParamsItem,
-  // ResponseSamples,
-  // SchemaItem,
-  // SchemaTabs,
-  // Markdown,
-  // OperationTabs,
-  // TabItem,
-  Test,
+  MethodEndpoint,
 };
 
 interface Props {
@@ -109,7 +83,8 @@ export function getStaticPaths() {
   };
 }
 
-export default function DocPage({ mdxSource, slug, docuoConfig }: Props) {
+export default function DocPage(props: Props) {
+  const { mdxSource, slug, docuoConfig } = props;
   if (!slug) {
     return null;
   }
@@ -118,6 +93,7 @@ export default function DocPage({ mdxSource, slug, docuoConfig }: Props) {
   const description =
     (mdxSource?.frontmatter?.description as string) ||
     `A statically generated blog example using Next.js and ${CMS_NAME}.`;
+
   return (
     <div className="prose" style={{ maxWidth: "unset" }}>
       <Head>
@@ -125,11 +101,10 @@ export default function DocPage({ mdxSource, slug, docuoConfig }: Props) {
         <meta name="description" content={description} />
       </Head>
       <article className="editor-wrapper">
-        {/* @ts-ignore */}
-        {/* <ApiItem> */}
-        {/* @ts-ignore */}
-        <MDXRemote {...mdxSource} components={components} />
-        {/* </ApiItem> */}
+        <ApiItem {...props}>
+          {/* @ts-ignore */}
+          <MDXRemote {...mdxSource} components={components} />
+        </ApiItem>
       </article>
     </div>
   );
