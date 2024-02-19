@@ -1,5 +1,6 @@
 export interface DocuoConfig {
   title: string;
+  description?: string;
   favicon: string;
   logo:
     | string
