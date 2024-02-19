@@ -17,6 +17,7 @@ const Social = {
   GitHub: { dark: <IconGithubDark />, light: <IconGithubLight /> },
   LinkedIn: { dark: <IconLinkedInDark />, light: <IconLinkedInLight /> },
   Twitter: { dark: <IconXDark />, light: <IconXLight /> },
+  X: { dark: <IconXDark />, light: <IconXLight /> },
   YouTube: { dark: <IconYoutubeDark />, light: <IconYoutubeLight /> },
 };
 const getSocial = (
@@ -27,15 +28,15 @@ const getSocial = (
   const current = typeof logo === "string" ? logo : logo[mode];
   console.log(mode, current);
 
-  return (
-    Social[current][mode] || (
-      <img
-        src={current.includes("http") ? current : `/${current}`}
-        width={20}
-        height={20}
-        alt={"social"}
-      />
-    )
+  return Social[current] ? (
+    Social[current][mode]
+  ) : (
+    <img
+      src={current.includes("http") ? current : `/${current}`}
+      width={20}
+      height={20}
+      alt={"social"}
+    />
   );
 };
 
