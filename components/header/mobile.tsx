@@ -7,14 +7,16 @@ import IconArrowRight from "@/assets/icons/iconArrowRight.svg";
 import styles from "./mobile.module.scss";
 import { Collapse } from "antd";
 import Link from "next/link";
-import { NavbarLink } from "./@types";
+import { NavBarItem, NavbarLink } from "./@types";
 import { createPortal } from "react-dom";
 
 interface Props {
   menus: NavbarLink[];
+  versions: NavBarItem;
+  instances: NavBarItem;
 }
 
-const Mobile: FC<Props> = ({ menus }) => {
+const Mobile: FC<Props> = ({ menus, versions, instances }) => {
   const [open, setOpen] = useState(false);
 
   const DropdownList = useMemo(() => {
@@ -25,7 +27,8 @@ const Mobile: FC<Props> = ({ menus }) => {
           onClick={() => setOpen(() => false)}
         />
         <div className={styles["mobile-menus"]}>
-          {menus.map((menu, index, arr) => {
+          {/* @ts-ignore */}
+          {menus.concat(versions, instances).map((menu, index, arr) => {
             if (menu.items) {
               const items = [
                 {

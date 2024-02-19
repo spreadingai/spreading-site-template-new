@@ -162,8 +162,12 @@ const Header = (props: Props) => {
         {isMobile ? (
           <div className={styles["menus"]}>
             {/* {DocSearchComponent} */}
-            {/*  @ts-ignore */}
-            <Mobile menus={(items || []).filter((item) => item.label)} />
+            <Mobile
+              // @ts-ignore
+              menus={(items || []).filter((item) => item.label)}
+              versions={versions}
+              instances={instances}
+            />
           </div>
         ) : (
           <div className={styles["menus"]} ref={menusRef}>

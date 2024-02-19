@@ -17,6 +17,7 @@ const Social = {
   GitHub: { dark: <IconGithubDark />, light: <IconGithubLight /> },
   LinkedIn: { dark: <IconLinkedInDark />, light: <IconLinkedInLight /> },
   Twitter: { dark: <IconXDark />, light: <IconXLight /> },
+  X: { dark: <IconXDark />, light: <IconXLight /> },
   YouTube: { dark: <IconYoutubeDark />, light: <IconYoutubeLight /> },
 };
 const getSocial = (
