@@ -1,5 +1,3 @@
-@import "./site.scss";
-
 .dark.editor-container {
 	// 站点主题变量
 	--text-primary: #fff;
@@ -7,119 +5,87 @@
 
 .editor-wrapper,
 .editor-container {
+	font-family: Inter;
 	--text-primary: #171717;
-	$text-primary: #171717;
-	$tableBorderColor: #eaeaea;
-	$tableHeaderBgColor: #f1f1f1;
-	$tableSelectedBorderColor: #eaeaea;
-	$tableSelectedCellBgColor: #e2e2e2;
-	$tableSelectedControlBgColor: #171717;
-	$tableResizeHandleBgColor: #171717;
-	$tableResizeHandleColumnBgColor: #c8c8c8;
-	$tableResizeHandleRowBgColor: #c8c8c8;
 	font-size: 14px;
 	font-weight: 300;
-	font-family: LexendDeca-Light, LexendDeca;
-	color: #171717;
+	color: var(--text-primary);
 	line-height: 25px;
-	// word-break: break-word;
+	// 如果单词太长无法装进容器里，允许在任意位置断行
+	word-wrap: break-word;
 
 	.katex-html[aria-hidden="true"] {
 		display: none;
 	}
 
-	p,
-	b,
-	strong,
-	code {
-		margin: 24px 0;
-	}
 	//标题
 	h1 {
-		font-size: 26px;
-		line-height: 39px;
-		font-weight: 600;
-		font-family: LexendDeca-SemiBold, LexendDeca;
-		color: #000000;
-		margin-top: 36px;
-		margin-bottom: 24px;
-
-		code {
-			font-size: 24px;
-			font-family: RobotoMono-Bold, RobotoMono;
-			font-weight: bold;
-			color: #000000;
-			line-height: 24px;
-			background: #e9e9e9;
-			padding: 3px 12px;
-		}
+		font-family: Inter-Bold;
+		font-weight: bold;
+	}
+	h2, h3, h4, h5, h6 {
+		font-family: Inter-SemiBold, Inter;
+		font-weight: bold;
+	}
+	h2, h3, h4 {
+		margin-top: 32px;
+		margin-bottom: 20px;
+	}
+	h5 {
+		margin-top: 28px;
+		margin-bottom: 20px;
+	}
+	h6 {
+		margin-top: 20px;
+		margin-bottom: 20px;
+	}
+	h1 {
+		font-size: 36px;
+		line-height: 54px;
 	}
 	h2 {
+		font-size: 30px;
+		line-height: 36px;
+	}
+	h3 {
+		font-size: 26px;
+		line-height: 32px;
+	}
+	h4 {
 		font-size: 22px;
-		font-weight: 600;
-		font-family: LexendDeca-SemiBold, LexendDeca;
-		color: #000000;
-		line-height: 33px;
-		margin-top: 32px;
-		margin-bottom: 24px;
-
-		code {
-			font-size: 20px;
-			font-family: RobotoMono-Bold, RobotoMono;
-			font-weight: bold;
-			color: #000000;
-			line-height: 20px;
-		}
+		line-height: 28px;
+	}
+	h5 {
+		font-size: 18px;
+		line-height: 28px;
+	}
+	h6 {
+		font-size: 16px;
+		line-height: 24px;
 	}
 
-	h3, h4, h5, h6 {
-		font-size: 20px;
-		line-height: 32px;
-		font-weight: 600;
-		font-family: LexendDeca-SemiBold, LexendDeca;
-		color: #171717;
-		line-height: 32px;
-		margin-top: 32px;
-		margin-bottom: 24px;
-
-		code {
-			font-size: 18px;
-			font-family: RobotoMono-Bold, RobotoMono;
-			font-weight: bold;
-			color: #000000;
-			line-height: 18px;
-		}
+	// 正文
+	p {
+		font-size: 16px;
+		color: #353C4E;
+		margin: 16px 0;
 	}
-	// 分割线
-	p:has(+ hr) {
-		margin-bottom: 16px;
-	}
+	
 	hr {
-		border-top: 1px solid #ececec;
-		overflow: hidden;
-		margin-top: 16px;
-		margin-bottom: 16px;
-		& + p {
-			margin-top: 16px;
-		}
+		height: 0;
+		border-top: 1px solid rgba(229, 231, 235, 0.8);
+		margin: 48px 0;
 	}
 
 	ul,
 	ol {
-		margin-top: 24px;
-		margin-bottom: 24px;
-		color: $text-primary;
-		padding-inline-start: 28px;
+		margin: 20px 0 26px;
+		padding-inline-start: 20px;
 		& > li {
-			margin: initial;
-			font-size: 14px;
-			line-height: 25px;
-			font-weight: 300;
-			padding: 8px 0;
-
-			& > p:first-child {
-				margin-top: 0;
-			}
+			font-size: 16px;
+			line-height: 24px;
+			font-weight: 400;
+			margin: 14px 0;
 
 			& > ul,
 			& > ol {
@@ -131,23 +97,15 @@
 
 	// 无序排序序号
 	ul:not([data-type="taskList"]) {
-		// padding-inline-start: 0;
-		// > li {
-		//   padding-inline-start: 30px;
-		// }
-		> li:not([class^="ant-"]):marker {
-			content: " ";
-			width: 28px;
-			height: 14px;
-		}
 		> li:not([class^="ant-"])::before {
-			content: " ";
-			position: absolute;
+			content: "";
 			width: 6px;
-			height: 2px;
-			background: #171717;
-			left: -16px;
-			top: 20px;
+			height: 6px;
+			background: #C5C9D0;
+			border-radius: 4px 4px 4px 4px;
+			position: absolute;
+			left: -18px;
+			top: 10px;
 			z-index: 1;
 		}
 		// 直接子元素才生效，否则会影响到 ul 嵌套 ol 的样式
@@ -156,6 +114,11 @@
 		}
 	}
 	// 有序排序序号
+	ol > li:not([class^="ant-"]) {
+		&::marker {
+			color: #B1B4B8;
+		}
+	}
 	ol,
 	ol ol ol ol,
 	ol ol ol ol ol ol ol,
@@ -174,490 +137,102 @@
 	ol ol ol ol ol ol ol ol ol ol ol ol {
 		list-style-type: lower-roman;
 	}
-	// task list
-	ul[data-type="taskList"] {
-		margin-top: 24px;
-		margin-bottom: 24px;
-		padding-inline-start: 4px;
-		color: $text-primary;
-		& > li[data-checked="true"] div > p {
-			text-decoration: line-through;
-			opacity: 0.5;
-		}
-		& > li {
-			display: flex;
-			align-items: baseline;
-			& > label {
-				margin-right: 2px;
-				input[type="checkbox"] {
-					width: 16px;
-					height: 16px;
-					margin: 4px 6px;
-					accent-color: #000;
-				}
-			}
-			& > div > p {
-				font-size: 14px;
-				line-height: 25px;
-				font-weight: 300;
-				padding: 8px 0;
-				margin: initial;
-			}
-			& ul[data-type="taskList"] {
-				margin-top: 0;
-				margin-bottom: 0;
-			}
-		}
-	}
 	// 加粗
 	b,
 	strong {
-		font-weight: 500;
-		font-family: LexendDeca-Medium, LexendDeca;
+		font-family: Inter-SemiBold, Inter;
+		font-weight: bold;
 	}
 	// 下划线
 	u {
 		text-decoration: underline;
-		text-decoration-color: $text-primary;
 	}
 	//链接
 	a {
-		color: #0055ff;
+		font-family: Inter-Medium;
+		font-size: 16px;
+		line-height: 24px;
+		color: #171717;
+		text-decoration: none;
+		border-bottom: 1px solid #1ABD00;
 		&:hover {
-			text-decoration: underline;
-			text-decoration-color: #0055ff;
+			color: #1ABD00;
 		}
-	}
-	// image
-	.image-desc {
-		color: var(--gray-text-200);
-		font-size: 12px;
-		font-weight: 400;
-		min-width: 440px;
-		font-family: RobotoMono-Regular, RobotoMono;
-		line-height: 18px;
-		margin-top: 8px;
-		margin-bottom: 28px;
 	}
 
 	// 引用
 	blockquote {
-		// word-break: break-all;
-		margin: 24px 0;
-		margin-right: 8px;
-		padding: 12px 16px 12px 44px;
-		background: #f9f9f9;
+		margin: 16px 0;
+		border-radius: 6px;
+		border: 1px solid rgba(202, 208, 217, 0.4);
+		border-left: 4px solid #E3E8EF;
+		background: #F9FAFB;
+		padding: 16px 20px 16px 50px;
 		position: relative;
 		p {
-			color: #444444;
-			margin: initial;
+			margin: 0;
+			font-size: 16px;
+			color: #353C4E;
+			line-height: 24px;
 		}
 		&::before {
-			content: " ";
-			flex-shrink: 0;
-			width: 16px;
-			height: 16px;
-			background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAkJJREFUWEftV21v2jAQ9luAlNGGzHFMYB1dp3Wbtv//R6ZN6tAKaIiZZEzqKlZIbU9GZaLBCaFStS+5r3fP3XOP72wZgnLmcM49AEBTaw2FEFflYNYo3O12Pa31kckHixL1+/3GarViUspjAMA6Vin1J47jwSMIOJTSgBDS1lqjDT6PAAzDMAAAsE3hDeAxBDzP8xqNRqS1xlniNgKIMXYGITQS7dihBHzf7zmO085TLEugsPihRxBF0QsppZmdXHtAgHPe11q3igBlFQiCgCOEzDEW2j8CvV7PT9O0uyf+RikVx3F8UxQXRdGRlPJ8TyO3rusmGwKEc36xPZ3bYITQ3XK5nMzn8+t9HRk/pfQNxrieE6sJIdPJZPLT+NcEGGMhhNBM/I6Z4s1m89tgMFiWKe77/rHjOC/zikspR0mS/N74DQHY6XTeKqWIDZSm6ahs5wYfhuErc8HYcmmtZ7PZTGz7IKW0hTHu2wBSymWSJJdlOr+PIWEYvsvrXgjxBQAgHxDYM61CCDErS6Ddbp/UarXTnKO8nk6no6zP3Hi5krmu+3U4HN6WJUApjTDGz23x9Xr9+3g8/rVDgFJ6gTGu2UBCiM9Zyfas36mU8sQWo5S6sq0v5Jy/t93RAAAthPhUtvv7ATwDADyzYVqt1qVtk8wRfMg+OOv9hFASQn5kky0Wi7u8rWCMnee9IRjjKUJI2Wbg4yFdFl3FQRC8Rgi5h+QzClQEKgUqBSoFKgUqBf6vAoe8XE8RW/g7foqC2Zx/AXZYUO19RG0LAAAAAElFTkSuQmCC")
-				no-repeat center center;
+			content: "";
+			width: 14px;
+			height: 14px;
+			background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAkJJREFUWEftV21v2jAQ9luAlNGGzHFMYB1dp3Wbtv//R6ZN6tAKaIiZZEzqKlZIbU9GZaLBCaFStS+5r3fP3XOP72wZgnLmcM49AEBTaw2FEFflYNYo3O12Pa31kckHixL1+/3GarViUspjAMA6Vin1J47jwSMIOJTSgBDS1lqjDT6PAAzDMAAAsE3hDeAxBDzP8xqNRqS1xlniNgKIMXYGITQS7dihBHzf7zmO085TLEugsPihRxBF0QsppZmdXHtAgHPe11q3igBlFQiCgCOEzDEW2j8CvV7PT9O0uyf+RikVx3F8UxQXRdGRlPJ8TyO3rusmGwKEc36xPZ3bYITQ3XK5nMzn8+t9HRk/pfQNxrieE6sJIdPJZPLT+NcEGGMhhNBM/I6Z4s1m89tgMFiWKe77/rHjOC/zikspR0mS/N74DQHY6XTeKqWIDZSm6ahs5wYfhuErc8HYcmmtZ7PZTGz7IKW0hTHu2wBSymWSJJdlOr+PIWEYvsvrXgjxBQAgHxDYM61CCDErS6Ddbp/UarXTnKO8nk6no6zP3Hi5krmu+3U4HN6WJUApjTDGz23x9Xr9+3g8/rVDgFJ6gTGu2UBCiM9Zyfas36mU8sQWo5S6sq0v5Jy/t93RAAAthPhUtvv7ATwDADyzYVqt1qVtk8wRfMg+OOv9hFASQn5kky0Wi7u8rWCMnee9IRjjKUJI2Wbg4yFdFl3FQRC8Rgi5h+QzClQEKgUqBSoFKgUqBf6vAoe8XE8RW/g7foqC2Zx/AXZYUO19RG0LAAAAAElFTkSuQmCC");
 			background-size: contain;
 			position: absolute;
-			left: 16px;
-			top: 12px;
-		}
-		&::after {
-			content: " ";
-			position: absolute;
-			inset: 0;
-			border: 2px solid #f9f9f9;
-			transform: translate(8px, 8px);
-			pointer-events: none;
-		}
-	}
-	// table
-	.tableWrapper {
-		position: relative;
-		margin: 28px 0px;
-
-		&.has-focus {
-			.scrollWrapper {
-				margin-top: -20px;
-			}
-		}
-
-		.column-resize-handle {
-			z-index: 101;
-		}
-
-		&.resizing-mask::after {
-			content: "";
-			position: absolute;
-			top: 0;
-			left: 0;
-			bottom: 0;
-			right: 0;
-			z-index: 100;
-		}
-	}
-
-	.scrollWrapper {
-		overflow-y: auto;
-		overflow-x: auto;
-		padding-left: 28px;
-		padding-top: 28px;
-		padding-bottom: 2px;
-		margin-left: -28px;
-		margin-top: -20px;
-		// margin-bottom: -8px;
-		border-left: 1px solid transparent;
-		border-right: 1px solid transparent;
-		-webkit-transition: border 250ms ease-in-out 0s;
-		transition: border 250ms ease-in-out 0s;
-		&::-webkit-scrollbar {
-			width: 4px;
-			height: 4px;
-		}
-		&::-webkit-scrollbar-track {
-			background: transparent;
-			border-radius: 4px;
-		}
-		&::-webkit-scrollbar-thumb {
-			background: #999999;
-			border-radius: 2px;
+			left: 18px;
+			top: 13px;
 		}
 	}
 
 	table {
+		display: block;
+		text-align: left;
 		width: 100%;
-		border-collapse: collapse;
-		border-radius: 4px;
 		overflow: auto;
-		margin: 24px 0;
-		box-shadow: 0px 4px 20px 0px rgba(0, 0, 0, 0.05);
-		box-sizing: border-box;
-
-		* {
-			box-sizing: border-box;
+		margin: 20px 0;
+		// table 正文颜色
+		color: #353C4E;
+		p {
+			color: #353C4E;
 		}
 
 		tr {
-			position: relative;
-			&:last-of-type {
-				> td {
-					border-bottom: none;
-				}
-			}
+			border-bottom: 1px solid rgba(229, 231, 235, 0.8);
 		}
 
-		th,
-		th p {
-			background: $tableHeaderBgColor;
-			font-size: 12px;
-			font-family: LexendDeca-SemiBold, LexendDeca;
-			font-weight: 600;
-			color: #666666;
-			line-height: 18px;
-		}
-		td,
-		td p {
+		th, td {
 			font-size: 14px;
-			font-family: LexendDeca-Light, LexendDeca;
-			font-weight: 300;
-			line-height: 24px;
+			line-height: 22px;
+			padding: 14px 12px;
 		}
 
 		th {
-			position: relative;
-			vertical-align: top;
-			position: relative;
-			padding: 10px 24px;
-			min-width: 100px;
-			& > p {
-				margin: 0;
-				padding: 0;
-			}
-			& ul:not([data-type="taskList"]) {
-				& > li:not([class^="ant-"])::before {
-					content: " ";
-					position: absolute;
-					width: 6px;
-					height: 2px;
-					background: #171717;
-					left: -16px;
-					top: 17px;
-					z-index: 1;
-				}
-			}
+			font-family: Inter-SemiBold, Inter;
+			font-weight: bold;
+			color: #171717;
+			background: rgba(229, 231, 235, 0.25);
 		}
+
 		td {
-			position: relative;
-			vertical-align: top;
-			position: relative;
-			padding: 16px 24px;
-			min-width: 100px;
-			& > p {
-				margin: 0;
-				padding: 0;
-			}
-		}
-		th:not(:first-of-type) {
-			border-left: 1px solid $tableBorderColor;
-		}
-		td {
-			border-right: 1px solid $tableBorderColor;
-			border-bottom: 1px solid $tableBorderColor;
-			&:last-of-type {
-				border-right: none;
-			}
+			font-weight: 400;
 		}
 
-		.selectedCell {
-			position: relative;
-			border: 1px solid $tableSelectedBorderColor;
-			background-color: $tableSelectedCellBgColor;
-
-			&::after {
-				box-sizing: content-box;
-				height: 100%;
-				width: 100%;
-				content: "";
-				position: absolute;
-				left: -1px;
-				top: -1px;
-				bottom: 0px;
-				z-index: 12;
-				display: inline-block;
-				pointer-events: none;
-			}
-			p {
-				background: transparent;
-			}
-			& ::selection {
-				background: transparent;
-			}
-		}
-
-		.grip-column {
-			position: absolute;
-			top: -10px;
-			left: -1px;
-			width: 100%;
-
-			> span {
-				position: absolute;
-				top: -17px;
-				left: calc(100% + 2px);
-				transform: translateX(-12px);
-				display: none;
-				border-radius: 50%;
-				width: 22px;
-				height: 22px;
-				background-color: $tableSelectedControlBgColor;
-				font-size: 0;
-				cursor: pointer;
-				z-index: 1;
-			}
-
-			&::before {
-				content: "";
-				position: absolute;
-				left: 100%;
-				bottom: 4px;
-				transform: translateX(-1px);
-
-				width: 4px;
-				height: 4px;
-				background-color: $tableBorderColor;
-				border-radius: 50%;
-				display: block;
-			}
-
-			&::after {
-				box-sizing: content-box;
-				content: "";
-				cursor: pointer;
-				position: absolute;
-				top: 0;
-				left: 0;
-				width: 100%;
-				height: 10px;
-				background: $tableResizeHandleColumnBgColor;
-				border-right: 1px solid $tableResizeHandleColumnBgColor;
-				display: block;
-			}
-
-			&:hover {
-				color: $tableSelectedBorderColor;
-
-				> span {
-					font-size: 14px;
-				}
-				.table_add_icon {
-					display: block;
-				}
-
-				&::before {
-					display: none;
-				}
-
-				&::after {
-					background: $tableSelectedControlBgColor;
-					border-color: $tableSelectedControlBgColor;
-				}
-			}
-
-			&.last::after {
-				border-top-right-radius: 3px;
-			}
-
-			&.selected::after {
-				background: $tableSelectedControlBgColor;
-				border-color: $tableSelectedControlBgColor;
-			}
-		}
-
-		.grip-row {
-			position: absolute;
-			left: -10px;
-			top: -1px;
-			height: 100%;
-
-			> span {
-				transform: translateY(8px);
-				position: absolute;
-				left: -17px;
-				bottom: -2px;
-				z-index: 1;
-				display: none;
-				width: 22px;
-				height: 22px;
-				font-size: 0;
-				cursor: pointer;
-				background-color: $tableSelectedControlBgColor;
-				border-radius: 50%;
-			}
-
-			&::before {
-				content: "";
-				position: absolute;
-				left: -10px;
-				bottom: -2px;
-				width: 4px;
-				height: 4px;
-				background-color: $tableBorderColor;
-				border-radius: 50%;
-				display: block;
-			}
-
-			&::after {
-				box-sizing: content-box;
-				content: "";
-				cursor: pointer;
-				position: absolute;
-				left: 0;
-				top: 0;
-				height: 100%;
-				width: 10px;
-				background: $tableResizeHandleRowBgColor;
-				border-top: 1px solid $tableResizeHandleRowBgColor;
-				display: block;
-			}
-
-			&:hover {
-				color: $tableSelectedBorderColor;
-
-				> span {
-					font-size: 14px;
-					display: inline-block;
-				}
-
-				&::before {
-					display: none;
-				}
-
-				&::after {
-					background: $tableSelectedControlBgColor;
-					border-color: $tableSelectedBorderColor;
-				}
-			}
-
-			&.last::after {
-				border-bottom-left-radius: 3px;
-			}
-
-			&.selected::after {
-				background: $tableSelectedControlBgColor;
-				border-color: $tableSelectedBorderColor;
-			}
-		}
-
-		.grip-table {
-			&::after {
-				box-sizing: content-box;
-				content: "";
-				cursor: pointer;
-				position: absolute;
-				top: -10px;
-				left: -10px;
-				display: block;
-				background: $tableResizeHandleRowBgColor;
-				width: 10px;
-				height: 10px;
-				border-top-left-radius: 3px;
-			}
-
-			&:hover::after {
-				background: $tableSelectedControlBgColor;
-			}
-
-			&.selected::after {
-				background: $tableSelectedControlBgColor;
-			}
-		}
 	}
 
-	.column-resize-handle {
-		position: absolute;
-		top: 0;
-		right: -2px;
-		bottom: -2px;
-		width: 2px;
-		pointer-events: none;
-		background-color: $tableResizeHandleBgColor;
-		z-index: 1;
-	}
-
-	.resize-cursor {
-		cursor: ew-resize;
-		cursor: col-resize;
-	}
+	// inline code
 	code:not([class*="language-"]) {
-		background: #e9e9e9;
-		border: 1px solid rgba(13, 13, 13, 0.07);
 		padding: 2px 6px;
-		font-family: RobotoMono-Bold, RobotoMono;
-		font-weight: bold;
+		background: #F4F4FA;
+		border: 1px solid #E1E2EA;
+		border-radius: 4px;
+		font-family: RobotoMono;
+		font-weight: 500;
 		color: #171717;
-		line-height: 14px;
-		font-size: 95%;
-	}
-	pre code {
-		background: unset;
-		border: unset;
-		line-height: 22px !important;
-		font-weight: unset;
-		color: unset;
-		padding: unset;
-		font-family: RobotoMono-Regular, RobotoMono;
-		font-weight: 400;
-		white-space: pre;
-		font-size: 12px;
-	}
-
-	div[data-autowrap="true"] {
-		pre code {
-			white-space: break-spaces;
-			word-break: break-word;
-		}
+		line-height: 1.2;
+		font-size: 90%;
 	}
 
 	// video
@@ -668,9 +243,9 @@
 		}
 	}
 	h1 + .s-video-wrapper {
-		margin: 50px 0 28px 0;
+		margin: 50px 0 20px 0;
 	}
 	.s-video-wrapper {
-		margin: 28px 0;
+		margin: 20px 0;
 	}
 }
