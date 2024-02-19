@@ -12,12 +12,9 @@ import {
   useTabs,
 } from "@docusaurus/theme-common/internal";
 import useIsBrowser from "@docusaurus/useIsBrowser";
-import { setAccept } from "@/components/openapi/theme/ApiExplorer/Accept/slice";
-import { setContentType } from "@/components/openapi/theme/ApiExplorer/ContentType/slice";
-import {
-  useTypedDispatch,
-  useTypedSelector,
-} from "@/components/openapi/theme/ApiItem/hooks";
+import { setAccept } from "@theme/ApiExplorer/Accept/slice";
+import { setContentType } from "@theme/ApiExplorer/ContentType/slice";
+import { useTypedDispatch, useTypedSelector } from "@theme/ApiItem/hooks";
 import clsx from "clsx";
 
 function TabList({

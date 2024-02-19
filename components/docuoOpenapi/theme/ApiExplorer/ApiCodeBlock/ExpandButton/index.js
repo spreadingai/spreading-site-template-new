@@ -9,10 +9,10 @@ import React, { useEffect, useState } from "react";
 
 import { usePrismTheme } from "@docusaurus/theme-common";
 import { translate } from "@docusaurus/Translate";
-import Container from "@/components/openapi/theme/ApiExplorer/ApiCodeBlock/Container";
-import CopyButton from "@/components/openapi/theme/ApiExplorer/ApiCodeBlock/CopyButton";
-import ExitButton from "@/components/openapi/theme/ApiExplorer/ApiCodeBlock/ExitButton";
-import Line from "@/components/openapi/theme/ApiExplorer/ApiCodeBlock/Line";
+import Container from "@theme/ApiExplorer/ApiCodeBlock/Container";
+import CopyButton from "@theme/ApiExplorer/ApiCodeBlock/CopyButton";
+import ExitButton from "@theme/ApiExplorer/ApiCodeBlock/ExitButton";
+import Line from "@theme/ApiExplorer/ApiCodeBlock/Line";
 import clsx from "clsx";
 import Highlight, { defaultProps } from "prism-react-renderer";
 import Modal from "react-modal";

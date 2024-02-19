@@ -10,24 +10,21 @@ import React, { useState } from "react";
 
 import { useDoc } from "@docusaurus/theme-common/internal";
 import sdk from "@paloaltonetworks/postman-collection";
-import Accept from "@/components/openapi/theme/ApiExplorer/Accept";
-import Authorization from "@/components/openapi/theme/ApiExplorer/Authorization";
-import Body from "@/components/openapi/theme/ApiExplorer/Body";
-import buildPostmanRequest from "@/components/openapi/theme/ApiExplorer/buildPostmanRequest";
-import ContentType from "@/components/openapi/theme/ApiExplorer/ContentType";
-import ParamOptions from "@/components/openapi/theme/ApiExplorer/ParamOptions";
+import Accept from "@theme/ApiExplorer/Accept";
+import Authorization from "@theme/ApiExplorer/Authorization";
+import Body from "@theme/ApiExplorer/Body";
+import buildPostmanRequest from "@theme/ApiExplorer/buildPostmanRequest";
+import ContentType from "@theme/ApiExplorer/ContentType";
+import ParamOptions from "@theme/ApiExplorer/ParamOptions";
 import {
   setResponse,
   setCode,
   clearCode,
   setHeaders,
   clearHeaders,
-} from "@/components/openapi/theme/ApiExplorer/Response/slice";
-import Server from "@/components/openapi/theme/ApiExplorer/Server";
-import {
-  useTypedDispatch,
-  useTypedSelector,
-} from "@/components/openapi/theme/ApiItem/hooks";
+} from "@theme/ApiExplorer/Response/slice";
+import Server from "@theme/ApiExplorer/Server";
+import { useTypedDispatch, useTypedSelector } from "@theme/ApiItem/hooks";
 import { ParameterObject } from "docusaurus-plugin-openapi-docs/src/openapi/types";
 import { ApiItem } from "docusaurus-plugin-openapi-docs/src/types";
 import { FormProvider, useForm } from "react-hook-form";

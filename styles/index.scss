@@ -21,6 +21,11 @@ html > body {
   // height: calc(100vh - var(--preview-header-height));
 }
 
+a {
+  color: inherit !important;
+  text-decoration: inherit !important;
+}
+
 #__next {
   height: 100%;
 }
@@ -79,7 +84,7 @@ html > body {
       font-family: Inter-SemiBold;
       font-size: 14px;
       font-weight: bold;
-      color: #AEB1B8;
+      color: #aeb1b8;
     }
 
     img {
@@ -102,7 +107,6 @@ html > body {
   left: 0;
   z-index: 99;
   height: calc(100vh - var(--preview-header-height));
-
 }
 .preview-side-close-btn {
   display: none;
@@ -272,7 +276,6 @@ html > body {
         width: 16px;
       }
     }
-
   }
 
   .preview-content-wrap {
@@ -426,7 +429,6 @@ html > body {
         width: 16px;
       }
     }
-
   }
 
   .preview-content-wrap {

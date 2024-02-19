@@ -8,7 +8,7 @@
 import React from "react";
 
 import Link from "@/components/openapi/core/Link";
-import { useTypedSelector } from "@/components/openapi/theme//ApiItem/hooks";
+import { useTypedSelector } from "@theme//ApiItem/hooks";
 
 function SecuritySchemes(props: any) {
   const options = useTypedSelector((state: any) => state.auth.options);

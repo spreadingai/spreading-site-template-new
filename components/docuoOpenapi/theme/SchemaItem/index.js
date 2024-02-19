@@ -7,7 +7,7 @@
 
 import React from "react";
 
-import CodeBlock from "@/components/openapi/theme/CodeBlock";
+import CodeBlock from "@theme/CodeBlock";
 /* eslint-disable import/no-extraneous-dependencies*/
 import clsx from "clsx";
 import { createDescription } from "docusaurus-theme-openapi-docs/lib/markdown/createDescription";

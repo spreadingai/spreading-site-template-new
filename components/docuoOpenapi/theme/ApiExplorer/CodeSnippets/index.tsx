@@ -10,10 +10,10 @@ import React, { useState, useEffect } from "react";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import codegen from "@paloaltonetworks/postman-code-generators";
 import sdk from "@paloaltonetworks/postman-collection";
-import ApiCodeBlock from "@/components/openapi/theme/ApiExplorer/ApiCodeBlock";
-import buildPostmanRequest from "@/components/openapi/theme/ApiExplorer/buildPostmanRequest";
-import CodeTabs from "@/components/openapi/theme/ApiExplorer/CodeTabs";
-import { useTypedSelector } from "@/components/openapi/theme/ApiItem/hooks";
+import ApiCodeBlock from "@theme/ApiExplorer/ApiCodeBlock";
+import buildPostmanRequest from "@theme/ApiExplorer/buildPostmanRequest";
+import CodeTabs from "@theme/ApiExplorer/CodeTabs";
+import { useTypedSelector } from "@theme/ApiItem/hooks";
 import merge from "lodash/merge";
 
 import { CodeSample, Language } from "./code-snippets-types";

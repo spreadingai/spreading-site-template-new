@@ -9,13 +9,10 @@ import React, { useEffect, useState } from "react";
 
 import { ErrorMessage } from "@hookform/error-message";
 import { nanoid } from "@reduxjs/toolkit";
-import FormSelect from "@/components/openapi/theme/ApiExplorer/FormSelect";
-import FormTextInput from "@/components/openapi/theme/ApiExplorer/FormTextInput";
-import {
-  Param,
-  setParam,
-} from "@/components/openapi/theme/ApiExplorer/ParamOptions/slice";
-import { useTypedDispatch } from "@/components/openapi/theme/ApiItem/hooks";
+import FormSelect from "@theme/ApiExplorer/FormSelect";
+import FormTextInput from "@theme/ApiExplorer/FormTextInput";
+import { Param, setParam } from "@theme/ApiExplorer/ParamOptions/slice";
+import { useTypedDispatch } from "@theme/ApiItem/hooks";
 import { Controller, useFormContext } from "react-hook-form";
 
 export interface ParamProps {

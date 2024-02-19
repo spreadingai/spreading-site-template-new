@@ -7,12 +7,9 @@
 
 import React from "react";
 
-import FormTextInput from "@/components/openapi/theme/ApiExplorer/FormTextInput";
-import {
-  Param,
-  setParam,
-} from "@/components/openapi/theme/ApiExplorer/ParamOptions/slice";
-import { useTypedDispatch } from "@/components/openapi/theme/ApiItem/hooks";
+import FormTextInput from "@theme/ApiExplorer/FormTextInput";
+import { Param, setParam } from "@theme/ApiExplorer/ParamOptions/slice";
+import { useTypedDispatch } from "@theme/ApiItem/hooks";
 
 export interface ParamProps {
   param: Param;

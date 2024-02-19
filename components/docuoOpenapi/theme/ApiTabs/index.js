@@ -12,7 +12,7 @@ import {
   useTabs,
 } from "@docusaurus/theme-common/internal";
 import useIsBrowser from "@docusaurus/useIsBrowser";
-import Heading from "@/components/openapi/theme/Heading";
+import Heading from "@theme/Heading";
 import clsx from "clsx";
 
 function TabList({

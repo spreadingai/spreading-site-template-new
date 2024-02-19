@@ -1,5 +1,6 @@
 {
   "mySidebar": [
+    "add-pet",
     "demo",
     {
       "type": "category",

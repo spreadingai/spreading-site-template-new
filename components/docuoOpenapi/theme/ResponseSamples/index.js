@@ -7,7 +7,7 @@
 
 import React from "react";
 
-import CodeBlock from "@/components/openapi/theme/CodeBlock";
+import CodeBlock from "@theme/CodeBlock";
 
 function ResponseSamples({ responseExample, language }) {
   return (

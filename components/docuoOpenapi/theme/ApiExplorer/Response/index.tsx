@@ -9,13 +9,10 @@ import React from "react";
 
 import { usePrismTheme } from "@docusaurus/theme-common";
 import { useDoc } from "@docusaurus/theme-common/internal";
-import ApiCodeBlock from "@/components/openapi/theme/ApiExplorer/ApiCodeBlock";
-import {
-  useTypedDispatch,
-  useTypedSelector,
-} from "@/components/openapi/theme/ApiItem/hooks";
-import SchemaTabs from "@/components/openapi/theme/SchemaTabs";
-import TabItem from "@/components/openapi/theme/TabItem";
+import ApiCodeBlock from "@theme/ApiExplorer/ApiCodeBlock";
+import { useTypedDispatch, useTypedSelector } from "@theme/ApiItem/hooks";
+import SchemaTabs from "@theme/SchemaTabs";
+import TabItem from "@theme/TabItem";
 import clsx from "clsx";
 import { ApiItem } from "docusaurus-plugin-openapi-docs/src/types";
 

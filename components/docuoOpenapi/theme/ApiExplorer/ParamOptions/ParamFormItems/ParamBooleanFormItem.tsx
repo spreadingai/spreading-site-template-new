@@ -8,12 +8,9 @@
 import React from "react";
 
 import { ErrorMessage } from "@hookform/error-message";
-import FormSelect from "@/components/openapi/theme/ApiExplorer/FormSelect";
-import {
-  Param,
-  setParam,
-} from "@/components/openapi/theme/ApiExplorer/ParamOptions/slice";
-import { useTypedDispatch } from "@/components/openapi/theme/ApiItem/hooks";
+import FormSelect from "@theme/ApiExplorer/FormSelect";
+import { Param, setParam } from "@theme/ApiExplorer/ParamOptions/slice";
+import { useTypedDispatch } from "@theme/ApiItem/hooks";
 import { Controller, useFormContext } from "react-hook-form";
 
 export interface ParamProps {

@@ -7,19 +7,16 @@
 
 import React from "react";
 
-import json2xml from "@/components/openapi/theme/ApiExplorer/Body/json2xml";
-import FormFileUpload from "@/components/openapi/theme/ApiExplorer/FormFileUpload";
-import FormItem from "@/components/openapi/theme/ApiExplorer/FormItem";
-import FormSelect from "@/components/openapi/theme/ApiExplorer/FormSelect";
-import FormTextInput from "@/components/openapi/theme/ApiExplorer/FormTextInput";
-import LiveApp from "@/components/openapi/theme/ApiExplorer/LiveEditor";
-import {
-  useTypedDispatch,
-  useTypedSelector,
-} from "@/components/openapi/theme/ApiItem/hooks";
-import Markdown from "@/components/openapi/theme/Markdown";
-import SchemaTabs from "@/components/openapi/theme/SchemaTabs";
-import TabItem from "@/components/openapi/theme/TabItem";
+import json2xml from "@theme/ApiExplorer/Body/json2xml";
+import FormFileUpload from "@theme/ApiExplorer/FormFileUpload";
+import FormItem from "@theme/ApiExplorer/FormItem";
+import FormSelect from "@theme/ApiExplorer/FormSelect";
+import FormTextInput from "@theme/ApiExplorer/FormTextInput";
+import LiveApp from "@theme/ApiExplorer/LiveEditor";
+import { useTypedDispatch, useTypedSelector } from "@theme/ApiItem/hooks";
+import Markdown from "@theme/Markdown";
+import SchemaTabs from "@theme/SchemaTabs";
+import TabItem from "@theme/TabItem";
 import { RequestBodyObject } from "docusaurus-plugin-openapi-docs/src/openapi/types";
 import format from "xml-formatter";
 

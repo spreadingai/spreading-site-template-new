@@ -7,7 +7,7 @@
 
 import React from "react";
 
-import Container from "@/components/openapi/theme/ApiExplorer/ApiCodeBlock/Container";
+import Container from "@theme/ApiExplorer/ApiCodeBlock/Container";
 import clsx from "clsx";
 
 // <pre> tags in markdown map to CodeBlocks. They may contain JSX children. When

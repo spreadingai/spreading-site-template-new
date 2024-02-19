@@ -8,15 +8,9 @@
 import React from "react";
 
 import { ErrorMessage } from "@hookform/error-message";
-import FormMultiSelect from "@/components/openapi/theme/ApiExplorer/FormMultiSelect";
-import {
-  Param,
-  setParam,
-} from "@/components/openapi/theme/ApiExplorer/ParamOptions/slice";
-import {
-  useTypedDispatch,
-  useTypedSelector,
-} from "@/components/openapi/theme/ApiItem/hooks";
+import FormMultiSelect from "@theme/ApiExplorer/FormMultiSelect";
+import { Param, setParam } from "@theme/ApiExplorer/ParamOptions/slice";
+import { useTypedDispatch, useTypedSelector } from "@theme/ApiItem/hooks";
 import { Controller, useFormContext } from "react-hook-form";
 
 export interface ParamProps {

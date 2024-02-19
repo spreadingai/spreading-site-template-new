@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { usePrismTheme } from "@docusaurus/theme-common";
 import useIsBrowser from "@docusaurus/useIsBrowser";
 import { ErrorMessage } from "@hookform/error-message";
-import { setStringRawBody } from "@/components/openapi/theme/ApiExplorer/Body/slice";
+import { setStringRawBody } from "@theme/ApiExplorer/Body/slice";
 import clsx from "clsx";
 import { Controller, useFormContext } from "react-hook-form";
 import { LiveProvider, LiveEditor, withLive } from "react-live";

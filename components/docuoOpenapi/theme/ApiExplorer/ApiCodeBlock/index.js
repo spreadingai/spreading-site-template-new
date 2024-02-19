@@ -8,8 +8,8 @@
 import React, { isValidElement } from "react";
 
 import useIsBrowser from "@docusaurus/useIsBrowser";
-import ElementContent from "@/components/openapi/theme/ApiExplorer/ApiCodeBlock/Content/Element";
-import StringContent from "@/components/openapi/theme/ApiExplorer/ApiCodeBlock/Content/String";
+import ElementContent from "@theme/ApiExplorer/ApiCodeBlock/Content/Element";
+import StringContent from "@theme/ApiExplorer/ApiCodeBlock/Content/String";
 /**
  * Best attempt to make the children a plain string so it is copyable. If there
  * are react elements, we will not be able to copy the content, and it will

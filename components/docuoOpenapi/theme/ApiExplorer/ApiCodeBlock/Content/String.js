@@ -15,11 +15,11 @@ import {
   containsLineNumbers,
   useCodeWordWrap,
 } from "@docusaurus/theme-common/internal";
-import Container from "@/components/openapi/theme/ApiExplorer/ApiCodeBlock/Container";
-import CopyButton from "@/components/openapi/theme/ApiExplorer/ApiCodeBlock/CopyButton";
-import ExpandButton from "@/components/openapi/theme/ApiExplorer/ApiCodeBlock/ExpandButton";
-import Line from "@/components/openapi/theme/ApiExplorer/ApiCodeBlock/Line";
-import WordWrapButton from "@/components/openapi/theme/ApiExplorer/ApiCodeBlock/WordWrapButton";
+import Container from "@theme/ApiExplorer/ApiCodeBlock/Container";
+import CopyButton from "@theme/ApiExplorer/ApiCodeBlock/CopyButton";
+import ExpandButton from "@theme/ApiExplorer/ApiCodeBlock/ExpandButton";
+import Line from "@theme/ApiExplorer/ApiCodeBlock/Line";
+import WordWrapButton from "@theme/ApiExplorer/ApiCodeBlock/WordWrapButton";
 import clsx from "clsx";
 import Highlight, { defaultProps } from "prism-react-renderer";
 

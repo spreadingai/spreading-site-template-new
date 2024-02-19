@@ -7,13 +7,10 @@
 
 import React from "react";
 
-import FormItem from "@/components/openapi/theme/ApiExplorer/FormItem";
-import FormSelect from "@/components/openapi/theme/ApiExplorer/FormSelect";
-import FormTextInput from "@/components/openapi/theme/ApiExplorer/FormTextInput";
-import {
-  useTypedDispatch,
-  useTypedSelector,
-} from "@/components/openapi/theme/ApiItem/hooks";
+import FormItem from "@theme/ApiExplorer/FormItem";
+import FormSelect from "@theme/ApiExplorer/FormSelect";
+import FormTextInput from "@theme/ApiExplorer/FormTextInput";
+import { useTypedDispatch, useTypedSelector } from "@theme/ApiItem/hooks";
 
 import { setAuthData, setSelectedAuth } from "./slice";
 

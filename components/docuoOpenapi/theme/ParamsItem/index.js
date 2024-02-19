@@ -7,21 +7,18 @@
 
 import React from "react";
 
-import CodeBlock from "@/components/openapi/theme/CodeBlock";
-import SchemaTabs from "@/components/openapi/theme/SchemaTabs";
-import TabItem from "@/components/openapi/theme/TabItem";
+import CodeBlock from "@docusaurus/theme-classic/lib/theme/CodeBlock";
+import SchemaTabs from "@/components/docuoOpenapi/theme/SchemaTabs";
+import TabItem from "@docusaurus/theme-classic/lib/theme/TabItem";
 /* eslint-disable import/no-extraneous-dependencies*/
-import { createDescription } from "docusaurus-theme-openapi-docs/lib/markdown/createDescription";
+import { createDescription } from "@/components/docuoOpenapi/markdown/createDescription";
 /* eslint-disable import/no-extraneous-dependencies*/
 import {
   getQualifierMessage,
   getSchemaName,
-} from "docusaurus-theme-openapi-docs/lib/markdown/schema";
+} from "@/components/docuoOpenapi/markdown/schema";
 /* eslint-disable import/no-extraneous-dependencies*/
-import {
-  guard,
-  toString,
-} from "docusaurus-theme-openapi-docs/lib/markdown/utils";
+import { guard, toString } from "@/components/docuoOpenapi/markdown/utils";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 

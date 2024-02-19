@@ -19,6 +19,7 @@ import Head from "next/head";
 import { CMS_NAME } from "@/lib/constants";
 import ApiItem from "@/components/docuoOpenapi/theme/ApiItem";
 import MethodEndpoint from "@/components/docuoOpenapi/theme/ApiExplorer/MethodEndpoint";
+import ParamsItem from "@/components/docuoOpenapi/theme/ParamsItem";
 
 const components = {
   CodeBlock,
@@ -32,6 +33,7 @@ const components = {
   Heading,
   a: Link,
   MethodEndpoint,
+  ParamsItem,
 };
 
 interface Props {

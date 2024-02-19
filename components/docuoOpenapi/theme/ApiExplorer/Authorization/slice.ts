@@ -6,10 +6,7 @@
  * ========================================================================== */
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {
-  createStorage,
-  hashArray,
-} from "@/components/openapi/theme//ApiExplorer/storage-utils";
+import { createStorage, hashArray } from "@theme//ApiExplorer/storage-utils";
 import {
   SecurityRequirementObject,
   SecuritySchemeObject,

@@ -11,7 +11,7 @@ import {
   useScrollPositionBlocker,
   useTabs,
 } from "@docusaurus/theme-common/internal";
-import useIsBrowser from "@docusaurus/useIsBrowser";
+import useIsBrowser from "@/components/docuoOpenapi/core/client/exports/useIsBrowser";
 import clsx from "clsx";
 import flatten from "lodash/flatten";
 
