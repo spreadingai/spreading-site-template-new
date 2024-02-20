@@ -98,7 +98,7 @@ class LibController {
   getDisplayInstances(): DisplayInstance[] {
     if (!this._docuoConfig) return [];
     const allSlugs = SlugControllerImpl.getAllSlugs();
-    console.log("getDisplayInstances", this._docuoConfig.instances, allSlugs);
+    console.log("getDisplayInstances", this._docuoConfig.instances);
     return this._docuoConfig.instances.map((instance) => {
       const targetSlug = allSlugs.find((item) => {
         return item.params.instanceID === instance.id;

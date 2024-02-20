@@ -81,7 +81,6 @@ export function getStaticPaths() {
 }
 
 export default function DocPage({ mdxSource, slug, docuoConfig }: Props) {
-  console.log(mdxSource, slug, docuoConfig, "pageProps");
   if (!slug) {
     return null;
   }
