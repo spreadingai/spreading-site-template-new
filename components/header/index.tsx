@@ -164,9 +164,17 @@ const Header = (props: Props) => {
             {/* {DocSearchComponent} */}
             <Mobile
               // @ts-ignore
-              menus={(items || []).filter((item) => item.label)}
-              versions={versions}
-              instances={instances}
+              menus={(items || []).map((item) => {
+                if (item.type === NavBarItemType.DocsInstanceDropdown) {
+                  return instances;
+                }
+                if (item.type === NavBarItemType.DocsVersionDropdown) {
+                  return versions;
+                }
+                if (item.label) {
+                  return item;
+                }
+              })}
             />
           </div>
         ) : (

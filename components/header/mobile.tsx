@@ -12,11 +12,9 @@ import { createPortal } from "react-dom";
 
 interface Props {
   menus: NavbarLink[];
-  versions: NavBarItem;
-  instances: NavBarItem;
 }
 
-const Mobile: FC<Props> = ({ menus, versions, instances }) => {
+const Mobile: FC<Props> = ({ menus }) => {
   const [open, setOpen] = useState(false);
 
   const DropdownList = useMemo(() => {
@@ -28,7 +26,7 @@ const Mobile: FC<Props> = ({ menus, versions, instances }) => {
         />
         <div className={styles["mobile-menus"]}>
           {/* @ts-ignore */}
-          {menus.concat(versions, instances).map((menu, index, arr) => {
+          {menus.map((menu, index, arr) => {
             if (menu.items) {
               const items = [
                 {

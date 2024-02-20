@@ -6,7 +6,7 @@ import Link from "next/link";
 import { NavbarLink } from "./@types";
 
 const DropdownItem: FC<{ menu: NavbarLink }> = ({ menu }) => {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const DropdownList = useMemo(() => {
     return menu.items.map((item, index) => {
       return {
