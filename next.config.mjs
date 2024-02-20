@@ -8,10 +8,9 @@ const nextConfig = {
   swcMinify: true, // Version 13 or later is true by default
   compress: false, // TODO:Why disable gzip
   experimental: {
-    // Defaults to 50MB
-    isrMemoryCacheSize: 0,
     webpackBuildWorker: true,
   },
+  cacheMaxMemorySize: 0,
   transpilePackages: [
     "antd",
     "rc-util",
