@@ -43,11 +43,16 @@ class DocsController {
       versions
     );
     if (!slugVersion || slugVersion !== versions[0]) {
-      rootUrl = path.join(LibControllerImpl.getEntityRootDirectory(), (instanceID === "default" ? "" : (instanceID + "_")) + "docs");
+      rootUrl = path.join(
+        LibControllerImpl.getEntityRootDirectory(),
+        (instanceID === "default" ? "" : instanceID + "_") + "docs"
+      );
       if (docVersion) {
-        rootUrl = path.join(LibControllerImpl.getEntityRootDirectory(), `${
-          instanceID === "default" ? "" : instanceID + "_"
-        }versioned_docs`, `version-${docVersion}`);
+        rootUrl = path.join(
+          LibControllerImpl.getEntityRootDirectory(),
+          `${instanceID === "default" ? "" : instanceID + "_"}versioned_docs`,
+          `version-${docVersion}`
+        );
       }
       console.log("@@@@#####", rootUrl);
 
