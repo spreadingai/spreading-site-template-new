@@ -135,7 +135,10 @@ class SidebarsController {
       files.forEach((file) => {
         const filePath = path.join(dirPath, file);
         const childTreeData = loop(filePath);
-        childTreeData && ((childTreeData.items && childTreeData.items.length) || !childTreeData.items) && sidebar.items.push(childTreeData);
+        childTreeData &&
+          ((childTreeData.items && childTreeData.items.length) ||
+            !childTreeData.items) &&
+          sidebar.items.push(childTreeData);
       });
       return sidebar;
     };
@@ -176,7 +179,9 @@ class SidebarsController {
               const suffixIndex = sidebarItem.id.lastIndexOf(".");
               suffixIndex !== -1 &&
                 (sidebarItem.id = sidebarItem.id.slice(0, suffixIndex));
-              sidebarItem.id = this.convertDocID(path.normalize(sidebarItem.id));
+              sidebarItem.id = this.convertDocID(
+                path.normalize(sidebarItem.id)
+              );
             }
             if (sidebarItem.items) {
               loop(sidebarItem.items);
@@ -203,7 +208,7 @@ class SidebarsController {
     // Quick Start, Quick-Start
     // Quick start, Quick-start
     // Quick start/Overview
-    console.log("@@@####", str, process.platform, path.sep)
+    console.log("@@@####", str, process.platform, path.sep);
     if (process.platform.includes("win")) {
       str = str.replace(/\\/g, "/");
     }
