@@ -6,10 +6,12 @@
  * ========================================================================== */
 
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import server from "../ApiExplorer/Server/slice";
+import auth from "@/components/docuoOpenapi/theme/ApiExplorer/Authorization/slice";
+import server from "@/components/docuoOpenapi/theme/ApiExplorer/Server/slice";
 
 const rootReducer = combineReducers({
   server,
+  auth,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

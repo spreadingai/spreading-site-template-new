@@ -6,13 +6,16 @@
  * ========================================================================== */
 
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { createStorage, hashArray } from "@theme//ApiExplorer/storage-utils";
+import {
+  createStorage,
+  hashArray,
+} from "@/components/docuoOpenapi/theme/ApiExplorer/storage-utils";
 import {
   SecurityRequirementObject,
   SecuritySchemeObject,
-} from "docusaurus-plugin-openapi-docs/src/openapi/types";
+} from "@/components/docuoOpenapi/docuo-plugin-openapi-docs/src/openapi/types";
 /* eslint-disable import/no-extraneous-dependencies*/
-import { ThemeConfig } from "docusaurus-theme-openapi-docs/src/types";
+import { ThemeConfig } from "@/components/docuoOpenapi/types";
 
 import { getAuthDataKeys } from "./auth-types";
 

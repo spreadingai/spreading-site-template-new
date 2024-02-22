@@ -8,7 +8,7 @@ import React, { isValidElement } from "react";
 import useIsBrowser from "./useIsBrowser";
 // Similar comp to the one described here:
 // https://www.joshwcomeau.com/react/the-perils-of-rehydration/#abstractions
-export default function BrowserOnly({ children, fallback }) {
+export default function BrowserOnly({ children, fallback = null }) {
   const isBrowser = useIsBrowser();
   if (isBrowser) {
     if (

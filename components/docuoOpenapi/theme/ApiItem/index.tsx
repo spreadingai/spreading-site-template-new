@@ -7,14 +7,22 @@
 
 import zlib from "zlib";
 import React from "react";
-import { ServerObject } from "docusaurus-plugin-openapi-docs/src/openapi/types";
-import { ParameterObject } from "docusaurus-plugin-openapi-docs/src/openapi/types";
-import type { ApiItem as ApiItemType } from "docusaurus-plugin-openapi-docs/src/types";
-import type { DocFrontMatter } from "docusaurus-theme-openapi-docs/src/types";
+import clsx from "clsx";
+import {
+  ServerObject,
+  ParameterObject,
+} from "@/components/docuoOpenapi/docuo-plugin-openapi-docs/src/openapi/types";
+import type { ApiItem as ApiItemType } from "@/components/docuoOpenapi/docuo-plugin-openapi-docs/src/types";
+import type { DocFrontMatter } from "@/components/docuoOpenapi/types";
 import { Provider } from "react-redux";
 import { createStoreWithoutState, createStoreWithState } from "./store";
 import { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { DocuoConfig, TocItem } from "@/lib/types";
+import DocItemLayout from "@/components/docuoOpenapi/theme/ApiItem/Layout";
+import ApiExplorer from "@/components/docuoOpenapi/theme/ApiExplorer";
+import { createAuth } from "@/components/docuoOpenapi/theme/ApiExplorer/Authorization/slice";
+import useIsBrowser from "@/components/docuoOpenapi/core/lib/client/exports/useIsBrowser";
+
 interface Props {
   mdxSource: MDXRemoteSerializeResult;
   toc: TocItem[];
@@ -30,6 +38,7 @@ interface ApiFrontMatter extends DocFrontMatter {
 export default function ApiItem(props: Props): JSX.Element {
   const children = props.children;
   const frontMatter = props.mdxSource.frontmatter;
+  const { info_path: infoPath } = frontMatter as DocFrontMatter;
   let { api } = frontMatter as ApiFrontMatter;
   // decompress and parse
   if (api) {
@@ -38,7 +47,10 @@ export default function ApiItem(props: Props): JSX.Element {
     );
     console.log("####api", api);
 
-    const isBrowser = true;
+    // TODO: fix this
+    const options = {};
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const isBrowser = useIsBrowser();
 
     // Regex for 2XX status
     const statusRegex = new RegExp("(20[0-9]|2[1-9][0-9])");
@@ -77,6 +89,11 @@ export default function ApiItem(props: Props): JSX.Element {
           paramsArray.push(param as ParameterObject);
         }
       );
+      const auth = createAuth({
+        security: api?.security,
+        securitySchemes: api?.securitySchemes,
+        options,
+      });
       // TODO: determine way to rehydrate without flashing
       // const acceptValue = window?.sessionStorage.getItem("accept");
       // const contentTypeValue = window?.sessionStorage.getItem("contentType");
@@ -90,11 +107,25 @@ export default function ApiItem(props: Props): JSX.Element {
             value: (serverObject as any).url ? serverObject : undefined,
             options: servers,
           },
+          auth,
         },
         []
       );
     }
-    return <Provider store={store2}>{children}</Provider>;
+    return (
+      <DocItemLayout>
+        <Provider store={store2}>
+          <div className={clsx("row", "theme-api-markdown")}>
+            <div className="col col--7 openapi-left-panel__container">
+              {children}
+            </div>
+            <div className="col col--5 openapi-right-panel__container">
+              <ApiExplorer item={api} infoPath={infoPath} />
+            </div>
+          </div>
+        </Provider>
+      </DocItemLayout>
+    );
   }
   return <>{children}</>;
 }

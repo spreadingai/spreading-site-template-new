@@ -7,7 +7,7 @@
 
 import React from "react";
 
-import Link from "@/components/docuoOpenapi/core/client/Link";
+import Link from "@/components/docuoOpenapi/core/lib/client/exports/Link";
 import { useTypedSelector } from "@/components/docuoOpenapi/theme/ApiItem/hooks";
 
 function SecuritySchemes(props: any) {

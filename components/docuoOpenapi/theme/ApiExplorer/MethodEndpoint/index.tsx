@@ -6,7 +6,7 @@
  * ========================================================================== */
 
 import React from "react";
-import BrowserOnly from "../../../core/client/BrowserOnly";
+import BrowserOnly from "@/components/docuoOpenapi/core/lib/client/exports/BrowserOnly";
 import { useTypedSelector } from "../../ApiItem/hooks";
 
 function colorForMethod(method: string) {
@@ -52,19 +52,17 @@ function MethodEndpoint({ method, path }: Props) {
       });
     }
 
-    console.log(
-      "MethodEndpoint serverUrlWithVariables",
-      serverUrlWithVariables
+    return (
+      <BrowserOnly>
+        {() => {
+          if (serverUrlWithVariables.length) {
+            return serverUrlWithVariables;
+          } else if (serverValue && serverValue.url) {
+            return serverValue.url;
+          }
+        }}
+      </BrowserOnly>
     );
-    const getUrl: () => string = () => {
-      if (serverUrlWithVariables.length) {
-        return serverUrlWithVariables;
-      } else if (serverValue && serverValue.url) {
-        return serverValue.url;
-      }
-    };
-
-    return <BrowserOnly>{getUrl}</BrowserOnly>;
   };
 
   return (
