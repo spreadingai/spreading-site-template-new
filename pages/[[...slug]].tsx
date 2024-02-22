@@ -92,6 +92,7 @@ export default function DocPage(props: Props) {
     (mdxSource?.frontmatter?.title as string) || docuoConfig.title || "";
   const description =
     (mdxSource?.frontmatter?.description as string) ||
+    docuoConfig.description ||
     `A statically generated blog example using Next.js and ${CMS_NAME}.`;
 
   return (

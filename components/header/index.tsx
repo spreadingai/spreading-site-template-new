@@ -162,22 +162,34 @@ const Header = (props: Props) => {
         {isMobile ? (
           <div className={styles["menus"]}>
             {/* {DocSearchComponent} */}
-            {/*  @ts-ignore */}
-            <Mobile menus={(items || []).filter((item) => item.label)} />
+            <Mobile
+              // @ts-ignore
+              menus={(items || []).map((item) => {
+                if (item.type === NavBarItemType.DocsInstanceDropdown) {
+                  return instances;
+                }
+                if (item.type === NavBarItemType.DocsVersionDropdown) {
+                  return versions;
+                }
+                if (item.label) {
+                  return item;
+                }
+              })}
+            />
           </div>
         ) : (
           <div className={styles["menus"]} ref={menusRef}>
             {(items || []).map((menu, index) => {
               if (!menu) return null;
-              // if (menu?.type === NavBarItemType.DocsInstanceDropdown) {
-              //   // @ts-ignore
-              //   return <DropdownItem key={index} menu={instances} />;
-              // }
+              if (menu?.type === NavBarItemType.DocsInstanceDropdown) {
+                // @ts-ignore
+                return <DropdownItem key={index} menu={instances} />;
+              }
 
-              // if (menu?.type === NavBarItemType.DocsVersionDropdown) {
-              //   // @ts-ignore
-              //   return <DropdownItem key={index} menu={versions} />;
-              // }
+              if (menu?.type === NavBarItemType.DocsVersionDropdown) {
+                // @ts-ignore
+                return <DropdownItem key={index} menu={versions} />;
+              }
               if (
                 menu?.type === NavBarItemType.Dropdown ||
                 Array.isArray(menu.items)

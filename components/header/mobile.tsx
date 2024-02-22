@@ -7,7 +7,7 @@ import IconArrowRight from "@/assets/icons/iconArrowRight.svg";
 import styles from "./mobile.module.scss";
 import { Collapse } from "antd";
 import Link from "next/link";
-import { NavbarLink } from "./@types";
+import { NavBarItem, NavbarLink } from "./@types";
 import { createPortal } from "react-dom";
 
 interface Props {
@@ -25,6 +25,7 @@ const Mobile: FC<Props> = ({ menus }) => {
           onClick={() => setOpen(() => false)}
         />
         <div className={styles["mobile-menus"]}>
+          {/* @ts-ignore */}
           {menus.map((menu, index, arr) => {
             if (menu.items) {
               const items = [

@@ -2,6 +2,8 @@
 
 /mdxs
 /docs_test
+/docs_starter
+/public/docs
 
 # dependencies
 /node_modules

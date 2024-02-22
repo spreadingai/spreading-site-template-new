@@ -6,10 +6,6 @@ interface Props {
 }
 
 export const getStaticProps = async () => {
-  console.log(
-    new Date().toISOString().slice(0, 23),
-    "[Spreading] Home getStaticProps:"
-  );
   const allSlugs = SlugControllerImpl.getAllSlugs();
   return {
     props: {

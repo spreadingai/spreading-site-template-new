@@ -70,15 +70,15 @@ const PreviewLayout = ({
   algolia,
 }: Props) => {
   // slug eg: instance routeBasePath/version/folder/filename
-  console.log(
-    "[Site]init params",
-    // slug,
-    instanceID,
-    // docVersion,
-    // docuoConfig,
-    // displayVersions,
-    displayInstances
-  );
+  // console.log(
+  //   "[Site]init params",
+  //   slug,
+  //   instanceID,
+  //   docVersion,
+  //   docuoConfig,
+  //   displayVersions,
+  //   displayInstances
+  // );
 
   // Avoid empty slug
   if (!slug) {
@@ -212,7 +212,6 @@ const PreviewLayout = ({
   };
 
   const titleRenderHandle = (nodeData: TreeDataObject) => {
-    console.log(nodeData, "nodeData");
     return (
       <div className="custom-node-title">
         {nodeData.id ? (
@@ -306,7 +305,7 @@ const PreviewLayout = ({
                   >
                     On this page
                   </p>
-                  <div className="overflow-auto pr-6 max-h-[70vh]">
+                  <div className="toc-scroller overflow-auto overscroll-none relative pr-6 max-h-[70vh]">
                     <DocuoAnchor data={tocFormatData} offsetTop={68} />
                   </div>
 

@@ -17,10 +17,6 @@
       "@/*": ["./*"]
     }
   },
-  "exclude": [
-    "node_modules",
-    "packages/docusaurus-plugin-openapi-docs/node_modules",
-    "packages/docusaurus-theme-openapi-docs/node_modules"
-  ],
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"]
+  "exclude": ["node_modules"],
+  "include": ["globals.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx"]
 }
