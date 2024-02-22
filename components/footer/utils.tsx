@@ -10,7 +10,7 @@ import IconXDark from "@/assets/icons/social/X.svg";
 import IconXLight from "@/assets/icons/social/X_light.svg";
 import IconYoutubeDark from "@/assets/icons/social/YouTube.svg";
 import IconYoutubeLight from "@/assets/icons/social/YouTube_light.svg";
-import Image from "next/image";
+
 const Social = {
   Discord: { dark: <IconDiscordDark />, light: <IconDiscordLight /> },
   Facebook: { dark: <IconFacebookDark />, light: <IconFacebookLight /> },
@@ -25,7 +25,7 @@ const getSocial = (
   isDarkMode: boolean
 ) => {
   const mode = isDarkMode ? "dark" : "light";
-  const current = typeof logo === "string" ? logo : logo[mode];
+  const current = typeof logo === "string" ? logo : logo?.[mode];
   console.log(mode, current);
 
   return Social[current] ? (

@@ -19,12 +19,10 @@ export function rehypeLink(options: {
       if (node.properties.href.includes(":")) {
         return;
       }
-      //   console.log("rehypeLink ", node.tagName, node.properties);
       if (!options.rootUrl || !options.filePath) return;
       // while href does not start with 'http'
       const href = node.properties.href;
       const parsedPath = path.parse(href);
-      console.log(`[rehypeLink]updateLinkTag parsedPath`, parsedPath);
       let targetHref = `${parsedPath.dir}/${parsedPath.name}`;
       parsedPath.ext.includes("#") &&
         (targetHref += `#${parsedPath.ext.split("#")[1]}`);
@@ -46,15 +44,15 @@ export function rehypeLink(options: {
         });
         return result.join("/");
       };
-      console.log(
-        `[rehypeLink]updateLinkTag`,
-        options.prefix,
-        options.rootUrl,
-        options.filePath,
-        imagePath,
-        targetHref,
-        publicPath
-      );
+      // console.log(
+      //   `[rehypeLink]updateLinkTag`,
+      //   options.prefix,
+      //   options.rootUrl,
+      //   options.filePath,
+      //   imagePath,
+      //   targetHref,
+      //   publicPath
+      // );
       node.properties.href = `${options.prefix}/${convertDocID(publicPath)}`;
     });
   };

@@ -81,14 +81,13 @@ export function getStaticPaths() {
 }
 
 export default function DocPage({ mdxSource, slug, docuoConfig }: Props) {
-  console.log(mdxSource, slug, docuoConfig, "pageProps");
   if (!slug) {
     return null;
   }
   const title =
     (mdxSource?.frontmatter?.title as string) || docuoConfig.title || "";
   const description =
-    (mdxSource?.frontmatter?.description as string) ||
+    (mdxSource?.frontmatter?.description as string) || docuoConfig.description ||
     `A statically generated blog example using Next.js and ${CMS_NAME}.`;
   return (
     <div className="prose" style={{ maxWidth: "unset" }}>
