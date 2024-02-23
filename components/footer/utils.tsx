@@ -26,7 +26,6 @@ const getSocial = (
 ) => {
   const mode = isDarkMode ? "dark" : "light";
   const current = typeof logo === "string" ? logo : logo?.[mode];
-  console.log(mode, current);
 
   return Social[current] ? (
     Social[current][mode]
