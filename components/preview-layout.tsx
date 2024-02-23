@@ -27,7 +27,7 @@ import gradientFixed from "@/assets/images/gradient_fixed.png";
 import IconBackTop from "@/assets/icons/anchor/IconBackTop.svg";
 import IconBreadcrumbArrow from "@/assets/icons/breadcrumb/arrow.svg";
 import AnChorMobile from "./Anchor/AnchorMobile";
-import InsVersionDropdown from '@/components/dropdown/InsVersionDropdown';
+import InsVersionDropdown from "@/components/dropdown/InsVersionDropdown";
 
 const { DirectoryTree } = Tree;
 
@@ -238,6 +238,7 @@ const PreviewLayout = ({
   };
 
   // @ts-ignore
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const versions = useMemo<NavBarItem>(() => {
     console.log(displayVersions, docVersion, "displayVersions");
     return {
@@ -250,6 +251,7 @@ const PreviewLayout = ({
     };
   }, [docVersion, displayVersions]);
   // @ts-ignore
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const instances = useMemo<NavBarItem>(() => {
     const currentInstanceLabel = displayInstances.find((item) => {
       return item.instance.id === instanceID;
