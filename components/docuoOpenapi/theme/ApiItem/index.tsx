@@ -22,6 +22,7 @@ import DocItemLayout from "@/components/docuoOpenapi/theme/ApiItem/Layout";
 import ApiExplorer from "@/components/docuoOpenapi/theme/ApiExplorer";
 import { createAuth } from "@/components/docuoOpenapi/theme/ApiExplorer/Authorization/slice";
 import useIsBrowser from "@/components/docuoOpenapi/core/lib/client/exports/useIsBrowser";
+import { createPersistanceMiddleware } from "@/components/docuoOpenapi/theme/ApiExplorer/persistanceMiddleware";
 
 interface Props {
   mdxSource: MDXRemoteSerializeResult;
@@ -57,10 +58,11 @@ export default function ApiItem(props: Props): JSX.Element {
 
     // Define store2
     let store2: any = {};
+    const persistanceMiddleware = createPersistanceMiddleware(options);
 
     // Init store for SSR
     if (!isBrowser) {
-      store2 = createStoreWithoutState({}, []);
+      store2 = createStoreWithoutState({}, [persistanceMiddleware]);
     }
 
     // Init store for CSR to hydrate components
@@ -94,11 +96,15 @@ export default function ApiItem(props: Props): JSX.Element {
         securitySchemes: api?.securitySchemes,
         options,
       });
+      console.log("#######auth", auth);
       // TODO: determine way to rehydrate without flashing
       // const acceptValue = window?.sessionStorage.getItem("accept");
       // const contentTypeValue = window?.sessionStorage.getItem("contentType");
       // const server = window?.sessionStorage.getItem("server");
-      const server = JSON.stringify(api.servers[0]);
+      const server =
+        typeof window !== "undefined"
+          ? window?.sessionStorage.getItem("server")
+          : JSON.stringify(api.servers[0]);
       const serverObject = (JSON.parse(server!) as ServerObject) ?? {};
 
       store2 = createStoreWithState(
@@ -109,7 +115,7 @@ export default function ApiItem(props: Props): JSX.Element {
           },
           auth,
         },
-        []
+        [persistanceMiddleware]
       );
     }
     return (

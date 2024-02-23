@@ -14,7 +14,7 @@ import React, { useEffect, useState } from "react";
 // re-rendering after a successful hydration
 export const Context = React.createContext(true);
 export function BrowserContextProvider({ children }) {
-  const [isBrowser, setIsBrowser] = useState(true);
+  const [isBrowser, setIsBrowser] = useState(false);
   useEffect(() => {
     setIsBrowser(true);
   }, []);

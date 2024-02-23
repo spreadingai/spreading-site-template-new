@@ -52,17 +52,15 @@ function MethodEndpoint({ method, path }: Props) {
       });
     }
 
-    return (
-      <BrowserOnly>
-        {() => {
-          if (serverUrlWithVariables.length) {
-            return serverUrlWithVariables;
-          } else if (serverValue && serverValue.url) {
-            return serverValue.url;
-          }
-        }}
-      </BrowserOnly>
-    );
+    const getUrl: () => string = () => {
+      if (serverUrlWithVariables.length) {
+        return serverUrlWithVariables;
+      } else if (serverValue && serverValue.url) {
+        return serverValue.url;
+      }
+    };
+
+    return <BrowserOnly>{getUrl}</BrowserOnly>;
   };
 
   return (

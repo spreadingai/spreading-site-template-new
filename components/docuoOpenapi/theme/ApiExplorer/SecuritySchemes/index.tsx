@@ -15,6 +15,8 @@ function SecuritySchemes(props: any) {
   const selected = useTypedSelector((state: any) => state.auth.selected);
   const infoAuthPath = `/${props.infoPath}#authentication`;
 
+  console.log("#######SecuritySchemes", options, selected, infoAuthPath);
+
   if (selected === undefined) return null;
 
   if (options[selected]?.[0]?.type === undefined) {

@@ -20,20 +20,23 @@ export function hashArray(arr: string[]) {
 type Persistance = false | "localStorage" | "sessionStorage" | undefined;
 
 export function createStorage(persistance: Persistance): Storage {
+  const defaultStorage = {
+    getItem: () => "11111111",
+    setItem: () => {},
+    clear: () => {},
+    key: () => null,
+    removeItem: () => {},
+    length: 0,
+  };
   if (persistance === false) {
-    return {
-      getItem: () => null,
-      setItem: () => {},
-      clear: () => {},
-      key: () => null,
-      removeItem: () => {},
-      length: 0,
-    };
+    return defaultStorage;
   }
 
   if (persistance === "sessionStorage") {
-    return sessionStorage;
+    return typeof sessionStorage !== "undefined"
+      ? sessionStorage
+      : defaultStorage;
   }
 
-  return localStorage;
+  return typeof localStorage !== "undefined" ? localStorage : defaultStorage;
 }

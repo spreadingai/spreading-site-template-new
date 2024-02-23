@@ -9,10 +9,13 @@ import { Middleware } from "@reduxjs/toolkit";
 import {
   setAuthData,
   setSelectedAuth,
-} from "@theme/ApiExplorer/Authorization/slice";
-import { AppDispatch, RootState } from "@theme/ApiItem/store";
+} from "@/components/docuoOpenapi/theme/ApiExplorer/Authorization/slice";
+import {
+  AppDispatch,
+  RootState,
+} from "@/components/docuoOpenapi/theme/ApiItem/store";
 /* eslint-disable import/no-extraneous-dependencies*/
-import { ThemeConfig } from "docusaurus-theme-openapi-docs/src/types";
+import { ThemeConfig } from "@/components/docuoOpenapi/types";
 
 import { createStorage, hashArray } from "./storage-utils";
 
@@ -64,6 +67,8 @@ export function createPersistanceMiddleware(options: ThemeConfig["api"]) {
         serverObject.variables[variables.key].default = variables.value;
         storage.setItem("server", JSON.stringify(serverObject));
       }
+
+      console.log("####storage", storage, result);
 
       return result;
     };

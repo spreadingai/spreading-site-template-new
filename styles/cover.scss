@@ -1,0 +1,21 @@
+.openapi-security__summary-header {
+    font-size: 12px !important;
+    margin-bottom: unset !important;
+    line-height: normal !important;
+    margin-top: 0 !important;
+}
+
+.openapi-security__details {
+    pre code {
+        background-color: transparent !important;
+        border: none !important;
+    }
+}
+
+.openapi__method-endpoint-path {
+    margin-bottom: 0 !important;
+    margin-top: 0 !important;
+    font-size: 12px !important;
+    font-weight: normal !important;
+    font-family: var(--ifm-font-family-monospace) !important;
+}
