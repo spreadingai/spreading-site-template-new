@@ -1,6 +1,7 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 /mdxs
+/docs
 /docs_test
 /docs_starter
 /public/docs
