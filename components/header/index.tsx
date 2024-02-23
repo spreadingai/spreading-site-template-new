@@ -124,7 +124,7 @@ const Header = (props: Props) => {
                 src={
                   (navbar.logo as string).includes("http")
                     ? `${navbar.logo}`
-                    : `${process.env.NEXT_PUBLIC_BASE_PATH || ""}${
+                    : `${process.env.NEXT_PUBLIC_BASE_PATH || "/"}${
                         process.env.NEXT_PUBLIC_BASE_PATH ? "/" : ""
                       }${navbar.logo}`
                 }

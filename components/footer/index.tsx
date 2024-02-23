@@ -70,7 +70,7 @@ const Footer: FC<footerProps> = (props) => {
                   src={
                     (footer.logo as string).includes("http")
                       ? `${footer.logo}`
-                      : `${process.env.NEXT_PUBLIC_BASE_PATH || ""}${
+                      : `${process.env.NEXT_PUBLIC_BASE_PATH || "/"}${
                           process.env.NEXT_PUBLIC_BASE_PATH ? "/" : ""
                         }${footer.logo}`
                   }
