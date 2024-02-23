@@ -40,11 +40,11 @@ class SlugController {
       // [""]
       slugVersions.push("");
     } else {
-      // ["next", "1.1.0", "1.0.0"]
-      slugVersions.unshift(VersionsControllerImpl.getDefaultVersion());
-      slugVersions[1] = this.docVersionToSlugVersion(
+      // ["1.1.0", "1.0.0", "next"]
+      slugVersions.push(VersionsControllerImpl.getDefaultVersion());
+      slugVersions[0] = this.docVersionToSlugVersion(
         instanceID,
-        slugVersions[1]
+        slugVersions[0]
       );
     }
     for (let index = 0, len = slugVersions.length; index < len; index++) {
@@ -169,7 +169,7 @@ class SlugController {
     return instanceID;
   }
   slugVersionToDocVersion(instanceID: string, slugVersion: string) {
-    // slugVersion: "next", ""("1.1.0"), "1.0.0",
+    // slugVersion: ""("1.1.0"), "1.0.0", "next"
     const versions = VersionsControllerImpl.getUsedVersions(instanceID);
     let docVersion;
     if (versions.length) {
@@ -186,7 +186,7 @@ class SlugController {
     return docVersion;
   }
   docVersionToSlugVersion(instanceID: string, docVersion: string) {
-    // docVersion: "", "1.1.0", "1.0.0"
+    // docVersion: "1.1.0", "1.0.0", ""
     const versions = VersionsControllerImpl.getUsedVersions(instanceID);
     let slugVersion;
     if (versions.length) {

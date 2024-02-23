@@ -74,8 +74,8 @@ class VersionsController {
     const usedVersions = this.getUsedVersions(instanceID);
     const allSlugs = SlugControllerImpl.getAllSlugs();
     if (usedVersions.length) {
-      // ["", "1.1.0", "1.0.0"]
-      usedVersions.unshift("");
+      // ["1.1.0", "1.0.0", ""]
+      usedVersions.push("");
       usedVersions.forEach((docVersion) => {
         const slugVersion = SlugControllerImpl.docVersionToSlugVersion(
           instanceID,
