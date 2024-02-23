@@ -19,6 +19,11 @@ import { NavBarItem, NavbarLink } from "./@types";
 import { DocSearch } from "@docsearch/react";
 import AnchorNode from "../Anchor/Anchor";
 
+console.log(
+  "process.env.NEXT_PUBLIC_BASE_PATH",
+  process.env.NEXT_PUBLIC_BASE_PATH
+);
+
 // import "@docsearch/css";
 
 interface Props {
@@ -118,7 +123,9 @@ const Header = (props: Props) => {
                 src={
                   (navbar.logo as string).includes("http")
                     ? `${navbar.logo}`
-                    : `/${navbar.logo}`
+                    : `${process.env.NEXT_PUBLIC_BASE_PATH || ""}${
+                        process.env.NEXT_PUBLIC_BASE_PATH ? "/" : ""
+                      }${navbar.logo}`
                 }
                 alt={"logo"}
               />

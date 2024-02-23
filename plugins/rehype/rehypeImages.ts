@@ -15,23 +15,22 @@ export function rehypeImages(options) {
         // Get the relative file path of the image
         const relativePath = node.properties.src;
         const publicPath = getPublicPath(relativePath, options.filePath);
-        if (publicPath === "") return;     
+        if (publicPath === "") return;
         // Update the image path in the AST
         node.properties.src = `/docs/${path.join(publicPath)}`;
       }
-      if (
-        node.type === "mdxJsxFlowElement" &&
-        node.name === "img"
-      ) {
+      if (node.type === "mdxJsxFlowElement" && node.name === "img") {
         const attributes = node.attributes || [];
-        const srcAttribute = attributes.find(attr => attr.name === "src");
+        const srcAttribute = attributes.find((attr) => attr.name === "src");
         if (!srcAttribute) return;
         // Get the relative file path of the image
         const relativePath = srcAttribute.value;
         const publicPath = getPublicPath(relativePath, options.filePath);
-        if (publicPath === "") return;     
+        if (publicPath === "") return;
         // Update the image path in the AST
-        srcAttribute.value = `/docs/${path.join(publicPath)}`;
+        srcAttribute.value = `${
+          process.env.NEXT_PUBLIC_BASE_PATH || ""
+        }/docs/${path.join(publicPath)}`;
       }
     });
   };
@@ -39,10 +38,7 @@ export function rehypeImages(options) {
 
 function getPublicPath(relativePath, filePath) {
   // Get the relative path of the image
-  const imagePath = path.resolve(
-    path.dirname(filePath),
-    relativePath
-  );
+  const imagePath = path.resolve(path.dirname(filePath), relativePath);
   // Determine whether the image exists
   const isExist = fs.existsSync(imagePath);
   // Skip if the image does not exist

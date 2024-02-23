@@ -23,7 +23,7 @@ const nextConfig = {
     "rc-table",
   ],
   output: "standalone",
-  basePath: process.env.BASE_PATH || "",
+  basePath: process.env.NEXT_PUBLIC_BASE_PATH || "",
   webpack(config) {
     // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find((rule) =>
