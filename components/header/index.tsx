@@ -88,12 +88,13 @@ const Header = (props: Props) => {
               buttonText: "Quick search...",
             },
           }}
-          // searchParameters={{
-          //   facetFilters: [
-          //     `version:${currentVersion}`,
-          //     `instance:${currentInstance}`,
-          //   ],
-          // }}
+          placeholder="Find or ask what you want"
+          searchParameters={{
+            facetFilters: [
+              `version:${currentVersion}`,
+              `instance:${currentInstance}`,
+            ],
+          }}
         />
       </>
     );
