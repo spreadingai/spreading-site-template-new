@@ -27,6 +27,7 @@ const Mobile: FC<Props> = ({ menus }) => {
         <div className={styles["mobile-menus"]}>
           {/* @ts-ignore */}
           {menus.map((menu, index, arr) => {
+            if (!menu) return null;
             if (menu.items) {
               const items = [
                 {

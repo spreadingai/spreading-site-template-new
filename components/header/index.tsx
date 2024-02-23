@@ -37,8 +37,6 @@ const Header = (props: Props) => {
     currentVersion,
     currentInstance,
     tocFormatData,
-    displayInstances,
-    displayVersions,
     setDrawerOpen,
   } = props;
   const { themeConfig, search } = docuoConfig;
@@ -78,34 +76,6 @@ const Header = (props: Props) => {
     };
     // return window.removeEventListener("scroll", handleScroll, true);
   }, []);
-
-  // @ts-ignore
-  const versions = useMemo<NavBarItem>(() => {
-    console.log(displayVersions, currentVersion, "displayVersions");
-    return {
-      label: currentVersion,
-      type: "dropdown",
-      items: displayVersions.map((item) => ({
-        ...item,
-        label: item.version,
-      })),
-    };
-  }, [currentVersion, displayVersions]);
-  // @ts-ignore
-  const instances = useMemo<NavBarItem>(() => {
-    const currentInstanceLabel = displayInstances.find((item) => {
-      return item.instance.id === currentInstance;
-    });
-
-    return {
-      label: currentInstanceLabel.instance.label,
-      type: "dropdown",
-      items: displayInstances.map((item) => ({
-        ...item,
-        label: item.instance.label,
-      })),
-    };
-  }, [currentInstance, displayInstances]);
 
   const DocSearchComponent = useMemo(() => {
     if (!algolia) return null;
@@ -165,12 +135,6 @@ const Header = (props: Props) => {
             <Mobile
               // @ts-ignore
               menus={(items || []).map((item) => {
-                if (item.type === NavBarItemType.DocsInstanceDropdown) {
-                  return instances;
-                }
-                if (item.type === NavBarItemType.DocsVersionDropdown) {
-                  return versions;
-                }
                 if (item.label) {
                   return item;
                 }
@@ -181,15 +145,6 @@ const Header = (props: Props) => {
           <div className={styles["menus"]} ref={menusRef}>
             {(items || []).map((menu, index) => {
               if (!menu) return null;
-              if (menu?.type === NavBarItemType.DocsInstanceDropdown) {
-                // @ts-ignore
-                return <DropdownItem key={index} menu={instances} />;
-              }
-
-              if (menu?.type === NavBarItemType.DocsVersionDropdown) {
-                // @ts-ignore
-                return <DropdownItem key={index} menu={versions} />;
-              }
               if (
                 menu?.type === NavBarItemType.Dropdown ||
                 Array.isArray(menu.items)

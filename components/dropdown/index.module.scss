@@ -1,0 +1,77 @@
+.ins-version-wrapper {
+  &.version {
+    width: 80px;
+  }
+  width: 150px;
+  height: 36px;
+  background: #FAFAFB;
+  border-radius: 6px;
+  border: 1px solid #F2F3F5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 6px 12px;
+  margin-right: 8px;
+  cursor: pointer;
+  &:hover, &.active {
+    background: #F6F6F8;
+  }
+  .label {
+    font-size: 14px;
+    font-family: Inter-Medium;
+    font-weight: 500;
+    color: #171717;
+    line-height: 24px;
+  
+    & + .icon {
+      font-size: 12px;
+      margin-left: 6px;
+      color: #666666;
+      transition: transform 0.3s;
+      flex-shrink: 0;
+    }
+  }
+}
+
+.ins-version-popup {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-height: 258px;
+  overflow: auto;
+  overflow: overlay;
+  padding: 8px !important;
+  box-shadow: 0px 1px 12px 0px rgba(0, 0, 0, 0.05) !important;
+  border-radius: 6px !important;
+  border: 1px solid rgba(229, 231, 235, 0.6);
+  // 滚动条
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  /* 滑块样式 */
+  &::-webkit-scrollbar-thumb {
+    background: rgba(81, 88, 105, 0.2);
+    border-radius: 4px;
+  }
+
+  /* 轨道样式 */
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+}
+.popup-list-item {
+  height: 40px;
+  flex-shrink: 0;
+  padding: 6px 8px !important;
+  font-size: 14px !important;
+  font-family: Inter-Medium;
+  font-weight: 500 !important;
+  color: #171717 !important;
+  border-radius: 4px !important;
+  transition: unset !important;
+
+  &:hover, &.active {
+    background: rgba(229, 231, 235, 0.25);
+    color: #1abd00 !important;
+  }
+}

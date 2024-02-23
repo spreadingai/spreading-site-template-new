@@ -27,6 +27,7 @@ import gradientFixed from "@/assets/images/gradient_fixed.png";
 import IconBackTop from "@/assets/icons/anchor/IconBackTop.svg";
 import IconBreadcrumbArrow from "@/assets/icons/breadcrumb/arrow.svg";
 import AnChorMobile from "./Anchor/AnchorMobile";
+import InsVersionDropdown from '@/components/dropdown/InsVersionDropdown';
 
 const { DirectoryTree } = Tree;
 
@@ -236,6 +237,34 @@ const PreviewLayout = ({
     setExpandedKeys(expandedKeys);
   };
 
+  // @ts-ignore
+  const versions = useMemo<NavBarItem>(() => {
+    console.log(displayVersions, docVersion, "displayVersions");
+    return {
+      label: docVersion,
+      type: "dropdown",
+      items: displayVersions.map((item) => ({
+        ...item,
+        label: item.version,
+      })),
+    };
+  }, [docVersion, displayVersions]);
+  // @ts-ignore
+  const instances = useMemo<NavBarItem>(() => {
+    const currentInstanceLabel = displayInstances.find((item) => {
+      return item.instance.id === instanceID;
+    });
+
+    return {
+      label: currentInstanceLabel.instance.label,
+      type: "dropdown",
+      items: displayInstances.map((item) => ({
+        ...item,
+        label: item.instance.label,
+      })),
+    };
+  }, [instanceID, displayInstances]);
+
   return (
     <div className="preview-screen relative">
       <Head>
@@ -263,6 +292,10 @@ const PreviewLayout = ({
       </div>
       <main className="preview-main">
         <div className="preview-sider">
+          <div className="ins-version pl-8 mt-[28px]">
+            <InsVersionDropdown type="instance" menu={instances} />
+            <InsVersionDropdown type="version" menu={versions} />
+          </div>
           <DocuoTree
             data={folderTreeData}
             selectedKeys={selectedKeys}
