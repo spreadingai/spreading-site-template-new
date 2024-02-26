@@ -94,12 +94,12 @@ const Header = (props: Props) => {
             },
           }}
           placeholder="Find or ask what you want"
-          searchParameters={{
-            facetFilters: [
-              `version:${currentVersion}`,
-              `instance:${currentInstance}`,
-            ],
-          }}
+          // searchParameters={{
+          //   facetFilters: [
+          //     `version:${currentVersion}`,
+          //     `instance:${currentInstance}`,
+          //   ],
+          // }}
         />
       </>
     );
