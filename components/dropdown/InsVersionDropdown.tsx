@@ -45,7 +45,7 @@ const InsVersionDropdown = ({ type, menu }: InsVersionDropdownProps) => {
     >
       <div
         title={menu.label as string}
-        className={`${styles["ins-version-wrapper"]} ${styles[type]} ${open ? styles.active : ""}`}
+        className={`mt-[28px] ${styles["ins-version-wrapper"]} ${styles[type]} ${open ? styles.active : ""}`}
       >
         <span className={`${styles["label"]} pop-overlay text-ellipsis overflow-hidden`}>{menu.label}</span>
         {open ? (
