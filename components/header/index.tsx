@@ -100,6 +100,7 @@ const Header = (props: Props) => {
           //     `instance:${currentInstance}`,
           //   ],
           // }}
+          maxResultsPerGroup={20}
         />
       </>
     );
