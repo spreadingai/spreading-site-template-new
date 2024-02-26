@@ -154,9 +154,9 @@
   },
   "search": {
     "algolia": {
-      "appId": "4TC1Z0S4I2",
-      "apiKey": "4931865248d4ed6ec59dc60f3db682ef",
-      "indexName": "spreading--template-new"
+      "appId": "24083JW88L",
+      "apiKey": "5ec85b3104c941999985d4f528b6376b",
+      "indexName": "sunlyproject1-hdh34-spreading"
     }
   }
 }
