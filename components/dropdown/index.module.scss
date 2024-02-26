@@ -71,8 +71,11 @@
   border-radius: 4px !important;
   transition: unset !important;
 
-  &:hover, &.active {
-    background: rgba(229, 231, 235, 0.25);
+  &.active {
     color: #1abd00 !important;
+  }
+
+  &:hover {
+    background: rgba(229, 231, 235, 0.25) !important;
   }
 }

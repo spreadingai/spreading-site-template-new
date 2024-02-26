@@ -294,7 +294,7 @@ const PreviewLayout = ({
       </div>
       <main className="preview-main">
         <div className="preview-sider">
-          <div className="ins-version pl-8 mt-[28px]">
+          <div className="flex pl-8 mt-[28px]">
             <InsVersionDropdown type="instance" menu={instances} />
             <InsVersionDropdown type="version" menu={versions} />
           </div>
@@ -364,6 +364,10 @@ const PreviewLayout = ({
           key="left"
           getContainer={false}
         >
+          <div className="flex pl-8 mt-[28px]">
+            <InsVersionDropdown type="instance" menu={instances} />
+            <InsVersionDropdown type="version" menu={versions} />
+          </div>
           <DocuoTree
             data={folderTreeData}
             selectedKeys={selectedKeys}

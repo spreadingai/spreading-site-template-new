@@ -7,7 +7,7 @@
   --docsearch-icon-stroke-width: 1.4;
   --docsearch-highlight-color: #1ABD00;
   --docsearch-muted-color: rgba(81, 88, 105, 0.6);
-  --docsearch-container-background: rgba(101, 108, 133, 0.8);
+  --docsearch-container-background: rgba(0, 0, 0, 0.3);
   --docsearch-logo-color: #5468ff;
   --docsearch-modal-width: 640px;
   --docsearch-modal-height: 600px;
@@ -156,7 +156,7 @@ html[data-theme="dark"] {
   top: 0;
   width: 100vw;
   z-index: 200;
-  --tw-backdrop-blur: blur(2px);
+  --tw-backdrop-blur: blur(6px);
   backdrop-filter: var(--tw-backdrop-blur);
 }
 .DocSearch-Container a {
@@ -333,6 +333,7 @@ html[data-theme="dark"] {
 }
 .DocSearch-Title {
   font-size: 1.2em;
+  color: #171717;
 }
 .DocSearch-Logo a {
   display: flex;
@@ -527,18 +528,20 @@ svg.DocSearch-Hit-Select-Icon {
 .DocSearch-StartScreen {
   font-size: 0.9em;
   margin: 0 auto;
-  padding: 36px 0;
+  padding: 60px 0;
   text-align: center;
   width: 80%;
 }
 .DocSearch-Screen-Icon {
   color: var(--docsearch-muted-color);
   padding-bottom: 12px;
+  display: none;
 }
 .DocSearch-NoResults-Prefill-List {
   display: inline-block;
   padding-bottom: 24px;
   text-align: left;
+  display: none;
 }
 .DocSearch-NoResults-Prefill-List ul {
   display: inline-block;
