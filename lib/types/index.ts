@@ -133,3 +133,7 @@ export interface TocItem {
   children: TocItem[];
   index?: number;
 }
+
+export enum Plan {
+  Free = "free",
+}

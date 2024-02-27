@@ -3,13 +3,14 @@ import path from "path";
 import LibControllerImpl from "./index";
 // TODO:Here's the cross-reference
 import SlugControllerImpl from "./slug-help";
-import { DisplayVersion } from "./types";
+import { DisplayVersion, Plan } from "./types";
 
 class VersionsController {
   static _instance: VersionsController;
   _usedVersionsMap: Record<string, string[]> = {};
   _actualVersionsMap: Record<string, string[]> = {};
   _defaultVersion = "next";
+  _unlimitedVersionNumber = "-1";
   static getInstance() {
     return (
       VersionsController._instance ||
@@ -25,12 +26,29 @@ class VersionsController {
     }versions.json`;
     const versionsPath = path.resolve("./public", "..", versionsUrl);
     let versions: string[] = [];
-    if (fs.existsSync(versionsPath)) {
-      versions = (
-        JSON.parse(fs.readFileSync(versionsPath, "utf8")) as string[]
-      ).filter((version) => version);
+    // Increased the version limit
+    if (process.env.NEXT_PUBLIC_PLAN !== Plan.Free) {
+      if (fs.existsSync(versionsPath)) {
+        versions = (
+          JSON.parse(fs.readFileSync(versionsPath, "utf8")) as string[]
+        ).filter((version) => version);
+      }
+      console.log(`[DocsController]getUsedVersions: `, versions);
+      if (
+        process.env.NEXT_PUBLIC_VERSION_LIMIT &&
+        process.env.NEXT_PUBLIC_VERSION_LIMIT !== this._unlimitedVersionNumber
+      ) {
+        try {
+          const limit = Number(process.env.NEXT_PUBLIC_VERSION_LIMIT);
+          versions.splice(limit - 1);
+        } catch (error) {
+          console.log(
+            `[DocsController]getUsedVersions process.env.NEXT_PUBLIC_VERSION_LIMIT: `,
+            process.env.NEXT_PUBLIC_VERSION_LIMIT
+          );
+        }
+      }
     }
-    console.log(`[DocsController]getUsedVersions: `, versions);
     this._usedVersionsMap[instanceID] = versions;
     return JSON.parse(
       JSON.stringify(this._usedVersionsMap[instanceID])

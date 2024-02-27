@@ -5,6 +5,7 @@ import {
   DocuoConfig,
   NavBarItem,
   NavBarItemType,
+  Plan,
   SlugData,
 } from "./types";
 
@@ -13,6 +14,7 @@ class LibController {
   _docuoConfig: DocuoConfig;
   _entityRootDirectory = "docs";
   _instances: DisplayInstance[];
+  _unlimitedInstanceNumber = "-1";
   static getInstance() {
     return (
       LibController._instance || (LibController._instance = new LibController())
@@ -53,6 +55,24 @@ class LibController {
         if (!result) {
           // Insert host instance
           docuoConfig.instances.unshift(defaultInstance);
+        }
+        if (process.env.NEXT_PUBLIC_PLAN === Plan.Free) {
+          docuoConfig.instances.splice(1);
+        } else {
+          if (
+            process.env.NEXT_PUBLIC_INSTANCE_LIMIT !==
+            this._unlimitedInstanceNumber
+          ) {
+            try {
+              const limit = Number(process.env.NEXT_PUBLIC_INSTANCE_LIMIT);
+              docuoConfig.instances.splice(limit);
+            } catch (error) {
+              console.log(
+                `[LibController]getDocuoConfig process.env.NEXT_PUBLIC_INSTANCE_LIMIT: `,
+                process.env.NEXT_PUBLIC_INSTANCE_LIMIT
+              );
+            }
+          }
         }
       }
       this._docuoConfig = docuoConfig;
