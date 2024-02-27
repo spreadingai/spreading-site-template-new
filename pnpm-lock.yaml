@@ -47,6 +47,9 @@ dependencies:
   github-slugger:
     specifier: ^2.0.0
     version: 2.0.0
+  history:
+    specifier: 4.10.1
+    version: 4.10.1
   infima:
     specifier: 0.2.0-alpha.43
     version: 0.2.0-alpha.43
@@ -89,6 +92,9 @@ dependencies:
   react-redux:
     specifier: ^7.2.0
     version: 7.2.9(react-dom@18.2.0)(react@18.2.0)
+  react-router-dom:
+    specifier: 5.3.4
+    version: 5.3.4(react@18.2.0)
   rehype-katex:
     specifier: ^7.0.0
     version: 7.0.0
@@ -110,6 +116,9 @@ dependencies:
   unist-util-visit:
     specifier: ^5.0.0
     version: 5.0.0
+  use-sync-external-store:
+    specifier: ^1.2.0
+    version: 1.2.0(react@18.2.0)
   usehooks-ts:
     specifier: ^2.9.1
     version: 2.12.1(react@18.2.0)

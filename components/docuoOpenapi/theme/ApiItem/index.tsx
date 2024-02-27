@@ -101,10 +101,13 @@ export default function ApiItem(props: Props): JSX.Element {
       // const acceptValue = window?.sessionStorage.getItem("accept");
       // const contentTypeValue = window?.sessionStorage.getItem("contentType");
       // const server = window?.sessionStorage.getItem("server");
+      const defaultServer = JSON.stringify(api.servers[0]);
       const server =
         typeof window !== "undefined"
-          ? window?.sessionStorage.getItem("server")
-          : JSON.stringify(api.servers[0]);
+          ? window?.sessionStorage.getItem("server") || defaultServer
+          : typeof sessionStorage !== "undefined"
+          ? sessionStorage.getItem("server") || defaultServer
+          : defaultServer;
       const serverObject = (JSON.parse(server!) as ServerObject) ?? {};
 
       store2 = createStoreWithState(
@@ -115,7 +118,7 @@ export default function ApiItem(props: Props): JSX.Element {
           },
           auth,
         },
-        [persistanceMiddleware]
+        []
       );
     }
     return (

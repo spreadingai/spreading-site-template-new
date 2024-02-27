@@ -10,8 +10,8 @@ import React, { cloneElement, useRef, useEffect, useState } from "react";
 import {
   useScrollPositionBlocker,
   useTabs,
-} from "@docusaurus/theme-common/internal";
-import useIsBrowser from "@/components/docuoOpenapi/core/client/exports/useIsBrowser";
+} from "@/components/docuoOpenapi/theme-common/src/internal";
+import useIsBrowser from "@/components/docuoOpenapi/core/lib/client/exports/useIsBrowser";
 import clsx from "clsx";
 import flatten from "lodash/flatten";
 

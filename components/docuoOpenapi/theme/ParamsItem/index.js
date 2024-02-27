@@ -7,9 +7,10 @@
 
 import React from "react";
 
-import CodeBlock from "@docusaurus/theme-classic/lib/theme/CodeBlock";
+// import CodeBlock from "@docusaurus/theme-classic/lib/theme/CodeBlock";
+import { CodeBlock } from "@spreading/docuo-mdx-component";
 import SchemaTabs from "@/components/docuoOpenapi/theme/SchemaTabs";
-import TabItem from "@docusaurus/theme-classic/lib/theme/TabItem";
+import TabItem from "@/components/docuoOpenapi/theme-classic/src/theme/TabItem";
 /* eslint-disable import/no-extraneous-dependencies*/
 import { createDescription } from "@/components/docuoOpenapi/markdown/createDescription";
 /* eslint-disable import/no-extraneous-dependencies*/
@@ -40,6 +41,7 @@ function ParamsItem({
   const renderSchema = guard(getQualifierMessage(schema), (message) => (
     <div>
       <ReactMarkdown
+        // eslint-disable-next-line react/no-children-prop
         children={createDescription(message)}
         rehypePlugins={[rehypeRaw]}
       />
@@ -49,6 +51,7 @@ function ParamsItem({
   const renderDescription = guard(description, (description) => (
     <div>
       <ReactMarkdown
+        // eslint-disable-next-line react/no-children-prop
         children={createDescription(description)}
         components={{
           pre: "div",
@@ -75,6 +78,7 @@ function ParamsItem({
       : undefined,
     (value) => (
       <div>
+        {/* eslint-disable-next-line react/no-children-prop */}
         <ReactMarkdown children={`**Default value:** \`${value}\``} />
       </div>
     )
@@ -94,7 +98,7 @@ function ParamsItem({
         <strong>Examples:</strong>
         <SchemaTabs>
           {exampleEntries.map(([exampleName, exampleProperties]) => (
-            <TabItem value={exampleName} label={exampleName}>
+            <TabItem value={exampleName} label={exampleName} key={exampleName}>
               {exampleProperties.summary && <p>{exampleProperties.summary}</p>}
               {exampleProperties.description && (
                 <p>
