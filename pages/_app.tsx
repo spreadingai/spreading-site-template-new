@@ -7,9 +7,17 @@ import "@/styles/tailwind.css";
 import "@/tailwind.config";
 import "@/styles/prism.token.scss";
 import { ThemeProvider } from "@/components/Theme";
+import { useEffect } from "react";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   // Use the layout defined at the page level, if available
+
+  //@ts-ignore
+  useEffect(() => {
+    const firstPageSeen = localStorage.getItem("FIRST_PAGE_SEEN");
+    if (!firstPageSeen)
+      localStorage.setItem("FIRST_PAGE_SEEN", window.location.href);
+  }, []);
   // @ts-ignore
   const getLayout = Component.getLayout || ((page) => page);
   return (
