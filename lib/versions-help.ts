@@ -40,7 +40,9 @@ class VersionsController {
       ) {
         try {
           const limit = Number(process.env.NEXT_PUBLIC_VERSION_LIMIT);
-          versions.splice(limit - 1);
+          if (!isNaN(limit) && limit) {
+            versions.splice(limit - 1);
+          }
         } catch (error) {
           console.log(
             `[DocsController]getUsedVersions process.env.NEXT_PUBLIC_VERSION_LIMIT: `,

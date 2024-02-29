@@ -65,7 +65,9 @@ class LibController {
           ) {
             try {
               const limit = Number(process.env.NEXT_PUBLIC_INSTANCE_LIMIT);
-              docuoConfig.instances.splice(limit);
+              if (!isNaN(limit) && limit) {
+                docuoConfig.instances.splice(limit);
+              }
             } catch (error) {
               console.log(
                 `[LibController]getDocuoConfig process.env.NEXT_PUBLIC_INSTANCE_LIMIT: `,
