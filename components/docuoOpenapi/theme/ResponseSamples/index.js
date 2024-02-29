@@ -7,7 +7,8 @@
 
 import React from "react";
 
-import CodeBlock from "@theme/CodeBlock";
+// import CodeBlock from "@theme/CodeBlock";
+import { CodeBlock } from "@spreading/docuo-mdx-component";
 
 function ResponseSamples({ responseExample, language }) {
   return (

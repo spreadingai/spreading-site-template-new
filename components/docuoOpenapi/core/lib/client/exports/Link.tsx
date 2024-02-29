@@ -1,6 +1,8 @@
 import React, { useEffect, useImperativeHandle, useRef } from "react";
 
 type Props = {
+  className?: string;
+  title?: string;
   isNavLink?: boolean;
   to?: string;
   href?: string;
@@ -13,6 +15,8 @@ type Props = {
 
 const Link = (
   {
+    className,
+    title,
     isNavLink,
     to,
     href,

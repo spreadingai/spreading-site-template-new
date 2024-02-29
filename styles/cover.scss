@@ -1,3 +1,12 @@
+.theme-api-markdown {
+    line-height: normal;
+    ul {
+        margin: 0;
+        & > li::before {
+            display: none;
+        }
+    }
+}
 .openapi-security__summary-header {
     font-size: 12px !important;
     margin-bottom: unset !important;
@@ -48,4 +57,52 @@
 }
 .openapi-markdown__details p {
     font-size: inherit;
+}
+ul.tabs {
+    margin: 0;
+    padding-inline-start: 0;
+    li.openapi-tabs__mime-item {
+        font-size: 10px;
+        margin-bottom: 0;
+        margin-right: 0.5rem;
+    }
+    li.openapi-tabs__discriminator-item {
+        font-size: 10px;
+        margin-bottom: 0;
+        margin-right: 0.5rem;
+    }
+    li.openapi-tabs__response-code-item {
+        margin-bottom: 0;
+        font-size: 12px;
+        margin-right: 0.5rem;
+    }
+    li.openapi-tabs__schema-item {
+        margin-bottom: 0;
+        font-size: 12px;
+        margin-right: 0.5rem;
+    }
+}
+h2.openapi-tabs__response-header {
+    margin-bottom: 0;
+}
+// dropdown arrow style
+.theme-api-markdown details > summary {
+    cursor: pointer;
+    list-style: none;
+    padding-left: 1rem;
+    position: relative;
+    &::before {
+        position: absolute;
+        left: 0;
+    }
+}
+.theme-api-markdown details[data-collapsed="false"] > summary:before {
+    transform: rotate(90deg) !important;
+}
+.theme-api-markdown details[open] > summary:before {
+    transform: rotate(180deg) !important;
+}
+
+.openapi-markdown__details > summary::before {
+    top: 0.35rem;
 }

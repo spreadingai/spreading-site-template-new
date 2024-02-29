@@ -8,11 +8,11 @@
 import React, { cloneElement, useRef, useState, useEffect } from "react";
 
 import {
-  useScrollPositionBlocker,
+  // useScrollPositionBlocker,
   useTabs,
-} from "@docusaurus/theme-common/internal";
-import useIsBrowser from "@docusaurus/useIsBrowser";
-import Heading from "@theme/Heading";
+} from "@/components/docuoOpenapi/theme-common/src/internal";
+import useIsBrowser from "@/components/docuoOpenapi/core/lib/client/exports/useIsBrowser";
+import Heading from "@/components/docuoOpenapi/theme-classic/src/theme/Heading";
 import clsx from "clsx";
 
 function TabList({
@@ -25,15 +25,17 @@ function TabList({
   id = "responses",
 }) {
   const tabRefs = [];
-  const { blockElementScrollPositionUntilNextRender } =
-    useScrollPositionBlocker();
+  // TODO: Docuo: The scroll problem needs to be solved
+  // const { blockElementScrollPositionUntilNextRender } =
+  //   useScrollPositionBlocker();
 
   const handleTabChange = (event) => {
     const newTab = event.currentTarget;
     const newTabIndex = tabRefs.indexOf(newTab);
     const newTabValue = tabValues[newTabIndex].value;
     if (newTabValue !== selectedValue) {
-      blockElementScrollPositionUntilNextRender(newTab);
+      // TODO: Docuo: The scroll problem needs to be solved
+      // blockElementScrollPositionUntilNextRender(newTab);
       selectValue(newTabValue);
     }
   };

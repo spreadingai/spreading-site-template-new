@@ -127,7 +127,6 @@ export interface AuthState {
 
 const initialState: AuthState = {} as any;
 
-// DOCUO: Fixed type conflict issues
 export const slice: any = createSlice({
   name: "auth",
   initialState,

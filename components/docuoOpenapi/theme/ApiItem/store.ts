@@ -6,10 +6,14 @@
  * ========================================================================== */
 
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import accept from "@/components/docuoOpenapi/theme/ApiExplorer/Accept/slice";
 import auth from "@/components/docuoOpenapi/theme/ApiExplorer/Authorization/slice";
+import contentType from "@/components/docuoOpenapi/theme/ApiExplorer/ContentType/slice";
 import server from "@/components/docuoOpenapi/theme/ApiExplorer/Server/slice";
 
 const rootReducer = combineReducers({
+  accept,
+  contentType,
   server,
   auth,
 });

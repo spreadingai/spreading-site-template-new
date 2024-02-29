@@ -8,7 +8,7 @@
 /*
  * APIs to document
  */
-
+export { useThemeConfig } from "./utils/useThemeConfig";
 export {
   createStorageSlot,
   useStorageSlot,

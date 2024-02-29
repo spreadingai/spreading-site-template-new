@@ -16,7 +16,6 @@ export interface State {
 
 const initialState: State = {} as any;
 
-// DOCUO: Fixed type conflict issues
 export const slice: any = createSlice({
   name: "server",
   initialState,

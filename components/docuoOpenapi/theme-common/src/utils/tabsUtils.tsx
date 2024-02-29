@@ -185,16 +185,18 @@ function useTabQueryString({
 }: Pick<TabsProps, "queryString" | "groupId">) {
   const history = useHistory();
   const key = getQueryStringKey({ queryString, groupId });
-  const value = useQueryStringValue(key);
+  // TODO: Docuo: The route history problem needs to be solved
+  // const value = useQueryStringValue(key);
+  const value = "";
 
   const setValue = useCallback(
     (newValue: string) => {
       if (!key) {
         return; // no-op
       }
-      const searchParams = new URLSearchParams(history.location.search);
-      searchParams.set(key, newValue);
-      history.replace({ ...history.location, search: searchParams.toString() });
+      // const searchParams = new URLSearchParams(history.location.search);
+      // searchParams.set(key, newValue);
+      // history.replace({ ...history.location, search: searchParams.toString() });
     },
     [key, history]
   );

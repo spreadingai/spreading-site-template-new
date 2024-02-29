@@ -8,13 +8,16 @@
 import React, { cloneElement, useEffect, useState, useRef } from "react";
 
 import {
-  useScrollPositionBlocker,
+  //   useScrollPositionBlocker,
   useTabs,
-} from "@docusaurus/theme-common/internal";
-import useIsBrowser from "@docusaurus/useIsBrowser";
-import { setAccept } from "@theme/ApiExplorer/Accept/slice";
-import { setContentType } from "@theme/ApiExplorer/ContentType/slice";
-import { useTypedDispatch, useTypedSelector } from "@theme/ApiItem/hooks";
+} from "@/components/docuoOpenapi/theme-common/src/internal";
+import useIsBrowser from "@/components/docuoOpenapi/core/lib/client/exports/useIsBrowser";
+import { setAccept } from "@/components/docuoOpenapi/theme/ApiExplorer/Accept/slice";
+import { setContentType } from "@/components/docuoOpenapi/theme/ApiExplorer/ContentType/slice";
+import {
+  useTypedDispatch,
+  useTypedSelector,
+} from "@/components/docuoOpenapi/theme/ApiItem/hooks";
 import clsx from "clsx";
 
 function TabList({
@@ -26,8 +29,9 @@ function TabList({
   schemaType,
 }) {
   const tabRefs = [];
-  const { blockElementScrollPositionUntilNextRender } =
-    useScrollPositionBlocker();
+  // TODO: Docuo: The scroll problem needs to be solved
+  // const { blockElementScrollPositionUntilNextRender } =
+  //   useScrollPositionBlocker();
 
   // custom
   const dispatch = useTypedDispatch();
@@ -60,7 +64,7 @@ function TabList({
       } else {
         dispatch(setAccept(newTabValue));
       }
-      blockElementScrollPositionUntilNextRender(newTab);
+      // blockElementScrollPositionUntilNextRender(newTab);
       selectValue(newTabValue);
     }
   };

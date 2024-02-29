@@ -6,7 +6,7 @@
  * ========================================================================== */
 
 import zlib from "zlib";
-import React from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import {
   ServerObject,
@@ -23,6 +23,10 @@ import ApiExplorer from "@/components/docuoOpenapi/theme/ApiExplorer";
 import { createAuth } from "@/components/docuoOpenapi/theme/ApiExplorer/Authorization/slice";
 import useIsBrowser from "@/components/docuoOpenapi/core/lib/client/exports/useIsBrowser";
 import { createPersistanceMiddleware } from "@/components/docuoOpenapi/theme/ApiExplorer/persistanceMiddleware";
+import {
+  DocContext,
+  DocContextType,
+} from "@/components/docuoOpenapi/context/DocContext";
 
 interface Props {
   mdxSource: MDXRemoteSerializeResult;
@@ -37,6 +41,12 @@ interface ApiFrontMatter extends DocFrontMatter {
 }
 
 export default function ApiItem(props: Props): JSX.Element {
+  const docValues = {
+    toc: props.toc,
+    slug: props.slug,
+    docuoConfig: props.docuoConfig,
+  };
+  const [docData, setDocData] = useState<DocContextType>(docValues);
   const children = props.children;
   const frontMatter = props.mdxSource.frontmatter;
   const { info_path: infoPath } = frontMatter as DocFrontMatter;
@@ -77,6 +87,7 @@ export default function ApiItem(props: Props): JSX.Element {
       acceptArray = acceptArray.flat();
 
       const content = api?.requestBody?.content ?? {};
+      const contentTypeArray = Object.keys(content);
       const servers = api?.servers ?? [];
       const params = {
         path: [] as ParameterObject[],
@@ -112,6 +123,14 @@ export default function ApiItem(props: Props): JSX.Element {
 
       store2 = createStoreWithState(
         {
+          accept: {
+            value: acceptArray[0],
+            options: acceptArray,
+          },
+          contentType: {
+            value: contentTypeArray[0],
+            options: contentTypeArray,
+          },
           server: {
             value: (serverObject as any).url ? serverObject : undefined,
             options: servers,
@@ -122,18 +141,20 @@ export default function ApiItem(props: Props): JSX.Element {
       );
     }
     return (
-      <DocItemLayout>
-        <Provider store={store2}>
-          <div className={clsx("row", "theme-api-markdown")}>
-            <div className="col col--7 openapi-left-panel__container">
-              {children}
+      <DocContext.Provider value={{ docData, setDocData }}>
+        <DocItemLayout>
+          <Provider store={store2}>
+            <div className={clsx("row", "theme-api-markdown")}>
+              <div className="col col--7 openapi-left-panel__container">
+                {children}
+              </div>
+              <div className="col col--5 openapi-right-panel__container">
+                <ApiExplorer item={api} infoPath={infoPath} />
+              </div>
             </div>
-            <div className="col col--5 openapi-right-panel__container">
-              <ApiExplorer item={api} infoPath={infoPath} />
-            </div>
-          </div>
-        </Provider>
-      </DocItemLayout>
+          </Provider>
+        </DocItemLayout>
+      </DocContext.Provider>
     );
   }
   return <>{children}</>;

@@ -79,8 +79,6 @@ export function getQualifierMessage(schema?: SchemaObject): string | undefined {
   if (schema.items && schema.items.enum) {
     if (schema.items.enum) {
       qualifierGroups.push(
-        // DOCUO: Fixed type conflict issues
-        // @ts-ignore
         `[${schema.items.enum.map((e) => `\`${e}\``).join(", ")}]`
       );
     }
@@ -109,8 +107,6 @@ export function getQualifierMessage(schema?: SchemaObject): string | undefined {
     if (minLength && maxLength) {
       lengthQualifier += `${minLength} and ${maxLength}`;
     }
-    // DOCUO: Fixed type conflict issues
-    // @ts-ignore
     qualifierGroups.push(lengthQualifier);
   }
 
@@ -147,15 +143,11 @@ export function getQualifierMessage(schema?: SchemaObject): string | undefined {
     if (minimum && maximum) {
       minmaxQualifier += `${minimum} and ${maximum}`;
     }
-    // DOCUO: Fixed type conflict issues
-    // @ts-ignore
     qualifierGroups.push(minmaxQualifier);
   }
 
   if (schema.pattern) {
     qualifierGroups.push(
-      // DOCUO: Fixed type conflict issues
-      // @ts-ignore
       `Value must match regular expression \`${schema.pattern}\``
     );
   }
@@ -164,26 +156,18 @@ export function getQualifierMessage(schema?: SchemaObject): string | undefined {
   const discriminator = schema as any;
   if (discriminator.mapping) {
     const values = Object.keys(discriminator.mapping);
-    // DOCUO: Fixed type conflict issues
-    // @ts-ignore
     qualifierGroups.push(`[${values.map((e) => `\`${e}\``).join(", ")}]`);
   }
 
   if (schema.enum) {
-    // DOCUO: Fixed type conflict issues
-    // @ts-ignore
     qualifierGroups.push(`[${schema.enum.map((e) => `\`${e}\``).join(", ")}]`);
   }
 
   if (schema.minItems) {
-    // DOCUO: Fixed type conflict issues
-    // @ts-ignore
     qualifierGroups.push(`\`>= ${schema.minItems}\``);
   }
 
   if (schema.maxItems) {
-    // DOCUO: Fixed type conflict issues
-    // @ts-ignore
     qualifierGroups.push(`\`<= ${schema.maxItems}\``);
   }
 

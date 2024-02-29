@@ -7,12 +7,13 @@
 
 import React from "react";
 
-import CodeBlock from "@theme/CodeBlock";
+// import CodeBlock from "@theme/CodeBlock";
+import { CodeBlock } from "@spreading/docuo-mdx-component";
 /* eslint-disable import/no-extraneous-dependencies*/
 import clsx from "clsx";
-import { createDescription } from "docusaurus-theme-openapi-docs/lib/markdown/createDescription";
+import { createDescription } from "@/components/docuoOpenapi/markdown/createDescription";
 /* eslint-disable import/no-extraneous-dependencies*/
-import { guard } from "docusaurus-theme-openapi-docs/lib/markdown/utils";
+import { guard } from "@/components/docuoOpenapi/markdown/utils";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 
@@ -52,6 +53,7 @@ function SchemaItem({
   const renderSchemaDescription = guard(schemaDescription, (description) => (
     <div>
       <ReactMarkdown
+        // eslint-disable-next-line react/no-children-prop
         children={createDescription(description)}
         components={{
           pre: "div",
@@ -73,6 +75,7 @@ function SchemaItem({
   const renderQualifierMessage = guard(qualifierMessage, (message) => (
     <div>
       <ReactMarkdown
+        // eslint-disable-next-line react/no-children-prop
         children={createDescription(message)}
         rehypePlugins={[rehypeRaw]}
       />
@@ -83,6 +86,7 @@ function SchemaItem({
     typeof defaultValue === "boolean" ? defaultValue.toString() : defaultValue,
     (value) => (
       <div className="">
+        {/* eslint-disable-next-line react/no-children-prop */}
         <ReactMarkdown children={`**Default value:** \`${value}\``} />
       </div>
     )

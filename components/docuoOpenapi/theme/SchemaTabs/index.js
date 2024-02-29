@@ -8,7 +8,7 @@
 import React, { cloneElement, useRef, useEffect, useState } from "react";
 
 import {
-  useScrollPositionBlocker,
+  // useScrollPositionBlocker,
   useTabs,
 } from "@/components/docuoOpenapi/theme-common/src/internal";
 import useIsBrowser from "@/components/docuoOpenapi/core/lib/client/exports/useIsBrowser";
@@ -17,14 +17,15 @@ import flatten from "lodash/flatten";
 
 function TabList({ className, block, selectedValue, selectValue, tabValues }) {
   const tabRefs = [];
-  const { blockElementScrollPositionUntilNextRender } =
-    useScrollPositionBlocker();
+  // TODO: Docuo: The scroll problem needs to be solved
+  // const { blockElementScrollPositionUntilNextRender } =
+  //   useScrollPositionBlocker();
   const handleTabChange = (event) => {
     const newTab = event.currentTarget;
     const newTabIndex = tabRefs.indexOf(newTab);
     const newTabValue = tabValues[newTabIndex].value;
     if (newTabValue !== selectedValue) {
-      blockElementScrollPositionUntilNextRender(newTab);
+      // blockElementScrollPositionUntilNextRender(newTab);
       selectValue(newTabValue);
     }
   };
