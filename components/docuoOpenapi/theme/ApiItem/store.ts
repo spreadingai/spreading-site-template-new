@@ -8,13 +8,19 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import accept from "@/components/docuoOpenapi/theme/ApiExplorer/Accept/slice";
 import auth from "@/components/docuoOpenapi/theme/ApiExplorer/Authorization/slice";
+import body from "@/components/docuoOpenapi/theme/ApiExplorer/Body/slice";
 import contentType from "@/components/docuoOpenapi/theme/ApiExplorer/ContentType/slice";
+import params from "@/components/docuoOpenapi/theme/ApiExplorer/ParamOptions/slice";
+import response from "@/components/docuoOpenapi/theme/ApiExplorer/Response/slice";
 import server from "@/components/docuoOpenapi/theme/ApiExplorer/Server/slice";
 
 const rootReducer = combineReducers({
   accept,
   contentType,
+  response,
   server,
+  body,
+  params,
   auth,
 });
 

@@ -7,7 +7,7 @@
 
 import React from "react";
 
-import CodeBlock from "@theme/CodeBlock";
+import { CodeBlock } from "@spreading/docuo-mdx-component";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 
@@ -15,6 +15,7 @@ function Markdown({ children }) {
   return (
     <div>
       <ReactMarkdown
+        // eslint-disable-next-line react/no-children-prop
         children={children}
         rehypePlugins={[rehypeRaw]}
         components={{

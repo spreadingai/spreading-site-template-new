@@ -7,9 +7,10 @@
 
 import React, { isValidElement } from "react";
 
-import useIsBrowser from "@docusaurus/useIsBrowser";
-import ElementContent from "@theme/ApiExplorer/ApiCodeBlock/Content/Element";
-import StringContent from "@theme/ApiExplorer/ApiCodeBlock/Content/String";
+import useIsBrowser from "@/components/docuoOpenapi/core/lib/client/exports/useIsBrowser";
+import { CodeBlock } from "@spreading/docuo-mdx-component";
+// import ElementContent from "@/components/docuoOpenapi/theme/ApiExplorer/ApiCodeBlock/Content/Element";
+// import StringContent from "@/components/docuoOpenapi/theme/ApiExplorer/ApiCodeBlock/Content/String";
 /**
  * Best attempt to make the children a plain string so it is copyable. If there
  * are react elements, we will not be able to copy the content, and it will
@@ -29,9 +30,11 @@ export default function ApiCodeBlock({ children: rawChildren, ...props }) {
   // from SSR. Hence force a re-render after mounting to apply the current
   // relevant styles.
   const isBrowser = useIsBrowser();
+  console.log("#############rawChildren", rawChildren);
   const children = maybeStringifyChildren(rawChildren);
-  const CodeBlockComp =
-    typeof children === "string" ? StringContent : ElementContent;
+  // const CodeBlockComp =
+  //   typeof children === "string" ? StringContent : ElementContent;
+  const CodeBlockComp = CodeBlock;
   return (
     <CodeBlockComp key={String(isBrowser)} {...props}>
       {children}

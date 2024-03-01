@@ -6,12 +6,18 @@
  * ========================================================================== */
 
 import sdk from "@paloaltonetworks/postman-collection";
-import { AuthState, Scheme } from "@theme/ApiExplorer/Authorization/slice";
-import { Body, Content } from "@theme/ApiExplorer/Body/slice";
+import {
+  AuthState,
+  Scheme,
+} from "@/components/docuoOpenapi/theme/ApiExplorer/Authorization/slice";
+import {
+  Body,
+  Content,
+} from "@/components/docuoOpenapi/theme/ApiExplorer/Body/slice";
 import {
   ParameterObject,
   ServerObject,
-} from "docusaurus-plugin-openapi-docs/src/openapi/types";
+} from "@/components/docuoOpenapi/docuo-plugin-openapi-docs/src/openapi/types";
 import cloneDeep from "lodash/cloneDeep";
 
 type Param = {

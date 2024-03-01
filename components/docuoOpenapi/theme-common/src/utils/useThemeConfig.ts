@@ -9,7 +9,7 @@ import type { PrismTheme } from "prism-react-renderer";
 import type { DeepPartial } from "utility-types";
 import type { MagicCommentConfig } from "./codeBlockUtils";
 import { useContext } from "react";
-import { DocContext } from "@/components/docuoOpenapi/context/DocContext";
+import { DocContext } from "@/components/docuoOpenapi/context/docContext";
 
 export type DocsVersionPersistence = "localStorage" | "none";
 

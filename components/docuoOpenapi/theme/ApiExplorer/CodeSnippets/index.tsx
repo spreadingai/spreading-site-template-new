@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  * ========================================================================== */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 
-import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
+import { DocContext } from "@/components/docuoOpenapi/context/docContext";
 import codegen from "@paloaltonetworks/postman-code-generators";
 import sdk from "@paloaltonetworks/postman-collection";
-import ApiCodeBlock from "@theme/ApiExplorer/ApiCodeBlock";
-import buildPostmanRequest from "@theme/ApiExplorer/buildPostmanRequest";
-import CodeTabs from "@theme/ApiExplorer/CodeTabs";
-import { useTypedSelector } from "@theme/ApiItem/hooks";
+import ApiCodeBlock from "@/components/docuoOpenapi/theme/ApiExplorer/ApiCodeBlock";
+import buildPostmanRequest from "@/components/docuoOpenapi/theme/ApiExplorer/buildPostmanRequest";
+import CodeTabs from "@/components/docuoOpenapi/theme/ApiExplorer/CodeTabs";
+import { useTypedSelector } from "@/components/docuoOpenapi/theme/ApiItem/hooks";
 import merge from "lodash/merge";
 
 import { CodeSample, Language } from "./code-snippets-types";
@@ -151,7 +151,7 @@ function CodeTab({ children, hidden, className }: any): JSX.Element {
 function CodeSnippets({ postman, codeSamples }: Props) {
   // TODO: match theme for vscode.
 
-  const { siteConfig } = useDocusaurusContext();
+  const { docData } = useContext(DocContext);
 
   const contentType = useTypedSelector((state: any) => state.contentType.value);
   const accept = useTypedSelector((state: any) => state.accept.value);
@@ -168,8 +168,10 @@ function CodeSnippets({ postman, codeSamples }: Props) {
   // User-defined languages array
   // Can override languageSet, change order of langs, override options and variants
   const langs = [
-    ...((siteConfig?.themeConfig?.languageTabs as Language[] | undefined) ??
-      languageSet),
+    // @ts-ignore
+    ...((docData?.docuoConfig.themeConfig?.languageTabs as
+      | Language[]
+      | undefined) ?? languageSet),
   ];
 
   // Filter languageSet by user-defined langs
@@ -186,10 +188,14 @@ function CodeSnippets({ postman, codeSamples }: Props) {
   );
 
   // Read defaultLang from localStorage
-  const defaultLang: Language[] = mergedLangs.filter(
-    (lang) =>
-      lang.language === localStorage.getItem("docusaurus.tab.code-samples")
-  );
+  const defaultLang: Language[] =
+    typeof localStorage !== "undefined"
+      ? mergedLangs.filter(
+          (lang) =>
+            lang.language ===
+            localStorage.getItem("docusaurus.tab.code-samples")
+        )
+      : [mergedLangs[0]];
   const [selectedVariant, setSelectedVariant] = useState<string | undefined>();
   const [selectedSample, setSelectedSample] = useState<string | undefined>();
   const [language, setLanguage] = useState(() => {

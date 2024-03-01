@@ -26,7 +26,7 @@ import { createPersistanceMiddleware } from "@/components/docuoOpenapi/theme/Api
 import {
   DocContext,
   DocContextType,
-} from "@/components/docuoOpenapi/context/DocContext";
+} from "@/components/docuoOpenapi/context/docContext";
 
 interface Props {
   mdxSource: MDXRemoteSerializeResult;
@@ -135,6 +135,9 @@ export default function ApiItem(props: Props): JSX.Element {
             value: (serverObject as any).url ? serverObject : undefined,
             options: servers,
           },
+          response: { value: undefined },
+          body: { type: "empty" },
+          params,
           auth,
         },
         []
