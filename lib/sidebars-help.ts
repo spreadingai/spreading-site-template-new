@@ -68,6 +68,7 @@ class SidebarsController {
   }
   getUsedSidebarIds(instanceID: string) {
     const { themeConfig } = LibControllerImpl.getDocuoConfig();
+    if (!themeConfig) return []; // 容错
     const { navbar } = themeConfig;
     const usedSidebarIds = [];
     const loop = (items: NavBarItem[] = [], usedSidebarIds: string[]) => {

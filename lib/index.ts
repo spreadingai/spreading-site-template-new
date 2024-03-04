@@ -95,8 +95,9 @@ class LibController {
     return firstSlug;
   }
   addDefaultLink(allSlugs: SlugData[]) {
-    const docuoConfig = this.getDocuoConfig();
-    const { navbar } = docuoConfig.themeConfig;
+    const { themeConfig } = this.getDocuoConfig();
+    if (!themeConfig) return; // 容错
+    const { navbar } = themeConfig;
     // Add a default jump link to all docSidebar type items
     const loop = (items: NavBarItem[] = []) => {
       if (items.length === 0) return;

@@ -12,7 +12,6 @@ import type { footerProps } from "./@types";
 import { useMediaQuery, useDarkMode } from "usehooks-ts";
 import FooterMobile from "./mobile";
 import classNames from "classnames";
-import DocuoConfig from "@/docs/docuo.config.json";
 import { getSocial } from "./utils";
 
 const defaultFooter = {
@@ -23,11 +22,11 @@ const defaultFooter = {
   socials: [],
 };
 
-const Footer: FC<footerProps> = (props) => {
+const Footer: FC<footerProps> = ({ docuoConfig }) => {
   const footer = Object.assign(
     {},
     defaultFooter,
-    DocuoConfig?.themeConfig?.footer || {}
+    docuoConfig?.themeConfig?.footer || {}
   );
   const itemWidth = 200;
   const links = footer?.links || [];

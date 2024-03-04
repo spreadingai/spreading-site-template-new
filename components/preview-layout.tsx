@@ -58,6 +58,7 @@ type TreeDataObject = {
   children?: TreeDataObject[];
 };
 
+let WsConnecting = false;
 const PreviewLayout = ({
   children,
   slug,
@@ -98,6 +99,34 @@ const PreviewLayout = ({
   const [selectedKeys, setSelectedKeys] = useState([]);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [expandedKeys, setExpandedKeys] = useState([]);
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    // NEXT_PUBLIC_LOCAL_WS: auto reload only for dev mode
+    if (!process?.env?.NEXT_PUBLIC_LOCAL_WS || WsConnecting) return;
+    WsConnecting = true;
+    if ('WebSocket' in window) {
+      const ws = new WebSocket('ws://localhost:8001');
+      ws.onopen = function() {
+        console.log('建立连接，状态:' + ws.readyState);
+        WsConnecting = true;
+      };
+      ws.onmessage = function(evt) {
+        console.log("状态：" + ws.readyState + "；服务端返回数据:", evt);
+        if (evt.data === 'reload') {
+          location.reload();
+        }
+      };
+      ws.onerror = function() {
+        console.log('发生错误，状态:' + ws.readyState);
+        WsConnecting = false;
+      };  
+      ws.onclose = function() {
+        console.log("连接关闭，状态：", ws.readyState);
+        WsConnecting = false;
+      };
+    }
+  }, []);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
@@ -405,7 +434,7 @@ const PreviewLayout = ({
           </div> */}
         </Drawer>
       </main>
-      <Footer socials={[]} links={[]} />
+      <Footer docuoConfig={docuoConfig} socials={[]} links={[]} />
     </div>
   );
 };

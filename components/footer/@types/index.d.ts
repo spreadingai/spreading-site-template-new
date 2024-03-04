@@ -1,3 +1,5 @@
+import { DocuoConfig } from "@/lib/types";
+
 interface FooterLinkItem {
   label: string;
   to?: string;
@@ -27,6 +29,7 @@ export interface FooterLinkGroup {
   items: FooterLink[];
 }
 export interface footerProps {
+  docuoConfig: DocuoConfig;
   logo?: string;
   copyright?: string;
   caption?: string;
