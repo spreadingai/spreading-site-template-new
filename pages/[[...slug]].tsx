@@ -27,6 +27,9 @@ import SchemaTabs from "@/components/docuoOpenapi/theme/SchemaTabs";
 import DiscriminatorTabs from "@/components/docuoOpenapi/theme/DiscriminatorTabs";
 import ApiTabs from "@/components/docuoOpenapi/theme/ApiTabs";
 import ResponseSamples from "@/components/docuoOpenapi/theme/ResponseSamples";
+import OperationTabs from "@/components/docuoOpenapi/theme/OperationTabs";
+import Markdown from "@/components/docuoOpenapi/theme/Markdown";
+import SecuritySchemes from "@/components/docuoOpenapi/theme/ApiExplorer/SecuritySchemes";
 
 const components = {
   CodeBlock,
@@ -48,6 +51,9 @@ const components = {
   DiscriminatorTabs,
   ApiTabs,
   ResponseSamples,
+  OperationTabs,
+  Markdown,
+  SecuritySchemes,
 };
 
 interface Props {

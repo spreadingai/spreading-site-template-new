@@ -17,7 +17,7 @@ import { useTypedDispatch, useTypedSelector } from "@theme/ApiItem/hooks";
 import Markdown from "@theme/Markdown";
 import SchemaTabs from "@theme/SchemaTabs";
 import TabItem from "@theme/TabItem";
-import { RequestBodyObject } from "docusaurus-plugin-openapi-docs/src/openapi/types";
+import { RequestBodyObject } from "@/components/docuoOpenapi/docuo-plugin-openapi-docs/src/openapi/types";
 import format from "xml-formatter";
 
 import {

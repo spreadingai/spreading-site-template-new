@@ -14,7 +14,7 @@ import { useTypedDispatch, useTypedSelector } from "@theme/ApiItem/hooks";
 import SchemaTabs from "@theme/SchemaTabs";
 import TabItem from "@theme/TabItem";
 import clsx from "clsx";
-import { ApiItem } from "docusaurus-plugin-openapi-docs/src/types";
+import { ApiItem } from "@/components/docuoOpenapi/docuo-plugin-openapi-docs/src/types";
 
 import { clearResponse, clearCode, clearHeaders } from "./slice";
 

@@ -25,8 +25,8 @@ import {
 } from "@theme/ApiExplorer/Response/slice";
 import Server from "@theme/ApiExplorer/Server";
 import { useTypedDispatch, useTypedSelector } from "@theme/ApiItem/hooks";
-import { ParameterObject } from "docusaurus-plugin-openapi-docs/src/openapi/types";
-import { ApiItem } from "docusaurus-plugin-openapi-docs/src/types";
+import { ParameterObject } from "@/components/docuoOpenapi/docuo-plugin-openapi-docs/src/openapi/types";
+import { ApiItem } from "@/components/docuoOpenapi/docuo-plugin-openapi-docs/src/types";
 import { FormProvider, useForm } from "react-hook-form";
 
 import makeRequest from "./makeRequest";
