@@ -2,8 +2,7 @@
 
 /mdxs
 /docs
-/docs_test
-/docs_starter
+/docs_*
 /public/docs
 
 # dependencies
