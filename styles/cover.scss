@@ -1,3 +1,45 @@
+// Outer Layout
+.preview-content-wrap:has(.theme-api-markdown) {
+    .article-anchor-right {
+        display: none !important;
+    }
+}
+.openapi-left-panel__container {
+    border-right: none;
+}
+@media screen and (min-width: 1281px) {
+    .preview-content-wrap:has(.theme-api-markdown) {
+        .article {
+            width: 100%;
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+    .openapi-left-panel__container {
+        width: 53%;
+        padding: 0 32px 0 24px;
+    }
+    .openapi-right-panel__container {
+        width: 47%;
+        padding: 0 1px 0 24px;
+    }
+}
+@media screen and (max-width: 1280px) {
+    .openapi-left-panel__container {
+        width: 100%;
+        padding: 0 32px 0 24px;
+    }
+    .openapi-right-panel__container {
+        width: 100%;
+        padding: 0 32px 0 24px;
+    }
+}
+
+// OpenAPI doc
+.theme-api-markdown {
+    display: flex;
+    flex-wrap: wrap;
+}
 .theme-api-markdown {
     line-height: normal;
     ul {

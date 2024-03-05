@@ -6,20 +6,15 @@
  * ========================================================================== */
 
 import React from "react";
-import clsx from "clsx";
 
 import styles from "./styles.module.css";
 
 export default function DocItemLayout({ children }): JSX.Element {
   return (
-    <div className="row">
-      <div className={clsx("col")}>
-        <div className={styles.docItemContainer}>
-          <article>
-            <>{children}</>
-          </article>
-        </div>
-      </div>
+    <div className={styles.docItemContainer}>
+      <article>
+        <>{children}</>
+      </article>
     </div>
   );
 }

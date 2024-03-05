@@ -147,11 +147,9 @@ export default function ApiItem(props: Props): JSX.Element {
         <DocItemLayout>
           <Provider store={store2}>
             <ColorModeProvider>
-              <div className={clsx("row", "theme-api-markdown")}>
-                <div className="col col--7 openapi-left-panel__container">
-                  {children}
-                </div>
-                <div className="col col--5 openapi-right-panel__container">
+              <div className={clsx("theme-api-markdown")}>
+                <div className="openapi-left-panel__container">{children}</div>
+                <div className="openapi-right-panel__container">
                   <ApiExplorer item={api} infoPath={infoPath} />
                 </div>
               </div>
