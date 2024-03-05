@@ -50,6 +50,9 @@ dependencies:
   docusaurus-theme-openapi-docs:
     specifier: ^2.0.4
     version: 2.0.4(@docusaurus/core@2.4.3)(@types/react@18.2.51)(eslint@8.56.0)(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)
+  file-saver:
+    specifier: ^2.0.5
+    version: 2.0.5
   github-slugger:
     specifier: ^2.0.0
     version: 2.0.0

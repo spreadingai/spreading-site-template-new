@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  * ========================================================================== */
 
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 
-import { DocContext } from "@/components/docuoOpenapi/context/docContext";
+import useDocuoContext from "@/components/docuoOpenapi/core/lib/client/exports/useDocuoContext";
 import codegen from "@paloaltonetworks/postman-code-generators";
 import sdk from "@paloaltonetworks/postman-collection";
 import ApiCodeBlock from "@/components/docuoOpenapi/theme/ApiExplorer/ApiCodeBlock";
@@ -151,7 +151,7 @@ function CodeTab({ children, hidden, className }: any): JSX.Element {
 function CodeSnippets({ postman, codeSamples }: Props) {
   // TODO: match theme for vscode.
 
-  const { docData } = useContext(DocContext);
+  const { docData } = useDocuoContext();
 
   const contentType = useTypedSelector((state: any) => state.contentType.value);
   const accept = useTypedSelector((state: any) => state.accept.value);

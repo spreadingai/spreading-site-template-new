@@ -24,3 +24,5 @@ export {
 } from "./utils/reactUtils";
 
 export { duplicates, uniq } from "./utils/jsUtils";
+
+export { useColorMode, type ColorMode } from "./contexts/colorMode";

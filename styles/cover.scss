@@ -112,3 +112,27 @@ h2.openapi-tabs__response-header {
 .token.variable {
     color: inherit;
 }
+ul.tabs {
+    li.tabs__item.openapi-tabs__schema-item::before {
+        display: none;
+    }
+}
+ul.export-dropdown.dropdown__menu {
+    margin: 0;
+    padding-inline-start: 0.5rem;
+    li {
+        margin: 0;
+        &::before {
+            display: none;
+        }
+        a {
+            border-bottom: none;
+        }
+    }
+}
+.dropdown--hoverable:hover .dropdown__menu {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(-1px);
+    visibility: visible;
+}

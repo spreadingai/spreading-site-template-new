@@ -27,6 +27,7 @@ import {
   DocContext,
   DocContextType,
 } from "@/components/docuoOpenapi/context/docContext";
+import { ColorModeProvider } from "@/components/docuoOpenapi/theme-common/src/contexts/colorMode";
 
 interface Props {
   mdxSource: MDXRemoteSerializeResult;
@@ -147,14 +148,16 @@ export default function ApiItem(props: Props): JSX.Element {
       <DocContext.Provider value={{ docData, setDocData }}>
         <DocItemLayout>
           <Provider store={store2}>
-            <div className={clsx("row", "theme-api-markdown")}>
-              <div className="col col--7 openapi-left-panel__container">
-                {children}
+            <ColorModeProvider>
+              <div className={clsx("row", "theme-api-markdown")}>
+                <div className="col col--7 openapi-left-panel__container">
+                  {children}
+                </div>
+                <div className="col col--5 openapi-right-panel__container">
+                  <ApiExplorer item={api} infoPath={infoPath} />
+                </div>
               </div>
-              <div className="col col--5 openapi-right-panel__container">
-                <ApiExplorer item={api} infoPath={infoPath} />
-              </div>
-            </div>
+            </ColorModeProvider>
           </Provider>
         </DocItemLayout>
       </DocContext.Provider>

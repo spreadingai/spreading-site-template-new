@@ -15,6 +15,7 @@ import useIsBrowser from "@/components/docuoOpenapi/core/lib/client/exports/useI
 import clsx from "clsx";
 
 function TabList({ className, block, selectedValue, selectValue, tabValues }) {
+  const tabRefs = [];
   // TODO: Docuo: The scroll problem needs to be solved
   // const { blockElementScrollPositionUntilNextRender } =
   //   useScrollPositionBlocker();

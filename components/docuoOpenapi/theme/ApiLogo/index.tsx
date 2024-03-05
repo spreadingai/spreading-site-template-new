@@ -7,9 +7,9 @@
 
 import React from "react";
 
-import { useColorMode } from "@docusaurus/theme-common";
-import useBaseUrl from "@docusaurus/useBaseUrl";
-import ThemedImage from "@theme/ThemedImage";
+import { useColorMode } from "@/components/docuoOpenapi/theme-common/src";
+import useBaseUrl from "@/components/docuoOpenapi/core/lib/client/exports/useBaseUrl";
+import ThemedImage from "@/components/docuoOpenapi/theme-classic/src/theme/ThemedImage";
 
 export default function ApiLogo(props: any): JSX.Element | undefined {
   const { colorMode } = useColorMode();

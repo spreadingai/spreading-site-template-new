@@ -30,6 +30,8 @@ import ResponseSamples from "@/components/docuoOpenapi/theme/ResponseSamples";
 import OperationTabs from "@/components/docuoOpenapi/theme/OperationTabs";
 import Markdown from "@/components/docuoOpenapi/theme/Markdown";
 import SecuritySchemes from "@/components/docuoOpenapi/theme/ApiExplorer/SecuritySchemes";
+import ApiLogo from "@/components/docuoOpenapi/theme/ApiLogo";
+import Export from "@/components/docuoOpenapi/theme/ApiExplorer/Export";
 
 const components = {
   CodeBlock,
@@ -54,6 +56,8 @@ const components = {
   OperationTabs,
   Markdown,
   SecuritySchemes,
+  ApiLogo,
+  Export,
 };
 
 interface Props {
