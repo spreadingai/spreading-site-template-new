@@ -4,6 +4,8 @@
 /docs
 /docs_*
 /public/docs
+/public/robots
+/public/sitemap
 
 # dependencies
 /node_modules
