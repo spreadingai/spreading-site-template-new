@@ -57,7 +57,6 @@ export default function ApiItem(props: Props): JSX.Element {
     api = JSON.parse(
       zlib.inflateSync(Buffer.from(api as any, "base64")).toString()
     );
-    console.log("####api", api);
 
     // TODO: fix this
     const options = {};
@@ -108,7 +107,6 @@ export default function ApiItem(props: Props): JSX.Element {
         securitySchemes: api?.securitySchemes,
         options,
       });
-      console.log("#######auth", auth);
       // TODO: determine way to rehydrate without flashing
       // const acceptValue = window?.sessionStorage.getItem("accept");
       // const contentTypeValue = window?.sessionStorage.getItem("contentType");

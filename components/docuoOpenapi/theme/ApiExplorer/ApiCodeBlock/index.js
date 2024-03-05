@@ -35,7 +35,6 @@ export default function ApiCodeBlock({ children: rawChildren, ...props }) {
   // from SSR. Hence force a re-render after mounting to apply the current
   // relevant styles.
   const isBrowser = useIsBrowser();
-  console.log("#############rawChildren", rawChildren);
   const children = maybeStringifyChildren(rawChildren);
   // const CodeBlockComp =
   //   typeof children === "string" ? StringContent : ElementContent;

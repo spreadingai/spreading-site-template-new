@@ -8,7 +8,6 @@ const Meta = () => {
       ? docuoConfig.favicon
       : `/${docuoConfig.favicon}`
     : "/favicon/favicon.ico";
-  console.log(`Meta favicon`, favicon);
   return (
     <>
       <link

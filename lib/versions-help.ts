@@ -30,7 +30,6 @@ class VersionsController {
         JSON.parse(fs.readFileSync(versionsPath, "utf8")) as string[]
       ).filter((version) => version);
     }
-    console.log(`[DocsController]getUsedVersions: `, versions);
     this._usedVersionsMap[instanceID] = versions;
     return JSON.parse(
       JSON.stringify(this._usedVersionsMap[instanceID])
@@ -110,7 +109,6 @@ class VersionsController {
         firstLink: `/${targetSlug.params.slug.join("/")}`,
       });
     }
-    console.log(`[VersionsController]getDisplayVersions `, result);
     return result;
   }
 }

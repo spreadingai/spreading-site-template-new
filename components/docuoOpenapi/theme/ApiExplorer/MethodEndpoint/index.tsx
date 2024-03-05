@@ -38,7 +38,6 @@ export interface Props {
 function MethodEndpoint({ method, path }: Props) {
   let serverValue = useTypedSelector((state: any) => state.server.value);
   let serverUrlWithVariables = "";
-  console.log("MethodEndpoint serverValue", serverValue);
 
   const renderServerUrl = () => {
     if (serverValue && serverValue.variables) {
