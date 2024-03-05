@@ -106,7 +106,7 @@ const PreviewLayout = ({
     if (!process?.env?.NEXT_PUBLIC_LOCAL_WS || WsConnecting) return;
     WsConnecting = true;
     if ('WebSocket' in window) {
-      const ws = new WebSocket('ws://localhost:8001');
+      const ws = new WebSocket('ws://localhost:59999');
       ws.onopen = function() {
         console.log('建立连接，状态:' + ws.readyState);
         WsConnecting = true;
