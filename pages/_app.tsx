@@ -10,7 +10,8 @@ import "@/tailwind.config";
 import "@/styles/prism.token.scss";
 import { ThemeProvider } from "@/components/Theme";
 import "@/components/docuoOpenapi/theme/styles.scss";
-import "@/styles/cover.scss";
+import "@/styles/openapi.cover.scss";
+import "@/styles/openapi.refer.scss";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   // Use the layout defined at the page level, if available
