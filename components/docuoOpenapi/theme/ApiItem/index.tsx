@@ -17,7 +17,7 @@ import type { DocFrontMatter } from "@/components/docuoOpenapi/types";
 import { Provider } from "react-redux";
 import { createStoreWithoutState, createStoreWithState } from "./store";
 import { MDXRemoteSerializeResult } from "next-mdx-remote";
-import { DocuoConfig, TocItem } from "@/lib/types";
+import { DocInstance, DocuoConfig, TocItem } from "@/lib/types";
 import DocItemLayout from "@/components/docuoOpenapi/theme/ApiItem/Layout";
 import ApiExplorer from "@/components/docuoOpenapi/theme/ApiExplorer";
 import { createAuth } from "@/components/docuoOpenapi/theme/ApiExplorer/Authorization/slice";
@@ -28,12 +28,15 @@ import {
   DocContextType,
 } from "@/components/docuoOpenapi/context/docContext";
 import { ColorModeProvider } from "@/components/docuoOpenapi/theme-common/src/contexts/colorMode";
+import { parseByInfoPath } from "@/components/docuoOpenapi/utils";
 
 interface Props {
   mdxSource: MDXRemoteSerializeResult;
   toc: TocItem[];
   slug: string[];
   docuoConfig: DocuoConfig;
+  instances: DocInstance[];
+  versions: string[];
   children: React.ReactNode;
 }
 
@@ -50,7 +53,9 @@ export default function ApiItem(props: Props): JSX.Element {
   const [docData, setDocData] = useState<DocContextType>(docValues);
   const children = props.children;
   const frontMatter = props.mdxSource.frontmatter;
-  const { info_path: infoPath } = frontMatter as DocFrontMatter;
+  let { info_path: infoPath } = frontMatter as DocFrontMatter;
+  // Parse the instance and version
+  infoPath = parseByInfoPath(infoPath, props.instances, props.versions);
   let { api } = frontMatter as ApiFrontMatter;
   // decompress and parse
   if (api) {

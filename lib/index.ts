@@ -15,6 +15,8 @@ class LibController {
   _entityRootDirectory = "docs";
   _instances: DisplayInstance[];
   _unlimitedInstanceNumber = "-1";
+  _defaultVersion = "next";
+  _defaultInstanceID = "default";
   static getInstance() {
     return (
       LibController._instance || (LibController._instance = new LibController())
@@ -27,7 +29,7 @@ class LibController {
         JSON.stringify(inputDocuoConfig)
       );
       const defaultInstance = {
-        id: "default", // Host instance
+        id: this._defaultInstanceID, // Host instance
         label: "docs",
         path: "docs",
         routeBasePath: "",
@@ -50,7 +52,7 @@ class LibController {
           }
         });
         const result = docuoConfig.instances.find(
-          (instance) => instance.id === "default"
+          (instance) => instance.id === this._defaultInstanceID
         );
         if (!result) {
           // Insert host instance
@@ -101,7 +103,7 @@ class LibController {
     const loop = (items: NavBarItem[] = []) => {
       if (items.length === 0) return;
       for (const item of items) {
-        !item.docsInstanceId && (item.docsInstanceId = "default");
+        !item.docsInstanceId && (item.docsInstanceId = this._defaultInstanceID);
         if (item.type === NavBarItemType.DocSidebar) {
           const firstSlug = this.getFirstSlug(
             allSlugs,

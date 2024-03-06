@@ -1,4 +1,5 @@
 import React, { useEffect, useImperativeHandle, useRef } from "react";
+import NextLink from "next/link";
 
 type Props = {
   className?: string;
@@ -35,9 +36,9 @@ const Link = (
   useImperativeHandle(forwardedRef, () => innerRef.current);
 
   return (
-    <a ref={innerRef} href={to}>
+    <NextLink ref={innerRef} href={to}>
       {children}
-    </a>
+    </NextLink>
   );
 };
 

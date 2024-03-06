@@ -14,7 +14,7 @@ import TreeControllerImpl from "@/lib/tree-help";
 import SlugControllerImpl from "@/lib/slug-help";
 import VersionsControllerImpl from "@/lib/versions-help";
 import Link from "next/link";
-import { SlugData, DocuoConfig, TocItem } from "@/lib/types";
+import { SlugData, DocuoConfig, TocItem, DocInstance } from "@/lib/types";
 import Head from "next/head";
 import { CMS_NAME } from "@/lib/constants";
 import ApiItem from "@/components/docuoOpenapi/theme/ApiItem";
@@ -65,6 +65,8 @@ interface Props {
   toc: TocItem[];
   slug: string[];
   docuoConfig: DocuoConfig;
+  instances: DocInstance[];
+  versions: string[];
 }
 
 export const getStaticProps = async ({ params }: SlugData) => {
@@ -83,6 +85,8 @@ export const getStaticProps = async ({ params }: SlugData) => {
   );
   const displayInstances = LibControllerImpl.getDisplayInstances();
   const postData = await DocsControllerImpl.readDoc(params.slug);
+  const instances = LibControllerImpl.getDocuoConfig().instances;
+  const versions = VersionsControllerImpl.getUsedVersions(instanceID);
   return {
     props: {
       ...postData,
@@ -92,6 +96,8 @@ export const getStaticProps = async ({ params }: SlugData) => {
       docuoConfig,
       displayVersions,
       displayInstances,
+      instances,
+      versions,
     },
   };
 };
