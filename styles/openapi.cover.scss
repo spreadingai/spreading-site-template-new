@@ -1,0 +1,207 @@
+// Outer Layout
+.preview-content-wrap:has(.theme-api-markdown) {
+    .article-anchor-right {
+        display: none !important;
+    }
+    .article-breadcrumb {
+        padding: 0 32px 0 24px;
+    }
+    .middle__show {
+        display: none !important;
+    }
+}
+.openapi-left-panel__container {
+    border-right: none;
+}
+@media screen and (min-width: 1281px) {
+    .preview-content-wrap:has(.theme-api-markdown) {
+        .article {
+            width: 100%;
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+    .openapi-left-panel__container {
+        width: 53%;
+        padding: 0 32px 0 24px;
+    }
+    .openapi-right-panel__container {
+        width: 47%;
+        padding: 0 1px 0 24px;
+    }
+}
+@media screen and (max-width: 1280px) {
+    .openapi-left-panel__container {
+        width: 100%;
+        padding: 0 32px 0 24px;
+    }
+    .openapi-right-panel__container {
+        width: 100%;
+        padding: 0 32px 0 24px;
+    }
+}
+
+// OpenAPI doc
+.theme-api-markdown {
+    display: flex;
+    flex-wrap: wrap;
+    line-height: normal;
+    ul {
+        margin: 0;
+        & > li::before {
+            display: none;
+        }
+    }
+}
+// AUTHORIZATION
+.openapi-security__summary-header {
+    font-size: 12px !important;
+    margin-bottom: unset !important;
+    line-height: normal !important;
+    margin-top: 0 !important;
+}
+
+.openapi-security__details {
+    pre code {
+        background-color: transparent !important;
+        border: none !important;
+    }
+}
+// H1
+h1.openapi__heading {
+    margin-bottom: 0 !important;
+}
+// Method Endpoint
+.openapi__method-endpoint {
+    padding: 8px 14px 8px 8px;
+    margin-top: 12px;
+    background: #f9fafb;
+    border-radius: 6px 6px 6px 6px;
+    border: 1px solid rgba(227, 232, 239, 0.8);
+}
+h2.openapi__method-endpoint-path {
+    font-family: Roboto Mono;
+    font-weight: 400;
+    font-size: 14px;
+    color: #171717;
+    line-height: 20px;
+    margin: 0 0 0 10px;
+}
+// Badge
+.badge {
+    font-family: Inter;
+    height: 24px;
+    background: #1abd00;
+    border-radius: 4px 4px 4px 4px;
+    padding: 4px 8px 2px 8px;
+    font-weight: normal;
+    font-size: 12px;
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    border: none;
+}
+// Divider
+.openapi__divider {
+    margin: 32px 0;
+    border-radius: 0px 0px 0px 0px;
+    border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+}
+.theme-api-markdown {
+    h3 {
+        font-family: var(--ifm-heading-font-family);
+        font-weight: var(--ifm-heading-font-weight);
+        line-height: var(--ifm-heading-line-height);
+        margin: var(--ifm-heading-margin-top) 0 var(--ifm-heading-margin-bottom) 0;
+    }
+
+    h3 {
+        font-size: var(--ifm-h3-font-size);
+        &.openapi-markdown__details-summary-header-params,
+        &.openapi-markdown__details-summary-header-body {
+            font-size: 12px;
+            margin-bottom: 0;
+        }
+    }
+}
+.openapi-markdown__details p {
+    font-size: inherit;
+}
+ul.tabs {
+    margin: 0;
+    padding-inline-start: 0;
+    li.openapi-tabs__mime-item {
+        font-size: 10px;
+        margin-bottom: 0;
+        margin-right: 0.5rem;
+    }
+    li.openapi-tabs__discriminator-item {
+        font-size: 10px;
+        margin-bottom: 0;
+        margin-right: 0.5rem;
+    }
+    li.openapi-tabs__response-code-item {
+        margin-bottom: 0;
+        font-size: 12px;
+        margin-right: 0.5rem;
+    }
+    li.openapi-tabs__schema-item {
+        margin-bottom: 0;
+        font-size: 12px;
+        margin-right: 0.5rem;
+    }
+}
+h2.openapi-tabs__response-header {
+    margin-bottom: 0;
+}
+// dropdown arrow style
+.theme-api-markdown details > summary {
+    cursor: pointer;
+    list-style: none;
+    padding-left: 1rem;
+    position: relative;
+    &::before {
+        position: absolute;
+        left: 0;
+    }
+}
+.theme-api-markdown details[data-collapsed="false"] > summary:before {
+    transform: rotate(90deg) !important;
+}
+.theme-api-markdown details[open] > summary:before {
+    transform: rotate(180deg) !important;
+}
+
+.openapi-markdown__details > summary::before {
+    top: 0.35rem;
+}
+.token.punctuation {
+    color: inherit;
+}
+.token.variable {
+    color: inherit;
+}
+ul.tabs {
+    li.tabs__item.openapi-tabs__schema-item::before {
+        display: none;
+    }
+}
+ul.export-dropdown.dropdown__menu {
+    margin: 0;
+    padding-inline-start: 0.5rem;
+    li {
+        margin: 0;
+        &::before {
+            display: none;
+        }
+        a {
+            border-bottom: none;
+        }
+    }
+}
+.dropdown--hoverable:hover .dropdown__menu {
+    opacity: 1;
+    pointer-events: all;
+    transform: translateY(-1px);
+    visibility: visible;
+}

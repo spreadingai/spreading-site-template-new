@@ -130,7 +130,6 @@ class VersionsController {
         firstLink: `/${targetSlug.params.slug.join("/")}`,
       });
     }
-    console.log(`[VersionsController]getDisplayVersions `, result);
     return result;
   }
 }

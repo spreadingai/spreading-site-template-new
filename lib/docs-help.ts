@@ -54,7 +54,6 @@ class DocsController {
           `version-${docVersion}`
         );
       }
-      console.log("@@@@#####", rootUrl);
 
       const actualMdxFilePath = this.getActualMdxFilePath(rootUrl, mdxFileID);
       if (actualMdxFilePath) {
@@ -168,7 +167,6 @@ class DocsController {
       }
     };
     const actualMdxFilePath = loop(rootPath, 1);
-    console.log(`getActualMdxFilePath actualMdxFilePath`, actualMdxFilePath);
     return actualMdxFilePath;
   }
   convertDocID(str: string) {

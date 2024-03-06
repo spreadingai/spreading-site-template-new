@@ -1,9 +1,0 @@
-# *
-User-agent: *
-Allow: /
-
-# Host
-Host: https://spreading.ai
-
-# Sitemaps
-Sitemap: https://spreading.ai/sitemap.xml

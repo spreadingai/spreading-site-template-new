@@ -17,6 +17,21 @@ import Link from "next/link";
 import { SlugData, DocuoConfig, TocItem } from "@/lib/types";
 import Head from "next/head";
 import { CMS_NAME } from "@/lib/constants";
+import ApiItem from "@/components/docuoOpenapi/theme/ApiItem";
+import MethodEndpoint from "@/components/docuoOpenapi/theme/ApiExplorer/MethodEndpoint";
+import ParamsItem from "@/components/docuoOpenapi/theme/ParamsItem";
+import MimeTabs from "@/components/docuoOpenapi/theme/MimeTabs";
+import TabItem from "@/components/docuoOpenapi/theme-classic/src/theme/TabItem";
+import SchemaItem from "@/components/docuoOpenapi/theme/SchemaItem";
+import SchemaTabs from "@/components/docuoOpenapi/theme/SchemaTabs";
+import DiscriminatorTabs from "@/components/docuoOpenapi/theme/DiscriminatorTabs";
+import ApiTabs from "@/components/docuoOpenapi/theme/ApiTabs";
+import ResponseSamples from "@/components/docuoOpenapi/theme/ResponseSamples";
+import OperationTabs from "@/components/docuoOpenapi/theme/OperationTabs";
+import Markdown from "@/components/docuoOpenapi/theme/Markdown";
+import SecuritySchemes from "@/components/docuoOpenapi/theme/ApiExplorer/SecuritySchemes";
+import ApiLogo from "@/components/docuoOpenapi/theme/ApiLogo";
+import Export from "@/components/docuoOpenapi/theme/ApiExplorer/Export";
 
 const components = {
   CodeBlock,
@@ -29,6 +44,20 @@ const components = {
   Video,
   Heading,
   a: Link,
+  MethodEndpoint,
+  ParamsItem,
+  MimeTabs,
+  TabItem,
+  SchemaItem,
+  SchemaTabs,
+  DiscriminatorTabs,
+  ApiTabs,
+  ResponseSamples,
+  OperationTabs,
+  Markdown,
+  SecuritySchemes,
+  ApiLogo,
+  Export,
 };
 
 interface Props {
@@ -80,15 +109,18 @@ export function getStaticPaths() {
   };
 }
 
-export default function DocPage({ mdxSource, slug, docuoConfig }: Props) {
+export default function DocPage(props: Props) {
+  const { mdxSource, slug, docuoConfig } = props;
   if (!slug) {
     return null;
   }
   const title =
     (mdxSource?.frontmatter?.title as string) || docuoConfig.title || "";
   const description =
-    (mdxSource?.frontmatter?.description as string) || docuoConfig.description ||
+    (mdxSource?.frontmatter?.description as string) ||
+    docuoConfig.description ||
     `A statically generated blog example using Next.js and ${CMS_NAME}.`;
+
   return (
     <div className="prose" style={{ maxWidth: "unset" }}>
       <Head>
@@ -96,8 +128,10 @@ export default function DocPage({ mdxSource, slug, docuoConfig }: Props) {
         <meta name="description" content={description} />
       </Head>
       <article className="editor-wrapper">
-        {/* @ts-ignore */}
-        <MDXRemote {...mdxSource} components={components} />
+        <ApiItem {...props}>
+          {/* @ts-ignore */}
+          <MDXRemote {...mdxSource} components={components} />
+        </ApiItem>
       </article>
     </div>
   );
