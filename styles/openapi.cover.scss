@@ -6,6 +6,9 @@
     .article-breadcrumb {
         padding: 0 32px 0 24px;
     }
+    .middle__show {
+        display: none !important;
+    }
 }
 .openapi-left-panel__container {
     border-right: none;
@@ -42,8 +45,6 @@
 .theme-api-markdown {
     display: flex;
     flex-wrap: wrap;
-}
-.theme-api-markdown {
     line-height: normal;
     ul {
         margin: 0;
@@ -52,6 +53,7 @@
         }
     }
 }
+// AUTHORIZATION
 .openapi-security__summary-header {
     font-size: 12px !important;
     margin-bottom: unset !important;
@@ -65,32 +67,54 @@
         border: none !important;
     }
 }
-.openapi__method-endpoint-path {
+// H1
+h1.openapi__heading {
     margin-bottom: 0 !important;
-    margin-top: 0 !important;
-    margin-left: 0.5rem !important;
-    font-size: 12px !important;
-    font-weight: normal !important;
-    font-family: var(--ifm-font-family-monospace) !important;
+}
+// Method Endpoint
+.openapi__method-endpoint {
+    padding: 8px 14px 8px 8px;
+    margin-top: 12px;
+    background: #f9fafb;
+    border-radius: 6px 6px 6px 6px;
+    border: 1px solid rgba(227, 232, 239, 0.8);
+}
+h2.openapi__method-endpoint-path {
+    font-family: Roboto Mono;
+    font-weight: 400;
+    font-size: 14px;
+    color: #171717;
+    line-height: 20px;
+    margin: 0 0 0 10px;
+}
+// Badge
+.badge {
+    font-family: Inter;
+    height: 24px;
+    background: #1abd00;
+    border-radius: 4px 4px 4px 4px;
+    padding: 4px 8px 2px 8px;
+    font-weight: normal;
+    font-size: 12px;
+    color: #ffffff;
+    display: inline-flex;
+    align-items: center;
+    border: none;
+}
+// Divider
+.openapi__divider {
+    margin: 32px 0;
+    border-radius: 0px 0px 0px 0px;
+    border-bottom: 1px solid rgba(229, 231, 235, 0.8);
 }
 .theme-api-markdown {
-    h1,
-    h2,
-    h3,
-    h4,
-    h5,
-    h6 {
+    h3 {
         font-family: var(--ifm-heading-font-family);
         font-weight: var(--ifm-heading-font-weight);
         line-height: var(--ifm-heading-line-height);
         margin: var(--ifm-heading-margin-top) 0 var(--ifm-heading-margin-bottom) 0;
     }
-    h1 {
-        font-size: var(--ifm-h1-font-size);
-    }
-    h2 {
-        font-size: var(--ifm-h2-font-size);
-    }
+
     h3 {
         font-size: var(--ifm-h3-font-size);
         &.openapi-markdown__details-summary-header-params,

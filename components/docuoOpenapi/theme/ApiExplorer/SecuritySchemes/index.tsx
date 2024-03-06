@@ -13,7 +13,9 @@ import { useTypedSelector } from "@/components/docuoOpenapi/theme/ApiItem/hooks"
 function SecuritySchemes(props: any) {
   const options = useTypedSelector((state: any) => state.auth.options);
   const selected = useTypedSelector((state: any) => state.auth.selected);
-  const infoAuthPath = `/${props.infoPath}#authentication`;
+  const infoPath = props.infoPath.toLowerCase();
+  // Parse the instance and version
+  const infoAuthPath = `/${infoPath}#authentication`;
 
   if (selected === undefined) return null;
 
