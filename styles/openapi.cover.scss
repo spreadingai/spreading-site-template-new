@@ -42,6 +42,7 @@
 }
 
 // OpenAPI doc
+// Common
 .theme-api-markdown {
     display: flex;
     flex-wrap: wrap;
@@ -80,7 +81,7 @@ h1.openapi__heading {
     border: 1px solid rgba(227, 232, 239, 0.8);
 }
 h2.openapi__method-endpoint-path {
-    font-family: Roboto Mono;
+    font-family: Inter;
     font-weight: 400;
     font-size: 14px;
     color: #171717;
@@ -107,9 +108,83 @@ h2.openapi__method-endpoint-path {
     border-radius: 0px 0px 0px 0px;
     border-bottom: 1px solid rgba(229, 231, 235, 0.8);
 }
+// Tabs
+ul.tabs {
+    margin: 0;
+    padding-inline-start: 0;
+    li.openapi-tabs__mime-item,
+    li.openapi-tabs__schema-item,
+    li.openapi-tabs__discriminator-item {
+        margin-bottom: 0;
+        margin-right: 2rem;
+        font-family: Inter-SemiBold;
+        font-weight: normal;
+        font-size: 12px;
+        color: rgba(81, 88, 105, 0.8);
+        padding: 0 0 10px 0;
+        border: none;
+        border-bottom: 2px solid transparent;
+        border-radius: 0;
+        line-height: normal;
+        &.active {
+            color: #1abd00;
+            border-color: #1abd00;
+        }
+    }
+    li.openapi-tabs__discriminator-item {
+        margin-right: 1rem;
+    }
+    li.openapi-tabs__response-code-item {
+        margin-bottom: 0;
+        font-size: 12px;
+        margin-right: 0.5rem;
+    }
+}
+// Schema
+.openapi-schema__container {
+    line-height: 23px;
+}
+.openapi-schema__container:hover .openapi-schema__property {
+    color: #1abd00;
+}
+.openapi-params__list-item:hover .openapi-schema__property {
+    color: #1abd00;
+}
+.openapi-schema__property {
+    margin-top: 0;
+}
+.openapi-schema__list-item {
+    padding: 5px 0 5px 1rem !important;
+}
+.openapi-markdown__details > div > div.openapi-schema__list-item {
+    padding: 5px 0 5px 1rem !important;
+}
+.openapi-markdown__details > div > div {
+    line-height: 23px;
+}
+// Details
+.openapi-markdown__details p {
+    font-size: inherit;
+    margin: 0;
+    line-height: 23px;
+}
+
+.openapi-discriminator__item > div > div {
+    line-height: 23px;
+}
+.openapi-discriminator__item {
+    padding: 5px 0 !important;
+}
+// Common
+.openapi-markdown__details-summary-header-body + span {
+    margin-left: 5px;
+}
+.openapi-markdown__details-summary-mime {
+    line-height: normal !important;
+}
 .theme-api-markdown {
     h3 {
-        font-family: var(--ifm-heading-font-family);
+        font-family: Inter-SemiBold, Inter;
         font-weight: var(--ifm-heading-font-weight);
         line-height: var(--ifm-heading-line-height);
         margin: var(--ifm-heading-margin-top) 0 var(--ifm-heading-margin-bottom) 0;
@@ -124,33 +199,7 @@ h2.openapi__method-endpoint-path {
         }
     }
 }
-.openapi-markdown__details p {
-    font-size: inherit;
-}
-ul.tabs {
-    margin: 0;
-    padding-inline-start: 0;
-    li.openapi-tabs__mime-item {
-        font-size: 10px;
-        margin-bottom: 0;
-        margin-right: 0.5rem;
-    }
-    li.openapi-tabs__discriminator-item {
-        font-size: 10px;
-        margin-bottom: 0;
-        margin-right: 0.5rem;
-    }
-    li.openapi-tabs__response-code-item {
-        margin-bottom: 0;
-        font-size: 12px;
-        margin-right: 0.5rem;
-    }
-    li.openapi-tabs__schema-item {
-        margin-bottom: 0;
-        font-size: 12px;
-        margin-right: 0.5rem;
-    }
-}
+
 h2.openapi-tabs__response-header {
     margin-bottom: 0;
 }
@@ -160,11 +209,16 @@ h2.openapi-tabs__response-header {
     list-style: none;
     padding-left: 1rem;
     position: relative;
+    line-height: 23px;
     &::before {
         position: absolute;
         left: 0;
     }
 }
+.theme-api-markdown details > div {
+    margin-top: 1rem;
+}
+
 .theme-api-markdown details[data-collapsed="false"] > summary:before {
     transform: rotate(90deg) !important;
 }
