@@ -107,6 +107,7 @@ h1.openapi__heading {
     background: #f9fafb;
     border-radius: 6px 6px 6px 6px;
     border: 1px solid rgba(227, 232, 239, 0.8);
+    overflow: auto;
 }
 h2.openapi__method-endpoint-path {
     font-family: Inter;
@@ -155,11 +156,19 @@ h2.openapi__method-endpoint-path {
     border-bottom: 1px solid rgba(229, 231, 235, 0.8);
 }
 // Tabs
+.openapi-tabs__container {
+    div[role="tabpanel"] {
+        & > div:first-of-type {
+            margin-bottom: 16px;
+        }
+    }
+}
 ul.tabs {
     margin: 0;
     padding-inline-start: 0;
     li.openapi-tabs__mime-item,
     li.openapi-tabs__schema-item,
+    li.openapi-tabs__operation-item,
     li.openapi-tabs__discriminator-item {
         margin-bottom: 0;
         margin-right: 0.5rem;
@@ -305,8 +314,10 @@ ul.tabs {
     line-height: normal !important;
     display: flex;
     align-items: center;
-    &::before {
-        top: 4px !important;
+    &:has(.openapi-schema__required) {
+        &::before {
+            top: 4px !important;
+        }
     }
 }
 .theme-api-markdown {
