@@ -9,6 +9,9 @@
     .middle__show {
         display: none !important;
     }
+    code:not([class*="language-"]) {
+        padding: 1px 6px;
+    }
 }
 .openapi-left-panel__container {
     border-right: none;
@@ -42,7 +45,15 @@
 }
 
 // OpenAPI doc
-// Common
+pre {
+    background-color: initial;
+    border-radius: initial;
+    color: initial;
+    font: initial;
+    margin: initial;
+    overflow: initial;
+    padding: initial;
+}
 .theme-api-markdown {
     display: flex;
     flex-wrap: wrap;
@@ -63,9 +74,26 @@
 }
 
 .openapi-security__details {
-    pre code {
-        background-color: transparent !important;
-        border: none !important;
+    border-radius: 8px 8px 8px 8px;
+    border: 1px solid rgba(229, 231, 235, 0.6);
+    overflow: hidden;
+    box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.07);
+    .openapi-security__summary-container {
+        background: #ffffff;
+    }
+    & > pre {
+        background: #ffffff !important;
+        padding: var(--ifm-pre-padding);
+        color: var(--ifm-pre-color);
+        font: var(--ifm-code-font-size) / var(--ifm-pre-line-height) var(--ifm-font-family-monospace);
+        overflow: auto;
+        a {
+            font-size: inherit;
+        }
+        code {
+            background-color: initial !important;
+            border: initial !important;
+        }
     }
 }
 // H1
@@ -75,7 +103,7 @@ h1.openapi__heading {
 // Method Endpoint
 .openapi__method-endpoint {
     padding: 8px 14px 8px 8px;
-    margin-top: 12px;
+    margin-top: 8px;
     background: #f9fafb;
     border-radius: 6px 6px 6px 6px;
     border: 1px solid rgba(227, 232, 239, 0.8);
@@ -86,13 +114,13 @@ h2.openapi__method-endpoint-path {
     font-size: 14px;
     color: #171717;
     line-height: 20px;
-    margin: 0 0 0 10px;
+    margin: 0 0 0 10px !important;
 }
 // Badge
 .badge {
     font-family: Inter;
     height: 24px;
-    background: #1abd00;
+    background-color: #1abd00;
     border-radius: 4px 4px 4px 4px;
     padding: 4px 8px 2px 8px;
     font-weight: normal;
@@ -101,10 +129,28 @@ h2.openapi__method-endpoint-path {
     display: inline-flex;
     align-items: center;
     border: none;
+    &.badge--success {
+        background-color: #1abd00;
+    }
+    &.badge--danger {
+        background-color: #ff2900;
+    }
+    &.badge--primary {
+        background-color: rgb(46, 133, 85);
+    }
+    &.badge--info {
+        background-color: rgb(84, 199, 236);
+    }
+    &.badge--warning {
+        background-color: #fd9800;
+    }
+    &.badge--secondary {
+        background-color: rgb(235, 237, 240);
+        color: #171717;
+    }
 }
 // Divider
 .openapi__divider {
-    margin: 32px 0;
     border-radius: 0px 0px 0px 0px;
     border-bottom: 1px solid rgba(229, 231, 235, 0.8);
 }
@@ -116,15 +162,12 @@ ul.tabs {
     li.openapi-tabs__schema-item,
     li.openapi-tabs__discriminator-item {
         margin-bottom: 0;
-        margin-right: 2rem;
+        margin-right: 0.5rem;
         font-family: Inter-SemiBold;
         font-weight: normal;
         font-size: 12px;
         color: rgba(81, 88, 105, 0.8);
-        padding: 0 0 10px 0;
-        border: none;
-        border-bottom: 2px solid transparent;
-        border-radius: 0;
+        padding: 0.4rem 0.7rem;
         line-height: normal;
         &.active {
             color: #1abd00;
@@ -135,8 +178,8 @@ ul.tabs {
         margin-right: 1rem;
     }
     li.openapi-tabs__response-code-item {
-        margin-bottom: 0;
         font-size: 12px;
+        margin-bottom: 0;
         margin-right: 0.5rem;
     }
 }
@@ -162,18 +205,92 @@ ul.tabs {
 .openapi-markdown__details > div > div {
     line-height: 23px;
 }
+.openapi-schema__required {
+    font-family: Roboto Mono !important;
+    font-weight: 400 !important;
+    font-size: 12px;
+    width: 68px;
+    background: #fcf3f2;
+    height: 20px;
+    border-radius: 4px;
+    justify-content: center;
+}
 // Details
 .openapi-markdown__details p {
     font-size: inherit;
     margin: 0;
     line-height: 23px;
 }
-
+// Discriminator
 .openapi-discriminator__item > div > div {
     line-height: 23px;
 }
 .openapi-discriminator__item {
     padding: 5px 0 !important;
+}
+// Response samples
+.openapi-code__response-samples-container {
+    background-color: #171717;
+    border-radius: 6px;
+}
+// Response
+.openapi-markdown__details-summary-response {
+    &::before {
+        top: 5px !important;
+    }
+}
+.openapi-tabs__response-container {
+    padding-left: 0;
+}
+.openapi-tabs__response-list-container {
+    padding: 0;
+}
+.openapi-tabs__response-code-item {
+    font-family: Inter-Bold;
+    font-size: 12px !important;
+    border-radius: 4px;
+    border: 1px solid rgba(229, 231, 235, 0.5);
+    height: 32px;
+    padding: 0 12px;
+    display: inline-flex;
+    align-items: center;
+    &.success.active {
+        border-color: #1abd00;
+        background-color: #1abd00;
+        color: #fff;
+    }
+    &.danger.active {
+        border-color: #f64841;
+        background-color: #f64841;
+        color: #fff;
+    }
+}
+// Code Tabs
+.openapi-tabs__code-item {
+    margin-bottom: 0 !important;
+    &.active {
+        box-shadow: none;
+        border-color: #1abd00;
+    }
+}
+.tabs-container.openapi-tabs__code-container {
+    background: #ffffff;
+    box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.07);
+    border-radius: 8px 8px 8px 8px;
+    border: 1px solid rgba(229, 231, 235, 0.6);
+    &:hover {
+        box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.07);
+    }
+    &.openapi-tabs__code-container-inner {
+        box-shadow: none;
+        border: none;
+    }
+}
+.openapi-tabs__code-list-container.openapi-tabs__code-container-inner {
+    & + div[role="tabpanel"] {
+        background-color: #171717;
+        border-radius: 6px;
+    }
 }
 // Common
 .openapi-markdown__details-summary-header-body + span {
@@ -181,8 +298,16 @@ ul.tabs {
 }
 .openapi-markdown__details-summary-mime {
     line-height: normal !important;
+    display: flex;
+    align-items: center;
+    &::before {
+        top: 4px !important;
+    }
 }
 .theme-api-markdown {
+    h2 {
+        margin: 20px 0 16px;
+    }
     h3 {
         font-family: Inter-SemiBold, Inter;
         font-weight: var(--ifm-heading-font-weight);
@@ -202,6 +327,7 @@ ul.tabs {
 
 h2.openapi-tabs__response-header {
     margin-bottom: 0;
+    margin-top: 0;
 }
 // dropdown arrow style
 .theme-api-markdown details > summary {
@@ -228,12 +354,6 @@ h2.openapi-tabs__response-header {
 
 .openapi-markdown__details > summary::before {
     top: 0.35rem;
-}
-.token.punctuation {
-    color: inherit;
-}
-.token.variable {
-    color: inherit;
 }
 ul.tabs {
     li.tabs__item.openapi-tabs__schema-item::before {
