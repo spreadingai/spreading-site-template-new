@@ -190,6 +190,11 @@ ul.tabs {
 .openapi-schema__container:hover .openapi-schema__property {
     color: #1abd00;
 }
+.openapi-params__list-item {
+    & > div:last-of-type {
+        line-height: 23px;
+    }
+}
 .openapi-params__list-item:hover .openapi-schema__property {
     color: #1abd00;
 }
