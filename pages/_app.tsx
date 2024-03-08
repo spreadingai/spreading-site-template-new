@@ -1,6 +1,6 @@
 import { AppProps } from "next/app";
 // Put it here on top, so as not to overwrite the docuo's existing style
-import "infima/dist/css/default/default.css";
+import "@/styles/infima.scss";
 import "@/styles/index.scss";
 import "@/assets/fonts/fonts.scss";
 import "@/styles/editor.scss";
