@@ -34,6 +34,7 @@ export const parseByInfoPath = (
   let result = "";
   if (infoPath) {
     infoPath = infoPath.toLowerCase();
+    infoPath = infoPath.replace(/\s/g, "-");
     // docs/xxx/swagger-petstore-yaml
     // xxx_docs/xxx/swagger-petstore-yaml
     // versioned_docs/version-x.x.x/xxx/swagger-petstore-yaml
