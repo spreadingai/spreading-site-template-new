@@ -118,7 +118,7 @@ h2.openapi__method-endpoint-path {
     margin: 0 0 0 10px !important;
 }
 // Badge
-.badge {
+.editor-wrapper .badge {
     font-family: Inter;
     height: 24px;
     background-color: #1abd00;
@@ -170,6 +170,7 @@ ul.tabs {
     li.openapi-tabs__schema-item,
     li.openapi-tabs__operation-item,
     li.openapi-tabs__discriminator-item {
+        border: 1px solid transparent;
         margin-bottom: 0;
         margin-right: 0.5rem;
         font-family: Inter-SemiBold;
@@ -178,18 +179,25 @@ ul.tabs {
         color: rgba(81, 88, 105, 0.8);
         padding: 0.4rem 0.7rem;
         line-height: normal;
+        transition: 0.3s;
+        &:hover {
+            border: 1px solid var(--ifm-toc-border-color);
+            background-color: transparent;
+        }
         &.active {
             color: #1abd00;
             border-color: #1abd00;
         }
     }
     li.openapi-tabs__discriminator-item {
+        transition: 0.3s;
         margin-right: 1rem;
     }
     li.openapi-tabs__response-code-item {
         font-size: 12px;
         margin-bottom: 0;
         margin-right: 0.5rem;
+        transition: 0.3s;
     }
 }
 // Schema
@@ -260,7 +268,7 @@ ul.tabs {
 .openapi-tabs__response-list-container {
     padding: 0;
 }
-.openapi-tabs__response-code-item {
+.theme-api-markdown .openapi-tabs__response-code-item {
     font-family: Inter-Bold;
     font-size: 12px !important;
     border-radius: 4px;
