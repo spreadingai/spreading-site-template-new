@@ -28,7 +28,10 @@ export default function ApiCodeBlock({ children: rawChildren, ...props }) {
   // be in a different mode. React hydration doesn't update DOM styles that come
   // from SSR. Hence force a re-render after mounting to apply the current
   // relevant styles.
-  const children = maybeStringifyChildren(rawChildren);
+  let children = maybeStringifyChildren(rawChildren);
+  if (typeof children === "string" && children[children.length - 1] !== "\n") {
+    children += "\n";
+  }
   return (
     <CodeBlock key={children} {...props}>
       {children}
