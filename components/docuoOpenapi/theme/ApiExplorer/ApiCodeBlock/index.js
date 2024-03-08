@@ -6,8 +6,6 @@
  * ========================================================================== */
 
 import React, { isValidElement } from "react";
-
-import useIsBrowser from "@/components/docuoOpenapi/core/lib/client/exports/useIsBrowser";
 import { CodeBlock } from "@spreading/docuo-mdx-component";
 // import ElementContent from "@/components/docuoOpenapi/theme/ApiExplorer/ApiCodeBlock/Content/Element";
 // import StringContent from "@/components/docuoOpenapi/theme/ApiExplorer/ApiCodeBlock/Content/String";
@@ -25,25 +23,15 @@ function maybeStringifyChildren(children) {
   return Array.isArray(children) ? children.join("") : children;
 }
 
-const CodeBlockCopy = ({ children }) => {
-  return <div>{children}</div>;
-};
-
 export default function ApiCodeBlock({ children: rawChildren, ...props }) {
   // The Prism theme on SSR is always the default theme but the site theme can
   // be in a different mode. React hydration doesn't update DOM styles that come
   // from SSR. Hence force a re-render after mounting to apply the current
   // relevant styles.
-  const isBrowser = useIsBrowser();
   const children = maybeStringifyChildren(rawChildren);
-  // const CodeBlockComp =
-  //   typeof children === "string" ? StringContent : ElementContent;
-  const CodeBlockComp = CodeBlock;
   return (
-    <CodeBlockComp key={String(isBrowser)} {...props}>
+    <CodeBlock key={children} {...props}>
       {children}
-    </CodeBlockComp>
-    // <div>{children}</div>
-    // <CodeBlockCopy>{children}</CodeBlockCopy>
+    </CodeBlock>
   );
 }

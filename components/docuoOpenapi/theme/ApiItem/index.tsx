@@ -51,6 +51,8 @@ export default function ApiItem(props: Props): JSX.Element {
     docuoConfig: props.docuoConfig,
   };
   const [docData, setDocData] = useState<DocContextType>(docValues);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const isBrowser = useIsBrowser();
   const children = props.children;
   const frontMatter = props.mdxSource.frontmatter;
   let { info_path: infoPath } = frontMatter as DocFrontMatter;
@@ -65,8 +67,6 @@ export default function ApiItem(props: Props): JSX.Element {
 
     // TODO: fix this
     const options = {};
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const isBrowser = useIsBrowser();
 
     // Regex for 2XX status
     const statusRegex = new RegExp("(20[0-9]|2[1-9][0-9])");
