@@ -131,19 +131,19 @@ h2.openapi__method-endpoint-path {
     align-items: center;
     border: none;
     &.badge--success {
-        background-color: #1abd00;
+        background-color: #0989ff;
     }
     &.badge--danger {
         background-color: #f64841;
     }
     &.badge--primary {
-        background-color: rgb(46, 133, 85);
+        background-color: #1abd00;
     }
     &.badge--info {
-        background-color: rgb(84, 199, 236);
+        background-color: #08b6ed;
     }
     &.badge--warning {
-        background-color: #fd9800;
+        background-color: #fb7e38;
     }
     &.badge--secondary {
         background-color: rgb(235, 237, 240);
@@ -369,12 +369,15 @@ h2.openapi-tabs__response-header {
 .theme-api-markdown details > div {
     margin-top: 1rem;
 }
-
-.theme-api-markdown details[data-collapsed="false"] > summary:before {
-    transform: rotate(90deg) !important;
+.theme-api-markdown details[data-collapsed="false"] > summary {
+    &:before {
+        transform: rotate(90deg) !important;
+    }
 }
-.theme-api-markdown details[open] > summary:before {
-    transform: rotate(180deg) !important;
+.theme-api-markdown details[open] > summary {
+    &:before {
+        transform: rotate(180deg) !important;
+    }
 }
 
 .openapi-markdown__details > summary::before {
