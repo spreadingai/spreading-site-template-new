@@ -33,7 +33,6 @@ class VersionsController {
           JSON.parse(fs.readFileSync(versionsPath, "utf8")) as string[]
         ).filter((version) => version);
       }
-      console.log(`[DocsController]getUsedVersions: `, versions);
       if (
         process.env.NEXT_PUBLIC_VERSION_LIMIT &&
         process.env.NEXT_PUBLIC_VERSION_LIMIT !== this._unlimitedVersionNumber

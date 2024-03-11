@@ -113,7 +113,6 @@ const Mobile: FC<Props> = ({ menus }) => {
           onClick={() => {
             const el: HTMLButtonElement =
               document.querySelector(".DocSearch-Button");
-            console.log("el", el);
 
             el && el.click();
           }}

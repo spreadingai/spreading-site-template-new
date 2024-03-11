@@ -68,8 +68,6 @@ export function createPersistanceMiddleware(options: ThemeConfig["api"]) {
         storage.setItem("server", JSON.stringify(serverObject));
       }
 
-      console.log("####storage", storage, result);
-
       return result;
     };
   return persistanceMiddleware;
