@@ -43,7 +43,6 @@ class SidebarsController {
             mySidebar: JSON.parse(JSON.stringify(sidebarsObj)),
           };
         }
-        console.log(`[SidebarsController]getSidebars sidebarsObj`, sidebarsObj);
         Object.keys(sidebarsObj).forEach((key) => {
           this.transSidebarItem(rootUrl, sidebarsObj[key]);
         });
@@ -209,7 +208,6 @@ class SidebarsController {
     // Quick Start, Quick-Start
     // Quick start, Quick-start
     // Quick start/Overview
-    console.log("@@@####", str, process.platform, path.sep);
     if (process.platform.includes("win")) {
       str = str.replace(/\\/g, "/");
     }

@@ -2,9 +2,10 @@
 
 /mdxs
 /docs
-/docs_test
-/docs_starter
+/docs_*
 /public/docs
+/public/robots.txt
+/public/sitemap.xml
 
 # dependencies
 /node_modules
