@@ -31,7 +31,6 @@ export function translate({ message, id, description }, values) {
 // the text?
 export default function Translate({ children, id, values }) {
   if (children && typeof children !== "string") {
-    console.warn("Illegal <Translate> children", children);
     throw new Error(
       "The Docusaurus <Translate> component only accept simple string values"
     );

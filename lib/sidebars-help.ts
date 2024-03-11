@@ -95,11 +95,6 @@ class SidebarsController {
       },
       []
     );
-    console.log(
-      `[DocsController]getUsedSidebarIds: `,
-      instanceID,
-      this._usedSidebarIdsMap[instanceID]
-    );
     return this._usedSidebarIdsMap[instanceID];
   }
   generatedSidebar(rootUrl: string, dirName: string) {

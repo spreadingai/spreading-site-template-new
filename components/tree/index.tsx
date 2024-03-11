@@ -30,7 +30,6 @@ const DocuoTree: FC<TreeProps> = ({
     setExpandedKeys(expandedKeys);
   };
   const handleClose = () => {
-    console.log("1");
     setDrawerOpen(false);
   };
   return (

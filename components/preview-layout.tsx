@@ -240,7 +240,6 @@ const PreviewLayout = ({
   // @ts-ignore
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const versions = useMemo<NavBarItem>(() => {
-    console.log(displayVersions, docVersion, "displayVersions");
     return {
       label: docVersion,
       type: "dropdown",
