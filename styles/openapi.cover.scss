@@ -89,6 +89,9 @@ pre {
         overflow: auto;
         a {
             font-size: inherit;
+            &:hover {
+                text-decoration: none;
+            }
         }
         code {
             background-color: initial !important;
