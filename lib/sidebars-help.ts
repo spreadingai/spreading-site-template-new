@@ -98,6 +98,21 @@ class SidebarsController {
     );
     return this._usedSidebarIdsMap[instanceID];
   }
+  getSidebarItemIDByMdxFileID(sidebars: Sidebars, mdxFileID: string) {
+    const sidebarIds = Object.keys(sidebars);
+    return sidebarIds.find((sidebarId) => {
+      const sidebarItem = sidebars[sidebarId];
+      const str = JSON.stringify(sidebarItem);
+      if (
+        str.includes(`"id": "${mdxFileID}"`) ||
+        str.includes(`"id":"${mdxFileID}"`)
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
   generatedSidebar(rootUrl: string, dirName: string) {
     const dirPath = path.resolve("./public", "..", rootUrl, dirName);
     const loop = (dirPath: string): SidebarItem => {
