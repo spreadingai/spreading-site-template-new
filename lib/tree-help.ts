@@ -12,13 +12,8 @@ class TreeController {
     );
   }
   getFolderTreeDataBySlug(slug: string[]) {
-    const { instanceID, routeBasePath, docVersion, slugVersion } =
+    const { instanceID, routeBasePath, docVersion, slugVersion, mdxFileID } =
       SlugControllerImpl.getExtractInfoFromSlug(slug);
-    console.log(
-      `[DocsController]getFolderTreeDataBySlug slug `,
-      slug,
-      SlugControllerImpl.getExtractInfoFromSlug(slug)
-    );
     let tree = [];
 
     const versions = VersionsControllerImpl.getUsedVersions(instanceID);
@@ -31,7 +26,14 @@ class TreeController {
         instanceID,
         docVersion
       );
-      const temp = usedSidebarIds.length
+      const targetSidebarId =
+        SidebarsControllerImpl.getSidebarItemIDByMdxFileID(sidebars, mdxFileID);
+      // const temp = usedSidebarIds.length
+      //   ? usedSidebarIds
+      //   : Object.keys(sidebars);
+      const temp = targetSidebarId
+        ? [targetSidebarId]
+        : usedSidebarIds.length
         ? usedSidebarIds
         : Object.keys(sidebars);
       temp.forEach((sidebarId, index) => {
