@@ -9,6 +9,9 @@ const nextConfig = {
   compress: false, // TODO:Why disable gzip
   experimental: {
     webpackBuildWorker: true,
+    outputFileTracingExcludes: {
+      "pages/**/*.tsx": [".next/cache/webpack/*"],
+    },
   },
   cacheMaxMemorySize: 0,
   transpilePackages: [
