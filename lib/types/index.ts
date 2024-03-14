@@ -22,6 +22,11 @@ export interface DocuoConfig {
       indexName: string;
     };
   };
+  analytics?: {
+    ga4?: {
+      measurementId: string;
+    }
+  };
 }
 export enum NavBarItemType {
   Default = "default",

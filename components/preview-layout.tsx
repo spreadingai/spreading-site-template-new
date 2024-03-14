@@ -28,6 +28,7 @@ import IconBackTop from "@/assets/icons/anchor/IconBackTop.svg";
 import IconBreadcrumbArrow from "@/assets/icons/breadcrumb/arrow.svg";
 import AnChorMobile from "./Anchor/AnchorMobile";
 import InsVersionDropdown from "@/components/dropdown/InsVersionDropdown";
+import { GoogleAnalytics } from "@next/third-parties/google";
 
 const { DirectoryTree } = Tree;
 
@@ -295,8 +296,11 @@ const PreviewLayout = ({
     };
   }, [instanceID, displayInstances]);
 
+  const gaId = docuoConfig?.analytics?.ga4?.measurementId;
+
   return (
     <div className="preview-screen relative">
+      { !!gaId && <GoogleAnalytics gaId={gaId} /> }
       <Head>
         <meta name="docsearch:version" content={docVersion} />
         <meta name="docsearch:instance" content={instanceID} />
