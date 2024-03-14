@@ -5,7 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  * ========================================================================== */
 
-import type { FrontMatterTag } from "@docusaurus/utils";
 import type { JSONSchema4, JSONSchema6, JSONSchema7 } from "json-schema";
 
 export interface ThemeConfig {
@@ -94,7 +93,7 @@ export type DocFrontMatter = {
    * Front matter tags, unnormalized.
    * @see {@link DocMetadata.tags}
    */
-  tags?: FrontMatterTag[];
+  tags?: any[];
   /**
    * If there isn't a Markdown h1 heading (which, if there is, we don't
    * remove), this front matter will cause the front matter title to not be

@@ -15,8 +15,8 @@ dependencies:
     specifier: ^1.7.1
     version: 1.9.7(react-redux@7.2.9)(react@18.2.0)
   '@spreading/docuo-mdx-component':
-    specifier: ^2.0.0
-    version: 2.0.0(react-dom@18.2.0)(react@18.2.0)
+    specifier: ^2.0.3
+    version: 2.0.3(react-dom@18.2.0)(react@18.2.0)
   '@svgr/webpack':
     specifier: ^8.1.0
     version: 8.1.0(typescript@5.3.3)
@@ -3072,8 +3072,8 @@ packages:
       webpack-sources: 3.2.3
     dev: false
 
-  /@spreading/docuo-mdx-component@2.0.0(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-RtjXkfF8iQvASdQXe7BUErrRoXa4+l9i/3HGTYOCozf7A+dyTyEtjLfM66VZP6LEXhpAO7ct+mEZkLti4i0uIQ==}
+  /@spreading/docuo-mdx-component@2.0.3(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-V39MUaEHRs8oZninT3jObIpKS3kAnRcJ6S716zZEX5xLtNEjnJJ7OEl/5ruqfkL/ldgcoIAJrApCnQFkXF903w==}
     peerDependencies:
       react: '>=17.0.0'
       react-dom: '>=17.0.0'
