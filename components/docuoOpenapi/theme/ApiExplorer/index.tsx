@@ -9,7 +9,7 @@ import React from "react";
 
 import sdk from "@paloaltonetworks/postman-collection";
 import CodeSnippets from "@/components/docuoOpenapi/theme/ApiExplorer/CodeSnippets";
-// import Request from "@/components/docuoOpenapi/theme/ApiExplorer/Request";
+import Request from "@/components/docuoOpenapi/theme/ApiExplorer/Request";
 // import Response from "@/components/docuoOpenapi/theme/ApiExplorer/Response";
 import { ApiItem } from "@/components/docuoOpenapi/docuo-plugin-openapi-docs/src/types";
 
@@ -33,7 +33,7 @@ function ApiExplorer({
           codeSamples={(item as any)["x-codeSamples"] ?? []}
         />
       )}
-      {/* <Request item={item} /> */}
+      <Request item={item} />
       {/* <Response item={item} /> */}
     </>
   );

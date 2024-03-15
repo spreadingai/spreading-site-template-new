@@ -151,7 +151,7 @@ function CodeTab({ children, hidden, className }: any): JSX.Element {
 function CodeSnippets({ postman, codeSamples }: Props) {
   // TODO: match theme for vscode.
 
-  const { docData } = useDocuoContext();
+  const { docuoData } = useDocuoContext();
 
   const contentType = useTypedSelector((state: any) => state.contentType.value);
   const accept = useTypedSelector((state: any) => state.accept.value);
@@ -169,7 +169,7 @@ function CodeSnippets({ postman, codeSamples }: Props) {
   // Can override languageSet, change order of langs, override options and variants
   const langs = [
     // @ts-ignore
-    ...((docData?.docuoConfig.themeConfig?.languageTabs as
+    ...((docuoData?.docuoConfig.themeConfig?.languageTabs as
       | Language[]
       | undefined) ?? languageSet),
   ];

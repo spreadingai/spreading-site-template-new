@@ -131,14 +131,15 @@ export type UserThemeConfig = DeepPartial<ThemeConfig>;
  * A convenient/more semantic way to get theme config from context.
  */
 export function useThemeConfig(): any {
-  const { docData } = useDocuoContext();
+  const { docuoData } = useDocuoContext();
   return {
-    ...docData,
+    ...docuoData,
     navbar: { hideOnScroll: false },
     colorMode: {
       defaultMode: "light",
       disableSwitch: false,
       respectPrefersColorScheme: false,
     },
+    prism: {},
   };
 }

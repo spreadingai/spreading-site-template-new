@@ -1,10 +1,8 @@
-import { DocuoConfig, TocItem } from "@/lib/types";
+import { DocFrontMatter } from "@/components/docuoOpenapi/types";
 import { Dispatch, SetStateAction, createContext } from "react";
 
 export interface DocContextType {
-  toc: TocItem[];
-  slug: string[];
-  docuoConfig: DocuoConfig;
+  frontMatter: DocFrontMatter;
 }
 
 type DocContentType = {
@@ -12,13 +10,11 @@ type DocContentType = {
   setDocData: Dispatch<SetStateAction<DocContextType>>;
 };
 
-export const defaultDocValues: DocContextType = {
-  toc: [],
-  slug: [],
-  docuoConfig: {} as DocuoConfig,
+export const defaultDocuoValues: DocContextType = {
+  frontMatter: {} as DocFrontMatter,
 };
 
 export const DocContext = createContext<DocContentType>({
-  docData: defaultDocValues,
-  setDocData: () => defaultDocValues,
+  docData: defaultDocuoValues,
+  setDocData: () => defaultDocuoValues,
 });
