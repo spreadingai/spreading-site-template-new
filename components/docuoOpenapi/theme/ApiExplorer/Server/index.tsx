@@ -7,11 +7,14 @@
 
 import React, { useState } from "react";
 
-import FloatingButton from "@theme/ApiExplorer/FloatingButton";
-import FormItem from "@theme/ApiExplorer/FormItem";
-import FormSelect from "@theme/ApiExplorer/FormSelect";
-import FormTextInput from "@theme/ApiExplorer/FormTextInput";
-import { useTypedDispatch, useTypedSelector } from "@theme/ApiItem/hooks";
+import FloatingButton from "@/components/docuoOpenapi/theme/ApiExplorer/FloatingButton";
+import FormItem from "@/components/docuoOpenapi/theme/ApiExplorer/FormItem";
+import FormSelect from "@/components/docuoOpenapi/theme/ApiExplorer/FormSelect";
+import FormTextInput from "@/components/docuoOpenapi/theme/ApiExplorer/FormTextInput";
+import {
+  useTypedDispatch,
+  useTypedSelector,
+} from "@/components/docuoOpenapi/theme/ApiItem/hooks";
 
 import { setServer, setServerVariable } from "./slice";
 
@@ -72,6 +75,7 @@ function Server() {
         <FormItem>
           <FormSelect
             options={options.map((s: any) => s.url)}
+            // @ts-ignore
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               dispatch(
                 setServer(
@@ -91,9 +95,10 @@ function Server() {
           Object.keys(value.variables).map((key) => {
             if (value.variables?.[key].enum !== undefined) {
               return (
-                <FormItem label={key}>
+                <FormItem label={key} key={key}>
                   <FormSelect
                     options={value.variables[key].enum}
+                    // @ts-ignore
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       dispatch(
                         setServerVariable(
@@ -107,7 +112,7 @@ function Server() {
               );
             }
             return (
-              <FormItem label={key}>
+              <FormItem label={key} key={key}>
                 <FormTextInput
                   placeholder={value.variables?.[key].default}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {

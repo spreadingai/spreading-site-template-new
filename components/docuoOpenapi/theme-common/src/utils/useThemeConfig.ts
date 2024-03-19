@@ -9,6 +9,9 @@ import type { PrismTheme } from "prism-react-renderer";
 import type { DeepPartial } from "utility-types";
 import type { MagicCommentConfig } from "./codeBlockUtils";
 import useDocuoContext from "@/components/docuoOpenapi/core/lib/client/exports/useDocuoContext";
+// You can change to dynamic import
+import rendererLightTheme from "@/components/docuoOpenapi/defaultPrismTheme/prismLight.js";
+import rendererDarkTheme from "@/components/docuoOpenapi/defaultPrismTheme/prismDark.js";
 
 export type DocsVersionPersistence = "localStorage" | "none";
 
@@ -140,6 +143,11 @@ export function useThemeConfig(): any {
       disableSwitch: false,
       respectPrefersColorScheme: false,
     },
-    prism: {},
+    prism: {
+      theme: rendererLightTheme,
+      darkTheme: rendererDarkTheme,
+      additionalLanguages: [],
+      magicComments: [],
+    },
   };
 }

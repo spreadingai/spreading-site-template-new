@@ -7,9 +7,12 @@
 
 import React from "react";
 
-import FormTextInput from "@theme/ApiExplorer/FormTextInput";
-import { Param, setParam } from "@theme/ApiExplorer/ParamOptions/slice";
-import { useTypedDispatch } from "@theme/ApiItem/hooks";
+import FormTextInput from "@/components/docuoOpenapi/theme/ApiExplorer/FormTextInput";
+import {
+  Param,
+  setParam,
+} from "@/components/docuoOpenapi/theme/ApiExplorer/ParamOptions/slice";
+import { useTypedDispatch } from "@/components/docuoOpenapi/theme/ApiItem/hooks";
 
 export interface ParamProps {
   param: Param;
@@ -19,6 +22,7 @@ export default function ParamTextFormItem({ param }: ParamProps) {
   const dispatch = useTypedDispatch();
   return (
     <FormTextInput
+      // @ts-ignore
       isRequired={param.required}
       paramName={param.name}
       placeholder={param.description || param.name}

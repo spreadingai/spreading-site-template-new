@@ -224,7 +224,9 @@ function buildPostmanRequest(
   const clonedPostman = cloneDeep(postman);
 
   clonedPostman.url.protocol = undefined;
-  clonedPostman.url.host = [window.location.origin];
+  clonedPostman.url.host = [
+    typeof window !== "undefined" ? window.location.origin : "",
+  ];
 
   if (server) {
     let url = server.url.replace(/\/$/, "");

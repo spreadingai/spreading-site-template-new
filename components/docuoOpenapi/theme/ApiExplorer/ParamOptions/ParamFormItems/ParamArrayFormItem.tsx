@@ -9,10 +9,13 @@ import React, { useEffect, useState } from "react";
 
 import { ErrorMessage } from "@hookform/error-message";
 import { nanoid } from "@reduxjs/toolkit";
-import FormSelect from "@theme/ApiExplorer/FormSelect";
-import FormTextInput from "@theme/ApiExplorer/FormTextInput";
-import { Param, setParam } from "@theme/ApiExplorer/ParamOptions/slice";
-import { useTypedDispatch } from "@theme/ApiItem/hooks";
+import FormSelect from "@/components/docuoOpenapi/theme/ApiExplorer/FormSelect";
+import FormTextInput from "@/components/docuoOpenapi/theme/ApiExplorer/FormTextInput";
+import {
+  Param,
+  setParam,
+} from "@/components/docuoOpenapi/theme/ApiExplorer/ParamOptions/slice";
+import { useTypedDispatch } from "@/components/docuoOpenapi/theme/ApiItem/hooks";
 import { Controller, useFormContext } from "react-hook-form";
 
 export interface ParamProps {
@@ -27,6 +30,7 @@ function ArrayItem({
     return (
       <FormSelect
         options={["---", "true", "false"]}
+        // @ts-ignore
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
           const val = e.target.value;
           onChange(val === "---" ? undefined : val);

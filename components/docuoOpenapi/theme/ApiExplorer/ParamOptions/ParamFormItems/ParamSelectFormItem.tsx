@@ -8,9 +8,12 @@
 import React from "react";
 
 import { ErrorMessage } from "@hookform/error-message";
-import FormSelect from "@theme/ApiExplorer/FormSelect";
-import { Param, setParam } from "@theme/ApiExplorer/ParamOptions/slice";
-import { useTypedDispatch } from "@theme/ApiItem/hooks";
+import FormSelect from "@/components/docuoOpenapi/theme/ApiExplorer/FormSelect";
+import {
+  Param,
+  setParam,
+} from "@/components/docuoOpenapi/theme/ApiExplorer/ParamOptions/slice";
+import { useTypedDispatch } from "@/components/docuoOpenapi/theme/ApiItem/hooks";
 import { Controller, useFormContext } from "react-hook-form";
 
 export interface ParamProps {
@@ -38,6 +41,7 @@ export default function ParamSelectFormItem({ param }: ParamProps) {
         render={({ field: { onChange, name } }) => (
           <FormSelect
             options={["---", ...(options as string[])]}
+            // @ts-ignore
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               const val = e.target.value;
               dispatch(

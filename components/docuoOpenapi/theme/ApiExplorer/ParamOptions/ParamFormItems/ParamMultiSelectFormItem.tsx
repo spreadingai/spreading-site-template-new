@@ -8,9 +8,15 @@
 import React from "react";
 
 import { ErrorMessage } from "@hookform/error-message";
-import FormMultiSelect from "@theme/ApiExplorer/FormMultiSelect";
-import { Param, setParam } from "@theme/ApiExplorer/ParamOptions/slice";
-import { useTypedDispatch, useTypedSelector } from "@theme/ApiItem/hooks";
+import FormMultiSelect from "@/components/docuoOpenapi/theme/ApiExplorer/FormMultiSelect";
+import {
+  Param,
+  setParam,
+} from "@/components/docuoOpenapi/theme/ApiExplorer/ParamOptions/slice";
+import {
+  useTypedDispatch,
+  useTypedSelector,
+} from "@/components/docuoOpenapi/theme/ApiItem/hooks";
 import { Controller, useFormContext } from "react-hook-form";
 
 export interface ParamProps {
@@ -68,6 +74,7 @@ export default function ParamMultiSelectFormItem({ param }: ParamProps) {
             options={options as string[]}
             name={name}
             onChange={(e: any) => handleChange(e, onChange)}
+            // @ts-ignore
             showErrors={showErrorMessage}
           />
         )}

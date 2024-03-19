@@ -7,13 +7,13 @@
 
 import React, { useState } from "react";
 
-import FormItem from "@theme/ApiExplorer/FormItem";
-import ParamArrayFormItem from "@theme/ApiExplorer/ParamOptions/ParamFormItems/ParamArrayFormItem";
-import ParamBooleanFormItem from "@theme/ApiExplorer/ParamOptions/ParamFormItems/ParamBooleanFormItem";
-import ParamMultiSelectFormItem from "@theme/ApiExplorer/ParamOptions/ParamFormItems/ParamMultiSelectFormItem";
-import ParamSelectFormItem from "@theme/ApiExplorer/ParamOptions/ParamFormItems/ParamSelectFormItem";
-import ParamTextFormItem from "@theme/ApiExplorer/ParamOptions/ParamFormItems/ParamTextFormItem";
-import { useTypedSelector } from "@theme/ApiItem/hooks";
+import FormItem from "@/components/docuoOpenapi/theme/ApiExplorer/FormItem";
+import ParamArrayFormItem from "@/components/docuoOpenapi/theme/ApiExplorer/ParamOptions/ParamFormItems/ParamArrayFormItem";
+import ParamBooleanFormItem from "@/components/docuoOpenapi/theme/ApiExplorer/ParamOptions/ParamFormItems/ParamBooleanFormItem";
+import ParamMultiSelectFormItem from "@/components/docuoOpenapi/theme/ApiExplorer/ParamOptions/ParamFormItems/ParamMultiSelectFormItem";
+import ParamSelectFormItem from "@/components/docuoOpenapi/theme/ApiExplorer/ParamOptions/ParamFormItems/ParamSelectFormItem";
+import ParamTextFormItem from "@/components/docuoOpenapi/theme/ApiExplorer/ParamOptions/ParamFormItems/ParamTextFormItem";
+import { useTypedSelector } from "@/components/docuoOpenapi/theme/ApiItem/hooks";
 
 import { Param } from "./slice";
 
