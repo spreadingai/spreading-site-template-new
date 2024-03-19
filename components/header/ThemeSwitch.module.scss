@@ -1,0 +1,25 @@
+.colorModeToggle {
+
+  .toggleButton {
+    color: var(--docuo-theme-btn-color);
+    width: 30px;
+    height: 30px;
+    box-shadow: var(--docuo-theme-btn-shadow);
+    border-radius: 8px 8px 8px 8px;
+    border: var(--docuo-theme-btn-border);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+      color: var(--docuo-theme-btn-color-hover);
+    }
+  }
+}
+
+[data-theme=light] .darkToggleIcon {
+  display: none;
+}
+
+[data-theme=dark] .lightToggleIcon {
+  display: none;
+}

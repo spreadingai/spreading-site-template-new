@@ -1,12 +1,10 @@
-import React, { FC, useEffect, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import styles from "./styles.module.scss";
-import Image from "next/image";
 import Link from "next/link";
 import { useMediaQuery } from "usehooks-ts";
 import Mobile from "./mobile";
 import DropdownItem from "./DropdownItem";
 import IconMenu from "@/assets/icons/iconMenu.svg";
-import IconArrowRight from "@/assets/icons/iconArrowDown.svg";
 import AnChorMobile from "../Anchor/AnchorMobile";
 
 import {
@@ -15,9 +13,10 @@ import {
   DocuoConfig,
   NavBarItemType,
 } from "@/lib/types";
-import { NavBarItem, NavbarLink } from "./@types";
 import { DocSearch } from "@docsearch/react";
 import AnchorNode from "../Anchor/Anchor";
+import ThemeSwitch from "./ThemeSwitch";
+import ThemeContext from "@/components/header/Theme.context";
 
 // import "@docsearch/css";
 
@@ -44,12 +43,12 @@ const Header = (props: Props) => {
   const { items } = navbar;
   const { algolia } = search || {};
   const [width, setWidth] = React.useState(0);
-  const [openToc, setOpenToc] = React.useState(false);
   const [isMobile, setIsMobile] = React.useState(false);
   const matches = useMediaQuery(`(max-width: ${Math.max(width, 1024)}px)`); // mobile
   const menusRef = React.useRef<HTMLDivElement>(null);
   const logoRef = React.useRef<HTMLAnchorElement>(null);
   const [scrollLength, setScrollLength] = React.useState(0);
+  const { theme } = React.useContext(ThemeContext);
 
   useEffect(() => {
     setIsMobile(matches);
@@ -101,14 +100,29 @@ const Header = (props: Props) => {
     );
   }, [algolia, currentVersion, currentInstance]);
 
+  const isShowThemeBtn = !docuoConfig?.themeConfig?.colorMode?.disableSwitch;
+
+  const logo = useMemo(() => {
+    if (typeof navbar.logo === "string") {
+      return navbar.logo;
+    }
+    if (theme === "dark" && typeof navbar.logo?.dark === "string") {
+      return navbar.logo?.dark;
+    }
+    if (theme === "light" && typeof navbar.logo?.light === "string") {
+      return navbar.logo?.light;
+    }
+    return "";
+  }, [navbar.logo, theme]);
+
   return (
     <header
       className={`${styles["header-container"]} ${
-        scrollLength === 0 ? "bg-white/60" : "bg-white"
+        scrollLength === 0 ? styles["header-bg-opacity"] : styles["header-bg"]
       }`}
     >
       <div className={styles.container}>
-        {navbar.logo ? (
+        {logo ? (
           <div className="flex items-center">
             <Link
               className={styles["logo-container"]}
@@ -118,11 +132,11 @@ const Header = (props: Props) => {
               <img
                 className={styles.logo}
                 src={
-                  (navbar.logo as string).includes("http")
-                    ? `${navbar.logo}`
+                  (logo as string).includes("http")
+                    ? `${logo}`
                     : `${process.env.NEXT_PUBLIC_BASE_PATH || "/"}${
                         process.env.NEXT_PUBLIC_BASE_PATH ? "/" : ""
-                      }${navbar.logo}`
+                      }${logo}`
                 }
                 alt={"logo"}
               />
@@ -167,6 +181,9 @@ const Header = (props: Props) => {
                 </Link>
               );
             })}
+            <div className={styles["menus__btn-list"]}>
+              {isShowThemeBtn && <ThemeSwitch docuoConfig={docuoConfig} />}
+            </div>
           </div>
         )}
       </div>

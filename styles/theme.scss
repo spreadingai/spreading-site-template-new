@@ -1,0 +1,37 @@
+html {
+  --docuo-color-primary: #171717;
+  --docuo-color-primary-hover: #1ABD00;
+  --docuo-color-primary-active: #1ABD00;
+  --docuo-background-primary: #fff;
+  --docuo-header-bg: #fff;
+  --docuo-header-bg-opacity: rgba(255, 255, 255, .6);
+  --docuo-header-border: 1px solid rgba(229, 231, 235, .8);
+  --docuo-header-menu-link-color: #171717;
+  --docuo-header-menu-divider-color: rgba(229, 231, 235, 0.8);
+  --docuo-theme-btn-color: rgba(0, 0, 0, .7);
+  --docuo-theme-btn-color-hover: rgba(0, 0, 0, 1);
+  --docuo-theme-btn-border: 1px solid rgba(229, 231, 235, 0.6);
+  --docuo-theme-btn-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.07);
+  --docuo-popup-bg: #fff;
+  --docuo-popup-border: 1px solid rgba(229, 231, 235, 0.6);
+  --docuo-popup-bg-hover: rgba(229, 231, 235, 0.25);
+}
+
+html[data-theme=dark] {
+  --docuo-color-primary: #F0F0F0;
+  --docuo-color-primary-hover: #05EC07;
+  --docuo-color-primary-active: #05EC07;
+  --docuo-background-primary: #0D0D0D;
+  --docuo-header-bg: rgba(13, 13, 13, 1);
+  --docuo-header-bg-opacity: rgba(13, 13, 13, .4);
+  --docuo-header-border: 1px solid #252525;
+  --docuo-header-menu-link-color: #e7e7e7;
+  --docuo-header-menu-divider-color: rgba(255, 255, 255, 0.15);
+  --docuo-theme-btn-color: rgba(255, 255, 255, .7);
+  --docuo-theme-btn-color-hover: rgba(255, 255, 255, 1);
+  --docuo-theme-btn-border: 1px solid #333333;
+  --docuo-theme-btn-shadow: 0px 1px 8px 0px rgba(255, 255, 255, 0.07);
+  --docuo-popup-bg: #191919;
+  --docuo-popup-border: 1px solid #333333;
+  --docuo-popup-bg-hover: #252525;
+}
