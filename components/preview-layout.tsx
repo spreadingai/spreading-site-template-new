@@ -212,7 +212,7 @@ const PreviewLayout = ({
     };
     loop(folderTreeData, []);
     return result.map((item, index, arr) => {
-      return { title: item.title };
+      return { title: item.title, className: "breadcrumb-label" };
     });
   };
   const breadCrumbData = getBreadCrumbData();
@@ -350,7 +350,7 @@ const PreviewLayout = ({
                 <div className="article-breadcrumb flex justify-between	items-center">
                   <Breadcrumb
                     items={breadCrumbData}
-                    separator={<IconBreadcrumbArrow className="m-auto" />}
+                    separator={<IconBreadcrumbArrow className="breadcrumb-icon m-auto" />}
                   />
                   <div className={"middle__show  relative"}>
                     <AnChorMobile tocFormatData={tocFormatData} />

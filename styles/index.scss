@@ -141,6 +141,18 @@ html > body {
       cursor: pointer;
       display: none;
     }
+
+    .breadcrumb-label {
+      color: var(--docuo-breadcrumb-color);
+    }
+
+    li:last-child .breadcrumb-label {
+      color: var(--docuo-color-primary-active);
+    }
+
+    .breadcrumb-icon {
+      color: var(--docuo-breadcrumb-icon-color);
+    }
   }
 
   .article-content {
