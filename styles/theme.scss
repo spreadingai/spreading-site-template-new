@@ -12,9 +12,30 @@ html {
   --docuo-theme-btn-color-hover: rgba(0, 0, 0, 1);
   --docuo-theme-btn-border: 1px solid rgba(229, 231, 235, 0.6);
   --docuo-theme-btn-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.07);
+  --docuo-popup-color: #171717;
   --docuo-popup-bg: #fff;
   --docuo-popup-border: 1px solid rgba(229, 231, 235, 0.6);
   --docuo-popup-bg-hover: rgba(229, 231, 235, 0.25);
+
+  --docuo-anchor-color: rgba(81, 88, 105, 0.8);
+  --docuo-anchor-border-color: rgba(229, 231, 235, 0.8);
+  --docuo-anchor-top-btn-color: #515869;
+  --docuo-anchor-top-btn-border: 1px solid rgba(221, 227, 235, 0.6);
+  --docuo-anchor-top-btn-bg: #ffffff;
+
+  --docuo-dropdown-label-bg: #FAFAFB;
+  --docuo-dropdown-label-bg-hover: #F6F6F8;
+  --docuo-dropdown-label-border: 1px solid #F2F3F5;
+  --docuo-dropdown-icon-color: #666666;
+
+  --docuo-sidebar-color: rgba(81, 88, 105, 0.9);
+  --docuo-sidebar-border-color: rgba(229, 231, 235, 0.8);
+
+  --docuo-footer-bg: rgba(229, 231, 235, 0.5);
+  --docuo-footer-caption-color: rgba(81, 88, 105, 0.7);
+  --docuo-footer-link-color: rgba(53, 60, 78, 0.7);
+  --docuo-footer-copyright-color: rgba(53, 60, 78, 0.4);
+  --docuo-footer-copyright-border: 1px solid #e5e7eb;
 }
 
 html[data-theme=dark] {
@@ -31,7 +52,28 @@ html[data-theme=dark] {
   --docuo-theme-btn-color-hover: rgba(255, 255, 255, 1);
   --docuo-theme-btn-border: 1px solid #333333;
   --docuo-theme-btn-shadow: 0px 1px 8px 0px rgba(255, 255, 255, 0.07);
+  --docuo-popup-color: rgba(231, 231, 231, 0.9);
   --docuo-popup-bg: #191919;
   --docuo-popup-border: 1px solid #333333;
   --docuo-popup-bg-hover: #252525;
+
+  --docuo-anchor-color: #868686;
+  --docuo-anchor-border-color: #252525;
+  --docuo-anchor-top-btn-color: #F0F0F0;
+  --docuo-anchor-top-btn-border: 1px solid #333333;
+  --docuo-anchor-top-btn-bg: #191919;
+
+  --docuo-dropdown-label-bg: #191919;
+  --docuo-dropdown-label-bg-hover: #252525;
+  --docuo-dropdown-label-border: 1px solid #404040;
+  --docuo-dropdown-icon-color: #909090;
+
+  --docuo-sidebar-color: rgba(144, 144, 144, 0.9);
+  --docuo-sidebar-border-color: #252525;
+
+  --docuo-footer-bg: #161616;
+  --docuo-footer-caption-color: rgba(182, 182, 182, 0.7);
+  --docuo-footer-link-color: rgba(182, 182, 182, 0.7);
+  --docuo-footer-copyright-color: rgba(182, 182, 182, 0.6);
+  --docuo-footer-copyright-border: 1px solid #3c3c3c;
 }

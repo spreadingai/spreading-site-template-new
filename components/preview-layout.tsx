@@ -26,6 +26,7 @@ import AnchorNode from "./Anchor/Anchor";
 import gradientFixed from "@/assets/images/gradient_fixed.png";
 import gradientFixedDark from "@/assets/images/gradient_fixed@dark.png";
 import IconBackTop from "@/assets/icons/anchor/IconBackTop.svg";
+import IconBackTopDark from "@/assets/icons/anchor/IconBackTopDark.svg";
 import IconBreadcrumbArrow from "@/assets/icons/breadcrumb/arrow.svg";
 import AnChorMobile from "./Anchor/AnchorMobile";
 import InsVersionDropdown from "@/components/dropdown/InsVersionDropdown";
@@ -372,7 +373,7 @@ const PreviewLayout = ({
                 {toc?.length ? (
                   <div className="pt-[28px]  pb-10 ml-8">
                     <p
-                      className="mb-2.5 font-inter-bold font-semibold text-sm text-sidebar-primary"
+                      className="mb-2.5 font-inter-bold font-semibold text-sm"
                       onClick={() => setIsExpand(!isExpand)}
                     >
                       On this page
@@ -383,8 +384,8 @@ const PreviewLayout = ({
 
                     <div className="right-anchor-divide"></div>
                     <div className="back-to-top" onClick={scrollToTop}>
-                      <div className="flex flex-shrink-0 items-center justify-center w-6 h-6 rounded-md bg-white opacity-60 border-backtop-default border mr-2.5">
-                        <IconBackTop />
+                      <div className="top-btn">
+                        {theme === "dark" ? <IconBackTopDark /> : <IconBackTop />}
                       </div>
                       Back to top
                     </div>

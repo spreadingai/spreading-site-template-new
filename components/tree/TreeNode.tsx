@@ -1,3 +1,4 @@
+import styles from "./TreeNode.module.scss";
 import classNames from "classnames";
 import { FC, useEffect, useState } from "react";
 import IconTreeArrow from "@/assets/icons/tree/sidebar_arrow_open.svg";
@@ -70,24 +71,10 @@ const TreeNode: FC<TreeNodeProps> = ({
         onClick={level > 0 ? toggleNode : undefined}
       >
         <span
-          className={classNames({
-            "hover:text-sidebar-hover":
-              node.type === SidebarItemType.Doc ||
-              node.type === SidebarItemType.Link,
-            "hover:border-s-sidebar-hover hover:-translate-x-[1px] hover:border-l":
-              level > 0 &&
-              (node.type === SidebarItemType.Doc ||
-                node.type === SidebarItemType.Link),
-            "pl-[14px] text-opacity-90": level > 0,
-            // 选中粗体绿色
-            "font-inter-bold font-semibold text-sidebar-active":
-              selectedKeys?.includes(node.key),
-            // 第一层级粗体
-            "font-inter-bold font-semibold": level === 0,
-            "text-sidebar-secondary":
-              !selectedKeys?.includes(node.key) && level > 0,
-            "border-l border-s-sidebar-active -translate-x-[1px]":
-              level > 0 && selectedKeys?.includes(node.key),
+          className={classNames(styles.treeNodeLabel, {
+            [styles.isLevel0]: level === 0,
+            [styles.active]: selectedKeys?.includes(node.key),
+            [styles.islink]: node.type === SidebarItemType.Doc || node.type === SidebarItemType.Link
           })}
         >
           <span>{titleRender ? titleRender(node) : node.title}</span>
@@ -95,7 +82,7 @@ const TreeNode: FC<TreeNodeProps> = ({
 
         {hasChildren && level > 0 ? (
           <span
-            className={classNames("duration-200 ml-1.5", {
+            className={classNames("duration-200 ml-1.5", styles.treeNodeIcon, {
               "rotate-90": isOpen,
             })}
           >
@@ -114,7 +101,7 @@ const TreeNode: FC<TreeNodeProps> = ({
           className={classNames("mt-2.5", {
             "ml-4": level > 0,
             hidden: !isOpen,
-            "border-l border-s-sidebar-default": showLines,
+            [styles.childrenBorderLeft]: showLines,
           })}
         >
           {node.children.map((child, index) => (

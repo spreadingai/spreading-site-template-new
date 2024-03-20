@@ -87,7 +87,7 @@
       & + .icon {
         font-size: 12px;
         margin-left: 6px;
-        color: var(--docuo-header-menu-link-color);
+        color: var(--docuo-dropdown-icon-color);
         transition: transform 0.3s;
       }
     }
@@ -129,7 +129,7 @@
   font-size: 14px;
   font-family: Inter-Medium;
   font-weight: 500 !important;
-  color: var(--docuo-header-menu-link-color) !important;
+  color: var(--docuo-popup-color) !important;
   line-height: 28px;
   border-radius: 4px;
   transition: unset !important;
