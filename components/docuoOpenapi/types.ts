@@ -178,4 +178,6 @@ export type DocFrontMatter = {
   last_update?: FileChange;
   /** Provides OpenAPI Docs with a reference path to their respective Info Doc */
   info_path?: string;
+  /** Hide the send button. */
+  hide_send_button?: boolean;
 };

@@ -32,10 +32,10 @@ function addBaseUrl(
   return absolute ? siteUrl + basePath : basePath;
 }
 export function useBaseUrlUtils() {
-  const { docData } = useDocuoContext();
+  const { docuoData } = useDocuoContext();
   let {
     docuoConfig: { baseUrl, url: siteUrl },
-  } = docData;
+  } = docuoData;
   baseUrl = baseUrl || "";
   siteUrl = siteUrl || "";
   const withBaseUrl = useCallback(

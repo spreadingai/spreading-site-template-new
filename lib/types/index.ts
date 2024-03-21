@@ -25,7 +25,7 @@ export interface DocuoConfig {
   analytics?: {
     ga4?: {
       measurementId: string;
-    }
+    };
   };
 }
 export enum NavBarItemType {

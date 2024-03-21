@@ -9,6 +9,9 @@ import type { PrismTheme } from "prism-react-renderer";
 import type { DeepPartial } from "utility-types";
 import type { MagicCommentConfig } from "./codeBlockUtils";
 import useDocuoContext from "@/components/docuoOpenapi/core/lib/client/exports/useDocuoContext";
+// You can change to dynamic import
+import rendererLightTheme from "@/components/docuoOpenapi/defaultPrismTheme/prismLight.js";
+import rendererDarkTheme from "@/components/docuoOpenapi/defaultPrismTheme/prismDark.js";
 
 export type DocsVersionPersistence = "localStorage" | "none";
 
@@ -131,14 +134,20 @@ export type UserThemeConfig = DeepPartial<ThemeConfig>;
  * A convenient/more semantic way to get theme config from context.
  */
 export function useThemeConfig(): any {
-  const { docData } = useDocuoContext();
+  const { docuoData } = useDocuoContext();
   return {
-    ...docData,
+    ...docuoData,
     navbar: { hideOnScroll: false },
     colorMode: {
       defaultMode: "light",
       disableSwitch: false,
       respectPrefersColorScheme: false,
+    },
+    prism: {
+      theme: rendererLightTheme,
+      darkTheme: rendererDarkTheme,
+      additionalLanguages: [],
+      magicComments: [],
     },
   };
 }

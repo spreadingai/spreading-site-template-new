@@ -21,7 +21,7 @@ type Persistance = false | "localStorage" | "sessionStorage" | undefined;
 
 export function createStorage(persistance: Persistance): Storage {
   const defaultStorage = {
-    getItem: () => "11111111",
+    getItem: () => null,
     setItem: () => {},
     clear: () => {},
     key: () => null,

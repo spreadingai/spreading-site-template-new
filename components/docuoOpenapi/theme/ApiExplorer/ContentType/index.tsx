@@ -7,9 +7,12 @@
 
 import React from "react";
 
-import FormItem from "@theme/ApiExplorer/FormItem";
-import FormSelect from "@theme/ApiExplorer/FormSelect";
-import { useTypedDispatch, useTypedSelector } from "@theme/ApiItem/hooks";
+import FormItem from "@/components/docuoOpenapi/theme/ApiExplorer/FormItem";
+import FormSelect from "@/components/docuoOpenapi/theme/ApiExplorer/FormSelect";
+import {
+  useTypedDispatch,
+  useTypedSelector,
+} from "@/components/docuoOpenapi/theme/ApiItem/hooks";
 
 import { setContentType } from "./slice";
 
@@ -27,6 +30,7 @@ function ContentType() {
       <FormSelect
         value={value}
         options={options}
+        // @ts-ignore
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           dispatch(setContentType(e.target.value))
         }
