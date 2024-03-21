@@ -77,7 +77,7 @@ pre {
     border-radius: 8px 8px 8px 8px;
     border: 1px solid rgba(229, 231, 235, 0.6);
     overflow: hidden;
-    box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.07);
+    box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.07) !important;
     .openapi-security__summary-container {
         background: #ffffff;
     }
@@ -214,6 +214,7 @@ ul.tabs {
     color: #1abd00;
 }
 .openapi-params__list-item {
+    padding: 2px 0 5px 1rem !important;
     & > div:last-of-type {
         line-height: 23px;
     }
@@ -321,6 +322,93 @@ ul.tabs {
         border-radius: 6px;
     }
 }
+
+// Request form
+.openapi-explorer__request-form,
+.openapi-explorer__response-container {
+    background: #ffffff;
+    box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.07);
+    border-radius: 8px 8px 8px 8px;
+    border: 1px solid rgba(229, 231, 235, 0.6);
+    &:hover {
+        box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.07);
+    }
+}
+.openapi-explorer__response-container {
+    .openapi-tabs__schema-tabs-container + div[role="tabpanel"] {
+        background-color: #171717;
+        border-radius: 6px;
+    }
+    .openapi-tabs__schema-container {
+        padding-right: 1rem;
+        margin-bottom: 1rem;
+    }
+    .openapi-explorer__response-placeholder-message {
+        margin: 0 1rem 0 0;
+    }
+}
+// Form item input
+.openapi-explorer__form-item-input {
+    transition: all 0.3s;
+    &:focus,
+    &:hover {
+        border-color: #1abd00;
+    }
+}
+// Request btn
+.openapi-explorer__request-btn {
+    background-color: #1abd00;
+    &:hover {
+        opacity: 0.8;
+        background-color: #1abd00;
+    }
+}
+// Show more btn
+.openapi-explorer__show-more-btn {
+    color: #1abd00;
+    transition: all 0.3s;
+}
+// Select
+.openapi-explorer__select-input {
+    cursor: pointer;
+    &:focus {
+        box-shadow: none !important;
+    }
+}
+.openapi-explorer__multi-select-input {
+    &:focus {
+        border-color: #1abd00;
+    }
+}
+// Button
+.openapi-explorer__thin-btn {
+    color: #1abd00;
+    border-color: #1abd00;
+    &:hover {
+        color: #fff;
+        background-color: #1abd00;
+    }
+}
+.openapi-explorer__dropzone {
+    border: 2px dashed transparent;
+    transition: all 0.3s;
+    &:hover {
+        border-color: #1abd00;
+    }
+}
+// Request loading
+.openapi-explorer__loading-container {
+    padding-right: 1rem;
+}
+.openapi-response__lds-ring div {
+    border-color: #1abd00 transparent transparent transparent;
+}
+.openapi-explorer__floating-btn button {
+    background: #1abd00;
+    &:hover {
+        opacity: 0.8;
+    }
+}
 // Common
 .margin-top--md {
     margin-top: 1rem !important;
@@ -375,7 +463,7 @@ h2.openapi-tabs__response-header {
         left: 0;
     }
 }
-.theme-api-markdown details > div {
+.openapi-left-panel__container details > div {
     margin-top: 1rem;
 }
 .theme-api-markdown details[data-collapsed="false"] > summary {
@@ -390,7 +478,7 @@ h2.openapi-tabs__response-header {
 }
 
 .openapi-markdown__details > summary::before {
-    top: 0.42rem;
+    top: 0.32rem;
 }
 ul.tabs {
     li.tabs__item.openapi-tabs__schema-item::before {

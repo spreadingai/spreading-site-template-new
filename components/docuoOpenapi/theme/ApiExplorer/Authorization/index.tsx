@@ -7,10 +7,13 @@
 
 import React from "react";
 
-import FormItem from "@theme/ApiExplorer/FormItem";
-import FormSelect from "@theme/ApiExplorer/FormSelect";
-import FormTextInput from "@theme/ApiExplorer/FormTextInput";
-import { useTypedDispatch, useTypedSelector } from "@theme/ApiItem/hooks";
+import FormItem from "@/components/docuoOpenapi/theme/ApiExplorer/FormItem";
+import FormSelect from "@/components/docuoOpenapi/theme/ApiExplorer/FormSelect";
+import FormTextInput from "@/components/docuoOpenapi/theme/ApiExplorer/FormTextInput";
+import {
+  useTypedDispatch,
+  useTypedSelector,
+} from "@/components/docuoOpenapi/theme/ApiItem/hooks";
 
 import { setAuthData, setSelectedAuth } from "./slice";
 
@@ -36,6 +39,7 @@ function Authorization() {
           <FormSelect
             options={optionKeys}
             value={selected}
+            // @ts-ignore
             onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               dispatch(setSelectedAuth(e.target.value));
             }}

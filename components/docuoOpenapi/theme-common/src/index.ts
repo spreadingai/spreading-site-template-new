@@ -26,3 +26,5 @@ export {
 export { duplicates, uniq } from "./utils/jsUtils";
 
 export { useColorMode, type ColorMode } from "./contexts/colorMode";
+
+export { usePrismTheme } from "./hooks/usePrismTheme";

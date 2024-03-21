@@ -24,6 +24,10 @@ import { createAuth } from "@/components/docuoOpenapi/theme/ApiExplorer/Authoriz
 import useIsBrowser from "@/components/docuoOpenapi/core/lib/client/exports/useIsBrowser";
 import { createPersistanceMiddleware } from "@/components/docuoOpenapi/theme/ApiExplorer/persistanceMiddleware";
 import {
+  DocuoContext,
+  DocuoContextType,
+} from "@/components/docuoOpenapi/context/docuoContext";
+import {
   DocContext,
   DocContextType,
 } from "@/components/docuoOpenapi/context/docContext";
@@ -45,16 +49,19 @@ interface ApiFrontMatter extends DocFrontMatter {
 }
 
 export default function ApiItem(props: Props): JSX.Element {
-  const docValues = {
+  const docuoValues = {
     toc: props.toc,
     slug: props.slug,
     docuoConfig: props.docuoConfig,
   };
-  const [docData, setDocData] = useState<DocContextType>(docValues);
+  const [docuoData, setDocuoData] = useState<DocuoContextType>(docuoValues);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const isBrowser = useIsBrowser();
   const children = props.children;
   const frontMatter = props.mdxSource.frontmatter;
+  const [docData, setDocData] = useState<DocContextType>({
+    frontMatter,
+  });
   let { info_path: infoPath } = frontMatter as DocFrontMatter;
   // Parse the instance and version
   infoPath = parseByInfoPath(infoPath, props.instances, props.versions);
@@ -148,20 +155,24 @@ export default function ApiItem(props: Props): JSX.Element {
       );
     }
     return (
-      <DocContext.Provider value={{ docData, setDocData }}>
-        <DocItemLayout>
-          <Provider store={store2}>
-            <ColorModeProvider>
-              <div className={clsx("theme-api-markdown")}>
-                <div className="openapi-left-panel__container">{children}</div>
-                <div className="openapi-right-panel__container">
-                  <ApiExplorer item={api} infoPath={infoPath} />
+      <DocuoContext.Provider value={{ docuoData, setDocuoData }}>
+        <DocContext.Provider value={{ docData, setDocData }}>
+          <DocItemLayout>
+            <Provider store={store2}>
+              <ColorModeProvider>
+                <div className={clsx("theme-api-markdown")}>
+                  <div className="openapi-left-panel__container">
+                    {children}
+                  </div>
+                  <div className="openapi-right-panel__container">
+                    <ApiExplorer item={api} infoPath={infoPath} />
+                  </div>
                 </div>
-              </div>
-            </ColorModeProvider>
-          </Provider>
-        </DocItemLayout>
-      </DocContext.Provider>
+              </ColorModeProvider>
+            </Provider>
+          </DocItemLayout>
+        </DocContext.Provider>
+      </DocuoContext.Provider>
     );
   }
   return <>{children}</>;

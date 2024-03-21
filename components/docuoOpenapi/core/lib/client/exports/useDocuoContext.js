@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 import { useContext } from "react";
-import { DocContext } from "../../../../context/docContext";
+import { DocuoContext } from "../../../../context/docuoContext";
 export default function useDocuoContext() {
-  return useContext(DocContext);
+  return useContext(DocuoContext);
 }
