@@ -1,4 +1,4 @@
 echo "start delete"
-# rm -rf .next/cache/webpack
+# rm -rf docs/.git/objects
 echo "end delete"
 
