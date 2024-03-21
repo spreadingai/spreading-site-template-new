@@ -214,6 +214,7 @@ ul.tabs {
     color: #1abd00;
 }
 .openapi-params__list-item {
+    padding: 2px 0 5px 1rem !important;
     & > div:last-of-type {
         line-height: 23px;
     }
@@ -372,6 +373,27 @@ ul.tabs {
     cursor: pointer;
     &:focus {
         box-shadow: none !important;
+    }
+}
+.openapi-explorer__multi-select-input {
+    &:focus {
+        border-color: #1abd00;
+    }
+}
+// Button
+.openapi-explorer__thin-btn {
+    color: #1abd00;
+    border-color: #1abd00;
+    &:hover {
+        color: #fff;
+        background-color: #1abd00;
+    }
+}
+.openapi-explorer__dropzone {
+    border: 2px dashed transparent;
+    transition: all 0.3s;
+    &:hover {
+        border-color: #1abd00;
     }
 }
 // Request loading
