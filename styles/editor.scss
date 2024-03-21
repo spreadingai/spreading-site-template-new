@@ -1,10 +1,9 @@
 .editor-wrapper,
 .editor-container {
 	font-family: Inter;
-	--text-primary: #171717;
 	font-size: 14px;
 	font-weight: 300;
-	color: var(--text-primary);
+	color: var(--docuo-color-primary);
 	line-height: 25px;
 	// 如果单词太长无法装进容器里，允许在任意位置断行
 	word-wrap: break-word;
@@ -17,10 +16,12 @@
 	h1 {
 		font-family: Inter-Bold;
 		font-weight: bold;
+		color: var(--docuo-color-primary);
 	}
 	h2, h3, h4, h5, h6 {
 		font-family: Inter-SemiBold, Inter;
 		font-weight: bold;
+		color: var(--docuo-color-primary);
 	}
 	h2, h3, h4 {
 		margin-top: 32px;
@@ -62,13 +63,13 @@
 	// 正文
 	p {
 		font-size: 16px;
-		color: #353C4E;
+		color: var(--docuo-text-color);
 		margin: 16px 0;
 	}
 	
 	hr {
 		height: 0;
-		border-top: 1px solid rgba(229, 231, 235, 0.8);
+		border-top: 1px solid var(--docuo-hr-color);
 		margin: 48px 0;
 	}
 
@@ -80,6 +81,7 @@
 			font-size: 16px;
 			line-height: 24px;
 			font-weight: 400;
+			color: var(--docuo-text-color);
 			margin: 14px 0;
 
 			& > ul,
@@ -96,7 +98,7 @@
 			content: "";
 			width: 6px;
 			height: 6px;
-			background: #C5C9D0;
+			background: var(--docuo-ul-dot-color);
 			border-radius: 4px 4px 4px 4px;
 			position: absolute;
 			left: -18px;
@@ -111,7 +113,7 @@
 	// 有序排序序号
 	ol > li:not([class^="ant-"]) {
 		&::marker {
-			color: #B1B4B8;
+			color: var(--docuo-ol-number-color);
 		}
 	}
 	ol,
@@ -145,11 +147,11 @@
 	//链接
 	a {
 		font-family: Inter-Medium;
-		color: #171717;
+		color: var(--docuo-color-primary);
 		text-decoration: none;
-		border-bottom: 1px solid #1ABD00;
+		border-bottom: 1px solid var(--docuo-color-primary-hover);
 		&:hover {
-			color: #1ABD00;
+			color: var(--docuo-color-primary-hover);
 		}
 	}
 
@@ -157,22 +159,22 @@
 	blockquote {
 		margin: 16px 0;
 		border-radius: 6px;
-		border: 1px solid rgba(202, 208, 217, 0.4);
-		border-left: 4px solid #E3E8EF;
-		background: #F9FAFB;
+		border: var(--docuo-blockquote-border);
+		border-left: var(--docuo-blockquote-border-l);
+		background: var(--docuo-blockquote-bg);
 		padding: 16px 20px 16px 50px;
 		position: relative;
 		p {
 			margin: 0;
 			font-size: 16px;
-			color: #353C4E;
+			color: var(--docuo-text-color);
 			line-height: 24px;
 		}
 		&::before {
 			content: "";
 			width: 14px;
 			height: 14px;
-			background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAkJJREFUWEftV21v2jAQ9luAlNGGzHFMYB1dp3Wbtv//R6ZN6tAKaIiZZEzqKlZIbU9GZaLBCaFStS+5r3fP3XOP72wZgnLmcM49AEBTaw2FEFflYNYo3O12Pa31kckHixL1+/3GarViUspjAMA6Vin1J47jwSMIOJTSgBDS1lqjDT6PAAzDMAAAsE3hDeAxBDzP8xqNRqS1xlniNgKIMXYGITQS7dihBHzf7zmO085TLEugsPihRxBF0QsppZmdXHtAgHPe11q3igBlFQiCgCOEzDEW2j8CvV7PT9O0uyf+RikVx3F8UxQXRdGRlPJ8TyO3rusmGwKEc36xPZ3bYITQ3XK5nMzn8+t9HRk/pfQNxrieE6sJIdPJZPLT+NcEGGMhhNBM/I6Z4s1m89tgMFiWKe77/rHjOC/zikspR0mS/N74DQHY6XTeKqWIDZSm6ahs5wYfhuErc8HYcmmtZ7PZTGz7IKW0hTHu2wBSymWSJJdlOr+PIWEYvsvrXgjxBQAgHxDYM61CCDErS6Ddbp/UarXTnKO8nk6no6zP3Hi5krmu+3U4HN6WJUApjTDGz23x9Xr9+3g8/rVDgFJ6gTGu2UBCiM9Zyfas36mU8sQWo5S6sq0v5Jy/t93RAAAthPhUtvv7ATwDADyzYVqt1qVtk8wRfMg+OOv9hFASQn5kky0Wi7u8rWCMnee9IRjjKUJI2Wbg4yFdFl3FQRC8Rgi5h+QzClQEKgUqBSoFKgUqBf6vAoe8XE8RW/g7foqC2Zx/AXZYUO19RG0LAAAAAElFTkSuQmCC");
+			background: var(--docuo-blockquote-icon);
 			background-size: contain;
 			position: absolute;
 			left: 18px;
@@ -187,13 +189,13 @@
 		overflow: auto;
 		margin: 20px 0;
 		// table 正文颜色
-		color: #353C4E;
+		color: var(--docuo-text-color);
 		p {
-			color: #353C4E;
+			color: var(--docuo-text-color);
 		}
 
 		tr {
-			border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+			border-bottom: var(--docuo-table-border);
 		}
 
 		th, td {
@@ -205,8 +207,8 @@
 		th {
 			font-family: Inter-SemiBold, Inter;
 			font-weight: bold;
-			color: #171717;
-			background: rgba(229, 231, 235, 0.25);
+			color: var(--docuo-color-primary);
+			background: var(--docuo-table-th-bg);
 		}
 
 		td {
@@ -218,12 +220,12 @@
 	// inline code
 	code:not([class*="language-"]) {
 		padding: 2px 6px;
-		background: #F4F4FA;
-		border: 1px solid #E1E2EA;
+		background: var(--docuo-inline-code-bg);
+		border: var(--docuo-inline-code-border);
 		border-radius: 4px;
 		font-family: RobotoMono;
 		font-weight: 500;
-		color: #171717;
+		color: var(--docuo-color-primary);
 		line-height: 1.2;
 		font-size: 90%;
 	}

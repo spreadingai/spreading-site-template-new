@@ -211,6 +211,9 @@ html[data-theme="dark"] {
   position: relative;
   width: 100%;
 }
+.DocSearch-VisuallyHiddenForAccessibility {
+  display: none;
+}
 .DocSearch-Input {
   appearance: none;
   background: transparent;
