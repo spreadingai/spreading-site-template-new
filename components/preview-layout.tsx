@@ -13,6 +13,7 @@ import {
   DisplayInstance,
   DisplayVersion,
   DocuoConfig,
+  ColorMode,
   SidebarItemType,
   TocItem,
 } from "@/lib/types";
@@ -105,6 +106,30 @@ const PreviewLayout = ({
   const [expandedKeys, setExpandedKeys] = useState([]);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [theme, setTheme] = useState<Theme>("light");
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    if (["dark", "light"].includes(theme)) {
+      document.documentElement.dataset.theme = theme;
+    }
+  }, [theme]);
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    const THEME_KEY = "theme";
+    const colorMode: ColorMode = docuoConfig?.themeConfig?.colorMode;
+    let defaultTheme: Theme = "light";
+    const localTheme = localStorage.getItem(THEME_KEY);
+    if (["dark", "light"].includes(localTheme)) {
+      defaultTheme = localTheme as Theme;
+    } else if (colorMode?.respectPrefersColorScheme) {
+      const isDarkPrefer = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)')?.matches;
+      defaultTheme = isDarkPrefer ? "dark" : "light";
+    } else if (["dark", "light"].includes(colorMode?.defaultMode)) {
+      defaultTheme = colorMode?.defaultMode;
+    }
+    setTheme(defaultTheme);
+  }, []);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
@@ -233,14 +258,6 @@ const PreviewLayout = ({
 
   const scrollToTop = () => {
     document.body.scrollTo({ top: 0, behavior: "smooth" });
-  };
-  const handleAnchorClick: AnchorProps["onClick"] = (event) => {
-    if ((event.target as HTMLElement).matches("a")) {
-      event.preventDefault();
-
-      // 执行您的自定义逻辑
-      console.log("[Site]handleAnchorClick", event);
-    }
   };
 
   const onDrawerClose = () => {
@@ -413,34 +430,6 @@ const PreviewLayout = ({
               titleRender={titleRenderHandle}
               setDrawerOpen={setDrawerOpen}
             />
-            {/* <DirectoryTree
-              key="2"
-              showLine
-              blockNode
-              defaultExpandAll
-              // @ts-ignore
-              switcherIcon={(props: AntTreeNodeProps) => (
-                <IconFileClose
-                  style={{
-                    fontSize: "18px",
-                    transform: props.expanded ? "rotate(90deg)" : "rotate(0deg)",
-                  }}
-                />
-              )}
-              showIcon={false}
-              titleRender={titleRenderHandle}
-              onSelect={fileSelectHandle}
-              treeData={folderTreeData}
-              selectedKeys={selectedKeys}
-              // expandedKeys={expandedKeys}
-              onExpand={onExpand}
-            /> */}
-            {/* <div className="generate-desc">
-              <span>Powered By</span>
-              <a href="https://www.spreading.ai/" target="_blank">
-                <Image src={LogoGrey} alt={"spreading"} />
-              </a>
-            </div> */}
           </Drawer>
         </main>
         <Footer docuoConfig={docuoConfig} socials={[]} links={[]} />

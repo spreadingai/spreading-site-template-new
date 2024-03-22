@@ -115,6 +115,10 @@ const Header = (props: Props) => {
     return "";
   }, [navbar.logo, theme]);
 
+  const renderThemeSwitch = () => {
+    return isShowThemeBtn ? <ThemeSwitch className={isMobile ? "mobile" : ""} /> : null;
+  }
+
   return (
     <header
       className={`${styles["header-container"]} ${
@@ -157,6 +161,7 @@ const Header = (props: Props) => {
                   return item;
                 }
               })}
+              renderThemeSwitch={renderThemeSwitch}
             />
           </div>
         ) : (
@@ -182,7 +187,7 @@ const Header = (props: Props) => {
               );
             })}
             <div className={styles["menus__btn-list"]}>
-              {isShowThemeBtn && <ThemeSwitch docuoConfig={docuoConfig} />}
+              {renderThemeSwitch()}
             </div>
           </div>
         )}
@@ -190,14 +195,14 @@ const Header = (props: Props) => {
       {isMobile && (
         <div
           style={{ paddingLeft: 22, paddingRight: 22 }}
-          className="w-full toc-bar flex justify-between"
+          className={`w-full flex justify-between ${styles["mobile-magic-btn-wrapper"]}`}
         >
           <span
             style={{ padding: 4, marginRight: 14 }}
-            className="w-10 h-10 cursor-pointer block border border-gray-200/80 rounded-md bg-white"
+            className={`w-10 h-10 cursor-pointer block rounded-md ${styles["sidebar-btn"]}`}
             onClick={() => setDrawerOpen(true)}
           >
-            <IconMenu />
+            <IconMenu className={styles["sidebar-icon"]} />
           </span>
           <AnChorMobile tocFormatData={tocFormatData} />
         </div>

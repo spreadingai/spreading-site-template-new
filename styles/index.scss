@@ -559,6 +559,7 @@ html > body {
 
   .preview-side-close-btn {
     display: block;
+    color: var(--docuo-m-drawer-close-color);
   }
 
   .mobile-tree-container {
@@ -566,8 +567,16 @@ html > body {
     z-index: 1001;
     position: fixed;
 
+    .ant-drawer-mask {
+      background: var(--docuo-m-drawer-mask-bg);
+    }
+
     .ant-drawer-content-wrapper {
       width: 21.25rem !important;
+
+      .ant-drawer-content {
+        background: var(--docuo-background-primary);
+      }
     }
 
     .ant-drawer-header {

@@ -1,22 +1,27 @@
-import React, { FC, useMemo, useState } from "react";
-import IconBurgerMenu from "@/assets/icons/iconBurgerMenu.svg";
+import React, { FC, useEffect, useMemo, useState } from "react";
 import IconNavMore from "@/assets/icons/IconNavMore.svg";
-import IconBurgerMenuClose from "@/assets/icons/iconBurgerMenuClose.svg";
+import IconNavMoreActive from "@/assets/icons/IconNavMoreActive.svg";
+import IconNavMoreDark from "@/assets/icons/IconNavMore@dark.svg";
+import IconNavMoreActiveDark from "@/assets/icons/IconNavMoreActive@dark.svg";
 import IconMenuSearch from "@/assets/icons/iconMenuSearch.svg";
+import IconMenuSearchDark from "@/assets/icons/iconMenuSearch@dark.svg";
 import IconArrowRight from "@/assets/icons/iconArrowRight.svg";
 import styles from "./mobile.module.scss";
 import { Collapse } from "antd";
 import Link from "next/link";
-import { NavBarItem, NavbarLink } from "./@types";
+import { NavbarLink } from "./@types";
 import { createPortal } from "react-dom";
+import ThemeContext from "@/components/header/Theme.context";
 
 interface Props {
   menus: NavbarLink[];
+  renderThemeSwitch: () => any;
 }
 
-const Mobile: FC<Props> = ({ menus }) => {
+const Mobile: FC<Props> = ({ menus, renderThemeSwitch }) => {
   const [open, setOpen] = useState(false);
-
+  const { theme } = React.useContext(ThemeContext);
+  
   const DropdownList = useMemo(() => {
     return (
       <div className={styles["mobile-container"]}>
@@ -66,9 +71,9 @@ const Mobile: FC<Props> = ({ menus }) => {
                     if (panelProps.isActive) {
                       return (
                         <IconArrowRight
+                          className={styles["dropdown-icon"]}
                           style={{
                             fontSize: 12,
-                            color: "#444444",
                             transition: "transform 0.3s",
                             transform: "rotate(90deg)",
                           }}
@@ -77,9 +82,9 @@ const Mobile: FC<Props> = ({ menus }) => {
                     }
                     return (
                       <IconArrowRight
+                        className={styles["dropdown-icon"]}
                         style={{
                           fontSize: 12,
-                          color: "#444444",
                           transition: "transform 0.3s",
                         }}
                       />
@@ -101,24 +106,29 @@ const Mobile: FC<Props> = ({ menus }) => {
               </React.Fragment>
             );
           })}
+          <div className={styles["mobile-btn-list"]}>
+            {renderThemeSwitch()}
+          </div>
         </div>
       </div>
     );
   }, [menus]);
 
+  const NavMoreNormal = theme === "dark" ? IconNavMoreDark : IconNavMore;
+  const NavMoreActive = theme === "dark" ? IconNavMoreActiveDark : IconNavMoreActive;
+  const MenuSearch = theme === "dark" ? IconMenuSearchDark : IconMenuSearch;
+
   return (
     <div>
       <div className={`cursor-pointer flex gap-4`}>
-        <IconMenuSearch
+        <MenuSearch
           onClick={() => {
-            const el: HTMLButtonElement =
-              document.querySelector(".DocSearch-Button");
-
+            const el: HTMLButtonElement = document.querySelector(".DocSearch-Button");
             el && el.click();
           }}
         />
         <span onClick={() => setOpen((value) => !value)}>
-          {open ? <IconBurgerMenu /> : <IconNavMore />}
+          {open ? <NavMoreActive /> : <NavMoreNormal />}
         </span>
       </div>
       {open &&

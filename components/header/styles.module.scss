@@ -108,6 +108,17 @@
       }
     }
   }
+
+  .mobile-magic-btn-wrapper {
+    .sidebar-btn {
+      background: var(--docuo-m-drawer-btn-bg);
+      border: var(--docuo-m-drawer-btn-border);
+
+      .sidebar-icon {
+        color: var(--docuo-m-drawer-btn-color);
+      }
+    }
+  }
 }
 
 .popup {
