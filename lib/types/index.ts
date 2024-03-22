@@ -14,7 +14,8 @@ export interface DocuoConfig {
   themeConfig: {
     navbar: NavbarConfig;
     footer: FooterConfig;
-    colorMode: ColorMode;
+    colorMode?: ColorMode;
+    colors?: Colors;
   };
   search?: {
     algolia?: {
@@ -88,6 +89,12 @@ export interface ColorMode {
   defaultMode: "light" | "dark";
   disableSwitch: boolean;
   respectPrefersColorScheme: boolean;
+}
+export interface Colors {
+  primaryLight: string;
+  primaryDark: string;
+  backgroundLight: string;
+  backgroundDark: string;
 }
 export interface DocInstance {
   id: string;

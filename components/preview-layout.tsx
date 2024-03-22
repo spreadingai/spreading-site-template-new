@@ -135,6 +135,58 @@ const PreviewLayout = ({
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
+    const styleElId = "themeColor";
+    const colors = docuoConfig.themeConfig.colors;
+    if (!colors || document.getElementById(styleElId)) return;
+
+    const styleEl = document.createElement("style");
+    styleEl.id = styleElId;
+    let innerHTML = "";
+    let lightStyleText = "";
+    if (colors.primaryLight) {
+      lightStyleText += `
+          --docuo-color-primary-hover: ${colors.primaryLight};
+          --docuo-color-primary-active: ${colors.primaryLight};
+        `;
+    }
+    if (colors.backgroundLight) {
+      lightStyleText += `
+          --docuo-background-primary: ${colors.backgroundLight};
+        `;
+    }
+    let darkStyleText = "";
+    if (colors.primaryDark) {
+      darkStyleText += `
+          --docuo-color-primary-hover: ${colors.primaryDark};
+          --docuo-color-primary-active: ${colors.primaryDark};
+        `;
+    }
+    if (colors.backgroundDark) {
+      darkStyleText += `
+          --docuo-background-primary: ${colors.backgroundDark};
+        `;
+    }
+    if (lightStyleText !== "") {
+      innerHTML += `
+        html {
+          ${lightStyleText}
+        }
+      `;
+    }
+    if (darkStyleText !== "") {
+      innerHTML += `
+        html[data-theme=dark] {
+          ${darkStyleText}
+        }
+      `;
+    }
+    // remove blank lines
+    styleEl.innerHTML = innerHTML.replaceAll(/^[\s]*\n/mg, "");
+    document.documentElement.firstChild.appendChild(styleEl);
+  }, [docuoConfig.themeConfig.colors]);
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
     // NEXT_PUBLIC_LOCAL_WS: auto reload only for dev mode
     if (!process?.env?.NEXT_PUBLIC_LOCAL_WS || WsConnecting) return;
     WsConnecting = true;
