@@ -38,10 +38,10 @@ const FooterMobile: FC<{ items: FooterLinkGroup[] }> = ({ items }) => {
               <IconArrowRight
                 style={{
                   fontSize: 24,
-                  color: "#8f939d",
                   transition: "transform 0.3s",
                   transform: "rotate(-180deg)",
                 }}
+                className={styles["dropdown-icon"]}
               />
             );
           }
@@ -49,9 +49,9 @@ const FooterMobile: FC<{ items: FooterLinkGroup[] }> = ({ items }) => {
             <IconArrowRight
               style={{
                 fontSize: 24,
-                color: "#8f939d",
                 transition: "transform 0.3s",
               }}
+              className={styles["dropdown-icon"]}
             />
           );
         }}

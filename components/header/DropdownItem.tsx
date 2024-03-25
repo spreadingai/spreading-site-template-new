@@ -1,4 +1,4 @@
-import { Dropdown, MenuProps, Space } from "antd";
+import { Dropdown } from "antd";
 import React, { FC, useMemo } from "react";
 import styles from "./styles.module.scss";
 import IconArrowRight from "@/assets/icons/iconArrowRight.svg";
@@ -10,7 +10,6 @@ const DropdownItem: FC<{ menu: NavbarLink }> = ({ menu }) => {
   const DropdownList = useMemo(() => {
     return menu.items.map((item, index) => {
       return {
-        ...item,
         key: index,
         label: (
           <Link
