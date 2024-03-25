@@ -33,6 +33,8 @@ import AnChorMobile from "./Anchor/AnchorMobile";
 import InsVersionDropdown from "@/components/dropdown/InsVersionDropdown";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import ThemeContext, { Theme } from "@/components/header/Theme.context";
+import useColors from "./hooks/useColors";
+import useColorMode from "./hooks/useColorMode";
 
 const { DirectoryTree } = Tree;
 
@@ -107,83 +109,9 @@ const PreviewLayout = ({
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [theme, setTheme] = useState<Theme>("light");
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useEffect(() => {
-    if (["dark", "light"].includes(theme)) {
-      document.documentElement.dataset.theme = theme;
-    }
-  }, [theme]);
+  useColorMode(docuoConfig.themeConfig?.colorMode, theme, setTheme);
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useEffect(() => {
-    const themeEnabled = docuoConfig?.themeConfig?.colorMode?.disableSwitch === false;
-    if (!themeEnabled) return;
-    const THEME_KEY = "theme";
-    const colorMode: ColorMode = docuoConfig?.themeConfig?.colorMode;
-    let defaultTheme: Theme = "light";
-    const localTheme = localStorage.getItem(THEME_KEY);
-    if (["dark", "light"].includes(localTheme)) {
-      defaultTheme = localTheme as Theme;
-    } else if (colorMode?.respectPrefersColorScheme) {
-      const isDarkPrefer = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)')?.matches;
-      defaultTheme = isDarkPrefer ? "dark" : "light";
-    } else if (["dark", "light"].includes(colorMode?.defaultMode)) {
-      defaultTheme = colorMode?.defaultMode;
-    }
-    setTheme(defaultTheme);
-  }, []);
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useEffect(() => {
-    const styleElId = "themeColor";
-    const colors = docuoConfig.themeConfig.colors;
-    if (!colors || document.getElementById(styleElId)) return;
-
-    const styleEl = document.createElement("style");
-    styleEl.id = styleElId;
-    let innerHTML = "";
-    let lightStyleText = "";
-    if (colors.primaryLight) {
-      lightStyleText += `
-          --docuo-color-primary-hover: ${colors.primaryLight};
-          --docuo-color-primary-active: ${colors.primaryLight};
-        `;
-    }
-    if (colors.backgroundLight) {
-      lightStyleText += `
-          --docuo-background-primary: ${colors.backgroundLight};
-        `;
-    }
-    let darkStyleText = "";
-    if (colors.primaryDark) {
-      darkStyleText += `
-          --docuo-color-primary-hover: ${colors.primaryDark};
-          --docuo-color-primary-active: ${colors.primaryDark};
-        `;
-    }
-    if (colors.backgroundDark) {
-      darkStyleText += `
-          --docuo-background-primary: ${colors.backgroundDark};
-        `;
-    }
-    if (lightStyleText !== "") {
-      innerHTML += `
-        html {
-          ${lightStyleText}
-        }
-      `;
-    }
-    if (darkStyleText !== "") {
-      innerHTML += `
-        html[data-theme=dark] {
-          ${darkStyleText}
-        }
-      `;
-    }
-    // remove blank lines
-    styleEl.innerHTML = innerHTML.replaceAll(/^[\s]*\n/mg, "");
-    document.documentElement.firstChild.appendChild(styleEl);
-  }, [docuoConfig.themeConfig.colors]);
+  useColors(docuoConfig.themeConfig?.colors);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
