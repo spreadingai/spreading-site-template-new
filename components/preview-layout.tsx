@@ -400,7 +400,7 @@ const PreviewLayout = ({
                     </div>
 
                     <div className="right-anchor-divide"></div>
-                    <div className="back-to-top" onClick={scrollToTop}>
+                    <div className="back-to-top hover:opacity-70" onClick={scrollToTop}>
                       <div className="top-btn">
                         {theme === "dark" ? <IconBackTopDark /> : <IconBackTop />}
                       </div>

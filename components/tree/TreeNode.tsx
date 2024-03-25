@@ -67,6 +67,7 @@ const TreeNode: FC<TreeNodeProps> = ({
         className={classNames("text-sm flex items-center", {
           "mb-2.5": level === 0,
           "mb-2 cursor-pointer": level > 0,
+          "hover:opacity-70": level > 0 && hasChildren,
         })}
         onClick={level > 0 ? toggleNode : undefined}
       >

@@ -35,6 +35,7 @@ html {
   --docuo-footer-bg: rgba(229, 231, 235, 0.5);
   --docuo-footer-caption-color: rgba(81, 88, 105, 0.7);
   --docuo-footer-link-color: rgba(53, 60, 78, 0.7);
+  --docuo-footer-link-color-hover: #1abd00;
   --docuo-footer-copyright-color: rgba(53, 60, 78, 0.4);
   --docuo-footer-copyright-border: 1px solid #e5e7eb;
 
@@ -107,6 +108,7 @@ html[data-theme=dark] {
   --docuo-footer-bg: #161616;
   --docuo-footer-caption-color: rgba(182, 182, 182, 0.7);
   --docuo-footer-link-color: rgba(182, 182, 182, 0.7);
+  --docuo-footer-link-color-hover: #f0f0f0;
   --docuo-footer-copyright-color: rgba(182, 182, 182, 0.6);
   --docuo-footer-copyright-border: 1px solid #3c3c3c;
 
