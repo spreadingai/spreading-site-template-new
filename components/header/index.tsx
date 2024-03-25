@@ -100,7 +100,7 @@ const Header = (props: Props) => {
     );
   }, [algolia, currentVersion, currentInstance]);
 
-  const isShowThemeBtn = !docuoConfig?.themeConfig?.colorMode?.disableSwitch;
+  const isShowThemeBtn = docuoConfig?.themeConfig?.colorMode?.disableSwitch === false;
 
   const logo = useMemo(() => {
     if (typeof navbar.logo === "string") {

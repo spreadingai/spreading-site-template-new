@@ -116,6 +116,8 @@ const PreviewLayout = ({
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
+    const themeEnabled = docuoConfig?.themeConfig?.colorMode?.disableSwitch === false;
+    if (!themeEnabled) return;
     const THEME_KEY = "theme";
     const colorMode: ColorMode = docuoConfig?.themeConfig?.colorMode;
     let defaultTheme: Theme = "light";
