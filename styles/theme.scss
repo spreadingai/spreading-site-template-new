@@ -69,6 +69,8 @@ html {
   // ul, ol
   --docuo-ul-dot-color: #C5C9D0;
   --docuo-ol-number-color: #B1B4B8;
+  // code group
+  --docuo-code-group-active: #05EC07;
 }
 
 html[data-theme=dark] {
@@ -142,4 +144,6 @@ html[data-theme=dark] {
   // ul, ol
   --docuo-ul-dot-color: #565656;
   --docuo-ol-number-color: #565656;
+  // code group
+  --docuo-code-group-active: #05EC07;
 }

@@ -11,15 +11,17 @@ const useColors = (colors) => {
     let lightStyleText = "";
     if (colors.primaryLight) {
       lightStyleText += `
-          --docuo-color-primary-hover: ${colors.primaryLight};
-          --docuo-color-primary-active: ${colors.primaryLight};
+          --docuo-color-primary-hover: ${colors.primaryLight} !important;
+          --docuo-color-primary-active: ${colors.primaryLight} !important;
+          --docuo-code-group-active: ${colors.primaryLight} !important;
         `;
     }
     let darkStyleText = "";
     if (colors.primaryDark) {
       darkStyleText += `
-          --docuo-color-primary-hover: ${colors.primaryDark};
-          --docuo-color-primary-active: ${colors.primaryDark};
+          --docuo-color-primary-hover: ${colors.primaryDark} !important;
+          --docuo-color-primary-active: ${colors.primaryDark} !important;
+          --docuo-code-group-active: ${colors.primaryDark} !important;
         `;
     }
     if (lightStyleText !== "") {
