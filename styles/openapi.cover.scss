@@ -115,6 +115,7 @@ pre {
     .openapi-security__summary-container {
         background: #282828;
         padding: 12px 28px;
+        width: auto;
         & + pre {
             background-color: #171717;
             border: none;
