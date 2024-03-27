@@ -10,7 +10,6 @@ const DropdownItem: FC<{ menu: NavbarLink }> = ({ menu }) => {
   const DropdownList = useMemo(() => {
     return menu.items.map((item, index) => {
       return {
-        ...item,
         key: index,
         label: (
           <Link

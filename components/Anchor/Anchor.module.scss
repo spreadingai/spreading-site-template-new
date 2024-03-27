@@ -1,0 +1,17 @@
+.anchorText {
+  color: var(--docuo-anchor-color);
+  &:hover, &.active {
+    color: var(--docuo-color-primary-hover);
+  }
+  &.gt0Level {
+    &:hover, &.active {
+      border-left-width: 1px;
+      border-inline-start-color: var(--docuo-color-primary-hover);
+      transform: translateX(-1px);
+    }
+  }
+}
+.anchorChildrenWrap {
+  border-left-width: 1px;
+  border-inline-start-color: var(--docuo-anchor-border-color);
+}

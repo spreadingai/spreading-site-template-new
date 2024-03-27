@@ -1,18 +1,12 @@
-import React, { FC, useEffect, useRef } from "react";
+import React, { FC, useEffect, useMemo, useRef } from "react";
 import styles from "./styles.module.scss";
-import Image from "next/image";
-import IconDiscord from "@/assets/icons/social/Discord.svg";
-import IconFacebook from "@/assets/icons/social/Facebook.svg";
-import IconGithub from "@/assets/icons/social/GitHub.svg";
-import IconLinkedIn from "@/assets/icons/social/LinkedIn.svg";
-import IconX from "@/assets/icons/social/X.svg";
-import IconYoutube from "@/assets/icons/social/YouTube.svg";
 import Link from "next/link";
 import type { footerProps } from "./@types";
-import { useMediaQuery, useDarkMode } from "usehooks-ts";
+import { useMediaQuery } from "usehooks-ts";
 import FooterMobile from "./mobile";
 import classNames from "classnames";
 import { getSocial } from "./utils";
+import ThemeContext from "@/components/header/Theme.context";
 
 const defaultFooter = {
   logo: undefined,
@@ -40,7 +34,7 @@ const Footer: FC<footerProps> = ({ docuoConfig }) => {
   const isWrap = useMediaQuery(`(max-width: ${towRowWidth}px)`);
   const isShowMobile = useMediaQuery(`(max-width: 1024px)`);
   const isSMWrap = useMediaQuery(`(max-width: ${3 * 200 + 64}px)`);
-  const { isDarkMode } = useDarkMode(false);
+  const { theme } = React.useContext(ThemeContext);
 
   useEffect(() => {
     const towColWidth = 40 * 2 + 320 + 40 + len * itemWidth;
@@ -54,7 +48,21 @@ const Footer: FC<footerProps> = ({ docuoConfig }) => {
     setIsMobile(isShowMobile);
   }, [isShowMobile]);
 
-  if (!footer) return null;
+  const logo = useMemo(() => {
+    if (typeof footer.logo === "string") {
+      return footer.logo;
+    }
+    if (theme === "dark" && typeof footer.logo?.dark === "string") {
+      return footer.logo?.dark;
+    }
+    if (theme === "light" && typeof footer.logo?.light === "string") {
+      return footer.logo?.light;
+    }
+    return "";
+  }, [footer.logo, theme]);
+
+  const isDarkMode = theme === "dark";
+
   return (
     <footer
       className={`${styles["footer-container"]} w-full flex  justify-center`}
@@ -62,20 +70,19 @@ const Footer: FC<footerProps> = ({ docuoConfig }) => {
       <div className={styles["container"]}>
         <div className={styles["footer-wrapper"]}>
           <div className={styles["left"]}>
-            {footer.logo && (
+            {logo && (
               <div className={styles["logo-container"]}>
                 <img
                   className={styles.logo}
                   src={
-                    (footer.logo as string).includes("http")
-                      ? `${footer.logo}`
+                    (logo as string).includes("http")
+                      ? `${logo}`
                       : `${process.env.NEXT_PUBLIC_BASE_PATH || "/"}${
                           process.env.NEXT_PUBLIC_BASE_PATH ? "/" : ""
-                        }${footer.logo}`
+                        }${logo}`
                   }
                   alt={"logo"}
                 />
-                {/* <div className={styles["logo-title"]}>{"Untitled"}</div> */}
               </div>
             )}
 
@@ -90,8 +97,6 @@ const Footer: FC<footerProps> = ({ docuoConfig }) => {
                       <span className={styles["social-item"]}>
                         {getSocial(social.logo, isDarkMode)}
                       </span>
-                      {/* <Image src={social.logo} alt={"logo"} /> */}
-                      {/* {<IconDiscord />} */}
                     </a>
                   );
                 })}

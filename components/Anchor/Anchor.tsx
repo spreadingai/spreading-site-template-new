@@ -1,3 +1,4 @@
+import styles from "./Anchor.module.scss";
 import classNames from "classnames";
 import React, {
   FC,
@@ -6,8 +7,6 @@ import React, {
   useContext,
   useEffect,
 } from "react";
-import IconTreeArrow from "@/assets/icons/tree/sidebar_arrow_open.svg";
-import { SidebarItemType } from "@/lib/types";
 import AnchorContext from "./context";
 import { useMediaQuery } from "usehooks-ts";
 
@@ -73,26 +72,19 @@ const AnchorNode: FC<AnchorNodeProps> = ({
         }
       >
         <span
-          className={classNames({
-            "text-secondary/80 hover:border-l hover:border-s-sidebar-hover hover:-translate-x-[1px]":
-              level !== 0,
-            "border-l border-s-sidebar-active  -translate-x-[1px]":
-              activeLink === node.href && level !== 0,
-            "active:text-sidebar-active": level !== 0,
-            "text-secondary/80": level === 0,
+          className={classNames(styles.anchorText, {
+            [styles.active]: activeLink === node.href,
+            [styles.gt0Level]: level !== 0,
           })}
         >
           <a
             href={node.href}
             className={classNames(
               "cursor-pointer block",
-              "hover:text-sidebar-hover",
-              "active:text-sidebar-active",
-
               "font-inter-regular",
               {
                 "pl-[13px]": level !== 0,
-                "font-inter-bold font-semibold text-sidebar-active":
+                "font-inter-bold font-semibold":
                   activeLink === node.href,
               }
             )}
@@ -104,9 +96,8 @@ const AnchorNode: FC<AnchorNodeProps> = ({
       </div>
       {hasChildren && (
         <div
-          className={classNames(" mt-1", {
+          className={classNames(" mt-1", styles.anchorChildrenWrap, {
             "ml-4": level !== 0,
-            "border-l border-s-sidebar-default": true,
           })}
         >
           {node.children.map((child, index) => (

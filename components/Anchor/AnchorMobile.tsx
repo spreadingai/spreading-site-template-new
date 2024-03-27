@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import styles from "./mobile.module.scss";
 import IconArrowRight from "@/assets/icons/iconArrowDown.svg";
 import DocuoAnchor from "./index";
@@ -7,9 +6,6 @@ import { useMediaQuery } from "usehooks-ts";
 
 import React, {
   FC,
-  MouseEvent,
-  MouseEventHandler,
-  useContext,
   useEffect,
   useMemo,
 } from "react";
@@ -29,13 +25,11 @@ const AnchorNodeMobile: FC<AnchorNodeProps> = ({ tocFormatData }) => {
     return openToc
       ? {
           fontSize: 24,
-          color: "#8f939d",
           transition: "transform 0.3s",
           transform: "rotate(-180deg)",
         }
       : {
           fontSize: 24,
-          color: "#8f939d",
           transition: "transform 0.3s",
         };
   }, [openToc]);
@@ -50,10 +44,10 @@ const AnchorNodeMobile: FC<AnchorNodeProps> = ({ tocFormatData }) => {
         setOpenToc((value) => !value);
       }}
       style={{ paddingLeft: 14, paddingRight: 12 }}
-      className={`w-full border bg-white border-gray-200/80 rounded-md toc flex items-center justify-between  h-10 ${styles["toc-btn"]}`}
+      className={`w-full rounded-md toc flex items-center justify-between  h-10 ${styles["toc-btn"]}`}
     >
       <span className={styles["toc-font"]}>On this page</span>
-      <IconArrowRight style={iconStyles} />
+      <IconArrowRight style={iconStyles} className={styles["toc-icon"]} />
       {loaded &&
         createPortal(
           <div style={{ display: openToc ? "block" : "none" }}>

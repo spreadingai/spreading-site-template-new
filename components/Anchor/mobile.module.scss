@@ -1,8 +1,16 @@
+.toc-btn {
+  background: var(--docuo-m-drawer-btn-bg);
+  border: var(--docuo-m-drawer-btn-border);
+
+  .toc-icon {
+    color: var(--docuo-m-toc-btn-icon-color);
+  }
+}
 .toc-font {
   font-size: 14px;
   font-family: Inter-SemiBold, Inter;
   font-weight: normal;
-  color: #171717;
+  color: var(--docuo-color-primary);
   line-height: 24px;
 }
 // PC端自定义滚动条样式
@@ -23,6 +31,14 @@
       background-color: transparent;
     }
   }
+  // dark mode
+  html[data-theme=dark] {
+    .mobile-toc-container {
+      &::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+      }
+    }
+  }
 }
 @media screen and (max-width: 1280px) {
   .toc-btn {
@@ -36,7 +52,7 @@
     top: 48px;
     right: 0;
     min-width: 331px;
-    background: #ffffff;
+    background: var(--docuo-popup-bg);
     padding: 20px;
     padding-top: 16px;
     display: flex;
@@ -44,10 +60,9 @@
     height: auto;
     max-height: 480px;
     overflow: auto;
-    background: #ffffff;
-    box-shadow: 0px 1px 12px 0px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--docuo-m-popup-box-shadow);
     border-radius: 8px;
-    border: 1px solid rgba(229, 231, 235, 0.6);
+    border: var(--docuo-popup-border);
   }
   .mobile-toc-mask {
     margin-top: 54px; // TODO: header height
@@ -72,17 +87,16 @@
     right: auto;
     left: 15px;
     width: calc(100% - 35px);
-    background: #ffffff;
+    background: var(--docuo-popup-bg);
     padding: 20px;
     padding-top: 16px;
     display: flex;
     flex-direction: column;
     max-height: calc(100vh - 202px);
     overflow: auto;
-    background: #ffffff;
-    box-shadow: 0px 1px 12px 0px rgba(0, 0, 0, 0.05);
+    box-shadow: var(--docuo-m-popup-box-shadow);
     border-radius: 8px;
-    border: 1px solid rgba(229, 231, 235, 0.6);
+    border: var(--docuo-popup-border);
   }
   .mobile-toc-mask {
     margin-top: 54px; // TODO: header height

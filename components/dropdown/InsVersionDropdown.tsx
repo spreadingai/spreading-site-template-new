@@ -16,7 +16,6 @@ const InsVersionDropdown = ({ type, menu }: InsVersionDropdownProps) => {
   const DropdownList = useMemo(() => {
     return menu.items.map((item, index) => {
       return {
-        ...item,
         key: index,
         label: (
           <Link
