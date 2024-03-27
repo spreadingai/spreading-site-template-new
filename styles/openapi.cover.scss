@@ -398,6 +398,19 @@ h3.openapi-markdown__details-summary-header-body {
 .openapi-markdown__details-summary-header-body + .openapi-schema__required {
     margin-left: 5px;
 }
+.openapi-markdown__details-summary-header-body + span {
+    background: rgba(81, 88, 105, 0.07);
+    border-radius: 4px;
+    margin-right: 5px;
+    font-family: Roboto Mono;
+    font-weight: 400;
+    font-size: 12px;
+    height: 19px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1px 4px 0;
+}
 .openapi-markdown__details-summary-mime {
     &:has(.openapi-schema__required) {
         &::before {
@@ -423,7 +436,7 @@ h3.openapi-markdown__details-summary-header-body {
 .openapi-left-panel__container {
     .openapi-schema__list-item {
         &::before {
-            // display: none;
+            display: none;
         }
     }
     & > .tabs-container {
@@ -504,6 +517,8 @@ h3.openapi-markdown__details-summary-header-body {
             }
             & > .openapi-markdown__details {
                 & > summary {
+                    display: flex;
+                    align-items: center;
                     & + div {
                         & > div {
                             font-family: Inter;
@@ -518,6 +533,25 @@ h3.openapi-markdown__details-summary-header-body {
                                 color: #515869;
                                 margin-right: 8px;
                             }
+                        }
+                    }
+                    & > strong {
+                        font-family: Roboto Mono;
+                        font-size: 16px;
+                        margin-right: 10px;
+                        color: #1abd00;
+                        & + span {
+                            background: rgba(81, 88, 105, 0.07);
+                            border-radius: 4px;
+                            margin-right: 5px;
+                            font-family: Roboto Mono;
+                            font-weight: 400;
+                            font-size: 12px;
+                            height: 19px;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            padding: 1px 4px 0;
                         }
                     }
                 }
@@ -539,6 +573,9 @@ h3.openapi-markdown__details-summary-header-body {
             }
             &:last-of-type {
                 padding-bottom: 0;
+            }
+            &.openapi-discriminator__item {
+                padding-left: 1rem !important;
             }
         }
         .openapi-markdown__details {
@@ -667,7 +704,7 @@ ul.tabs {
         border: 1px solid #4d4c4c;
         box-shadow: none;
         margin-right: 14px;
-        padding: 8px 0 4px !important;
+        padding: 8px 8px 4px !important;
         justify-content: space-between;
         margin-bottom: 0;
         & > span {
