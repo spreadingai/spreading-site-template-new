@@ -35,13 +35,17 @@ function Authorization() {
   return (
     <div>
       {optionKeys.length > 1 && (
-        <FormItem label="Security Scheme">
+        <FormItem label="Security Scheme" hideLabel={true}>
           <FormSelect
+            label="Security Scheme"
             options={optionKeys}
             value={selected}
             // @ts-ignore
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              dispatch(setSelectedAuth(e.target.value));
+            // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            //   dispatch(setSelectedAuth(e.target.value));
+            // }}
+            onChange={(value) => {
+              dispatch(setSelectedAuth(value));
             }}
           />
         </FormItem>
@@ -49,9 +53,14 @@ function Authorization() {
       {selectedAuth.map((a: any) => {
         if (a.type === "http" && a.scheme === "bearer") {
           return (
-            <FormItem label="Bearer Token" key={a.key + "-bearer"}>
+            <FormItem
+              label="Bearer Token"
+              key={a.key + "-bearer"}
+              hideLabel={true}
+            >
               <FormTextInput
-                placeholder="Bearer Token"
+                prefix="Bearer Token"
+                placeholder="Enter Bearer Token"
                 value={data[a.key].token ?? ""}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   const value = e.target.value;
@@ -70,9 +79,14 @@ function Authorization() {
 
         if (a.type === "oauth2") {
           return (
-            <FormItem label="Bearer Token" key={a.key + "-oauth2"}>
+            <FormItem
+              label="Bearer Token"
+              key={a.key + "-oauth2"}
+              hideLabel={true}
+            >
               <FormTextInput
-                placeholder="Bearer Token"
+                prefix="Bearer Token"
+                placeholder="Enter Bearer Token"
                 value={data[a.key].token ?? ""}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   const value = e.target.value;
@@ -92,9 +106,10 @@ function Authorization() {
         if (a.type === "http" && a.scheme === "basic") {
           return (
             <React.Fragment key={a.key + "-basic"}>
-              <FormItem label="Username">
+              <FormItem label="Username" hideLabel={true}>
                 <FormTextInput
-                  placeholder="Username"
+                  prefix="Username"
+                  placeholder="Enter Username"
                   value={data[a.key].username ?? ""}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     const value = e.target.value;
@@ -108,9 +123,10 @@ function Authorization() {
                   }}
                 />
               </FormItem>
-              <FormItem label="Password">
+              <FormItem label="Password" hideLabel={true}>
                 <FormTextInput
-                  placeholder="Password"
+                  prefix="Password"
+                  placeholder="Enter Password"
                   password
                   value={data[a.key].password ?? ""}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -131,9 +147,14 @@ function Authorization() {
 
         if (a.type === "apiKey") {
           return (
-            <FormItem label={`${a.key}`} key={a.key + "-apikey"}>
+            <FormItem
+              label={`${a.key}`}
+              key={a.key + "-apikey"}
+              hideLabel={true}
+            >
               <FormTextInput
-                placeholder={`${a.key}`}
+                prefix={`${a.key}`}
+                placeholder={`Enter ${a.key}`}
                 value={data[a.key].apiKey ?? ""}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                   const value = e.target.value;

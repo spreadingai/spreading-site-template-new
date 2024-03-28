@@ -18,7 +18,7 @@ export default function TabItem({
   return (
     <div
       role="tabpanel"
-      className={clsx(styles.tabItem, className)}
+      className={clsx(styles.tabItem, className, "tabpanel-container")}
       {...{ hidden }}
     >
       {children}

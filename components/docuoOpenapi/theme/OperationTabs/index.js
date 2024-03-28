@@ -13,22 +13,33 @@ import {
 } from "@/components/docuoOpenapi/theme-common/src/internal";
 import useIsBrowser from "@/components/docuoOpenapi/core/lib/client/exports/useIsBrowser";
 import clsx from "clsx";
+import { Select } from "antd";
 
 function TabList({ className, block, selectedValue, selectValue, tabValues }) {
+  const [currentValue, setCurrentValue] = useState(selectedValue);
   const tabRefs = [];
   // TODO: Docuo: The scroll problem needs to be solved
   // const { blockElementScrollPositionUntilNextRender } =
   //   useScrollPositionBlocker();
 
-  const handleTabChange = (event) => {
-    event.preventDefault();
-    const newTab = event.currentTarget;
-    const newTabIndex = tabRefs.indexOf(newTab);
-    const newTabValue = tabValues[newTabIndex].value;
+  // const handleTabChange = (event) => {
+  //   event.preventDefault();
+  //   const newTab = event.currentTarget;
+  //   const newTabIndex = tabRefs.indexOf(newTab);
+  //   const newTabValue = tabValues[newTabIndex].value;
+  //   // custom
+  //   if (newTabValue !== selectedValue) {
+  //     // blockElementScrollPositionUntilNextRender(newTab);
+  //     selectValue(newTabValue);
+  //   }
+  // };
+  const handleTabChange = (value) => {
+    const newTabValue = value;
     // custom
     if (newTabValue !== selectedValue) {
       // blockElementScrollPositionUntilNextRender(newTab);
       selectValue(newTabValue);
+      setCurrentValue(newTabValue);
     }
   };
 
@@ -58,23 +69,23 @@ function TabList({ className, block, selectedValue, selectValue, tabValues }) {
   const tabItemListContainerRef = useRef(null);
   const [showTabArrows, setShowTabArrows] = useState(false);
 
-  useEffect(() => {
-    const resizeObserver = new ResizeObserver((entries) => {
-      for (let entry of entries) {
-        if (entry.target.offsetWidth < entry.target.scrollWidth) {
-          setShowTabArrows(true);
-        } else {
-          setShowTabArrows(false);
-        }
-      }
-    });
+  // useEffect(() => {
+  //   const resizeObserver = new ResizeObserver((entries) => {
+  //     for (let entry of entries) {
+  //       if (entry.target.offsetWidth < entry.target.scrollWidth) {
+  //         setShowTabArrows(true);
+  //       } else {
+  //         setShowTabArrows(false);
+  //       }
+  //     }
+  //   });
 
-    resizeObserver.observe(tabItemListContainerRef.current);
+  //   resizeObserver.observe(tabItemListContainerRef.current);
 
-    return () => {
-      resizeObserver.disconnect();
-    };
-  }, []);
+  //   return () => {
+  //     resizeObserver.disconnect();
+  //   };
+  // }, []);
 
   const handleRightClick = () => {
     tabItemListContainerRef.current.scrollLeft += 90;
@@ -87,7 +98,7 @@ function TabList({ className, block, selectedValue, selectValue, tabValues }) {
   return (
     <div className="tabs__container">
       <div className="openapi-tabs__operation-container">
-        {showTabArrows && (
+        {/* {showTabArrows && (
           <button
             className={clsx("openapi-tabs__arrow", "left")}
             onClick={handleLeftClick}
@@ -137,7 +148,18 @@ function TabList({ className, block, selectedValue, selectValue, tabValues }) {
             className={clsx("openapi-tabs__arrow", "right")}
             onClick={handleRightClick}
           />
-        )}
+        )} */}
+        <Select
+          defaultValue={selectedValue}
+          value={currentValue}
+          onChange={handleTabChange}
+          options={tabValues.map((tabValue) => {
+            return {
+              label: tabValue.label || tabValue.value,
+              value: tabValue.value,
+            };
+          })}
+        />
       </div>
     </div>
   );
@@ -153,10 +175,12 @@ function TabContent({ lazy, children, selectedValue }) {
       // fail-safe or fail-fast? not sure what's best here
       return null;
     }
-    return cloneElement(selectedTabItem, { className: "margin-top--md" });
+    return cloneElement(selectedTabItem, {
+      className: "operation-tabpanel-container",
+    });
   }
   return (
-    <div className="margin-top--md">
+    <div className="operation-tabpanel-container">
       {children.map((tabItem, i) =>
         cloneElement(tabItem, {
           key: i,

@@ -31,8 +31,12 @@ function ArrayItem({
       <FormSelect
         options={["---", "true", "false"]}
         // @ts-ignore
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-          const val = e.target.value;
+        // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+        //   const val = e.target.value;
+        //   onChange(val === "---" ? undefined : val);
+        // }}
+        onChange={(value) => {
+          const val = value;
           onChange(val === "---" ? undefined : val);
         }}
       />

@@ -51,10 +51,6 @@
     padding-left: 1rem;
     position: relative;
     padding: 10px 0 10px 1rem;
-    &::before {
-        position: absolute;
-        left: 0;
-    }
 }
 h2.openapi-tabs__response-header {
     margin-bottom: 0;
@@ -62,13 +58,19 @@ h2.openapi-tabs__response-header {
 }
 .theme-api-markdown details[data-collapsed="false"] > summary {
     &:before {
-        transform: rotate(90deg) !important;
+        transform: translateY(-50%) rotate(90deg) !important;
     }
 }
 .theme-api-markdown details[open] > summary {
     &:before {
-        transform: rotate(180deg) !important;
+        transform: translateY(-50%) rotate(180deg) !important;
     }
+}
+// Divider
+.openapi__divider {
+    border-radius: 0px 0px 0px 0px;
+    border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+    margin: 33px 0 32px;
 }
 // Yaml info page
 .openapi-tabs__schema-list-container.tabs.openapi-tabs__security-schemes {
@@ -97,88 +99,21 @@ pre {
         }
     }
 }
-// AUTHORIZATION
-.openapi-security__details {
-    border-radius: 6px;
-    border: none;
-    overflow: hidden;
-    margin-bottom: 20px;
-    .openapi-security__summary-header {
-        font-family: "Inter";
-        font-weight: normal;
-        font-size: 14px;
-        color: rgba(255, 255, 255, 0.8);
-        margin-bottom: unset;
-        line-height: 20px;
-        margin-top: 0;
-    }
-    .openapi-security__summary-container {
-        background: #282828;
-        padding: 12px 28px;
-        width: auto;
-        & + pre {
-            background-color: #171717;
-            border: none;
-            padding: var(--ifm-pre-padding);
-            color: var(--ifm-pre-color);
-            font: var(--ifm-code-font-size) / var(--ifm-pre-line-height) var(--ifm-font-family-monospace);
-            overflow: auto;
-            padding: 12px 16px 18px 16px;
-            & > span {
-                font-family: Inter;
-                font-weight: 400;
-                font-size: 14px;
-                color: rgba(255, 255, 255, 0.7);
-                line-height: 20px;
-                margin-bottom: 8px;
-                & > strong {
-                    font-family: Roboto Mono;
-                    font-weight: 500;
-                    font-size: 14px;
-                    color: #ffffff;
-                    margin-right: 8px;
-                }
-                &:last-of-type {
-                    margin-bottom: 0;
-                }
-            }
-            a {
-                font-family: Inter;
-                font-weight: 500;
-                font-size: 14px;
-                color: #1ece01;
-                line-height: 20px;
-                &:hover {
-                    text-decoration: none;
-                }
-            }
-            code {
-                padding: 0 !important;
-                font-family: Inter;
-                font-weight: 400;
-                font-size: 14px;
-                color: rgba(255, 255, 255, 0.7);
-                background-color: initial !important;
-                border: initial !important;
-            }
-        }
-    }
-}
 // H1
 h1.openapi__heading {
     margin-bottom: 0 !important;
 }
 // Method Endpoint
 .openapi__method-endpoint {
-    padding: 8px 14px 8px 8px;
-    margin-top: 8px;
-    background: #f9fafb;
+    padding: 10px 12px;
+    margin-top: 15px;
+    background: #f7f8f9;
     border-radius: 6px 6px 6px 6px;
-    border: 1px solid rgba(227, 232, 239, 0.8);
+    border: none;
     overflow: auto;
 }
 h2.openapi__method-endpoint-path {
-    font-family: Inter;
+    font-family: Roboto Mono;
     font-weight: 400;
     font-size: 14px;
     color: #171717;
@@ -188,10 +123,9 @@ h2.openapi__method-endpoint-path {
 // Badge
 .theme-api-markdown .badge {
     font-family: Inter;
-    height: 24px;
     background-color: #1abd00;
     border-radius: 4px 4px 4px 4px;
-    padding: 4px 8px 0px 8px;
+    padding: 6px 5px 3px 5px;
     font-weight: normal;
     font-size: 12px;
     color: #ffffff;
@@ -218,11 +152,6 @@ h2.openapi__method-endpoint-path {
         color: #171717;
     }
 }
-// Divider
-.openapi__divider {
-    border-radius: 0px 0px 0px 0px;
-    border-bottom: 1px solid rgba(229, 231, 235, 0.8);
-}
 // Request PARAMETERS
 #request {
     height: 28px;
@@ -231,7 +160,7 @@ h2.openapi__method-endpoint-path {
     font-size: 22px;
     color: #171717;
     line-height: 28px;
-    margin: 48px 0 20px;
+    margin: 31px 0 20px;
 }
 .openapi-left-panel__container {
     & > .openapi-markdown__details {
@@ -273,13 +202,7 @@ h2.openapi__method-endpoint-path {
         line-height: 20px;
         margin: 0;
     }
-    & > summary {
-        &::before {
-            top: 13px !important;
-        }
-    }
     .openapi-schema__container {
-        margin-bottom: 8px;
         strong {
             height: 24px;
             font-family: Roboto Mono;
@@ -367,19 +290,6 @@ h3.openapi-markdown__details-summary-header-body {
     color: #171717;
     line-height: 20px;
 }
-.openapi-schema__required {
-    font-family: Roboto Mono !important;
-    font-weight: 400 !important;
-    font-size: 12px;
-    width: 68px;
-    background: #fcf3f2;
-    height: 20px;
-    border-radius: 4px;
-    justify-content: center;
-    color: #ff2900;
-    line-height: normal;
-    margin-left: 5px;
-}
 .openapi-schema__name {
     background: rgba(81, 88, 105, 0.07);
     border-radius: 4px;
@@ -411,13 +321,6 @@ h3.openapi-markdown__details-summary-header-body {
     align-items: center;
     justify-content: center;
     padding: 1px 4px 0;
-}
-.openapi-markdown__details-summary-mime {
-    &:has(.openapi-schema__required) {
-        &::before {
-            top: 13px !important;
-        }
-    }
 }
 .openapi-tabs__mime-container {
     margin-top: 0;
@@ -582,17 +485,9 @@ h3.openapi-markdown__details-summary-header-body {
         .openapi-markdown__details {
             summary {
                 padding: 0 0 0 1rem;
-                &::before {
-                    top: 5px !important;
-                }
             }
         }
     }
-}
-
-// Responses
-.openapi-tabs__response-header-section {
-    border: none;
 }
 
 // Tabs
@@ -626,12 +521,6 @@ ul.tabs {
         transition: 0.3s;
         margin-right: 1rem;
     }
-    li.openapi-tabs__response-code-item {
-        font-size: 12px;
-        margin-bottom: 0;
-        margin-right: 0.5rem;
-        transition: 0.3s;
-    }
 }
 .openapi-params__list-item {
     // padding: 2px 0 5px 1rem !important;
@@ -645,27 +534,24 @@ ul.tabs {
     border-radius: 6px;
 }
 // Response
-.openapi-tabs__container {
-    div[role="tabpanel"] {
-        & > div:first-of-type {
-            margin-bottom: 16px;
-        }
+.openapi-tabs__response-header-section {
+    border: none;
+    padding: 9px 0 8px;
+    margin-top: 48px;
+    .openapi-tabs__response-header {
+        height: 28px;
+        font-family: Inter-Semi Bold;
+        font-size: 22px;
+        color: #171717;
+        line-height: 28px;
     }
-}
-.openapi-markdown__details-summary-response {
-    &::before {
-        top: 5px !important;
-    }
-}
-.openapi-tabs__response-container {
-    padding-left: 0;
-}
-.openapi-tabs__response-list-container {
-    padding: 0;
 }
 .theme-api-markdown .openapi-tabs__response-code-item {
+    font-size: 12px;
+    margin-bottom: 0;
+    margin-right: 0.5rem;
+    transition: 0.3s;
     font-family: Inter-Bold;
-    font-size: 12px !important;
     border-radius: 4px;
     border: 1px solid rgba(229, 231, 235, 0.5);
     height: 32px;
@@ -683,185 +569,24 @@ ul.tabs {
         color: #fff;
     }
 }
-// Code Tabs
-.tabs-container.openapi-tabs__code-container {
-    background: #282828;
-    box-shadow: none;
-    border-radius: 6px;
-    border: none;
-    padding: 0;
-    overflow: hidden;
-    &:hover {
-        box-shadow: none;
-    }
-    .openapi-tabs__code-list-container {
-        padding: 14px 14px 20px 14px;
-        background-color: #282828;
-    }
-    .openapi-tabs__code-item {
-        height: 62px;
-        flex: 0 0 68px;
-        border-radius: 6px;
-        border: 1px solid #4d4c4c;
-        box-shadow: none;
-        margin-right: 14px;
-        padding: 8px 8px 4px !important;
-        justify-content: space-between;
-        margin-bottom: 0;
-        & > span {
-            padding-top: 0;
+.response-tabpanel-container {
+    div[role="tabpanel"] {
+        & > div:first-of-type {
+            margin-bottom: 20px;
+            margin-top: 10px;
             font-family: Inter;
-            font-weight: 500;
-            font-size: 11px;
-            color: #ffffff;
-            line-height: 18px;
-        }
-        &:hover,
-        &.active {
-            border-color: #1abd00;
-            box-shadow: none;
-            border-color: #1abd00;
-        }
-        &:last-of-type {
-            margin-right: 0;
-        }
-        &::after {
-            width: 26px;
-            height: 26px;
-            margin: 0;
-        }
-    }
-    &.openapi-tabs__code-container-inner {
-        box-shadow: none;
-        border: none;
-        margin-bottom: 0;
-    }
-    .openapi-tabs__code-list-container {
-        &.openapi-tabs__code-container-inner {
-            padding: 0 14px;
-            margin-top: 2px;
-            & + div[role="tabpanel"] {
-                background-color: #171717;
-                padding: 0px 0px 2px 0px;
-            }
-            .openapi-tabs__code-item {
-                flex: initial;
-                height: auto;
-                padding: 0 0 12px 0 !important;
-                margin-right: 28px;
-                border: none;
-                border-bottom-width: 2px !important;
-                border-bottom-style: solid;
-                border-bottom-color: transparent;
-                border-radius: 0;
-                &:last-of-type {
-                    margin-right: 0px;
-                }
-                & > span {
-                    font-family: Inter;
-                    font-weight: 500;
-                    font-size: 13px;
-                    color: rgba(255, 255, 255, 0.7);
-                    line-height: 24px;
-                    padding: 0 !important;
-                    transition: color 0.3s;
-                }
-                &:hover,
-                &.active {
-                    border-bottom-color: #1abd00;
-                    & > span {
-                        color: #1abd00;
-                    }
-                }
-            }
+            font-weight: 400;
+            font-size: 16px;
+            color: #353c4e;
+            line-height: 24px;
         }
     }
 }
-// Request form
-.openapi-explorer__request-form,
-.openapi-explorer__response-container {
-    background: #ffffff;
-    box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.07);
-    border-radius: 8px 8px 8px 8px;
-    border: 1px solid rgba(229, 231, 235, 0.6);
-    &:hover {
-        box-shadow: 0px 1px 8px 0px rgba(0, 0, 0, 0.07);
-    }
+.openapi-tabs__response-container {
+    padding-left: 0;
 }
-.openapi-explorer__response-container {
-    .openapi-tabs__schema-tabs-container + div[role="tabpanel"] {
-        background-color: #171717;
-        border-radius: 6px;
-    }
-    .openapi-tabs__schema-container {
-        padding-right: 1rem;
-        margin-bottom: 1rem;
-    }
-    .openapi-explorer__response-placeholder-message {
-        margin: 0 1rem 0 0;
-    }
-}
-// Form item input
-.openapi-explorer__form-item-input {
-    transition: all 0.3s;
-    &:focus,
-    &:hover {
-        border-color: #1abd00;
-    }
-}
-// Request btn
-.openapi-explorer__request-btn {
-    background-color: #1abd00;
-    &:hover {
-        opacity: 0.8;
-        background-color: #1abd00;
-    }
-}
-// Show more btn
-.openapi-explorer__show-more-btn {
-    color: #1abd00;
-    transition: all 0.3s;
-}
-// Select
-.openapi-explorer__select-input {
-    cursor: pointer;
-    &:focus {
-        box-shadow: none !important;
-    }
-}
-.openapi-explorer__multi-select-input {
-    &:focus {
-        border-color: #1abd00;
-    }
-}
-// Button
-.openapi-explorer__thin-btn {
-    color: #1abd00;
-    border-color: #1abd00;
-    &:hover {
-        color: #fff;
-        background-color: #1abd00;
-    }
-}
-.openapi-explorer__dropzone {
-    border: 2px dashed transparent;
-    transition: all 0.3s;
-    &:hover {
-        border-color: #1abd00;
-    }
-}
-// Request loading
-.openapi-explorer__loading-container {
-    padding-right: 1rem;
-}
-.openapi-response__lds-ring div {
-    border-color: #1abd00 transparent transparent transparent;
-}
-.openapi-explorer__floating-btn button {
-    background: #1abd00;
-    &:hover {
-        opacity: 0.8;
-    }
+.openapi-tabs__response-list-container {
+    padding: 0;
 }
 // Common
 ul.tabs {

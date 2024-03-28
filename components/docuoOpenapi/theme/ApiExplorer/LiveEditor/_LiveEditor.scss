@@ -4,12 +4,12 @@
   border-radius: var(--ifm-global-radius);
   box-shadow: var(--ifm-global-shadow-lw);
   overflow: auto;
-  max-height: 500px;
+  max-height: 400px;
+  font-size: inherit;
 }
 
 .openapi-explorer__playground-editor {
-  font: var(--ifm-code-font-size) / var(--ifm-pre-line-height)
-    var(--ifm-font-family-monospace) !important;
+  font: var(--ifm-code-font-size) / var(--ifm-pre-line-height) var(--ifm-font-family-monospace) !important;
   /* rtl:ignore */
   direction: ltr;
 }
