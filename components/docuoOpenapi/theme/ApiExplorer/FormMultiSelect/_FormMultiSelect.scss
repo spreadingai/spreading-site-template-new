@@ -26,7 +26,7 @@
 // }
 
 .openapi-explorer__request-form {
-  .ant-select.ant-select-outlined {
+  .ant-select {
     &.ant-select-multiple {
       margin: 8px 0;
       .ant-select-selection-item {
@@ -49,7 +49,7 @@
   }
 }
 
-.ant-select-dropdown {
+.openapi-form-select-dropdown.ant-select-dropdown {
   .ant-select-item {
     margin: 2px 0;
     .ant-select-item-option-state {

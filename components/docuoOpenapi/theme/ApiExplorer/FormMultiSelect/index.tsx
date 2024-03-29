@@ -46,6 +46,7 @@ function FormMultiSelect({ value, options, onChange, showErrors }: Props) {
 
   return (
     <Select
+      popupClassName="openapi-form-select-dropdown"
       className={clsx({
         error: showErrors,
       })}
