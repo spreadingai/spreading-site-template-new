@@ -44,14 +44,14 @@
 .tabs-container .margin-top--md {
     margin-top: 0 !important;
 }
-.theme-api-markdown details > summary {
-    width: max-content;
-    cursor: pointer;
-    list-style: none;
-    padding-left: 1rem;
-    position: relative;
-    padding: 10px 0 10px 1rem;
-}
+// .theme-api-markdown details > summary {
+//     width: max-content;
+//     cursor: pointer;
+//     list-style: none;
+//     padding-left: 1rem;
+//     position: relative;
+//     padding: 10px 0 10px 1rem;
+// }
 h2.openapi-tabs__response-header {
     margin-bottom: 0;
     margin-top: 0;
@@ -66,12 +66,7 @@ h2.openapi-tabs__response-header {
         transform: translateY(-50%) rotate(180deg) !important;
     }
 }
-// Divider
-.openapi__divider {
-    border-radius: 0px 0px 0px 0px;
-    border-bottom: 1px solid rgba(229, 231, 235, 0.8);
-    margin: 33px 0 32px;
-}
+
 // Yaml info page
 .openapi-tabs__schema-list-container.tabs.openapi-tabs__security-schemes {
     padding-inline-start: 0;
@@ -102,23 +97,6 @@ pre {
 // H1
 h1.openapi__heading {
     margin-bottom: 0 !important;
-}
-// Method Endpoint
-.openapi__method-endpoint {
-    padding: 10px 12px;
-    margin-top: 15px;
-    background: #f7f8f9;
-    border-radius: 6px 6px 6px 6px;
-    border: none;
-    overflow: auto;
-}
-h2.openapi__method-endpoint-path {
-    font-family: Roboto Mono;
-    font-weight: 400;
-    font-size: 14px;
-    color: #171717;
-    line-height: 20px;
-    margin: 0 0 0 10px !important;
 }
 // Badge
 .theme-api-markdown .badge {
@@ -153,15 +131,6 @@ h2.openapi__method-endpoint-path {
     }
 }
 // Request PARAMETERS
-#request {
-    height: 28px;
-    font-family: Inter;
-    font-weight: normal;
-    font-size: 22px;
-    color: #171717;
-    line-height: 28px;
-    margin: 31px 0 20px;
-}
 .openapi-left-panel__container {
     & > .openapi-markdown__details {
         margin-bottom: 20px !important;
@@ -322,9 +291,6 @@ h3.openapi-markdown__details-summary-header-body {
     justify-content: center;
     padding: 1px 4px 0;
 }
-.openapi-tabs__mime-container {
-    margin-top: 0;
-}
 .openapi-discriminator__item {
     & > div {
         line-height: 23px;
@@ -351,14 +317,6 @@ h3.openapi-markdown__details-summary-header-body {
                 &::before {
                     display: none;
                 }
-            }
-        }
-        &:has(.openapi-markdown__details-summary-header-body) {
-            position: relative;
-            & > .tabs__container {
-                position: absolute;
-                right: 0;
-                top: 5px;
             }
         }
         .openapi-schema__list-item {
@@ -534,18 +492,6 @@ ul.tabs {
     border-radius: 6px;
 }
 // Response
-.openapi-tabs__response-header-section {
-    border: none;
-    padding: 9px 0 8px;
-    margin-top: 48px;
-    .openapi-tabs__response-header {
-        height: 28px;
-        font-family: Inter-Semi Bold;
-        font-size: 22px;
-        color: #171717;
-        line-height: 28px;
-    }
-}
 .theme-api-markdown .openapi-tabs__response-code-item {
     font-size: 12px;
     margin-bottom: 0;
@@ -567,19 +513,6 @@ ul.tabs {
         border-color: #f64841;
         background-color: #f64841;
         color: #fff;
-    }
-}
-.response-tabpanel-container {
-    div[role="tabpanel"] {
-        & > div:first-of-type {
-            margin-bottom: 20px;
-            margin-top: 10px;
-            font-family: Inter;
-            font-weight: 400;
-            font-size: 16px;
-            color: #353c4e;
-            line-height: 24px;
-        }
     }
 }
 .openapi-tabs__response-container {

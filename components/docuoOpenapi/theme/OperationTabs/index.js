@@ -150,6 +150,7 @@ function TabList({ className, block, selectedValue, selectValue, tabValues }) {
           />
         )} */}
         <Select
+          popupClassName="operation-select-dropdown"
           defaultValue={selectedValue}
           value={currentValue}
           onChange={handleTabChange}

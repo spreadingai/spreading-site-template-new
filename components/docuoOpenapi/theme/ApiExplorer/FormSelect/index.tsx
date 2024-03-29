@@ -26,6 +26,7 @@ function FormSelect({ label, value, options, onChange }: Props) {
     <div className={`select-container ${label ? "inner-label" : ""}`}>
       {label ? <span className="select-inner-label">{label}</span> : null}
       <Select
+        suffixIcon={<span className="suffix-dropdown-icon"></span>}
         defaultValue={value}
         style={{ width: 120 }}
         onChange={onChange}

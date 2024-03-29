@@ -1,6 +1,6 @@
 #callbacks {
-    height: 28px;
-    margin: 10px 0;
+    padding: 10px 0;
+    margin: 0;
     font-family: Inter-Semi Bold;
     font-size: 22px;
     color: #171717;
@@ -10,7 +10,7 @@
         .tabs__container {
             .openapi-tabs__operation-container {
                 position: absolute;
-                top: -47px;
+                top: -57px;
                 right: 0;
             }
         }

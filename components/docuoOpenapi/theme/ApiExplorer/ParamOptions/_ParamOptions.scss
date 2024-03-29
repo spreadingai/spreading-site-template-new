@@ -12,9 +12,9 @@
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
+  padding-top: 5px;
   margin-left: 8px;
-  margin-bottom: 10px;
-  padding: 0;
+  margin-bottom: 15px;
   cursor: pointer;
   font-size: 12px;
   user-select: none;
@@ -25,6 +25,7 @@
   background-color: transparent;
   color: #05ec07;
   text-align: left;
+  transition: all 0.3s;
   &:hover {
     opacity: 0.8;
   }
@@ -91,8 +92,7 @@
   transition: all 0.3s;
 
   &:hover {
-    color: #fff;
-    background-color: #05ec07;
+    opacity: 0.8;
   }
 
   &:focus {

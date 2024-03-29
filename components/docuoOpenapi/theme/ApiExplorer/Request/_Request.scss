@@ -34,10 +34,11 @@
   background-color: #282828;
   padding: 10px 12px 10px 16px;
   text-transform: uppercase;
-  font-size: 12px;
-  font-weight: bold;
   .openapi-explorer__request-title {
-    font-family: Inter-Semi Bold;
+    font-size: 14px;
+    font-family: Inter-Medium;
+    font-weight: 500;
+    color: #b6b6b6;
   }
   .right-btn {
     display: flex;
@@ -46,11 +47,11 @@
 
 .openapi-explorer__expand-details-btn {
   cursor: pointer;
-  width: 110px;
+  width: 125px;
   height: 31px;
   border-radius: 6px 6px 6px 6px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  opacity: 0.8;
+  opacity: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -58,21 +59,25 @@
   transition: 0.3s;
   margin-right: 10px;
   &:hover {
-    opacity: 1;
+    opacity: 0.8;
   }
 }
 
 .openapi-explorer__details-outer-container {
-  padding: 14px 12px;
+  padding: 16px 12px;
 }
 
 .openapi-explorer__details-summary {
+  font-family: Inter-Medium;
+  font-weight: 500;
+  position: relative;
+  padding: 12px 20px;
   display: inline-flex;
   align-items: center;
-  padding: 0.35rem 0;
   font-size: 14px;
   list-style: none;
   padding-left: 20px !important;
+  color: inherit;
 
   &:hover {
     cursor: pointer;
@@ -102,7 +107,7 @@
 
 .openapi-explorer__request-btn {
   border-radius: 6px 6px 6px 6px;
-  border: 1px solid #1ece01;
+  border: 1px solid #05ec07;
   width: 67px;
   height: 31px;
   display: flex;
@@ -111,7 +116,7 @@
   font-weight: 500;
   font-family: Inter-Medium;
   font-size: 14px;
-  color: #1ece01;
+  color: #05ec07;
   cursor: pointer;
   transition: 300ms;
 
@@ -123,6 +128,10 @@
 .openapi-explorer__details-container {
   &:not(:last-of-type) {
     margin-bottom: 10px;
+  }
+  .openapi-schema__required {
+    color: #ea3902;
+    background: rgba(227, 77, 60, 0.15);
   }
 }
 

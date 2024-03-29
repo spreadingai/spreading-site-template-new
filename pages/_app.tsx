@@ -12,6 +12,9 @@ import { ThemeProvider } from "@/components/Theme";
 import "@/components/docuoOpenapi/theme/styles.scss";
 import "@/styles/openapi.cover.scss";
 import "@/styles/openapi/callbacks.cover.scss";
+import "@/styles/openapi/response.cover.scss";
+import "@/styles/openapi/request.cover.scss";
+
 import "@/styles/openapi-theme.scss";
 
 export default function MyApp({ Component, pageProps }: AppProps) {

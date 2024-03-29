@@ -11,9 +11,10 @@
     padding: 10px 11px 10px 16px;
     justify-content: space-between;
     align-items: center;
-    font-family: Inter;
+    font-family: Inter-Medium;
+    font-weight: 500;
     font-size: 14px;
-    color: rgba(240, 240, 240, 0.8);
+    color: #b6b6b6;
   }
   .openapi-explorer__response-content {
     overflow: hidden;
@@ -21,7 +22,7 @@
     & > .openapi-tabs__schema-container {
       margin-top: 0;
       .openapi-tabs__schema-tabs-container {
-        padding: 20px 15px 0 15px;
+        padding: 10px 15px 0 15px;
         background: #282828;
       }
       .openapi-tabs__schema-item {
@@ -72,7 +73,6 @@
     height: 31px;
     border-radius: 6px 6px 6px 6px;
     border: 1px solid rgba(255, 255, 255, 0.2);
-    opacity: 0.6;
     display: flex;
     align-items: center;
     justify-content: center;

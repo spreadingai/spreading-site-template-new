@@ -3,20 +3,26 @@
   align-items: center;
   max-width: 100%;
   width: fit-content;
-  padding: 0.65rem;
-  border: 1px solid var(--ifm-toc-border-color);
+  padding: 10px 12px;
+  margin-top: 16px;
+  background: #f7f8f9;
+  border-radius: 6px 6px 6px 6px;
+  border: none;
+  overflow: auto;
 }
 
-.openapi__method-endpoint-path {
-  margin-bottom: 0;
-  margin-left: 0.5rem;
-  font-size: 12px;
-  font-weight: normal;
-  font-family: var(--ifm-font-family-monospace);
+h2.openapi__method-endpoint-path {
+  font-family: Roboto Mono;
+  font-weight: 400;
+  font-size: 14px;
+  color: #171717;
+  line-height: 20px;
+  margin: 0 0 0 10px;
 }
 
 .openapi__divider {
+  border-radius: 0px 0px 0px 0px;
+  border-bottom: 1px solid rgba(229, 231, 235, 0.8);
+  margin: 33px 0 32px;
   width: 100%;
-  margin: 1.5rem 0;
-  border-bottom: 1px solid var(--ifm-toc-border-color);
 }

@@ -52,6 +52,48 @@
 .openapi-tabs__operation-schema-container {
   max-width: 600px;
 }
+.openapi-tabs__operation-container {
+  .ant-select.ant-select-outlined {
+    height: 36px;
+    .ant-select-selector {
+      box-shadow: none;
+      background: #fafafb;
+      border-radius: 6px 6px 6px 6px;
+      border: 1px solid #f2f3f5 !important;
+      .ant-select-selection-item {
+        font-family: Inter-Medium;
+        font-weight: 500;
+        font-size: 14px;
+        color: #171717;
+      }
+    }
+    &:hover {
+      .ant-select-selector {
+        border-color: #f2f3f5 !important;
+      }
+    }
+  }
+}
+.operation-tabpanel-container {
+  .openapi__divider {
+    margin: 24px 0;
+  }
+  .tabpanel-container {
+    &:has(.openapi__method-endpoint) {
+      font-family: Inter-Regular;
+      font-size: 16px;
+      color: #353c4e;
+    }
+  }
+}
+.ant-select-dropdown.operation-select-dropdown {
+  background-color: #fafafb;
+  border: 1px solid #fafafb;
+  box-shadow: none;
+  .ant-select-item {
+    color: #171717;
+  }
+}
 
 @media screen and (max-width: 500px) {
   .operationTabsTopSection {

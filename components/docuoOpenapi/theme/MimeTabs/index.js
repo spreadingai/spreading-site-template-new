@@ -191,11 +191,11 @@ function TabContent({ lazy, children, selectedValue }) {
       return null;
     }
     return cloneElement(selectedTabItem, {
-      className: "response-tabpanel-container",
+      className: "mimetab-tabpanel-container",
     });
   }
   return (
-    <div className="response-tabpanel-container">
+    <div className="mimetab-tabpanel-container">
       {children.map((tabItem, i) =>
         cloneElement(tabItem, {
           key: i,
