@@ -77,7 +77,7 @@ function Response({ item }: { item: NonNullable<ApiItem> }) {
   return (
     <div className="openapi-explorer__response-container">
       <div className="openapi-explorer__response-title-container">
-        <span className="openapi-explorer__response-title">Response</span>
+        <span className="openapi-explorer__response-title">RESPONSE</span>
         <span
           className="openapi-explorer__response-clear-btn"
           onClick={() => {
@@ -90,14 +90,12 @@ function Response({ item }: { item: NonNullable<ApiItem> }) {
         </span>
       </div>
       <div
-        style={{
-          // backgroundColor: prismTheme.plain.backgroundColor,
-          paddingLeft: "1rem",
-          paddingTop: "1rem",
-          ...((prettyResponse === "Fetching..." || !code) && {
-            paddingBottom: "1rem",
-          }),
-        }}
+        className="openapi-explorer__response-content"
+        style={
+          {
+            // backgroundColor: prismTheme.plain.backgroundColor,
+          }
+        }
       >
         {code && prettyResponse !== "Fetching..." ? (
           <SchemaTabs lazy>
@@ -117,8 +115,8 @@ function Response({ item }: { item: NonNullable<ApiItem> }) {
               >
                 {prettyResponse || (
                   <p className="openapi-explorer__response-placeholder-message">
-                    Click the <code>Send API Request</code> button above and see
-                    the response here!
+                    Click the &quot;Send&quot; button above and see the response
+                    here!
                   </p>
                 )}
               </ApiCodeBlock>
@@ -136,17 +134,11 @@ function Response({ item }: { item: NonNullable<ApiItem> }) {
           </SchemaTabs>
         ) : prettyResponse === "Fetching..." ? (
           <div className="openapi-explorer__loading-container">
-            <div className="openapi-response__lds-ring">
-              <div></div>
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
+            <div className="openapi-response__lds-ring"></div>
           </div>
         ) : (
           <p className="openapi-explorer__response-placeholder-message">
-            Click the <code>Send API Request</code> button above and see the
-            response here!
+            Click the &quot;Send&quot; button above and see the response here!
           </p>
         )}
       </div>

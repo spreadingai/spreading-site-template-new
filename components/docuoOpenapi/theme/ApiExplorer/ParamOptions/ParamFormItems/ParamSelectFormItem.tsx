@@ -42,8 +42,18 @@ export default function ParamSelectFormItem({ param }: ParamProps) {
           <FormSelect
             options={["---", ...(options as string[])]}
             // @ts-ignore
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              const val = e.target.value;
+            // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            //   const val = e.target.value;
+            //   dispatch(
+            //     setParam({
+            //       ...param,
+            //       value: val === "---" ? undefined : val,
+            //     })
+            //   );
+            //   onChange(val);
+            // }}
+            onChange={(value) => {
+              const val = value;
               dispatch(
                 setParam({
                   ...param,

@@ -26,14 +26,16 @@ function ContentType() {
   }
 
   return (
-    <FormItem label="Content-Type">
+    <FormItem label="Content-Type" hideLabel={true}>
       <FormSelect
+        label="Content-Type"
         value={value}
         options={options}
         // @ts-ignore
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          dispatch(setContentType(e.target.value))
-        }
+        // onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+        //   dispatch(setContentType(e.target.value))
+        // }
+        onChange={(value) => dispatch(setContentType(value))}
       />
     </FormItem>
   );

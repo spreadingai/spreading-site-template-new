@@ -33,14 +33,19 @@
 }
 
 .openapi-schema__required {
-  display: inline-flex;
+  font-family: Roboto Mono;
+  font-weight: 400;
+  font-size: 12px;
+  background: #fcf3f2;
+  height: 20px;
+  border-radius: 4px;
+  color: #ff2900;
+  line-height: normal;
+  margin-left: 5px;
+  padding: 0 4px;
+  display: flex;
   align-items: center;
-  font-size: 10.5px;
-  font-weight: bold;
-  color: var(--openapi-required);
-  margin-left: 1%;
-  background-color: transparent;
-  text-transform: uppercase;
+  justify-content: center;
 }
 
 .openapi-schema__divider {

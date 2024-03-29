@@ -195,5 +195,5 @@ export function useColorMode(): ContextValue {
   //   );
   // }
   const { colorMode } = useThemeConfig();
-  return context || ({ colorMode: colorMode.defaultMode } as ContextValue);
+  return context || colorMode.defaultMode;
 }

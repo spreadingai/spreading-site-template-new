@@ -1,43 +1,154 @@
-html[data-theme="dark"] .openapi-explorer__select-input {
-  margin-top: calc(var(--ifm-pre-padding) / 2);
-  background-color: var(--openapi-input-background);
-  border: none;
-  outline: none;
-  width: 100%;
-  color: var(--ifm-pre-color);
+// html[data-theme="dark"] .openapi-explorer__select-input {
+//   margin-top: calc(var(--ifm-pre-padding) / 2);
+//   background-color: var(--openapi-input-background);
+//   border: none;
+//   outline: none;
+//   width: 100%;
+//   color: var(--ifm-pre-color);
 
-  border-radius: 4px;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
+//   border-radius: 4px;
+//   -moz-appearance: none;
+//   -webkit-appearance: none;
+//   appearance: none;
 
-  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="white"><path d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"></path></svg>');
-  background-repeat: no-repeat;
-  background-position: right var(--ifm-pre-padding) top 50%;
-  background-size: auto auto;
+//   background-image: url('data:image/svg+xml;charset=US-ASCII,<svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true" fill="white"><path d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"></path></svg>');
+//   background-repeat: no-repeat;
+//   background-position: right var(--ifm-pre-padding) top 50%;
+//   background-size: auto auto;
+// }
+
+// .openapi-explorer__select-input {
+//   width: 100%;
+//   margin-top: calc(var(--ifm-pre-padding) / 2);
+//   padding: var(--openapi-explorer-padding-input);
+//   border: none;
+//   outline: none;
+//   border-radius: 4px;
+//   background-color: var(--openapi-input-background);
+//   font-size: var(--openapi-explorer-font-size-input);
+//   font-family: var(--ifm-font-family-monospace);
+//   color: var(--ifm-pre-color);
+//   -moz-appearance: none;
+//   -webkit-appearance: none;
+//   appearance: none;
+
+//   background-image: url('data:image/svg+xml;charset=US-ASCII,<svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"></path></svg>');
+//   background-repeat: no-repeat;
+//   background-position: right var(--ifm-pre-padding) top 50%;
+//   background-size: auto auto;
+
+//   &:focus {
+//     box-shadow: inset 0px 0px 0px 2px var(--openapi-input-border);
+//   }
+// }
+
+// Cover antd select
+.openapi-explorer__request-form {
+  .ant-select.ant-select-outlined {
+    width: 100% !important;
+    height: 40px;
+    outline: none;
+    .ant-select-selector {
+      font-family: Roboto Mono-Regular;
+      font-weight: 400;
+      font-size: 12px;
+      outline: none;
+      background-color: #191919;
+      border-color: #333333;
+      border-radius: 6px;
+      color: #f0f0f0;
+      padding: 0 12px;
+      &::after {
+        color: rgba(255, 255, 255, 0.6);
+      }
+    }
+    .ant-select-arrow {
+      .suffix-dropdown-icon {
+        content: "";
+        background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24"><path fill="white" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg>')
+          50% / 1.2rem 1.2rem;
+        filter: var(--ifm-menu-link-sublist-icon-filter);
+        height: 0.75rem;
+        transform: translateY(-50%) rotate(180deg) !important;
+        width: 0.75rem;
+        transition: transform var(--ifm-transition-fast) linear !important;
+        border: none !important;
+        transform-origin: unset !important;
+        position: absolute;
+        top: 50%;
+        right: 0;
+        opacity: 0.6;
+      }
+    }
+    &.ant-select-open {
+      .ant-select-arrow {
+        .suffix-dropdown-icon {
+          transform: translateY(-50%) rotate(360deg) !important;
+        }
+      }
+    }
+    &:hover {
+      .ant-select-selector {
+        border-color: #05ec07 !important;
+      }
+    }
+    .ant-select-selection-item {
+      outline: none;
+      text-align: right;
+    }
+  }
+  .ant-select-single.ant-select-open {
+    .ant-select-selection-item {
+      color: #f0f0f0;
+    }
+  }
+  .ant-select-focused {
+    .ant-select-selector {
+      border-color: #05ec07 !important;
+    }
+  }
+  .select-container {
+    position: relative;
+    .select-inner-label {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 1;
+      height: 20px;
+      font-family: Roboto Mono;
+      font-weight: 500;
+      font-size: 12px;
+      color: #f0f0f0;
+      line-height: 20px;
+    }
+    &.inner-label {
+      .ant-select-selector {
+        padding-left: 125px;
+      }
+    }
+  }
 }
-
-.openapi-explorer__select-input {
-  width: 100%;
-  margin-top: calc(var(--ifm-pre-padding) / 2);
-  padding: var(--openapi-explorer-padding-input);
-  border: none;
-  outline: none;
-  border-radius: 4px;
-  background-color: var(--openapi-input-background);
-  font-size: var(--openapi-explorer-font-size-input);
-  font-family: var(--ifm-font-family-monospace);
-  color: var(--ifm-pre-color);
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
-
-  background-image: url('data:image/svg+xml;charset=US-ASCII,<svg focusable="false" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 11L3 6 3.7 5.3 8 9.6 12.3 5.3 13 6z"></path></svg>');
-  background-repeat: no-repeat;
-  background-position: right var(--ifm-pre-padding) top 50%;
-  background-size: auto auto;
-
-  &:focus {
-    box-shadow: inset 0px 0px 0px 2px var(--openapi-input-border);
+.ant-select-dropdown {
+  background: #191919;
+  box-shadow: 0px 1px 12px 0px rgba(0, 0, 0, 0.05);
+  border-radius: 6px 6px 6px 6px;
+  border: 1px solid #333333;
+  padding: 10px;
+  .ant-select-item {
+    font-family: Inter-Medium;
+    font-weight: 500;
+    font-size: 14px;
+    color: #e7e7e7;
+    transition: all 0.3s;
+    padding: 4px 10px;
+    line-height: 28px;
+    &:hover {
+      background: #252525 !important;
+      border-radius: 4px 4px 4px 4px;
+    }
+    &.ant-select-item-option-selected {
+      color: #05ec07 !important;
+      background: inherit;
+    }
   }
 }

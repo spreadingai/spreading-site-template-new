@@ -9,10 +9,6 @@
   margin-bottom: var(--ifm-leading);
 }
 
-.openapi-tabs__response-header {
-  margin-bottom: 0;
-}
-
 .openapi-tabs__response-code-item {
   border: 1px solid transparent;
   margin-top: 0 !important;
@@ -64,12 +60,20 @@
 
 /* Open API Response Code Tabs */
 .openapi-tabs__response-header-section {
-  border-top: 1px solid var(--ifm-toc-border-color);
-  margin-top: 2rem;
-  padding-top: 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border: none;
+  padding: 9px 0 8px;
+  margin-top: 48px;
+  .openapi-tabs__response-header {
+    margin-bottom: 0;
+    height: 28px;
+    font-family: Inter-Semi Bold;
+    font-size: 22px;
+    color: #171717;
+    line-height: 28px;
+  }
 }
 
 .openapi-tabs__response-container {
@@ -123,6 +127,21 @@
 
   &.right {
     transform: rotate(90deg);
+  }
+}
+
+.openapi-explorer__details-container {
+  .openapi-tabs__arrow {
+    height: 0.75rem;
+    width: 0.75rem;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24"><path fill="rgb(182,182,182)" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg>')
+      50%/1.2rem 1.2rem;
+    &.left {
+      margin-right: 5px;
+    }
+    &.right {
+      margin-right: 5px;
+    }
   }
 }
 

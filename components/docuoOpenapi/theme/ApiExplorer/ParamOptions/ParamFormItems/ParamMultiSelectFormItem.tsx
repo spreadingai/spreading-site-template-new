@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  * ========================================================================== */
 
-import React from "react";
+import React, { useState } from "react";
 
 import { ErrorMessage } from "@hookform/error-message";
 import FormMultiSelect from "@/components/docuoOpenapi/theme/ApiExplorer/FormMultiSelect";
@@ -48,15 +48,27 @@ export default function ParamMultiSelectFormItem({ param }: ParamProps) {
     ? cookieParams
     : headerParams;
 
-  const handleChange = (e: any, onChange: any) => {
-    const values = Array.prototype.filter
-      .call(e.target.options, (o) => o.selected)
-      .map((o) => o.value);
+  // const handleChange = (e: any, onChange: any) => {
+  //   const values = Array.prototype.filter
+  //     .call(e.target.options, (o) => o.selected)
+  //     .map((o) => o.value);
 
+  //   const value = values.length > 0 ? values : undefined;
+  //   dispatch(
+  //     setParam({
+  //       ...param,
+  //       value,
+  //     })
+  //   );
+
+  //   onChange(paramTypeToWatch);
+  // };
+  const handleChange = (values: any, onChange: any) => {
+    const value = values.length > 0 ? values : undefined;
     dispatch(
       setParam({
         ...param,
-        value: values.length > 0 ? values : undefined,
+        value,
       })
     );
 
@@ -73,7 +85,8 @@ export default function ParamMultiSelectFormItem({ param }: ParamProps) {
           <FormMultiSelect
             options={options as string[]}
             name={name}
-            onChange={(e: any) => handleChange(e, onChange)}
+            // onChange={(e: any) => handleChange(e, onChange)}
+            onChange={(values) => handleChange(values, onChange)}
             // @ts-ignore
             showErrors={showErrorMessage}
           />

@@ -16,9 +16,10 @@ import type { PrismTheme } from "prism-react-renderer";
 export function usePrismTheme(): PrismTheme {
   const { prism } = useThemeConfig();
   const { colorMode } = useColorMode();
+  console.log("####colorMode", colorMode);
   const lightModeTheme = prism.theme;
   const darkModeTheme = prism.darkTheme || lightModeTheme;
   const prismTheme = colorMode === "dark" ? darkModeTheme : lightModeTheme;
 
-  return prismTheme;
+  return darkModeTheme;
 }

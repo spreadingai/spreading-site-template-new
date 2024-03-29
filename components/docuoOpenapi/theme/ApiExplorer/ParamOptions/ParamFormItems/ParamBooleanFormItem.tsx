@@ -41,8 +41,18 @@ export default function ParamBooleanFormItem({ param }: ParamProps) {
             name={name}
             options={["---", "true", "false"]}
             // @ts-ignore
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              const val = e.target.value;
+            // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            //   const val = e.target.value;
+            //   dispatch(
+            //     setParam({
+            //       ...param,
+            //       value: val === "---" ? undefined : val,
+            //     })
+            //   );
+            //   onChange(val);
+            // }}
+            onChange={(value) => {
+              const val = value;
               dispatch(
                 setParam({
                   ...param,

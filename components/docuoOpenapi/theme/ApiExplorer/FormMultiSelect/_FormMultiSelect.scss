@@ -1,30 +1,59 @@
-.openapi-explorer__multi-select-input {
-  width: 100%;
-  margin-top: calc(var(--ifm-pre-padding) / 2);
-  padding: 1rem;
-  border-radius: 4px;
-  border: 1px solid transparent;
-  background-color: var(--openapi-input-background);
-  outline: none;
-  font-size: var(--openapi-explorer-font-size-input);
-  color: var(--ifm-pre-color);
-  -moz-appearance: none;
-  -webkit-appearance: none;
-  appearance: none;
+// .openapi-explorer__multi-select-input {
+//   width: 100%;
+//   margin-top: 10px;
+//   margin-bottom: 10px;
+//   padding: 1rem;
+//   border-radius: 4px;
+//   background-color: #282828;
+//   outline: none;
+//   font-size: var(--openapi-explorer-font-size-input);
+//   color: var(--ifm-pre-color);
+//   -moz-appearance: none;
+//   -webkit-appearance: none;
+//   appearance: none;
 
-  &:focus {
-    border: 1px solid var(--openapi-input-border);
+//   &.error {
+//     border-color: #ff2900;
+//   }
+
+//   option {
+//     cursor: pointer;
+//     border-radius: 0.25rem;
+//     color: inherit;
+//     margin: 0.25rem 0;
+//     padding: var(--ifm-menu-link-padding-vertical) var(--ifm-menu-link-padding-horizontal);
+//   }
+// }
+
+.openapi-explorer__request-form {
+  .ant-select.ant-select-outlined {
+    &.ant-select-multiple {
+      margin: 8px 0;
+      .ant-select-selection-item {
+        background: rgba(255, 255, 255, 0.1);
+        .ant-select-selection-item-remove {
+          color: inherit;
+        }
+      }
+      &.error {
+        .ant-select-selector {
+          border-color: #ff2900;
+        }
+        &:hover {
+          .ant-select-selector {
+            border-color: #ff2900 !important;
+          }
+        }
+      }
+    }
   }
+}
 
-  &.error {
-    border: 1px solid var(--ifm-color-danger);
-  }
-
-  option {
-    border-radius: 0.25rem;
-    color: var(--ifm-menu-color);
-    margin: 0.25rem 0;
-    padding: var(--ifm-menu-link-padding-vertical)
-      var(--ifm-menu-link-padding-horizontal);
+.ant-select-dropdown {
+  .ant-select-item {
+    margin: 2px 0;
+    .ant-select-item-option-state {
+      display: none;
+    }
   }
 }
