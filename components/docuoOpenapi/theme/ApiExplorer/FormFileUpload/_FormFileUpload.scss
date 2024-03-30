@@ -8,8 +8,42 @@
 
   width: 100%;
   border-radius: 4px;
-  padding: var(--ifm-pre-padding);
-  font-size: var(--ifm-code-font-size);
+  font-size: 12px;
+  padding: 15px;
+  margin-top: 8px;
+  flex-direction: column-reverse;
+}
+
+.openapi-explorer__file-name {
+  font-family: Inter-Medium;
+  font-weight: 500;
+  color: #b6b6b6;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+}
+
+button.file-clear-btn {
+  width: 51px;
+  height: 25px;
+  border-radius: 6px 6px 6px 6px;
+  border: 1px solid rgba(5, 236, 7, 0.5);
+  background: none;
+  font-family: Inter-Medium;
+  font-weight: 500;
+  font-size: 12px;
+  color: #05ec07;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  position: initial;
+  transform: translateY(0);
+  margin-top: 11px;
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 .openapi-explorer__dropzone-hover {
@@ -35,14 +69,6 @@
     flex-wrap: wrap;
     margin: var(--ifm-pre-padding) 0;
     color: var(--ifm-pre-color);
-  }
-
-  .openapi-explorer__file-name {
-    margin: 0 calc(var(--ifm-pre-padding) * 1.5);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    flex: 1;
   }
 }
 

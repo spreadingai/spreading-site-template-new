@@ -34,9 +34,7 @@ h3 {
     margin: 0;
   }
   &.openapi-markdown__details-summary-header-body {
-    & + .openapi-schema__required {
-      margin-left: 5px;
-    }
+    margin-right: 10px;
     & + span:not([class]) {
       background: rgba(81, 88, 105, 0.07);
       border-radius: 4px;
@@ -57,13 +55,19 @@ h3 {
 /* End of Top-Level Details Caret Styling */
 
 .openapi-markdown__details {
+  cursor: pointer;
+  font-family: Inter-Medium;
+  font-weight: 500;
+  color: #171717;
   margin: unset !important;
   background-color: transparent;
-  color: var(--ifm-font-color-base);
   padding: unset;
   border: unset !important;
   box-shadow: unset !important;
-  --docusaurus-details-decoration-color: var(--ifm-font-color-base) !important;
+  & > summary > strong {
+    font-family: inherit;
+    font-weight: inherit;
+  }
 }
 
 .openapi-markdown__details > summary::before {

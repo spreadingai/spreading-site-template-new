@@ -1,13 +1,69 @@
 .apitab-tabpanel-container {
     .tabpanel-container {
         & > div:not([class]) {
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             margin-top: 10px;
             font-family: Inter;
             font-weight: 400;
             font-size: 16px;
             color: #353c4e;
             line-height: 24px;
+        }
+    }
+}
+.openapi-markdown__details.response > summary {
+    &.openapi-markdown__details-summary-response {
+        font-family: Inter-Medium;
+        font-weight: 500;
+        font-size: 14px;
+        color: #171717;
+        line-height: 20px;
+        strong {
+            font-family: inherit;
+            font-weight: inherit;
+        }
+    }
+}
+.openapi-markdown__details {
+    & > ul > .schemaItem {
+        margin: 0;
+        padding: 0;
+        & > summary {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            strong {
+                height: 24px;
+                font-family: Roboto Mono;
+                font-size: 16px;
+                line-height: 24px;
+                margin-right: 10px;
+                color: #1abd00;
+                cursor: pointer;
+            }
+            .header-name-type {
+                background: rgba(81, 88, 105, 0.07);
+                color: #353c4e;
+                border-radius: 4px;
+                margin-right: 10px;
+                font-family: Roboto Mono;
+                font-weight: 400;
+                font-size: 12px;
+                height: 19px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 1px 4px 0;
+            }
+        }
+        & > div {
+            font-family: Inter;
+            font-weight: 500;
+            font-size: 14px;
+            color: #515869;
+            & > div {
+                margin: 0 0 8px 0 !important;
+            }
         }
     }
 }

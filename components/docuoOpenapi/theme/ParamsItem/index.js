@@ -125,11 +125,21 @@ function ParamsItem({
         {required && <span className="openapi-schema__divider"></span>}
         {renderSchemaRequired}
       </span>
-      <div className="openapi-params_schema">{renderSchema} </div>
-      <div className="openapi-params_default_value">{renderDefaultValue}</div>
-      <div className="openapi-params_description">{renderDescription}</div>
-      <div className="openapi-params_example">{renderExample}</div>
-      <div className="openapi-params_examples">{renderExamples}</div>
+      {renderSchema ? (
+        <div className="openapi-params_schema">{renderSchema} </div>
+      ) : null}
+      {renderDefaultValue ? (
+        <div className="openapi-params_default_value">{renderDefaultValue}</div>
+      ) : null}
+      {renderDescription ? (
+        <div className="openapi-params_description">{renderDescription}</div>
+      ) : null}
+      {renderExample ? (
+        <div className="openapi-params_example">{renderExample}</div>
+      ) : null}
+      {renderExamples ? (
+        <div className="openapi-params_examples">{renderExamples}</div>
+      ) : null}
     </div>
   );
 }

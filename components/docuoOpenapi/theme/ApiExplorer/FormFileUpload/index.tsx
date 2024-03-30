@@ -40,19 +40,23 @@ function RenderPreview({ file }: RenderPreviewProps) {
             minWidth: 0,
           }}
         >
-          <svg viewBox="0 0 100 120" style={{ width: "50px", height: "60px" }}>
-            <path
-              fillRule="evenodd"
-              fill="#b3beca"
-              d="M100.000,39.790 L100.000,105.000 C100.000,113.284 93.284,120.000 85.000,120.000 L15.000,120.000 C6.716,120.000 -0.000,113.284 -0.000,105.000 L-0.000,15.000 C-0.000,6.716 6.716,-0.000 15.000,-0.000 L60.210,-0.000 L100.000,39.790 Z"
-            />
-            <path
-              fillRule="evenodd"
-              fill="#90a1b1"
-              transform="translate(60, 0)"
-              d="M0.210,-0.000 L40.000,39.790 L40.000,40.000 L15.000,40.000 C6.716,40.000 0.000,33.284 0.000,25.000 L0.000,-0.000 L0.210,-0.000 Z"
-            />
-          </svg>
+          <span style={{ marginRight: "4px" }}>
+            <svg
+              width="21"
+              height="22"
+              viewBox="0 0 21 22"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g id="file">
+                <path
+                  id="Vector"
+                  d="M16.8 8.9V17.2947C16.8 17.6858 16.4886 18 16.1046 18H4.89533C4.51142 18 4.19995 17.6892 4.19995 17.3057V4.69426C4.19995 4.31872 4.51281 4 4.89873 4H11.9V8.2C11.9 8.5866 12.2133 8.9 12.6 8.9H16.8ZM16.8 7.5H13.3V4.00223L16.8 7.5ZM7.69995 7.5V8.9H9.79995V7.5H7.69995ZM7.69995 10.3V11.7H13.3V10.3H7.69995ZM7.69995 13.1V14.5H13.3V13.1H7.69995Z"
+                  fill="#B6B6B6"
+                />
+              </g>
+            </svg>
+          </span>
           <div className="openapi-explorer__file-name">{file.name}</div>
         </div>
       );
@@ -91,12 +95,11 @@ function FormFileUpload({ placeholder, onChange }: Props) {
         onDragEnter={() => setHover(true)}
         onDragLeave={() => setHover(false)}
         multiple={false}
-        style={{ marginTop: "calc(var(--ifm-pre-padding) / 2)" }}
       >
         {file ? (
           <>
             <button
-              style={{ marginTop: "calc(var(--ifm-pre-padding) / 2)" }}
+              className="file-clear-btn"
               onClick={(e) => {
                 e.stopPropagation();
                 setAndNotifyFile(undefined);

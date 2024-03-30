@@ -8,53 +8,46 @@
   margin-left: -1px;
 }
 
-.openapi-tabs__response-code-item {
-  border: 1px solid transparent;
-  margin-top: 0 !important;
-  margin-right: 0.5rem;
-  padding: 0.35rem 0.85rem;
-  border-radius: var(--ifm-global-radius);
-  font-weight: var(--ifm-font-weight-bold);
-  font-size: 12px;
-  transition: 300ms;
-  color: var(--ifm-font-color-secondary);
-
-  &.success.active {
-    background-color: var(--ifm-color-success);
-    color: var(--ifm-color-white);
-  }
-
-  &.danger.active {
-    background-color: var(--ifm-color-danger);
-    color: var(--ifm-color-white);
-  }
-
-  &.info.active {
-    background-color: var(--ifm-color-info);
-    color: var(--ifm-color-white);
-  }
-
-  &.active,
+.theme-api-markdown .openapi-tabs__response-code-item {
+  transition: 0.3s;
+  height: 32px;
+  padding: 0 12px;
+  display: inline-flex;
+  align-items: center;
+  height: 33px;
+  background: #f7f8f9;
+  border-radius: 6px 6px 6px 6px;
+  border: 1px solid #f2f3f5;
+  padding: 0 16px;
+  margin: 0 12px 0 0;
+  font-family: Inter-Medium;
+  font-weight: 500;
+  font-size: 14px;
+  color: #515869;
   &:hover {
-    opacity: 1;
+    background-color: #f7f8f9;
   }
-
-  &:hover:not(.active) {
-    background-color: transparent;
-    border: 1px solid var(--ifm-toc-border-color);
+  &.success.active {
+    border-color: #19b100;
+    background-color: #19b100;
+    color: #fff;
+    &:hover {
+      background-color: #19b100;
+      border-color: #19b100;
+    }
   }
-}
-
-.openapi-tabs__response-code-item:not(.active) {
-  opacity: 0.65;
-}
-
-.openapi-tabs__response-code-item:hover {
-  opacity: 1;
-}
-
-.openapi-tabs__response-code-item:last-child {
-  margin-right: 0 !important;
+  &.danger.active {
+    border-color: #ff2900;
+    background-color: #ff2900;
+    color: #fff;
+    &:hover {
+      background-color: #ff2900;
+      border-color: #ff2900;
+    }
+  }
+  &:last-of-type {
+    margin-right: 0;
+  }
 }
 
 /* Open API Response Code Tabs */

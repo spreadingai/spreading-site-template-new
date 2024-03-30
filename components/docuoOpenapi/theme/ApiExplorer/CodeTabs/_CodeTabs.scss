@@ -153,7 +153,7 @@ body[class="ReactModal__Body--open"] {
     content: "";
     width: var(--code-tab-logo-width);
     height: var(--code-tab-logo-height);
-    background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/bash/bash-plain.svg") no-repeat;
+    background: url("../../../../../assets/icons/openapi/curl.svg") no-repeat;
     margin-block: auto;
     background-color: var(--bash-background-color);
     border-radius: var(--bash-border-radius);
@@ -292,7 +292,7 @@ body[class="ReactModal__Body--open"] {
     border: 1px solid #4d4c4c;
     box-shadow: none;
     margin-right: 14px;
-    padding: 8px 8px 4px !important;
+    padding: 8px 8px 0 !important;
     justify-content: space-between;
     margin-bottom: 0;
     & > span {
@@ -300,6 +300,8 @@ body[class="ReactModal__Body--open"] {
       font-weight: 500;
       font-size: 11px;
       color: #f0f0f0;
+      text-transform: uppercase;
+      margin-top: 2px;
     }
     &:hover,
     &.active {
@@ -327,6 +329,7 @@ body[class="ReactModal__Body--open"] {
     &.openapi-tabs__code-container-inner {
       padding: 0 14px !important;
       margin-top: 2px;
+      border-bottom: 1px solid #3d3d3d;
       & + div[role="tabpanel"] {
         background-color: #171717;
         padding: 0px 0px 2px 0px;

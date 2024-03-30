@@ -52,14 +52,18 @@
 .openapi-tabs__operation-schema-container {
   max-width: 600px;
 }
+// Cover antd select
 .openapi-tabs__operation-container {
   .ant-select {
     height: 36px;
+    outline: none;
     .ant-select-selector {
+      outline: none;
       box-shadow: none;
       background: #fafafb;
       border-radius: 6px 6px 6px 6px;
       border: 1px solid #f2f3f5 !important;
+      padding: 0 12px;
       .ant-select-selection-item {
         font-family: Inter-Medium;
         font-weight: 500;
@@ -70,6 +74,31 @@
     &:hover {
       .ant-select-selector {
         border-color: #f2f3f5 !important;
+      }
+    }
+    .ant-select-arrow .suffix-dropdown-icon {
+      transition: all 0.3s;
+      transform: translateY(-50%) rotate(180deg) !important;
+      position: absolute;
+      top: 50%;
+      right: 0;
+    }
+    &.ant-select-open {
+      .ant-select-arrow {
+        .suffix-dropdown-icon {
+          transform: translateY(-50%) rotate(360deg) !important;
+        }
+      }
+    }
+    &.ant-select-show-arrow {
+      .ant-select-selection-item {
+        padding-inline-end: 22px;
+      }
+    }
+    &.ant-select-focused {
+      .ant-select-selector {
+        border-color: #f2f3f5 !important;
+        box-shadow: none !important;
       }
     }
   }
@@ -88,10 +117,24 @@
 }
 .ant-select-dropdown.operation-select-dropdown {
   background-color: #fafafb;
-  border: 1px solid #fafafb;
+  border: 1px solid #f2f3f5;
   box-shadow: none;
   .ant-select-item {
+    font-family: Inter-Medium;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.3s;
+    padding: 4px 10px;
+    line-height: 28px;
     color: #171717;
+    &:hover {
+      background: rgba(23, 23, 23, 0.04) !important;
+      border-radius: 4px 4px 4px 4px;
+    }
+    &.ant-select-item-option-selected {
+      color: #05ec07 !important;
+      background: inherit;
+    }
   }
 }
 

@@ -38,11 +38,6 @@
   color: #ff2900;
   font-size: 12px;
   padding-top: 8px;
-
-  &::before {
-    display: inline;
-    content: "⚠ ";
-  }
 }
 .openapi-explorer__details-container {
   &.params,
