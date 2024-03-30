@@ -1,0 +1,46 @@
+.treeNodeLabel {
+
+  &:not(.isLevel0) {
+    color: var(--docuo-sidebar-color);
+    padding-left: 14px;
+
+    &.active {
+      border-left-width: 1px;
+      border-inline-start-color: var(--docuo-color-primary-active);
+      transform: translateX(-1px);
+    }
+  }
+
+  &.isLevel0 {
+    font-family: Inter-SemiBold, Inter;
+    font-weight: 600;
+  }
+
+  &.active {
+    font-family: Inter-SemiBold, Inter;
+    font-weight: 600;
+    color: var(--docuo-color-primary-active);
+  }
+
+  &.islink {
+    &:hover {
+      color: var(--docuo-color-primary-active);
+    }
+
+    &:not(.isLevel0):hover {
+      border-left-width: 1px;
+      border-inline-start-color: var(--docuo-color-primary-active);
+      transform: translateX(-1px);
+    }
+  }
+
+}
+
+.treeNodeIcon {
+  color: var(--docuo-sidebar-color);
+}
+
+.childrenBorderLeft {
+  border-left-width: 1px;
+  border-inline-start-color: var(--docuo-sidebar-border-color);
+}

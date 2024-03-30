@@ -13,6 +13,7 @@ import {
   DisplayInstance,
   DisplayVersion,
   DocuoConfig,
+  ColorMode,
   SidebarItemType,
   TocItem,
 } from "@/lib/types";
@@ -24,11 +25,16 @@ import DocuoTree from "./tree";
 import DocuoAnchor from "./Anchor";
 import AnchorNode from "./Anchor/Anchor";
 import gradientFixed from "@/assets/images/gradient_fixed.png";
+import gradientFixedDark from "@/assets/images/gradient_fixed@dark.png";
 import IconBackTop from "@/assets/icons/anchor/IconBackTop.svg";
+import IconBackTopDark from "@/assets/icons/anchor/IconBackTopDark.svg";
 import IconBreadcrumbArrow from "@/assets/icons/breadcrumb/arrow.svg";
 import AnChorMobile from "./Anchor/AnchorMobile";
 import InsVersionDropdown from "@/components/dropdown/InsVersionDropdown";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import ThemeContext, { Theme } from "@/components/header/Theme.context";
+import useColors from "./hooks/useColors";
+import useColorMode from "./hooks/useColorMode";
 
 const { DirectoryTree } = Tree;
 
@@ -100,6 +106,12 @@ const PreviewLayout = ({
   const [selectedKeys, setSelectedKeys] = useState([]);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [expandedKeys, setExpandedKeys] = useState([]);
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [theme, setTheme] = useState<Theme>("light");
+
+  useColorMode(docuoConfig.themeConfig?.colorMode, theme, setTheme);
+
+  useColors(docuoConfig.themeConfig?.colors);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
@@ -207,7 +219,7 @@ const PreviewLayout = ({
     };
     loop(folderTreeData, []);
     return result.map((item, index, arr) => {
-      return { title: item.title };
+      return { title: item.title, className: "breadcrumb-label" };
     });
   };
   const breadCrumbData = getBreadCrumbData();
@@ -228,14 +240,6 @@ const PreviewLayout = ({
 
   const scrollToTop = () => {
     document.body.scrollTo({ top: 0, behavior: "smooth" });
-  };
-  const handleAnchorClick: AnchorProps["onClick"] = (event) => {
-    if ((event.target as HTMLElement).matches("a")) {
-      event.preventDefault();
-
-      // 执行您的自定义逻辑
-      console.log("[Site]handleAnchorClick", event);
-    }
   };
 
   const onDrawerClose = () => {
@@ -299,146 +303,120 @@ const PreviewLayout = ({
   const gaId = docuoConfig?.analytics?.ga4?.measurementId;
 
   return (
-    <div className="preview-screen relative">
-      { !!gaId && <GoogleAnalytics gaId={gaId} /> }
-      <Head>
-        <meta name="docsearch:version" content={docVersion} />
-        <meta name="docsearch:instance" content={instanceID} />
-      </Head>
-      <Header
-        docuoConfig={docuoConfig}
-        currentVersion={docVersion}
-        currentInstance={instanceID}
-        tocFormatData={tocFormatData}
-        displayInstances={displayInstances}
-        displayVersions={displayVersions}
-        setDrawerOpen={setDrawerOpen}
-      ></Header>
-      <div className="only_pc__show absolute z-0 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
-        <div className="w-[108rem] flex-none flex justify-end">
-          <Image
-            src={gradientFixed}
-            alt=""
-            className="w-[71.75rem] flex-none max-w-none dark:hidden"
-            decoding="async"
-          />
-        </div>
-      </div>
-      <main className="preview-main">
-        <div className="preview-sider">
-          <div className="flex pl-8">
-            <InsVersionDropdown type="instance" menu={instances} />
-            <InsVersionDropdown type="version" menu={versions} />
+    <ThemeContext.Provider value={{ theme, setTheme }}>
+      <div className="preview-screen relative">
+        { !!gaId && <GoogleAnalytics gaId={gaId} /> }
+        <Head>
+          <meta name="docsearch:version" content={docVersion} />
+          <meta name="docsearch:instance" content={instanceID} />
+        </Head>
+        <Header
+          docuoConfig={docuoConfig}
+          currentVersion={docVersion}
+          currentInstance={instanceID}
+          tocFormatData={tocFormatData}
+          displayInstances={displayInstances}
+          displayVersions={displayVersions}
+          setDrawerOpen={setDrawerOpen}
+        ></Header>
+        <div className="only_pc__show absolute z-0 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
+          <div className="w-[108rem] flex-none flex justify-end">
+            <Image
+              src={theme === "dark" ? gradientFixedDark : gradientFixed}
+              alt=""
+              className="w-[71.75rem] flex-none max-w-none"
+              decoding="async"
+            />
           </div>
-          <DocuoTree
-            data={folderTreeData}
-            selectedKeys={selectedKeys}
-            onSelect={fileSelectHandle}
-            titleRender={titleRenderHandle}
-            setDrawerOpen={setDrawerOpen}
-          />
         </div>
-        <div className="preview-content-wrap">
-          <div className="preview-content">
-            <div className="article">
-              <div className="article-breadcrumb flex justify-between	items-center">
-                <Breadcrumb
-                  items={breadCrumbData}
-                  separator={<IconBreadcrumbArrow className="m-auto" />}
-                />
-                <div className={"middle__show  relative"}>
-                  <AnChorMobile tocFormatData={tocFormatData} />
+        <main className="preview-main">
+          <div className="preview-sider">
+            <div className="flex pl-8">
+              <InsVersionDropdown type="instance" menu={instances} />
+              <InsVersionDropdown type="version" menu={versions} />
+            </div>
+            <DocuoTree
+              data={folderTreeData}
+              selectedKeys={selectedKeys}
+              onSelect={fileSelectHandle}
+              titleRender={titleRenderHandle}
+              setDrawerOpen={setDrawerOpen}
+            />
+          </div>
+          <div className="preview-content-wrap">
+            <div className="preview-content">
+              <div className="article">
+                <div className="article-breadcrumb flex justify-between	items-center">
+                  <Breadcrumb
+                    items={breadCrumbData}
+                    separator={<IconBreadcrumbArrow className="breadcrumb-icon m-auto" />}
+                  />
+                  <div className={"middle__show  relative"}>
+                    <AnChorMobile tocFormatData={tocFormatData} />
+                  </div>
+                </div>
+
+                <div
+                  className="article-content"
+                  ref={(current) => {
+                    const titleElement =
+                      current?.querySelector("h1[class*='title']");
+                    setTitleElement(titleElement as HTMLElement);
+                  }}
+                >
+                  {children}
                 </div>
               </div>
 
-              <div
-                className="article-content"
-                ref={(current) => {
-                  const titleElement =
-                    current?.querySelector("h1[class*='title']");
-                  setTitleElement(titleElement as HTMLElement);
-                }}
-              >
-                {children}
-              </div>
-            </div>
-
-            <div className="article-anchor-right">
-              {toc?.length ? (
-                <div className="pt-[28px]  pb-10 ml-8">
-                  <p
-                    className="mb-2.5 font-inter-bold font-semibold text-sm text-sidebar-primary"
-                    onClick={() => setIsExpand(!isExpand)}
-                  >
-                    On this page
-                  </p>
-                  <div className="toc-scroller overflow-auto overscroll-none relative pr-6 max-h-[70vh]">
-                    <DocuoAnchor data={tocFormatData} offsetTop={68} />
-                  </div>
-
-                  <div className="right-anchor-divide"></div>
-                  <div className="back-to-top" onClick={scrollToTop}>
-                    <div className="flex flex-shrink-0 items-center justify-center w-6 h-6 rounded-md bg-white opacity-60 border-backtop-default border mr-2.5">
-                      <IconBackTop />
+              <div className="article-anchor-right">
+                {toc?.length ? (
+                  <div className="pt-[28px]  pb-10 ml-8">
+                    <p
+                      className="mb-2.5 font-inter-bold font-semibold text-sm"
+                      onClick={() => setIsExpand(!isExpand)}
+                    >
+                      On this page
+                    </p>
+                    <div className="toc-scroller overflow-auto overscroll-none relative pr-6 max-h-[70vh]">
+                      <DocuoAnchor data={tocFormatData} offsetTop={68} />
                     </div>
-                    Back to top
+
+                    <div className="right-anchor-divide"></div>
+                    <div className="back-to-top hover:opacity-70" onClick={scrollToTop}>
+                      <div className="top-btn">
+                        {theme === "dark" ? <IconBackTopDark /> : <IconBackTop />}
+                      </div>
+                      Back to top
+                    </div>
                   </div>
-                </div>
-              ) : null}
+                ) : null}
+              </div>
             </div>
           </div>
-        </div>
-        <Drawer
-          rootClassName="mobile-tree-container"
-          placement="left"
-          onClose={onDrawerClose}
-          open={drawerOpen}
-          key="left"
-          getContainer={false}
-        >
-          <div className="flex pl-8">
-            <InsVersionDropdown type="instance" menu={instances} />
-            <InsVersionDropdown type="version" menu={versions} />
-          </div>
-          <DocuoTree
-            data={folderTreeData}
-            selectedKeys={selectedKeys}
-            onSelect={fileSelectHandle}
-            titleRender={titleRenderHandle}
-            setDrawerOpen={setDrawerOpen}
-          />
-          {/* <DirectoryTree
-            key="2"
-            showLine
-            blockNode
-            defaultExpandAll
-            // @ts-ignore
-            switcherIcon={(props: AntTreeNodeProps) => (
-              <IconFileClose
-                style={{
-                  fontSize: "18px",
-                  transform: props.expanded ? "rotate(90deg)" : "rotate(0deg)",
-                }}
-              />
-            )}
-            showIcon={false}
-            titleRender={titleRenderHandle}
-            onSelect={fileSelectHandle}
-            treeData={folderTreeData}
-            selectedKeys={selectedKeys}
-            // expandedKeys={expandedKeys}
-            onExpand={onExpand}
-          /> */}
-          {/* <div className="generate-desc">
-            <span>Powered By</span>
-            <a href="https://www.spreading.ai/" target="_blank">
-              <Image src={LogoGrey} alt={"spreading"} />
-            </a>
-          </div> */}
-        </Drawer>
-      </main>
-      <Footer docuoConfig={docuoConfig} socials={[]} links={[]} />
-    </div>
+          <Drawer
+            rootClassName="mobile-tree-container"
+            placement="left"
+            onClose={onDrawerClose}
+            open={drawerOpen}
+            key="left"
+            getContainer={false}
+          >
+            <div className="flex pl-8">
+              <InsVersionDropdown type="instance" menu={instances} />
+              <InsVersionDropdown type="version" menu={versions} />
+            </div>
+            <DocuoTree
+              data={folderTreeData}
+              selectedKeys={selectedKeys}
+              onSelect={fileSelectHandle}
+              titleRender={titleRenderHandle}
+              setDrawerOpen={setDrawerOpen}
+            />
+          </Drawer>
+        </main>
+        <Footer docuoConfig={docuoConfig} socials={[]} links={[]} />
+      </div>
+    </ThemeContext.Provider>
   );
 };
 

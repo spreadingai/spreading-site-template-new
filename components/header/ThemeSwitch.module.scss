@@ -1,0 +1,33 @@
+.colorModeToggle {
+
+  .toggleButton {
+    color: var(--docuo-theme-btn-color);
+    width: 30px;
+    height: 30px;
+    box-shadow: var(--docuo-theme-btn-shadow);
+    border-radius: 8px;
+    border: var(--docuo-theme-btn-border);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+      color: var(--docuo-theme-btn-color-hover);
+    }
+  }
+  &:global(.mobile) {
+    .toggleButton {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      box-shadow: none;
+    }
+  }
+}
+
+[data-theme=light] .darkToggleIcon {
+  display: none;
+}
+
+[data-theme=dark] .lightToggleIcon {
+  display: none;
+}

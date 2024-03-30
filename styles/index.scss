@@ -42,13 +42,23 @@ html > body {
 
     /* 轨道样式 */
     &::-webkit-scrollbar-track {
-      background-color: transparent;
+      background: var(--docuo-background-primary);
     }
   }
   .article-anchor-right {
     // 滚动条
     &::-webkit-scrollbar {
       display: none;
+    }
+  }
+  // dark mode
+  html[data-theme=dark] {
+    body,
+    .preview-sider,
+    .toc-scroller {
+      &::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+      }
     }
   }
 }
@@ -58,44 +68,14 @@ html > body {
 }
 
 .preview-screen {
-  min-height: calc(100vh - var(--preview-header-height));
   display: flex;
   flex-direction: column;
-}
-
-.preview-header {
-  height: var(--preview-header-height);
-  background: #171717;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1001;
-  .logo {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    cursor: pointer;
-
-    img {
-      width: 28px;
-      height: 28px;
-    }
-
-    .title {
-      font-family: Inter-SemiBold, Inter;
-      font-weight: 600;
-      color: #ffffff;
-    }
-  }
+  color: var(--docuo-color-primary);
+  background: var(--docuo-background-primary);
 }
 
 .preview-main {
+  min-height: calc(100vh - var(--preview-header-height));
   display: flex;
   flex-direction: row;
   position: relative;
@@ -127,7 +107,6 @@ html > body {
   flex-direction: column;
   flex-shrink: 0;
   overflow: auto;
-  background: #ffffff;
   // border-right: 1px solid #efefef;
   position: sticky;
   top: var(--preview-header-height);
@@ -161,6 +140,18 @@ html > body {
     .drawer-switch {
       cursor: pointer;
       display: none;
+    }
+
+    .breadcrumb-label {
+      color: var(--docuo-breadcrumb-color);
+    }
+
+    li:last-child .breadcrumb-label {
+      color: var(--docuo-color-primary-active);
+    }
+
+    .breadcrumb-icon {
+      color: var(--docuo-breadcrumb-icon-color);
     }
   }
 
@@ -351,7 +342,7 @@ html > body {
       margin-top: 20px;
       width: 100%;
       height: 1px;
-      background: rgba($color: #e5e7eb, $alpha: 0.8);
+      background: var(--docuo-anchor-border-color);
     }
 
     .back-to-top {
@@ -361,12 +352,18 @@ html > body {
       font-size: 14px;
       font-family: Inter-Medium;
       font-weight: 500;
-      color: #515869;
+      color: var(--docuo-anchor-top-btn-color);
       line-height: 24px;
-      img {
-        height: 12px;
-        width: 12px;
-        margin-right: 4px;
+      .top-btn {
+        width: 24px;
+        height: 24px;
+        margin-right: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 6px;
+        border: var(--docuo-anchor-top-btn-border);
+        background: var(--docuo-anchor-top-btn-bg);
       }
     }
 
@@ -562,6 +559,7 @@ html > body {
 
   .preview-side-close-btn {
     display: block;
+    color: var(--docuo-m-drawer-close-color);
   }
 
   .mobile-tree-container {
@@ -569,8 +567,16 @@ html > body {
     z-index: 1001;
     position: fixed;
 
+    .ant-drawer-mask {
+      background: var(--docuo-m-drawer-mask-bg);
+    }
+
     .ant-drawer-content-wrapper {
       width: 21.25rem !important;
+
+      .ant-drawer-content {
+        background: var(--docuo-background-primary);
+      }
     }
 
     .ant-drawer-header {

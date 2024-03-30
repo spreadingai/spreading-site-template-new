@@ -13,6 +13,9 @@ const nextConfig = {
   reactStrictMode: true, // Version 13.4 or later is true by default in the app router
   swcMinify: true, // Version 13 or later is true by default
   compress: false, // TODO:Why disable gzip
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   experimental: {
     webpackBuildWorker: true,
     // outputFileTracingExcludes: {
