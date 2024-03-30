@@ -1,34 +1,56 @@
-.openapi-explorer__form-item-input {
-  margin-top: calc(var(--ifm-pre-padding) / 2);
-  background-color: var(--openapi-input-background);
-  border: 1px solid transparent;
-  outline: none;
-  width: 100%;
-  color: var(--ifm-pre-color);
-  padding: var(--openapi-explorer-padding-input);
-  border-radius: 4px;
-
+.openapi-explorer__form-item-input-container {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  background: #191919;
+  border-radius: 6px 6px 6px 6px;
+  padding: 11px 10px 11px 12px;
+  border: 1px solid #333333;
+  height: 40px;
+  transition: all 0.3s;
+  color: #f0f0f0;
   &:hover {
-    border: 1px solid var(--ifm-toc-border-color);
+    border-color: #05ec07;
   }
-
-  &:focus {
-    border: 1px solid var(--ifm-color-primary);
-    box-shadow: none;
-  }
-
   &.error {
-    border: 1px solid var(--openapi-required);
+    border-color: #ff2900;
+  }
+  &.has-prefix {
+    .prefix-container {
+      margin-right: 16px;
+      font-family: Roboto Mono;
+      font-weight: 400;
+      font-size: 12px;
+    }
+  }
+}
+.openapi-explorer__form-item-input {
+  outline: none;
+  flex: 1;
+  border: none;
+  background: inherit;
+  &::placeholder {
+    color: #757575;
   }
 }
 
 .openapi-explorer__input-error {
-  font-size: var(--openapi-explorer-font-size-input);
-  color: var(--openapi-required);
-  padding-top: var(--openapi-explorer-padding-input);
-
-  &::before {
-    display: inline;
-    content: "⚠ ";
+  color: #ff2900;
+  font-size: 12px;
+  padding-top: 8px;
+}
+.openapi-explorer__details-container {
+  &.params,
+  &.body {
+    .openapi-explorer__form-item-input-container {
+      border: none;
+      margin-top: 0;
+      padding-left: 0;
+      flex: 1;
+    }
+    .openapi-explorer__input-error {
+      padding-top: 0;
+      padding-bottom: 8px;
+    }
   }
 }

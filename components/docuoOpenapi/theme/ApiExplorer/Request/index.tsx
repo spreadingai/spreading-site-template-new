@@ -159,27 +159,34 @@ function Request({ item }: { item: NonNullable<ApiItem> }) {
       >
         <div className="openapi-explorer__request-header-container">
           <span className="openapi-explorer__request-title">Request </span>
-          {allDetailsExpanded ? (
-            <span
-              className="openapi-explorer__expand-details-btn"
-              onClick={collapseAllDetails}
-            >
-              Collapse all
-            </span>
-          ) : (
-            <span
-              className="openapi-explorer__expand-details-btn"
-              onClick={expandAllDetails}
-            >
-              Expand all
-            </span>
-          )}
+          <div className="right-btn">
+            {allDetailsExpanded ? (
+              <span
+                className="openapi-explorer__expand-details-btn"
+                onClick={collapseAllDetails}
+              >
+                Collapse all
+              </span>
+            ) : (
+              <span
+                className="openapi-explorer__expand-details-btn"
+                onClick={expandAllDetails}
+              >
+                Expand all
+              </span>
+            )}
+            {showRequestButton && item.method !== "event" && (
+              <button className="openapi-explorer__request-btn" type="submit">
+                Send
+              </button>
+            )}
+          </div>
         </div>
         <div className="openapi-explorer__details-outer-container">
           {showServerOptions && item.method !== "event" && (
             <details
               open={expandServer}
-              className="openapi-explorer__details-container"
+              className="openapi-explorer__details-container server"
             >
               <summary
                 className="openapi-explorer__details-summary"
@@ -196,7 +203,7 @@ function Request({ item }: { item: NonNullable<ApiItem> }) {
           {showAuth && (
             <details
               open={expandAuth}
-              className="openapi-explorer__details-container"
+              className="openapi-explorer__details-container auth"
             >
               <summary
                 className="openapi-explorer__details-summary"
@@ -215,7 +222,7 @@ function Request({ item }: { item: NonNullable<ApiItem> }) {
               open={
                 expandParams || Object.keys(methods.formState.errors).length
               }
-              className="openapi-explorer__details-container"
+              className="openapi-explorer__details-container params"
             >
               <summary
                 className="openapi-explorer__details-summary"
@@ -232,7 +239,7 @@ function Request({ item }: { item: NonNullable<ApiItem> }) {
           {showRequestBody && (
             <details
               open={expandBody}
-              className="openapi-explorer__details-container"
+              className="openapi-explorer__details-container body"
             >
               <summary
                 className="openapi-explorer__details-summary"
@@ -243,9 +250,7 @@ function Request({ item }: { item: NonNullable<ApiItem> }) {
               >
                 Body
                 {requestBodyRequired && (
-                  <span className="openapi-schema__required">
-                    &nbsp;required
-                  </span>
+                  <span className="openapi-schema__required">required</span>
                 )}
               </summary>
               <>
@@ -274,11 +279,6 @@ function Request({ item }: { item: NonNullable<ApiItem> }) {
               </summary>
               <Accept />
             </details>
-          )}
-          {showRequestButton && item.method !== "event" && (
-            <button className="openapi-explorer__request-btn" type="submit">
-              Send API Request
-            </button>
           )}
         </div>
       </form>

@@ -26,11 +26,13 @@ function Accept() {
   }
 
   return (
-    <FormItem label="Accept">
+    <FormItem label="Accept" hideLabel={true}>
       <FormSelect
+        label="Accept"
         value={value}
         options={options}
-        onChange={(e: any) => dispatch(setAccept(e.target.value))}
+        // onChange={(e: any) => dispatch(setAccept(e.target.value))}
+        onChange={(value) => dispatch(value)}
       />
     </FormItem>
   );

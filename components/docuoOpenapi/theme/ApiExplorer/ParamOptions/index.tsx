@@ -85,9 +85,7 @@ function ParamOptions() {
           >
             <span
               style={{
-                width: "1.5em",
-                display: "inline-block",
-                textAlign: "center",
+                width: "20px",
               }}
             >
               <span

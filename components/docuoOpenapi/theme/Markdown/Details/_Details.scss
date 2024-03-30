@@ -4,8 +4,16 @@
 .openapi-left-panel__container > .openapi-markdown__details > summary,
 .openapi-markdown__details.mime > summary,
 .openapi-markdown__details.response > summary {
+  cursor: pointer;
   text-transform: uppercase;
   font-size: 12px;
+}
+
+.openapi-markdown__details > summary {
+  width: max-content;
+  list-style: none;
+  position: relative;
+  padding: 10px 0 10px 16px;
 }
 
 .openapi-left-panel__container > .openapi-markdown__details,
@@ -14,29 +22,52 @@
   margin-bottom: 1rem !important;
 }
 
-.openapi-markdown__details-summary-header-params,
-.openapi-markdown__details-summary-header-body {
-  font-size: 12px;
-  margin-bottom: 0;
+h3 {
+  &.openapi-markdown__details-summary-header-params,
+  &.openapi-markdown__details-summary-header-body {
+    height: 20px;
+    font-family: Inter-Medium;
+    font-weight: 500;
+    font-size: 14px;
+    color: #171717;
+    line-height: 20px;
+    margin: 0;
+  }
+  &.openapi-markdown__details-summary-header-body {
+    margin-right: 10px;
+    & + span:not([class]) {
+      background: rgba(81, 88, 105, 0.07);
+      border-radius: 4px;
+      margin-right: 5px;
+      font-family: Roboto Mono;
+      font-weight: 400;
+      font-size: 12px;
+      height: 19px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1px 4px 0;
+    }
+  }
 }
 /* End of Top-Level Details Styling */
 
-/* Top-Level Details Caret Styling */
-.openapi-left-panel__container > .openapi-markdown__details > summary::before,
-.openapi-markdown__details.mime > summary::before,
-.openapi-markdown__details.response > summary::before {
-  top: 0.1rem;
-}
 /* End of Top-Level Details Caret Styling */
 
 .openapi-markdown__details {
+  cursor: pointer;
+  font-family: Inter-Medium;
+  font-weight: 500;
+  color: #171717;
   margin: unset !important;
   background-color: transparent;
-  color: var(--ifm-font-color-base);
   padding: unset;
   border: unset !important;
   box-shadow: unset !important;
-  --docusaurus-details-decoration-color: var(--ifm-font-color-base) !important;
+  & > summary > strong {
+    font-family: inherit;
+    font-weight: inherit;
+  }
 }
 
 .openapi-markdown__details > summary::before {
@@ -45,11 +76,15 @@
     50% / 1.2rem 1.2rem;
   filter: var(--ifm-menu-link-sublist-icon-filter);
   height: 0.75rem;
-  transform: rotate(90deg) !important;
+  transform: translateY(-50%) rotate(90deg) !important;
   width: 0.75rem;
   transition: transform var(--ifm-transition-fast) linear !important;
   border: none !important;
+  position: absolute;
+  top: 50%;
+  left: 0;
   transform-origin: unset !important;
+  cursor: pointer;
 }
 
 .openapi-markdown__details ul {
@@ -63,16 +98,12 @@
 }
 
 .theme-api-markdown details[data-collapsed="false"] > summary::before {
-  transform: rotate(180deg) !important;
-}
-
-.openapi-markdown__details > div > div {
-  padding-top: unset !important;
-  border-top: unset !important;
+  transform: translateY(-50%) rotate(180deg) !important;
 }
 
 .openapi-markdown__details p {
   margin-bottom: 0;
+  margin-top: 0;
 }
 
 .openapi-markdown__details-summary-mime {
@@ -85,15 +116,10 @@ details summary::-webkit-details-marker {
 }
 
 .openapi-security__details {
-  font-size: 12px;
-  margin-bottom: 1rem;
-  background-color: transparent;
-  color: var(--ifm-font-color-base);
-  padding: unset;
-  border: thin solid var(--ifm-toc-border-color);
-  border-radius: var(--ifm-pre-border-radius);
-  box-shadow: unset !important;
-  --docusaurus-details-decoration-color: var(--ifm-font-color-base) !important;
+  border-radius: 6px;
+  border: none;
+  overflow: hidden;
+  margin-bottom: 12px;
 }
 
 .openapi-security__details pre {
@@ -103,17 +129,87 @@ details summary::-webkit-details-marker {
   border-top-right-radius: 0;
 }
 
-.openapi-security__summary-header {
-  font-size: 12px;
-  text-transform: uppercase;
+.openapi-security__details .openapi-security__summary-header {
+  font-family: Inter-Medium;
+  font-weight: 500;
+  font-size: 14px;
+  color: #b6b6b6;
   margin-bottom: unset;
+  line-height: 20px;
+  margin-top: 0;
+}
+
+.openapi-security__details .openapi-security__summary-container {
+  background: #282828;
+  padding: 16px 28px;
+  width: auto;
+  & + pre {
+    background-color: #171717;
+    border: none;
+    padding: var(--ifm-pre-padding);
+    color: var(--ifm-pre-color);
+    font: var(--ifm-code-font-size) / var(--ifm-pre-line-height) var(--ifm-font-family-monospace);
+    overflow: auto;
+    padding: 14px 16px 18px 16px;
+    & > span {
+      font-family: Inter-Regular;
+      font-weight: 400;
+      font-size: 14px;
+      color: #909090;
+      line-height: 20px;
+      margin-bottom: 8px;
+      code {
+        padding: 0 !important;
+        font-family: inherit;
+        font-weight: inherit;
+        font-size: inherit;
+        color: inherit;
+        background-color: initial !important;
+        border: initial !important;
+      }
+      & > strong,
+      & > code > strong:first-of-type {
+        font-family: Roboto Mono;
+        font-weight: 400;
+        font-size: 14px;
+        color: #f0f0f0;
+        margin-right: 8px;
+      }
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
+    a {
+      font-family: Inter;
+      font-weight: 500;
+      font-size: 14px;
+      color: #05ec07;
+      line-height: 20px;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
 }
 
 .openapi-security__summary-container {
-  padding: 1rem;
-  list-style-type: none;
-
-  &:hover {
-    cursor: pointer;
+  list-style: none;
+  position: relative;
+  cursor: pointer;
+  &::before {
+    content: "";
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24"><path fill="white" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg>')
+      50% / 1.2rem 1.2rem;
+    filter: var(--ifm-menu-link-sublist-icon-filter);
+    height: 0.75rem;
+    transform: translateY(-50%) rotate(90deg) !important;
+    width: 0.75rem;
+    transition: transform var(--ifm-transition-fast) linear !important;
+    border: none !important;
+    transform-origin: unset !important;
+    position: absolute;
+    top: 50%;
+    left: 10px !important;
+    opacity: 0.6;
   }
 }

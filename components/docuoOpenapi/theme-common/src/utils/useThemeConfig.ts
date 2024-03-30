@@ -139,7 +139,7 @@ export function useThemeConfig(): any {
     ...docuoData,
     navbar: { hideOnScroll: false },
     colorMode: {
-      defaultMode: "light",
+      defaultMode: "dark",
       disableSwitch: false,
       respectPrefersColorScheme: false,
     },

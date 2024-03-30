@@ -1,13 +1,11 @@
 .openapi-explorer__request-form {
-  background-color: var(--ifm-pre-background);
-  border-radius: var(--openapi-card-border-radius);
-  border: 1px solid var(--openapi-explorer-border-color);
-  box-shadow: 0 2px 3px hsla(222, 8%, 43%, 0.1),
-    0 8px 16px -10px hsla(222, 8%, 43%, 0.2);
-  color: var(--ifm-pre-color);
-  line-height: var(--ifm-pre-line-height);
-  margin-bottom: var(--ifm-spacing-vertical);
-  margin-top: 0;
+  background-color: #171717;
+  border-radius: 6px;
+  font-family: Inter;
+  font-weight: 500;
+  font-size: 14px;
+  color: #b6b6b6;
+  margin-bottom: 12px;
   overflow: auto;
   transition: 300ms;
 
@@ -16,12 +14,6 @@
 
   &:empty {
     display: none;
-  }
-
-  &:hover {
-    box-shadow: 0 0 0 2px rgba(38, 53, 61, 0.15),
-      0 2px 3px hsla(222, 8%, 43%, 0.15),
-      0 16px 16px -10px hsla(222, 8%, 43%, 0.2);
   }
 
   .required {
@@ -37,37 +29,55 @@
 .openapi-explorer__request-header-container {
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid var(--openapi-explorer-border-color);
+  align-items: center;
   margin: 0;
-  padding: 0.75rem var(--ifm-pre-padding);
+  background-color: #282828;
+  padding: 10px 12px 10px 16px;
   text-transform: uppercase;
-  font-size: 12px;
-  font-weight: bold;
+  .openapi-explorer__request-title {
+    font-size: 14px;
+    font-family: Inter-Medium;
+    font-weight: 500;
+    color: #b6b6b6;
+  }
+  .right-btn {
+    display: flex;
+  }
 }
 
 .openapi-explorer__expand-details-btn {
+  cursor: pointer;
+  width: 125px;
+  height: 31px;
+  border-radius: 6px 6px 6px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  opacity: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-right: 10px;
   &:hover {
-    cursor: pointer;
+    opacity: 0.8;
   }
 }
 
 .openapi-explorer__details-outer-container {
-  padding: 1rem;
-}
-
-.openapi-explorer__details-container[open] {
-  .openapi-explorer__details-summary::before {
-    transform: rotate(180deg);
-    margin-top: 0.25rem;
-  }
+  padding: 16px 12px;
 }
 
 .openapi-explorer__details-summary {
+  font-family: Inter-Medium;
+  font-weight: 500;
+  position: relative;
+  padding: 12px 20px;
   display: inline-flex;
   align-items: center;
-  padding: 0.35rem 0;
   font-size: 14px;
   list-style: none;
+  padding-left: 20px !important;
+  color: inherit;
 
   &:hover {
     cursor: pointer;
@@ -78,42 +88,55 @@
   }
 
   &::before {
-    margin-right: 0.25rem;
-    margin-bottom: 0.25rem;
-    margin-top: 0.25rem;
-    background-image: var(--openapi-explorer-caret-bg);
-    border: none !important;
-    transform: rotate(90deg);
     content: "";
-    height: 1rem;
-    width: 1rem;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24"><path fill="white" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg>')
+      50% / 1.2rem 1.2rem;
+    filter: var(--ifm-menu-link-sublist-icon-filter);
+    height: 0.75rem;
+    transform: translateY(-50%) rotate(90deg) !important;
+    width: 0.75rem;
+    transition: transform var(--ifm-transition-fast) linear !important;
+    border: none !important;
+    transform-origin: unset !important;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    opacity: 0.6;
   }
 }
 
 .openapi-explorer__request-btn {
-  border: none;
-  border-radius: var(--ifm-global-radius);
-  padding: 0.5rem 1rem;
-  margin-top: 1rem;
-  background-color: var(--ifm-color-primary-light);
-  text-transform: uppercase;
-  font-weight: bold;
-  font-size: 12px;
-  color: white;
+  border-radius: 6px 6px 6px 6px;
+  border: 1px solid #05ec07;
+  width: 67px;
+  height: 31px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  font-family: Inter-Medium;
+  font-size: 14px;
+  color: #05ec07;
   cursor: pointer;
   transition: 300ms;
 
   &:hover {
-    background-color: var(--ifm-color-primary-lightest);
-  }
-
-  &:active {
-    background-color: var(--ifm-color-primary-light);
+    opacity: 0.8;
   }
 }
 
-.openapi-security__summary-container {
-  background: var(--ifm-pre-background);
+.openapi-explorer__details-container {
+  &:not(:last-of-type) {
+    margin-bottom: 10px;
+  }
+  .openapi-schema__required {
+    color: #ea3902;
+    background: rgba(227, 77, 60, 0.15);
+  }
+}
+
+.openapi-explorer__playground-editor .prism-code {
+  font-size: inherit;
 }
 
 // Prevent auto zoom on mobile iOS devices when focusing on input elmenents
@@ -121,6 +144,6 @@
   .prism-code,
   select,
   input {
-    font-size: 1rem;
+    font-size: inherit;
   }
 }

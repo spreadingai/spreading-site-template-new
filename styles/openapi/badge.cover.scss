@@ -1,0 +1,67 @@
+// Badge
+.theme-api-markdown {
+    .badge {
+        font-family: Inter-Semi Bold;
+        background-color: #1abd00;
+        border-radius: 4px 4px 4px 4px;
+        padding: 6px 5px 3px 5px;
+        font-weight: normal;
+        font-size: 12px;
+        color: #ffffff;
+        display: inline-flex;
+        align-items: center;
+        border: none;
+        &.badge--success {
+            background-color: #0989ff;
+        }
+        &.badge--danger {
+            background-color: #f64841;
+        }
+        &.badge--primary {
+            background-color: #1abd00;
+        }
+        &.badge--info {
+            background-color: #08b6ed;
+        }
+        &.badge--warning {
+            background-color: #fb7e38;
+        }
+        &.badge--secondary {
+            background-color: rgb(235, 237, 240);
+            color: #171717;
+        }
+    }
+    .openapi-markdown__details {
+        &:has(> .oneof-container) {
+            position: relative;
+            & > .oneof-container {
+                & > .oneof-label {
+                    height: 19px;
+                    padding: 0 4px;
+                    background: rgba(0, 178, 255, 0.1);
+                    border-radius: 4px 4px 4px 4px;
+                    position: absolute;
+                    left: 100px;
+                    top: 1px;
+                    font-family: Roboto Mono;
+                    font-size: 12px;
+                    color: #00b2ff;
+                }
+            }
+            &:has(> summary > .openapi-schema__required) {
+                & > .oneof-container {
+                    & > .oneof-label {
+                        left: 167px;
+                    }
+                }
+            }
+            &:has(> summary > .schema-name) {
+                & > .oneof-container {
+                    & > .oneof-label {
+                        left: 100px;
+                    }
+                }
+            }
+        }
+    }
+}

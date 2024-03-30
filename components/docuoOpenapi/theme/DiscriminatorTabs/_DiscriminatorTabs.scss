@@ -4,39 +4,42 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  * ========================================================================== */
-.openapi-tabs__discriminator-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.35rem 0.7rem;
-  border: 1px solid transparent;
-  margin-top: 0 !important;
-  margin-right: 0.5rem;
-  font-weight: var(--ifm-font-weight-bold);
-  font-size: 10px;
-  font-family: var(--ifm-font-family-monospace);
-  white-space: nowrap;
-  transition: 300ms;
+.openapi-tabs__discriminator-list-container {
+  .openapi-tabs__discriminator-item {
+    border: 1px solid #e1e2ea;
+    font-family: Inter-Medium;
+    font-weight: 500;
+    font-size: 12px;
+    color: #515869;
+    margin-bottom: 0;
+    margin-top: 0;
+    margin-right: 10px;
+    padding: 4px 12px;
+    transition: 0.3s;
+    cursor: pointer;
+    border-radius: 6px;
+    line-height: normal;
+    &:hover {
+      border-color: #1abd00;
+      color: #1abd00;
+      background-color: inherit;
+    }
 
-  &:hover {
-    background-color: transparent;
-    border: 1px solid var(--ifm-toc-border-color);
-  }
-
-  &.active {
-    border: 1px solid var(--ifm-color-primary);
-    color: var(--ifm-color-primary);
-  }
-
-  &:last-child {
-    margin-right: 0 !important;
+    &.active {
+      border-color: #1abd00;
+      color: #1abd00;
+      background-color: inherit;
+    }
+    &:last-child {
+      margin-right: 0 !important;
+    }
   }
 }
 
 /* Open API Discriminator Tabs */
 .openapi-tabs__discriminator-top-section {
-  margin-top: 1rem;
-  margin-left: 0.9rem;
+  margin-top: 20px;
+  margin-left: 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -79,6 +82,10 @@
 
 .openapi-discriminator__name {
   padding-left: 1rem;
+}
+
+.mimetab-tabpanel-container {
+  margin-top: 16px;
 }
 
 @media screen and (max-width: 500px) {

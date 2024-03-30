@@ -6,13 +6,14 @@
  * ========================================================================== */
 
 // @ts-nocheck
-import React from "react";
+import React, { ReactNode } from "react";
 
 import { ErrorMessage } from "@hookform/error-message";
 import clsx from "clsx";
 import { useFormContext } from "react-hook-form";
 
 export interface Props {
+  prefix?: ReactNode;
   value?: string;
   placeholder?: string;
   password?: boolean;
@@ -20,6 +21,7 @@ export interface Props {
 }
 
 function FormTextInput({
+  prefix,
   isRequired,
   value,
   placeholder,
@@ -34,36 +36,44 @@ function FormTextInput({
     formState: { errors },
   } = useFormContext();
 
+  console.log("$$$$$$$prefix", prefix);
+
   const showErrorMessage = errors?.[paramName]?.message;
 
   return (
     <>
-      {paramName ? (
-        <input
-          {...register(paramName, {
-            required: isRequired ? "This field is required" : false,
-          })}
-          className={clsx("openapi-explorer__form-item-input", {
-            error: showErrorMessage,
-          })}
-          type={password ? "password" : "text"}
-          placeholder={placeholder}
-          title={placeholder}
-          value={value}
-          onChange={onChange}
-          autoComplete="off"
-        />
-      ) : (
-        <input
-          className="openapi-explorer__form-item-input"
-          type={password ? "password" : "text"}
-          placeholder={placeholder}
-          title={placeholder}
-          value={value}
-          onChange={onChange}
-          autoComplete="off"
-        />
-      )}
+      <div
+        className={clsx("openapi-explorer__form-item-input-container", {
+          "has-prefix": !!prefix,
+          error: showErrorMessage,
+        })}
+      >
+        <div className="prefix-container">{prefix ? prefix : null}</div>
+        {paramName ? (
+          <input
+            {...register(paramName, {
+              required: isRequired ? "This field is required" : false,
+            })}
+            className={clsx("openapi-explorer__form-item-input")}
+            type={password ? "password" : "text"}
+            placeholder={placeholder}
+            title={placeholder}
+            value={value}
+            onChange={onChange}
+            autoComplete="off"
+          />
+        ) : (
+          <input
+            className="openapi-explorer__form-item-input"
+            type={password ? "password" : "text"}
+            placeholder={placeholder}
+            title={placeholder}
+            value={value}
+            onChange={onChange}
+            autoComplete="off"
+          />
+        )}
+      </div>
       {showErrorMessage && (
         <ErrorMessage
           errors={errors}

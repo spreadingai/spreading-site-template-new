@@ -19,7 +19,7 @@ import {
 import { setServer, setServerVariable } from "./slice";
 
 function Server() {
-  const [isEditing, setIsEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(true);
   const value = useTypedSelector((state: any) => state.server.value);
   const options = useTypedSelector((state: any) => state.server.options);
   const dispatch = useTypedDispatch();
@@ -71,17 +71,24 @@ function Server() {
   }
   return (
     <div className="openapi-explorer__server-container">
-      <FloatingButton onClick={() => setIsEditing(false)} label="Hide">
-        <FormItem>
+      <FloatingButton onClick={() => setIsEditing(true)} label="Hide">
+        <FormItem hideLabel={true}>
           <FormSelect
             options={options.map((s: any) => s.url)}
             // @ts-ignore
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            //   dispatch(
+            //     setServer(
+            //       JSON.stringify(
+            //         options.filter((s: any) => s.url === e.target.value)[0]
+            //       )
+            //     )
+            //   );
+            // }}
+            onChange={(value) => {
               dispatch(
                 setServer(
-                  JSON.stringify(
-                    options.filter((s: any) => s.url === e.target.value)[0]
-                  )
+                  JSON.stringify(options.filter((s: any) => s.url === value)[0])
                 )
               );
             }}
@@ -95,15 +102,21 @@ function Server() {
           Object.keys(value.variables).map((key) => {
             if (value.variables?.[key].enum !== undefined) {
               return (
-                <FormItem label={key} key={key}>
+                <FormItem label={key} key={key} hideLabel={true}>
                   <FormSelect
+                    label={key}
                     options={value.variables[key].enum}
                     // @ts-ignore
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    //   dispatch(
+                    //     setServerVariable(
+                    //       JSON.stringify({ key, value: e.target.value })
+                    //     )
+                    //   );
+                    // }}
+                    onChange={(value) => {
                       dispatch(
-                        setServerVariable(
-                          JSON.stringify({ key, value: e.target.value })
-                        )
+                        setServerVariable(JSON.stringify({ key, value: value }))
                       );
                     }}
                     value={value?.variables[key].default}

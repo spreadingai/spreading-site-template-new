@@ -1,8 +1,7 @@
 .openapi-schema__container {
-  &:hover {
-    .openapi-schema__property {
-      color: var(--ifm-color-primary);
-    }
+  .openapi-schema__property {
+    color: #1abd00;
+    cursor: pointer;
   }
 }
 
@@ -10,39 +9,49 @@
   list-style: none;
   position: relative;
   margin: 0 !important;
-  padding: 5px 0 5px 1rem;
-  border-left: thin solid var(--openapi-tree-line-color) !important;
-
-  // Horizontal line styling for schema properties
-  &::before {
-    position: absolute;
-    top: 10px;
-    left: 0;
-    width: 0.7rem;
-    /* width of horizontal line */
-    height: 0.5rem;
-    /* vertical position of line */
-    vertical-align: top;
-    border-bottom: thin solid var(--openapi-tree-line-color);
-    content: "";
-    display: inline-block;
+  padding: 0 0 16px 16px;
+  border-left: 1px solid #e5e7eb !important;
+  &:not(:last-of-type) {
+    &::after {
+      content: "";
+      height: 1px;
+      margin-top: 16px;
+      display: flex;
+      background-color: rgba(229, 231, 235, 0.8);
+    }
+  }
+  &:last-of-type {
+    padding-bottom: 0 !important;
+  }
+  & > div {
+    &:not(:last-child) {
+      margin-bottom: 8px;
+    }
+    & > div {
+      &:not(:last-child) {
+        margin-bottom: 8px;
+      }
+    }
+  }
+  .openapi-schema__container:not(:last-child) {
+    margin-bottom: 8px;
   }
 }
 
-.openapi-schema__name {
-  opacity: 0.6;
-  padding-left: 0.3rem;
-}
-
 .openapi-schema__required {
-  display: inline-flex;
+  font-family: Roboto Mono;
+  font-weight: 400;
+  font-size: 12px;
+  background: #fcf3f2;
+  height: 20px;
+  border-radius: 4px;
+  color: #ff2900;
+  line-height: normal;
+  padding: 0 4px;
+  display: flex;
   align-items: center;
-  font-size: 10.5px;
-  font-weight: bold;
-  text-transform: uppercase;
-  color: var(--openapi-required);
-  margin-left: 1%;
-  background-color: transparent;
+  justify-content: center;
+  text-transform: none;
 }
 
 .openapi-schema__deprecated {

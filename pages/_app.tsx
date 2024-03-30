@@ -12,7 +12,13 @@ import "@/styles/prism.token.scss";
 import { ThemeProvider } from "@/components/Theme";
 import "@/components/docuoOpenapi/theme/styles.scss";
 import "@/styles/openapi.cover.scss";
-import "@/styles/openapi.refer.scss";
+import "@/styles/openapi/callbacks.cover.scss";
+import "@/styles/openapi/response.cover.scss";
+import "@/styles/openapi/request.cover.scss";
+import "@/styles/openapi/badge.cover.scss";
+import "@/styles/openapi/schema.cover.scss";
+
+import "@/styles/openapi-theme.scss";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   // Use the layout defined at the page level, if available

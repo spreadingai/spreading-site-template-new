@@ -167,14 +167,18 @@ function TabContent({ lazy, children, selectedValue }) {
       // fail-safe or fail-fast? not sure what's best here
       return null;
     }
-    return cloneElement(selectedTabItem, { className: "margin-top--md" });
+    return cloneElement(selectedTabItem, {
+      className: "apitab-tabpanel-container",
+    });
   }
+  console.log("######children", children);
   return (
-    <div className="margin-top--md">
+    <div className="apitab-tabpanel-container">
       {children.map((tabItem, i) =>
         cloneElement(tabItem, {
           key: i,
           hidden: tabItem.props.value !== selectedValue,
+          className: "tabpanel",
         })
       )}
     </div>

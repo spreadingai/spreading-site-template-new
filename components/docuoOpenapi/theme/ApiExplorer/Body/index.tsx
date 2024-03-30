@@ -170,10 +170,24 @@ function Body({
                   }
                 >
                   <FormSelect
+                    label={key}
                     options={["---", ...val.enum]}
                     // @ts-ignore
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      const val = e.target.value;
+                    // onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    //   const val = e.target.value;
+                    //   if (val === "---") {
+                    //     dispatch(clearFormBodyKey(key));
+                    //   } else {
+                    //     dispatch(
+                    //       setStringFormBody({
+                    //         key: key,
+                    //         value: val,
+                    //       })
+                    //     );
+                    //   }
+                    // }}
+                    onChange={(value) => {
+                      const val = value;
                       if (val === "---") {
                         dispatch(clearFormBodyKey(key));
                       } else {

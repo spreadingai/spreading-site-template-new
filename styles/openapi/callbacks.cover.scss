@@ -1,0 +1,18 @@
+#callbacks {
+    padding: 10px 0;
+    margin: 0;
+    font-family: Inter-Semi Bold;
+    font-size: 22px;
+    color: #171717;
+    line-height: 28px;
+    & + .tabs-container {
+        position: relative;
+        .tabs__container {
+            .openapi-tabs__operation-container {
+                position: absolute;
+                top: -57px;
+                right: 0;
+            }
+        }
+    }
+}

@@ -1,0 +1,8 @@
+.schema-description-container {
+    margin-left: 5px;
+}
+.openapi-markdown__details {
+    & > summary + .schema-description-container {
+        margin-top: 10px;
+    }
+}

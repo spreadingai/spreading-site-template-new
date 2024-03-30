@@ -6,33 +6,57 @@
  * ========================================================================== */
 
 import React from "react";
+import { Select } from "antd";
 
 export interface Props {
+  label?: string;
+  name?: string;
   value?: string;
   options?: string[];
-  onChange?: React.ChangeEventHandler<HTMLSelectElement>;
+  // onChange?: React.ChangeEventHandler<HTMLSelectElement>;
+  onChange?: (value: string) => void;
 }
 
-function FormSelect({ value, options, onChange }: Props) {
+function FormSelect({ label, value, options, onChange }: Props) {
   if (!Array.isArray(options) || options.length === 0) {
     return null;
   }
 
   return (
-    <select
-      className="openapi-explorer__select-input"
-      value={value}
-      onChange={onChange}
-    >
-      {options.map((option) => {
-        return (
-          <option key={option} value={option}>
-            {option}
-          </option>
-        );
-      })}
-    </select>
+    <div className={`select-container ${label ? "inner-label" : ""}`}>
+      {label ? <span className="select-inner-label">{label}</span> : null}
+      <Select
+        popupClassName="openapi-form-select-dropdown"
+        suffixIcon={<span className="suffix-dropdown-icon"></span>}
+        defaultValue={value}
+        style={{ width: 120 }}
+        onChange={onChange}
+        options={options.map((option) => {
+          return {
+            value: option,
+            label: option,
+          };
+        })}
+      />
+    </div>
   );
+
+  // return (
+  //   <select
+  //     className="openapi-explorer__select-input"
+  //     value={value}
+  //     // @ts-ignore
+  //     onChange={onChange}
+  //   >
+  //     {options.map((option) => {
+  //       return (
+  //         <option key={option} value={option}>
+  //           {option}
+  //         </option>
+  //       );
+  //     })}
+  //   </select>
+  // );
 }
 
 export default FormSelect;

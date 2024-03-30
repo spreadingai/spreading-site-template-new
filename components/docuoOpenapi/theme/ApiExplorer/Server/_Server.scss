@@ -1,9 +1,5 @@
 .openapi-explorer__server-container {
-  background: var(--openapi-card-background-color);
-  border-radius: var(--openapi-card-border-radius);
-  color: var(--ifm-pre-color);
-  line-height: var(--ifm-pre-line-height);
-  margin-bottom: var(--ifm-spacing-vertical);
+  margin-bottom: 10px;
   margin-top: 0;
   overflow: auto;
 
@@ -13,14 +9,35 @@
   &:empty {
     display: none;
   }
+
+  // .openapi-explorer__form-item {
+  //   padding-right: 70px;
+  // }
+  .ant-select {
+    width: 100% !important;
+    .ant-select-selection-item {
+      text-align: initial;
+    }
+    .ant-select-selector {
+      font-size: inherit;
+    }
+  }
 }
 
 .openapi-explorer__server-url {
-  font-size: var(--openapi-explorer-font-size-input);
-  font-family: var(--ifm-font-family-monospace);
+  padding-right: 70px;
+  display: flex;
+  font-family: Roboto mono;
+  font-weight: 400;
+  font-size: 14px;
+  color: #f0f0f0;
+  line-height: 20px;
+  align-items: center;
+  min-height: 400px;
 }
 
 .openapi-explorer__server-description {
   padding-left: 0.5rem;
   font-weight: var(--ifm-font-weight-bold);
+  display: none;
 }
