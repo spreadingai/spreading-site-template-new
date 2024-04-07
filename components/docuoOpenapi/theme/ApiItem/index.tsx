@@ -31,7 +31,6 @@ import {
   DocContext,
   DocContextType,
 } from "@/components/docuoOpenapi/context/docContext";
-import { ColorModeProvider } from "@/components/docuoOpenapi/theme-common/src/contexts/colorMode";
 import { parseByInfoPath } from "@/components/docuoOpenapi/utils";
 
 interface Props {
@@ -159,16 +158,12 @@ export default function ApiItem(props: Props): JSX.Element {
         <DocContext.Provider value={{ docData, setDocData }}>
           <DocItemLayout>
             <Provider store={store2}>
-              <ColorModeProvider>
-                <div className={clsx("theme-api-markdown")}>
-                  <div className="openapi-left-panel__container">
-                    {children}
-                  </div>
-                  <div className="openapi-right-panel__container">
-                    <ApiExplorer item={api} infoPath={infoPath} />
-                  </div>
+              <div className={clsx("theme-api-markdown")}>
+                <div className="openapi-left-panel__container">{children}</div>
+                <div className="openapi-right-panel__container">
+                  <ApiExplorer item={api} infoPath={infoPath} />
                 </div>
-              </ColorModeProvider>
+              </div>
             </Provider>
           </DocItemLayout>
         </DocContext.Provider>

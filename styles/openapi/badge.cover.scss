@@ -2,33 +2,34 @@
 .theme-api-markdown {
     .badge {
         font-family: Inter-Semi Bold;
-        background-color: #1abd00;
+        background-color: var(--docuo-openapi-badge-bg-primary-color);
         border-radius: 4px 4px 4px 4px;
         padding: 6px 5px 3px 5px;
         font-weight: normal;
         font-size: 12px;
-        color: #ffffff;
+        line-height: 1;
+        color: var(--docuo-openapi-badge-primary-color);
         display: inline-flex;
         align-items: center;
         border: none;
         &.badge--success {
-            background-color: #0989ff;
+            background-color: var(--docuo-openapi-badge-bg-success-color);
         }
         &.badge--danger {
-            background-color: #f64841;
+            background-color: var(--docuo-openapi-badge-bg-danger-color);
         }
         &.badge--primary {
-            background-color: #1abd00;
+            background-color: var(--docuo-openapi-badge-bg-primary-color);
         }
         &.badge--info {
-            background-color: #08b6ed;
+            background-color: var(--docuo-openapi-badge-bg-info-color);
         }
         &.badge--warning {
-            background-color: #fb7e38;
+            background-color: var(--docuo-openapi-badge-bg-warning-color);
         }
         &.badge--secondary {
-            background-color: rgb(235, 237, 240);
-            color: #171717;
+            background-color: var(--docuo-openapi-badge-bg-secondary-color);
+            color: var(--docuo-openapi-badge-secondary-color);
         }
     }
     .openapi-markdown__details {

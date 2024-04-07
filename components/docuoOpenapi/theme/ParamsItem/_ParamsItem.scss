@@ -1,9 +1,9 @@
 .openapi-params__list-item {
   position: relative;
-  padding-left: 16px;
+  padding-left: 20px;
   &::before {
     content: "";
-    border-left: 1px solid #e5e7eb;
+    border-left: 1px solid var(--docuo-openapi-list-item-leading-line-color);
     height: 100%;
     display: flex;
     position: absolute;

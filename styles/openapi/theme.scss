@@ -1,0 +1,83 @@
+html {
+    // ########### Common start ###########
+    // Tabs
+    --docuo-openapi-tabs-arrow-bg-icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24"><path fill="rgba(81,88,105,0.8)" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg>');
+    --docuo-openapi-tabs-arrow-bg-icon-filter: none;
+    // SchemaTabs
+    --docuo-openapi-schema-item-border-color: #e1e2ea;
+    --docuo-openapi-schema-item-bg-color: transparent;
+    --docuo-openapi-schema-item-color: #515869;
+    --docuo-openapi-schema-item-hover-border-color: var(--docuo-color-primary-hover);
+    --docuo-openapi-schema-item-hover-bg-color: transparent;
+    --docuo-openapi-schema-item-hover-color: var(--docuo-color-primary-hover);
+    --docuo-openapi-schema-item-active-border-color: var(--docuo-color-primary-active);
+    --docuo-openapi-schema-item-active-bg-color: transparent;
+    --docuo-openapi-schema-item-active-color: var(--docuo-color-primary-active);
+    // ########### Common end ###########
+
+    // ########### Yaml info ###########
+
+    // ########### Api doc ###########
+    .theme-api-markdown {
+        // MethodEndpoint
+        --docuo-openapi-method-endpoint-color: var(--docuo-color-primary);
+        --docuo-openapi-method-endpoint-bg-color: #f7f8f9;
+        // Badge
+        --docuo-openapi-badge-bg-primary-color: var(--docuo-color-primary);
+        --docuo-openapi-badge-primary-color: #ffffff;
+        --docuo-openapi-badge-bg-success-color: #0989ff;
+        --docuo-openapi-badge-bg-danger-color: #f64841;
+        --docuo-openapi-badge-bg-info-color: #08b6ed;
+        --docuo-openapi-badge-bg-warning-color: #fb7e38;
+        --docuo-openapi-badge-bg-secondary-color: rgb(235, 237, 240);
+        --docuo-openapi-badge-secondary-color: #171717;
+        // Divider
+        --docuo-openapi-divider-color: rgba(229, 231, 235, 0.8);
+        // Details summary arrow
+        --docuo-openapi-details-summary-arrow-icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg>');
+        // openapi-params__list-item、openapi-schema__list-item
+        --docuo-openapi-list-item-leading-line-color: #e5e7eb;
+    }
+}
+
+html[data-theme="dark"] {
+    // ########### Common start ###########
+    // Tabs
+    --docuo-openapi-tabs-arrow-bg-icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24"><path fill="rgb(144,144,144)" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg>');
+    --docuo-openapi-tabs-arrow-bg-icon-filter: none;
+    // SchemaTabs
+    --docuo-openapi-schema-item-border-color: #535353;
+    --docuo-openapi-schema-item-bg-color: transparent;
+    --docuo-openapi-schema-item-color: #909090;
+    --docuo-openapi-schema-item-hover-border-color: var(--docuo-color-primary-hover);
+    --docuo-openapi-schema-item-hover-bg-color: transparent;
+    --docuo-openapi-schema-item-hover-color: var(--docuo-color-primary-hover);
+    --docuo-openapi-schema-item-active-border-color: var(--docuo-color-primary-active);
+    --docuo-openapi-schema-item-active-bg-color: transparent;
+    --docuo-openapi-schema-item-active-color: var(--docuo-color-primary-active);
+    // ########### Common end ###########
+
+    // ########### Yaml info ###########
+
+    // ########### Api doc ###########
+    .theme-api-markdown {
+        // MethodEndpoint
+        --docuo-openapi-method-endpoint-color: var(--docuo-color-primary);
+        --docuo-openapi-method-endpoint-bg-color: #171717;
+        // Badge
+        --docuo-openapi-badge-bg-primary-color: #19b100;
+        --docuo-openapi-badge-primary-color: #ffffff;
+        --docuo-openapi-badge-bg-success-color: #0085ff;
+        --docuo-openapi-badge-bg-danger-color: #f13024;
+        --docuo-openapi-badge-bg-info-color: #08b6ed;
+        --docuo-openapi-badge-bg-warning-color: #fb7e38;
+        --docuo-openapi-badge-bg-secondary-color: #717e97;
+        --docuo-openapi-badge-secondary-color: #171717;
+        // Divider
+        --docuo-openapi-divider-color: #252525;
+        // Details summary arrow
+        --docuo-openapi-details-summary-arrow-icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" fill="rgb(182,182,182)"></path></svg>');
+        // openapi-params__list-item、openapi-schema__list-item
+        --docuo-openapi-list-item-leading-line-color: #252525;
+    }
+}

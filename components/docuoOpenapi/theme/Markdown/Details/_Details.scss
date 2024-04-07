@@ -13,7 +13,7 @@
   width: max-content;
   list-style: none;
   position: relative;
-  padding: 10px 0 10px 16px;
+  padding: 10px 0 10px 20px;
 }
 
 .openapi-left-panel__container > .openapi-markdown__details,
@@ -29,7 +29,6 @@ h3 {
     font-family: Inter-Medium;
     font-weight: 500;
     font-size: 14px;
-    color: #171717;
     line-height: 20px;
     margin: 0;
   }
@@ -72,9 +71,8 @@ h3 {
 
 .openapi-markdown__details > summary::before {
   content: "";
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg>')
-    50% / 1.2rem 1.2rem;
-  filter: var(--ifm-menu-link-sublist-icon-filter);
+  background: var(--docuo-openapi-details-summary-arrow-icon) 50% / 1.2rem 1.2rem;
+  filter: var(--docuo-openapi-tabs-arrow-bg-icon-filter);
   height: 0.75rem;
   transform: translateY(-50%) rotate(90deg) !important;
   width: 0.75rem;
@@ -86,6 +84,16 @@ h3 {
   transform-origin: unset !important;
   cursor: pointer;
 }
+.theme-api-markdown details[data-collapsed="false"] > summary {
+  &::before {
+    transform: translateY(-50%) rotate(90deg) !important;
+  }
+}
+.theme-api-markdown details[open] > summary {
+  &::before {
+    transform: translateY(-50%) rotate(180deg) !important;
+  }
+}
 
 .openapi-markdown__details ul {
   padding-left: 0;
@@ -95,10 +103,6 @@ h3 {
 .openapi-markdown__details li {
   list-style: none;
   padding-top: 5px;
-}
-
-.theme-api-markdown details[data-collapsed="false"] > summary::before {
-  transform: translateY(-50%) rotate(180deg) !important;
 }
 
 .openapi-markdown__details p {
@@ -198,9 +202,9 @@ details summary::-webkit-details-marker {
   cursor: pointer;
   &::before {
     content: "";
-    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24"><path fill="white" d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg>')
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" fill="rgb(182,182,182)"></path></svg>')
       50% / 1.2rem 1.2rem;
-    filter: var(--ifm-menu-link-sublist-icon-filter);
+    filter: var(--docuo-openapi-tabs-arrow-bg-icon-filter);
     height: 0.75rem;
     transform: translateY(-50%) rotate(90deg) !important;
     width: 0.75rem;
@@ -210,6 +214,5 @@ details summary::-webkit-details-marker {
     position: absolute;
     top: 50%;
     left: 10px !important;
-    opacity: 0.6;
   }
 }

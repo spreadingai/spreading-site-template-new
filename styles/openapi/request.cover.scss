@@ -2,14 +2,13 @@
     height: 28px;
     font-family: Inter-Semi Bold;
     font-size: 22px;
-    color: #171717;
     line-height: 28px;
     margin: 31px 0 20px;
 }
 
 .body-description-container {
     margin-left: 5px;
-    border-left: 1px solid #e5e7eb;
+    border-left: 1px solid var(--docuo-openapi-list-item-leading-line-color);
     padding: 16px 0 16px 16px;
     .body-description {
         font-family: Inter;
@@ -73,10 +72,6 @@
 }
 .openapi-left-panel__container {
     & > p {
-        font-family: Inter;
-        font-weight: 400;
-        font-size: 16px;
-        color: #353c4e;
         line-height: 24px;
     }
 }

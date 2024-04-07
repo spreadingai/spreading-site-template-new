@@ -41,16 +41,6 @@
         padding: 0 32px 0 24px;
     }
 }
-.theme-api-markdown details[data-collapsed="false"] > summary {
-    &:before {
-        transform: translateY(-50%) rotate(90deg) !important;
-    }
-}
-.theme-api-markdown details[open] > summary {
-    &:before {
-        transform: translateY(-50%) rotate(180deg) !important;
-    }
-}
 
 // Yaml info page
 .openapi-tabs__schema-list-container.tabs.openapi-tabs__security-schemes {

@@ -109,8 +109,10 @@ const PreviewLayout = ({
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [theme, setTheme] = useState<Theme>("light");
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useColorMode(docuoConfig.themeConfig?.colorMode, theme, setTheme);
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   useColors(docuoConfig.themeConfig?.colors);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -118,23 +120,23 @@ const PreviewLayout = ({
     // NEXT_PUBLIC_LOCAL_WS: auto reload only for dev mode
     if (!process?.env?.NEXT_PUBLIC_LOCAL_WS || WsConnecting) return;
     WsConnecting = true;
-    if ('WebSocket' in window) {
-      const ws = new WebSocket('ws://localhost:59999');
-      ws.onopen = function() {
-        console.log('建立连接，状态:' + ws.readyState);
+    if ("WebSocket" in window) {
+      const ws = new WebSocket("ws://localhost:59999");
+      ws.onopen = function () {
+        console.log("建立连接，状态:" + ws.readyState);
         WsConnecting = true;
       };
-      ws.onmessage = function(evt) {
+      ws.onmessage = function (evt) {
         console.log("状态：" + ws.readyState + "；服务端返回数据:", evt);
-        if (evt.data === 'reload') {
+        if (evt.data === "reload") {
           location.reload();
         }
       };
-      ws.onerror = function() {
-        console.log('发生错误，状态:' + ws.readyState);
+      ws.onerror = function () {
+        console.log("发生错误，状态:" + ws.readyState);
         WsConnecting = false;
-      };  
-      ws.onclose = function() {
+      };
+      ws.onclose = function () {
         console.log("连接关闭，状态：", ws.readyState);
         WsConnecting = false;
       };
@@ -305,7 +307,7 @@ const PreviewLayout = ({
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
       <div className="preview-screen relative">
-        { !!gaId && <GoogleAnalytics gaId={gaId} /> }
+        {!!gaId && <GoogleAnalytics gaId={gaId} />}
         <Head>
           <meta name="docsearch:version" content={docVersion} />
           <meta name="docsearch:instance" content={instanceID} />
@@ -349,7 +351,9 @@ const PreviewLayout = ({
                 <div className="article-breadcrumb flex justify-between	items-center">
                   <Breadcrumb
                     items={breadCrumbData}
-                    separator={<IconBreadcrumbArrow className="breadcrumb-icon m-auto" />}
+                    separator={
+                      <IconBreadcrumbArrow className="breadcrumb-icon m-auto" />
+                    }
                   />
                   <div className={"middle__show  relative"}>
                     <AnChorMobile tocFormatData={tocFormatData} />
@@ -382,9 +386,16 @@ const PreviewLayout = ({
                     </div>
 
                     <div className="right-anchor-divide"></div>
-                    <div className="back-to-top hover:opacity-70" onClick={scrollToTop}>
+                    <div
+                      className="back-to-top hover:opacity-70"
+                      onClick={scrollToTop}
+                    >
                       <div className="top-btn">
-                        {theme === "dark" ? <IconBackTopDark /> : <IconBackTop />}
+                        {theme === "dark" ? (
+                          <IconBackTopDark />
+                        ) : (
+                          <IconBackTop />
+                        )}
                       </div>
                       Back to top
                     </div>

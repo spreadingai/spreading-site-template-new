@@ -10,7 +10,7 @@
   position: relative;
   margin: 0 !important;
   padding: 0 0 16px 16px;
-  border-left: 1px solid #e5e7eb !important;
+  border-left: 1px solid var(--docuo-openapi-list-item-leading-line-color);
   &:not(:last-of-type) {
     &::after {
       content: "";

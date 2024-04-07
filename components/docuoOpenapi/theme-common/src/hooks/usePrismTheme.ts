@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import { useColorMode } from "../contexts/colorMode";
+import useTheme from "@/components/docuoOpenapi/hook/useTheme";
 import { useThemeConfig } from "../utils/useThemeConfig";
 import type { PrismTheme } from "prism-react-renderer";
 
@@ -15,11 +15,11 @@ import type { PrismTheme } from "prism-react-renderer";
  */
 export function usePrismTheme(): PrismTheme {
   const { prism } = useThemeConfig();
-  const { colorMode } = useColorMode();
-  console.log("####colorMode", colorMode);
+  const { theme } = useTheme();
+  console.log("####usePrismTheme", theme);
   const lightModeTheme = prism.theme;
   const darkModeTheme = prism.darkTheme || lightModeTheme;
-  const prismTheme = colorMode === "dark" ? darkModeTheme : lightModeTheme;
+  const prismTheme = theme === "dark" ? darkModeTheme : lightModeTheme;
 
-  return darkModeTheme;
+  return prismTheme;
 }

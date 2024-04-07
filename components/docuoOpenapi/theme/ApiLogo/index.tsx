@@ -7,15 +7,15 @@
 
 import React from "react";
 
-import { useColorMode } from "@/components/docuoOpenapi/theme-common/src";
+import useTheme from "@/components/docuoOpenapi/hook/useTheme";
 import useBaseUrl from "@/components/docuoOpenapi/core/lib/client/exports/useBaseUrl";
 import ThemedImage from "@/components/docuoOpenapi/theme-classic/src/theme/ThemedImage";
 
 export default function ApiLogo(props: any): JSX.Element | undefined {
-  const { colorMode } = useColorMode();
+  const { theme } = useTheme();
   const { logo, darkLogo } = props;
   const altText = () => {
-    if (colorMode === "dark") {
+    if (theme === "dark") {
       return darkLogo?.altText ?? logo?.altText;
     }
     return logo?.altText;

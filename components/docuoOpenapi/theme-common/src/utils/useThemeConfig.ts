@@ -138,11 +138,6 @@ export function useThemeConfig(): any {
   return {
     ...docuoData,
     navbar: { hideOnScroll: false },
-    colorMode: {
-      defaultMode: "dark",
-      disableSwitch: false,
-      respectPrefersColorScheme: false,
-    },
     prism: {
       theme: rendererLightTheme,
       darkTheme: rendererDarkTheme,

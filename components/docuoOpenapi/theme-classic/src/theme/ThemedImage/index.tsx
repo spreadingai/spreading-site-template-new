@@ -8,20 +8,19 @@
 import React from "react";
 import clsx from "clsx";
 import useIsBrowser from "@/components/docuoOpenapi/core/lib/client/exports/useIsBrowser";
-import { useColorMode } from "@/components/docuoOpenapi/theme-common/src";
 import type { Props } from "@theme/ThemedImage";
 
 import styles from "./styles.module.css";
+import useTheme from "@/components/docuoOpenapi/hook/useTheme";
 
 export default function ThemedImage(props: Props): JSX.Element {
   const isBrowser = useIsBrowser();
-  const { colorMode } = useColorMode();
+  const { theme } = useTheme();
   const { sources, className, alt, ...propsRest } = props;
 
   type SourceName = keyof Props["sources"];
 
-  const clientThemes: SourceName[] =
-    colorMode === "dark" ? ["dark"] : ["light"];
+  const clientThemes: SourceName[] = theme === "dark" ? ["dark"] : ["light"];
 
   const renderedSourceNames: SourceName[] = isBrowser
     ? clientThemes
