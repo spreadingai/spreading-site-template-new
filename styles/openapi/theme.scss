@@ -37,6 +37,23 @@ html {
         --docuo-openapi-details-summary-arrow-icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg>');
         // openapi-params__list-item、openapi-schema__list-item
         --docuo-openapi-list-item-leading-line-color: #e5e7eb;
+        // MimeTabs
+        --docuo-openapi-mime-item-border-color: #e1e2ea;
+        --docuo-openapi-mime-item-bg-color: transparent;
+        --docuo-openapi-mime-item-color: #515869;
+        --docuo-openapi-mime-item-hover-border-color: var(--docuo-color-primary-hover);
+        --docuo-openapi-mime-item-hover-bg-color: transparent;
+        --docuo-openapi-mime-item-hover-color: var(--docuo-color-primary-hover);
+        --docuo-openapi-mime-item-active-border-color: var(--docuo-color-primary-active);
+        --docuo-openapi-mime-item-active-bg-color: transparent;
+        --docuo-openapi-mime-item-active-color: var(--docuo-color-primary-active);
+        // SchemaItem
+        --docuo-openapi-schema-property-color: #1abd00;
+        --docuo-openapi-type-color: #353c4e;
+        --docuo-openapi-type-bg-color: rgba(81, 88, 105, 0.07);
+        --docuo-openapi-name-color: #353c4e;
+        --docuo-openapi-name-bg-color: rgba(81, 88, 105, 0.07);
+        // ParamsItem
     }
 }
 
@@ -79,5 +96,22 @@ html[data-theme="dark"] {
         --docuo-openapi-details-summary-arrow-icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" fill="rgb(182,182,182)"></path></svg>');
         // openapi-params__list-item、openapi-schema__list-item
         --docuo-openapi-list-item-leading-line-color: #252525;
+        // MimeTabs
+        --docuo-openapi-mime-item-border-color: #535353;
+        --docuo-openapi-mime-item-bg-color: transparent;
+        --docuo-openapi-mime-item-color: #909090;
+        --docuo-openapi-mime-item-hover-border-color: var(--docuo-color-primary-hover);
+        --docuo-openapi-mime-item-hover-bg-color: transparent;
+        --docuo-openapi-mime-item-hover-color: var(--docuo-color-primary-hover);
+        --docuo-openapi-mime-item-active-border-color: var(--docuo-color-primary-active);
+        --docuo-openapi-mime-item-active-bg-color: transparent;
+        --docuo-openapi-mime-item-active-color: var(--docuo-color-primary-active);
+        // SchemaItem
+        --docuo-openapi-schema-property-color: #05ec07;
+        --docuo-openapi-type-color: #909090;
+        --docuo-openapi-type-bg-color: #1d1d1d;
+        --docuo-openapi-name-color: #909090;
+        --docuo-openapi-name-bg-color: #1d1d1d;
+        // ParamsItem
     }
 }

@@ -54,9 +54,8 @@
   }
 }
 
-.openapi-schema__type {
-  background: rgba(81, 88, 105, 0.07);
-  color: #353c4e;
+.openapi-schema__type,
+.openapi-schema__name {
   border-radius: 4px;
   margin-right: 10px;
   font-family: Roboto Mono;
@@ -67,6 +66,14 @@
   align-items: center;
   justify-content: center;
   padding: 1px 4px 0;
+}
+.openapi-schema__type {
+  background-color: var(--docuo-openapi-type-bg-color);
+  color: var(--docuo-openapi-type-color);
+}
+.openapi-schema__name {
+  background-color: var(--docuo-openapi-name-bg-color);
+  color: var(--docuo-openapi-name-color);
 }
 
 .openapi-schema__required {

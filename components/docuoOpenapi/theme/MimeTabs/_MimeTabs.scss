@@ -13,11 +13,11 @@
   overflow: hidden;
 
   .openapi-tabs__mime-item {
-    border: 1px solid #e1e2ea;
+    border: 1px solid var(--docuo-openapi-mime-item-border-color);
     font-family: Inter-Medium;
     font-weight: 500;
     font-size: 12px;
-    color: #515869;
+    color: var(--docuo-openapi-mime-item-color);
     padding: 7px 16px;
     transition: 0.3s;
     cursor: pointer;
@@ -29,18 +29,18 @@
     margin-top: 0;
     margin-bottom: 0;
     line-height: normal;
-    background-color: transparent;
+    background-color: var(--docuo-openapi-mime-item-bg-color);
 
     &:hover {
-      border-color: #1abd00;
-      color: #1abd00;
-      background-color: inherit;
+      border-color: var(--docuo-openapi-mime-item-hover-border-color);
+      color: var(--docuo-openapi-mime-item-hover-color);
+      background-color: var(--docuo-openapi-mime-item-hover-bg-color);
     }
 
     &.active {
-      border-color: #1abd00;
-      color: #1abd00;
-      background-color: inherit;
+      border-color: var(--docuo-openapi-mime-item-active-border-color);
+      color: var(--docuo-openapi-mime-item-active-color);
+      background-color: var(--docuo-openapi-mime-item-active-bg-color);
     }
 
     &:last-child {
