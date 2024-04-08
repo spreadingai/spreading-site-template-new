@@ -57,7 +57,7 @@ h3 {
   cursor: pointer;
   font-family: Inter-Medium;
   font-weight: 500;
-  color: #171717;
+  color: var(--docuo-openapi-markdown-details-color);
   margin: unset !important;
   background-color: transparent;
   padding: unset;
@@ -215,4 +215,8 @@ details summary::-webkit-details-marker {
     top: 50%;
     left: 10px !important;
   }
+}
+
+.openapi-markdown__details:last-of-type::after {
+  display: none;
 }

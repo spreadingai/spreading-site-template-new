@@ -60,20 +60,20 @@
     .ant-select-selector {
       outline: none;
       box-shadow: none;
-      background: #fafafb;
+      background-color: var(--docuo-openapi-select-selector-bg-color);
       border-radius: 6px 6px 6px 6px;
-      border: 1px solid #f2f3f5 !important;
+      border: 1px solid var(--docuo-openapi-select-selector-border-color) !important;
       padding: 0 12px;
       .ant-select-selection-item {
         font-family: Inter-Medium;
         font-weight: 500;
         font-size: 14px;
-        color: #171717;
+        color: var(--docuo-openapi-select-selector-color);
       }
     }
     &:hover {
       .ant-select-selector {
-        border-color: #f2f3f5 !important;
+        border-color: var(--docuo-openapi-select-selector-border-color) !important;
       }
     }
     .ant-select-arrow .suffix-dropdown-icon {
@@ -97,7 +97,7 @@
     }
     &.ant-select-focused {
       .ant-select-selector {
-        border-color: #f2f3f5 !important;
+        border-color: var(--docuo-openapi-select-selector-border-color) !important;
         box-shadow: none !important;
       }
     }
@@ -111,13 +111,13 @@
     &:has(.openapi__method-endpoint) {
       font-family: Inter-Regular;
       font-size: 16px;
-      color: #353c4e;
+      color: var(--docuo-openapi-callbacks-description-color);
     }
   }
 }
 .ant-select-dropdown.operation-select-dropdown {
-  background-color: #fafafb;
-  border: 1px solid #f2f3f5;
+  background-color: var(--docuo-openapi-select-selector-dropdown-bg-color);
+  border: 1px solid var(--docuo-openapi-select-selector-dropdown-border-color);
   box-shadow: none;
   .ant-select-item {
     font-family: Inter-Medium;
@@ -126,14 +126,15 @@
     transition: all 0.3s;
     padding: 4px 10px;
     line-height: 28px;
-    color: #171717;
+    color: var(--docuo-openapi-select-selector-dropdown-item-option-color);
     &:hover {
-      background: rgba(23, 23, 23, 0.04) !important;
+      background-color: var(--docuo-openapi-select-selector-dropdown-item-option-hover-bg-color);
+      color: var(--docuo-openapi-select-selector-dropdown-item-option-hover-color);
       border-radius: 4px 4px 4px 4px;
     }
     &.ant-select-item-option-selected {
-      color: #05ec07 !important;
-      background: inherit;
+      color: var(--docuo-openapi-select-selector-dropdown-item-option-selected-color);
+      background-color: var(--docuo-openapi-select-selector-dropdown-item-option-selected-bg-color);
     }
   }
 }

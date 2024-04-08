@@ -21,5 +21,6 @@ export function usePrismTheme(): PrismTheme {
   const darkModeTheme = prism.darkTheme || lightModeTheme;
   const prismTheme = theme === "dark" ? darkModeTheme : lightModeTheme;
 
-  return prismTheme;
+  // The dark theme is currently used
+  return darkModeTheme;
 }

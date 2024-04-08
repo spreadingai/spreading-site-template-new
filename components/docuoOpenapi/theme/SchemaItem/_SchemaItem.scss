@@ -33,6 +33,53 @@
   &:last-of-type {
     padding-bottom: 0 !important;
   }
+  div {
+    p {
+      margin: 0;
+      font-family: Inter-Medium;
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--docuo-openapi-schema-list-item-color);
+      line-height: 23px;
+      strong {
+        font-family: Inter;
+        font-size: 14px;
+        font-weight: 400;
+        margin-right: 8px;
+      }
+    }
+  }
+  & > .openapi-markdown__details {
+    & > summary {
+      display: flex;
+      align-items: center;
+      & + div {
+        & > div {
+          font-family: Inter;
+          font-weight: 500;
+          font-size: 14px;
+          color: var(--docuo-openapi-schema-list-item-color);
+          line-height: 23px;
+          & > strong {
+            font-family: Inter;
+            font-size: 14px;
+            font-weight: 400;
+            margin-right: 8px;
+          }
+        }
+      }
+      & > strong {
+        font-family: Roboto Mono;
+        font-size: 16px;
+        margin-right: 10px;
+        color: var(--docuo-openapi-schema-property-color);
+      }
+      .schema-name {
+        background-color: var(--docuo-openapi-name-bg-color);
+        color: var(--docuo-openapi-name-color);
+      }
+    }
+  }
   & > div {
     &:not(:last-child) {
       margin-bottom: 8px;
@@ -46,22 +93,22 @@
   .openapi-schema__container:not(:last-child) {
     margin-bottom: 8px;
   }
-}
-
-.openapi-schema__required {
-  font-family: Roboto Mono;
-  font-weight: 400;
-  font-size: 12px;
-  background: #fcf3f2;
-  height: 20px;
-  border-radius: 4px;
-  color: #ff2900;
-  line-height: normal;
-  padding: 0 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-transform: none;
+  .openapi-schema__list-item {
+    &::after {
+      display: none !important;
+    }
+    &::before {
+      top: 4px;
+    }
+    &:last-of-type {
+      padding-bottom: 0;
+    }
+  }
+  .openapi-markdown__details {
+    summary {
+      padding: 0 0 0 16px;
+    }
+  }
 }
 
 .openapi-schema__deprecated {

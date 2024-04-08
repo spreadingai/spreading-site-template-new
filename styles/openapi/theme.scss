@@ -13,6 +13,20 @@ html {
     --docuo-openapi-schema-item-active-border-color: var(--docuo-color-primary-active);
     --docuo-openapi-schema-item-active-bg-color: transparent;
     --docuo-openapi-schema-item-active-color: var(--docuo-color-primary-active);
+    // Details
+    --docuo-openapi-markdown-details-color: var(--docuo-color-primary);
+    // Selector
+    --docuo-openapi-select-selector-border-color: #f2f3f5;
+    --docuo-openapi-select-selector-bg-color: #fafafb;
+    --docuo-openapi-select-selector-color: var(--docuo-color-primary);
+    // Selector dropdown
+    --docuo-openapi-select-selector-dropdown-border-color: #f2f3f5;
+    --docuo-openapi-select-selector-dropdown-bg-color: #fafafb;
+    --docuo-openapi-select-selector-dropdown-item-option-color: var(--docuo-color-primary);
+    --docuo-openapi-select-selector-dropdown-item-option-hover-color: var(--docuo-color-primary);
+    --docuo-openapi-select-selector-dropdown-item-option-hover-bg-color: rgba(23, 23, 23, 0.04);
+    --docuo-openapi-select-selector-dropdown-item-option-selected-color: #1abd00;
+    --docuo-openapi-select-selector-dropdown-item-option-selected-bg-color: transparent;
     // ########### Common end ###########
 
     // ########### Yaml info ###########
@@ -23,7 +37,7 @@ html {
         --docuo-openapi-method-endpoint-color: var(--docuo-color-primary);
         --docuo-openapi-method-endpoint-bg-color: #f7f8f9;
         // Badge
-        --docuo-openapi-badge-bg-primary-color: var(--docuo-color-primary);
+        --docuo-openapi-badge-bg-primary-color: #19b100;
         --docuo-openapi-badge-primary-color: #ffffff;
         --docuo-openapi-badge-bg-success-color: #0989ff;
         --docuo-openapi-badge-bg-danger-color: #f64841;
@@ -32,12 +46,14 @@ html {
         --docuo-openapi-badge-bg-secondary-color: rgb(235, 237, 240);
         --docuo-openapi-badge-secondary-color: #171717;
         // Divider
-        --docuo-openapi-divider-color: rgba(229, 231, 235, 0.8);
-        // Details summary arrow
-        --docuo-openapi-details-summary-arrow-icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg>');
-        // openapi-params__list-item、openapi-schema__list-item
-        --docuo-openapi-list-item-leading-line-color: #e5e7eb;
-        // MimeTabs
+        --docuo-openapi-divider-color: rgba(229, 231, 235, 0.8); // Details summary arrow
+        --docuo-openapi-details-summary-arrow-icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"></path></svg>'); // Params list item、Schema list item
+        --docuo-openapi-list-item-leading-line-color: #e5e7eb; // Params list item
+        --docuo-openapi-params-list-item-color: #515869;
+        --docuo-openapi-params-list-item-example-strong-color: #171717;
+        // Schema description
+        --docuo-openapi-schema-description-color: #515869; // Schema list item
+        --docuo-openapi-schema-list-item-color: #515869; // MimeTabs
         --docuo-openapi-mime-item-border-color: #e1e2ea;
         --docuo-openapi-mime-item-bg-color: transparent;
         --docuo-openapi-mime-item-color: #515869;
@@ -46,14 +62,40 @@ html {
         --docuo-openapi-mime-item-hover-color: var(--docuo-color-primary-hover);
         --docuo-openapi-mime-item-active-border-color: var(--docuo-color-primary-active);
         --docuo-openapi-mime-item-active-bg-color: transparent;
-        --docuo-openapi-mime-item-active-color: var(--docuo-color-primary-active);
-        // SchemaItem
+        --docuo-openapi-mime-item-active-color: var(--docuo-color-primary-active); // DiscriminatorTabs
+        --docuo-openapi-discriminator-item-border-color: #e1e2ea;
+        --docuo-openapi-discriminator-item-bg-color: transparent;
+        --docuo-openapi-discriminator-item-color: #515869;
+        --docuo-openapi-discriminator-item-hover-border-color: var(--docuo-color-primary-hover);
+        --docuo-openapi-discriminator-item-hover-bg-color: transparent;
+        --docuo-openapi-discriminator-item-hover-color: var(--docuo-color-primary-hover);
+        --docuo-openapi-discriminator-item-active-border-color: var(--docuo-color-primary-active);
+        --docuo-openapi-discriminator-item-active-bg-color: transparent;
+        --docuo-openapi-discriminator-item-active-color: var(--docuo-color-primary-active); // SchemaItem
         --docuo-openapi-schema-property-color: #1abd00;
         --docuo-openapi-type-color: #353c4e;
         --docuo-openapi-type-bg-color: rgba(81, 88, 105, 0.07);
         --docuo-openapi-name-color: #353c4e;
         --docuo-openapi-name-bg-color: rgba(81, 88, 105, 0.07);
-        // ParamsItem
+        --docuo-openapi-schema-required-color: #ff2900;
+        --docuo-openapi-schema-required-bg-color: #fcf3f2; // Body description
+        --docuo-openapi-body-description-color: #515869; // Response description
+        --docuo-openapi-response-description-color: #353c4e; // Response code item
+        --docuo-openapi-response-code-item-primary-border-color: #f2f3f5;
+        --docuo-openapi-response-code-item-primary-bg-color: #f7f8f9;
+        --docuo-openapi-response-code-item-primary-color: #515869;
+        --docuo-openapi-response-code-item-info-active-border-color: #00b0e8;
+        --docuo-openapi-response-code-item-info-active-bg-color: #00b0e8;
+        --docuo-openapi-response-code-item-info-active-color: #ffffff;
+        --docuo-openapi-response-code-item-success-active-border-color: #19b100;
+        --docuo-openapi-response-code-item-success-active-bg-color: #19b100;
+        --docuo-openapi-response-code-item-success-active-color: #ffffff;
+        --docuo-openapi-response-code-item-danger-active-border-color: #ff2900;
+        --docuo-openapi-response-code-item-danger-active-bg-color: #ff2900;
+        --docuo-openapi-response-code-item-danger-active-color: #ffffff; // Response summary
+        --docuo-openapi-response-summary: #171717; // Response header description
+        --docuo-openapi-response-header-description: #515869; // Callbacks description
+        --docuo-openapi-callbacks-description-color: #353c4e;
     }
 }
 
@@ -72,6 +114,20 @@ html[data-theme="dark"] {
     --docuo-openapi-schema-item-active-border-color: var(--docuo-color-primary-active);
     --docuo-openapi-schema-item-active-bg-color: transparent;
     --docuo-openapi-schema-item-active-color: var(--docuo-color-primary-active);
+    // Details
+    --docuo-openapi-markdown-details-color: var(--docuo-color-primary);
+    // Selector
+    --docuo-openapi-select-selector-border-color: #333333;
+    --docuo-openapi-select-selector-bg-color: #191919;
+    --docuo-openapi-select-selector-color: var(--docuo-color-primary);
+    // Selector dropdown
+    --docuo-openapi-select-selector-dropdown-border-color: #333333;
+    --docuo-openapi-select-selector-dropdown-bg-color: #191919;
+    --docuo-openapi-select-selector-dropdown-item-option-color: var(--docuo-color-primary);
+    --docuo-openapi-select-selector-dropdown-item-option-hover-color: var(--docuo-color-primary);
+    --docuo-openapi-select-selector-dropdown-item-option-hover-bg-color: #252525;
+    --docuo-openapi-select-selector-dropdown-item-option-selected-color: #05ec07;
+    --docuo-openapi-select-selector-dropdown-item-option-selected-bg-color: transparent;
     // ########### Common end ###########
 
     // ########### Yaml info ###########
@@ -94,8 +150,15 @@ html[data-theme="dark"] {
         --docuo-openapi-divider-color: #252525;
         // Details summary arrow
         --docuo-openapi-details-summary-arrow-icon: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z" fill="rgb(182,182,182)"></path></svg>');
-        // openapi-params__list-item、openapi-schema__list-item
+        // Params list item、Schema list item
         --docuo-openapi-list-item-leading-line-color: #252525;
+        // Params list item
+        --docuo-openapi-params-list-item-color: #b6b6b6;
+        --docuo-openapi-params-list-item-example-strong-color: #f0f0f0;
+        // Schema description
+        --docuo-openapi-schema-description-color: #b6b6b6;
+        // Schema list item
+        --docuo-openapi-schema-list-item-color: #b6b6b6;
         // MimeTabs
         --docuo-openapi-mime-item-border-color: #535353;
         --docuo-openapi-mime-item-bg-color: transparent;
@@ -106,12 +169,46 @@ html[data-theme="dark"] {
         --docuo-openapi-mime-item-active-border-color: var(--docuo-color-primary-active);
         --docuo-openapi-mime-item-active-bg-color: transparent;
         --docuo-openapi-mime-item-active-color: var(--docuo-color-primary-active);
+        // DiscriminatorTabs
+        --docuo-openapi-discriminator-item-border-color: #535353;
+        --docuo-openapi-discriminator-item-bg-color: transparent;
+        --docuo-openapi-discriminator-item-color: #909090;
+        --docuo-openapi-discriminator-item-hover-border-color: var(--docuo-color-primary-hover);
+        --docuo-openapi-discriminator-item-hover-bg-color: transparent;
+        --docuo-openapi-discriminator-item-hover-color: var(--docuo-color-primary-hover);
+        --docuo-openapi-discriminator-item-active-border-color: var(--docuo-color-primary-active);
+        --docuo-openapi-discriminator-item-active-bg-color: transparent;
+        --docuo-openapi-discriminator-item-active-color: var(--docuo-color-primary-active);
         // SchemaItem
         --docuo-openapi-schema-property-color: #05ec07;
         --docuo-openapi-type-color: #909090;
         --docuo-openapi-type-bg-color: #1d1d1d;
         --docuo-openapi-name-color: #909090;
         --docuo-openapi-name-bg-color: #1d1d1d;
-        // ParamsItem
+        --docuo-openapi-schema-required-color: #ff2900;
+        --docuo-openapi-schema-required-bg-color: rgba(227, 77, 60, 0.15);
+        // Body description
+        --docuo-openapi-body-description-color: #b6b6b6;
+        // Response description
+        --docuo-openapi-response-description-color: #b6b6b6;
+        // Response code item
+        --docuo-openapi-response-code-item-primary-border-color: #333333;
+        --docuo-openapi-response-code-item-primary-bg-color: #191919;
+        --docuo-openapi-response-code-item-primary-color: #b6b6b6;
+        --docuo-openapi-response-code-item-info-active-border-color: #00b0e8;
+        --docuo-openapi-response-code-item-info-active-bg-color: #00b0e8;
+        --docuo-openapi-response-code-item-info-active-color: #ffffff;
+        --docuo-openapi-response-code-item-success-active-border-color: #1abd00;
+        --docuo-openapi-response-code-item-success-active-bg-color: #1abd00;
+        --docuo-openapi-response-code-item-success-active-color: #ffffff;
+        --docuo-openapi-response-code-item-danger-active-border-color: #f13024;
+        --docuo-openapi-response-code-item-danger-active-bg-color: #f13024;
+        --docuo-openapi-response-code-item-danger-active-color: #ffffff;
+        // Response summary
+        --docuo-openapi-response-summary: var(--docuo-color-primary);
+        // Response header description
+        --docuo-openapi-response-header-description: #b6b6b6;
+        // Callbacks description
+        --docuo-openapi-callbacks-description-color: #b6b6b6;
     }
 }

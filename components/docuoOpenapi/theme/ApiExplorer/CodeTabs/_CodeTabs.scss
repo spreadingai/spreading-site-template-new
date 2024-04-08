@@ -64,209 +64,79 @@ body[class="ReactModal__Body--open"] {
   }
 }
 
-.openapi-tabs__code-item--variant {
-  color: var(--ifm-color-secondary);
-
-  &.active {
-    border-color: var(--ifm-toc-border-color);
-  }
-}
-
-.openapi-tabs__code-item--variant > span {
-  padding-top: unset !important;
-  padding-left: 0.5rem !important;
-  padding-right: 0.5rem !important;
-}
-
-.openapi-tabs__code-item--sample {
-  color: var(--ifm-color-secondary);
-
-  &.active {
-    border-color: var(--ifm-toc-border-color);
-  }
-}
-
-.openapi-tabs__code-item--sample > span {
-  padding-top: unset !important;
-  padding-left: 0.5rem !important;
-  padding-right: 0.5rem !important;
-}
-
 .openapi-tabs__code-item--python {
-  color: var(--ifm-color-success);
-
   &::after {
     content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
     background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg")
       no-repeat;
-    margin-block: auto;
-  }
-
-  &.active {
-    box-shadow: 0 0 0 3px var(--openapi-code-tab-shadow-color-python);
-    border-color: var(--openapi-code-tab-border-color-python);
   }
 }
 
 .openapi-tabs__code-item--go {
-  color: var(--ifm-color-info);
-
   &::after {
     content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
     background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/go/go-original-wordmark.svg")
       no-repeat;
-    margin-block: auto;
-  }
-
-  &.active {
-    box-shadow: 0 0 0 3px var(--openapi-code-tab-shadow-color-go);
-    border-color: var(--openapi-code-tab-border-color-go);
   }
 }
 
 .openapi-tabs__code-item--javascript {
-  color: var(--ifm-color-warning);
-
   &::after {
     content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
     background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg")
       no-repeat;
-    margin-block: auto;
-  }
-
-  &.active {
-    box-shadow: 0 0 0 3px var(--openapi-code-tab-shadow-color-js);
-    border-color: var(--openapi-code-tab-border-color-js);
   }
 }
 
 .openapi-tabs__code-item--bash {
-  color: var(--ifm-color-danger);
-
   &::after {
     content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
     background: url("../../../../../assets/icons/openapi/curl.svg") no-repeat;
-    margin-block: auto;
-    background-color: var(--bash-background-color);
-    border-radius: var(--bash-border-radius);
-  }
-
-  &.active {
-    box-shadow: 0 0 0 3px var(--openapi-code-tab-shadow-color-bash);
-    border-color: var(--ifm-color-danger);
   }
 }
 
 .openapi-tabs__code-item--ruby {
-  color: var(--ifm-color-danger);
-
   &::after {
     content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
     background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/ruby/ruby-plain.svg") no-repeat;
-    margin-block: auto;
-  }
-
-  &.active {
-    box-shadow: 0 0 0 3px var(--openapi-code-tab-shadow-color-ruby);
-    border-color: var(--openapi-code-tab-border-color-ruby);
   }
 }
 
 .openapi-tabs__code-item--csharp {
-  color: var(--ifm-color-gray-500);
-
   &::after {
     content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
     background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/csharp/csharp-original.svg")
       no-repeat;
-    margin-block: auto;
-  }
-
-  &.active {
-    box-shadow: 0 0 0 3px var(--openapi-code-tab-shadow-color-csharp);
-    border-color: var(--openapi-code-tab-border-color-csharp);
   }
 }
 
 .openapi-tabs__code-item--nodejs {
-  color: var(--ifm-color-success);
-
   &::after {
     content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
     background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original.svg")
       no-repeat;
-    margin-block: auto;
-  }
-
-  &.active {
-    box-shadow: 0 0 0 3px var(--opeanpi-code-tab-shadow-color-nodejs);
-    border-color: var(--openapi-code-tab-border-color-nodejs);
   }
 }
 
 .openapi-tabs__code-item--php {
-  color: var(--ifm-color-gray-500);
-
   &::after {
     content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
     background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/php/php-original.svg") no-repeat;
-    margin-block: auto;
-  }
-
-  &.active {
-    box-shadow: 0 0 0 3px var(--openapi-code-tab-shadow-color-php);
-    border-color: var(--openapi-code-tab-border-color-php);
   }
 }
 
 .openapi-tabs__code-item--java {
-  color: var(--ifm-color-warning);
-
   &::after {
     content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
     background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg") no-repeat;
-    margin-block: auto;
-  }
-
-  &.active {
-    box-shadow: 0 0 0 3px var(--openapi-code-tab-shadow-color-java);
-    border-color: var(--openapi-code-tab-border-color-java);
   }
 }
 
 .openapi-tabs__code-item--powershell {
-  color: var(--ifm-color-info);
-
   &::after {
     content: "";
-    width: var(--code-tab-logo-width);
-    height: var(--code-tab-logo-height);
     background: url("https://raw.githubusercontent.com/devicons/devicon/master/icons/windows8/windows8-original.svg")
       no-repeat;
-    margin-block: auto;
-  }
-
-  &.active {
-    box-shadow: 0 0 0 3px var(--opeanpi-code-tab-shadow-color-powershell);
-    border-color: var(--openapi-code-tab-border-color-powershell);
   }
 }
 

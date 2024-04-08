@@ -20,34 +20,31 @@
     font-family: Inter;
     font-weight: 500;
     font-size: 14px;
-    color: #515869;
+    color: var(--docuo-openapi-params-list-item-color);
     & > div {
       & > p {
         margin: 0;
         font-family: Inter;
         font-weight: 500;
         font-size: 14px;
-        color: #515869;
         line-height: 23px;
+        color: var(--docuo-openapi-params-list-item-color);
         strong {
           font-family: Inter;
           font-size: 14px;
           font-weight: 400;
-          color: #515869;
           margin-right: 8px;
         }
-        code {
-          font-size: 12px;
-          background: #f4f4fa;
-          border-radius: 4px;
-          border: 1px solid #e1e2ea;
-          padding: 3px 6px;
-        }
       }
+    }
+  }
+  .openapi-params_example,
+  .openapi-params_examples {
+    & > div {
       & > strong {
         font-family: Inter-Semi Bold;
         font-size: 14px;
-        color: #171717;
+        color: var(--docuo-openapi-params-list-item-example-strong-color);
         margin-right: 8px;
       }
     }
@@ -55,7 +52,9 @@
 }
 
 .openapi-schema__type,
-.openapi-schema__name {
+.openapi-schema__name,
+.header-name-type,
+.schema-name {
   border-radius: 4px;
   margin-right: 10px;
   font-family: Roboto Mono;
@@ -80,10 +79,10 @@
   font-family: Roboto Mono;
   font-weight: 400;
   font-size: 12px;
-  background: #fcf3f2;
+  background-color: var(--docuo-openapi-schema-required-bg-color);
   height: 20px;
   border-radius: 4px;
-  color: #ff2900;
+  color: var(--docuo-openapi-schema-required-color);
   line-height: normal;
   padding: 0 4px;
   display: flex;

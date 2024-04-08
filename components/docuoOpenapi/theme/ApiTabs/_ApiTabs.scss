@@ -15,35 +15,31 @@
   display: inline-flex;
   align-items: center;
   height: 33px;
-  background: #f7f8f9;
+  background-color: var(--docuo-openapi-response-code-item-primary-bg-color);
   border-radius: 6px 6px 6px 6px;
-  border: 1px solid #f2f3f5;
+  border: 1px solid var(--docuo-openapi-response-code-item-primary-border-color);
   padding: 0 16px;
   margin: 0 12px 0 0;
   font-family: Inter-Medium;
   font-weight: 500;
   font-size: 14px;
-  color: #515869;
-  &:hover {
-    background-color: #f7f8f9;
+  color: var(--docuo-openapi-response-code-item-primary-color);
+
+  &.info.active {
+    border-color: var(--docuo-openapi-response-code-item-info-active-border-color);
+    background-color: var(--docuo-openapi-response-code-item-info-active-bg-color);
+    color: var(--docuo-openapi-response-code-item-info-active-color);
   }
+
   &.success.active {
-    border-color: #19b100;
-    background-color: #19b100;
-    color: #fff;
-    &:hover {
-      background-color: #19b100;
-      border-color: #19b100;
-    }
+    border-color: var(--docuo-openapi-response-code-item-success-active-border-color);
+    background-color: var(--docuo-openapi-response-code-item-success-active-bg-color);
+    color: var(--docuo-openapi-response-code-item-success-active-color);
   }
   &.danger.active {
-    border-color: #ff2900;
-    background-color: #ff2900;
-    color: #fff;
-    &:hover {
-      background-color: #ff2900;
-      border-color: #ff2900;
-    }
+    border-color: var(--docuo-openapi-response-code-item-danger-active-border-color);
+    background-color: var(--docuo-openapi-response-code-item-danger-active-bg-color);
+    color: var(--docuo-openapi-response-code-item-danger-active-color);
   }
   &:last-of-type {
     margin-right: 0;
@@ -64,7 +60,6 @@
     height: 28px;
     font-family: Inter-Semi Bold;
     font-size: 22px;
-    color: #171717;
     line-height: 28px;
   }
 }
