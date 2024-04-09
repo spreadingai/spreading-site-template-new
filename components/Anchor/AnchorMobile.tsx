@@ -4,11 +4,7 @@ import DocuoAnchor from "./index";
 import { createPortal } from "react-dom";
 import { useMediaQuery } from "usehooks-ts";
 
-import React, {
-  FC,
-  useEffect,
-  useMemo,
-} from "react";
+import React, { FC, useEffect, useMemo } from "react";
 import AnchorNode from "./Anchor";
 
 interface AnchorNodeProps {
@@ -44,7 +40,7 @@ const AnchorNodeMobile: FC<AnchorNodeProps> = ({ tocFormatData }) => {
         setOpenToc((value) => !value);
       }}
       style={{ paddingLeft: 14, paddingRight: 12 }}
-      className={`w-full rounded-md toc flex items-center justify-between  h-10 ${styles["toc-btn"]}`}
+      className={`anchor-mobile-container w-full rounded-md toc flex items-center justify-between  h-10 ${styles["toc-btn"]}`}
     >
       <span className={styles["toc-font"]}>On this page</span>
       <IconArrowRight style={iconStyles} className={styles["toc-icon"]} />

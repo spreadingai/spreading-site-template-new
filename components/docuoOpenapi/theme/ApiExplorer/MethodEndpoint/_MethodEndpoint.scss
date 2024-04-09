@@ -7,7 +7,6 @@
   background-color: var(--docuo-openapi-method-endpoint-bg-color);
   border-radius: 6px 6px 6px 6px;
   border: none;
-  overflow: auto;
 }
 
 h2.openapi__method-endpoint-path {
@@ -16,6 +15,7 @@ h2.openapi__method-endpoint-path {
   font-size: 14px;
   line-height: 20px;
   margin: 0 0 0 10px;
+  word-break: break-word;
 }
 
 .openapi__divider {

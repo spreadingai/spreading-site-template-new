@@ -100,7 +100,8 @@ const Header = (props: Props) => {
     );
   }, [algolia, currentVersion, currentInstance]);
 
-  const isShowThemeBtn = docuoConfig?.themeConfig?.colorMode?.disableSwitch === false;
+  const isShowThemeBtn =
+    docuoConfig?.themeConfig?.colorMode?.disableSwitch === false;
 
   const logo = useMemo(() => {
     if (typeof navbar.logo === "string") {
@@ -116,16 +117,18 @@ const Header = (props: Props) => {
   }, [navbar.logo, theme]);
 
   const renderThemeSwitch = () => {
-    return isShowThemeBtn ? <ThemeSwitch className={isMobile ? "mobile" : ""} /> : null;
-  }
+    return isShowThemeBtn ? (
+      <ThemeSwitch className={isMobile ? "mobile" : ""} />
+    ) : null;
+  };
 
   return (
     <header
-      className={`${styles["header-container"]} ${
+      className={`header-container ${styles["header-container"]} ${
         scrollLength === 0 ? styles["header-bg-opacity"] : styles["header-bg"]
       }`}
     >
-      <div className={styles.container}>
+      <div className={`container-wrap ${styles.container}`}>
         {logo ? (
           <div className="flex items-center">
             <Link
@@ -195,11 +198,11 @@ const Header = (props: Props) => {
       {isMobile && (
         <div
           style={{ paddingLeft: 22, paddingRight: 22 }}
-          className={`w-full flex justify-between ${styles["mobile-magic-btn-wrapper"]}`}
+          className={`mobile-magic-btn-wrapper w-full flex justify-between ${styles["mobile-magic-btn-wrapper"]}`}
         >
           <span
             style={{ padding: 4, marginRight: 14 }}
-            className={`w-10 h-10 cursor-pointer block rounded-md ${styles["sidebar-btn"]}`}
+            className={`hamburger-btn w-10 h-10 cursor-pointer block rounded-md ${styles["sidebar-btn"]}`}
             onClick={() => setDrawerOpen(true)}
           >
             <IconMenu className={styles["sidebar-icon"]} />

@@ -9,7 +9,8 @@
 .body-description-container {
     margin-left: 5px;
     border-left: 1px solid var(--docuo-openapi-list-item-leading-line-color);
-    padding: 16px 0 16px 16px;
+    padding: 0 0 16px 16px;
+    margin-top: 16px;
     .body-description {
         font-family: Inter;
         font-weight: 500;

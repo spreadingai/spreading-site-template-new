@@ -52,7 +52,7 @@ html > body {
     }
   }
   // dark mode
-  html[data-theme=dark] {
+  html[data-theme="dark"] {
     body,
     .preview-sider,
     .toc-scroller {
@@ -652,7 +652,7 @@ html > body {
     }
 
     .article-breadcrumb {
-      margin: 28px 0 0 0;
+      margin: 28px 0 10px 0;
 
       .drawer-switch {
         display: flex;

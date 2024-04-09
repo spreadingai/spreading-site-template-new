@@ -1,21 +1,18 @@
 // Outer Layout
-.preview-content-wrap:has(.theme-api-markdown) {
+.preview-screen:has(.theme-api-markdown) {
     .article-anchor-right {
         display: none !important;
     }
-    .article-breadcrumb {
-        padding: 0 32px 0 24px;
-    }
-    .middle__show {
+    .anchor-mobile-container {
         display: none !important;
     }
 }
-.openapi-left-panel__container {
-    border-right: none;
-}
 @media screen and (min-width: 1281px) {
-    .preview-content-wrap:has(.theme-api-markdown) {
+    .preview-screen:has(.theme-api-markdown) {
         overflow: hidden;
+        .article-breadcrumb {
+            padding: 0 32px 0 24px;
+        }
         .article {
             width: 100%;
             padding-left: 0;
@@ -34,11 +31,40 @@
 @media screen and (max-width: 1280px) {
     .openapi-left-panel__container {
         width: 100%;
-        padding: 0 32px 0 24px;
     }
     .openapi-right-panel__container {
         width: 100%;
-        padding: 0 32px 0 24px;
+    }
+}
+@media screen and (max-width: 1024px) {
+    .preview-screen:has(.theme-api-markdown) {
+        --preview-header-height: 64px;
+        .header-container {
+            justify-content: flex-start;
+            padding-bottom: 16px;
+            .container-wrap {
+                margin-bottom: 0;
+                padding-right: 68px;
+            }
+        }
+        .mobile-magic-btn-wrapper {
+            width: auto !important;
+            padding: 0 !important;
+            position: absolute;
+            top: 16px;
+            right: 20px;
+            .hamburger-btn {
+                margin-right: 0 !important;
+                padding: 0 !important;
+                border: none;
+                width: 32px;
+                height: 32px;
+                svg {
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+        }
     }
 }
 
@@ -87,7 +113,6 @@ pre {
 .openapi-schema__divider {
     display: none;
 }
-
 // Response samples
 .openapi-code__response-samples-container {
     background-color: #171717;
