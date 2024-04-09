@@ -12,28 +12,30 @@
 }
 
 .openapi-tabs__operation-item {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.35rem 0.7rem;
-  border: 1px solid transparent;
+  border: 1px solid var(--docuo-openapi-schema-item-border-color);
+  font-family: Inter-Medium;
+  font-weight: 500 !important;
+  font-size: 12px !important;
+  color: var(--docuo-openapi-schema-item-color) !important;
+  margin-bottom: 0 !important;
   margin-top: 0 !important;
-  margin-right: 0.5rem;
-  font-weight: var(--ifm-font-weight-bold);
-  font-size: 12px;
-  white-space: nowrap;
-  transition: 300ms;
-
+  margin-right: 10px !important;
+  padding: 7px 16px;
+  transition: 0.3s;
+  cursor: pointer;
+  border-radius: 6px;
+  line-height: normal !important;
+  background-color: var(--docuo-openapi-schema-item-bg-color);
   &:hover {
-    background-color: transparent;
-    border: 1px solid var(--ifm-toc-border-color);
+    border-color: var(--docuo-openapi-schema-item-hover-border-color);
+    color: var(--docuo-openapi-schema-item-hover-color);
+    background-color: var(--docuo-openapi-schema-item-hover-bg-color);
   }
-
   &.active {
-    border: 1px solid var(--ifm-tabs-color-active-border);
-    color: var(--ifm-tabs-color-active);
+    border-color: var(--docuo-openapi-schema-item-active-border-color);
+    color: var(--docuo-openapi-schema-item-active-color);
+    background-color: var(--docuo-openapi-schema-item-active-bg-color);
   }
-
   &:last-child {
     margin-right: 0 !important;
   }

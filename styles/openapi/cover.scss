@@ -88,31 +88,6 @@ pre {
     display: none;
 }
 
-// Tabs
-ul.tabs {
-    li.openapi-tabs__operation-item {
-        border: 1px solid transparent !important;
-        margin-bottom: 0;
-        margin-right: 0.5rem;
-        font-family: Inter-SemiBold;
-        font-weight: normal;
-        font-size: 12px;
-        color: rgba(81, 88, 105, 0.8);
-        padding: 0.4rem 0.7rem;
-        line-height: normal;
-        transition: 0.3s;
-        cursor: pointer;
-        border-radius: var(--ifm-global-radius);
-        &:hover {
-            border: 1px solid var(--ifm-toc-border-color) !important;
-            background-color: transparent;
-        }
-        &.active {
-            color: #1abd00;
-            border-color: #1abd00 !important;
-        }
-    }
-}
 // Response samples
 .openapi-code__response-samples-container {
     background-color: #171717;

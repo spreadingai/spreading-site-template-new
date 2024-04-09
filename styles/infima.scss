@@ -2656,22 +2656,6 @@
     padding-left: 0;
   }
 
-  .tabs__item {
-    border-bottom: 3px solid transparent;
-    border-radius: var(--ifm-global-radius);
-    cursor: pointer;
-    display: inline-flex;
-    padding: var(--ifm-tabs-padding-vertical) var(--ifm-tabs-padding-horizontal);
-    transition: background-color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
-  }
-
-  .tabs__item--active {
-    border-bottom-color: var(--ifm-tabs-color-active-border);
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    color: var(--ifm-tabs-color-active);
-  }
-
   .tabs--block {
     justify-content: stretch;
   }
