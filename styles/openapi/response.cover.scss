@@ -60,3 +60,8 @@
 .response-schema-first-body-node-container {
     margin-left: 5px !important;
 }
+.openapi-markdown__details-summary-response + .response-schema-first-body-node-container {
+    & > .opening-array-bracket-container:first-of-type {
+        margin-top: 16px !important;
+    }
+}
