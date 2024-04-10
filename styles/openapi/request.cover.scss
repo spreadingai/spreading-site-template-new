@@ -23,6 +23,10 @@
     border-left: 1px solid var(--docuo-openapi-list-item-leading-line-color);
     padding: 0 0 8px 16px !important;
 }
+.schema-common-description {
+    margin-bottom: 8px;
+    margin-left: 15px;
+}
 .array-type {
     background: rgba(81, 88, 105, 0.07);
     border-radius: 4px;
@@ -38,7 +42,7 @@
 }
 .opening-array-bracket-container {
     padding-top: 18px !important;
-    padding-bottom: 8px;
+    padding-bottom: 16px;
     padding-left: 16px;
     border-left: 1px solid var(--docuo-openapi-list-item-leading-line-color);
     margin: 0 !important;
@@ -49,12 +53,25 @@
     &:first-child {
         padding-top: 0 !important;
     }
+    .opening-array-bracket {
+        display: inline-flex;
+        align-items: center;
+    }
+    .opening-array-bracket_text {
+        background-color: var(--docuo-openapi-name-bg-color);
+        color: var(--docuo-openapi-name-color);
+        margin-right: 4px;
+    }
+    .opening-array-bracket_symbol {
+        line-height: 19px;
+    }
 }
 .body-description-container + ul > .opening-array-bracket-container {
     padding-top: 0 !important;
 }
 .closing-array-bracket-container {
     padding-left: 16px;
+    padding-top: 16px !important;
     border-left: 1px solid var(--docuo-openapi-list-item-leading-line-color);
     margin: 0 !important;
     color: var(--docuo-openapi-schema-list-item-color);
@@ -62,5 +79,15 @@
 .openapi-left-panel__container {
     & > p {
         line-height: 24px;
+    }
+}
+.request-schema-first-body-node-container {
+    margin-left: 5px !important;
+    div {
+        font-family: Inter;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 23px;
+        color: var(--docuo-openapi-params-list-item-color);
     }
 }

@@ -24,6 +24,7 @@
   font-weight: 500;
   font-size: 14px;
   color: var(--docuo-openapi-response-code-item-primary-color);
+  cursor: pointer;
 
   &.info.active {
     border-color: var(--docuo-openapi-response-code-item-info-active-border-color);
@@ -52,8 +53,8 @@
   justify-content: space-between;
   align-items: center;
   border: none;
-  padding: 9px 0 8px;
-  margin-top: 48px;
+  padding: 10px 0;
+  margin-top: 58px;
   .openapi-tabs__response-header {
     margin-bottom: 0;
     margin-top: 0;
@@ -67,8 +68,7 @@
 .openapi-tabs__response-container {
   display: flex;
   align-items: center;
-  max-width: 390px;
-  padding-left: 1rem;
+  max-width: calc(100% - 130px);
   overflow: hidden;
 }
 
@@ -111,10 +111,12 @@
 
   &.left {
     transform: rotate(270deg);
+    margin-right: 4px;
   }
 
   &.right {
     transform: rotate(90deg);
+    margin-left: 4px;
   }
 }
 
@@ -130,18 +132,5 @@
     &.right {
       margin-right: 5px;
     }
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .openapi-tabs__response-header-section {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .openapi-tabs__response-container {
-    width: 100%;
-    margin-top: var(--ifm-spacing-vertical);
-    padding: 0;
   }
 }

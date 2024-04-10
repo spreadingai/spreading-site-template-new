@@ -567,6 +567,12 @@ html > body {
     z-index: 1001;
     position: fixed;
 
+    .custom-node-title {
+      a:hover {
+        color: var(--docuo-color-primary-hover);
+      }
+    }
+
     .ant-drawer-mask {
       background: var(--docuo-m-drawer-mask-bg);
     }

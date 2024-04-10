@@ -10,7 +10,7 @@
   border-radius: 4px;
   font-size: 12px;
   padding: 15px;
-  margin-top: 8px;
+  margin-top: 10px;
   flex-direction: column-reverse;
 }
 
@@ -78,9 +78,14 @@ button.file-clear-btn {
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  margin: 16px 0;
+  margin: 16px 0 17px;
   color: #05ec07;
   .dropzone-add-icon {
     margin-right: 8px;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .openapi-explorer__dropzone {
+    margin-top: 0;
   }
 }

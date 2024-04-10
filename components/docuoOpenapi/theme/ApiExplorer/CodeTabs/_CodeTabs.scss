@@ -21,13 +21,10 @@
   .openapi-tabs__code-item {
     display: flex;
     flex-direction: column-reverse;
-    flex: 0 0 80px;
     align-items: center;
-    padding: 0.5rem 0 !important;
     margin-top: 0 !important;
-    margin-right: 0.5rem;
-    border: 1px solid transparent;
     transition: 300ms;
+    cursor: pointer;
 
     &:not(.active):hover {
       border: 1px solid var(--openapi-code-tab-border-color);
@@ -165,6 +162,7 @@ body[class="ReactModal__Body--open"] {
     padding: 8px 8px 0 !important;
     justify-content: space-between;
     margin-bottom: 0;
+    cursor: pointer;
     & > span {
       font-family: Inter-Medium;
       font-weight: 500;

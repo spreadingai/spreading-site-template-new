@@ -56,7 +56,7 @@
   }
 
   .openapi-explorer__response-placeholder-message {
-    margin: 20px 0 !important;
+    margin: 13px 0 27px !important;
     font-family: Inter;
     font-weight: 500;
     font-size: 13px;
@@ -66,6 +66,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 0 27px;
+    text-align: center;
   }
 
   .openapi-explorer__response-clear-btn {
@@ -136,6 +138,14 @@
     }
     100% {
       transform: rotate(360deg);
+    }
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .openapi-explorer__response-container {
+    .openapi-explorer__response-placeholder-message {
+      margin: 14px 0 26px !important;
     }
   }
 }

@@ -1133,31 +1133,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-  /* Links */
-
-  a {
-    color: var(--ifm-link-color);
-    /* autoprefixer: ignore next */
-    text-decoration: var(--ifm-link-decoration);
-    transition: color var(--ifm-transition-fast) var(--ifm-transition-timing-default);
-  }
-
-  a:hover {
-    color: var(--ifm-link-hover-color);
-    /* autoprefixer: ignore next */
-    text-decoration: var(--ifm-link-hover-decoration);
-  }
-
-  a:not([href]) {
-    text-decoration: none;
-  }
-
-  /* Paragraphs */
-
-  p {
-    margin: 0 0 var(--ifm-paragraph-margin-bottom);
-  }
-
   /* Blockquotes */
 
   blockquote {

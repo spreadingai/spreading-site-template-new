@@ -39,6 +39,10 @@
 @media screen and (max-width: 1024px) {
     .preview-screen:has(.theme-api-markdown) {
         --preview-header-height: 64px;
+        .preview-content-wrap .article {
+            padding-right: 22px;
+            padding-left: 22px;
+        }
         .header-container {
             justify-content: flex-start;
             padding-bottom: 16px;
@@ -65,6 +69,9 @@
                 }
             }
         }
+    }
+    .openapi-right-panel__container {
+        margin-top: 44px;
     }
 }
 
@@ -119,9 +126,6 @@ pre {
     border-radius: 6px;
 }
 // Response
-.openapi-tabs__response-container {
-    padding-left: 0;
-}
 .openapi-tabs__response-list-container {
     padding: 0;
 }

@@ -1,13 +1,14 @@
 .treeNodeLabel {
-
   &:not(.isLevel0) {
     color: var(--docuo-sidebar-color);
     padding-left: 14px;
+    border-left-width: 1px;
+    border-inline-start-color: transparent;
+    transform: translateX(-1px);
+    transition: all 0.3s;
 
     &.active {
-      border-left-width: 1px;
-      border-inline-start-color: var(--docuo-color-primary-active);
-      transform: translateX(-1px);
+      border-inline-start-color: var(--docuo-color-primary-active) !important;
     }
   }
 
@@ -27,13 +28,16 @@
       color: var(--docuo-color-primary-active);
     }
 
-    &:not(.isLevel0):hover {
+    &:not(.isLevel0) {
       border-left-width: 1px;
-      border-inline-start-color: var(--docuo-color-primary-active);
+      border-inline-start-color: transparent;
       transform: translateX(-1px);
+      transition: all 0.3s;
+      &:hover {
+        border-inline-start-color: var(--docuo-color-primary-active);
+      }
     }
   }
-
 }
 
 .treeNodeIcon {
