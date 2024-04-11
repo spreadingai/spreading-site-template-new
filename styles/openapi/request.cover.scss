@@ -25,7 +25,8 @@
 }
 .schema-common-description {
     margin-bottom: 8px;
-    margin-left: 15px;
+    padding-left: 14px;
+    border-left: 1px solid var(--docuo-openapi-list-item-leading-line-color);
 }
 .array-type {
     background-color: var(--docuo-openapi-name-bg-color);

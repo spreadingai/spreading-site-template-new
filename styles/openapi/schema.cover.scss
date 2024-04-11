@@ -11,5 +11,8 @@
     margin-left: 16px;
 }
 .response-headers-container {
-    margin-left: 16px;
+    margin-top: 10px !important;
+    padding-left: 14px !important;
+    margin-left: 5px !important;
+    border-left: 1px solid var(--docuo-openapi-list-item-leading-line-color);
 }
