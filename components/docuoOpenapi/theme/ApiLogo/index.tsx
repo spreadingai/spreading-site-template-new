@@ -29,7 +29,7 @@ export default function ApiLogo(props: any): JSX.Element | undefined {
         alt={altText()}
         sources={{
           light: lightLogoUrl,
-          dark: darkLogoUrl,
+          dark: lightLogoUrl,
         }}
         className="openapi__logo"
       />
