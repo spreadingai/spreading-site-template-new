@@ -64,18 +64,23 @@ const TreeNode: FC<TreeNodeProps> = ({
       })}
     >
       <div
-        className={classNames("text-sm flex items-center", {
-          "mb-2.5": level === 0,
-          "mb-2 cursor-pointer": level > 0,
-          "hover:opacity-70": level > 0 && hasChildren,
-        })}
+        className={classNames(
+          `${styles.treeNodeContainer} text-sm flex items-center`,
+          {
+            "mb-2.5": level === 0,
+            "mb-2 cursor-pointer": level > 0,
+            "hover:opacity-70": level > 0 && hasChildren,
+          }
+        )}
         onClick={level > 0 ? toggleNode : undefined}
       >
         <span
           className={classNames(styles.treeNodeLabel, {
             [styles.isLevel0]: level === 0,
             [styles.active]: selectedKeys?.includes(node.key),
-            [styles.islink]: node.type === SidebarItemType.Doc || node.type === SidebarItemType.Link
+            [styles.islink]:
+              node.type === SidebarItemType.Doc ||
+              node.type === SidebarItemType.Link,
           })}
         >
           <span>{titleRender ? titleRender(node) : node.title}</span>

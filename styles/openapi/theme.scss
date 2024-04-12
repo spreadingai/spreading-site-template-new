@@ -41,7 +41,7 @@ html {
         --docuo-openapi-badge-primary-color: #ffffff;
         --docuo-openapi-badge-bg-success-color: #0989ff;
         --docuo-openapi-badge-bg-danger-color: #f64841;
-        --docuo-openapi-badge-bg-info-color: #08b6ed;
+        --docuo-openapi-badge-bg-info-color: #00b0e7;
         --docuo-openapi-badge-bg-warning-color: #fb7e38;
         --docuo-openapi-badge-bg-secondary-color: rgb(235, 237, 240);
         --docuo-openapi-badge-secondary-color: #171717;
@@ -142,10 +142,10 @@ html[data-theme="dark"] {
         --docuo-openapi-badge-primary-color: #ffffff;
         --docuo-openapi-badge-bg-success-color: #0085ff;
         --docuo-openapi-badge-bg-danger-color: #f13024;
-        --docuo-openapi-badge-bg-info-color: #08b6ed;
+        --docuo-openapi-badge-bg-info-color: #00b0e7;
         --docuo-openapi-badge-bg-warning-color: #fb7e38;
         --docuo-openapi-badge-bg-secondary-color: #717e97;
-        --docuo-openapi-badge-secondary-color: #171717;
+        --docuo-openapi-badge-secondary-color: #ffffff;
         // Divider
         --docuo-openapi-divider-color: #252525;
         // Details summary arrow
@@ -181,9 +181,9 @@ html[data-theme="dark"] {
         --docuo-openapi-discriminator-item-active-color: var(--docuo-color-primary-active);
         // SchemaItem
         --docuo-openapi-schema-property-color: #05ec07;
-        --docuo-openapi-type-color: #909090;
+        --docuo-openapi-type-color: #b6b6b6;
         --docuo-openapi-type-bg-color: #1d1d1d;
-        --docuo-openapi-name-color: #909090;
+        --docuo-openapi-name-color: #b6b6b6;
         --docuo-openapi-name-bg-color: #1d1d1d;
         --docuo-openapi-schema-required-color: #ff2900;
         --docuo-openapi-schema-required-bg-color: rgba(227, 77, 60, 0.15);

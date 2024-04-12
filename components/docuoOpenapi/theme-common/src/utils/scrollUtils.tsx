@@ -9,7 +9,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
-  useLayoutEffect,
+  // useLayoutEffect,
   useMemo,
   useRef,
   type ReactNode,
@@ -221,12 +221,12 @@ export function useScrollPositionBlocker(): {
     [scrollController, scrollPositionSaver]
   );
 
-  useLayoutEffect(() => {
-    // Queuing permits to restore scroll position after all useLayoutEffect
-    // have run, and yet preserve the sync nature of the scroll restoration
-    // See https://github.com/facebook/docusaurus/issues/8625
-    queueMicrotask(() => nextLayoutEffectCallbackRef.current?.());
-  });
+  // useLayoutEffect(() => {
+  //   // Queuing permits to restore scroll position after all useLayoutEffect
+  //   // have run, and yet preserve the sync nature of the scroll restoration
+  //   // See https://github.com/facebook/docusaurus/issues/8625
+  //   queueMicrotask(() => nextLayoutEffectCallbackRef.current?.());
+  // });
 
   return {
     blockElementScrollPositionUntilNextRender,

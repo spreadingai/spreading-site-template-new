@@ -8,7 +8,7 @@
 import React, {
   useCallback,
   useEffect,
-  useLayoutEffect,
+  // useLayoutEffect,
   useMemo,
   useRef,
   type ComponentType,
@@ -25,7 +25,8 @@ import ExecutionEnvironment from "@/components/docuoOpenapi/core/lib/client/expo
  * render (before `useEffect`).
  */
 export const useIsomorphicLayoutEffect = ExecutionEnvironment.canUseDOM
-  ? useLayoutEffect
+  ? // ? useLayoutEffect
+    useEffect
   : useEffect;
 
 /**

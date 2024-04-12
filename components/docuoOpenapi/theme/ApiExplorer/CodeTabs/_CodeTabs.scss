@@ -200,9 +200,13 @@ body[class="ReactModal__Body--open"] {
       border-bottom: 1px solid #3d3d3d;
       & + div[role="tabpanel"] {
         background-color: #171717;
-        padding: 0px 0px 2px 0px;
-        max-height: 300px;
-        overflow-y: auto;
+        overflow-y: hidden;
+        .tabpanel-wrapper {
+          margin-bottom: 10px;
+          padding: 0px 0px 2px 0px;
+          max-height: 300px;
+          overflow-y: auto;
+        }
       }
       .openapi-tabs__code-item {
         flex: initial;
@@ -218,7 +222,7 @@ body[class="ReactModal__Body--open"] {
           margin-right: 0px;
         }
         & > span {
-          font-family: Inter-Semi Bold;
+          font-family: Inter-SemiBold;
           font-weight: 500;
           font-size: 13px;
           color: #909090;

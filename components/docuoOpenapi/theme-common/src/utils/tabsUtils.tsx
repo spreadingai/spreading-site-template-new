@@ -12,7 +12,7 @@ import React, {
   useMemo,
   type ReactNode,
   type ReactElement,
-  useLayoutEffect,
+  // useLayoutEffect,
 } from "react";
 import { useHistory } from "@/components/docuoOpenapi/router";
 import { useQueryStringValue } from "@/components/docuoOpenapi/theme-common/src/internal";
@@ -252,11 +252,11 @@ export function useTabs(props: TabsProps): {
   })();
   // Sync in a layout/sync effect is important, for useScrollPositionBlocker
   // See https://github.com/facebook/docusaurus/issues/8625
-  useLayoutEffect(() => {
-    if (valueToSync) {
-      setSelectedValue(valueToSync);
-    }
-  }, [valueToSync]);
+  // useLayoutEffect(() => {
+  //   if (valueToSync) {
+  //     setSelectedValue(valueToSync);
+  //   }
+  // }, [valueToSync]);
 
   const selectValue = useCallback(
     (newValue: string) => {

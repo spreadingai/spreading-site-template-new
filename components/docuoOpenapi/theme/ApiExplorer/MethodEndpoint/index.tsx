@@ -66,7 +66,11 @@ function MethodEndpoint({ method, path }: Props) {
     <>
       <div className="openapi__method-endpoint">
         <span className={"badge badge--" + colorForMethod(method)}>
-          {method === "event" ? "Webhook" : method.toUpperCase()}
+          {method === "event"
+            ? "Webhook"
+            : method.toUpperCase() === "DELETE"
+            ? "DEL"
+            : method.toUpperCase()}
         </span>{" "}
         {method !== "event" && (
           <h2 className="openapi__method-endpoint-path">

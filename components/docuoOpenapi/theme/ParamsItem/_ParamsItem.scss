@@ -42,7 +42,7 @@
   .openapi-params_examples {
     & > div {
       & > strong {
-        font-family: Inter-Semi Bold;
+        font-family: Inter-SemiBold;
         font-size: 14px;
         color: var(--docuo-openapi-params-list-item-example-strong-color);
         margin-right: 8px;
@@ -59,7 +59,7 @@
 .schema-name {
   border-radius: 4px;
   margin-right: 10px;
-  font-family: Roboto Mono;
+  font-family: RobotoMono-Regular;
   font-weight: 400;
   font-size: 12px;
   height: 19px;
@@ -78,7 +78,7 @@
 }
 
 .openapi-schema__required {
-  font-family: Roboto Mono;
+  font-family: RobotoMono-Regular;
   font-weight: 400;
   font-size: 12px;
   background-color: var(--docuo-openapi-schema-required-bg-color);

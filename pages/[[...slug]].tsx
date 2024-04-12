@@ -70,6 +70,10 @@ interface Props {
 }
 
 export const getStaticProps = async ({ params }: SlugData) => {
+  console.log(
+    new Date().toISOString().slice(0, 23),
+    "[Spreading] getStaticProps..."
+  );
   // Reason: `undefined` cannot be serialized as JSON. Please use `null` or omit this value.
   const docuoConfig = LibControllerImpl.getDocuoConfig();
   const allSlugs = SlugControllerImpl.getAllSlugs();

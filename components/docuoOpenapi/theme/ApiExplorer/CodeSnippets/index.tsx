@@ -143,7 +143,7 @@ export interface Props {
 function CodeTab({ children, hidden, className }: any): JSX.Element {
   return (
     <div role="tabpanel" className={className} {...{ hidden }}>
-      {children}
+      <div className="tabpanel-wrapper">{children}</div>
     </div>
   );
 }
