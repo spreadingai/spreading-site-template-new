@@ -2,7 +2,7 @@ import { visit } from "unist-util-visit";
 import Link from "next/link";
 import path from "path";
 import fs from "fs";
-import { convertDocID, ignoreNumberPrefix } from "@/lib/utils";
+import { ignoreNumberPrefix } from "@/lib/utils";
 
 export function rehypeLink(options: {
   prefix: string;
@@ -40,6 +40,19 @@ export function rehypeLink(options: {
       //   targetHref,
       //   publicPath
       // );
+      const convertDocID = (str: string) => {
+        // Quick Start, Quick-Start
+        // Quick start, Quick-start
+        // Quick start/Overview
+        const result = [];
+        const temp = str.split("/");
+        temp.forEach((path) => {
+          result.push(
+            path.toLowerCase().replace(/%20/g, " ").replace(/\s+/g, "-")
+          );
+        });
+        return result.join("/");
+      };
       node.properties.href = `${options.prefix}/${convertDocID(
         ignoreNumberPrefix(publicPath)
       )}`;

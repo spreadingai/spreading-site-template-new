@@ -220,7 +220,6 @@ class SidebarsController {
     return result ? key : "";
   }
   sortFiles(files: string[]) {
-    console.log("#########sortFiles", files);
     const numberFiles = files.filter((item) =>
       SEQUENCE_PREFIX_REGEX.test(item)
     );
