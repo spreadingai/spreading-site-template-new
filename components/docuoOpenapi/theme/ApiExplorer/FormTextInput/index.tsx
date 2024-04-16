@@ -36,8 +36,6 @@ function FormTextInput({
     formState: { errors },
   } = useFormContext();
 
-  console.log("$$$$$$$prefix", prefix);
-
   const showErrorMessage = errors?.[paramName]?.message;
 
   return (

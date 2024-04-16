@@ -9,7 +9,7 @@ export const getStaticProps = async () => {
   const allSlugs = SlugControllerImpl.getAllSlugs();
   return {
     props: {
-      slug: allSlugs[0].params.slug,
+      slug: allSlugs[0] ? allSlugs[0].params.slug : ["404"],
     },
   };
 };

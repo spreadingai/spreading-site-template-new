@@ -129,8 +129,8 @@ class LibController {
       });
       return {
         instance,
-        firstSlug: targetSlug.params.slug,
-        defaultLink: `/${targetSlug.params.slug.join("/")}`,
+        firstSlug: targetSlug ? targetSlug.params.slug : [],
+        defaultLink: targetSlug ? `/${targetSlug.params.slug.join("/")}` : "",
       };
     });
   }

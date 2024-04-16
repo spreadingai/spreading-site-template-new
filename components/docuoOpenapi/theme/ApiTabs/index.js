@@ -171,7 +171,6 @@ function TabContent({ lazy, children, selectedValue }) {
       className: "apitab-tabpanel-container",
     });
   }
-  console.log("######children", children);
   return (
     <div className="apitab-tabpanel-container">
       {children.map((tabItem, i) =>

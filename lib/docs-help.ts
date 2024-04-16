@@ -18,6 +18,7 @@ import {
 import LibControllerImpl from "./index";
 import SlugControllerImpl from "./slug-help";
 import VersionsControllerImpl from "./versions-help";
+import { convertDocID, ignoreNumberPrefix, removeMdxSuffix } from "./utils";
 
 class DocsController {
   static _instance: DocsController;
@@ -134,9 +135,6 @@ class DocsController {
     const levels = mdxFileID.split("/");
 
     const loop = (sourcePath: string, level: number) => {
-      if (!fs.existsSync(sourcePath)) {
-        return;
-      }
       const files = fs.readdirSync(sourcePath);
       for (let index = 0; index < files.length; index++) {
         const file = files[index];
@@ -155,12 +153,10 @@ class DocsController {
           }
         } else {
           let relativePath = path.relative(rootPath, joinPath);
-          const suffixIndex = relativePath.lastIndexOf(".");
-          const temp =
-            suffixIndex !== -1
-              ? relativePath.slice(0, suffixIndex)
-              : relativePath;
-          if (this.convertDocID(temp) === mdxFileID) {
+          // Remove mdx|md suffix
+          relativePath = removeMdxSuffix(relativePath);
+          relativePath = ignoreNumberPrefix(relativePath);
+          if (convertDocID(relativePath) === mdxFileID) {
             return joinPath;
           }
         }
@@ -168,21 +164,6 @@ class DocsController {
     };
     const actualMdxFilePath = loop(rootPath, 1);
     return actualMdxFilePath;
-  }
-  convertDocID(str: string) {
-    // Quick Start, Quick-Start
-    // Quick start, Quick-start
-    // Quick start/Overview
-    let sp = "/";
-    if (process.platform.includes("win")) {
-      str = str.replace(/\\/g, "/");
-    }
-    const result = [];
-    const temp = str.split(sp);
-    temp.forEach((path) => {
-      result.push(path.toLowerCase().replace(/\s+/g, "-"));
-    });
-    return result.join(sp);
   }
 }
 
