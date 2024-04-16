@@ -109,7 +109,7 @@ class LibController {
           const firstSlug = this.getFirstSlug(
             allSlugs,
             item.docsInstanceId,
-            item.sidebarIds
+            item.sidebarIds || [item.sidebarId]
           );
           item.defaultLink = `/${firstSlug.join("/")}`;
         }

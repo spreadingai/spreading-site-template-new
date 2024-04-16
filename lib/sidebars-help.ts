@@ -81,7 +81,7 @@ class SidebarsController {
           item.type === NavBarItemType.DocSidebar &&
           item.docsInstanceId === instanceID
         ) {
-          usedSidebarIds.push(...item.sidebarIds);
+          usedSidebarIds.push(...(item.sidebarIds || [item.sidebarId]));
         }
         if (item.items) {
           loop(item.items, usedSidebarIds);
