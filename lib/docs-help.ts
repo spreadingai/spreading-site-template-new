@@ -13,6 +13,7 @@ import {
   rehypeCodeBlocks,
   rehypeCodeGroup,
   remarkToc,
+  remarkFrontmatter,
 } from "@/plugins";
 
 import LibControllerImpl from "./index";
@@ -58,11 +59,16 @@ class DocsController {
 
       const actualMdxFilePath = this.getActualMdxFilePath(rootUrl, mdxFileID);
       if (actualMdxFilePath) {
+        console.log("#####actualMdxFilePath", actualMdxFilePath);
         mdxFileUrl = actualMdxFilePath;
         originContent = fs.readFileSync(actualMdxFilePath, "utf8");
       }
     }
     const tocRef: any = {};
+    const temp = mdxFileUrl.split("/");
+    const frontmatterRef: any = {
+      fileName: ignoreNumberPrefix(removeMdxSuffix(temp[temp.length - 1])),
+    };
     const mdxSource = await serialize(originContent, {
       mdxOptions: {
         remarkPlugins: [
@@ -70,13 +76,14 @@ class DocsController {
           remarkMath,
           remarkImages,
           [remarkToc, { exportRef: tocRef }],
+          [remarkFrontmatter, { exportRef: frontmatterRef }],
         ],
         rehypePlugins: [
           // @ts-ignore
           rehypeKatex,
           rehypeCodeBlocks,
           rehypeCodeGroup,
-          [rehypeImages, { filePath: mdxFileUrl }],
+          [rehypeImages, { filePath: mdxFileUrl, exportRef: frontmatterRef }],
           [
             rehypeLink,
             {
@@ -97,11 +104,50 @@ class DocsController {
       },
       parseFrontmatter: true,
     });
+    // Copy frontmatter img
+    mdxSource.frontmatter["og:logo"] = this.getPublicPath(
+      mdxSource.frontmatter["og:logo"],
+      mdxFileUrl
+    );
+    mdxSource.frontmatter["og:image"] = this.getPublicPath(
+      mdxSource.frontmatter["og:image"],
+      mdxFileUrl
+    );
     return {
       slug,
       mdxSource,
       toc: tocRef.toc || [],
+      frontmatterRef,
     };
+  }
+  getPublicPath(relativePath, filePath) {
+    if (!relativePath || !filePath) return "";
+    if (relativePath.startsWith("http")) {
+      return relativePath;
+    }
+    if (relativePath.startsWith("/")) {
+      return `${process.env.NEXT_PUBLIC_BASE_PATH || ""}${relativePath}`;
+    }
+    // Get the relative path of the image
+    const imagePath = path.resolve(path.dirname(filePath), relativePath);
+    // Determine whether the image exists
+    const isExist = fs.existsSync(imagePath);
+    // Skip if the image does not exist
+    if (!isExist) return "";
+    // Get the relative path of the image and
+    const publicPath = path.relative("docs", imagePath);
+    // Create the public directory (if it does not exist)
+    fs.mkdirSync("public/docs", { recursive: true });
+    // Create the same folder structure in the public directory
+    fs.mkdirSync(path.join("public/docs", path.dirname(publicPath)), {
+      recursive: true,
+    });
+    // Copy the image to the public directory
+    const destPath = path.join("public/docs", publicPath);
+    fs.copyFileSync(imagePath, destPath);
+    return `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/docs/${path.join(
+      publicPath
+    )}`;
   }
   copyStaticFile() {
     const staticFileUrl = `${LibControllerImpl.getEntityRootDirectory()}/static`;
