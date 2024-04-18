@@ -21,7 +21,7 @@ interface Props {
 const Mobile: FC<Props> = ({ menus, renderThemeSwitch }) => {
   const [open, setOpen] = useState(false);
   const { theme } = React.useContext(ThemeContext);
-  
+
   const DropdownList = useMemo(() => {
     return (
       <div className={styles["mobile-container"]}>
@@ -47,8 +47,9 @@ const Mobile: FC<Props> = ({ menus, renderThemeSwitch }) => {
                           key={index}
                           className={styles["mobile-down-item"]}
                           href={
+                            child.href || { pathname: child.to } ||
                             child.defaultLink ||
-                            child.href || { pathname: child.to }
+                            "/"
                           }
                           target={child.href ? "_blank" : "_self"}
                         >
@@ -97,7 +98,11 @@ const Mobile: FC<Props> = ({ menus, renderThemeSwitch }) => {
               <React.Fragment key={index}>
                 <Link
                   className={styles["mobile-item"]}
-                  href={menu.defaultLink || menu.href || { pathname: menu.to }}
+                  href={
+                    menu.href || { pathname: menu.to } ||
+                    menu.defaultLink ||
+                    "/"
+                  }
                   target={menu.href ? "_blank" : "_self"}
                 >
                   {menu.label}
@@ -106,16 +111,15 @@ const Mobile: FC<Props> = ({ menus, renderThemeSwitch }) => {
               </React.Fragment>
             );
           })}
-          <div className={styles["mobile-btn-list"]}>
-            {renderThemeSwitch()}
-          </div>
+          <div className={styles["mobile-btn-list"]}>{renderThemeSwitch()}</div>
         </div>
       </div>
     );
   }, [menus]);
 
   const NavMoreNormal = theme === "dark" ? IconNavMoreDark : IconNavMore;
-  const NavMoreActive = theme === "dark" ? IconNavMoreActiveDark : IconNavMoreActive;
+  const NavMoreActive =
+    theme === "dark" ? IconNavMoreActiveDark : IconNavMoreActive;
   const MenuSearch = theme === "dark" ? IconMenuSearchDark : IconMenuSearch;
 
   return (
@@ -123,7 +127,8 @@ const Mobile: FC<Props> = ({ menus, renderThemeSwitch }) => {
       <div className={`cursor-pointer flex gap-4`}>
         <MenuSearch
           onClick={() => {
-            const el: HTMLButtonElement = document.querySelector(".DocSearch-Button");
+            const el: HTMLButtonElement =
+              document.querySelector(".DocSearch-Button");
             el && el.click();
           }}
         />

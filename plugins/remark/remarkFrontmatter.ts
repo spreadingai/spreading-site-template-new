@@ -6,7 +6,6 @@ export const remarkFrontmatter = (options) => {
     let firstParagraphMarker = false;
     let firstParagraphContent = "";
     visit(tree, (node, i, parent) => {
-      console.log("#######remarkFrontmatter", node.type);
       if (!firstParagraphMarker && node.type === "paragraph") {
         const textContent = toString(node);
         if (textContent) {

@@ -75,25 +75,25 @@ interface Props {
 }
 
 export const getStaticProps = async ({ params }: SlugData) => {
+  // TODO: Here some methods are executed multiple times
   console.log(
     new Date().toISOString().slice(0, 23),
     "[Spreading] getStaticProps..."
   );
+  const slug = params.slug;
+  // Remove the effect of anchor points
+  slug[slug.length - 1] = slug[slug.length - 1].replace(/#.*$/, "");
   // Reason: `undefined` cannot be serialized as JSON. Please use `null` or omit this value.
   const docuoConfig = LibControllerImpl.getDocuoConfig();
   const allSlugs = SlugControllerImpl.getAllSlugs();
   LibControllerImpl.addDefaultLink(allSlugs);
   const { instanceID, slugVersion, docVersion } =
-    SlugControllerImpl.getExtractInfoFromSlug(params.slug);
+    SlugControllerImpl.getExtractInfoFromSlug(slug);
   const defaultVersion = VersionsControllerImpl.getDefaultVersion();
-  const folderTreeData = TreeControllerImpl.getFolderTreeDataBySlug(
-    params.slug
-  );
-  const displayVersions = VersionsControllerImpl.getDisplayVersions(
-    params.slug
-  );
+  const folderTreeData = TreeControllerImpl.getFolderTreeDataBySlug(slug);
+  const displayVersions = VersionsControllerImpl.getDisplayVersions(slug);
   const displayInstances = LibControllerImpl.getDisplayInstances();
-  const postData = await DocsControllerImpl.readDoc(params.slug);
+  const postData = await DocsControllerImpl.readDoc(slug);
   const instances = LibControllerImpl.getDocuoConfig().instances;
   const versions = VersionsControllerImpl.getUsedVersions(instanceID);
   return {

@@ -49,6 +49,12 @@ class LibController {
           }
           if (!instance.routeBasePath) {
             instance.routeBasePath = "";
+          } else {
+            // Compatible with old implementations, removing the "/" before and after
+            instance.routeBasePath = instance.routeBasePath.replace(
+              /^\/|\/$/g,
+              ""
+            );
           }
         });
         const result = docuoConfig.instances.find(
@@ -97,14 +103,17 @@ class LibController {
     return firstSlug;
   }
   addDefaultLink(allSlugs: SlugData[]) {
-    const { themeConfig } = this.getDocuoConfig();
-    if (!themeConfig) return; // 容错
-    const { navbar } = themeConfig;
-    // Add a default jump link to all docSidebar type items
+    const { themeConfig, instances } = this.getDocuoConfig();
+    if (!themeConfig) return;
+    const { navbar, footer } = themeConfig;
+    // Add a default jump link to all docSidebar type items and update the `to` field
     const loop = (items: NavBarItem[] = []) => {
       if (items.length === 0) return;
       for (const item of items) {
+        if (item.defaultLink) continue;
         !item.docsInstanceId && (item.docsInstanceId = this._defaultInstanceID);
+        const instance = instances.find((i) => i.id === item.docsInstanceId);
+        const routeBasePath = instance ? instance.routeBasePath : "";
         if (item.type === NavBarItemType.DocSidebar) {
           const firstSlug = this.getFirstSlug(
             allSlugs,
@@ -112,6 +121,8 @@ class LibController {
             item.sidebarIds || [item.sidebarId]
           );
           item.defaultLink = `/${firstSlug.join("/")}`;
+          item.to &&
+            (item.to = `${routeBasePath}/${item.to.replace(/^\//, "")}`);
         }
         if (item.items) {
           loop(item.items);
@@ -119,6 +130,7 @@ class LibController {
       }
     };
     loop(navbar.items);
+    // loop(footer.links);
   }
   getDisplayInstances(): DisplayInstance[] {
     if (!this._docuoConfig) return [];

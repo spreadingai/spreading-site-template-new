@@ -15,7 +15,8 @@ const FooterMobile: FC<{ items: FooterLinkGroup[] }> = ({ items }) => {
             <Link
               key={index}
               className={styles["mobile-item"]}
-              href={child.href || child.to}
+              href={child.href || { pathname: child.to } || "/"}
+              target={child.href ? "_blank" : "_self"}
             >
               {child.label}
             </Link>

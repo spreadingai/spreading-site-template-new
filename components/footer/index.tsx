@@ -126,8 +126,8 @@ const Footer: FC<footerProps> = ({ docuoConfig }) => {
                           <Link
                             key={index}
                             className={styles["group-item"]}
-                            href={item.href || { pathname: item.to }}
-                            target="_blank"
+                            href={item.href || { pathname: item.to } || "/"}
+                            target={item.href ? "_blank" : "_self"}
                           >
                             {item.label}
                           </Link>

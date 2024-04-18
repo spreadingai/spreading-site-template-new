@@ -183,7 +183,11 @@ const Header = (props: Props) => {
                 <Link
                   key={index}
                   className={styles["item"]}
-                  href={menu.defaultLink || menu.href || { pathname: menu.to }}
+                  href={
+                    menu.href || { pathname: menu.to } ||
+                    menu.defaultLink ||
+                    "/"
+                  }
                   target={menu.href ? "_blank" : "_self"}
                 >
                   {menu.label}
