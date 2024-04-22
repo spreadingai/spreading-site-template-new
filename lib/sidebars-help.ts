@@ -8,10 +8,12 @@ import {
 import LibControllerImpl from "./index";
 import path from "path";
 import fs from "fs";
+import { convertDocID, ignoreNumberPrefix, removeMdxSuffix } from "./utils";
+import { SEQUENCE_PREFIX_REGEX } from "./constants";
 
 class SidebarsController {
   static _instance: SidebarsController;
-  _sidebarsMap: Record<string, Record<string, Sidebars>>;
+  _sidebarsMap: Record<string, Record<string, Sidebars>> = {};
   _usedSidebarIdsMap: Record<string, string[]> = {};
   static getInstance() {
     return (
@@ -20,6 +22,13 @@ class SidebarsController {
     );
   }
   getSidebars(instanceID: string, docVersion?: string) {
+    if (
+      this._sidebarsMap[instanceID] &&
+      this._sidebarsMap[instanceID][docVersion]
+    ) {
+      console.log(`[SidebarsController]getSidebars cache`);
+      return this._sidebarsMap[instanceID][docVersion];
+    }
     let result: Sidebars = null;
     let rootUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
       instanceID === "default" ? "" : instanceID + "_"
@@ -63,9 +72,14 @@ class SidebarsController {
     this._sidebarsMap = this._sidebarsMap || {};
     this._sidebarsMap[instanceID] = this._sidebarsMap[instanceID] || {};
     this._sidebarsMap[instanceID][docVersion] = result;
+    console.log(`[SidebarsController]getSidebars`);
     return this._sidebarsMap[instanceID][docVersion];
   }
   getUsedSidebarIds(instanceID: string) {
+    if (this._usedSidebarIdsMap[instanceID]) {
+      console.log(`[SidebarsController]getUsedSidebarIds cache`);
+      return JSON.parse(JSON.stringify(this._usedSidebarIdsMap[instanceID]));
+    }
     const { themeConfig } = LibControllerImpl.getDocuoConfig();
     if (!themeConfig) return []; // 容错
     const { navbar } = themeConfig;
@@ -78,7 +92,7 @@ class SidebarsController {
           item.type === NavBarItemType.DocSidebar &&
           item.docsInstanceId === instanceID
         ) {
-          usedSidebarIds.push(...item.sidebarIds);
+          usedSidebarIds.push(...(item.sidebarIds || [item.sidebarId]));
         }
         if (item.items) {
           loop(item.items, usedSidebarIds);
@@ -96,7 +110,7 @@ class SidebarsController {
       },
       []
     );
-    return this._usedSidebarIdsMap[instanceID];
+    return JSON.parse(JSON.stringify(this._usedSidebarIdsMap[instanceID]));
   }
   getSidebarItemIDByMdxFileID(sidebars: Sidebars, mdxFileID: string) {
     const sidebarIds = Object.keys(sidebars);
@@ -114,8 +128,13 @@ class SidebarsController {
     });
   }
   generatedSidebar(rootUrl: string, dirName: string) {
+    // The dirName is the real path, and the number prefix is not removed
+    // Only the url and id were removed from the prefix
     const dirPath = path.resolve("./public", "..", rootUrl, dirName);
     const loop = (dirPath: string): SidebarItem => {
+      if (!fs.existsSync(dirPath)) {
+        return null;
+      }
       const stats = fs.statSync(dirPath);
       if (!stats.isDirectory()) {
         const relativePath = path.relative(rootUrl, dirPath);
@@ -125,11 +144,11 @@ class SidebarsController {
           parsedPath.ext.toLocaleLowerCase() === ".md"
         ) {
           const originID = path.join(parsedPath.dir, parsedPath.name);
-          const id = this.convertDocID(path.normalize(originID));
+          const id = convertDocID(path.normalize(originID));
           return {
             type: SidebarItemType.Doc,
-            id,
-            label: parsedPath.name,
+            id: ignoreNumberPrefix(id),
+            label: ignoreNumberPrefix(parsedPath.name),
           };
         } else {
           return null;
@@ -138,11 +157,13 @@ class SidebarsController {
       const files = fs.readdirSync(dirPath);
       const sidebar: SidebarItem = {
         type: SidebarItemType.Category,
-        label: path.basename(dirPath, path.extname(dirPath)),
+        label: ignoreNumberPrefix(
+          path.basename(dirPath, path.extname(dirPath))
+        ),
         items: [],
       };
 
-      files.forEach((file) => {
+      this.sortFiles(files).forEach((file) => {
         const filePath = path.join(dirPath, file);
         const childTreeData = loop(filePath);
         childTreeData &&
@@ -152,7 +173,8 @@ class SidebarsController {
       });
       return sidebar;
     };
-    const sidebar = (loop(dirPath) as SidebarItem).items;
+    const result = loop(dirPath) as SidebarItem;
+    const sidebar = result ? result.items : [];
     return sidebar;
   }
   transSidebarItem(rootUrl: string, sidebar: (string | SidebarItem)[]) {
@@ -160,11 +182,9 @@ class SidebarsController {
       for (let index = 0; index < items.length; index++) {
         let sidebarItem = items[index];
         if (typeof sidebarItem === "string") {
-          // Remove suffix
-          const suffixIndex = sidebarItem.lastIndexOf(".");
-          suffixIndex !== -1 &&
-            (sidebarItem = sidebarItem.slice(0, suffixIndex));
-          sidebarItem = this.convertDocID(path.normalize(sidebarItem));
+          // Remove mdx|md suffix
+          sidebarItem = removeMdxSuffix(sidebarItem);
+          sidebarItem = convertDocID(path.normalize(sidebarItem));
           items[index] = {
             type: SidebarItemType.Doc,
             id: sidebarItem,
@@ -185,13 +205,9 @@ class SidebarsController {
             index += temp.length - 1;
           } else {
             if (sidebarItem.id) {
-              // Remove suffix
-              const suffixIndex = sidebarItem.id.lastIndexOf(".");
-              suffixIndex !== -1 &&
-                (sidebarItem.id = sidebarItem.id.slice(0, suffixIndex));
-              sidebarItem.id = this.convertDocID(
-                path.normalize(sidebarItem.id)
-              );
+              // Remove mdx|md suffix
+              sidebarItem.id = removeMdxSuffix(sidebarItem.id);
+              sidebarItem.id = convertDocID(path.normalize(sidebarItem.id));
             }
             if (sidebarItem.items) {
               loop(sidebarItem.items);
@@ -214,19 +230,17 @@ class SidebarsController {
       Array.isArray(sidebarItem[key]);
     return result ? key : "";
   }
-  convertDocID(str: string) {
-    // Quick Start, Quick-Start
-    // Quick start, Quick-start
-    // Quick start/Overview
-    if (process.platform.includes("win")) {
-      str = str.replace(/\\/g, "/");
-    }
-    const result = [];
-    const temp = str.split("/");
-    temp.forEach((path) => {
-      result.push(path.toLowerCase().replace(/\s+/g, "-"));
+  sortFiles(files: string[]) {
+    const numberFiles = files.filter((item) =>
+      SEQUENCE_PREFIX_REGEX.test(item)
+    );
+    const otherFiles = files.filter(
+      (item) => !SEQUENCE_PREFIX_REGEX.test(item)
+    );
+    numberFiles.sort((a, b) => {
+      return Number(a.split("-")[0]) - Number(b.split("-")[0]);
     });
-    return result.join("/");
+    return numberFiles.concat(otherFiles);
   }
 }
 export default SidebarsController.getInstance();

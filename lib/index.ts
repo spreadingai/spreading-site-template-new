@@ -3,6 +3,7 @@ import SlugControllerImpl from "./slug-help";
 import {
   DisplayInstance,
   DocuoConfig,
+  FooterLink,
   NavBarItem,
   NavBarItemType,
   Plan,
@@ -17,6 +18,9 @@ class LibController {
   _unlimitedInstanceNumber = "-1";
   _defaultVersion = "next";
   _defaultInstanceID = "default";
+  _addDefaultLinkMarker = false;
+  _updateFooterLinksMarker = false;
+  _displayInstances = null;
   static getInstance() {
     return (
       LibController._instance || (LibController._instance = new LibController())
@@ -49,6 +53,12 @@ class LibController {
           }
           if (!instance.routeBasePath) {
             instance.routeBasePath = "";
+          } else {
+            // Compatible with old implementations, removing the "/" before and after
+            instance.routeBasePath = instance.routeBasePath.replace(
+              /^\/|\/$/g,
+              ""
+            );
           }
         });
         const result = docuoConfig.instances.find(
@@ -97,21 +107,28 @@ class LibController {
     return firstSlug;
   }
   addDefaultLink(allSlugs: SlugData[]) {
-    const { themeConfig } = this.getDocuoConfig();
-    if (!themeConfig) return; // 容错
+    if (this._addDefaultLinkMarker) return;
+    const { themeConfig, instances } = this.getDocuoConfig();
+    if (!themeConfig) return;
     const { navbar } = themeConfig;
-    // Add a default jump link to all docSidebar type items
+    // Add a default jump link to all docSidebar type items and update the `to` field
     const loop = (items: NavBarItem[] = []) => {
       if (items.length === 0) return;
       for (const item of items) {
+        if (item.defaultLink) continue;
         !item.docsInstanceId && (item.docsInstanceId = this._defaultInstanceID);
+        const instance = instances.find((i) => i.id === item.docsInstanceId);
+        const routeBasePath = instance ? instance.routeBasePath : "";
         if (item.type === NavBarItemType.DocSidebar) {
           const firstSlug = this.getFirstSlug(
             allSlugs,
             item.docsInstanceId,
-            item.sidebarIds
+            item.sidebarIds || [item.sidebarId]
           );
           item.defaultLink = `/${firstSlug.join("/")}`;
+          // Add routeBasePath
+          item.to &&
+            (item.to = `${routeBasePath}/${item.to.replace(/^\//, "")}`);
         }
         if (item.items) {
           loop(item.items);
@@ -119,8 +136,32 @@ class LibController {
       }
     };
     loop(navbar.items);
+    this._addDefaultLinkMarker = true;
+  }
+  updateFooterLinks() {
+    if (this._updateFooterLinksMarker) return;
+    const { themeConfig } = this.getDocuoConfig();
+    if (!themeConfig) return;
+    const { footer } = themeConfig;
+    const loop = (links: FooterLink[]) => {
+      for (const link of links) {
+        // @ts-ignore
+        if (link.to) {
+        }
+        if (link.items) {
+          // @ts-ignore
+          loop(link.items);
+        }
+      }
+    };
+    loop(footer.links);
+    this._updateFooterLinksMarker = true;
   }
   getDisplayInstances(): DisplayInstance[] {
+    if (this._displayInstances) {
+      console.log(`[LibController]getDisplayInstances cache`);
+      return JSON.parse(JSON.stringify(this._displayInstances));
+    }
     if (!this._docuoConfig) return [];
     const allSlugs = SlugControllerImpl.getAllSlugs();
     return this._docuoConfig.instances.map((instance) => {
@@ -129,8 +170,8 @@ class LibController {
       });
       return {
         instance,
-        firstSlug: targetSlug.params.slug,
-        defaultLink: `/${targetSlug.params.slug.join("/")}`,
+        firstSlug: targetSlug ? targetSlug.params.slug : [],
+        defaultLink: targetSlug ? `/${targetSlug.params.slug.join("/")}` : "",
       };
     });
   }

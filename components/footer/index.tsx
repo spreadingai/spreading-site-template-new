@@ -72,14 +72,15 @@ const Footer: FC<footerProps> = ({ docuoConfig }) => {
           <div className={styles["left"]}>
             {logo && (
               <div className={styles["logo-container"]}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   className={styles.logo}
                   src={
                     (logo as string).includes("http")
                       ? `${logo}`
-                      : `${process.env.NEXT_PUBLIC_BASE_PATH || "/"}${
-                          process.env.NEXT_PUBLIC_BASE_PATH ? "/" : ""
-                        }${logo}`
+                      : `${
+                          process.env.NEXT_PUBLIC_BASE_PATH || ""
+                        }/${logo.replace(/^\//, "")}`
                   }
                   alt={"logo"}
                 />
@@ -125,8 +126,8 @@ const Footer: FC<footerProps> = ({ docuoConfig }) => {
                           <Link
                             key={index}
                             className={styles["group-item"]}
-                            href={item.href || { pathname: item.to }}
-                            target="_blank"
+                            href={item.href || { pathname: item.to } || "/"}
+                            target={item.href ? "_blank" : "_self"}
                           >
                             {item.label}
                           </Link>

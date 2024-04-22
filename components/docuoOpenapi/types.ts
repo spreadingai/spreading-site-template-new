@@ -180,4 +180,20 @@ export type DocFrontMatter = {
   info_path?: string;
   /** Hide the send button. */
   hide_send_button?: boolean;
+  /** The Open Graph protocol. */
+  "og:site_name"?: string;
+  "og:title"?: string;
+  "og:description"?: string;
+  "og:url"?: string;
+  "og:image"?: string;
+  "og:locale"?: string;
+  "og:logo"?: string;
+  "article:publisher"?: string;
+  "twitter:title"?: string;
+  "twitter:description"?: string;
+  "twitter:url"?: string;
+  "twitter:image"?: string;
+  "twitter:site"?: string;
+  "og:image:width"?: string;
+  "og:image:height"?: string;
 };

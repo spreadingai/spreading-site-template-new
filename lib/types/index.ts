@@ -44,7 +44,8 @@ export interface NavBarItem {
   href?: string;
   label?: string;
   position?: "left" | "right" | "center";
-  sidebarIds: string[];
+  sidebarIds?: string[];
+  sidebarId?: string;
   docsInstanceId: string;
   items: NavBarItem[];
   defaultLink?: string;

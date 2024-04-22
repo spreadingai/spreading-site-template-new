@@ -2,6 +2,7 @@ import { visit } from "unist-util-visit";
 import Link from "next/link";
 import path from "path";
 import fs from "fs";
+import { ignoreNumberPrefix } from "@/lib/utils";
 
 export function rehypeLink(options: {
   prefix: string;
@@ -24,13 +25,21 @@ export function rehypeLink(options: {
       const href = node.properties.href;
       const parsedPath = path.parse(href);
       let targetHref = `${parsedPath.dir}/${parsedPath.name}`;
-      parsedPath.ext.includes("#") &&
-        (targetHref += `#${parsedPath.ext.split("#")[1]}`);
+      targetHref += parsedPath.ext.replace(/^\.mdx?/gi, "");
       const imagePath = path.resolve(
         path.dirname(options.filePath),
         targetHref
       );
       const publicPath = path.relative(options.rootUrl, imagePath);
+      // console.log(
+      //   `[rehypeLink]updateLinkTag`,
+      //   options.prefix,
+      //   options.rootUrl,
+      //   options.filePath,
+      //   imagePath,
+      //   targetHref,
+      //   publicPath
+      // );
       const convertDocID = (str: string) => {
         // Quick Start, Quick-Start
         // Quick start, Quick-start
@@ -44,16 +53,9 @@ export function rehypeLink(options: {
         });
         return result.join("/");
       };
-      // console.log(
-      //   `[rehypeLink]updateLinkTag`,
-      //   options.prefix,
-      //   options.rootUrl,
-      //   options.filePath,
-      //   imagePath,
-      //   targetHref,
-      //   publicPath
-      // );
-      node.properties.href = `${options.prefix}/${convertDocID(publicPath)}`;
+      node.properties.href = `${options.prefix}/${convertDocID(
+        ignoreNumberPrefix(publicPath)
+      )}`;
     });
   };
 }

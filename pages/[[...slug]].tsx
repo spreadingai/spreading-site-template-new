@@ -16,7 +16,6 @@ import VersionsControllerImpl from "@/lib/versions-help";
 import Link from "next/link";
 import { SlugData, DocuoConfig, TocItem, DocInstance } from "@/lib/types";
 import Head from "next/head";
-import { CMS_NAME } from "@/lib/constants";
 import ApiItem from "@/components/docuoOpenapi/theme/ApiItem";
 import MethodEndpoint from "@/components/docuoOpenapi/theme/ApiExplorer/MethodEndpoint";
 import ParamsItem from "@/components/docuoOpenapi/theme/ParamsItem";
@@ -32,6 +31,7 @@ import Markdown from "@/components/docuoOpenapi/theme/Markdown";
 import SecuritySchemes from "@/components/docuoOpenapi/theme/ApiExplorer/SecuritySchemes";
 import ApiLogo from "@/components/docuoOpenapi/theme/ApiLogo";
 import Export from "@/components/docuoOpenapi/theme/ApiExplorer/Export";
+import { DocFrontMatter } from "@/components/docuoOpenapi/types";
 
 const components = {
   CodeBlock,
@@ -67,28 +67,33 @@ interface Props {
   docuoConfig: DocuoConfig;
   instances: DocInstance[];
   versions: string[];
+  frontmatterRef: {
+    fileName: string;
+    firstParagraphContent: string;
+    firstImgSrc: string;
+  };
 }
 
 export const getStaticProps = async ({ params }: SlugData) => {
+  // TODO: Here some methods are executed multiple times
   console.log(
     new Date().toISOString().slice(0, 23),
     "[Spreading] getStaticProps..."
   );
+  const slug = params.slug;
+  // Remove the effect of anchor points
+  slug[slug.length - 1] = slug[slug.length - 1].replace(/#.*$/, "");
   // Reason: `undefined` cannot be serialized as JSON. Please use `null` or omit this value.
   const docuoConfig = LibControllerImpl.getDocuoConfig();
   const allSlugs = SlugControllerImpl.getAllSlugs();
   LibControllerImpl.addDefaultLink(allSlugs);
   const { instanceID, slugVersion, docVersion } =
-    SlugControllerImpl.getExtractInfoFromSlug(params.slug);
+    SlugControllerImpl.getExtractInfoFromSlug(slug);
   const defaultVersion = VersionsControllerImpl.getDefaultVersion();
-  const folderTreeData = TreeControllerImpl.getFolderTreeDataBySlug(
-    params.slug
-  );
-  const displayVersions = VersionsControllerImpl.getDisplayVersions(
-    params.slug
-  );
+  const folderTreeData = TreeControllerImpl.getFolderTreeDataBySlug(slug);
+  const displayVersions = VersionsControllerImpl.getDisplayVersions(slug);
   const displayInstances = LibControllerImpl.getDisplayInstances();
-  const postData = await DocsControllerImpl.readDoc(params.slug);
+  const postData = await DocsControllerImpl.readDoc(slug);
   const instances = LibControllerImpl.getDocuoConfig().instances;
   const versions = VersionsControllerImpl.getUsedVersions(instanceID);
   return {
@@ -112,7 +117,9 @@ export function getStaticPaths() {
     "[Spreading] getStaticPaths..."
   );
   const paths = SlugControllerImpl.getAllSlugs();
+  console.time("123");
   DocsControllerImpl.copyStaticFile();
+  console.timeEnd("123");
   return {
     paths,
     fallback: true,
@@ -120,23 +127,13 @@ export function getStaticPaths() {
 }
 
 export default function DocPage(props: Props) {
-  const { mdxSource, slug, docuoConfig } = props;
+  const { mdxSource, slug } = props;
   if (!slug) {
     return null;
   }
-  const title =
-    (mdxSource?.frontmatter?.title as string) || docuoConfig.title || "";
-  const description =
-    (mdxSource?.frontmatter?.description as string) ||
-    docuoConfig.description ||
-    `A statically generated blog example using Next.js and ${CMS_NAME}.`;
-
   return (
     <div className="prose" style={{ maxWidth: "unset" }}>
-      <Head>
-        <title>{title}</title>
-        <meta name="description" content={description} />
-      </Head>
+      <PageHead {...props}></PageHead>
       <article className="editor-wrapper">
         <ApiItem {...props}>
           {/* @ts-ignore */}
@@ -144,6 +141,82 @@ export default function DocPage(props: Props) {
         </ApiItem>
       </article>
     </div>
+  );
+}
+
+function PageHead(props: Props) {
+  const { mdxSource, docuoConfig, frontmatterRef } = props;
+  const frontmatter = mdxSource.frontmatter as DocFrontMatter;
+  let { title, description } = frontmatter;
+  title = title || frontmatterRef.fileName || docuoConfig.title || "";
+  description =
+    description ||
+    frontmatterRef.firstParagraphContent ||
+    docuoConfig.description ||
+    "";
+  const navbarLogo = docuoConfig.themeConfig.navbar.logo;
+  let ogLogo =
+    typeof navbarLogo === "string"
+      ? navbarLogo
+      : typeof navbarLogo !== "undefined"
+      ? navbarLogo.dark
+      : "";
+  ogLogo = ogLogo.includes("http")
+    ? `${ogLogo}`
+    : `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/${ogLogo.replace(/^\//, "")}`;
+
+  return (
+    <Head>
+      <title>{title}</title>
+      <meta name="description" content={description} />
+      <meta
+        property="og:site_name"
+        content={frontmatter["og:site_name"] || docuoConfig.title || ""}
+      ></meta>
+      <meta property="og:title" content={title}></meta>
+      <meta property="og:description" content={description}></meta>
+      <meta
+        property="og:url"
+        content={
+          frontmatter["og:url"] || process.env.NEXT_PUBLIC_SITE_URL || ""
+        }
+      ></meta>
+      <meta property="og:image" content={frontmatter["og:image"] || ""}></meta>
+      <meta
+        property="og:locale"
+        content={frontmatter["og:locale"] || "en_US"}
+      ></meta>
+      <meta
+        property="og:logo"
+        content={frontmatter["og:logo"] || ogLogo}
+      ></meta>
+      <meta
+        property="article:publisher"
+        content={frontmatter["article:publisher"] || ""}
+      ></meta>
+      <meta name="twitter:title" content={title}></meta>
+      <meta name="twitter:description" content={description}></meta>
+      <meta
+        name="twitter:url"
+        content={frontmatter["twitter:url"] || ""}
+      ></meta>
+      <meta
+        name="twitter:image"
+        content={frontmatter["twitter:image"] || frontmatterRef.firstImgSrc}
+      ></meta>
+      <meta
+        name="twitter:site"
+        content={frontmatter["twitter:site"] || ""}
+      ></meta>
+      <meta
+        property="og:image:width"
+        content={frontmatter["og:image:width"] || ""}
+      ></meta>
+      <meta
+        property="og:image:height"
+        content={frontmatter["og:image:height"] || ""}
+      ></meta>
+    </Head>
   );
 }
 

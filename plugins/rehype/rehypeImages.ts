@@ -5,6 +5,8 @@ import fs from "fs";
 export function rehypeImages(options) {
   return function transformer(tree) {
     if (!options.filePath) return;
+    let firstImgMarker = false;
+    let firstImgSrc = "";
     visit(tree, (node) => {
       if (
         node.type === "element" &&
@@ -15,24 +17,55 @@ export function rehypeImages(options) {
         // Get the relative file path of the image
         const relativePath = node.properties.src;
         const publicPath = getPublicPath(relativePath, options.filePath);
-        if (publicPath === "") return;
-        // Update the image path in the AST
-        node.properties.src = `/docs/${path.join(publicPath)}`;
+        if (publicPath === "") {
+          if (relativePath.startsWith("/")) {
+            // Absolute path
+            // Update the image path in the AST
+            node.properties.src = `${
+              process.env.NEXT_PUBLIC_BASE_PATH || ""
+            }${relativePath}`;
+          }
+        } else {
+          // Update the image path in the AST
+          node.properties.src = `${
+            process.env.NEXT_PUBLIC_BASE_PATH || ""
+          }/docs/${path.join(publicPath)}`;
+        }
+
+        if (!firstImgMarker && node.properties.src) {
+          firstImgSrc = node.properties.src;
+          firstImgMarker = true;
+        }
       }
       if (node.type === "mdxJsxFlowElement" && node.name === "img") {
         const attributes = node.attributes || [];
         const srcAttribute = attributes.find((attr) => attr.name === "src");
-        if (!srcAttribute) return;
+        if (!srcAttribute || srcAttribute.value.startsWith("http")) return;
         // Get the relative file path of the image
         const relativePath = srcAttribute.value;
         const publicPath = getPublicPath(relativePath, options.filePath);
-        if (publicPath === "") return;
-        // Update the image path in the AST
-        srcAttribute.value = `${
-          process.env.NEXT_PUBLIC_BASE_PATH || ""
-        }/docs/${path.join(publicPath)}`;
+        if (publicPath === "") {
+          if (relativePath.startsWith("/")) {
+            // Absolute path
+            // Update the image path in the AST
+            srcAttribute.value = `${
+              process.env.NEXT_PUBLIC_BASE_PATH || ""
+            }${relativePath}`;
+          }
+        } else {
+          // Update the image path in the AST
+          srcAttribute.value = `${
+            process.env.NEXT_PUBLIC_BASE_PATH || ""
+          }/docs/${path.join(publicPath)}`;
+        }
+
+        if (!firstImgMarker && srcAttribute.value) {
+          firstImgSrc = srcAttribute.value;
+          firstImgMarker = true;
+        }
       }
     });
+    options.exportRef.firstImgSrc = firstImgSrc;
   };
 }
 

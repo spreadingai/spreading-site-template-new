@@ -136,14 +136,15 @@ const Header = (props: Props) => {
               href={navbar.iconRedirectUrl || process.env.SITE_URL || ""}
               ref={logoRef}
             >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 className={styles.logo}
                 src={
                   (logo as string).includes("http")
                     ? `${logo}`
-                    : `${process.env.NEXT_PUBLIC_BASE_PATH || "/"}${
-                        process.env.NEXT_PUBLIC_BASE_PATH ? "/" : ""
-                      }${logo}`
+                    : `${
+                        process.env.NEXT_PUBLIC_BASE_PATH || ""
+                      }/${logo.replace(/^\//, "")}`
                 }
                 alt={"logo"}
               />
@@ -182,7 +183,11 @@ const Header = (props: Props) => {
                 <Link
                   key={index}
                   className={styles["item"]}
-                  href={menu.defaultLink || menu.href || { pathname: menu.to }}
+                  href={
+                    menu.href || { pathname: menu.to } ||
+                    menu.defaultLink ||
+                    "/"
+                  }
                   target={menu.href ? "_blank" : "_self"}
                 >
                   {menu.label}

@@ -18,6 +18,12 @@ class VersionsController {
     );
   }
   getUsedVersions(instanceID: string) {
+    if (this._usedVersionsMap[instanceID]) {
+      console.log(`[VersionsController]getUsedVersions cache`);
+      return JSON.parse(
+        JSON.stringify(this._usedVersionsMap[instanceID])
+      ) as string[];
+    }
     // Use the external current version if the file is not present or the list is empty
     const { instances } = LibControllerImpl.getDocuoConfig();
     const instance = instances.find((i) => i.id === instanceID);
@@ -106,14 +112,15 @@ class VersionsController {
             item.params.slugVersion === slugVersion
         );
         const version = slugVersion || docVersion; // Here's the latest version to show
-        result.push({
-          version,
-          firstSlug: targetSlug.params.slug,
-          defaultLink: `${
-            routeBasePath ? "/" + routeBasePath : ""
-          }/${slugVersion}${slugVersion ? "/" + mdxFileID : mdxFileID}`,
-          firstLink: `/${targetSlug.params.slug.join("/")}`,
-        });
+        targetSlug &&
+          result.push({
+            version,
+            firstSlug: targetSlug.params.slug,
+            defaultLink: `${
+              routeBasePath ? "/" + routeBasePath : ""
+            }/${slugVersion}${slugVersion ? "/" + mdxFileID : mdxFileID}`,
+            firstLink: `/${targetSlug.params.slug.join("/")}`,
+          });
       });
     } else {
       // There is actually no version or the user has not defined the display version list
@@ -122,12 +129,13 @@ class VersionsController {
           item.params.instanceID === instanceID &&
           item.params.slugVersion === slugVersion
       );
-      result.push({
-        version: this._defaultVersion,
-        firstSlug: targetSlug.params.slug,
-        defaultLink: `/${slug.join("/")}`,
-        firstLink: `/${targetSlug.params.slug.join("/")}`,
-      });
+      targetSlug &&
+        result.push({
+          version: this._defaultVersion,
+          firstSlug: targetSlug.params.slug,
+          defaultLink: `/${slug.join("/")}`,
+          firstLink: `/${targetSlug.params.slug.join("/")}`,
+        });
     }
     return result;
   }
