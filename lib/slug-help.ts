@@ -109,6 +109,7 @@ class SlugController {
     return result;
   }
   getExtractInfoFromSlug(slug: string[]) {
+    // /route/Base/Path/ + 👇
     // eg1: /docs/path/to/doc => The current version when there is no version list
     // eg2: /docs/path/to/doc => The latest version when the version list is available
     // eg3: /docs/next/path/to/doc => The current version when the version list is available

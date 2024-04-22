@@ -3,6 +3,7 @@ import SlugControllerImpl from "./slug-help";
 import {
   DisplayInstance,
   DocuoConfig,
+  FooterLink,
   NavBarItem,
   NavBarItemType,
   Plan,
@@ -18,6 +19,7 @@ class LibController {
   _defaultVersion = "next";
   _defaultInstanceID = "default";
   _addDefaultLinkMarker = false;
+  _updateFooterLinksMarker = false;
   _displayInstances = null;
   static getInstance() {
     return (
@@ -135,6 +137,25 @@ class LibController {
     };
     loop(navbar.items);
     this._addDefaultLinkMarker = true;
+  }
+  updateFooterLinks() {
+    if (this._updateFooterLinksMarker) return;
+    const { themeConfig } = this.getDocuoConfig();
+    if (!themeConfig) return;
+    const { footer } = themeConfig;
+    const loop = (links: FooterLink[]) => {
+      for (const link of links) {
+        // @ts-ignore
+        if (link.to) {
+        }
+        if (link.items) {
+          // @ts-ignore
+          loop(link.items);
+        }
+      }
+    };
+    loop(footer.links);
+    this._updateFooterLinksMarker = true;
   }
   getDisplayInstances(): DisplayInstance[] {
     if (this._displayInstances) {
