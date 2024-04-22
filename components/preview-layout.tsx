@@ -145,8 +145,33 @@ const PreviewLayout = ({
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
-    document.body.scrollTo({ top: 0 });
-  }, [router]);
+    const beforeUnloadHandler = () => {
+      localStorage.setItem("scrollHeight", String(document.body.scrollTop));
+    };
+    window.addEventListener("beforeunload", beforeUnloadHandler);
+    const scrollHeight = localStorage.getItem("scrollHeight");
+    localStorage.removeItem("scrollHeight");
+    if (scrollHeight) {
+      // setTimeout: Scroll after images rendered
+      setTimeout(() => {
+        document.body.scrollTo({
+          top: Number(scrollHeight)
+        });
+      }, 10);
+    }
+
+    return () => {
+      window.removeEventListener("beforeunload", beforeUnloadHandler);
+    };
+  }, []);
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    if (router.isReady) {
+      document.body.scrollTo({ top: 0 });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.asPath]);
 
   // All articles must have an id
   const docID = slug.join("/");
