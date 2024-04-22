@@ -97,6 +97,18 @@ html {
         --docuo-openapi-response-header-description: #515869; // Callbacks description
         --docuo-openapi-callbacks-description-color: #353c4e;
     }
+    .preview-sider,
+    .mobile-tree-container {
+        // Badge
+        --docuo-openapi-badge-bg-primary-color: #19b100;
+        --docuo-openapi-badge-primary-color: #ffffff;
+        --docuo-openapi-badge-bg-success-color: #0989ff;
+        --docuo-openapi-badge-bg-danger-color: #f64841;
+        --docuo-openapi-badge-bg-info-color: #00b0e7;
+        --docuo-openapi-badge-bg-warning-color: #fb7e38;
+        --docuo-openapi-badge-bg-secondary-color: rgb(235, 237, 240);
+        --docuo-openapi-badge-secondary-color: #171717;
+    }
 }
 
 html[data-theme="dark"] {
@@ -210,5 +222,17 @@ html[data-theme="dark"] {
         --docuo-openapi-response-header-description: #b6b6b6;
         // Callbacks description
         --docuo-openapi-callbacks-description-color: #b6b6b6;
+    }
+    .preview-sider,
+    .mobile-tree-container {
+        // Badge
+        --docuo-openapi-badge-bg-primary-color: #19b100;
+        --docuo-openapi-badge-primary-color: #ffffff;
+        --docuo-openapi-badge-bg-success-color: #0085ff;
+        --docuo-openapi-badge-bg-danger-color: #f13024;
+        --docuo-openapi-badge-bg-info-color: #00b0e7;
+        --docuo-openapi-badge-bg-warning-color: #fb7e38;
+        --docuo-openapi-badge-bg-secondary-color: #717e97;
+        --docuo-openapi-badge-secondary-color: #ffffff;
     }
 }

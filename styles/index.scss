@@ -256,44 +256,91 @@ html > body {
   .preview-sider {
     width: var(--preview-sider-width);
     padding-right: 8px;
-    .ant-tree {
-      padding-top: 33px;
-      .custom-node-title {
-        img {
-          margin-left: 15px;
-          width: 16px;
-          height: 17px;
-        }
-      }
-      .ant-tree-treenode-selected {
-        .ant-tree-indent-unit:nth-last-of-type(1)::after {
-          content: "";
-          width: 2px;
-          height: 24px;
-          background: #000000;
-          display: block;
-          position: absolute;
-          inset-inline-end: 11px;
-          top: 4px;
-          bottom: 4px;
-        }
-      }
-      &.ant-tree-show-line .ant-tree-indent-unit:before {
-        inset-inline-end: 12px;
-        bottom: -4px;
-        top: -4px;
-        display: inline;
-      }
-
-      .ant-tree-treenode {
-        color: rgba($color: #171717, $alpha: 0.9);
-        padding: 2px 25px 2px 29px;
-      }
-
-      .ant-tree-indent-unit {
+    .custom-node-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      img {
+        margin-left: 8px;
         width: 16px;
+        height: 17px;
+        margin-bottom: 1px;
+      }
+      .right-content {
+        display: flex;
+        align-items: center;
+      }
+      .title-tag {
+        margin-left: 8px;
+        display: flex;
+        align-items: center;
+        padding: 0 4px;
+        height: 13px;
+        line-height: 13px;
+        font-family: Inter-SemiBold;
+        font-size: 9px;
+        border-radius: 4px 4px 4px 4px;
+        color: var(--docuo-openapi-badge-primary-color);
+        background-color: var(--docuo-openapi-badge-bg-primary-color);
+        &.badge--success {
+          background-color: var(--docuo-openapi-badge-bg-success-color);
+        }
+        &.badge--danger {
+          background-color: var(--docuo-openapi-badge-bg-danger-color);
+        }
+        &.badge--primary {
+          background-color: var(--docuo-openapi-badge-bg-primary-color);
+        }
+        &.badge--info {
+          background-color: var(--docuo-openapi-badge-bg-info-color);
+        }
+        &.badge--warning {
+          background-color: var(--docuo-openapi-badge-bg-warning-color);
+        }
+        &.badge--secondary {
+          background-color: var(--docuo-openapi-badge-bg-secondary-color);
+          color: var(--docuo-openapi-badge-secondary-color);
+        }
       }
     }
+    // .ant-tree {
+    //   padding-top: 33px;
+    //   .custom-node-title {
+    //     img {
+    //       margin-left: 8px;
+    //       width: 16px;
+    //       height: 17px;
+    //     }
+    //   }
+    //   .ant-tree-treenode-selected {
+    //     .ant-tree-indent-unit:nth-last-of-type(1)::after {
+    //       content: "";
+    //       width: 2px;
+    //       height: 24px;
+    //       background: #000000;
+    //       display: block;
+    //       position: absolute;
+    //       inset-inline-end: 11px;
+    //       top: 4px;
+    //       bottom: 4px;
+    //     }
+    //   }
+    //   &.ant-tree-show-line .ant-tree-indent-unit:before {
+    //     inset-inline-end: 12px;
+    //     bottom: -4px;
+    //     top: -4px;
+    //     display: inline;
+    //   }
+
+    //   .ant-tree-treenode {
+    //     color: rgba($color: #171717, $alpha: 0.9);
+    //     padding: 2px 25px 2px 29px;
+    //   }
+
+    //   .ant-tree-indent-unit {
+    //     width: 16px;
+    //   }
+    // }
   }
 
   .preview-content-wrap {
@@ -414,45 +461,91 @@ html > body {
   .preview-sider {
     width: var(--preview-sider-width);
     padding: 0 0 16px 0;
-
-    .ant-tree {
-      padding-top: 33px;
-      .custom-node-title {
-        img {
-          margin-left: 15px;
-          width: 16px;
-          height: 17px;
-        }
-      }
-      .ant-tree-treenode-selected {
-        .ant-tree-indent-unit:nth-last-of-type(1)::after {
-          content: "";
-          width: 2px;
-          height: 24px;
-          background: #000000;
-          display: block;
-          position: absolute;
-          inset-inline-end: 11px;
-          top: 4px;
-          bottom: 4px;
-        }
-      }
-      &.ant-tree-show-line .ant-tree-indent-unit:before {
-        inset-inline-end: 12px;
-        bottom: -4px;
-        top: -4px;
-        display: inline;
-      }
-
-      .ant-tree-treenode {
-        color: rgba($color: #171717, $alpha: 0.9);
-        padding: 2px 25px 2px 29px;
-      }
-
-      .ant-tree-indent-unit {
+    .custom-node-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      img {
+        margin-left: 8px;
         width: 16px;
+        height: 17px;
+        margin-bottom: 1px;
+      }
+      .right-content {
+        display: flex;
+        align-items: center;
+      }
+      .title-tag {
+        margin-left: 8px;
+        display: flex;
+        align-items: center;
+        padding: 0 4px;
+        height: 13px;
+        line-height: 13px;
+        font-family: Inter-SemiBold;
+        font-size: 9px;
+        border-radius: 4px 4px 4px 4px;
+        color: var(--docuo-openapi-badge-primary-color);
+        background-color: var(--docuo-openapi-badge-bg-primary-color);
+        &.badge--success {
+          background-color: var(--docuo-openapi-badge-bg-success-color);
+        }
+        &.badge--danger {
+          background-color: var(--docuo-openapi-badge-bg-danger-color);
+        }
+        &.badge--primary {
+          background-color: var(--docuo-openapi-badge-bg-primary-color);
+        }
+        &.badge--info {
+          background-color: var(--docuo-openapi-badge-bg-info-color);
+        }
+        &.badge--warning {
+          background-color: var(--docuo-openapi-badge-bg-warning-color);
+        }
+        &.badge--secondary {
+          background-color: var(--docuo-openapi-badge-bg-secondary-color);
+          color: var(--docuo-openapi-badge-secondary-color);
+        }
       }
     }
+    // .ant-tree {
+    //   padding-top: 33px;
+    //   .custom-node-title {
+    //     img {
+    //       margin-left: 8px;
+    //       width: 16px;
+    //       height: 17px;
+    //     }
+    //   }
+    //   .ant-tree-treenode-selected {
+    //     .ant-tree-indent-unit:nth-last-of-type(1)::after {
+    //       content: "";
+    //       width: 2px;
+    //       height: 24px;
+    //       background: #000000;
+    //       display: block;
+    //       position: absolute;
+    //       inset-inline-end: 11px;
+    //       top: 4px;
+    //       bottom: 4px;
+    //     }
+    //   }
+    //   &.ant-tree-show-line .ant-tree-indent-unit:before {
+    //     inset-inline-end: 12px;
+    //     bottom: -4px;
+    //     top: -4px;
+    //     display: inline;
+    //   }
+
+    //   .ant-tree-treenode {
+    //     color: rgba($color: #171717, $alpha: 0.9);
+    //     padding: 2px 25px 2px 29px;
+    //   }
+
+    //   .ant-tree-indent-unit {
+    //     width: 16px;
+    //   }
+    // }
   }
 
   .preview-content-wrap {
@@ -568,8 +661,53 @@ html > body {
     position: fixed;
 
     .custom-node-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      img {
+        margin-left: 8px;
+        width: 16px;
+        height: 17px;
+        margin-bottom: 1px;
+      }
       a:hover {
         color: var(--docuo-color-primary-hover);
+      }
+      .right-content {
+        display: flex;
+        align-items: center;
+      }
+      .title-tag {
+        margin-left: 8px;
+        display: flex;
+        align-items: center;
+        padding: 0 4px;
+        height: 13px;
+        line-height: 13px;
+        font-family: Inter-SemiBold;
+        font-size: 9px;
+        border-radius: 4px 4px 4px 4px;
+        color: var(--docuo-openapi-badge-primary-color);
+        background-color: var(--docuo-openapi-badge-bg-primary-color);
+        &.badge--success {
+          background-color: var(--docuo-openapi-badge-bg-success-color);
+        }
+        &.badge--danger {
+          background-color: var(--docuo-openapi-badge-bg-danger-color);
+        }
+        &.badge--primary {
+          background-color: var(--docuo-openapi-badge-bg-primary-color);
+        }
+        &.badge--info {
+          background-color: var(--docuo-openapi-badge-bg-info-color);
+        }
+        &.badge--warning {
+          background-color: var(--docuo-openapi-badge-bg-warning-color);
+        }
+        &.badge--secondary {
+          background-color: var(--docuo-openapi-badge-bg-secondary-color);
+          color: var(--docuo-openapi-badge-secondary-color);
+        }
       }
     }
 
@@ -595,46 +733,46 @@ html > body {
       flex-direction: column;
     }
 
-    .ant-tree {
-      padding-top: 33px;
-      background: #ffffff;
+    // .ant-tree {
+    //   padding-top: 33px;
+    //   background: #ffffff;
 
-      .custom-node-title {
-        img {
-          margin-left: 15px;
-          width: 16px;
-          height: 17px;
-        }
-      }
-      .ant-tree-treenode-selected {
-        .ant-tree-indent-unit:nth-last-of-type(1)::after {
-          content: "";
-          width: 2px;
-          height: 24px;
-          background: #000000;
-          display: block;
-          position: absolute;
-          inset-inline-end: 11px;
-          top: 4px;
-          bottom: 4px;
-        }
-      }
-      &.ant-tree-show-line .ant-tree-indent-unit:before {
-        inset-inline-end: 12px;
-        bottom: -4px;
-        top: -4px;
-        display: inline;
-      }
+    //   .custom-node-title {
+    //     img {
+    //       margin-left: 8px;
+    //       width: 16px;
+    //       height: 17px;
+    //     }
+    //   }
+    //   .ant-tree-treenode-selected {
+    //     .ant-tree-indent-unit:nth-last-of-type(1)::after {
+    //       content: "";
+    //       width: 2px;
+    //       height: 24px;
+    //       background: #000000;
+    //       display: block;
+    //       position: absolute;
+    //       inset-inline-end: 11px;
+    //       top: 4px;
+    //       bottom: 4px;
+    //     }
+    //   }
+    //   &.ant-tree-show-line .ant-tree-indent-unit:before {
+    //     inset-inline-end: 12px;
+    //     bottom: -4px;
+    //     top: -4px;
+    //     display: inline;
+    //   }
 
-      .ant-tree-treenode {
-        color: rgba($color: #171717, $alpha: 0.9);
-        padding: 2px 25px 2px 29px;
-      }
+    //   .ant-tree-treenode {
+    //     color: rgba($color: #171717, $alpha: 0.9);
+    //     padding: 2px 25px 2px 29px;
+    //   }
 
-      .ant-tree-indent-unit {
-        width: 16px;
-      }
-    }
+    //   .ant-tree-indent-unit {
+    //     width: 16px;
+    //   }
+    // }
 
     // .generate-desc {
     //   font-size: 14px;

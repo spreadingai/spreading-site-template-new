@@ -18,6 +18,12 @@ class VersionsController {
     );
   }
   getUsedVersions(instanceID: string) {
+    if (this._usedVersionsMap[instanceID]) {
+      console.log(`[VersionsController]getUsedVersions cache`);
+      return JSON.parse(
+        JSON.stringify(this._usedVersionsMap[instanceID])
+      ) as string[];
+    }
     // Use the external current version if the file is not present or the list is empty
     const { instances } = LibControllerImpl.getDocuoConfig();
     const instance = instances.find((i) => i.id === instanceID);

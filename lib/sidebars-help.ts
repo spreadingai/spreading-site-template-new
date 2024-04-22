@@ -13,9 +13,8 @@ import { SEQUENCE_PREFIX_REGEX } from "./constants";
 
 class SidebarsController {
   static _instance: SidebarsController;
-  _sidebarsMap: Record<string, Record<string, Sidebars>>;
+  _sidebarsMap: Record<string, Record<string, Sidebars>> = {};
   _usedSidebarIdsMap: Record<string, string[]> = {};
-  _actualMdxFilePathMap: Record<string, string[]> = {}; // <mdxFileID, [actualMdxFilePath]>
   static getInstance() {
     return (
       SidebarsController._instance ||
@@ -23,6 +22,13 @@ class SidebarsController {
     );
   }
   getSidebars(instanceID: string, docVersion?: string) {
+    if (
+      this._sidebarsMap[instanceID] &&
+      this._sidebarsMap[instanceID][docVersion]
+    ) {
+      console.log(`[SidebarsController]getSidebars cache`);
+      return this._sidebarsMap[instanceID][docVersion];
+    }
     let result: Sidebars = null;
     let rootUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
       instanceID === "default" ? "" : instanceID + "_"
@@ -66,9 +72,14 @@ class SidebarsController {
     this._sidebarsMap = this._sidebarsMap || {};
     this._sidebarsMap[instanceID] = this._sidebarsMap[instanceID] || {};
     this._sidebarsMap[instanceID][docVersion] = result;
+    console.log(`[SidebarsController]getSidebars`);
     return this._sidebarsMap[instanceID][docVersion];
   }
   getUsedSidebarIds(instanceID: string) {
+    if (this._usedSidebarIdsMap[instanceID]) {
+      console.log(`[SidebarsController]getUsedSidebarIds cache`);
+      return JSON.parse(JSON.stringify(this._usedSidebarIdsMap[instanceID]));
+    }
     const { themeConfig } = LibControllerImpl.getDocuoConfig();
     if (!themeConfig) return []; // 容错
     const { navbar } = themeConfig;
@@ -99,7 +110,7 @@ class SidebarsController {
       },
       []
     );
-    return this._usedSidebarIdsMap[instanceID];
+    return JSON.parse(JSON.stringify(this._usedSidebarIdsMap[instanceID]));
   }
   getSidebarItemIDByMdxFileID(sidebars: Sidebars, mdxFileID: string) {
     const sidebarIds = Object.keys(sidebars);

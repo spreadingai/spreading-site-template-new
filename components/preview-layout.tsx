@@ -262,9 +262,16 @@ const PreviewLayout = ({
         ) : (
           <span className="title">{nodeData.title}</span>
         )}
-        {nodeData.type === SidebarItemType.Link ? (
-          <Image src={IconOutlink} alt={"link"} />
-        ) : null}
+        <span className="right-content">
+          {/* @ts-ignore */}
+          {nodeData.tag ? (
+            // @ts-ignore
+            <span className="title-tag">{nodeData.tag || "POST"}</span>
+          ) : null}
+          {nodeData.type === SidebarItemType.Link ? (
+            <Image src={IconOutlink} alt={"link"} />
+          ) : null}
+        </span>
       </div>
     );
   };

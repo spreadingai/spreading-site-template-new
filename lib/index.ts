@@ -17,6 +17,8 @@ class LibController {
   _unlimitedInstanceNumber = "-1";
   _defaultVersion = "next";
   _defaultInstanceID = "default";
+  _addDefaultLinkMarker = false;
+  _displayInstances = null;
   static getInstance() {
     return (
       LibController._instance || (LibController._instance = new LibController())
@@ -103,9 +105,10 @@ class LibController {
     return firstSlug;
   }
   addDefaultLink(allSlugs: SlugData[]) {
+    if (this._addDefaultLinkMarker) return;
     const { themeConfig, instances } = this.getDocuoConfig();
     if (!themeConfig) return;
-    const { navbar, footer } = themeConfig;
+    const { navbar } = themeConfig;
     // Add a default jump link to all docSidebar type items and update the `to` field
     const loop = (items: NavBarItem[] = []) => {
       if (items.length === 0) return;
@@ -121,6 +124,7 @@ class LibController {
             item.sidebarIds || [item.sidebarId]
           );
           item.defaultLink = `/${firstSlug.join("/")}`;
+          // Add routeBasePath
           item.to &&
             (item.to = `${routeBasePath}/${item.to.replace(/^\//, "")}`);
         }
@@ -130,9 +134,13 @@ class LibController {
       }
     };
     loop(navbar.items);
-    // loop(footer.links);
+    this._addDefaultLinkMarker = true;
   }
   getDisplayInstances(): DisplayInstance[] {
+    if (this._displayInstances) {
+      console.log(`[LibController]getDisplayInstances cache`);
+      return JSON.parse(JSON.stringify(this._displayInstances));
+    }
     if (!this._docuoConfig) return [];
     const allSlugs = SlugControllerImpl.getAllSlugs();
     return this._docuoConfig.instances.map((instance) => {

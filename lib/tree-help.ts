@@ -5,15 +5,31 @@ import SidebarsControllerImpl from "./sidebars-help";
 
 class TreeController {
   static _instance: TreeController;
+  _folderTreeDataMap: Record<string, Record<string, any[]>> = {};
   static getInstance() {
     return (
       TreeController._instance ||
       (TreeController._instance = new TreeController())
     );
   }
-  getFolderTreeDataBySlug(slug: string[]) {
-    const { instanceID, routeBasePath, docVersion, slugVersion, mdxFileID } =
-      SlugControllerImpl.getExtractInfoFromSlug(slug);
+  getFolderTreeDataBySlug(slug: string[], customID?: string) {
+    const {
+      instanceID,
+      routeBasePath,
+      docVersion,
+      slugVersion,
+      mdxFileID: currentMdxFileID,
+    } = SlugControllerImpl.getExtractInfoFromSlug(slug);
+    if (
+      this._folderTreeDataMap[instanceID] &&
+      this._folderTreeDataMap[instanceID][docVersion]
+    ) {
+      console.log(`[TreeController]getFolderTreeDataBySlug cache`);
+      return JSON.parse(
+        JSON.stringify(this._folderTreeDataMap[instanceID][docVersion])
+      );
+    }
+
     let tree = [];
 
     const versions = VersionsControllerImpl.getUsedVersions(instanceID);
@@ -27,7 +43,10 @@ class TreeController {
         docVersion
       );
       const targetSidebarId =
-        SidebarsControllerImpl.getSidebarItemIDByMdxFileID(sidebars, mdxFileID);
+        SidebarsControllerImpl.getSidebarItemIDByMdxFileID(
+          sidebars,
+          currentMdxFileID
+        );
       // const temp = usedSidebarIds.length
       //   ? usedSidebarIds
       //   : Object.keys(sidebars);
@@ -59,7 +78,10 @@ class TreeController {
         );
       });
     }
-    return tree;
+    this._folderTreeDataMap[instanceID] =
+      this._folderTreeDataMap[instanceID] || {};
+    this._folderTreeDataMap[instanceID][docVersion] = tree;
+    return JSON.parse(JSON.stringify(tree));
   }
   getChildrenFromChildren(
     level: string,
@@ -103,8 +125,10 @@ class TreeController {
           slugVersion,
         };
         children && (temp.children = children);
-        item.id &&
-          (temp.id = `${idPrefixKey}${idPrefixKey ? "/" : ""}${item.id}`);
+        if (item.id) {
+          temp.mdxFileID = item.id;
+          temp.id = `${idPrefixKey}${idPrefixKey ? "/" : ""}${item.id}`;
+        }
         result.push(temp);
       } else {
         // SidebarItemType.Link

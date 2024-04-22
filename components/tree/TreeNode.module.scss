@@ -1,4 +1,5 @@
 .treeNodeLabel {
+  width: 100%;
   &:not(.isLevel0) {
     color: var(--docuo-sidebar-color);
     padding-left: 14px;
