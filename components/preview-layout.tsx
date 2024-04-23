@@ -370,6 +370,7 @@ const PreviewLayout = ({
               <InsVersionDropdown type="version" menu={versions} />
             </div>
             <DocuoTree
+              docuoConfig={docuoConfig}
               data={folderTreeData}
               selectedKeys={selectedKeys}
               onSelect={fileSelectHandle}
@@ -449,6 +450,7 @@ const PreviewLayout = ({
               <InsVersionDropdown type="version" menu={versions} />
             </div>
             <DocuoTree
+              docuoConfig={docuoConfig}
               data={folderTreeData}
               selectedKeys={selectedKeys}
               onSelect={fileSelectHandle}

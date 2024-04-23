@@ -16,6 +16,7 @@ export interface DocuoConfig {
     footer: FooterConfig;
     colorMode?: ColorMode;
     colors?: Colors;
+    watermark?: boolean;
   };
   search?: {
     algolia?: {
@@ -154,5 +155,9 @@ export interface TocItem {
 }
 
 export enum Plan {
-  Free = "free",
+  None = 0,
+  ProTrial = 1,
+  Free = 2,
+  Pro = 3,
+  Enterprise = 4,
 }
