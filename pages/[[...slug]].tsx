@@ -155,67 +155,62 @@ function PageHead(props: Props) {
     docuoConfig.description ||
     "";
   const navbarLogo = docuoConfig.themeConfig.navbar.logo;
-  let ogLogo =
+  let logo =
     typeof navbarLogo === "string"
       ? navbarLogo
       : typeof navbarLogo !== "undefined"
       ? navbarLogo.dark
       : "";
-  ogLogo = ogLogo.includes("http")
-    ? `${ogLogo}`
-    : `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/${ogLogo.replace(/^\//, "")}`;
-
+  logo = logo.includes("http")
+    ? `${logo}`
+    : logo
+    ? `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/${logo.replace(/^\//, "")}`
+    : "";
+  const ogSiteName = frontmatter["og:site_name"] || docuoConfig.title || "";
+  const ogUrl = frontmatter["og:url"] || process.env.NEXT_PUBLIC_SITE_URL || "";
+  const ogImage = frontmatter["og:image"] || "";
+  const ogLocale = frontmatter["og:locale"] || "en_US";
+  const ogLogo = frontmatter["og:logo"] || logo;
+  const articlePublisher = frontmatter["article:publisher"] || "";
+  const twitterUrl = frontmatter["twitter:url"] || "";
+  const twitterImage =
+    frontmatter["twitter:image"] || frontmatterRef.firstImgSrc;
+  const twitterSite = frontmatter["twitter:site"] || "";
+  const ogImageWidth = frontmatter["og:image:width"] || "";
+  const ogImageHeight = frontmatter["og:image:height"] || "";
   return (
     <Head>
       <title>{title}</title>
       <meta name="description" content={description} />
-      <meta
-        property="og:site_name"
-        content={frontmatter["og:site_name"] || docuoConfig.title || ""}
-      ></meta>
+      {ogSiteName ? (
+        <meta property="og:site_name" content={ogSiteName}></meta>
+      ) : null}
       <meta property="og:title" content={title}></meta>
       <meta property="og:description" content={description}></meta>
-      <meta
-        property="og:url"
-        content={
-          frontmatter["og:url"] || process.env.NEXT_PUBLIC_SITE_URL || ""
-        }
-      ></meta>
-      <meta property="og:image" content={frontmatter["og:image"] || ""}></meta>
-      <meta
-        property="og:locale"
-        content={frontmatter["og:locale"] || "en_US"}
-      ></meta>
-      <meta
-        property="og:logo"
-        content={frontmatter["og:logo"] || ogLogo}
-      ></meta>
-      <meta
-        property="article:publisher"
-        content={frontmatter["article:publisher"] || ""}
-      ></meta>
+      {ogUrl ? <meta property="og:url" content={ogUrl}></meta> : null}
+      {ogImage ? <meta property="og:image" content={ogImage}></meta> : null}
+      {ogLocale ? <meta property="og:locale" content={ogLocale}></meta> : null}
+      {ogLogo ? <meta property="og:logo" content={ogLogo}></meta> : null}
+      {articlePublisher ? (
+        <meta property="article:publisher" content={articlePublisher}></meta>
+      ) : null}
       <meta name="twitter:title" content={title}></meta>
       <meta name="twitter:description" content={description}></meta>
-      <meta
-        name="twitter:url"
-        content={frontmatter["twitter:url"] || ""}
-      ></meta>
-      <meta
-        name="twitter:image"
-        content={frontmatter["twitter:image"] || frontmatterRef.firstImgSrc}
-      ></meta>
-      <meta
-        name="twitter:site"
-        content={frontmatter["twitter:site"] || ""}
-      ></meta>
-      <meta
-        property="og:image:width"
-        content={frontmatter["og:image:width"] || ""}
-      ></meta>
-      <meta
-        property="og:image:height"
-        content={frontmatter["og:image:height"] || ""}
-      ></meta>
+      {twitterUrl ? (
+        <meta name="twitter:url" content={twitterUrl}></meta>
+      ) : null}
+      {twitterImage ? (
+        <meta name="twitter:image" content={twitterImage}></meta>
+      ) : null}
+      {twitterSite ? (
+        <meta name="twitter:site" content={twitterSite}></meta>
+      ) : null}
+      {ogImageWidth ? (
+        <meta property="og:image:width" content={ogImageWidth}></meta>
+      ) : null}
+      {ogImageHeight ? (
+        <meta property="og:image:height" content={ogImageHeight}></meta>
+      ) : null}
     </Head>
   );
 }
