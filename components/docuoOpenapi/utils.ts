@@ -1,7 +1,10 @@
+import {
+  DEFAULT_INSTANCE_ID,
+  DEFAULT_CURRENT_SLUG_VERSION,
+  DEFAULT_LATEST_SLUG_VERSION,
+  DEFAULT_CURRENT_DOC_VERSION,
+} from "@/lib/constants";
 import { DocInstance } from "@/lib/types";
-
-const _defaultVersion = "next";
-const _defaultInstanceID = "default";
 
 export const docVersionToSlugVersion = (
   docVersion: string,
@@ -10,18 +13,18 @@ export const docVersionToSlugVersion = (
   // docVersion: "1.1.0", "1.0.0", ""
   let slugVersion;
   if (versions.length) {
-    if (docVersion === _defaultVersion) {
+    if (docVersion === DEFAULT_CURRENT_SLUG_VERSION) {
       // No conversion required
       slugVersion = docVersion;
     } else if (docVersion === versions[0]) {
-      slugVersion = "";
+      slugVersion = DEFAULT_LATEST_SLUG_VERSION;
     } else if (!docVersion) {
-      slugVersion = _defaultVersion;
+      slugVersion = DEFAULT_CURRENT_SLUG_VERSION;
     } else {
       slugVersion = docVersion;
     }
   } else {
-    slugVersion = "";
+    slugVersion = DEFAULT_LATEST_SLUG_VERSION;
   }
   return slugVersion;
 };
@@ -43,23 +46,23 @@ export const parseByInfoPath = (
     const firstStr = splitArr[0];
     const secondStr = splitArr[1];
     let instanceID = "",
-      docVersion = "",
+      docVersion = DEFAULT_CURRENT_DOC_VERSION,
       docArr = [];
     if (firstStr.endsWith("_versioned_docs")) {
       instanceID = firstStr.split("_versioned_docs")[0];
       docVersion = secondStr.split("version-")[1];
       docArr = splitArr.splice(2);
     } else if (firstStr.endsWith("versioned_docs")) {
-      instanceID = _defaultInstanceID;
+      instanceID = DEFAULT_INSTANCE_ID;
       docVersion = secondStr.split("version-")[1];
       docArr = splitArr.splice(2);
     } else if (firstStr.endsWith("_docs")) {
       instanceID = firstStr.split("_docs")[0];
-      docVersion = _defaultVersion;
+      docVersion = DEFAULT_CURRENT_SLUG_VERSION;
       docArr = splitArr.splice(1);
     } else if (firstStr.endsWith("docs")) {
-      instanceID = _defaultInstanceID;
-      docVersion = _defaultVersion;
+      instanceID = DEFAULT_INSTANCE_ID;
+      docVersion = DEFAULT_CURRENT_SLUG_VERSION;
       docArr = splitArr.splice(1);
     }
     const instance = instances.find((i) => i.id === instanceID);

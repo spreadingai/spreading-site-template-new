@@ -20,6 +20,7 @@ import LibControllerImpl from "./index";
 import SlugControllerImpl from "./slug-help";
 import VersionsControllerImpl from "./versions-help";
 import { convertDocID, ignoreNumberPrefix, removeMdxSuffix } from "./utils";
+import { DEFAULT_INSTANCE_ID } from "./constants";
 
 class DocsController {
   static _instance: DocsController;
@@ -47,12 +48,14 @@ class DocsController {
     if (!slugVersion || slugVersion !== versions[0]) {
       rootUrl = path.join(
         LibControllerImpl.getEntityRootDirectory(),
-        (instanceID === "default" ? "" : instanceID + "_") + "docs"
+        (instanceID === DEFAULT_INSTANCE_ID ? "" : instanceID + "_") + "docs"
       );
       if (docVersion) {
         rootUrl = path.join(
           LibControllerImpl.getEntityRootDirectory(),
-          `${instanceID === "default" ? "" : instanceID + "_"}versioned_docs`,
+          `${
+            instanceID === DEFAULT_INSTANCE_ID ? "" : instanceID + "_"
+          }versioned_docs`,
           `version-${docVersion}`
         );
       }

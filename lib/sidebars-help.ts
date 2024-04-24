@@ -9,7 +9,7 @@ import LibControllerImpl from "./index";
 import path from "path";
 import fs from "fs";
 import { convertDocID, ignoreNumberPrefix, removeMdxSuffix } from "./utils";
-import { SEQUENCE_PREFIX_REGEX } from "./constants";
+import { DEFAULT_INSTANCE_ID, SEQUENCE_PREFIX_REGEX } from "./constants";
 
 class SidebarsController {
   static _instance: SidebarsController;
@@ -31,11 +31,11 @@ class SidebarsController {
     }
     let result: Sidebars = null;
     let rootUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
-      instanceID === "default" ? "" : instanceID + "_"
+      instanceID === DEFAULT_INSTANCE_ID ? "" : instanceID + "_"
     }docs`;
     if (docVersion) {
       rootUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
-        instanceID === "default" ? "" : instanceID + "_"
+        instanceID === DEFAULT_INSTANCE_ID ? "" : instanceID + "_"
       }versioned_docs/version-${docVersion}`;
     }
     const rootPath = path.resolve("./public", "..", rootUrl);
@@ -87,7 +87,7 @@ class SidebarsController {
     const loop = (items: NavBarItem[] = [], usedSidebarIds: string[]) => {
       if (items.length === 0) return;
       for (const item of items) {
-        !item.docsInstanceId && (item.docsInstanceId = "default");
+        !item.docsInstanceId && (item.docsInstanceId = DEFAULT_INSTANCE_ID);
         if (
           item.type === NavBarItemType.DocSidebar &&
           item.docsInstanceId === instanceID

@@ -4,13 +4,17 @@ import LibControllerImpl from "./index";
 // TODO:Here's the cross-reference
 import SlugControllerImpl from "./slug-help";
 import { DisplayVersion, Plan } from "./types";
+import {
+  DEFAULT_INSTANCE_ID,
+  DEFAULT_CURRENT_SLUG_VERSION,
+  UNLIMITED_VERSION_NUMBER,
+  DEFAULT_CURRENT_DOC_VERSION,
+} from "./constants";
 
 class VersionsController {
   static _instance: VersionsController;
   _usedVersionsMap: Record<string, string[]> = {};
   _actualVersionsMap: Record<string, string[]> = {};
-  _defaultVersion = "next";
-  _unlimitedVersionNumber = "-1";
   static getInstance() {
     return (
       VersionsController._instance ||
@@ -28,7 +32,7 @@ class VersionsController {
     const { instances } = LibControllerImpl.getDocuoConfig();
     const instance = instances.find((i) => i.id === instanceID);
     const versionsUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
-      instance.id === "default" ? "" : instance.id + "_"
+      instance.id === DEFAULT_INSTANCE_ID ? "" : instance.id + "_"
     }versions.json`;
     const versionsPath = path.resolve("./public", "..", versionsUrl);
     let versions: string[] = [];
@@ -41,7 +45,7 @@ class VersionsController {
       }
       if (
         process.env.NEXT_PUBLIC_VERSION_LIMIT &&
-        process.env.NEXT_PUBLIC_VERSION_LIMIT !== this._unlimitedVersionNumber
+        process.env.NEXT_PUBLIC_VERSION_LIMIT !== UNLIMITED_VERSION_NUMBER
       ) {
         try {
           const limit = Number(process.env.NEXT_PUBLIC_VERSION_LIMIT);
@@ -65,7 +69,7 @@ class VersionsController {
     const { instances } = LibControllerImpl.getDocuoConfig();
     const instance = instances.find((i) => i.id === instanceID);
     const versionedUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
-      instance.id === "default" ? "" : instance.id + "_"
+      instance.id === DEFAULT_INSTANCE_ID ? "" : instance.id + "_"
     }versioned_docs`;
     const versionedPath = path.resolve("./public", "..", versionedUrl);
     let versioned: string[] = [];
@@ -89,53 +93,33 @@ class VersionsController {
       JSON.stringify(this._actualVersionsMap[instanceID])
     ) as string[];
   }
-  getDefaultVersion() {
-    return this._defaultVersion;
-  }
   getDisplayVersions(slug: string[]) {
     const result: DisplayVersion[] = [];
-    const { instanceID, routeBasePath, mdxFileID, slugVersion } =
+    const { instanceID, routeBasePath, mdxFileID } =
       SlugControllerImpl.getExtractInfoFromSlug(slug);
     const usedVersions = this.getUsedVersions(instanceID);
-    const allSlugs = SlugControllerImpl.getAllSlugs();
     if (usedVersions.length) {
       // ["1.1.0", "1.0.0", ""]
-      usedVersions.push("");
+      usedVersions.push(DEFAULT_CURRENT_DOC_VERSION);
       usedVersions.forEach((docVersion) => {
         const slugVersion = SlugControllerImpl.docVersionToSlugVersion(
           instanceID,
           docVersion
         );
-        const targetSlug = allSlugs.find(
-          (item) =>
-            item.params.instanceID === instanceID &&
-            item.params.slugVersion === slugVersion
-        );
         const version = slugVersion || docVersion; // Here's the latest version to show
-        targetSlug &&
-          result.push({
-            version,
-            firstSlug: targetSlug.params.slug,
-            defaultLink: `${
-              routeBasePath ? "/" + routeBasePath : ""
-            }/${slugVersion}${slugVersion ? "/" + mdxFileID : mdxFileID}`,
-            firstLink: `/${targetSlug.params.slug.join("/")}`,
-          });
+        result.push({
+          version,
+          defaultLink: `${
+            routeBasePath ? "/" + routeBasePath : ""
+          }/${slugVersion}${slugVersion ? "/" + mdxFileID : mdxFileID}`,
+        });
       });
     } else {
       // There is actually no version or the user has not defined the display version list
-      const targetSlug = allSlugs.find(
-        (item) =>
-          item.params.instanceID === instanceID &&
-          item.params.slugVersion === slugVersion
-      );
-      targetSlug &&
-        result.push({
-          version: this._defaultVersion,
-          firstSlug: targetSlug.params.slug,
-          defaultLink: `/${slug.join("/")}`,
-          firstLink: `/${targetSlug.params.slug.join("/")}`,
-        });
+      result.push({
+        version: DEFAULT_CURRENT_SLUG_VERSION,
+        defaultLink: `/${slug.join("/")}`,
+      });
     }
     return result;
   }

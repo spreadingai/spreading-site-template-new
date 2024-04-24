@@ -16,6 +16,7 @@ import {
   ColorMode,
   SidebarItemType,
   TocItem,
+  DisplayLanguage,
 } from "@/lib/types";
 import Image from "next/image";
 import IconOutlink from "@/assets/images/icon_outlink.png";
@@ -49,6 +50,8 @@ type Props = {
   docuoConfig: DocuoConfig;
   displayVersions: DisplayVersion[];
   displayInstances: DisplayInstance[];
+  displayLanguages: DisplayLanguage[];
+  currentLanguage: string;
   algolia?: {
     appId: string;
     apiKey: string;
@@ -76,6 +79,8 @@ const PreviewLayout = ({
   docuoConfig,
   displayVersions,
   displayInstances,
+  displayLanguages,
+  currentLanguage,
   algolia,
 }: Props) => {
   // slug eg: instance routeBasePath/version/folder/filename
@@ -88,6 +93,13 @@ const PreviewLayout = ({
   //   displayVersions,
   //   displayInstances
   // );
+  console.log(
+    "#####displayLanguages",
+    displayLanguages,
+    currentLanguage,
+    displayInstances,
+    displayVersions
+  );
 
   // Avoid empty slug
   if (!slug) {
@@ -155,7 +167,7 @@ const PreviewLayout = ({
       // setTimeout: Scroll after images rendered
       setTimeout(() => {
         document.body.scrollTo({
-          top: Number(scrollHeight)
+          top: Number(scrollHeight),
         });
       }, 10);
     }
@@ -323,7 +335,8 @@ const PreviewLayout = ({
     const currentInstanceLabel = displayInstances.find((item) => {
       return item.instance.id === instanceID;
     });
-
+    // Examples that actually exist but are not shown
+    if (!currentInstanceLabel) return { items: [] };
     return {
       label: currentInstanceLabel.instance.label,
       type: "dropdown",
@@ -351,6 +364,8 @@ const PreviewLayout = ({
           tocFormatData={tocFormatData}
           displayInstances={displayInstances}
           displayVersions={displayVersions}
+          currentLanguage={currentLanguage}
+          displayLanguages={displayLanguages}
           setDrawerOpen={setDrawerOpen}
         ></Header>
         <div className="only_pc__show absolute z-0 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">

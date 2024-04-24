@@ -9,6 +9,7 @@ import AnChorMobile from "../Anchor/AnchorMobile";
 
 import {
   DisplayInstance,
+  DisplayLanguage,
   DisplayVersion,
   DocuoConfig,
   NavBarItemType,
@@ -27,6 +28,8 @@ interface Props {
   tocFormatData: AnchorNode[];
   displayInstances: DisplayInstance[];
   displayVersions: DisplayVersion[];
+  displayLanguages: DisplayLanguage[];
+  currentLanguage: string;
   setDrawerOpen: (value: boolean) => void;
 }
 
@@ -37,6 +40,8 @@ const Header = (props: Props) => {
     currentInstance,
     tocFormatData,
     setDrawerOpen,
+    displayLanguages,
+    currentLanguage,
   } = props;
   const { themeConfig, search } = docuoConfig;
   const { navbar } = themeConfig;
@@ -183,11 +188,7 @@ const Header = (props: Props) => {
                 <Link
                   key={index}
                   className={styles["item"]}
-                  href={
-                    menu.href || { pathname: menu.to } ||
-                    menu.defaultLink ||
-                    "/"
-                  }
+                  href={menu.href || menu.to || menu.defaultLink || "/"}
                   target={menu.href ? "_blank" : "_self"}
                 >
                   {menu.label}
@@ -195,7 +196,19 @@ const Header = (props: Props) => {
               );
             })}
             <div className={styles["menus__btn-list"]}>
-              {renderThemeSwitch()}
+              <DropdownItem
+                menu={{
+                  label: currentLanguage,
+                  // @ts-ignore
+                  items: displayLanguages.map((displayLanguage) => {
+                    return {
+                      ...displayLanguage,
+                      label: displayLanguage.language,
+                    };
+                  }),
+                }}
+              />
+              ;{renderThemeSwitch()}
             </div>
           </div>
         )}
