@@ -16,7 +16,7 @@ export interface DocuoConfig {
     footer: FooterConfig;
     colorMode?: ColorMode;
     colors?: Colors;
-    watermark?: boolean;
+    removeWatermark?: boolean;
   };
   search?: {
     algolia?: {
