@@ -97,6 +97,7 @@ export const getStaticProps = async ({ params }: SlugData) => {
     LanguageControllerImpl.getDisplayLanguages(slug);
   const postData = await DocsControllerImpl.readDoc(slug);
   const instances = LibControllerImpl.getDocuoConfig().instances;
+  const versions = VersionsControllerImpl.getUsedVersions(instanceID);
   return {
     props: {
       ...postData,
@@ -109,6 +110,7 @@ export const getStaticProps = async ({ params }: SlugData) => {
       currentLanguage,
       displayLanguages,
       instances,
+      versions,
     },
   };
 };

@@ -71,16 +71,28 @@ class VersionsController {
     const versionedUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
       instance.id === DEFAULT_INSTANCE_ID ? "" : instance.id + "_"
     }versioned_docs`;
+    const newVersionedUrl = `${LibControllerImpl.getEntityRootDirectory()}/docs_${
+      instance.id === DEFAULT_INSTANCE_ID ? "" : instance.id + "_"
+    }versioned`;
     const versionedPath = path.resolve("./public", "..", versionedUrl);
+    const newVersionedPath = path.resolve("./public", "..", newVersionedUrl);
     let versioned: string[] = [];
-    if (fs.existsSync(versionedPath)) {
-      const files = fs.readdirSync(versionedPath);
+    if (fs.existsSync(newVersionedPath)) {
+      const files = fs.readdirSync(newVersionedPath);
       versioned = files.map((file) => {
         const temp = file.split("-");
         temp.shift();
         return temp.join("-");
       });
     } else {
+      if (fs.existsSync(versionedPath)) {
+        const files = fs.readdirSync(versionedPath);
+        versioned = files.map((file) => {
+          const temp = file.split("-");
+          temp.shift();
+          return temp.join("-");
+        });
+      }
       // There is only one default version
       console.error(
         `[DocsController]getActualVersions: No version is currently defined `,

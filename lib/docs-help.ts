@@ -39,7 +39,8 @@ class DocsController {
     let originContent =
       "The conversion of the article content encountered an exception and cannot be displayed.";
     let mdxFileUrl = "";
-    let rootUrl = "";
+    let rootUrl = "",
+      newRootUrl = "";
     console.log(
       `[DocsController]readDoc slugVersion、versions`,
       slugVersion,
@@ -50,6 +51,10 @@ class DocsController {
         LibControllerImpl.getEntityRootDirectory(),
         (instanceID === DEFAULT_INSTANCE_ID ? "" : instanceID + "_") + "docs"
       );
+      newRootUrl = path.join(
+        LibControllerImpl.getEntityRootDirectory(),
+        "docs" + (instanceID === DEFAULT_INSTANCE_ID ? "" : "_" + instanceID)
+      );
       if (docVersion) {
         rootUrl = path.join(
           LibControllerImpl.getEntityRootDirectory(),
@@ -58,8 +63,18 @@ class DocsController {
           }versioned_docs`,
           `version-${docVersion}`
         );
+        newRootUrl = path.join(
+          LibControllerImpl.getEntityRootDirectory(),
+          `docs_${
+            instanceID === DEFAULT_INSTANCE_ID ? "" : instanceID + "_"
+          }versioned`,
+          `version-${docVersion}`
+        );
       }
-
+      // Compatible prefixes and suffixes
+      if (fs.existsSync(path.resolve("./public", "..", newRootUrl))) {
+        rootUrl = newRootUrl;
+      }
       const actualMdxFilePath = this.getActualMdxFilePath(rootUrl, mdxFileID);
       if (actualMdxFilePath) {
         console.log("#####actualMdxFilePath", actualMdxFilePath);

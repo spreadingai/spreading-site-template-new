@@ -33,13 +33,25 @@ class SidebarsController {
     let rootUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
       instanceID === DEFAULT_INSTANCE_ID ? "" : instanceID + "_"
     }docs`;
+    let newRootUrl = `${LibControllerImpl.getEntityRootDirectory()}/docs${
+      instanceID === DEFAULT_INSTANCE_ID ? "" : "_" + instanceID
+    }`;
     if (docVersion) {
       rootUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
         instanceID === DEFAULT_INSTANCE_ID ? "" : instanceID + "_"
       }versioned_docs/version-${docVersion}`;
+      newRootUrl = `${LibControllerImpl.getEntityRootDirectory()}/docs_${
+        instanceID === DEFAULT_INSTANCE_ID ? "" : instanceID + "_"
+      }versioned/version-${docVersion}`;
     }
-    const rootPath = path.resolve("./public", "..", rootUrl);
+    let rootPath = path.resolve("./public", "..", rootUrl);
+    const newRootPath = path.resolve("./public", "..", newRootUrl);
 
+    // Compatible prefixes and suffixes
+    if (fs.existsSync(newRootPath)) {
+      rootPath = newRootPath;
+      rootUrl = newRootUrl;
+    }
     if (fs.existsSync(rootPath)) {
       const sidebarsUrl = `${rootUrl}/sidebars.json`;
       const sidebarsPath = path.resolve("./public", "..", sidebarsUrl);

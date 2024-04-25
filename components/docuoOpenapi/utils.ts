@@ -42,6 +42,12 @@ export const parseByInfoPath = (
     // xxx_docs/xxx/swagger-petstore-yaml
     // versioned_docs/version-x.x.x/xxx/swagger-petstore-yaml
     // xxx_versioned_docs/version-x.x.x/xxx/swagger-petstore-yaml
+
+    // Compatible prefixes and suffixes
+    // docs/xxx/swagger-petstore-yaml
+    // docs_xxx/xxx/swagger-petstore-yaml
+    // docs_versioned/version-x.x.x/xxx/swagger-petstore-yaml
+    // docs_xxx_versioned/version-x.x.x/xxx/swagger-petstore-yaml
     const splitArr = infoPath.split("/");
     const firstStr = splitArr[0];
     const secondStr = splitArr[1];
@@ -52,7 +58,7 @@ export const parseByInfoPath = (
       instanceID = firstStr.split("_versioned_docs")[0];
       docVersion = secondStr.split("version-")[1];
       docArr = splitArr.splice(2);
-    } else if (firstStr.endsWith("versioned_docs")) {
+    } else if (firstStr === "versioned_docs" || firstStr === "docs_versioned") {
       instanceID = DEFAULT_INSTANCE_ID;
       docVersion = secondStr.split("version-")[1];
       docArr = splitArr.splice(2);
@@ -60,12 +66,21 @@ export const parseByInfoPath = (
       instanceID = firstStr.split("_docs")[0];
       docVersion = DEFAULT_CURRENT_SLUG_VERSION;
       docArr = splitArr.splice(1);
-    } else if (firstStr.endsWith("docs")) {
+    } else if (/^docs_\S+_versioned$/.test(firstStr)) {
+      const match = firstStr.match(/^docs_(\S+)_versioned$/);
+      instanceID = match ? match[1] : DEFAULT_CURRENT_SLUG_VERSION;
+      docVersion = secondStr.split("version-")[1];
+      docArr = splitArr.splice(2);
+    } else if (/^docs_\S+/.test(firstStr)) {
+      instanceID = firstStr.split("docs_")[1];
+      docVersion = DEFAULT_CURRENT_SLUG_VERSION;
+      docArr = splitArr.splice(1);
+    } else if (firstStr === "docs") {
       instanceID = DEFAULT_INSTANCE_ID;
       docVersion = DEFAULT_CURRENT_SLUG_VERSION;
       docArr = splitArr.splice(1);
     }
-    const instance = instances.find((i) => i.id === instanceID);
+    const instance = instances.find((i) => i.id.toLowerCase() === instanceID);
     if (instance) {
       const routeBasePath = instance.routeBasePath;
       const slugVersion = docVersionToSlugVersion(docVersion, versions);
