@@ -20,6 +20,7 @@ import LibControllerImpl from "./index";
 import SlugControllerImpl from "./slug-help";
 import VersionsControllerImpl from "./versions-help";
 import { convertDocID, ignoreNumberPrefix, removeMdxSuffix } from "./utils";
+import { DEFAULT_INSTANCE_ID } from "./constants";
 
 class DocsController {
   static _instance: DocsController;
@@ -38,7 +39,8 @@ class DocsController {
     let originContent =
       "The conversion of the article content encountered an exception and cannot be displayed.";
     let mdxFileUrl = "";
-    let rootUrl = "";
+    let rootUrl = "",
+      newRootUrl = "";
     console.log(
       `[DocsController]readDoc slugVersion、versions`,
       slugVersion,
@@ -47,16 +49,32 @@ class DocsController {
     if (!slugVersion || slugVersion !== versions[0]) {
       rootUrl = path.join(
         LibControllerImpl.getEntityRootDirectory(),
-        (instanceID === "default" ? "" : instanceID + "_") + "docs"
+        (instanceID === DEFAULT_INSTANCE_ID ? "" : instanceID + "_") + "docs"
+      );
+      newRootUrl = path.join(
+        LibControllerImpl.getEntityRootDirectory(),
+        "docs" + (instanceID === DEFAULT_INSTANCE_ID ? "" : "_" + instanceID)
       );
       if (docVersion) {
         rootUrl = path.join(
           LibControllerImpl.getEntityRootDirectory(),
-          `${instanceID === "default" ? "" : instanceID + "_"}versioned_docs`,
+          `${
+            instanceID === DEFAULT_INSTANCE_ID ? "" : instanceID + "_"
+          }versioned_docs`,
+          `version-${docVersion}`
+        );
+        newRootUrl = path.join(
+          LibControllerImpl.getEntityRootDirectory(),
+          `docs_${
+            instanceID === DEFAULT_INSTANCE_ID ? "" : instanceID + "_"
+          }versioned`,
           `version-${docVersion}`
         );
       }
-
+      // Compatible prefixes and suffixes
+      if (fs.existsSync(path.resolve("./public", "..", newRootUrl))) {
+        rootUrl = newRootUrl;
+      }
       const actualMdxFilePath = this.getActualMdxFilePath(rootUrl, mdxFileID);
       if (actualMdxFilePath) {
         console.log("#####actualMdxFilePath", actualMdxFilePath);
@@ -105,6 +123,7 @@ class DocsController {
       parseFrontmatter: true,
     });
     // Copy frontmatter img
+    mdxSource.frontmatter = mdxSource.frontmatter || {};
     mdxSource.frontmatter["og:logo"] = this.getPublicPath(
       mdxSource.frontmatter["og:logo"],
       mdxFileUrl

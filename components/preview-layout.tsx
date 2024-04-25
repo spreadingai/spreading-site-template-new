@@ -16,6 +16,7 @@ import {
   ColorMode,
   SidebarItemType,
   TocItem,
+  DisplayLanguage,
 } from "@/lib/types";
 import Image from "next/image";
 import IconOutlink from "@/assets/images/icon_outlink.png";
@@ -42,6 +43,7 @@ type Props = {
   children: React.ReactNode;
   slug?: string[];
   instanceID: string;
+  baseInstanceID: string;
   docVersion: string;
   mdxSource: MDXRemoteSerializeResult;
   toc: TocItem[];
@@ -49,6 +51,8 @@ type Props = {
   docuoConfig: DocuoConfig;
   displayVersions: DisplayVersion[];
   displayInstances: DisplayInstance[];
+  displayLanguages: DisplayLanguage[];
+  currentLanguage: string;
   algolia?: {
     appId: string;
     apiKey: string;
@@ -70,12 +74,15 @@ const PreviewLayout = ({
   children,
   slug,
   instanceID,
+  baseInstanceID,
   docVersion,
   toc,
   folderTreeData,
   docuoConfig,
   displayVersions,
   displayInstances,
+  displayLanguages,
+  currentLanguage,
   algolia,
 }: Props) => {
   // slug eg: instance routeBasePath/version/folder/filename
@@ -145,8 +152,33 @@ const PreviewLayout = ({
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
-    document.body.scrollTo({ top: 0 });
-  }, [router]);
+    const beforeUnloadHandler = () => {
+      localStorage.setItem("scrollHeight", String(document.body.scrollTop));
+    };
+    window.addEventListener("beforeunload", beforeUnloadHandler);
+    const scrollHeight = localStorage.getItem("scrollHeight");
+    localStorage.removeItem("scrollHeight");
+    if (scrollHeight) {
+      // setTimeout: Scroll after images rendered
+      setTimeout(() => {
+        document.body.scrollTo({
+          top: Number(scrollHeight),
+        });
+      }, 10);
+    }
+
+    return () => {
+      window.removeEventListener("beforeunload", beforeUnloadHandler);
+    };
+  }, []);
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    if (router.isReady) {
+      document.body.scrollTo({ top: 0 });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.asPath]);
 
   // All articles must have an id
   const docID = slug.join("/");
@@ -296,9 +328,11 @@ const PreviewLayout = ({
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const instances = useMemo<NavBarItem>(() => {
     const currentInstanceLabel = displayInstances.find((item) => {
-      return item.instance.id === instanceID;
+      // Matches multiple language instance id
+      return (
+        item.instance.id === instanceID || item.instance.id === baseInstanceID
+      );
     });
-
     return {
       label: currentInstanceLabel.instance.label,
       type: "dropdown",
@@ -326,6 +360,8 @@ const PreviewLayout = ({
           tocFormatData={tocFormatData}
           displayInstances={displayInstances}
           displayVersions={displayVersions}
+          currentLanguage={currentLanguage}
+          displayLanguages={displayLanguages}
           setDrawerOpen={setDrawerOpen}
         ></Header>
         <div className="only_pc__show absolute z-0 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
