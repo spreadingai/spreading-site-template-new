@@ -124,9 +124,9 @@ export function getStaticPaths() {
     "[Spreading] getStaticPaths..."
   );
   const paths = SlugControllerImpl.getAllSlugs();
-  console.time("123");
+  console.time("copyStaticFile");
   DocsControllerImpl.copyStaticFile();
-  console.timeEnd("123");
+  console.timeEnd("copyStaticFile");
   return {
     paths,
     fallback: true,

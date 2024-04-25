@@ -95,13 +95,6 @@ const PreviewLayout = ({
   //   displayVersions,
   //   displayInstances
   // );
-  console.log(
-    "#####displayLanguages",
-    displayLanguages,
-    currentLanguage,
-    displayInstances,
-    displayVersions
-  );
 
   // Avoid empty slug
   if (!slug) {
