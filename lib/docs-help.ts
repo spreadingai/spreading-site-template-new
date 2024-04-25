@@ -123,6 +123,7 @@ class DocsController {
       parseFrontmatter: true,
     });
     // Copy frontmatter img
+    mdxSource.frontmatter = mdxSource.frontmatter || {};
     mdxSource.frontmatter["og:logo"] = this.getPublicPath(
       mdxSource.frontmatter["og:logo"],
       mdxFileUrl

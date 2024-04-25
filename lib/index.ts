@@ -160,22 +160,22 @@ class LibController {
     const allSlugs = SlugControllerImpl.getAllSlugs();
     const result: DisplayInstance[] = [];
     this._docuoConfig.instances.forEach((instance) => {
-      // if (
-      //   i18n &&
-      //   i18n.localeConfigs &&
-      //   Object.keys(i18n.localeConfigs).find((suffix) =>
-      //     instance.id.endsWith(`_${suffix}`)
-      //   )
-      // ) {
-      // } else {
-      const targetSlug = allSlugs.find((item) => {
-        return item.params.instanceID === instance.id;
-      });
-      result.push({
-        instance,
-        defaultLink: targetSlug ? `/${targetSlug.params.slug.join("/")}` : "",
-      });
-      // }
+      if (
+        i18n &&
+        i18n.localeConfigs &&
+        Object.keys(i18n.localeConfigs).find((suffix) =>
+          instance.id.endsWith(`_${suffix}`)
+        )
+      ) {
+      } else {
+        const targetSlug = allSlugs.find((item) => {
+          return item.params.instanceID === instance.id;
+        });
+        result.push({
+          instance,
+          defaultLink: targetSlug ? `/${targetSlug.params.slug.join("/")}` : "",
+        });
+      }
     });
     return result;
   }
