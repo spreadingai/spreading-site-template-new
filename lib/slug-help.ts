@@ -126,13 +126,16 @@ class SlugController {
     );
     let instanceID = targetInstance ? targetInstance.id : "";
     docuoConfig.instances.forEach((instance) => {
-      const temp = `${instance.routeBasePath}/`;
-      const slugStr = slug.join("/");
-      const index = slugStr.indexOf(temp);
-      if (index !== -1) {
-        routeBasePath = slugStr.slice(0, temp.length - 1);
-        slugVersion = slug[routeBasePath.split("/").length];
-        instanceID = instance.id;
+      if (instance.routeBasePath) {
+        const temp = `${instance.routeBasePath}/`;
+        const slugStr = slug.join("/");
+        const index = slugStr.indexOf(temp);
+        if (index !== -1) {
+          routeBasePath = slugStr.slice(0, temp.length - 1);
+          slugVersion = slug[routeBasePath.split("/").length];
+          instanceID = instance.id;
+          return;
+        }
       }
     });
 
