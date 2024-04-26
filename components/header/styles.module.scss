@@ -96,7 +96,7 @@
     .menus__btn-list {
       display: flex;
       align-items: center;
-      div:first-child {
+      >div:first-child {
         display: flex;
         align-items: center;
         &::before {

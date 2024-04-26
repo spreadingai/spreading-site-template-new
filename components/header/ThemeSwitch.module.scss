@@ -1,4 +1,5 @@
 .colorModeToggle {
+  position: relative;
 
   .toggleButton {
     color: var(--docuo-theme-btn-color);
@@ -20,6 +21,32 @@
       height: 40px;
       border-radius: 10px;
       box-shadow: none;
+    }
+  }
+}
+.modesWrapper {
+  width: 140px;
+  height: 140px;
+  background: var(--docuo-theme-popover-bg) !important;
+  box-shadow: 0px 1px 12px 0px rgba(0, 0, 0, 0.05) !important;
+  border-radius: 6px !important;
+  border: var(--docuo-theme-btn-border) !important;
+  padding: 10px !important;
+  .modeItem {
+    height: 40px;
+    border-radius: 4px !important;
+    padding: 0 10px !important;
+    font-size: 14px !important;
+    color: var(--docuo-theme-popover-color) !important;
+    cursor: pointer;
+    svg {
+      margin-right: 10px;
+    }
+    &:hover {
+      background: var(--docuo-popup-bg-hover) !important;
+    }
+    &.active {
+      color: var(--docuo-color-primary-active) !important;
     }
   }
 }

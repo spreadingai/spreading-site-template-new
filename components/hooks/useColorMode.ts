@@ -6,6 +6,10 @@ const useColorMode = (colorMode, theme, setTheme) => {
     if (["dark", "light"].includes(theme)) {
       document.documentElement.dataset.theme = theme;
     }
+    if (theme === "system") {
+      const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)')?.matches;
+      document.documentElement.dataset.theme = isDarkMode ? "dark" : "light";
+    }
   }, [theme]);
 
   useEffect(() => {
@@ -14,12 +18,9 @@ const useColorMode = (colorMode, theme, setTheme) => {
     const THEME_KEY = "theme";
     let defaultTheme: Theme = "light";
     const localTheme = localStorage.getItem(THEME_KEY) || "";
-    if (["dark", "light"].includes(localTheme)) {
+    if (["dark", "light", "system"].includes(localTheme)) {
       defaultTheme = localTheme as Theme;
-    } else if (colorMode?.respectPrefersColorScheme) {
-      const isDarkPrefer = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)')?.matches;
-      defaultTheme = isDarkPrefer ? "dark" : "light";
-    } else if (["dark", "light"].includes(colorMode?.defaultMode)) {
+    } else if (["dark", "light", "system"].includes(colorMode?.defaultMode)) {
       defaultTheme = colorMode?.defaultMode;
     }
     setTheme(defaultTheme);
