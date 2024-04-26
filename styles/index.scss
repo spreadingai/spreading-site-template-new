@@ -125,8 +125,8 @@ html > body {
 }
 
 .preview-content-wrap {
-  width: calc(100vw - var(--preview-sider-width) - 15px);
-  overflow-x: auto;
+  width: calc(100% - var(--preview-sider-width) - 15px);
+  // overflow-x: auto; // 会导致 toc sticky 失效
 
   .preview-content {
     display: flex;
