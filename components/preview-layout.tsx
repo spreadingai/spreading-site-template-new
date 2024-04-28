@@ -335,6 +335,7 @@ const PreviewLayout = ({
   }, [instanceID, displayInstances]);
 
   const gaId = docuoConfig?.analytics?.ga4?.measurementId;
+  const isFooterHidden = !!docuoConfig?.themeConfig?.footer?.hidden;
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
@@ -459,7 +460,7 @@ const PreviewLayout = ({
             />
           </Drawer>
         </main>
-        <Footer docuoConfig={docuoConfig} socials={[]} links={[]} />
+        {!isFooterHidden && <Footer docuoConfig={docuoConfig} socials={[]} links={[]} />}
       </div>
     </ThemeContext.Provider>
   );

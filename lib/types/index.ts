@@ -76,6 +76,7 @@ export interface SocialItem {
   href: string;
 }
 export interface FooterConfig {
+  hidden?: boolean;
   logo:
     | string
     | {
