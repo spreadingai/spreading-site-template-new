@@ -19,6 +19,7 @@ export interface DocuoConfig {
     removeWatermark?: boolean;
   };
   search?: {
+    hidden?: boolean;
     algolia?: {
       appId: string;
       apiKey: string;
@@ -83,6 +84,7 @@ export interface FooterConfig {
         dark?: string;
         light?: string;
       };
+  logoUrl?: string;
   copyright: string;
   caption: string;
   links: FooterLink[];

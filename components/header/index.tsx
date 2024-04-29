@@ -42,6 +42,7 @@ const Header = (props: Props) => {
   const { navbar } = themeConfig;
   const { items } = navbar;
   const { algolia } = search || {};
+  const searchHidden = search?.hidden ?? false;
   const [width, setWidth] = React.useState(0);
   const [isMobile, setIsMobile] = React.useState(false);
   const matches = useMediaQuery(`(max-width: ${Math.max(width, 1024)}px)`); // mobile
@@ -77,7 +78,7 @@ const Header = (props: Props) => {
   }, []);
 
   const DocSearchComponent = useMemo(() => {
-    if (!algolia) return null;
+    if (!algolia || searchHidden) return null;
     return (
       <>
         <DocSearch
@@ -98,7 +99,7 @@ const Header = (props: Props) => {
         />
       </>
     );
-  }, [algolia, currentVersion, currentInstance]);
+  }, [algolia, searchHidden, currentVersion, currentInstance]);
 
   const isShowThemeBtn =
     docuoConfig?.themeConfig?.colorMode?.disableSwitch === false;
