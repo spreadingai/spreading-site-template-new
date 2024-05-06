@@ -344,6 +344,7 @@ const PreviewLayout = ({
   }, [instanceID, displayInstances]);
 
   const gaId = docuoConfig?.analytics?.ga4?.measurementId;
+  const isFooterHidden = !!docuoConfig?.themeConfig?.footer?.hidden;
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
@@ -381,6 +382,7 @@ const PreviewLayout = ({
               <InsVersionDropdown type="version" menu={versions} />
             </div>
             <DocuoTree
+              docuoConfig={docuoConfig}
               data={folderTreeData}
               selectedKeys={selectedKeys}
               onSelect={fileSelectHandle}
@@ -460,6 +462,7 @@ const PreviewLayout = ({
               <InsVersionDropdown type="version" menu={versions} />
             </div>
             <DocuoTree
+              docuoConfig={docuoConfig}
               data={folderTreeData}
               selectedKeys={selectedKeys}
               onSelect={fileSelectHandle}
@@ -468,7 +471,7 @@ const PreviewLayout = ({
             />
           </Drawer>
         </main>
-        <Footer docuoConfig={docuoConfig} socials={[]} links={[]} />
+        {!isFooterHidden && <Footer docuoConfig={docuoConfig} socials={[]} links={[]} />}
       </div>
     </ThemeContext.Provider>
   );

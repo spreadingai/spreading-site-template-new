@@ -16,8 +16,10 @@ export interface DocuoConfig {
     footer: FooterConfig;
     colorMode?: ColorMode;
     colors?: Colors;
+    removeWatermark?: boolean;
   };
   search?: {
+    hidden?: boolean;
     algolia?: {
       appId: string;
       apiKey: string;
@@ -81,12 +83,14 @@ export interface SocialItem {
   href: string;
 }
 export interface FooterConfig {
+  hidden?: boolean;
   logo:
     | string
     | {
         dark?: string;
         light?: string;
       };
+  logoUrl?: string;
   copyright: string;
   caption: string;
   links: FooterLink[];
@@ -161,7 +165,11 @@ export interface TocItem {
 }
 
 export enum Plan {
-  Free = "free",
+  None = 0,
+  ProTrial = 1,
+  Free = 2,
+  Pro = 3,
+  Enterprise = 4,
 }
 
 export interface FolderTreeItem {

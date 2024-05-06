@@ -10,25 +10,31 @@ import IconXDark from "@/assets/icons/social/x_dark.svg";
 import IconXLight from "@/assets/icons/social/x_light.svg";
 import IconYoutubeDark from "@/assets/icons/social/youtube_dark.svg";
 import IconYoutubeLight from "@/assets/icons/social/youtube_light.svg";
+import IconInstagramDark from "@/assets/icons/social/instagram_dark.svg";
+import IconInstagramLight from "@/assets/icons/social/instagram_light.svg";
+import IconDribbbleDark from "@/assets/icons/social/dribbble_dark.svg";
+import IconDribbbleLight from "@/assets/icons/social/dribbble_light.svg";
 
 const Social = {
-  Discord: { dark: <IconDiscordDark />, light: <IconDiscordLight /> },
-  Facebook: { dark: <IconFacebookDark />, light: <IconFacebookLight /> },
-  GitHub: { dark: <IconGithubDark />, light: <IconGithubLight /> },
-  LinkedIn: { dark: <IconLinkedInDark />, light: <IconLinkedInLight /> },
-  Twitter: { dark: <IconXDark />, light: <IconXLight /> },
-  X: { dark: <IconXDark />, light: <IconXLight /> },
-  YouTube: { dark: <IconYoutubeDark />, light: <IconYoutubeLight /> },
+  discord: { dark: <IconDiscordDark />, light: <IconDiscordLight /> },
+  facebook: { dark: <IconFacebookDark />, light: <IconFacebookLight /> },
+  github: { dark: <IconGithubDark />, light: <IconGithubLight /> },
+  linkedin: { dark: <IconLinkedInDark />, light: <IconLinkedInLight /> },
+  twitter: { dark: <IconXDark />, light: <IconXLight /> },
+  x: { dark: <IconXDark />, light: <IconXLight /> },
+  youtube: { dark: <IconYoutubeDark />, light: <IconYoutubeLight /> },
+  instagram: { dark: <IconInstagramDark />, light: <IconInstagramLight /> },
+  dribbble: { dark: <IconDribbbleDark />, light: <IconDribbbleLight /> },
 };
 const getSocial = (
   logo: string | { dark: string; light: string },
   isDarkMode: boolean
 ) => {
   const mode = isDarkMode ? "dark" : "light";
-  const current = typeof logo === "string" ? logo : logo?.[mode];
+  const current = typeof logo === "string" ? logo : logo?.[mode] || "";
 
-  return Social[current] ? (
-    Social[current][mode]
+  return Social[current.toLowerCase()] ? (
+    Social[current.toLowerCase()][mode]
   ) : (
     <img
       src={current.includes("http") ? current : `/${current}`}

@@ -61,7 +61,7 @@ class LibController {
             );
           }
         });
-        if (process.env.NEXT_PUBLIC_PLAN === Plan.Free) {
+        if (Number(process.env.NEXT_PUBLIC_PLAN) === Plan.Free) {
           docuoConfig.instances.splice(1);
         } else {
           if (

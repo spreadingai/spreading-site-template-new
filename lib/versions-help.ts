@@ -37,7 +37,7 @@ class VersionsController {
     const versionsPath = path.resolve("./public", "..", versionsUrl);
     let versions: string[] = [];
     // Increased the version limit
-    if (process.env.NEXT_PUBLIC_PLAN !== Plan.Free) {
+    if (Number(process.env.NEXT_PUBLIC_PLAN) !== Plan.Free) {
       if (fs.existsSync(versionsPath)) {
         versions = (
           JSON.parse(fs.readFileSync(versionsPath, "utf8")) as string[]
