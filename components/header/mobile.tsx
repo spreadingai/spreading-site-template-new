@@ -16,9 +16,10 @@ import ThemeContext from "@/components/header/Theme.context";
 interface Props {
   menus: NavbarLink[];
   renderThemeSwitch: () => any;
+  isShowSearchIcon: boolean;
 }
 
-const Mobile: FC<Props> = ({ menus, renderThemeSwitch }) => {
+const Mobile: FC<Props> = ({ menus, renderThemeSwitch, isShowSearchIcon }) => {
   const [open, setOpen] = useState(false);
   const { theme } = React.useContext(ThemeContext);
 
@@ -118,26 +119,23 @@ const Mobile: FC<Props> = ({ menus, renderThemeSwitch }) => {
   }, [menus]);
 
   const NavMoreNormal = theme === "dark" ? IconNavMoreDark : IconNavMore;
-  const NavMoreActive =
-    theme === "dark" ? IconNavMoreActiveDark : IconNavMoreActive;
+  const NavMoreActive = theme === "dark" ? IconNavMoreActiveDark : IconNavMoreActive;
   const MenuSearch = theme === "dark" ? IconMenuSearchDark : IconMenuSearch;
 
   return (
     <div>
       <div className={`cursor-pointer flex gap-4`}>
-        <MenuSearch
-          onClick={() => {
-            const el: HTMLButtonElement =
-              document.querySelector(".DocSearch-Button");
-            el && el.click();
-          }}
-        />
-        <span onClick={() => setOpen((value) => !value)}>
-          {open ? <NavMoreActive /> : <NavMoreNormal />}
-        </span>
+        {isShowSearchIcon && (
+          <MenuSearch
+            onClick={() => {
+              const el: HTMLButtonElement = document.querySelector(".DocSearch-Button");
+              el && el.click();
+            }}
+          />
+        )}
+        <span onClick={() => setOpen((value) => !value)}>{open ? <NavMoreActive /> : <NavMoreNormal />}</span>
       </div>
-      {open &&
-        createPortal(DropdownList, document.body, "mobile-menu-container")}
+      {open && createPortal(DropdownList, document.body, "mobile-menu-container")}
     </div>
   );
 };

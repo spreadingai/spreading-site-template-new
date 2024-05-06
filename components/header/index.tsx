@@ -167,6 +167,7 @@ const Header = (props: Props) => {
                 }
               })}
               renderThemeSwitch={renderThemeSwitch}
+              isShowSearchIcon={!!algolia && !searchHidden}
             />
           </div>
         ) : (
