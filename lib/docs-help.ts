@@ -14,6 +14,7 @@ import {
   rehypeCodeGroup,
   remarkToc,
   remarkFrontmatter,
+  rehypeNestedFormat,
 } from "@/plugins";
 
 import LibControllerImpl from "./index";
@@ -83,6 +84,7 @@ class DocsController {
           rehypeKatex,
           rehypeCodeBlocks,
           rehypeCodeGroup,
+          rehypeNestedFormat,
           [rehypeImages, { filePath: mdxFileUrl, exportRef: frontmatterRef }],
           [
             rehypeLink,
