@@ -35,6 +35,8 @@ import Export from "@/components/docuoOpenapi/theme/ApiExplorer/Export";
 import { DocFrontMatter } from "@/components/docuoOpenapi/types";
 import { DEFAULT_CURRENT_SLUG_VERSION } from "@/lib/constants";
 
+// import PartialExample from "@/docs/docs/01-Overview/partial-example.mdx";
+
 const components = {
   CodeBlock,
   CodeGroup,
@@ -60,6 +62,7 @@ const components = {
   SecuritySchemes,
   ApiLogo,
   Export,
+  // PartialExample,
 };
 
 interface Props {
