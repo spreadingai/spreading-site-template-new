@@ -53,7 +53,7 @@ const ThemeSwitch = (props: ThemeSwitchProps) => {
       <Dropdown
         trigger={["click"]}
         menu={{ items, className: styles.modesWrapper, onClick: handleThemeChanged }}
-        placement="bottomRight"
+        placement="bottomLeft"
       >
         <button className={styles.toggleButton}>
           <IconLight className={styles.lightToggleIcon} />
