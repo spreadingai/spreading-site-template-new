@@ -198,19 +198,21 @@ const Header = (props: Props) => {
               );
             })}
             <div className={styles["menus__btn-list"]}>
-              <DropdownItem
-                menu={{
-                  label: currentLanguage,
-                  // @ts-ignore
-                  items: displayLanguages.map((displayLanguage) => {
-                    return {
-                      ...displayLanguage,
-                      label: displayLanguage.language,
-                    };
-                  }),
-                }}
-              />
-              ;{renderThemeSwitch()}
+              {!!displayLanguages?.length && (
+                <DropdownItem
+                  menu={{
+                    label: currentLanguage,
+                    // @ts-ignore
+                    items: displayLanguages.map((displayLanguage) => {
+                      return {
+                        ...displayLanguage,
+                        label: displayLanguage.language
+                      };
+                    })
+                  }}
+                />
+              )}
+              {renderThemeSwitch()}
             </div>
           </div>
         )}
