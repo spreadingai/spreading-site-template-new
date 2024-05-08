@@ -48,9 +48,7 @@ const Mobile: FC<Props> = ({ menus, renderThemeSwitch, isShowSearchIcon }) => {
                           key={index}
                           className={styles["mobile-down-item"]}
                           href={
-                            child.href || { pathname: child.to } ||
-                            child.defaultLink ||
-                            "/"
+                            child.href || child.to || child.defaultLink || "/"
                           }
                           target={child.href ? "_blank" : "_self"}
                         >
@@ -99,11 +97,7 @@ const Mobile: FC<Props> = ({ menus, renderThemeSwitch, isShowSearchIcon }) => {
               <React.Fragment key={index}>
                 <Link
                   className={styles["mobile-item"]}
-                  href={
-                    menu.href || { pathname: menu.to } ||
-                    menu.defaultLink ||
-                    "/"
-                  }
+                  href={menu.href || menu.to || menu.defaultLink || "/"}
                   target={menu.href ? "_blank" : "_self"}
                 >
                   {menu.label}

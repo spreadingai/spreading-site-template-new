@@ -1,11 +1,15 @@
 import SlugControllerImpl from "./slug-help";
-import { SidebarItem, SidebarItemType } from "./types";
+import { FolderTreeData, SidebarItem, SidebarItemType } from "./types";
 import VersionsControllerImpl from "./versions-help";
 import SidebarsControllerImpl from "./sidebars-help";
 
 class TreeController {
   static _instance: TreeController;
   _folderTreeDataMap: Record<string, Record<string, any[]>> = {};
+  _idMap: Record<
+    string,
+    Record<string, Record<string, { mdxFileID: string; originID: string }>>
+  > = {}; // { [instanceID]: { [docVersion]: { [id]: { mdxFileID: "", originID: "" } } } }
   static getInstance() {
     return (
       TreeController._instance ||
@@ -27,10 +31,10 @@ class TreeController {
       console.log(`[TreeController]getFolderTreeDataBySlug cache`);
       return JSON.parse(
         JSON.stringify(this._folderTreeDataMap[instanceID][docVersion])
-      );
+      ) as FolderTreeData[];
     }
 
-    let tree = [];
+    let tree: FolderTreeData[] = [];
 
     const versions = VersionsControllerImpl.getUsedVersions(instanceID);
     if (slugVersion && slugVersion === versions[0]) {
@@ -81,7 +85,7 @@ class TreeController {
     this._folderTreeDataMap[instanceID] =
       this._folderTreeDataMap[instanceID] || {};
     this._folderTreeDataMap[instanceID][docVersion] = tree;
-    return JSON.parse(JSON.stringify(tree));
+    return JSON.parse(JSON.stringify(tree)) as FolderTreeData[];
   }
   getChildrenFromChildren(
     level: string,
@@ -127,7 +131,15 @@ class TreeController {
         children && (temp.children = children);
         if (item.id) {
           temp.mdxFileID = item.id;
-          temp.id = `${idPrefixKey}${idPrefixKey ? "/" : ""}${item.id}`;
+          temp.originID = `${idPrefixKey}${idPrefixKey ? "/" : ""}${item.id}`;
+          temp.id = this.transLanguageID(temp.originID);
+          this.updateIDMap(
+            instanceID,
+            docVersion,
+            temp.id,
+            temp.originID,
+            temp.mdxFileID
+          );
         }
         result.push(temp);
       } else {
@@ -146,6 +158,24 @@ class TreeController {
       }
     }
     return result;
+  }
+  updateIDMap(
+    instanceID: string,
+    docVersion: string,
+    id: string,
+    originID: string,
+    mdxFileID: string
+  ) {
+    this._idMap[instanceID] = this._idMap[instanceID] || {};
+    this._idMap[instanceID][docVersion] =
+      this._idMap[instanceID][docVersion] || {};
+    this._idMap[instanceID][docVersion][id] = {
+      mdxFileID,
+      originID,
+    };
+  }
+  transLanguageID(originID: string) {
+    return originID;
   }
 }
 

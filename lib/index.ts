@@ -9,15 +9,13 @@ import {
   Plan,
   SlugData,
 } from "./types";
+import { DEFAULT_INSTANCE_ID, UNLIMITED_INSTANCE_NUMBER } from "./constants";
 
 class LibController {
   static _instance: LibController;
   _docuoConfig: DocuoConfig;
   _entityRootDirectory = "docs";
   _instances: DisplayInstance[];
-  _unlimitedInstanceNumber = "-1";
-  _defaultVersion = "next";
-  _defaultInstanceID = "default";
   _addDefaultLinkMarker = false;
   _updateFooterLinksMarker = false;
   _displayInstances = null;
@@ -33,12 +31,14 @@ class LibController {
         JSON.stringify(inputDocuoConfig)
       );
       const defaultInstance = {
-        id: this._defaultInstanceID, // Host instance
+        id: DEFAULT_INSTANCE_ID, // Host instance
         label: "docs",
         path: "docs",
         routeBasePath: "",
       };
-      if (!docuoConfig.instances) {
+      // Check instances
+      if (!docuoConfig.instances || !docuoConfig.instances.length) {
+        // Insert host instance
         docuoConfig.instances = [defaultInstance];
       } else {
         docuoConfig.instances.forEach((instance) => {
@@ -61,19 +61,11 @@ class LibController {
             );
           }
         });
-        const result = docuoConfig.instances.find(
-          (instance) => instance.id === this._defaultInstanceID
-        );
-        if (!result) {
-          // Insert host instance
-          docuoConfig.instances.unshift(defaultInstance);
-        }
         if (Number(process.env.NEXT_PUBLIC_PLAN) === Plan.Free) {
           docuoConfig.instances.splice(1);
         } else {
           if (
-            process.env.NEXT_PUBLIC_INSTANCE_LIMIT !==
-            this._unlimitedInstanceNumber
+            process.env.NEXT_PUBLIC_INSTANCE_LIMIT !== UNLIMITED_INSTANCE_NUMBER
           ) {
             try {
               const limit = Number(process.env.NEXT_PUBLIC_INSTANCE_LIMIT);
@@ -106,8 +98,9 @@ class LibController {
     targetSlug && (firstSlug = targetSlug.params.slug);
     return firstSlug;
   }
-  addDefaultLink(allSlugs: SlugData[]) {
+  addDefaultLink() {
     if (this._addDefaultLinkMarker) return;
+    const allSlugs = SlugControllerImpl.getAllSlugs();
     const { themeConfig, instances } = this.getDocuoConfig();
     if (!themeConfig) return;
     const { navbar } = themeConfig;
@@ -116,7 +109,7 @@ class LibController {
       if (items.length === 0) return;
       for (const item of items) {
         if (item.defaultLink) continue;
-        !item.docsInstanceId && (item.docsInstanceId = this._defaultInstanceID);
+        !item.docsInstanceId && (item.docsInstanceId = DEFAULT_INSTANCE_ID);
         const instance = instances.find((i) => i.id === item.docsInstanceId);
         const routeBasePath = instance ? instance.routeBasePath : "";
         if (item.type === NavBarItemType.DocSidebar) {
@@ -163,17 +156,28 @@ class LibController {
       return JSON.parse(JSON.stringify(this._displayInstances));
     }
     if (!this._docuoConfig) return [];
+    const { i18n } = this._docuoConfig;
     const allSlugs = SlugControllerImpl.getAllSlugs();
-    return this._docuoConfig.instances.map((instance) => {
-      const targetSlug = allSlugs.find((item) => {
-        return item.params.instanceID === instance.id;
-      });
-      return {
-        instance,
-        firstSlug: targetSlug ? targetSlug.params.slug : [],
-        defaultLink: targetSlug ? `/${targetSlug.params.slug.join("/")}` : "",
-      };
+    const result: DisplayInstance[] = [];
+    this._docuoConfig.instances.forEach((instance) => {
+      if (
+        i18n &&
+        i18n.localeConfigs &&
+        Object.keys(i18n.localeConfigs).find((suffix) =>
+          instance.id.endsWith(`_${suffix}`)
+        )
+      ) {
+      } else {
+        const targetSlug = allSlugs.find((item) => {
+          return item.params.instanceID === instance.id;
+        });
+        result.push({
+          instance,
+          defaultLink: targetSlug ? `/${targetSlug.params.slug.join("/")}` : "",
+        });
+      }
     });
+    return result;
   }
 }
 

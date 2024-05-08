@@ -12,6 +12,7 @@ import LibControllerImpl from "@/lib";
 import DocsControllerImpl from "@/lib/docs-help";
 import TreeControllerImpl from "@/lib/tree-help";
 import SlugControllerImpl from "@/lib/slug-help";
+import LanguageControllerImpl from "@/lib/language-help";
 import VersionsControllerImpl from "@/lib/versions-help";
 import Link from "next/link";
 import { SlugData, DocuoConfig, TocItem, DocInstance } from "@/lib/types";
@@ -32,6 +33,7 @@ import SecuritySchemes from "@/components/docuoOpenapi/theme/ApiExplorer/Securit
 import ApiLogo from "@/components/docuoOpenapi/theme/ApiLogo";
 import Export from "@/components/docuoOpenapi/theme/ApiExplorer/Export";
 import { DocFrontMatter } from "@/components/docuoOpenapi/types";
+import { DEFAULT_CURRENT_SLUG_VERSION } from "@/lib/constants";
 
 const components = {
   CodeBlock,
@@ -85,14 +87,16 @@ export const getStaticProps = async ({ params }: SlugData) => {
   slug[slug.length - 1] = slug[slug.length - 1].replace(/#.*$/, "");
   // Reason: `undefined` cannot be serialized as JSON. Please use `null` or omit this value.
   const docuoConfig = LibControllerImpl.getDocuoConfig();
-  const allSlugs = SlugControllerImpl.getAllSlugs();
-  LibControllerImpl.addDefaultLink(allSlugs);
+  LibControllerImpl.addDefaultLink();
   const { instanceID, slugVersion, docVersion } =
     SlugControllerImpl.getExtractInfoFromSlug(slug);
-  const defaultVersion = VersionsControllerImpl.getDefaultVersion();
+  const { baseInstanceID } =
+    LanguageControllerImpl.getInfoByInstanceID(instanceID);
   const folderTreeData = TreeControllerImpl.getFolderTreeDataBySlug(slug);
   const displayVersions = VersionsControllerImpl.getDisplayVersions(slug);
   const displayInstances = LibControllerImpl.getDisplayInstances();
+  const { displayLanguages, currentLanguage } =
+    LanguageControllerImpl.getDisplayLanguages(slug);
   const postData = await DocsControllerImpl.readDoc(slug);
   const instances = LibControllerImpl.getDocuoConfig().instances;
   const versions = VersionsControllerImpl.getUsedVersions(instanceID);
@@ -100,11 +104,14 @@ export const getStaticProps = async ({ params }: SlugData) => {
     props: {
       ...postData,
       instanceID,
-      docVersion: docVersion || slugVersion || defaultVersion,
+      baseInstanceID,
+      docVersion: docVersion || slugVersion || DEFAULT_CURRENT_SLUG_VERSION,
       folderTreeData,
       docuoConfig,
       displayVersions,
       displayInstances,
+      currentLanguage,
+      displayLanguages,
       instances,
       versions,
     },
@@ -117,9 +124,9 @@ export function getStaticPaths() {
     "[Spreading] getStaticPaths..."
   );
   const paths = SlugControllerImpl.getAllSlugs();
-  console.time("123");
+  console.time("copyStaticFile");
   DocsControllerImpl.copyStaticFile();
-  console.timeEnd("123");
+  console.timeEnd("copyStaticFile");
   return {
     paths,
     fallback: true,

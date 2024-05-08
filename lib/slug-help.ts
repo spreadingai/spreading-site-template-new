@@ -3,6 +3,11 @@ import { SidebarItem, SidebarItemType, SlugData } from "./types";
 // TODO:Here's the cross-reference
 import VersionsControllerImpl from "./versions-help";
 import SidebarsControllerImpl from "./sidebars-help";
+import {
+  DEFAULT_CURRENT_DOC_VERSION,
+  DEFAULT_CURRENT_SLUG_VERSION,
+  DEFAULT_LATEST_SLUG_VERSION,
+} from "./constants";
 
 class SlugController {
   static _instance: SlugController;
@@ -38,10 +43,10 @@ class SlugController {
     // Convert to slug version
     if (!slugVersions.length) {
       // [""]
-      slugVersions.push("");
+      slugVersions.push(DEFAULT_LATEST_SLUG_VERSION);
     } else {
       // ["1.1.0", "1.0.0", "next"]
-      slugVersions.push(VersionsControllerImpl.getDefaultVersion());
+      slugVersions.push(DEFAULT_CURRENT_SLUG_VERSION);
       slugVersions[0] = this.docVersionToSlugVersion(
         instanceID,
         slugVersions[0]
@@ -109,38 +114,49 @@ class SlugController {
     return result;
   }
   getExtractInfoFromSlug(slug: string[]) {
-    // /route/Base/Path/ + 👇
-    // eg1: /docs/path/to/doc => The current version when there is no version list
-    // eg2: /docs/path/to/doc => The latest version when the version list is available
-    // eg3: /docs/next/path/to/doc => The current version when the version list is available
-    // eg4: /docs/1.0.0/path/to/doc => The specified version when there is a version list
+    // eg1: /route/Base/Path/path/to/doc => The current version when there is no version list
+    // eg2: /route/Base/Path/path/to/doc => The latest version when the version list is available
+    // eg3: /route/Base/Path/next/path/to/doc => The current version when the version list is available
+    // eg4: /route/Base/Path/1.0.0/path/to/doc => The specified version when there is a version list
     const docuoConfig = LibControllerImpl.getDocuoConfig();
-    let routeBasePath = slug[0];
-    let slugVersion = slug[1];
+    let routeBasePath = "",
+      slugVersion = slug[0];
     let targetInstance = docuoConfig.instances.find(
       (instance) => instance.routeBasePath === routeBasePath
     );
-    if (!targetInstance) {
-      // No basic path
-      routeBasePath = "";
-      targetInstance = docuoConfig.instances.find(
-        (instance) => !instance.routeBasePath
-      );
-      slugVersion = slug[0];
-    }
-    const instanceID = targetInstance.id;
+    let instanceID = targetInstance ? targetInstance.id : "";
+    docuoConfig.instances.forEach((instance) => {
+      if (instance.routeBasePath) {
+        const temp = `${instance.routeBasePath}/`;
+        const slugStr = slug.join("/");
+        const index = slugStr.indexOf(temp);
+        if (index !== -1) {
+          routeBasePath = slugStr.slice(0, temp.length - 1);
+          slugVersion = slug[routeBasePath.split("/").length];
+          instanceID = instance.id;
+          return;
+        }
+      }
+    });
+
     const versions = VersionsControllerImpl.getUsedVersions(instanceID);
     // mdxFileID: complex-components/test1/link_test.md
-    let mdxFileID = slug.slice(routeBasePath ? 2 : 1).join("/");
+    let mdxFileID = slug
+      .slice(routeBasePath ? routeBasePath.split("/").length + 1 : 1)
+      .join("/");
     const mdxFileName = slug[slug.length - 1];
     if (!versions.length) {
-      slugVersion = "";
-      mdxFileID = slug.slice(routeBasePath ? 1 : 0).join("/");
+      slugVersion = DEFAULT_LATEST_SLUG_VERSION;
+      mdxFileID = slug
+        .slice(routeBasePath ? routeBasePath.split("/").length : 0)
+        .join("/");
     } else {
-      if (slugVersion !== VersionsControllerImpl.getDefaultVersion()) {
+      if (slugVersion !== DEFAULT_CURRENT_SLUG_VERSION) {
         if (!versions.includes(slugVersion)) {
-          slugVersion = "";
-          mdxFileID = slug.slice(routeBasePath ? 1 : 0).join("/");
+          slugVersion = DEFAULT_LATEST_SLUG_VERSION;
+          mdxFileID = slug
+            .slice(routeBasePath ? routeBasePath.split("/").length : 0)
+            .join("/");
         }
       }
     }
@@ -176,13 +192,13 @@ class SlugController {
     if (versions.length) {
       if (!slugVersion) {
         docVersion = versions[0];
-      } else if (slugVersion === VersionsControllerImpl.getDefaultVersion()) {
-        docVersion = "";
+      } else if (slugVersion === DEFAULT_CURRENT_SLUG_VERSION) {
+        docVersion = DEFAULT_CURRENT_DOC_VERSION;
       } else {
         docVersion = slugVersion;
       }
     } else {
-      docVersion = "";
+      docVersion = DEFAULT_CURRENT_DOC_VERSION;
     }
     return docVersion;
   }
@@ -191,18 +207,18 @@ class SlugController {
     const versions = VersionsControllerImpl.getUsedVersions(instanceID);
     let slugVersion;
     if (versions.length) {
-      if (docVersion === VersionsControllerImpl.getDefaultVersion()) {
+      if (docVersion === DEFAULT_CURRENT_SLUG_VERSION) {
         // No conversion required
         slugVersion = docVersion;
       } else if (docVersion === versions[0]) {
-        slugVersion = "";
+        slugVersion = DEFAULT_LATEST_SLUG_VERSION;
       } else if (!docVersion) {
-        slugVersion = VersionsControllerImpl.getDefaultVersion();
+        slugVersion = DEFAULT_CURRENT_SLUG_VERSION;
       } else {
         slugVersion = docVersion;
       }
     } else {
-      slugVersion = "";
+      slugVersion = DEFAULT_LATEST_SLUG_VERSION;
     }
     return slugVersion;
   }

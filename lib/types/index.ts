@@ -31,6 +31,12 @@ export interface DocuoConfig {
       measurementId: string;
     };
   };
+  i18n?: {
+    defaultLocale: string;
+    localeConfigs: {
+      [index: string]: string;
+    };
+  };
 }
 export enum NavBarItemType {
   Default = "default",
@@ -131,13 +137,14 @@ export interface Sidebars {
 }
 export interface DisplayVersion {
   version: string;
-  firstSlug: string[];
   defaultLink: string;
-  firstLink: string;
 }
 export interface DisplayInstance {
   instance: DocInstance;
-  firstSlug: string[];
+  defaultLink: string;
+}
+export interface DisplayLanguage {
+  language: string;
   defaultLink: string;
 }
 export interface SlugData {
@@ -163,4 +170,28 @@ export enum Plan {
   Free = 2,
   Pro = 3,
   Enterprise = 4,
+}
+
+export interface FolderTreeItem {
+  children?: FolderTreeItem[];
+  docVersion: string;
+  instanceID: string;
+  key: string;
+  slugVersion: string;
+  title: string;
+  type: SidebarItemType;
+  id?: string;
+  mdxFileID?: string;
+  originID?: string;
+  link?: string;
+}
+
+export interface FolderTreeData {
+  children: FolderTreeItem[];
+  docVersion: string;
+  instanceID: string;
+  key: string;
+  slugVersion: string;
+  title: string;
+  type: SidebarItemType;
 }
