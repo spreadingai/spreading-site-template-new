@@ -113,10 +113,18 @@ const Header = (props: Props) => {
     if (typeof navbar.logo === "string") {
       return navbar.logo;
     }
-    if (theme === "dark" && typeof navbar.logo?.dark === "string") {
+    let currentMode = "light";
+    if (["dark", "light"].includes(theme)) {
+      currentMode = theme;
+    }
+    if (theme === "system") {
+      const isDarkMode = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)")?.matches;
+      currentMode = isDarkMode ? "dark" : "light";
+    }
+    if (currentMode === "dark" && typeof navbar.logo?.dark === "string") {
       return navbar.logo?.dark;
     }
-    if (theme === "light" && typeof navbar.logo?.light === "string") {
+    if (currentMode === "light" && typeof navbar.logo?.light === "string") {
       return navbar.logo?.light;
     }
     return "";
