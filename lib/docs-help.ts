@@ -7,6 +7,7 @@ import remarkGfm from "remark-gfm";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 import remarkImages from "remark-images";
+import remarkMdx from "remark-mdx";
 import {
   rehypeImages,
   rehypeLink,
@@ -14,6 +15,7 @@ import {
   rehypeCodeGroup,
   remarkToc,
   remarkFrontmatter,
+  remarkCustomMDX,
 } from "@/plugins";
 
 import LibControllerImpl from "./index";
@@ -90,6 +92,8 @@ class DocsController {
     const mdxSource = await serialize(originContent, {
       mdxOptions: {
         remarkPlugins: [
+          remarkCustomMDX,
+          // remarkMdx,
           remarkGfm,
           remarkMath,
           remarkImages,
