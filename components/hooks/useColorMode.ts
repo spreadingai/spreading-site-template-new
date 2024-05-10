@@ -13,8 +13,6 @@ const useColorMode = (colorMode, theme, setTheme) => {
   }, [theme]);
 
   useEffect(() => {
-    const themeEnabled = colorMode?.disableSwitch === false;
-    if (!themeEnabled) return;
     const THEME_KEY = "theme";
     let defaultTheme: Theme = "light";
     const localTheme = localStorage.getItem(THEME_KEY) || "";
