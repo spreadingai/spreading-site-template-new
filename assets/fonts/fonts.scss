@@ -119,6 +119,14 @@
   font-weight: 600;
   src: url("./roboto-mono-v22-latin-600.woff2") format("woff2");
 }
+// code font
+@font-face {
+  font-display: swap;
+  font-family: Menlo;
+  font-style: normal;
+  font-weight: 500;
+  src: url("./Menlo-Regular.ttf") format("ttf");
+}
 html body {
   font-family: Inter, sans-serif;
 }
