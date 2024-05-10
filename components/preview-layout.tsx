@@ -8,7 +8,6 @@ import { useRouter } from "next/router";
 import Header from "./header";
 import Footer from "./footer";
 
-import { MDXRemoteSerializeResult } from "next-mdx-remote";
 import {
   DisplayInstance,
   DisplayVersion,
@@ -45,7 +44,7 @@ type Props = {
   instanceID: string;
   baseInstanceID: string;
   docVersion: string;
-  mdxSource: MDXRemoteSerializeResult;
+  mdxSource: any;
   toc: TocItem[];
   folderTreeData: TreeDataObject[];
   docuoConfig: DocuoConfig;
@@ -471,7 +470,9 @@ const PreviewLayout = ({
             />
           </Drawer>
         </main>
-        {!isFooterHidden && <Footer docuoConfig={docuoConfig} socials={[]} links={[]} />}
+        {!isFooterHidden && (
+          <Footer docuoConfig={docuoConfig} socials={[]} links={[]} />
+        )}
       </div>
     </ThemeContext.Provider>
   );

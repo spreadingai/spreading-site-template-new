@@ -127,7 +127,7 @@ class DocsController {
     //   parseFrontmatter: true,
     // });
 
-    const cwd = path.dirname(mdxFileUrl);
+    const cwd = mdxFileUrl ? path.dirname(mdxFileUrl) : undefined;
     const globals = {
       "@mdx-js/react": {
         varName: "MdxJsReact",
