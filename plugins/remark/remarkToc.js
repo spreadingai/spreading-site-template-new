@@ -40,7 +40,11 @@ export const remarkToc = (options) => {
     });
     if (headings.length) {
       const toc = parseHeadingsToTocs(headings);
-      options.exportRef.toc = toc;
+      if (options.exportRef.toc) {
+        options.exportRef.toc.push(...toc);
+      } else {
+        options.exportRef.toc = toc;
+      }
     }
   };
 };
