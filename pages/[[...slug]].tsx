@@ -36,6 +36,7 @@ import ApiLogo from "@/components/docuoOpenapi/theme/ApiLogo";
 import Export from "@/components/docuoOpenapi/theme/ApiExplorer/Export";
 import { DocFrontMatter } from "@/components/docuoOpenapi/types";
 import { DEFAULT_CURRENT_SLUG_VERSION } from "@/lib/constants";
+import { Mermaid } from "mdx-mermaid/lib/Mermaid";
 
 const components = {
   CodeBlock,
@@ -64,6 +65,8 @@ const components = {
   SecuritySchemes,
   ApiLogo,
   Export,
+  mermaid: Mermaid,
+  Mermaid,
 };
 
 interface Props {

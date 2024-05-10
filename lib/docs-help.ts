@@ -7,6 +7,7 @@ import remarkGfm from "remark-gfm";
 import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 import remarkImages from "remark-images";
+import mdxMermaid from "mdx-mermaid";
 import {
   rehypeImages,
   rehypeLink,
@@ -96,6 +97,15 @@ class DocsController {
           remarkImages,
           [remarkToc, { exportRef: tocRef }],
           [remarkFrontmatter, { exportRef: frontmatterRef }],
+          [
+            mdxMermaid,
+            {
+              output: "svg",
+              // mermaid: {
+              //   theme: "dark",
+              // },
+            },
+          ],
         ],
         rehypePlugins: [
           // @ts-ignore

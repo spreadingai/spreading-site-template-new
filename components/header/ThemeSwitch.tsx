@@ -45,14 +45,20 @@ const ThemeSwitch = (props: ThemeSwitchProps) => {
     key: item.value,
     icon: isMobile ? null : item.icon,
     label: <span>{item.name}</span>,
-    className: `${styles.modeItem} ${item.value === theme ? styles.active : ""}`
+    className: `${styles.modeItem} ${
+      item.value === theme ? styles.active : ""
+    }`,
   }));
 
   return (
     <div className={`${styles.colorModeToggle} ${className}`}>
       <Dropdown
         trigger={["click"]}
-        menu={{ items, className: styles.modesWrapper, onClick: handleThemeChanged }}
+        menu={{
+          items,
+          className: styles.modesWrapper,
+          onClick: handleThemeChanged,
+        }}
         placement="bottomLeft"
       >
         <button className={styles.toggleButton}>
@@ -62,6 +68,6 @@ const ThemeSwitch = (props: ThemeSwitchProps) => {
       </Dropdown>
     </div>
   );
-}
+};
 
 export default ThemeSwitch;
