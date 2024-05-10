@@ -14,9 +14,17 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "/*": ["./docs/*"],
+      "@site/*": ["./docs/*"]
     }
   },
   "exclude": ["node_modules", "packages"],
-  "include": ["globals.d.ts", "next-env.d.ts", "**/*.ts", "**/*.tsx"]
+  "include": [
+    "globals.d.ts",
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "docs/docs/01-Overview/test5.mdx"
+  ]
 }

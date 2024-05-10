@@ -9,7 +9,12 @@ import LibControllerImpl from "./index";
 import path from "path";
 import fs from "fs";
 import { convertDocID, ignoreNumberPrefix, removeMdxSuffix } from "./utils";
-import { DEFAULT_INSTANCE_ID, SEQUENCE_PREFIX_REGEX } from "./constants";
+import {
+  DEFAULT_INSTANCE_ID,
+  SEQUENCE_PREFIX_REGEX,
+  IGNORE_FILE_NAME,
+  IGNORE_FOLDER_NAME,
+} from "./constants";
 
 class SidebarsController {
   static _instance: SidebarsController;
@@ -176,12 +181,17 @@ class SidebarsController {
       };
 
       this.sortFiles(files).forEach((file) => {
-        const filePath = path.join(dirPath, file);
-        const childTreeData = loop(filePath);
-        childTreeData &&
-          ((childTreeData.items && childTreeData.items.length) ||
-            !childTreeData.items) &&
-          sidebar.items.push(childTreeData);
+        if (
+          !IGNORE_FILE_NAME.includes(file) &&
+          !IGNORE_FOLDER_NAME.includes(file)
+        ) {
+          const filePath = path.join(dirPath, file);
+          const childTreeData = loop(filePath);
+          childTreeData &&
+            ((childTreeData.items && childTreeData.items.length) ||
+              !childTreeData.items) &&
+            sidebar.items.push(childTreeData);
+        }
       });
       return sidebar;
     };

@@ -1,14 +1,9 @@
 /** @type {import('next').NextConfig} */
 
 import NextBundleAnalyzer from "@next/bundle-analyzer";
-import createMDX from "@next/mdx";
 
 const withBundleAnalyzer = NextBundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
-});
-
-const withMDX = createMDX({
-  // Add markdown plugins here, as desired
 });
 
 const nextConfig = {
@@ -77,4 +72,4 @@ const nextConfig = {
   },
 };
 
-export default withBundleAnalyzer(withMDX(nextConfig));
+export default withBundleAnalyzer(nextConfig);
