@@ -13,3 +13,8 @@ export const DEFAULT_CURRENT_DOC_VERSION = "";
 // Limit
 export const UNLIMITED_INSTANCE_NUMBER = "-1";
 export const UNLIMITED_VERSION_NUMBER = "-1";
+
+// Ignore file, folder
+
+export const IGNORE_FILE_NAME = [".DS_Store"];
+export const IGNORE_FOLDER_NAME = ["snippets"];

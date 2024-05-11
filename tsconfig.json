@@ -14,7 +14,9 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "/*": ["./docs/*"],
+      "@site/*": ["./docs/*"]
     }
   },
   "exclude": ["node_modules", "packages"],
