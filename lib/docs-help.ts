@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
-import { serialize } from "next-mdx-remote/serialize";
+// import { serialize } from "next-mdx-remote/serialize";
+import { bundleMDX } from "mdx-bundler";
 
 // plugins
 import remarkGfm from "remark-gfm";
@@ -88,42 +89,68 @@ class DocsController {
     const frontmatterRef: any = {
       fileName: ignoreNumberPrefix(removeMdxSuffix(temp[temp.length - 1])),
     };
-    const mdxSource = await serialize(originContent, {
-      mdxOptions: {
-        remarkPlugins: [
-          remarkGfm,
-          remarkMath,
-          remarkImages,
-          [remarkToc, { exportRef: tocRef }],
-          [remarkFrontmatter, { exportRef: frontmatterRef }],
-        ],
-        rehypePlugins: [
-          // @ts-ignore
-          rehypeKatex,
-          rehypeCodeBlocks,
-          rehypeCodeGroup,
-          rehypeNestedFormat,
-          [rehypeImages, { filePath: mdxFileUrl, exportRef: frontmatterRef }],
-          [
-            rehypeLink,
-            {
-              rootUrl: `${rootUrl}`,
-              filePath: mdxFileUrl,
-              prefix: `${
-                slugVersion
-                  ? routeBasePath
-                    ? routeBasePath + "/"
-                    : ""
-                  : routeBasePath
-              }${slugVersion}`,
-            },
-          ],
-        ],
-        format: "mdx",
-        useDynamicImport: true,
+    const remarkPlugins = [
+      remarkGfm,
+      remarkMath,
+      remarkImages,
+      [remarkToc, { exportRef: tocRef }],
+      [remarkFrontmatter, { exportRef: frontmatterRef }],
+    ];
+    const rehypePlugins = [
+      rehypeKatex,
+      rehypeCodeBlocks,
+      rehypeCodeGroup,
+      rehypeNestedFormat,
+      [rehypeImages, { filePath: mdxFileUrl, exportRef: frontmatterRef }],
+      [
+        rehypeLink,
+        {
+          rootUrl: `${rootUrl}`,
+          filePath: mdxFileUrl,
+          prefix: `${
+            slugVersion
+              ? routeBasePath
+                ? routeBasePath + "/"
+                : ""
+              : routeBasePath
+          }${slugVersion}`,
+        },
+      ],
+    ];
+    // const mdxSource = await serialize(originContent, {
+    //   mdxOptions: {
+    //     // @ts-ignore
+    //     remarkPlugins,
+    //     // @ts-ignore
+    //     rehypePlugins,
+    //     format: "mdx",
+    //     useDynamicImport: true,
+    //   },
+    //   parseFrontmatter: true,
+    // });
+
+    const cwd = mdxFileUrl ? path.dirname(mdxFileUrl) : undefined;
+    const globals = {
+      "@mdx-js/react": {
+        varName: "MdxJsReact",
+        namedExports: ["useMDXComponents"],
+        defaultExport: false,
       },
-      parseFrontmatter: true,
+    };
+    const mdxSource = await bundleMDX({
+      cwd,
+      source: originContent,
+      globals,
+      mdxOptions: (opts) => {
+        opts.remarkPlugins = [...(opts.remarkPlugins ?? []), ...remarkPlugins];
+        opts.rehypePlugins = [...(opts.rehypePlugins ?? []), ...rehypePlugins];
+        return {
+          ...opts,
+          providerImportSource: "@mdx-js/react",
+        };
+      },
     });
+
     // Copy frontmatter img
     mdxSource.frontmatter = mdxSource.frontmatter || {};
     mdxSource.frontmatter["og:logo"] = this.getPublicPath(

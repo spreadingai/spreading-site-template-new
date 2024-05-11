@@ -1,5 +1,7 @@
+import React, { useMemo } from "react";
 import PreviewLayout from "@/components/preview-layout";
-import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
+// import { MDXRemote } from "next-mdx-remote";
+import { MDXProvider, useMDXComponents } from "@mdx-js/react";
 import {
   CodeBlock,
   CodeGroup,
@@ -36,6 +38,13 @@ import ApiLogo from "@/components/docuoOpenapi/theme/ApiLogo";
 import Export from "@/components/docuoOpenapi/theme/ApiExplorer/Export";
 import { DocFrontMatter } from "@/components/docuoOpenapi/types";
 import { DEFAULT_CURRENT_SLUG_VERSION } from "@/lib/constants";
+import { getMDXComponent } from "mdx-bundler/client";
+
+const MDX_GLOBAL_CONFIG = {
+  MdxJsReact: {
+    useMDXComponents,
+  },
+};
 
 const components = {
   CodeBlock,
@@ -67,7 +76,7 @@ const components = {
 };
 
 interface Props {
-  mdxSource: MDXRemoteSerializeResult;
+  mdxSource: any;
   toc: TocItem[];
   slug: string[];
   docuoConfig: DocuoConfig;
@@ -142,13 +151,22 @@ export default function DocPage(props: Props) {
   if (!slug) {
     return null;
   }
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const Component = useMemo(
+    () => getMDXComponent(mdxSource.code, MDX_GLOBAL_CONFIG),
+    [mdxSource.code]
+  );
   return (
     <div className="prose" style={{ maxWidth: "unset" }}>
       <PageHead {...props}></PageHead>
       <article className="editor-wrapper">
         <ApiItem {...props}>
           {/* @ts-ignore */}
-          <MDXRemote {...mdxSource} components={components} />
+          {/* <MDXRemote {...mdxSource} components={components} /> */}
+          {/* @ts-ignore */}
+          <MDXProvider components={components}>
+            <Component />
+          </MDXProvider>
         </ApiItem>
       </article>
     </div>

@@ -16,7 +16,6 @@ import type { ApiItem as ApiItemType } from "@/components/docuoOpenapi/docuo-plu
 import type { DocFrontMatter } from "@/components/docuoOpenapi/types";
 import { Provider } from "react-redux";
 import { createStoreWithoutState, createStoreWithState } from "./store";
-import { MDXRemoteSerializeResult } from "next-mdx-remote";
 import { DocInstance, DocuoConfig, TocItem } from "@/lib/types";
 import DocItemLayout from "@/components/docuoOpenapi/theme/ApiItem/Layout";
 import ApiExplorer from "@/components/docuoOpenapi/theme/ApiExplorer";
@@ -34,7 +33,7 @@ import {
 import { parseByInfoPath } from "@/components/docuoOpenapi/utils";
 
 interface Props {
-  mdxSource: MDXRemoteSerializeResult;
+  mdxSource: any;
   toc: TocItem[];
   slug: string[];
   docuoConfig: DocuoConfig;

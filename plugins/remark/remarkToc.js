@@ -6,7 +6,7 @@ import { parseHeadingsToTocs } from "../utils";
 export const remarkToc = (options) => {
   // 标记标题出现次数
   const uniqueId = {};
-  
+
   return (tree) => {
     const headings = [];
     visit(tree, "heading", (node, i, parent) => {
@@ -22,8 +22,8 @@ export const remarkToc = (options) => {
         id += `-${uniqueId[id]}`;
       }
       const Heading = {
-        type: 'mdxJsxFlowElement',
-        name: 'Heading',
+        type: "mdxJsxFlowElement",
+        name: "Heading",
         attributes: [
           { type: "mdxJsxAttribute", name: "level", value: node.depth },
           { type: "mdxJsxAttribute", name: "id", value: id },
@@ -40,8 +40,11 @@ export const remarkToc = (options) => {
     });
     if (headings.length) {
       const toc = parseHeadingsToTocs(headings);
-      options.exportRef.toc = toc;
+      if (options.exportRef.toc) {
+        options.exportRef.toc.push(...toc);
+      } else {
+        options.exportRef.toc = toc;
+      }
     }
-  }
+  };
 };
-
