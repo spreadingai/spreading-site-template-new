@@ -16,6 +16,6 @@ echo "delete template docs end"
 # 克隆远端用户 docs 仓库，拷贝到指定目录，推送到远端
 git clone -b $deploy_branch "https://$username:$token_3th@github.com/$username/$repo.git" ./docs
 cd ./docs
-echo "last commit: "
-git rev-parse HEAD
+# echo "last commit: "
+# git rev-parse HEAD
 cd ../
