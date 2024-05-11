@@ -7,6 +7,8 @@ import {
   Frame,
   Video,
   Heading,
+  Button,
+  Accordion,
 } from "@spreading/docuo-mdx-component";
 import LibControllerImpl from "@/lib";
 import DocsControllerImpl from "@/lib/docs-help";
@@ -45,6 +47,8 @@ const components = {
   Frame,
   Video,
   Heading,
+  Button,
+  Accordion,
   a: Link,
   MethodEndpoint,
   ParamsItem,

@@ -97,9 +97,8 @@ export interface FooterConfig {
   socials: SocialItem[];
 }
 export interface ColorMode {
-  defaultMode: "light" | "dark";
+  defaultMode: "light" | "dark" | "system";
   disableSwitch: boolean;
-  respectPrefersColorScheme: boolean;
 }
 export interface Colors {
   primaryLight: string;

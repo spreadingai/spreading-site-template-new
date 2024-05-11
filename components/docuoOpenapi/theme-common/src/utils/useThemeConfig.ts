@@ -47,9 +47,8 @@ export type Navbar = {
 };
 
 export type ColorModeConfig = {
-  defaultMode: "light" | "dark";
+  defaultMode: "light" | "dark" | "system";
   disableSwitch: boolean;
-  respectPrefersColorScheme: boolean;
 };
 
 export type AnnouncementBarConfig = {

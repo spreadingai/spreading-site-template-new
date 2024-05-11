@@ -116,24 +116,27 @@
 			color: var(--docuo-ol-number-color);
 		}
 	}
-	ol,
-	ol ol ol ol,
-	ol ol ol ol ol ol ol,
-	ol ol ol ol ol ol ol ol ol ol {
+	ol {
 		list-style-type: decimal;
 	}
-	ol ol,
-	ol ol ol ol ol,
-	ol ol ol ol ol ol ol ol,
-	ol ol ol ol ol ol ol ol ol ol ol {
-		list-style-type: lower-alpha;
-	}
-	ol ol ol,
-	ol ol ol ol ol ol,
-	ol ol ol ol ol ol ol ol ol,
-	ol ol ol ol ol ol ol ol ol ol ol ol {
-		list-style-type: lower-roman;
-	}
+	// ol,
+	// ol ol ol ol,
+	// ol ol ol ol ol ol ol,
+	// ol ol ol ol ol ol ol ol ol ol {
+	// 	list-style-type: decimal;
+	// }
+	// ol ol,
+	// ol ol ol ol ol,
+	// ol ol ol ol ol ol ol ol,
+	// ol ol ol ol ol ol ol ol ol ol ol {
+	// 	list-style-type: lower-alpha;
+	// }
+	// ol ol ol,
+	// ol ol ol ol ol ol,
+	// ol ol ol ol ol ol ol ol ol,
+	// ol ol ol ol ol ol ol ol ol ol ol ol {
+	// 	list-style-type: lower-roman;
+	// }
 	// 加粗
 	b,
 	strong {
@@ -223,7 +226,7 @@
 		background: var(--docuo-inline-code-bg);
 		border: var(--docuo-inline-code-border);
 		border-radius: 4px;
-		font-family: RobotoMono;
+    font-family: ui-monospace, SFMono-Regular, Menlo;
 		font-weight: 500;
 		color: var(--docuo-color-primary);
 		line-height: 1.2;

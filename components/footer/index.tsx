@@ -106,6 +106,7 @@ const Footer: FC<footerProps> = ({ docuoConfig }) => {
               [styles["two-col"]]: isShowTwoCol,
               [styles["sm-wrap"]]: isSMWrap
             })}
+            style={{ display: links?.length === 0 ? "none" : undefined }}
             ref={rightRef}
           >
             {isMobile ? (

@@ -42,6 +42,9 @@ html {
   --docuo-breadcrumb-color: rgba(81, 88, 105, 0.8);
   --docuo-breadcrumb-icon-color: rgba(81, 88, 105, 0.5);
 
+  --docuo-theme-popover-color: #515869;
+  --docuo-theme-popover-bg: #fff;
+
   --docuo-m-dropdown-divider-color: #eeeeee;
   --docuo-m-dropdown-sub-color: rgba(81, 88, 105, 0.9);
   --docuo-m-drawer-btn-color: rgba(81, 88, 105, 0.8);
@@ -116,6 +119,9 @@ html[data-theme=dark] {
 
   --docuo-breadcrumb-color: #909090;
   --docuo-breadcrumb-icon-color: #909090;
+
+  --docuo-theme-popover-color: #e7e7e7;
+  --docuo-theme-popover-bg: #191919;
 
   --docuo-m-dropdown-divider-color: #252525;
   --docuo-m-dropdown-sub-color: #B6B6B6;

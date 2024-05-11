@@ -79,7 +79,7 @@
   .mobile-btn-list {
     display: flex;
     gap: 22px;
-    div:first-child {
+    >div:first-child {
       margin-top: 16px;
     }
   }
