@@ -39,6 +39,7 @@ import Export from "@/components/docuoOpenapi/theme/ApiExplorer/Export";
 import { DocFrontMatter } from "@/components/docuoOpenapi/types";
 import { DEFAULT_CURRENT_SLUG_VERSION } from "@/lib/constants";
 import { getMDXComponent } from "mdx-bundler/client";
+import { Mermaid } from "mdx-mermaid/lib/Mermaid";
 
 const MDX_GLOBAL_CONFIG = {
   MdxJsReact: {
@@ -59,6 +60,8 @@ const components = {
   Button,
   Accordion,
   a: Link,
+  mermaid: (props) => <Mermaid config={{ theme: "default" }} {...props} />,
+  Mermaid: (props) => <Mermaid config={{ theme: "default" }} {...props} />,
   MethodEndpoint,
   ParamsItem,
   MimeTabs,
