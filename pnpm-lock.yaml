@@ -85,7 +85,7 @@ dependencies:
     version: 10.0.2(esbuild@0.21.1)
   mdx-mermaid:
     specifier: ^2.0.0
-    version: 2.0.0(mermaid@10.9.0)(react@18.2.0)(unist-util-visit@5.0.0)
+    version: 2.0.0(mermaid@10.9.0)(react@18.2.0)(unist-util-visit@4.1.2)
   mermaid:
     specifier: ^10.9.0
     version: 10.9.0
@@ -153,8 +153,8 @@ dependencies:
     specifier: ^0.33.2
     version: 0.33.2
   unist-util-visit:
-    specifier: ^5.0.0
-    version: 5.0.0
+    specifier: ^4.1.2
+    version: 4.1.2
   use-sync-external-store:
     specifier: ^1.2.0
     version: 1.2.0(react@18.2.0)
@@ -6639,6 +6639,7 @@ packages:
 
   /end-of-stream@1.4.4:
     resolution: {integrity: sha512-+uw1inIHVPQoaVuHzRyXd21icM+cnt4CzD5rW+NC1wjOUSTOs+Te7FOv7AhN7vS9x/oIyhLP5PR1H+phQAHu5Q==}
+    requiresBuild: true
     dependencies:
       once: 1.4.0
     dev: false
@@ -9757,7 +9758,7 @@ packages:
       - supports-color
     dev: false
 
-  /mdx-mermaid@2.0.0(mermaid@10.9.0)(react@18.2.0)(unist-util-visit@5.0.0):
+  /mdx-mermaid@2.0.0(mermaid@10.9.0)(react@18.2.0)(unist-util-visit@4.1.2):
     resolution: {integrity: sha512-vmkh4yg/EgkhAWxdFsyol5Tgk9aTnM16njgGIYk3R3SdbejPt8YV+HRYycAOstR1TJefMNAmjAyqkRjukLP7qg==}
     peerDependencies:
       mermaid: '>=8.11.0'
@@ -9766,7 +9767,7 @@ packages:
     dependencies:
       mermaid: 10.9.0
       react: 18.2.0
-      unist-util-visit: 5.0.0
+      unist-util-visit: 4.1.2
     optionalDependencies:
       estree-util-to-js: 1.2.0
       estree-util-visit: 1.2.1
