@@ -10,6 +10,8 @@ import {
   Video,
   Heading,
   Button,
+  Tab,
+  Tabs,
   Accordion,
 } from "@spreading/docuo-mdx-component";
 import LibControllerImpl from "@/lib";
@@ -59,6 +61,8 @@ const components = {
   Heading,
   Button,
   Accordion,
+  Tab,
+  Tabs,
   a: Link,
   mermaid: (props) => <Mermaid config={{ theme: "default" }} {...props} />,
   Mermaid: (props) => <Mermaid config={{ theme: "default" }} {...props} />,
