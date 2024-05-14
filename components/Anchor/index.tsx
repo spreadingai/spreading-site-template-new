@@ -180,7 +180,7 @@ const DocuoAnchor: FC<TreeProps> = ({
 
   return (
     <AnchorContext.Provider value={memoizedContextValue}>
-      <div ref={el => (wrapperRef.current = el)} className={classNames(className)}>
+      <div ref={(el: any) => (wrapperRef.current = el)} className={classNames(className)}>
         {data.map((node, index) => (
           <AnchorNode key={index} node={node} onClick={onSelect || onExpand} />
         ))}
