@@ -10,9 +10,11 @@ import {
   Video,
   Heading,
   Button,
+  Accordion,
   Tab,
   Tabs,
-  Accordion,
+  Card,
+  CardGroup,
 } from "@spreading/docuo-mdx-component";
 import LibControllerImpl from "@/lib";
 import DocsControllerImpl from "@/lib/docs-help";
@@ -63,6 +65,8 @@ const components = {
   Accordion,
   Tab,
   Tabs,
+  Card,
+  CardGroup,
   a: Link,
   mermaid: (props) => <Mermaid config={{ theme: "default" }} {...props} />,
   Mermaid: (props) => <Mermaid config={{ theme: "default" }} {...props} />,

@@ -12,6 +12,7 @@ import mdxMermaid from "mdx-mermaid";
 import {
   rehypeImages,
   rehypeLink,
+  rehypeA,
   rehypeCodeBlocks,
   rehypeCodeGroup,
   remarkToc,
@@ -90,6 +91,13 @@ class DocsController {
     const frontmatterRef: any = {
       fileName: ignoreNumberPrefix(removeMdxSuffix(temp[temp.length - 1])),
     };
+    const linkObj = {
+      rootUrl: `${rootUrl}`,
+      filePath: mdxFileUrl,
+      prefix: `${
+        slugVersion ? (routeBasePath ? routeBasePath + "/" : "") : routeBasePath
+      }${slugVersion}`,
+    };
     const remarkPlugins = [
       remarkGfm,
       remarkMath,
@@ -104,20 +112,8 @@ class DocsController {
       rehypeCodeGroup,
       rehypeNestedFormat,
       [rehypeImages, { filePath: mdxFileUrl, exportRef: frontmatterRef }],
-      [
-        rehypeLink,
-        {
-          rootUrl: `${rootUrl}`,
-          filePath: mdxFileUrl,
-          prefix: `${
-            slugVersion
-              ? routeBasePath
-                ? routeBasePath + "/"
-                : ""
-              : routeBasePath
-          }${slugVersion}`,
-        },
-      ],
+      [rehypeLink, linkObj],
+      [rehypeA, linkObj],
     ];
     // const mdxSource = await serialize(originContent, {
     //   mdxOptions: {

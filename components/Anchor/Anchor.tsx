@@ -72,7 +72,7 @@ const AnchorNode: FC<AnchorNodeProps> = ({
         }
       >
         <span
-          className={classNames(styles.anchorText, {
+          className={classNames(styles.anchorText, "overflow-hidden", {
             [styles.active]: activeLink === node.href,
             [styles.gt0Level]: level !== 0,
           })}
@@ -80,7 +80,7 @@ const AnchorNode: FC<AnchorNodeProps> = ({
           <a
             href={node.href}
             className={classNames(
-              "cursor-pointer block",
+              "cursor-pointer block truncate",
               "font-inter-regular",
               {
                 "pl-[13px]": level !== 0,

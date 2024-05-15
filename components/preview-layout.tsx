@@ -173,6 +173,25 @@ const PreviewLayout = ({
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
+    const linkClickHandler = (event) => {
+      const { href } = event.detail || {};
+      if (!href || typeof href !== "string") return;
+      if (href.startsWith("http")) {
+        window.open(href);
+      } else {
+        router.push({ pathname: href });
+      }
+    };
+    const eventName = "link-clicked";
+    document.addEventListener(eventName, linkClickHandler);
+
+    return () => {
+      document.removeEventListener(eventName, linkClickHandler);
+    };
+  }, [router]);
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
     if (router.isReady) {
       document.body.scrollTo({ top: 0 });
     }
