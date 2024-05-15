@@ -11,6 +11,8 @@ import {
   Heading,
   Button,
   Accordion,
+  Tab,
+  Tabs,
   Card,
   CardGroup,
 } from "@spreading/docuo-mdx-component";
@@ -61,6 +63,8 @@ const components = {
   Heading,
   Button,
   Accordion,
+  Tab,
+  Tabs,
   Card,
   CardGroup,
   a: Link,
