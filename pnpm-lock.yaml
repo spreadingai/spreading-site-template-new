@@ -24,8 +24,8 @@ importers:
         specifier: ^1.7.1
         version: 1.9.7(react-redux@7.2.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
       '@spreading/docuo-mdx-component':
-        specifier: ^2.2.4
-        version: 2.2.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        specifier: ^2.3.3
+        version: 2.3.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@svgr/webpack':
         specifier: ^8.1.0
         version: 8.1.0(typescript@5.3.3)
@@ -1677,8 +1677,8 @@ packages:
     resolution: {integrity: sha512-Ug7x6z5lwrz0WqdnNFOMYrDQNTPAprvHLSh6+/fmml3qUiz6l5eq+2MzLKWtn/q5K5NpSiFsZTP/fck/3vjSxA==}
     engines: {node: '>=14'}
 
-  '@spreading/docuo-mdx-component@2.2.4':
-    resolution: {integrity: sha512-/2YBqUi03BM1ZkFUGmg/ouB0+7LSbV5A0JcItihiwCU6aZJWOfM4lauBder48DmYC2WquDFbNHsv8CZziZ3Otw==}
+  '@spreading/docuo-mdx-component@2.3.3':
+    resolution: {integrity: sha512-1KA2FD9GXLXNgGByBb5RpOAYAHa2drXKQWBKrtEB6vTCK+XXrD6X0Jm8jU6KPnAGQCy4a2tlmb3r1NMpgEIusg==}
     peerDependencies:
       react: '>=17.0.0'
       react-dom: '>=17.0.0'
@@ -9595,7 +9595,7 @@ snapshots:
       p-map: 4.0.0
       webpack-sources: 3.2.3
 
-  '@spreading/docuo-mdx-component@2.2.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
+  '@spreading/docuo-mdx-component@2.3.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:
       antd: 5.13.3(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       lodash: 4.17.21
