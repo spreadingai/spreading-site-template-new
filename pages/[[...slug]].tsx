@@ -54,6 +54,7 @@ const MDX_GLOBAL_CONFIG = {
 const components = {
   CodeBlock,
   CodeGroup,
+  Check: Callout.Check,
   Tip: Callout.Tip,
   Note: Callout.Note,
   Warning: Callout.Warning,
