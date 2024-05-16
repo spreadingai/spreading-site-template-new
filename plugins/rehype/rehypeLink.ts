@@ -17,7 +17,7 @@ export function rehypeLink(options: {
         node.properties.target = "_blank";
         return;
       }
-      if (node.properties.href.includes(":")) {
+      if (node.properties.href.startsWith(":")) {
         return;
       }
       if (!options.rootUrl || !options.filePath) return;

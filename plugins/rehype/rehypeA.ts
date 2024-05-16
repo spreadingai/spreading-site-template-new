@@ -14,7 +14,12 @@ export function rehypeA(options: {
         (item) =>
           item.name === "href" && item.type === "mdxJsxAttribute" && item.value
       );
-      if (!target) return;
+      if (
+        !target ||
+        target.value.startsWith("http") ||
+        target.value.startsWith(":")
+      )
+        return;
       if (!options.rootUrl || !options.filePath) return;
       // while href does not start with 'http'
       const href = target.value;
