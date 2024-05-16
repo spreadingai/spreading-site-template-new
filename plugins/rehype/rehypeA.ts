@@ -17,7 +17,8 @@ export function rehypeA(options: {
       if (
         !target ||
         target.value.startsWith("http") ||
-        target.value.startsWith(":")
+        target.value.startsWith(":") ||
+        target.value.startsWith("#")
       )
         return;
       if (!options.rootUrl || !options.filePath) return;
