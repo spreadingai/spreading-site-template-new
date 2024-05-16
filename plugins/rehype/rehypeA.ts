@@ -8,7 +8,7 @@ export function rehypeA(options: {
   filePath: string;
 }) {
   return function updateATag(tree, file) {
-    visit(tree, "mdxJsxTextElement", (node, i, parent) => {
+    visit(tree, (node, i, parent) => {
       if (!node.attributes) return;
       const target = node.attributes.find(
         (item) =>
