@@ -34,8 +34,7 @@ const AnchorNode: FC<AnchorNodeProps> = ({
   level = 0,
   onClick,
 }) => {
-  const { unregisterLink, registerLink, activeLink, scrollTo } =
-    useContext(AnchorContext);
+  const { unregisterLink, registerLink, activeLink, scrollTo } = useContext(AnchorContext);
 
   const hasChildren = node.children && node.children.length > 0;
 
@@ -54,8 +53,8 @@ const AnchorNode: FC<AnchorNodeProps> = ({
   }, [isShowMobile]);
 
   const toggleNode: MouseEventHandler<HTMLAnchorElement> = (e) => {
-    e.preventDefault();
-    scrollTo?.(node.href);
+    // e.preventDefault();
+    // scrollTo?.(node.href);
     if (onClick) {
       onClick([node.key], { ...node, event: e });
     }
