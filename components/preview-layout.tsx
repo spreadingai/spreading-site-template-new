@@ -174,12 +174,16 @@ const PreviewLayout = ({
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     const linkClickHandler = (event) => {
-      const { href } = event.detail || {};
+      const { href, target } = event.detail || {};
       if (!href || typeof href !== "string") return;
-      if (href.startsWith("http")) {
+      if (target === "_blank") {
         window.open(href);
       } else {
-        router.push({ pathname: href });
+        if (href.startsWith("http")) {
+          location.href = href;
+        } else {
+          router.push({ pathname: href });
+        }
       }
     };
     const eventName = "link-clicked";
