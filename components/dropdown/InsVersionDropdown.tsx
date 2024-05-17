@@ -18,19 +18,24 @@ const InsVersionDropdown = ({ type, menu }: InsVersionDropdownProps) => {
       return {
         key: index,
         label: (
-          <Link
-            href={item.href || item.to || item.defaultLink || "/"}
-            target={item.href ? "_blank" : "_self"}
-          >
+          <Link href={item.href || item.to || item.defaultLink || "/"} target={item.href ? "_blank" : "_self"}>
             {item.label}
           </Link>
         ),
-        className: `${styles["popup-list-item"]} ${
-          menu.label === item.label ? styles.active : ""
-        }`,
+        className: `${styles["popup-list-item"]} ${menu.label === item.label ? styles.active : ""}`
       };
     });
   }, [menu.items, menu.to]);
+
+  const handleOpenChange = (val: boolean) => {
+    setOpen(val);
+    if (val) {
+      const activeNode = document.querySelector(`.${styles.active}.${styles["popup-list-item"]}`);
+      if (activeNode) {
+        setTimeout(() => activeNode.scrollIntoView(), 10);
+      }
+    }
+  };
 
   if (menu.items.length <= 1) return null;
 
@@ -39,32 +44,20 @@ const InsVersionDropdown = ({ type, menu }: InsVersionDropdownProps) => {
       menu={{
         items: DropdownList,
         className: styles["ins-version-popup"],
-        style: { top: "4px" },
+        style: { top: "4px" }
       }}
       open={open}
-      onOpenChange={setOpen}
+      onOpenChange={handleOpenChange}
     >
       <div
         title={menu.label as string}
-        className={`mt-[28px] ${styles["ins-version-wrapper"]} ${
-          styles[type]
-        } ${open ? styles.active : ""}`}
+        className={`mt-[28px] ${styles["ins-version-wrapper"]} ${styles[type]} ${open ? styles.active : ""}`}
       >
-        <span
-          className={`${styles["label"]} pop-overlay text-ellipsis overflow-hidden`}
-        >
-          {menu.label}
-        </span>
+        <span className={`${styles["label"]} pop-overlay text-ellipsis overflow-hidden`}>{menu.label}</span>
         {open ? (
-          <IconArrowRight
-            className={styles["icon"]}
-            style={{ transform: "rotate(-90deg)" }}
-          />
+          <IconArrowRight className={styles["icon"]} style={{ transform: "rotate(-90deg)" }} />
         ) : (
-          <IconArrowRight
-            className={styles["icon"]}
-            style={{ transform: "rotate(90deg)" }}
-          />
+          <IconArrowRight className={styles["icon"]} style={{ transform: "rotate(90deg)" }} />
         )}
       </div>
     </Dropdown>
