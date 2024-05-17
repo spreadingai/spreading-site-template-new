@@ -28,6 +28,7 @@ class SidebarsController {
   }
   getSidebars(instanceID: string, docVersion?: string) {
     if (
+      process.env.NODE_ENV !== "development" &&
       this._sidebarsMap[instanceID] &&
       this._sidebarsMap[instanceID][docVersion]
     ) {
