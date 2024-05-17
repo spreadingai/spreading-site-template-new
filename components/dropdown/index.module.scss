@@ -1,8 +1,13 @@
 .ins-version-wrapper {
+  &.instance {
+    width: 150px;
+    &:last-child {
+      width: 240px; // temp: 只有多实例，没有多版本时
+    }
+  }
   &.version {
     width: 80px;
   }
-  width: 150px;
   height: 36px;
   background: var(--docuo-dropdown-label-bg);
   border-radius: 6px;
