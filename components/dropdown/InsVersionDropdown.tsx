@@ -30,10 +30,12 @@ const InsVersionDropdown = ({ type, menu }: InsVersionDropdownProps) => {
   const handleOpenChange = (val: boolean) => {
     setOpen(val);
     if (val) {
-      const activeNode = document.querySelector(`.${styles.active}.${styles["popup-list-item"]}`);
-      if (activeNode) {
-        setTimeout(() => activeNode.scrollIntoView(), 10);
-      }
+      setTimeout(() => {
+        const activeNode = document.querySelector(`.${styles.active}.${styles["popup-list-item"]}`);
+        if (activeNode) {
+          activeNode.scrollIntoView();
+        }
+      }, 100);
     }
   };
 
