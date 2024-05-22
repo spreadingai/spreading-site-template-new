@@ -145,26 +145,18 @@ const Header = (props: Props) => {
       <div className={`container-wrap ${styles.container}`}>
         {logo ? (
           <div className="flex items-center">
-            <Link
-              className={styles["logo-container"]}
-              href={navbar.iconRedirectUrl || process.env.SITE_URL || ""}
-              ref={logoRef}
-            >
+            <Link className={styles["logo-container"]} href={navbar.iconRedirectUrl || ""} ref={logoRef}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 className={styles.logo}
                 src={
                   (logo as string).includes("http")
                     ? `${logo}`
-                    : `${
-                        process.env.NEXT_PUBLIC_BASE_PATH || ""
-                      }/${logo.replace(/^\//, "")}`
+                    : `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/${logo.replace(/^\//, "")}`
                 }
                 alt={"logo"}
               />
-              <span className={styles["logo-title"]}>
-                {decodeURI(navbar.title)}
-              </span>
+              <span className={styles["logo-title"]}>{decodeURI(navbar.title)}</span>
             </Link>
             {DocSearchComponent}
           </div>
@@ -187,10 +179,7 @@ const Header = (props: Props) => {
           <div className={styles["menus"]} ref={menusRef}>
             {(items || []).map((menu, index) => {
               if (!menu) return null;
-              if (
-                menu?.type === NavBarItemType.Dropdown ||
-                Array.isArray(menu.items)
-              ) {
+              if (menu?.type === NavBarItemType.Dropdown || Array.isArray(menu.items)) {
                 // @ts-ignore
                 return <DropdownItem menu={menu} key={index} />;
               }
