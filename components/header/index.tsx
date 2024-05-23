@@ -88,6 +88,11 @@ const Header = (props: Props) => {
       <>
         <DocSearch
           {...algolia}
+          searchParameters={{
+            // filters: "instance:callkit_flutter",
+            // facetFilters: ["instance:in_app_chat_kit_flutter"],
+            facetFilters: ["version:next"],
+          }}
           translations={{
             button: {
               buttonText: "Quick search...",
@@ -118,7 +123,9 @@ const Header = (props: Props) => {
       currentMode = theme;
     }
     if (theme === "system") {
-      const isDarkMode = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)")?.matches;
+      const isDarkMode =
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)")?.matches;
       currentMode = isDarkMode ? "dark" : "light";
     }
     if (currentMode === "dark" && typeof navbar.logo?.dark === "string") {
@@ -214,9 +221,9 @@ const Header = (props: Props) => {
                     items: displayLanguages.map((displayLanguage) => {
                       return {
                         ...displayLanguage,
-                        label: displayLanguage.language
+                        label: displayLanguage.language,
                       };
-                    })
+                    }),
                   }}
                 />
               )}
