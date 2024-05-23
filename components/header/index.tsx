@@ -18,7 +18,7 @@ import { DocSearch } from "@docsearch/react";
 import AnchorNode from "../Anchor/Anchor";
 import ThemeSwitch from "./ThemeSwitch";
 import ThemeContext from "@/components/header/Theme.context";
-
+import LanguageSwitch from "./LanguageSwitch";
 // import "@docsearch/css";
 
 interface Props {
@@ -145,6 +145,16 @@ const Header = (props: Props) => {
     ) : null;
   };
 
+  const renderLanguageSwitch = () => {
+    return !!displayLanguages?.length ? (
+      <LanguageSwitch
+        className={isMobile ? "mobile" : ""}
+        displayLanguage={displayLanguages}
+        currentLanguage={currentLanguage}
+      />
+    ) : null;
+  };
+
   return (
     <header
       className={`header-container ${styles["header-container"]} ${
@@ -189,6 +199,7 @@ const Header = (props: Props) => {
                 }
               })}
               renderThemeSwitch={renderThemeSwitch}
+              renderLanguageSwitch={renderLanguageSwitch}
               isShowSearchIcon={!!algolia && !searchHidden}
             />
           </div>
@@ -215,20 +226,7 @@ const Header = (props: Props) => {
               );
             })}
             <div className={styles["menus__btn-list"]}>
-              {!!displayLanguages?.length && (
-                <DropdownItem
-                  menu={{
-                    label: currentLanguage,
-                    // @ts-ignore
-                    items: displayLanguages.map((displayLanguage) => {
-                      return {
-                        ...displayLanguage,
-                        label: displayLanguage.language,
-                      };
-                    }),
-                  }}
-                />
-              )}
+              {renderLanguageSwitch()}
               {renderThemeSwitch()}
             </div>
           </div>
