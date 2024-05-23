@@ -375,7 +375,6 @@ const PreviewLayout = ({
         <Head>
           <meta name="docsearch:version" content={docVersion} />
           <meta name="docsearch:instance" content={instanceID} />
-          <meta name="docsearch:language" content="en" />
         </Head>
         <Header
           docuoConfig={docuoConfig}

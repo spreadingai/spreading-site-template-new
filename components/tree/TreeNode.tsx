@@ -58,14 +58,14 @@ const TreeNode: FC<TreeNodeProps> = ({
   };
   return (
     <div
-      className={classNames({
+      className={classNames("tree-node-wrapper", {
         "mb-7": level == 0,
         relative: showLines,
       })}
     >
       <div
         className={classNames(
-          `${styles.treeNodeContainer} text-sm flex items-center`,
+          `${styles.treeNodeContainer} text-sm flex items-center tree-node-container`,
           {
             "mb-2.5": level === 0,
             "mb-2 cursor-pointer": level > 0,
@@ -75,9 +75,10 @@ const TreeNode: FC<TreeNodeProps> = ({
         onClick={level > 0 ? toggleNode : undefined}
       >
         <span
-          className={classNames(styles.treeNodeLabel, {
+          className={classNames(`${styles.treeNodeLabel} tree-node-label`, {
             [styles.isLevel0]: level === 0,
             [styles.active]: selectedKeys?.includes(node.key),
+            active: selectedKeys?.includes(node.key),
             [styles.islink]:
               node.type === SidebarItemType.Doc ||
               node.type === SidebarItemType.Link,
@@ -104,7 +105,7 @@ const TreeNode: FC<TreeNodeProps> = ({
       </div>
       {hasChildren && (
         <div
-          className={classNames("mt-2.5", {
+          className={classNames("mt-2.5 tree-node-children-wrapper", {
             "ml-4": level > 0,
             hidden: !isOpen,
             [styles.childrenBorderLeft]: showLines,
