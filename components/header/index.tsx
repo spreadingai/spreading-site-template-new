@@ -88,11 +88,13 @@ const Header = (props: Props) => {
       <>
         <DocSearch
           {...algolia}
-          searchParameters={{
-            // filters: "instance:callkit_flutter",
-            // facetFilters: ["instance:in_app_chat_kit_flutter"],
-            facetFilters: ["version:next"],
-          }}
+          searchParameters={
+            {
+              // filters: "instance:callkit_flutter",
+              // facetFilters: ["instance:in_app_chat_kit_flutter"],
+              // facetFilters: ["version:next"],
+            }
+          }
           translations={{
             button: {
               buttonText: "Quick search...",
@@ -144,8 +146,12 @@ const Header = (props: Props) => {
   };
 
   const renderLanguageSwitch = () => {
-    return isShowThemeBtn ? (
-      <LanguageSwitch className={isMobile ? "mobile" : ""} />
+    return !!displayLanguages?.length ? (
+      <LanguageSwitch
+        className={isMobile ? "mobile" : ""}
+        displayLanguage={displayLanguages}
+        currentLanguage={currentLanguage}
+      />
     ) : null;
   };
 
@@ -193,6 +199,7 @@ const Header = (props: Props) => {
                 }
               })}
               renderThemeSwitch={renderThemeSwitch}
+              renderLanguageSwitch={renderLanguageSwitch}
               isShowSearchIcon={!!algolia && !searchHidden}
             />
           </div>
@@ -219,20 +226,6 @@ const Header = (props: Props) => {
               );
             })}
             <div className={styles["menus__btn-list"]}>
-              {!!displayLanguages?.length && (
-                <DropdownItem
-                  menu={{
-                    label: currentLanguage,
-                    // @ts-ignore
-                    items: displayLanguages.map((displayLanguage) => {
-                      return {
-                        ...displayLanguage,
-                        label: displayLanguage.language,
-                      };
-                    }),
-                  }}
-                />
-              )}
               {renderLanguageSwitch()}
               {renderThemeSwitch()}
             </div>

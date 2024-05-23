@@ -1,61 +1,44 @@
-import { useContext } from "react";
 import styles from "./ThemeSwitch.module.scss";
 import { Dropdown } from "antd";
 import type { MenuProps } from "antd";
-import { useMediaQuery } from "usehooks-ts";
 import IconLanguageNorLight from "@/assets/icons/header/icon_language_nor_light.svg";
 import IconLanguageNorDark from "@/assets/icons/header/icon_language_nor_dark.svg";
-import ThemeContext, { Theme } from "@/components/header/Theme.context";
-
-const THEME_KEY = "theme";
+import { DisplayLanguage } from "@/lib/types";
+import { useRouter } from "next/router";
 
 interface LanguageSwitchProps {
   className?: string;
+  displayLanguage: DisplayLanguage[];
+  currentLanguage: string;
 }
 
-const ModeList = [
-  {
-    name: "Light",
-    value: "light",
-  },
-  {
-    name: "Dark",
-    value: "dark",
-  },
-  {
-    name: "System",
-    value: "system",
-  },
-];
 const LanguageSwitch = (props: LanguageSwitchProps) => {
-  const { className = "" } = props;
-  const { theme, setTheme } = useContext(ThemeContext);
-  const isMobile = useMediaQuery(`(max-width: 1024px)`);
+  const router = useRouter();
+  const { className = "", displayLanguage, currentLanguage } = props;
 
-  const handleThemeChanged: MenuProps["onClick"] = ({ key: theme }) => {
-    setTheme(theme as Theme);
-    localStorage.setItem(THEME_KEY, theme);
+  const handleThemeChanged: MenuProps["onClick"] = ({ key: language }) => {
+    const target = displayLanguage.find((item) => item.language === language);
+    router.push({ pathname: target.defaultLink });
   };
 
-  const items = ModeList.map((item) => ({
-    key: item.value,
-    icon: isMobile ? null : item.icon,
-    label: <span>{item.name}</span>,
+  const items = displayLanguage.map((item) => ({
+    key: item.language,
+    label: <span>{item.language}</span>,
     className: `${styles.modeItem} ${
-      item.value === theme ? styles.active : ""
+      item.language === currentLanguage ? styles.active : ""
     }`,
   }));
 
   return (
-    <div className={`${styles.colorModeToggle} ${className}`}>
+    <div className={`${styles.languageToggle} ${className}`}>
       <Dropdown
         trigger={["click"]}
         menu={{
           items,
-          className: styles.modesWrapper,
+          className: styles.languageWrapper,
           onClick: handleThemeChanged,
         }}
-        placement="bottomLeft"
+        placement="bottomRight"
       >
         <button className={styles.toggleButton}>
           <IconLanguageNorLight className={styles.lightToggleIcon} />

@@ -16,10 +16,16 @@ import ThemeContext from "@/components/header/Theme.context";
 interface Props {
   menus: NavbarLink[];
   renderThemeSwitch: () => any;
+  renderLanguageSwitch: () => any;
   isShowSearchIcon: boolean;
 }
 
-const Mobile: FC<Props> = ({ menus, renderThemeSwitch, isShowSearchIcon }) => {
+const Mobile: FC<Props> = ({
+  menus,
+  renderThemeSwitch,
+  renderLanguageSwitch,
+  isShowSearchIcon,
+}) => {
   const [open, setOpen] = useState(false);
   const { theme } = React.useContext(ThemeContext);
 
@@ -106,14 +112,18 @@ const Mobile: FC<Props> = ({ menus, renderThemeSwitch, isShowSearchIcon }) => {
               </React.Fragment>
             );
           })}
-          <div className={styles["mobile-btn-list"]}>{renderThemeSwitch()}</div>
+          <div className={styles["mobile-btn-list"]}>
+            {renderThemeSwitch()}
+            {renderLanguageSwitch()}
+          </div>
         </div>
       </div>
     );
   }, [menus]);
 
   const NavMoreNormal = theme === "dark" ? IconNavMoreDark : IconNavMore;
-  const NavMoreActive = theme === "dark" ? IconNavMoreActiveDark : IconNavMoreActive;
+  const NavMoreActive =
+    theme === "dark" ? IconNavMoreActiveDark : IconNavMoreActive;
   const MenuSearch = theme === "dark" ? IconMenuSearchDark : IconMenuSearch;
 
   return (
@@ -122,14 +132,18 @@ const Mobile: FC<Props> = ({ menus, renderThemeSwitch, isShowSearchIcon }) => {
         {isShowSearchIcon && (
           <MenuSearch
             onClick={() => {
-              const el: HTMLButtonElement = document.querySelector(".DocSearch-Button");
+              const el: HTMLButtonElement =
+                document.querySelector(".DocSearch-Button");
               el && el.click();
             }}
           />
         )}
-        <span onClick={() => setOpen((value) => !value)}>{open ? <NavMoreActive /> : <NavMoreNormal />}</span>
+        <span onClick={() => setOpen((value) => !value)}>
+          {open ? <NavMoreActive /> : <NavMoreNormal />}
+        </span>
       </div>
-      {open && createPortal(DropdownList, document.body, "mobile-menu-container")}
+      {open &&
+        createPortal(DropdownList, document.body, "mobile-menu-container")}
     </div>
   );
 };
