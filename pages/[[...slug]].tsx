@@ -15,6 +15,8 @@ import {
   Tabs,
   Card,
   CardGroup,
+  Step,
+  Steps,
 } from "@spreading/docuo-mdx-component";
 import LibControllerImpl from "@/lib";
 import DocsControllerImpl from "@/lib/docs-help";
@@ -68,6 +70,8 @@ const components = {
   Tabs,
   Card,
   CardGroup,
+  Step,
+  Steps,
   a: Link,
   mermaid: (props) => <Mermaid config={{ theme: "default" }} {...props} />,
   Mermaid: (props) => <Mermaid config={{ theme: "default" }} {...props} />,

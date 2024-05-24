@@ -28,7 +28,7 @@ export function rehypeImages(options) {
         const publicPath = getPublicPath(relativePath, options.filePath);
         finalPath = srcAttribute.value = getFinalPath(relativePath, publicPath);
       }
-      if (node.type === "mdxJsxFlowElement" && node.name === "Card") {
+      if (node.type === "mdxJsxFlowElement" && ["Card", "Step"].includes(node.name)) {
         const attributes = node.attributes || [];
         const iconAttribute = attributes.find((attr) => attr.name === "icon");
         if (!iconAttribute || typeof iconAttribute.value !== "string" || iconAttribute.value?.startsWith("http"))
