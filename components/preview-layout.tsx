@@ -269,8 +269,13 @@ const PreviewLayout = ({
       }
     };
     loop(folderTreeData, []);
+    const len = result.length;
     return result.map((item, index, arr) => {
-      return { title: item.title, className: "breadcrumb-label" };
+      return {
+        title: item.title,
+        className:
+          `breadcrumb-label` + (index === len - 2 ? "doc-search-lvl0" : ""),
+      };
     });
   };
   const breadCrumbData = getBreadCrumbData();
