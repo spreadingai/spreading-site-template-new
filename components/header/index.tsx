@@ -98,7 +98,7 @@ const Header = (props: Props) => {
             facetFilters: [
               `version:${currentVersion}`,
               `instance:${currentInstance}`,
-              `language:${currentLanguage}`,
+              `language:${currentLanguage || "en"}`,
             ],
           }}
           maxResultsPerGroup={100}
