@@ -3,17 +3,15 @@ import styles from "./styles.module.scss";
 import classNames from "classnames";
 import IconNext from "@/assets/icons/iconNext.svg";
 import Link from "next/link";
+
+export interface PaginationData {
+  title: string;
+  description?: string;
+  href: string;
+}
 interface ArticlePagerProps {
-  prev?: {
-    title: string;
-    description: string;
-    href: string;
-  };
-  next?: {
-    title: string;
-    description: string;
-    href: string;
-  };
+  prev?: PaginationData;
+  next?: PaginationData;
 }
 const ArticlePager: FC<ArticlePagerProps> = ({ prev, next }) => {
   return (

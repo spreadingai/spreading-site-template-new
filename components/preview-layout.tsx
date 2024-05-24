@@ -1,8 +1,7 @@
 // TODO antd cause lambda very slow!!!!!!!!!!!!!! It will take more 7s!!!!!!!!
 
 import React, { useState, useEffect, useMemo } from "react";
-import { AnchorProps, Tree } from "antd";
-import { Breadcrumb, Anchor, Drawer } from "antd";
+import { Breadcrumb, Drawer } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Header from "./header";
@@ -12,7 +11,6 @@ import {
   DisplayInstance,
   DisplayVersion,
   DocuoConfig,
-  ColorMode,
   SidebarItemType,
   TocItem,
   DisplayLanguage,
@@ -35,8 +33,7 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import ThemeContext, { Theme } from "@/components/header/Theme.context";
 import useColors from "./hooks/useColors";
 import useColorMode from "./hooks/useColorMode";
-
-const { DirectoryTree } = Tree;
+import ArticlePager, { PaginationData } from "./articlePager";
 
 type Props = {
   children: React.ReactNode;
@@ -52,11 +49,8 @@ type Props = {
   displayInstances: DisplayInstance[];
   displayLanguages: DisplayLanguage[];
   currentLanguage: string;
-  algolia?: {
-    appId: string;
-    apiKey: string;
-    indexName: string;
-  };
+  prev: PaginationData;
+  next: PaginationData;
 };
 
 type TreeDataObject = {
@@ -82,7 +76,8 @@ const PreviewLayout = ({
   displayInstances,
   displayLanguages,
   currentLanguage,
-  algolia,
+  prev,
+  next,
 }: Props) => {
   // slug eg: instance routeBasePath/version/folder/filename
   // console.log(
@@ -274,8 +269,13 @@ const PreviewLayout = ({
       }
     };
     loop(folderTreeData, []);
+    const len = result.length;
     return result.map((item, index, arr) => {
-      return { title: item.title, className: "breadcrumb-label" };
+      return {
+        title: item.title,
+        className:
+          `breadcrumb-label` + (index === len - 2 ? "doc-search-lvl0" : ""),
+      };
     });
   };
   const breadCrumbData = getBreadCrumbData();
@@ -375,6 +375,7 @@ const PreviewLayout = ({
         <Head>
           <meta name="docsearch:version" content={docVersion} />
           <meta name="docsearch:instance" content={instanceID} />
+          <meta name="docsearch:language" content={currentLanguage} />
         </Head>
         <Header
           docuoConfig={docuoConfig}
@@ -426,7 +427,6 @@ const PreviewLayout = ({
                     <AnChorMobile tocFormatData={tocFormatData} />
                   </div>
                 </div>
-
                 <div
                   className="article-content"
                   ref={(current) => {
@@ -437,8 +437,8 @@ const PreviewLayout = ({
                 >
                   {children}
                 </div>
+                {/* <ArticlePager prev={prev} next={next} /> */}
               </div>
-
               <div className="article-anchor-right">
                 {toc?.length ? (
                   <div className="pt-[28px]  pb-10 ml-8">
