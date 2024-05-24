@@ -88,30 +88,24 @@ const Header = (props: Props) => {
       <>
         <DocSearch
           {...algolia}
-          searchParameters={
-            {
-              // filters: "instance:callkit_flutter",
-              // facetFilters: ["instance:in_app_chat_kit_flutter"],
-              // facetFilters: ["version:next"],
-            }
-          }
           translations={{
             button: {
               buttonText: "Quick search...",
             },
           }}
           placeholder="Find or ask what you want"
-          // searchParameters={{
-          //   facetFilters: [
-          //     `version:${currentVersion}`,
-          //     `instance:${currentInstance}`,
-          //   ],
-          // }}
-          maxResultsPerGroup={20}
+          searchParameters={{
+            facetFilters: [
+              `version:${currentVersion}`,
+              `instance:${currentInstance}`,
+              `language:${currentLanguage}`,
+            ],
+          }}
+          maxResultsPerGroup={100}
         />
       </>
     );
-  }, [algolia, searchHidden, currentVersion, currentInstance]);
+  }, [algolia, searchHidden, currentVersion, currentInstance, currentLanguage]);
 
   const isShowThemeBtn =
     docuoConfig?.themeConfig?.colorMode?.disableSwitch === false;

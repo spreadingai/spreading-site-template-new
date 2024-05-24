@@ -139,6 +139,8 @@ export const getStaticProps = async ({ params }: SlugData) => {
       displayLanguages,
       instances,
       versions,
+      prev: { title: "prev", description: "", href: "" },
+      next: { title: "next", description: "", href: "" },
     },
   };
 };
