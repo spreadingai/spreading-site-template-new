@@ -274,7 +274,7 @@ const PreviewLayout = ({
       return {
         title: item.title,
         className:
-          `breadcrumb-label` + (index === len - 2 ? "doc-search-lvl0" : ""),
+          `breadcrumb-label` + (index === len - 2 ? " doc-search-lvl0" : ""),
       };
     });
   };
