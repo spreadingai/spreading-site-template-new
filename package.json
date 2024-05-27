@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "docuodev": "pnpm dev",
     "build": "next build && next-sitemap && sh ./delete.sh",
+    "docuobuild": "pnpm build",
     "deploy": "sh ./build.sh && pnpm build",
     "start": "next start",
     "lint": "next lint"
