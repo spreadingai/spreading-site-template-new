@@ -18,12 +18,18 @@
 		font-weight: bold;
 		color: var(--docuo-color-primary);
 	}
-	h2, h3, h4, h5, h6 {
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
 		font-family: Inter-SemiBold, Inter;
 		font-weight: bold;
 		color: var(--docuo-color-primary);
 	}
-	h2, h3, h4 {
+	h2,
+	h3,
+	h4 {
 		margin-top: 32px;
 		margin-bottom: 20px;
 	}
@@ -66,11 +72,11 @@
 		color: var(--docuo-text-color);
 		margin: 16px 0;
 	}
-	
+
 	hr {
 		height: 0;
 		border-top: 1px solid var(--docuo-hr-color);
-		margin: 48px 0;
+		margin: 32px 0;
 	}
 
 	ul,
@@ -201,7 +207,8 @@
 			border-bottom: var(--docuo-table-border);
 		}
 
-		th, td {
+		th,
+		td {
 			font-size: 14px;
 			line-height: 22px;
 			padding: 14px 12px;
@@ -217,7 +224,6 @@
 		td {
 			font-weight: 400;
 		}
-
 	}
 
 	// inline code
@@ -226,7 +232,7 @@
 		background: var(--docuo-inline-code-bg);
 		border: var(--docuo-inline-code-border);
 		border-radius: 4px;
-    font-family: ui-monospace, SFMono-Regular, Menlo;
+		font-family: ui-monospace, SFMono-Regular, Menlo;
 		font-weight: 500;
 		color: var(--docuo-color-primary);
 		line-height: 1.2;
