@@ -96,6 +96,8 @@ interface Props {
   toc: TocItem[];
   slug: string[];
   docuoConfig: DocuoConfig;
+  instanceLabel: string;
+  slugVersion: string;
   instances: DocInstance[];
   versions: string[];
   frontmatterRef: {
@@ -129,12 +131,20 @@ export const getStaticProps = async ({ params }: SlugData) => {
   const postData = await DocsControllerImpl.readDoc(slug);
   const instances = LibControllerImpl.getDocuoConfig().instances;
   const versions = VersionsControllerImpl.getUsedVersions(instanceID);
+  const currentInstanceLabel = displayInstances.find((item) => {
+    // Matches multiple language instance id
+    return (
+      item.instance.id === instanceID || item.instance.id === baseInstanceID
+    );
+  });
   return {
     props: {
       ...postData,
       instanceID,
       baseInstanceID,
+      instanceLabel: currentInstanceLabel.instance.label,
       docVersion: docVersion || slugVersion || DEFAULT_CURRENT_SLUG_VERSION,
+      slugVersion,
       folderTreeData,
       docuoConfig,
       displayVersions,
@@ -192,15 +202,28 @@ export default function DocPage(props: Props) {
 }
 
 function PageHead(props: Props) {
-  const { mdxSource, docuoConfig, frontmatterRef, slug } = props;
+  const {
+    mdxSource,
+    docuoConfig,
+    frontmatterRef,
+    slug,
+    instanceLabel,
+    slugVersion,
+  } = props;
   const frontmatter = mdxSource.frontmatter as DocFrontMatter;
+  const str = `${instanceLabel ? instanceLabel + " " : ""}${
+    slugVersion ? slugVersion + " " : ""
+  }`;
   let { title, description } = frontmatter;
-  title = title || frontmatterRef.fileName || docuoConfig.title || "";
-  description =
+  title = `${str}${
+    title || frontmatterRef.fileName || docuoConfig.title || ""
+  }`;
+  description = `${str}${
     description ||
     frontmatterRef.firstParagraphContent ||
     docuoConfig.description ||
-    "";
+    ""
+  }`;
   const navbarLogo = docuoConfig.themeConfig.navbar.logo;
   let logo =
     typeof navbarLogo === "string"

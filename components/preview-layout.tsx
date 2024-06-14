@@ -40,6 +40,7 @@ type Props = {
   slug?: string[];
   instanceID: string;
   baseInstanceID: string;
+  instanceLabel: string;
   docVersion: string;
   mdxSource: any;
   toc: TocItem[];
@@ -68,6 +69,7 @@ const PreviewLayout = ({
   slug,
   instanceID,
   baseInstanceID,
+  instanceLabel,
   docVersion,
   toc,
   folderTreeData,
@@ -349,14 +351,8 @@ const PreviewLayout = ({
   // @ts-ignore
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const instances = useMemo<NavBarItem>(() => {
-    const currentInstanceLabel = displayInstances.find((item) => {
-      // Matches multiple language instance id
-      return (
-        item.instance.id === instanceID || item.instance.id === baseInstanceID
-      );
-    });
     return {
-      label: currentInstanceLabel.instance.label,
+      label: instanceLabel,
       type: "dropdown",
       items: displayInstances.map((item) => ({
         ...item,
