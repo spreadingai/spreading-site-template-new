@@ -192,7 +192,7 @@ export default function DocPage(props: Props) {
 }
 
 function PageHead(props: Props) {
-  const { mdxSource, docuoConfig, frontmatterRef } = props;
+  const { mdxSource, docuoConfig, frontmatterRef, slug } = props;
   const frontmatter = mdxSource.frontmatter as DocFrontMatter;
   let { title, description } = frontmatter;
   title = title || frontmatterRef.fileName || docuoConfig.title || "";
@@ -214,7 +214,14 @@ function PageHead(props: Props) {
     ? `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/${logo.replace(/^\//, "")}`
     : "";
   const ogSiteName = frontmatter["og:site_name"] || docuoConfig.title || "";
-  const ogUrl = frontmatter["og:url"] || process.env.NEXT_PUBLIC_SITE_URL || "";
+  const ogUrl =
+    frontmatter["og:url"] ||
+    `${
+      process.env.NEXT_PUBLIC_CUSTOM_DOMAIN ||
+      process.env.NEXT_PUBLIC_SITE_URL ||
+      ""
+    }${process.env.NEXT_PUBLIC_BASE_PATH || ""}` ||
+    "";
   const ogImage = frontmatter["og:image"] || "";
   const ogLocale = frontmatter["og:locale"] || "en_US";
   const ogLogo = frontmatter["og:logo"] || logo;
@@ -258,6 +265,14 @@ function PageHead(props: Props) {
       {ogImageHeight ? (
         <meta property="og:image:height" content={ogImageHeight}></meta>
       ) : null}
+      <link
+        rel="canonical"
+        href={`${
+          process.env.NEXT_PUBLIC_CUSTOM_DOMAIN ||
+          process.env.NEXT_PUBLIC_SITE_URL ||
+          ""
+        }${process.env.NEXT_PUBLIC_BASE_PATH || ""}/${slug.join("/")}`}
+      />
     </Head>
   );
 }

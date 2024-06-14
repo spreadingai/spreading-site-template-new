@@ -65,20 +65,34 @@ const Footer: FC<footerProps> = ({ docuoConfig }) => {
   const isDarkMode = theme === "dark";
 
   return (
-    <footer className={`${styles["footer-container"]} w-full flex  justify-center`}>
+    <footer
+      className={`${styles["footer-container"]} w-full flex  justify-center`}
+    >
       <div className={styles["container"]}>
         <div className={styles["footer-wrapper"]}>
           <div className={styles["left"]}>
             {logo && (
               <div className={styles["logo-container"]}>
-                <Link href={footer.logoUrl || process.env.SITE_URL || ""} target="_blank">
+                <Link
+                  href={
+                    footer.logoUrl ||
+                    `${
+                      process.env.NEXT_PUBLIC_CUSTOM_DOMAIN ||
+                      process.env.NEXT_PUBLIC_SITE_URL ||
+                      ""
+                    }${process.env.NEXT_PUBLIC_BASE_PATH || ""}`
+                  }
+                  target="_blank"
+                >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     className={styles.logo}
                     src={
                       (logo as string).includes("http")
                         ? `${logo}`
-                        : `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/${logo.replace(/^\//, "")}`
+                        : `${
+                            process.env.NEXT_PUBLIC_BASE_PATH || ""
+                          }/${logo.replace(/^\//, "")}`
                     }
                     alt={"logo"}
                   />
@@ -86,13 +100,17 @@ const Footer: FC<footerProps> = ({ docuoConfig }) => {
               </div>
             )}
 
-            {footer.caption && <div className={styles["description"]}>{footer.caption}</div>}
+            {footer.caption && (
+              <div className={styles["description"]}>{footer.caption}</div>
+            )}
             {socials.length > 0 && (
               <div className={styles["social"]}>
                 {socials.map((social, index) => {
                   return (
                     <a key={index} href={social.href} target="_blank">
-                      <span className={styles["social-item"]}>{getSocial(social.logo, isDarkMode)}</span>
+                      <span className={styles["social-item"]}>
+                        {getSocial(social.logo, isDarkMode)}
+                      </span>
                     </a>
                   );
                 })}
@@ -104,7 +122,7 @@ const Footer: FC<footerProps> = ({ docuoConfig }) => {
             className={classNames(styles["right"], {
               [styles["two-row"]]: isWrap,
               [styles["two-col"]]: isShowTwoCol,
-              [styles["sm-wrap"]]: isSMWrap
+              [styles["sm-wrap"]]: isSMWrap,
             })}
             style={{ display: links?.length === 0 ? "none" : undefined }}
             ref={rightRef}
@@ -136,7 +154,9 @@ const Footer: FC<footerProps> = ({ docuoConfig }) => {
             )}
           </div>
         </div>
-        {footer["copyright"] && <div className={styles["copyright"]}>{footer["copyright"]}</div>}
+        {footer["copyright"] && (
+          <div className={styles["copyright"]}>{footer["copyright"]}</div>
+        )}
       </div>
     </footer>
   );
