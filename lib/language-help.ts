@@ -73,6 +73,7 @@ class LanguageController {
       result.currentLanguageLabel = i18n.localeConfigs[currentLanguage];
 
       let defaultLocaleInstance;
+      // Put the default language first
       const defaultKeyIndex = keys.findIndex(
         (key) => key === i18n.defaultLocale
       );
@@ -88,10 +89,10 @@ class LanguageController {
         );
 
         // New logic: The first non-linked document takes the first non-linked instance of the target language if it is not found
-        if (!targetInstance) {
+        const reg = /^https?:/i;
+        if (!targetInstance || reg.test(targetInstance.path)) {
           const displayInstances =
             LibControllerImpl.getDisplayInstances(suffix);
-          const reg = /^https?:/gi;
           const target = displayInstances.find(
             (instance) => !reg.test(instance.defaultLink)
           );
