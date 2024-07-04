@@ -96,7 +96,7 @@ interface Props {
   toc: TocItem[];
   slug: string[];
   docuoConfig: DocuoConfig;
-  instanceLabel: string;
+  currentInstanceLabel: string;
   slugVersion: string;
   instances: DocInstance[];
   versions: string[];
@@ -121,17 +121,18 @@ export const getStaticProps = async ({ params }: SlugData) => {
   LibControllerImpl.addDefaultLink();
   const { instanceID, slugVersion, docVersion } =
     SlugControllerImpl.getExtractInfoFromSlug(slug);
-  const { baseInstanceID } =
+  const { baseInstanceID, currentLanguage } =
     LanguageControllerImpl.getInfoByInstanceID(instanceID);
   const folderTreeData = TreeControllerImpl.getFolderTreeDataBySlug(slug);
   const displayVersions = VersionsControllerImpl.getDisplayVersions(slug);
-  const displayInstances = LibControllerImpl.getDisplayInstances();
-  const { displayLanguages, currentLanguage } =
+  const displayInstances =
+    LibControllerImpl.getDisplayInstances(currentLanguage);
+  const { displayLanguages, currentLanguageLabel } =
     LanguageControllerImpl.getDisplayLanguages(slug);
   const postData = await DocsControllerImpl.readDoc(slug);
   const instances = LibControllerImpl.getDocuoConfig().instances;
   const versions = VersionsControllerImpl.getUsedVersions(instanceID);
-  const currentInstanceLabel = displayInstances.find((item) => {
+  const currentInstance = displayInstances.find((item) => {
     // Matches multiple language instance id
     return (
       item.instance.id === instanceID || item.instance.id === baseInstanceID
@@ -141,8 +142,7 @@ export const getStaticProps = async ({ params }: SlugData) => {
     props: {
       ...postData,
       instanceID,
-      baseInstanceID,
-      instanceLabel: currentInstanceLabel.instance.label,
+      currentInstanceLabel: currentInstance.instance.label,
       docVersion: docVersion || slugVersion || DEFAULT_CURRENT_SLUG_VERSION,
       slugVersion,
       folderTreeData,
@@ -150,6 +150,7 @@ export const getStaticProps = async ({ params }: SlugData) => {
       displayVersions,
       displayInstances,
       currentLanguage,
+      currentLanguageLabel,
       displayLanguages,
       instances,
       versions,
@@ -207,11 +208,11 @@ function PageHead(props: Props) {
     docuoConfig,
     frontmatterRef,
     slug,
-    instanceLabel,
+    currentInstanceLabel,
     slugVersion,
   } = props;
   const frontmatter = mdxSource.frontmatter as DocFrontMatter;
-  const str = `${instanceLabel ? instanceLabel + " " : ""}${
+  const str = `${currentInstanceLabel ? currentInstanceLabel + " " : ""}${
     slugVersion ? slugVersion + " " : ""
   }`;
   let { title, description } = frontmatter;

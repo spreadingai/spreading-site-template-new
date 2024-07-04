@@ -24,12 +24,13 @@ import LanguageSwitch from "./LanguageSwitch";
 interface Props {
   docuoConfig: DocuoConfig;
   currentVersion: string;
-  currentInstance: string;
+  currentInstanceID: string;
   tocFormatData: AnchorNode[];
   displayInstances: DisplayInstance[];
   displayVersions: DisplayVersion[];
   displayLanguages: DisplayLanguage[];
   currentLanguage: string;
+  currentLanguageLabel: string;
   setDrawerOpen: (value: boolean) => void;
 }
 
@@ -37,11 +38,12 @@ const Header = (props: Props) => {
   const {
     docuoConfig,
     currentVersion,
-    currentInstance,
+    currentInstanceID,
     tocFormatData,
     setDrawerOpen,
     displayLanguages,
     currentLanguage,
+    currentLanguageLabel,
   } = props;
   const { themeConfig, search } = docuoConfig;
   const { navbar } = themeConfig;
@@ -97,15 +99,21 @@ const Header = (props: Props) => {
           searchParameters={{
             facetFilters: [
               `version:${currentVersion}`,
-              `instance:${currentInstance}`,
-              `language:${currentLanguage || "en"}`,
+              `instance:${currentInstanceID}`,
+              `language:${currentLanguageLabel || "en"}`,
             ],
           }}
           maxResultsPerGroup={100}
         />
       </>
     );
-  }, [algolia, searchHidden, currentVersion, currentInstance, currentLanguage]);
+  }, [
+    algolia,
+    searchHidden,
+    currentVersion,
+    currentInstanceID,
+    currentLanguageLabel,
+  ]);
 
   const isShowThemeBtn =
     docuoConfig?.themeConfig?.colorMode?.disableSwitch === false;
@@ -143,8 +151,9 @@ const Header = (props: Props) => {
     return !!displayLanguages?.length ? (
       <LanguageSwitch
         className={isMobile ? "mobile" : ""}
-        displayLanguage={displayLanguages}
+        displayLanguages={displayLanguages}
         currentLanguage={currentLanguage}
+        currentLanguageLabel={currentLanguageLabel}
       />
     ) : null;
   };

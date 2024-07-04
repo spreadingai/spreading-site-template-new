@@ -23,8 +23,12 @@ class SlugController {
       let allSlugs: SlugData[] = [];
       const { instances } = LibControllerImpl.getDocuoConfig();
       for (const instance of instances) {
-        const slugs = this.getSlugs(instance.id);
-        allSlugs = allSlugs.concat(slugs);
+        const reg = /^https?:/gi;
+        if (!reg.test(instance.path)) {
+          // Filter out the external chain, no slug is generated
+          const slugs = this.getSlugs(instance.id);
+          allSlugs = allSlugs.concat(slugs);
+        }
       }
       this._allSlugs = allSlugs;
       console.log(`[SlugController]getAllSlugs generate`);

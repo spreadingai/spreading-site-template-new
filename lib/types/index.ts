@@ -111,6 +111,7 @@ export interface DocInstance {
   label: string;
   path: string;
   routeBasePath: string;
+  locale?: string;
 }
 
 export enum SidebarItemType {
@@ -144,6 +145,7 @@ export interface DisplayInstance {
 }
 export interface DisplayLanguage {
   language: string;
+  languageLabel: string;
   defaultLink: string;
 }
 export interface SlugData {

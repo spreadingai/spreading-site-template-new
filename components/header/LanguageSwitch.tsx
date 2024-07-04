@@ -8,22 +8,23 @@ import { useRouter } from "next/router";
 
 interface LanguageSwitchProps {
   className?: string;
-  displayLanguage: DisplayLanguage[];
+  displayLanguages: DisplayLanguage[];
   currentLanguage: string;
+  currentLanguageLabel: string;
 }
 
 const LanguageSwitch = (props: LanguageSwitchProps) => {
   const router = useRouter();
-  const { className = "", displayLanguage, currentLanguage } = props;
+  const { className = "", displayLanguages, currentLanguage } = props;
 
   const handleThemeChanged: MenuProps["onClick"] = ({ key: language }) => {
-    const target = displayLanguage.find((item) => item.language === language);
+    const target = displayLanguages.find((item) => item.language === language);
     router.push({ pathname: target.defaultLink });
   };
 
-  const items = displayLanguage.map((item) => ({
+  const items = displayLanguages.map((item) => ({
     key: item.language,
-    label: <span>{item.language}</span>,
+    label: <span>{item.languageLabel}</span>,
     className: `${styles.modeItem} ${
       item.language === currentLanguage ? styles.active : ""
     }`,

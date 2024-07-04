@@ -20,7 +20,11 @@ const InsVersionDropdown = ({ type, menu }: InsVersionDropdownProps) => {
         label: (
           <Link
             href={item.href || item.to || item.defaultLink || "/"}
-            target={item.href ? "_blank" : "_self"}
+            target={
+              item.href || /^https?:/gi.test(item.defaultLink)
+                ? "_blank"
+                : "_self"
+            }
           >
             {item.label}
           </Link>

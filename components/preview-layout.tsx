@@ -39,8 +39,7 @@ type Props = {
   children: React.ReactNode;
   slug?: string[];
   instanceID: string;
-  baseInstanceID: string;
-  instanceLabel: string;
+  currentInstanceLabel: string;
   docVersion: string;
   mdxSource: any;
   toc: TocItem[];
@@ -50,6 +49,7 @@ type Props = {
   displayInstances: DisplayInstance[];
   displayLanguages: DisplayLanguage[];
   currentLanguage: string;
+  currentLanguageLabel: string;
   prev: PaginationData;
   next: PaginationData;
 };
@@ -68,8 +68,7 @@ const PreviewLayout = ({
   children,
   slug,
   instanceID,
-  baseInstanceID,
-  instanceLabel,
+  currentInstanceLabel,
   docVersion,
   toc,
   folderTreeData,
@@ -78,6 +77,7 @@ const PreviewLayout = ({
   displayInstances,
   displayLanguages,
   currentLanguage,
+  currentLanguageLabel,
   prev,
   next,
 }: Props) => {
@@ -352,7 +352,7 @@ const PreviewLayout = ({
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const instances = useMemo<NavBarItem>(() => {
     return {
-      label: instanceLabel,
+      label: currentInstanceLabel,
       type: "dropdown",
       items: displayInstances.map((item) => ({
         ...item,
@@ -371,16 +371,20 @@ const PreviewLayout = ({
         <Head>
           <meta name="docsearch:version" content={docVersion} />
           <meta name="docsearch:instance" content={instanceID} />
-          <meta name="docsearch:language" content={currentLanguage || "en"} />
+          <meta
+            name="docsearch:language"
+            content={currentLanguageLabel || "en"}
+          />
         </Head>
         <Header
           docuoConfig={docuoConfig}
           currentVersion={docVersion}
-          currentInstance={instanceID}
+          currentInstanceID={instanceID}
           tocFormatData={tocFormatData}
           displayInstances={displayInstances}
           displayVersions={displayVersions}
           currentLanguage={currentLanguage}
+          currentLanguageLabel={currentLanguageLabel}
           displayLanguages={displayLanguages}
           setDrawerOpen={setDrawerOpen}
         ></Header>

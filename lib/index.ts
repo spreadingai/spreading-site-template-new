@@ -150,7 +150,7 @@ class LibController {
     loop(footer.links);
     this._updateFooterLinksMarker = true;
   }
-  getDisplayInstances(): DisplayInstance[] {
+  getDisplayInstances(currentLanguage: string): DisplayInstance[] {
     if (this._displayInstances) {
       console.log(`[LibController]getDisplayInstances cache`);
       return JSON.parse(JSON.stringify(this._displayInstances));
@@ -160,20 +160,51 @@ class LibController {
     const allSlugs = SlugControllerImpl.getAllSlugs();
     const result: DisplayInstance[] = [];
     this._docuoConfig.instances.forEach((instance) => {
+      // Old logic: Instances are bound to languages, and only one of the multiple language instances is displayed
+      // if (
+      //   i18n &&
+      //   i18n.localeConfigs &&
+      //   Object.keys(i18n.localeConfigs).find((suffix) =>
+      //     instance.id.endsWith(`_${suffix}`)
+      //   )
+      // ) {
+      //   // Only the default language instance is displayed. Instances of other languages share a label with the default language instance
+      // } else {
+      //   // Finds the first slug corresponding to the instance
+      //   const targetSlug = allSlugs.find((item) => {
+      //     return item.params.instanceID === instance.id;
+      //   });
+      //   result.push({
+      //     instance,
+      //     defaultLink: targetSlug ? `/${targetSlug.params.slug.join("/")}` : "",
+      //   });
+      // }
+
+      // New logic: Language is independent of the instance, and instances are filtered by language
       if (
-        i18n &&
-        i18n.localeConfigs &&
-        Object.keys(i18n.localeConfigs).find((suffix) =>
-          instance.id.endsWith(`_${suffix}`)
-        )
+        // Multiple languages are not configured
+        !currentLanguage ||
+        // No instance of locale is configured
+        (!instance.locale && i18n.defaultLocale === currentLanguage) ||
+        // Locale corresponding instance
+        instance.locale === currentLanguage
       ) {
-      } else {
-        const targetSlug = allSlugs.find((item) => {
-          return item.params.instanceID === instance.id;
-        });
+        let defaultLink = "";
+        const reg = /^https?:/gi;
+        if (!reg.test(instance.path)) {
+          // Finds the first slug corresponding to the instance
+          const targetSlug = allSlugs.find((item) => {
+            return item.params.instanceID === instance.id;
+          });
+          defaultLink = targetSlug
+            ? `/${targetSlug.params.slug.join("/")}`
+            : "";
+        } else {
+          defaultLink = instance.path;
+        }
         result.push({
           instance,
-          defaultLink: targetSlug ? `/${targetSlug.params.slug.join("/")}` : "",
+          defaultLink,
         });
       }
     });
