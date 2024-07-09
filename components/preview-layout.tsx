@@ -450,7 +450,7 @@ const PreviewLayout = ({
         </div>
         <main className="preview-main">
           <div className="preview-sider">
-            <div className={`mt-[16px] flex pl-8`}>
+            <div className={`mt-[16px] flex pl-8 flex-wrap`}>
               {!displayGroups || !displayGroups.length ? (
                 <>
                   <InsVersionDropdown type="instance" menu={instances} />
@@ -546,7 +546,7 @@ const PreviewLayout = ({
             key="left"
             getContainer={false}
           >
-            <div className={`mt-[16px] flex pl-8`}>
+            <div className={`mt-[16px] flex pl-8 flex-wrap`}>
               {!displayGroups || !displayGroups.length ? (
                 <>
                   <InsVersionDropdown type="instance" menu={instances} />
