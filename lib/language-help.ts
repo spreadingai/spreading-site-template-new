@@ -1,7 +1,7 @@
 import LibControllerImpl from "./index";
 import SlugControllerImpl from "./slug-help";
 import VersionsControllerImpl from "./versions-help";
-import { DisplayLanguage } from "./types";
+import { DisplayLanguage, InstanceType } from "./types";
 import {
   DEFAULT_CURRENT_DOC_VERSION,
   DEFAULT_LATEST_SLUG_VERSION,
@@ -19,32 +19,17 @@ class LanguageController {
     // instanceID eg: callkit、callkit_zh_CN
     let baseInstanceID = "",
       currentLanguage = "";
-    const { i18n, instances } = LibControllerImpl.getDocuoConfig();
+    const { i18n } = LibControllerImpl.getDocuoConfig();
     if (i18n && i18n.localeConfigs) {
       const keys = Object.keys(i18n.localeConfigs);
       const result = keys.find((suffix) => instanceID.endsWith(`_${suffix}`));
-
-      // The locale field takes precedence
-      const targetInstance = instances.find(
-        (instance) => instance.id === instanceID
-      );
-      if (targetInstance && targetInstance.locale) {
-        currentLanguage = targetInstance.locale;
-        if (result) {
-          const temp = instanceID.lastIndexOf(`_${result}`);
-          baseInstanceID = instanceID.slice(0, temp);
-        } else {
-          baseInstanceID = instanceID;
-        }
+      if (result) {
+        const temp = instanceID.lastIndexOf(`_${result}`);
+        baseInstanceID = instanceID.slice(0, temp);
+        currentLanguage = result;
       } else {
-        if (result) {
-          currentLanguage = result;
-          const temp = instanceID.lastIndexOf(`_${result}`);
-          baseInstanceID = instanceID.slice(0, temp);
-        } else {
-          currentLanguage = i18n.defaultLocale;
-          baseInstanceID = instanceID;
-        }
+        baseInstanceID = instanceID;
+        currentLanguage = i18n.defaultLocale;
       }
     } else {
       baseInstanceID = instanceID;
@@ -52,7 +37,7 @@ class LanguageController {
     return { baseInstanceID, currentLanguage };
   }
   getDisplayLanguages(slug: string[]) {
-    const { instances, i18n } = LibControllerImpl.getDocuoConfig();
+    const { i18n } = LibControllerImpl.getDocuoConfig();
     const result: {
       currentLanguage: string;
       currentLanguageLabel: string;
@@ -84,13 +69,12 @@ class LanguageController {
         if (suffix !== i18n.defaultLocale) {
           targetInstanceID += `_${suffix}`;
         }
-        let targetInstance = instances.find(
-          (instance) => instance.id === targetInstanceID
-        );
+        let targetInstance =
+          LibControllerImpl.getTargetInstance(targetInstanceID);
 
         // New logic: The first non-linked document takes the first non-linked instance of the target language if it is not found
         const reg = /^https?:/i;
-        if (!targetInstance || reg.test(targetInstance.path)) {
+        if (!targetInstance) {
           const displayInstances =
             LibControllerImpl.getDisplayInstances(suffix);
           const target = displayInstances.find(
@@ -113,38 +97,12 @@ class LanguageController {
         // A 的 3.0.0 => B 的 4.0.0（A 是最新版本，所以切到 B 最新，如果 B 有 3.0.0，那 B 就取 3.0.0）
         // A 的 next => B 的 next（都取当前版本）
         // 目标文档名称即为当前文档名称，无论是否存在
-        let targetSlugVersion = currentSlugVersion;
-        const targetUsedVersions = VersionsControllerImpl.getUsedVersions(
-          targetInstance.id
-        ).concat([DEFAULT_CURRENT_DOC_VERSION]);
-        if (currentSlugVersion === DEFAULT_LATEST_SLUG_VERSION) {
-          if (targetUsedVersions.includes(currentDocVersion)) {
-            const temp = SlugControllerImpl.docVersionToSlugVersion(
-              targetInstance.id,
-              currentDocVersion
-            );
-            if (temp !== DEFAULT_LATEST_SLUG_VERSION) {
-              targetSlugVersion = temp;
-            }
-          }
-        } else {
-          if (targetUsedVersions.includes(currentDocVersion)) {
-            const temp = SlugControllerImpl.docVersionToSlugVersion(
-              targetInstance.id,
-              currentDocVersion
-            );
-            if (temp === DEFAULT_LATEST_SLUG_VERSION) {
-              targetSlugVersion = DEFAULT_LATEST_SLUG_VERSION;
-            }
-          } else {
-            targetSlugVersion = DEFAULT_LATEST_SLUG_VERSION;
-          }
-        }
-        const defaultLink = `${
-          targetInstance.routeBasePath ? "/" + targetInstance.routeBasePath : ""
-        }/${targetSlugVersion}${
-          targetSlugVersion ? "/" + mdxFileID : mdxFileID
-        }`;
+        const defaultLink = this.getDefaultLink(
+          currentSlugVersion,
+          currentDocVersion,
+          mdxFileID,
+          targetInstance
+        );
         result.displayLanguages.push({
           language: suffix,
           languageLabel: i18n.localeConfigs[suffix],
@@ -153,6 +111,44 @@ class LanguageController {
       });
     }
     return result;
+  }
+  getDefaultLink(
+    currentSlugVersion,
+    currentDocVersion,
+    mdxFileID,
+    targetInstance
+  ) {
+    let targetSlugVersion = currentSlugVersion;
+    const targetUsedVersions = VersionsControllerImpl.getUsedVersions(
+      targetInstance.id
+    ).concat([DEFAULT_CURRENT_DOC_VERSION]);
+    if (currentSlugVersion === DEFAULT_LATEST_SLUG_VERSION) {
+      if (targetUsedVersions.includes(currentDocVersion)) {
+        const temp = SlugControllerImpl.docVersionToSlugVersion(
+          targetInstance.id,
+          currentDocVersion
+        );
+        if (temp !== DEFAULT_LATEST_SLUG_VERSION) {
+          targetSlugVersion = temp;
+        }
+      }
+    } else {
+      if (targetUsedVersions.includes(currentDocVersion)) {
+        const temp = SlugControllerImpl.docVersionToSlugVersion(
+          targetInstance.id,
+          currentDocVersion
+        );
+        if (temp === DEFAULT_LATEST_SLUG_VERSION) {
+          targetSlugVersion = DEFAULT_LATEST_SLUG_VERSION;
+        }
+      } else {
+        targetSlugVersion = DEFAULT_LATEST_SLUG_VERSION;
+      }
+    }
+    const defaultLink = `${
+      targetInstance.routeBasePath ? "/" + targetInstance.routeBasePath : ""
+    }/${targetSlugVersion}${targetSlugVersion ? "/" + mdxFileID : mdxFileID}`;
+    return defaultLink;
   }
 }
 

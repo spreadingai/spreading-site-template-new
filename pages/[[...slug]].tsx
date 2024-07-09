@@ -23,9 +23,17 @@ import DocsControllerImpl from "@/lib/docs-help";
 import TreeControllerImpl from "@/lib/tree-help";
 import SlugControllerImpl from "@/lib/slug-help";
 import LanguageControllerImpl from "@/lib/language-help";
+import GroupControllerImpl from "@/lib/group-help";
+import PlatformControllerImpl from "@/lib/platform-help";
 import VersionsControllerImpl from "@/lib/versions-help";
 import Link from "next/link";
-import { SlugData, DocuoConfig, TocItem, DocInstance } from "@/lib/types";
+import {
+  SlugData,
+  DocuoConfig,
+  TocItem,
+  DocInstance,
+  InstanceType,
+} from "@/lib/types";
 import Head from "next/head";
 import ApiItem from "@/components/docuoOpenapi/theme/ApiItem";
 import MethodEndpoint from "@/components/docuoOpenapi/theme/ApiExplorer/MethodEndpoint";
@@ -121,7 +129,7 @@ export const getStaticProps = async ({ params }: SlugData) => {
   LibControllerImpl.addDefaultLink();
   const { instanceID, slugVersion, docVersion } =
     SlugControllerImpl.getExtractInfoFromSlug(slug);
-  const { baseInstanceID, currentLanguage } =
+  const { currentLanguage } =
     LanguageControllerImpl.getInfoByInstanceID(instanceID);
   const folderTreeData = TreeControllerImpl.getFolderTreeDataBySlug(slug);
   const displayVersions = VersionsControllerImpl.getDisplayVersions(slug);
@@ -129,14 +137,16 @@ export const getStaticProps = async ({ params }: SlugData) => {
     LibControllerImpl.getDisplayInstances(currentLanguage);
   const { displayLanguages, currentLanguageLabel } =
     LanguageControllerImpl.getDisplayLanguages(slug);
+  const { displayGroups, currentGroup, currentGroupLabel } =
+    GroupControllerImpl.getDisplayGroups(slug, currentLanguage);
+  const { displayPlatforms, currentPlatform, currentPlatformLabel } =
+    PlatformControllerImpl.getDisplayPlatforms(slug, currentLanguage);
   const postData = await DocsControllerImpl.readDoc(slug);
-  const instances = LibControllerImpl.getDocuoConfig().instances;
+  const instances = LibControllerImpl.getInstances(InstanceType.Normal);
   const versions = VersionsControllerImpl.getUsedVersions(instanceID);
   const currentInstance = displayInstances.find((item) => {
     // Matches multiple language instance id
-    return (
-      item.instance.id === instanceID || item.instance.id === baseInstanceID
-    );
+    return item.instance.id === instanceID;
   });
   return {
     props: {
@@ -152,6 +162,12 @@ export const getStaticProps = async ({ params }: SlugData) => {
       currentLanguage,
       currentLanguageLabel,
       displayLanguages,
+      currentGroup,
+      currentGroupLabel,
+      displayGroups,
+      currentPlatform,
+      currentPlatformLabel,
+      displayPlatforms,
       instances,
       versions,
       prev: { title: "prev", description: "", href: "" },

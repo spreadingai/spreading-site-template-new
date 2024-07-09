@@ -29,8 +29,7 @@ class VersionsController {
       ) as string[];
     }
     // Use the external current version if the file is not present or the list is empty
-    const { instances } = LibControllerImpl.getDocuoConfig();
-    const instance = instances.find((i) => i.id === instanceID);
+    const instance = LibControllerImpl.getTargetInstance(instanceID);
     const versionsUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
       instance.id === DEFAULT_INSTANCE_ID ? "" : instance.id + "_"
     }versions.json`;
@@ -66,8 +65,7 @@ class VersionsController {
     ) as string[];
   }
   getActualVersions(instanceID: string) {
-    const { instances } = LibControllerImpl.getDocuoConfig();
-    const instance = instances.find((i) => i.id === instanceID);
+    const instance = LibControllerImpl.getTargetInstance(instanceID);
     const versionedUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
       instance.id === DEFAULT_INSTANCE_ID ? "" : instance.id + "_"
     }versioned_docs`;

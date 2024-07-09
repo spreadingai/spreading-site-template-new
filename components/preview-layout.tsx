@@ -14,6 +14,8 @@ import {
   SidebarItemType,
   TocItem,
   DisplayLanguage,
+  DisplayPlatform,
+  DisplayGroup,
 } from "@/lib/types";
 import Image from "next/image";
 import IconOutlink from "@/assets/images/icon_outlink.png";
@@ -50,6 +52,12 @@ type Props = {
   displayLanguages: DisplayLanguage[];
   currentLanguage: string;
   currentLanguageLabel: string;
+  currentGroup: string;
+  currentGroupLabel: string;
+  displayGroups: DisplayGroup[];
+  currentPlatform: string;
+  currentPlatformLabel: string;
+  displayPlatforms: DisplayPlatform[];
   prev: PaginationData;
   next: PaginationData;
 };
@@ -78,19 +86,27 @@ const PreviewLayout = ({
   displayLanguages,
   currentLanguage,
   currentLanguageLabel,
+  currentGroup,
+  currentGroupLabel,
+  displayGroups,
+  currentPlatform,
+  currentPlatformLabel,
+  displayPlatforms,
   prev,
   next,
 }: Props) => {
   // slug eg: instance routeBasePath/version/folder/filename
-  // console.log(
-  //   "[Site]init params",
-  //   slug,
-  //   instanceID,
-  //   docVersion,
-  //   docuoConfig,
-  //   displayVersions,
-  //   displayInstances
-  // );
+  console.log(
+    "[Site]init params",
+    slug,
+    instanceID,
+    currentGroup,
+    currentGroupLabel,
+    displayGroups,
+    currentPlatform,
+    currentPlatformLabel,
+    displayPlatforms
+  );
 
   // Avoid empty slug
   if (!slug) {
@@ -338,28 +354,61 @@ const PreviewLayout = ({
 
   // @ts-ignore
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const versions = useMemo<NavBarItem>(() => {
+  const versions = useMemo<any>(() => {
     return {
+      key: docVersion,
       label: docVersion,
       type: "dropdown",
       items: displayVersions.map((item) => ({
         ...item,
+        key: item.version,
         label: item.version,
       })),
     };
   }, [docVersion, displayVersions]);
   // @ts-ignore
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const instances = useMemo<NavBarItem>(() => {
+  const instances = useMemo<any>(() => {
     return {
+      key: instanceID,
       label: currentInstanceLabel,
       type: "dropdown",
       items: displayInstances.map((item) => ({
         ...item,
+        key: item.instance.id,
         label: item.instance.label,
       })),
     };
   }, [instanceID, displayInstances]);
+
+  // @ts-ignore
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const groups = useMemo<any>(() => {
+    return {
+      key: currentGroup,
+      label: currentGroupLabel,
+      type: "dropdown",
+      items: displayGroups.map((item) => ({
+        ...item,
+        key: item.group,
+        label: item.groupLabel,
+      })),
+    };
+  }, [currentGroupLabel, displayGroups]);
+  // @ts-ignore
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const platforms = useMemo<any>(() => {
+    return {
+      key: currentPlatform,
+      label: currentPlatformLabel,
+      type: "dropdown",
+      items: displayPlatforms.map((item) => ({
+        ...item,
+        key: item.platform,
+        label: item.platformLabel,
+      })),
+    };
+  }, [currentPlatformLabel, displayPlatforms]);
 
   const gaId = docuoConfig?.analytics?.ga4?.measurementId;
   const isFooterHidden = !!docuoConfig?.themeConfig?.footer?.hidden;
@@ -400,9 +449,19 @@ const PreviewLayout = ({
         </div>
         <main className="preview-main">
           <div className="preview-sider">
-            <div className="flex pl-8">
-              <InsVersionDropdown type="instance" menu={instances} />
-              <InsVersionDropdown type="version" menu={versions} />
+            <div className={`mt-[16px] flex pl-8`}>
+              {!displayGroups || !displayGroups.length ? (
+                <>
+                  <InsVersionDropdown type="instance" menu={instances} />
+                  <InsVersionDropdown type="version" menu={versions} />
+                </>
+              ) : (
+                <>
+                  <InsVersionDropdown type="group" menu={groups} />
+                  <InsVersionDropdown type="platform" menu={platforms} />
+                  <InsVersionDropdown type="version" menu={versions} />
+                </>
+              )}
             </div>
             <DocuoTree
               docuoConfig={docuoConfig}
@@ -479,9 +538,19 @@ const PreviewLayout = ({
             key="left"
             getContainer={false}
           >
-            <div className="flex pl-8">
-              <InsVersionDropdown type="instance" menu={instances} />
-              <InsVersionDropdown type="version" menu={versions} />
+            <div className={`mt-[16px] flex pl-8`}>
+              {!displayGroups || !displayGroups.length ? (
+                <>
+                  <InsVersionDropdown type="instance" menu={instances} />
+                  <InsVersionDropdown type="version" menu={versions} />
+                </>
+              ) : (
+                <>
+                  <InsVersionDropdown type="group" menu={groups} />
+                  <InsVersionDropdown type="platform" menu={platforms} />
+                  <InsVersionDropdown type="version" menu={versions} />
+                </>
+              )}
             </div>
             <DocuoTree
               docuoConfig={docuoConfig}

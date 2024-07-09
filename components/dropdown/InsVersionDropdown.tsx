@@ -6,7 +6,7 @@ import Link from "next/link";
 import { NavbarLink } from "../header/@types";
 
 interface InsVersionDropdownProps {
-  type: "instance" | "version";
+  type: "instance" | "version" | "group" | "platform";
   menu: NavbarLink;
 }
 
@@ -21,7 +21,7 @@ const InsVersionDropdown = ({ type, menu }: InsVersionDropdownProps) => {
           <Link
             href={item.href || item.to || item.defaultLink || "/"}
             target={
-              item.href || /^https?:/gi.test(item.defaultLink)
+              item.href || /^https?:/i.test(item.defaultLink)
                 ? "_blank"
                 : "_self"
             }
@@ -30,7 +30,7 @@ const InsVersionDropdown = ({ type, menu }: InsVersionDropdownProps) => {
           </Link>
         ),
         className: `${styles["popup-list-item"]} ${
-          menu.label === item.label ? styles.active : ""
+          menu.key === item.key ? styles.active : ""
         }`,
       };
     });
@@ -50,7 +50,8 @@ const InsVersionDropdown = ({ type, menu }: InsVersionDropdownProps) => {
     }
   };
 
-  if (menu.items.length <= 1) return null;
+  if ((type === "instance" || type === "version") && menu.items.length <= 1)
+    return null;
 
   return (
     <Dropdown
@@ -65,7 +66,7 @@ const InsVersionDropdown = ({ type, menu }: InsVersionDropdownProps) => {
       <div
         title={menu.label as string}
         id="ins-version-popup-wrapper"
-        className={`mt-[28px] ${styles["ins-version-wrapper"]} ${
+        className={`mt-[12px] ${styles["ins-version-wrapper"]} ${
           styles[type]
         } ${open ? styles.active : ""}`}
       >

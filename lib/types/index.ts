@@ -38,6 +38,11 @@ export interface DocuoConfig {
     };
   };
 }
+export enum InstanceType {
+  All = 1,
+  Normal,
+  OutsideChain,
+}
 export enum NavBarItemType {
   Default = "default",
   DocSidebar = "docSidebar",
@@ -106,12 +111,23 @@ export interface Colors {
   backgroundLight: string;
   backgroundDark: string;
 }
+export interface NavigationGroupInfo {
+  id: string;
+  name: string;
+  tag?: string;
+}
+export interface NavigationInfo {
+  group?: NavigationGroupInfo;
+  category?: string[];
+  platform?: string;
+}
 export interface DocInstance {
   id: string;
   label: string;
   path: string;
   routeBasePath: string;
   locale?: string;
+  navigationInfo?: NavigationInfo;
 }
 
 export enum SidebarItemType {
@@ -146,6 +162,22 @@ export interface DisplayInstance {
 export interface DisplayLanguage {
   language: string;
   languageLabel: string;
+  defaultLink: string;
+}
+export interface DisplayCategory {
+  category: string;
+  categoryLabel: string;
+  defaultLink: string;
+}
+export interface DisplayGroup {
+  group: string;
+  groupLabel: string;
+  tag?: string;
+  defaultLink: string;
+}
+export interface DisplayPlatform {
+  platform: string;
+  platformLabel: string;
   defaultLink: string;
 }
 export interface SlugData {

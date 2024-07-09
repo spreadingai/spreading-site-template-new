@@ -8,6 +8,8 @@ import {
   NavBarItemType,
   Plan,
   SlugData,
+  InstanceType,
+  DocInstance,
 } from "./types";
 import { DEFAULT_INSTANCE_ID, UNLIMITED_INSTANCE_NUMBER } from "./constants";
 
@@ -15,7 +17,6 @@ class LibController {
   static _instance: LibController;
   _docuoConfig: DocuoConfig;
   _entityRootDirectory = "docs";
-  _instances: DisplayInstance[];
   _addDefaultLinkMarker = false;
   _updateFooterLinksMarker = false;
   _displayInstances = null;
@@ -85,6 +86,23 @@ class LibController {
     }
     return this._docuoConfig;
   }
+  getInstances(type?: InstanceType) {
+    let instances: DocInstance[];
+    if (!this._docuoConfig) {
+      instances = this.getDocuoConfig().instances;
+    } else {
+      instances = this._docuoConfig.instances;
+    }
+
+    const reg = /^https?:/i;
+    if (type === InstanceType.Normal) {
+      return instances.filter((item) => !reg.test(item.path));
+    } else if (type === InstanceType.OutsideChain) {
+      return instances.filter((item) => reg.test(item.path));
+    } else {
+      return instances;
+    }
+  }
   getEntityRootDirectory() {
     return this._entityRootDirectory;
   }
@@ -101,7 +119,8 @@ class LibController {
   addDefaultLink() {
     if (this._addDefaultLinkMarker) return;
     const allSlugs = SlugControllerImpl.getAllSlugs();
-    const { themeConfig, instances } = this.getDocuoConfig();
+    const { themeConfig } = this.getDocuoConfig();
+    const instances = this.getInstances();
     if (!themeConfig) return;
     const { navbar } = themeConfig;
     // Add a default jump link to all docSidebar type items and update the `to` field
@@ -159,7 +178,8 @@ class LibController {
     const { i18n } = this._docuoConfig;
     const allSlugs = SlugControllerImpl.getAllSlugs();
     const result: DisplayInstance[] = [];
-    this._docuoConfig.instances.forEach((instance) => {
+    const instances = this.getInstances();
+    instances.forEach((instance) => {
       // Old logic: Instances are bound to languages, and only one of the multiple language instances is displayed
       // if (
       //   i18n &&
@@ -190,7 +210,7 @@ class LibController {
         instance.locale === currentLanguage
       ) {
         let defaultLink = "";
-        const reg = /^https?:/gi;
+        const reg = /^https?:/i;
         if (!reg.test(instance.path)) {
           // Finds the first slug corresponding to the instance
           const targetSlug = allSlugs.find((item) => {
@@ -209,6 +229,13 @@ class LibController {
       }
     });
     return result;
+  }
+  getTargetInstance(targetInstanceID: string) {
+    const instances = this.getInstances();
+    const targetInstance = instances.find(
+      (instance) => instance.id === targetInstanceID
+    );
+    return targetInstance;
   }
 }
 

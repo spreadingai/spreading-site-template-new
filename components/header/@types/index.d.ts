@@ -1,5 +1,6 @@
 interface NavBarItem {
   type?: "default" | "dropdown";
+  key: string;
   label: React.ReactNode;
   to?: string;
   href?: string;
