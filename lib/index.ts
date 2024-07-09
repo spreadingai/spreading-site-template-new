@@ -61,6 +61,9 @@ class LibController {
               ""
             );
           }
+          if (docuoConfig.i18n && !instance.locale) {
+            instance.locale = docuoConfig.i18n.defaultLocale;
+          }
         });
         if (Number(process.env.NEXT_PUBLIC_PLAN) === Plan.Free) {
           docuoConfig.instances.splice(1);
