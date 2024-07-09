@@ -3,15 +3,20 @@ import IconArrowRight from "@/assets/icons/iconArrowDown.svg";
 import DocuoAnchor from "./index";
 import { createPortal } from "react-dom";
 import { useMediaQuery } from "usehooks-ts";
+import { copywriting } from "@/components/constant/language";
 
 import React, { FC, useEffect, useMemo } from "react";
 import AnchorNode from "./Anchor";
 
 interface AnchorNodeProps {
   tocFormatData: AnchorNode[];
+  currentLanguage: string;
 }
 
-const AnchorNodeMobile: FC<AnchorNodeProps> = ({ tocFormatData }) => {
+const AnchorNodeMobile: FC<AnchorNodeProps> = ({
+  tocFormatData,
+  currentLanguage,
+}) => {
   const [isMobile, setIsMobile] = React.useState(false);
   const [openToc, setOpenToc] = React.useState(false);
   const [loaded, setLoaded] = React.useState(false);
@@ -42,7 +47,11 @@ const AnchorNodeMobile: FC<AnchorNodeProps> = ({ tocFormatData }) => {
       style={{ paddingLeft: 14, paddingRight: 12 }}
       className={`anchor-mobile-container w-full rounded-md toc flex items-center justify-between  h-10 ${styles["toc-btn"]}`}
     >
-      <span className={styles["toc-font"]}>On this page</span>
+      <span className={styles["toc-font"]}>
+        {copywriting[currentLanguage]
+          ? copywriting[currentLanguage].toc.title
+          : copywriting.en.toc.title}
+      </span>
       <IconArrowRight style={iconStyles} className={styles["toc-icon"]} />
       {loaded &&
         createPortal(

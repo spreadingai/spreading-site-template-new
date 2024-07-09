@@ -36,6 +36,7 @@ import ThemeContext, { Theme } from "@/components/header/Theme.context";
 import useColors from "./hooks/useColors";
 import useColorMode from "./hooks/useColorMode";
 import ArticlePager, { PaginationData } from "./articlePager";
+import { copywriting } from "@/components/constant/language";
 
 type Props = {
   children: React.ReactNode;
@@ -483,7 +484,10 @@ const PreviewLayout = ({
                     }
                   />
                   <div className={"middle__show  relative"}>
-                    <AnChorMobile tocFormatData={tocFormatData} />
+                    <AnChorMobile
+                      tocFormatData={tocFormatData}
+                      currentLanguage={currentLanguage}
+                    />
                   </div>
                 </div>
                 <div
@@ -505,7 +509,9 @@ const PreviewLayout = ({
                       className="mb-2.5 font-inter-bold font-semibold text-sm"
                       onClick={() => setIsExpand(!isExpand)}
                     >
-                      On this page
+                      {copywriting[currentLanguage]
+                        ? copywriting[currentLanguage].toc.title
+                        : copywriting.en.toc.title}
                     </p>
                     <div className="toc-scroller overflow-auto overscroll-none relative pr-6 max-h-[70vh]">
                       <DocuoAnchor data={tocFormatData} offsetTop={68} />
@@ -523,7 +529,9 @@ const PreviewLayout = ({
                           <IconBackTop />
                         )}
                       </div>
-                      Back to top
+                      {copywriting[currentLanguage]
+                        ? copywriting[currentLanguage].toc.backToTopText
+                        : copywriting.en.toc.backToTopText}
                     </div>
                   </div>
                 ) : null}

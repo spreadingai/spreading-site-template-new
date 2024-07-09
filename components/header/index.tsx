@@ -19,6 +19,7 @@ import AnchorNode from "../Anchor/Anchor";
 import ThemeSwitch from "./ThemeSwitch";
 import ThemeContext from "@/components/header/Theme.context";
 import LanguageSwitch from "./LanguageSwitch";
+import { copywriting } from "@/components/constant/language";
 // import "@docsearch/css";
 
 interface Props {
@@ -90,12 +91,9 @@ const Header = (props: Props) => {
       <>
         <DocSearch
           {...algolia}
-          translations={{
-            button: {
-              buttonText: "Quick search...",
-            },
-          }}
-          placeholder="Find or ask what you want"
+          {...(copywriting[currentLanguage]
+            ? copywriting[currentLanguage].search
+            : copywriting.en.search)}
           searchParameters={{
             facetFilters: [
               `version:${currentVersion}`,
@@ -112,6 +110,7 @@ const Header = (props: Props) => {
     searchHidden,
     currentVersion,
     currentInstanceID,
+    currentLanguage,
     currentLanguageLabel,
   ]);
 
@@ -247,7 +246,10 @@ const Header = (props: Props) => {
           >
             <IconMenu className={styles["sidebar-icon"]} />
           </span>
-          <AnChorMobile tocFormatData={tocFormatData} />
+          <AnChorMobile
+            tocFormatData={tocFormatData}
+            currentLanguage={currentLanguage}
+          />
         </div>
       )}
     </header>
