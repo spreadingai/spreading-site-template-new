@@ -10,12 +10,20 @@
   }
   &.group {
     width: 100%;
-    margin-right: 24px;
+    margin-right: 8px;
   }
   &.platform {
     & + &.version,
     & + &.platform {
       width: 86px;
+      margin-right: 0;
+    }
+    width: 100%;
+    margin-right: 8px;
+    &:has(~ &.version),
+    &:has(~ &.platform) {
+      width: 160px;
+      margin-right: 10px;
     }
   }
   height: 36px;
