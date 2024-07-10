@@ -25,6 +25,7 @@ import SlugControllerImpl from "./slug-help";
 import VersionsControllerImpl from "./versions-help";
 import { convertDocID, ignoreNumberPrefix, removeMdxSuffix } from "./utils";
 import { DEFAULT_INSTANCE_ID } from "./constants";
+import { InstanceType } from "./types";
 
 class DocsController {
   static _instance: DocsController;
@@ -51,26 +52,42 @@ class DocsController {
       versions
     );
     if (!slugVersion || slugVersion !== versions[0]) {
+      const temp = LibControllerImpl.getInstances(InstanceType.Normal)
+        .find((instance) => instance.id === instanceID)
+        .path.split("/");
+      const instanceFolder = temp.slice(0, temp.length - 1).join("/");
       rootUrl = path.join(
         LibControllerImpl.getEntityRootDirectory(),
-        (instanceID === DEFAULT_INSTANCE_ID ? "" : instanceID + "_") + "docs"
+        (instanceID === DEFAULT_INSTANCE_ID
+          ? ""
+          : (instanceFolder ? instanceFolder + "/" : "") + instanceID + "_") +
+          "docs"
       );
       newRootUrl = path.join(
         LibControllerImpl.getEntityRootDirectory(),
-        "docs" + (instanceID === DEFAULT_INSTANCE_ID ? "" : "_" + instanceID)
+        instanceID === DEFAULT_INSTANCE_ID
+          ? "docs"
+          : (instanceFolder ? instanceFolder + "/" : "") + "docs_" + instanceID
       );
       if (docVersion) {
         rootUrl = path.join(
           LibControllerImpl.getEntityRootDirectory(),
           `${
-            instanceID === DEFAULT_INSTANCE_ID ? "" : instanceID + "_"
+            instanceID === DEFAULT_INSTANCE_ID
+              ? ""
+              : (instanceFolder ? instanceFolder + "/" : "") + instanceID + "_"
           }versioned_docs`,
           `version-${docVersion}`
         );
         newRootUrl = path.join(
           LibControllerImpl.getEntityRootDirectory(),
-          `docs_${
-            instanceID === DEFAULT_INSTANCE_ID ? "" : instanceID + "_"
+          `${
+            instanceID === DEFAULT_INSTANCE_ID
+              ? "docs_"
+              : (instanceFolder ? instanceFolder + "/" : "") +
+                "docs_" +
+                instanceID +
+                "_"
           }versioned`,
           `version-${docVersion}`
         );

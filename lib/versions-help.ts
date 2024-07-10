@@ -66,12 +66,32 @@ class VersionsController {
   }
   getActualVersions(instanceID: string) {
     const instance = LibControllerImpl.getTargetInstance(instanceID);
+
+    // Old Logic
+    // const versionedUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
+    //   instance.id === DEFAULT_INSTANCE_ID ? "" : instance.id + "_"
+    // }versioned_docs`;
+    // const newVersionedUrl = `${LibControllerImpl.getEntityRootDirectory()}/docs_${
+    //   instance.id === DEFAULT_INSTANCE_ID ? "" : instance.id + "_"
+    // }versioned`;
+
+    // New logic: Use the path of the instance directly
+    const temp = instance.path.split("/");
+    const instanceFolder = temp.slice(0, temp.length - 1).join("/");
     const versionedUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
-      instance.id === DEFAULT_INSTANCE_ID ? "" : instance.id + "_"
+      instance.id === DEFAULT_INSTANCE_ID
+        ? ""
+        : (instanceFolder ? instanceFolder + "/" : "") + instance.id + "_"
     }versioned_docs`;
-    const newVersionedUrl = `${LibControllerImpl.getEntityRootDirectory()}/docs_${
-      instance.id === DEFAULT_INSTANCE_ID ? "" : instance.id + "_"
-    }versioned`;
+    const newVersionedUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
+      instance.id === DEFAULT_INSTANCE_ID
+        ? "docs_versioned"
+        : (instanceFolder ? instanceFolder + "/" : "") +
+          "docs_" +
+          instance.id +
+          "_versioned"
+    }`;
+
     const versionedPath = path.resolve("./public", "..", versionedUrl);
     const newVersionedPath = path.resolve("./public", "..", newVersionedUrl);
     let versioned: string[] = [];
