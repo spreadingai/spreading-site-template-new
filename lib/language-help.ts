@@ -74,7 +74,7 @@ class LanguageController {
 
         // New logic: The first non-linked document takes the first non-linked instance of the target language if it is not found
         const reg = /^https?:/i;
-        if (!targetInstance) {
+        if (!targetInstance || reg.test(targetInstance.path)) {
           const displayInstances =
             LibControllerImpl.getDisplayInstances(suffix);
           const target = displayInstances.find(

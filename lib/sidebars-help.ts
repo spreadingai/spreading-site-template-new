@@ -55,9 +55,10 @@ class SidebarsController {
     // }
 
     // New logic: Use the path of the instance directly
-    const temp = LibControllerImpl.getInstances(InstanceType.Normal)
-      .find((instance) => instance.id === instanceID)
-      .path.split("/");
+    const targetInstance = LibControllerImpl.getInstances(
+      InstanceType.Normal
+    ).find((instance) => instance.id === instanceID);
+    const temp = targetInstance.path.split("/");
     const instanceFolder = temp.slice(0, temp.length - 1).join("/");
     let rootUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
       instanceID === DEFAULT_INSTANCE_ID
