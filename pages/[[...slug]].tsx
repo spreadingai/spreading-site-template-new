@@ -26,6 +26,7 @@ import LanguageControllerImpl from "@/lib/language-help";
 import GroupControllerImpl from "@/lib/group-help";
 import PlatformControllerImpl from "@/lib/platform-help";
 import VersionsControllerImpl from "@/lib/versions-help";
+import PagerControllerImpl from "@/lib/pager-help";
 import Link from "next/link";
 import {
   SlugData,
@@ -148,6 +149,7 @@ export const getStaticProps = async ({ params }: SlugData) => {
     // Matches multiple language instance id
     return item.instance.id === instanceID;
   });
+  const { prev, next } = PagerControllerImpl.getPageTurningData(slug);
   return {
     props: {
       ...postData,
@@ -170,8 +172,8 @@ export const getStaticProps = async ({ params }: SlugData) => {
       displayPlatforms,
       instances,
       versions,
-      prev: { title: "prev", description: "", href: "" },
-      next: { title: "next", description: "", href: "" },
+      prev,
+      next,
     },
   };
 };

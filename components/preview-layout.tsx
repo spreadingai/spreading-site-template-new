@@ -501,7 +501,7 @@ const PreviewLayout = ({
                 >
                   {children}
                 </div>
-                {/* <ArticlePager prev={prev} next={next} /> */}
+                <ArticlePager prev={prev} next={next} />
               </div>
               <div className="article-anchor-right">
                 {toc?.length ? (

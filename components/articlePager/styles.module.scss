@@ -1,73 +1,76 @@
 .article-pager-container {
   width: 100%;
   display: flex;
-  gap: 0 20px;
   margin-top: 40px;
-  margin-bottom: 48px;
+  margin-bottom: 40px;
 }
 .article-pager {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 16px;
-  border: 1px solid #eaeaea;
-  border-radius: 2px;
+  transition: all 0.3s;
+  position: relative;
   &:hover {
-    background: #f9f9f9;
+    border-radius: 6px;
+    background: var(--docuo-pager-bg-hover);
+    transition: all 0.3s;
   }
   &.article-pager-next {
+    padding: 12px 10px 12px 12px;
     align-items: flex-end;
   }
   &.article-pager-prev {
+    padding: 12px 12px 12px 10px;
     align-items: flex-start;
   }
-  .article-pager-icon {
+  .article-pager-icon-prev,
+  .article-pager-icon-next {
     font-size: 18px;
+    position: absolute;
+    top: 12px;
+    color: var(--docuo-pager-arrow-color);
   }
-  // .article-pager-icon-next {}
   .article-pager-icon-prev {
-    transform: rotate(180deg);
+    left: 6px;
+  }
+  .article-pager-icon-next {
+    right: 6px;
   }
   .article-pager-title {
-    font-size: 14px;
-    font-family: LexendDeca-Regular, LexendDeca;
-    font-weight: 400;
-    color: #171717;
+    font-family: Inter, Inter;
+    font-weight: 500;
+    font-size: 13px;
+    color: var(--docuo-pager-title-color);
     line-height: 18px;
-    margin-top: 10px;
+    margin-left: 12px;
     &.article-pager-title-next {
       text-align: right;
+      margin-left: 0;
+      margin-right: 12px;
     }
   }
   .article-pager-description {
-    font-size: 12px;
-    font-family: LexendDeca-Light, LexendDeca;
-    font-weight: 300;
-    color: rgba($color: #171717, $alpha: 0.6);
-    line-height: 16px;
+    font-family: Inter, Inter;
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--docuo-pager-desc-color);
+    line-height: 24px;
     margin-top: 6px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -moz-box;
-    display: -webkit-box;
-    -moz-box-orient: vertical;
-    -webkit-box-orient: vertical;
-    -moz-line-clamp: 2;
-    -webkit-line-clamp: 2;
     &.article-pager-description-next {
       text-align: right;
     }
   }
 }
+.pager-separator {
+  flex-grow: 1;
+  min-width: 36px;
+}
 
 @media screen and (max-width: 1440px) {
   .article-pager-container {
-    gap: 0 16px;
   }
 }
 @media screen and (max-width: 375px) {
   .article-pager-container {
-    gap: 16px 0;
-    flex-direction: column;
+    flex-wrap: wrap;
   }
 }

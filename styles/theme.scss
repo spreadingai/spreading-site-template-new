@@ -85,6 +85,12 @@ html {
   // Language
   --docuo-language-btn-color: #979ba5;
   --docuo-language-btn-color-hover: #747987;
+
+  // Pager
+  --docuo-pager-bg-hover: rgba(229, 231, 235, 0.3);
+  --docuo-pager-arrow-color: #353c4e;
+  --docuo-pager-title-color: #515869;
+  --docuo-pager-desc-color: #171717;
 }
 
 html[data-theme="dark"] {
@@ -174,4 +180,10 @@ html[data-theme="dark"] {
   // Language
   --docuo-language-btn-color: #a6a6a6;
   --docuo-language-btn-color-hover: #e9e9e9;
+
+  // Pager
+  --docuo-pager-bg-hover: rgba(229, 231, 235, 0.3);
+  --docuo-pager-arrow-color: #b6b6b6;
+  --docuo-pager-title-color: #b6b6b6;
+  --docuo-pager-desc-color: #fff;
 }
