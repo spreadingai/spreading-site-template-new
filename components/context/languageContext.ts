@@ -10,8 +10,8 @@ type LanguageContentType = {
   setDisplayLanguages?: Dispatch<SetStateAction<[]>>;
 };
 
-export const defaultLanguage: string = "en";
-export const defaultLanguageLabel: string = "en";
+export const defaultLanguage: string = "";
+export const defaultLanguageLabel: string = "";
 export const defaultDisplayLanguages: [] = [];
 
 export const LanguageContext = createContext<LanguageContentType>({
