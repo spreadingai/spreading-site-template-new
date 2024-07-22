@@ -7,6 +7,7 @@ import FooterMobile from "./mobile";
 import classNames from "classnames";
 import { getSocial } from "./utils";
 import ThemeContext from "@/components/header/Theme.context";
+import useLanguage from "@/components/hooks/useLanguage";
 
 const defaultFooter = {
   logo: undefined,
@@ -18,10 +19,12 @@ const defaultFooter = {
 };
 
 const Footer: FC<footerProps> = ({ docuoConfig }) => {
+  const { currentLanguage } = useLanguage();
   const footer = Object.assign(
     {},
     defaultFooter,
-    docuoConfig?.themeConfig?.footer || {}
+    docuoConfig.themeConfig["footer"] || {},
+    docuoConfig.themeConfig[`footer.${currentLanguage}`] || {}
   );
   const itemWidth = 200;
   const links = footer?.links || [];

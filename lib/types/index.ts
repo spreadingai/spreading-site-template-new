@@ -12,8 +12,8 @@ export interface DocuoConfig {
   metadata?: Record<string, string>[];
   instances: DocInstance[];
   themeConfig: {
-    navbar: NavbarConfig;
-    footer: FooterConfig;
+    [key: `navbar${string}`]: NavbarConfig;
+    [key: `footer${string}`]: FooterConfig;
     colorMode?: ColorMode;
     colors?: Colors;
     removeWatermark?: boolean;

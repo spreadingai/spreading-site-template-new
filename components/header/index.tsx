@@ -20,6 +20,7 @@ import ThemeSwitch from "./ThemeSwitch";
 import ThemeContext from "@/components/header/Theme.context";
 import LanguageSwitch from "./LanguageSwitch";
 import { copywriting } from "@/components/constant/language";
+import useLanguage from "@/components/hooks/useLanguage";
 // import "@docsearch/css";
 
 interface Props {
@@ -29,9 +30,6 @@ interface Props {
   tocFormatData: AnchorNode[];
   displayInstances: DisplayInstance[];
   displayVersions: DisplayVersion[];
-  displayLanguages: DisplayLanguage[];
-  currentLanguage: string;
-  currentLanguageLabel: string;
   setDrawerOpen: (value: boolean) => void;
 }
 
@@ -42,12 +40,15 @@ const Header = (props: Props) => {
     currentInstanceID,
     tocFormatData,
     setDrawerOpen,
-    displayLanguages,
-    currentLanguage,
-    currentLanguageLabel,
   } = props;
+  const { currentLanguage, currentLanguageLabel, displayLanguages } =
+    useLanguage();
   const { themeConfig, search } = docuoConfig;
-  const { navbar } = themeConfig;
+  const navbar = Object.assign(
+    {},
+    themeConfig.navbar,
+    themeConfig[`navbar.${currentLanguage}`]
+  );
   const { items } = navbar;
   const { algolia } = search || {};
   const searchHidden = search?.hidden ?? false;
@@ -148,12 +149,7 @@ const Header = (props: Props) => {
 
   const renderLanguageSwitch = () => {
     return !!displayLanguages?.length ? (
-      <LanguageSwitch
-        className={isMobile ? "mobile" : ""}
-        displayLanguages={displayLanguages}
-        currentLanguage={currentLanguage}
-        currentLanguageLabel={currentLanguageLabel}
-      />
+      <LanguageSwitch className={isMobile ? "mobile" : ""} />
     ) : null;
   };
 
@@ -246,10 +242,7 @@ const Header = (props: Props) => {
           >
             <IconMenu className={styles["sidebar-icon"]} />
           </span>
-          <AnChorMobile
-            tocFormatData={tocFormatData}
-            currentLanguage={currentLanguage}
-          />
+          <AnChorMobile tocFormatData={tocFormatData} />
         </div>
       )}
     </header>

@@ -7,19 +7,17 @@ import { copywriting } from "@/components/constant/language";
 
 import React, { FC, useEffect, useMemo } from "react";
 import AnchorNode from "./Anchor";
+import useLanguage from "@/components/hooks/useLanguage";
 
 interface AnchorNodeProps {
   tocFormatData: AnchorNode[];
-  currentLanguage: string;
 }
 
-const AnchorNodeMobile: FC<AnchorNodeProps> = ({
-  tocFormatData,
-  currentLanguage,
-}) => {
+const AnchorNodeMobile: FC<AnchorNodeProps> = ({ tocFormatData }) => {
   const [isMobile, setIsMobile] = React.useState(false);
   const [openToc, setOpenToc] = React.useState(false);
   const [loaded, setLoaded] = React.useState(false);
+  const { currentLanguage } = useLanguage();
 
   const isShowMobile = useMediaQuery(`(max-width: 1024px)`);
   const iconStyles = useMemo(() => {

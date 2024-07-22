@@ -5,17 +5,16 @@ import IconLanguageNorLight from "@/assets/icons/header/icon_language_nor_light.
 import IconLanguageNorDark from "@/assets/icons/header/icon_language_nor_dark.svg";
 import { DisplayLanguage } from "@/lib/types";
 import { useRouter } from "next/router";
+import useLanguage from "@/components/hooks/useLanguage";
 
 interface LanguageSwitchProps {
   className?: string;
-  displayLanguages: DisplayLanguage[];
-  currentLanguage: string;
-  currentLanguageLabel: string;
 }
 
 const LanguageSwitch = (props: LanguageSwitchProps) => {
+  const { currentLanguage, displayLanguages } = useLanguage();
   const router = useRouter();
-  const { className = "", displayLanguages, currentLanguage } = props;
+  const { className = "" } = props;
 
   const handleThemeChanged: MenuProps["onClick"] = ({ key: language }) => {
     const target = displayLanguages.find((item) => item.language === language);
