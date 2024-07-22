@@ -145,9 +145,25 @@ class LanguageController {
         targetSlugVersion = DEFAULT_LATEST_SLUG_VERSION;
       }
     }
-    const defaultLink = `${
+    const defaultPrefix = `${
       targetInstance.routeBasePath ? "/" + targetInstance.routeBasePath : ""
-    }/${targetSlugVersion}${targetSlugVersion ? "/" + mdxFileID : mdxFileID}`;
+    }/${targetSlugVersion}${targetSlugVersion ? "/" : ""}`;
+    let defaultLink = defaultPrefix + mdxFileID;
+    // Check whether the document corresponding to the path exists
+    const allSlugs = SlugControllerImpl.getAllSlugs();
+    if (
+      !allSlugs.find((item) => `/${item.params.slug.join("/")}` === defaultLink)
+    ) {
+      // Documentation of the same instance
+      const temp = allSlugs.find((item) =>
+        `/${item.params.slug.join("/")}`.includes(defaultPrefix)
+      );
+      if (temp) {
+        defaultLink = `/${temp.params.slug.join("/")}`;
+      } else {
+        // Documentation for the next instance
+      }
+    }
     return defaultLink;
   }
 }
