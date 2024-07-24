@@ -25,7 +25,7 @@ html {
     --docuo-openapi-select-selector-dropdown-item-option-color: var(--docuo-color-primary);
     --docuo-openapi-select-selector-dropdown-item-option-hover-color: var(--docuo-color-primary);
     --docuo-openapi-select-selector-dropdown-item-option-hover-bg-color: rgba(23, 23, 23, 0.04);
-    --docuo-openapi-select-selector-dropdown-item-option-selected-color: #1abd00;
+    --docuo-openapi-select-selector-dropdown-item-option-selected-color: #0055ff;
     --docuo-openapi-select-selector-dropdown-item-option-selected-bg-color: transparent;
     // ########### Common end ###########
 
@@ -37,7 +37,7 @@ html {
         --docuo-openapi-method-endpoint-color: var(--docuo-color-primary);
         --docuo-openapi-method-endpoint-bg-color: #f7f8f9;
         // Badge
-        --docuo-openapi-badge-bg-primary-color: #19b100;
+        --docuo-openapi-badge-bg-primary-color: #0055ff;
         --docuo-openapi-badge-primary-color: #ffffff;
         --docuo-openapi-badge-bg-success-color: #0989ff;
         --docuo-openapi-badge-bg-danger-color: #f64841;
@@ -72,7 +72,7 @@ html {
         --docuo-openapi-discriminator-item-active-border-color: var(--docuo-color-primary-active);
         --docuo-openapi-discriminator-item-active-bg-color: transparent;
         --docuo-openapi-discriminator-item-active-color: var(--docuo-color-primary-active); // SchemaItem
-        --docuo-openapi-schema-property-color: #1abd00;
+        --docuo-openapi-schema-property-color: #0055ff;
         --docuo-openapi-type-color: #353c4e;
         --docuo-openapi-type-bg-color: rgba(81, 88, 105, 0.07);
         --docuo-openapi-name-color: #353c4e;
@@ -87,8 +87,8 @@ html {
         --docuo-openapi-response-code-item-info-active-border-color: #00b0e8;
         --docuo-openapi-response-code-item-info-active-bg-color: #00b0e8;
         --docuo-openapi-response-code-item-info-active-color: #ffffff;
-        --docuo-openapi-response-code-item-success-active-border-color: #19b100;
-        --docuo-openapi-response-code-item-success-active-bg-color: #19b100;
+        --docuo-openapi-response-code-item-success-active-border-color: #0055ff;
+        --docuo-openapi-response-code-item-success-active-bg-color: #0055ff;
         --docuo-openapi-response-code-item-success-active-color: #ffffff;
         --docuo-openapi-response-code-item-danger-active-border-color: #ff2900;
         --docuo-openapi-response-code-item-danger-active-bg-color: #ff2900;
@@ -100,7 +100,7 @@ html {
     .preview-sider,
     .mobile-tree-container {
         // Badge
-        --docuo-openapi-badge-bg-primary-color: #19b100;
+        --docuo-openapi-badge-bg-primary-color: #0055ff;
         --docuo-openapi-badge-primary-color: #ffffff;
         --docuo-openapi-badge-bg-success-color: #0989ff;
         --docuo-openapi-badge-bg-danger-color: #f64841;
@@ -138,7 +138,7 @@ html[data-theme="dark"] {
     --docuo-openapi-select-selector-dropdown-item-option-color: var(--docuo-color-primary);
     --docuo-openapi-select-selector-dropdown-item-option-hover-color: var(--docuo-color-primary);
     --docuo-openapi-select-selector-dropdown-item-option-hover-bg-color: #252525;
-    --docuo-openapi-select-selector-dropdown-item-option-selected-color: #05ec07;
+    --docuo-openapi-select-selector-dropdown-item-option-selected-color: #266eff;
     --docuo-openapi-select-selector-dropdown-item-option-selected-bg-color: transparent;
     // ########### Common end ###########
 
@@ -150,7 +150,7 @@ html[data-theme="dark"] {
         --docuo-openapi-method-endpoint-color: var(--docuo-color-primary);
         --docuo-openapi-method-endpoint-bg-color: #171717;
         // Badge
-        --docuo-openapi-badge-bg-primary-color: #19b100;
+        --docuo-openapi-badge-bg-primary-color: #0055ff;
         --docuo-openapi-badge-primary-color: #ffffff;
         --docuo-openapi-badge-bg-success-color: #0085ff;
         --docuo-openapi-badge-bg-danger-color: #f13024;
@@ -192,7 +192,7 @@ html[data-theme="dark"] {
         --docuo-openapi-discriminator-item-active-bg-color: transparent;
         --docuo-openapi-discriminator-item-active-color: var(--docuo-color-primary-active);
         // SchemaItem
-        --docuo-openapi-schema-property-color: #05ec07;
+        --docuo-openapi-schema-property-color: #266eff;
         --docuo-openapi-type-color: #b6b6b6;
         --docuo-openapi-type-bg-color: #1d1d1d;
         --docuo-openapi-name-color: #b6b6b6;
@@ -210,8 +210,8 @@ html[data-theme="dark"] {
         --docuo-openapi-response-code-item-info-active-border-color: #00b0e8;
         --docuo-openapi-response-code-item-info-active-bg-color: #00b0e8;
         --docuo-openapi-response-code-item-info-active-color: #ffffff;
-        --docuo-openapi-response-code-item-success-active-border-color: #1abd00;
-        --docuo-openapi-response-code-item-success-active-bg-color: #1abd00;
+        --docuo-openapi-response-code-item-success-active-border-color: #0055ff;
+        --docuo-openapi-response-code-item-success-active-bg-color: #0055ff;
         --docuo-openapi-response-code-item-success-active-color: #ffffff;
         --docuo-openapi-response-code-item-danger-active-border-color: #f13024;
         --docuo-openapi-response-code-item-danger-active-bg-color: #f13024;
@@ -226,7 +226,7 @@ html[data-theme="dark"] {
     .preview-sider,
     .mobile-tree-container {
         // Badge
-        --docuo-openapi-badge-bg-primary-color: #19b100;
+        --docuo-openapi-badge-bg-primary-color: #0055ff;
         --docuo-openapi-badge-primary-color: #ffffff;
         --docuo-openapi-badge-bg-success-color: #0085ff;
         --docuo-openapi-badge-bg-danger-color: #f13024;

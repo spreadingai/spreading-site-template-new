@@ -1,7 +1,7 @@
 html {
   --docuo-color-primary: #171717;
-  --docuo-color-primary-hover: #1abd00;
-  --docuo-color-primary-active: #1abd00;
+  --docuo-color-primary-hover: #0055ff;
+  --docuo-color-primary-active: #0055ff;
   --docuo-background-primary: #fff;
   --docuo-header-bg: #fff;
   --docuo-header-bg-opacity: rgba(255, 255, 255, 0.6);
@@ -35,7 +35,7 @@ html {
   --docuo-footer-bg: rgba(229, 231, 235, 0.25);
   --docuo-footer-caption-color: rgba(81, 88, 105, 0.7);
   --docuo-footer-link-color: rgba(53, 60, 78, 0.7);
-  --docuo-footer-link-color-hover: #1abd00;
+  --docuo-footer-link-color-hover: #0055ff;
   --docuo-footer-copyright-color: rgba(53, 60, 78, 0.4);
   --docuo-footer-copyright-border: 1px solid #e5e7eb;
 
@@ -73,7 +73,7 @@ html {
   --docuo-ul-dot-color: #c5c9d0;
   --docuo-ol-number-color: #b1b4b8;
   // code group
-  --docuo-code-group-active: #05ec07;
+  --docuo-code-group-active: #266eff;
   // Card
   --docuo-card-bg: rgba(255, 255, 255, 0.5);
   --docuo-card-border-color: rgb(238, 242, 241);
@@ -95,8 +95,8 @@ html {
 
 html[data-theme="dark"] {
   --docuo-color-primary: #f0f0f0;
-  --docuo-color-primary-hover: #05ec07;
-  --docuo-color-primary-active: #05ec07;
+  --docuo-color-primary-hover: #266eff;
+  --docuo-color-primary-active: #266eff;
   --docuo-background-primary: #0d0d0d;
   --docuo-header-bg: rgba(13, 13, 13, 1);
   --docuo-header-bg-opacity: rgba(13, 13, 13, 0.4);
@@ -168,7 +168,7 @@ html[data-theme="dark"] {
   --docuo-ul-dot-color: #565656;
   --docuo-ol-number-color: #565656;
   // code group
-  --docuo-code-group-active: #05ec07;
+  --docuo-code-group-active: #266eff;
   // Card
   --docuo-card-bg: #161616;
   --docuo-card-border-color: rgba(37, 41, 40, 0.5);

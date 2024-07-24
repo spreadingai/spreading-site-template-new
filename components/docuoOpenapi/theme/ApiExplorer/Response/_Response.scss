@@ -36,11 +36,11 @@
         border-radius: 0;
         color: rgba(255, 255, 255, 0.5);
         &.active {
-          border-bottom-color: #1abd00 !important;
-          color: #1abd00;
+          border-bottom-color: #0055ff !important;
+          color: #0055ff;
           &.openapi-response__dot--success {
-            border-bottom-color: #1abd00 !important;
-            color: #1abd00;
+            border-bottom-color: #0055ff !important;
+            color: #0055ff;
           }
           &.openapi-response__dot--danger {
             border-bottom-color: #f64841 !important;
@@ -99,7 +99,7 @@
   // }
 
   // .openapi-response__dot--success::before {
-  //   color: #1abd00;
+  //   color: #0055FF;
   // }
 
   // .openapi-response__dot--info::before {

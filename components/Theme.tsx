@@ -14,7 +14,7 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
           fontFamily: "Inter-Medium",
           fontBold: "500",
           itemColor: "rgba(81,88,105,0.8)",
-          lastItemColor: "#1ABD00",
+          lastItemColor: "#0055FF",
           separatorColor: "#D0D0D0",
           separatorMargin: 4,
         },

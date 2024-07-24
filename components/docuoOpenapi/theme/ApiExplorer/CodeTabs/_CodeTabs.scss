@@ -174,7 +174,7 @@ body[class="ReactModal__Body--open"] {
     &:hover,
     &.active {
       box-shadow: none;
-      border-color: #05ec07;
+      border-color: #266eff;
     }
     &:last-of-type {
       margin-right: 0;
@@ -232,9 +232,9 @@ body[class="ReactModal__Body--open"] {
         }
         &:hover,
         &.active {
-          border-bottom-color: #05ec07;
+          border-bottom-color: #266eff;
           & > span {
-            color: #05ec07;
+            color: #266eff;
           }
         }
       }

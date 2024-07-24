@@ -88,7 +88,7 @@
     }
     &:hover {
       .ant-select-selector {
-        border-color: #05ec07 !important;
+        border-color: #266eff !important;
       }
     }
     .ant-select-selection-item {
@@ -104,7 +104,7 @@
   }
   .ant-select-focused {
     .ant-select-selector {
-      border-color: #05ec07 !important;
+      border-color: #266eff !important;
       box-shadow: none !important;
     }
   }
@@ -148,7 +148,7 @@
       border-radius: 4px 4px 4px 4px;
     }
     &.ant-select-item-option-selected {
-      color: #05ec07 !important;
+      color: #266eff !important;
       background: inherit;
     }
   }

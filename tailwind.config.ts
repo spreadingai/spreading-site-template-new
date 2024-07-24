@@ -30,8 +30,8 @@ const config: Config = {
         sidebar: {
           primary: "#171717",
           secondary: "#515869",
-          active: "#1ABD00",
-          hover: "#1ABD00",
+          active: "#0055FF",
+          hover: "#0055FF",
           scrollbar: "rgba(81,88,105,0.2)",
         },
       },
@@ -48,6 +48,6 @@ const config: Config = {
         },
       },
     },
-  }
+  },
 };
 export default config;
