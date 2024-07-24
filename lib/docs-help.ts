@@ -9,6 +9,7 @@ import rehypeKatex from "rehype-katex";
 import remarkMath from "remark-math";
 import remarkImages from "remark-images";
 import mdxMermaid from "mdx-mermaid";
+import remarkDirective from "remark-directive";
 import {
   rehypeImages,
   rehypeLink,
@@ -18,6 +19,7 @@ import {
   remarkToc,
   remarkFrontmatter,
   rehypeNestedFormat,
+  remarkConditions,
 } from "@/plugins";
 
 import LibControllerImpl from "./index";
@@ -116,12 +118,14 @@ class DocsController {
       }${slugVersion}`,
     };
     const remarkPlugins = [
+      remarkDirective,
       remarkGfm,
       remarkMath,
       remarkImages,
       [mdxMermaid, { mermaid: { theme: "default" } }],
       [remarkToc, { exportRef: tocRef }],
       [remarkFrontmatter, { exportRef: frontmatterRef }],
+      remarkConditions,
     ];
     const rehypePlugins = [
       rehypeKatex,
