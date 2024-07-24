@@ -34,7 +34,7 @@
     height: 100%;
     .logo {
       width: auto;
-      height: 25px;
+      height: 36px;
       object-fit: contain;
     }
     .logo-title {
@@ -96,7 +96,7 @@
     .menus__btn-list {
       display: flex;
       align-items: center;
-      >div:first-child {
+      > div:first-child {
         display: flex;
         align-items: center;
         &::before {
