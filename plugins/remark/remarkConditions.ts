@@ -8,9 +8,34 @@ export const remarkConditions = () => {
           if (childreNode.name === "if") {
             const oldChildren = childreNode.children;
             const key = Object.keys(childreNode.attributes)[0];
-            const value =
+            let value =
               childreNode.attributes[Object.keys(childreNode.attributes)[0]];
+            if (!isNaN(Number(value))) value = Number(value);
+            if (value === "undefined") value = undefined;
+            if (value === "null") value = null;
             const propertyName = key.split(".")[1];
+            const operator = "===";
+            const expression = `{"display": ${key}${operator}${
+              typeof value !== "string" ? value : '"' + value + '"'
+            } ? "block" : "none"}`;
+
+            let rightObj: any = {
+              type: "Literal",
+              value: value,
+              raw: `"${value}"`,
+            };
+            if (value === undefined) {
+              rightObj = {
+                type: "Identifier",
+                name: "undefined",
+              };
+            }
+            if (value === null) {
+              rightObj = {
+                type: "Identifier",
+                name: "null",
+              };
+            }
             const temp = {
               name: "div",
               type: "mdxJsxFlowElement",
@@ -25,7 +50,7 @@ export const remarkConditions = () => {
                   type: "mdxJsxAttribute",
                   value: {
                     type: "mdxJsxAttributeValueExpression",
-                    value: `{"display": ${key}==="${value}" ? "block" : "none"}`,
+                    value: expression,
                     data: {
                       estree: {
                         type: "Program",
@@ -62,12 +87,8 @@ export const remarkConditions = () => {
                                         computed: false,
                                         optional: false,
                                       },
-                                      operator: "===",
-                                      right: {
-                                        type: "Literal",
-                                        value: `${value}`,
-                                        raw: `"${value}"`,
-                                      },
+                                      operator: operator,
+                                      right: rightObj,
                                     },
                                     consequent: {
                                       type: "Literal",
