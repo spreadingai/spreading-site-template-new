@@ -39,88 +39,169 @@ export const remarkConditions = () => {
             let newChildren = [];
             const oldChildren = childrenNode.children;
             oldChildren.forEach((oldChildreNode, oldIndex) => {
-              const temp = {
-                name: "div",
-                type: "mdxJsxFlowElement",
-                attributes: [
-                  {
-                    name: "className",
-                    type: "mdxJsxAttribute",
-                    value: `choose-one ${oldChildreNode.name}`,
-                  },
-                  {
-                    name: "style",
-                    type: "mdxJsxAttribute",
-                    value: {
-                      type: "mdxJsxAttributeValueExpression",
-                      value: expression,
-                      data: {
-                        estree: {
-                          type: "Program",
-                          body: [
-                            {
-                              type: "ExpressionStatement",
-                              expression: {
-                                type: "ObjectExpression",
-                                properties: [
-                                  {
-                                    type: "Property",
-                                    method: false,
-                                    shorthand: false,
-                                    computed: false,
-                                    key: {
-                                      type: "Literal",
-                                      value: "display",
-                                      raw: '"display"',
-                                    },
-                                    value: {
-                                      type: "ConditionalExpression",
-                                      test: {
-                                        type: "BinaryExpression",
-                                        left: {
-                                          type: "MemberExpression",
-                                          object: {
-                                            type: "Identifier",
-                                            name: "props",
-                                          },
-                                          property: {
-                                            type: "Identifier",
-                                            name: propertyName,
-                                          },
-                                          computed: false,
-                                          optional: false,
-                                        },
-                                        operator: operator,
-                                        right: rightObj,
-                                      },
-                                      consequent: {
-                                        type: "Literal",
-                                        value: "block",
-                                        raw: '"block"',
-                                      },
-                                      alternate: {
-                                        type: "Literal",
-                                        value: "none",
-                                        raw: '"none"',
-                                      },
-                                    },
-                                    kind: "init",
+              if (!oldChildreNode.attributes) {
+                oldChildreNode.attributes = [];
+              }
+              if (!Array.isArray(oldChildreNode.attributes)) {
+                oldChildreNode.attributes = [oldChildreNode.attributes];
+              }
+              oldChildreNode.attributes.push(
+                {
+                  name: "className",
+                  type: "mdxJsxAttribute",
+                  value: `choose-one ${oldChildreNode.name}`,
+                },
+                {
+                  name: "style",
+                  type: "mdxJsxAttribute",
+                  value: {
+                    type: "mdxJsxAttributeValueExpression",
+                    value: expression,
+                    data: {
+                      estree: {
+                        type: "Program",
+                        body: [
+                          {
+                            type: "ExpressionStatement",
+                            expression: {
+                              type: "ObjectExpression",
+                              properties: [
+                                {
+                                  type: "Property",
+                                  method: false,
+                                  shorthand: false,
+                                  computed: false,
+                                  key: {
+                                    type: "Literal",
+                                    value: "display",
+                                    raw: '"display"',
                                   },
-                                ],
-                              },
+                                  value: {
+                                    type: "ConditionalExpression",
+                                    test: {
+                                      type: "BinaryExpression",
+                                      left: {
+                                        type: "MemberExpression",
+                                        object: {
+                                          type: "Identifier",
+                                          name: "props",
+                                        },
+                                        property: {
+                                          type: "Identifier",
+                                          name: propertyName,
+                                        },
+                                        computed: false,
+                                        optional: false,
+                                      },
+                                      operator: operator,
+                                      right: rightObj,
+                                    },
+                                    consequent: {
+                                      type: "Literal",
+                                      value: "block",
+                                      raw: '"block"',
+                                    },
+                                    alternate: {
+                                      type: "Literal",
+                                      value: "none",
+                                      raw: '"none"',
+                                    },
+                                  },
+                                  kind: "init",
+                                },
+                              ],
                             },
-                          ],
-                          sourceType: "module",
-                          comments: [],
-                        },
+                          },
+                        ],
+                        sourceType: "module",
+                        comments: [],
                       },
                     },
                   },
-                ],
-                children: [oldChildreNode],
-                data: { _mdxExplicitJsx: true },
-              };
-              newChildren.push(temp);
+                }
+              );
+              // const temp = {
+              //   name: "div",
+              //   type: "mdxJsxFlowElement",
+              //   attributes: [
+              //     {
+              //       name: "className",
+              //       type: "mdxJsxAttribute",
+              //       value: `choose-one ${oldChildreNode.name}`,
+              //     },
+              //     {
+              //       name: "style",
+              //       type: "mdxJsxAttribute",
+              //       value: {
+              //         type: "mdxJsxAttributeValueExpression",
+              //         value: expression,
+              //         data: {
+              //           estree: {
+              //             type: "Program",
+              //             body: [
+              //               {
+              //                 type: "ExpressionStatement",
+              //                 expression: {
+              //                   type: "ObjectExpression",
+              //                   properties: [
+              //                     {
+              //                       type: "Property",
+              //                       method: false,
+              //                       shorthand: false,
+              //                       computed: false,
+              //                       key: {
+              //                         type: "Literal",
+              //                         value: "display",
+              //                         raw: '"display"',
+              //                       },
+              //                       value: {
+              //                         type: "ConditionalExpression",
+              //                         test: {
+              //                           type: "BinaryExpression",
+              //                           left: {
+              //                             type: "MemberExpression",
+              //                             object: {
+              //                               type: "Identifier",
+              //                               name: "props",
+              //                             },
+              //                             property: {
+              //                               type: "Identifier",
+              //                               name: propertyName,
+              //                             },
+              //                             computed: false,
+              //                             optional: false,
+              //                           },
+              //                           operator: operator,
+              //                           right: rightObj,
+              //                         },
+              //                         consequent: {
+              //                           type: "Literal",
+              //                           value: "block",
+              //                           raw: '"block"',
+              //                         },
+              //                         alternate: {
+              //                           type: "Literal",
+              //                           value: "none",
+              //                           raw: '"none"',
+              //                         },
+              //                       },
+              //                       kind: "init",
+              //                     },
+              //                   ],
+              //                 },
+              //               },
+              //             ],
+              //             sourceType: "module",
+              //             comments: [],
+              //           },
+              //         },
+              //       },
+              //     },
+              //   ],
+              //   children: [oldChildreNode],
+              //   data: { _mdxExplicitJsx: true },
+              // };
+              newChildren.push(oldChildreNode);
             });
             if (newChildren.length) {
               node.children.splice(index, 1, ...newChildren);
