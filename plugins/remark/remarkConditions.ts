@@ -45,11 +45,24 @@ export const remarkConditions = () => {
               if (!Array.isArray(oldChildreNode.attributes)) {
                 oldChildreNode.attributes = [oldChildreNode.attributes];
               }
-              oldChildreNode.attributes.push(
+              if (oldChildreNode.type === "code") {
+                if (!oldChildreNode.properties) {
+                  oldChildreNode.properties = [];
+                }
+                if (!Array.isArray(oldChildreNode.properties)) {
+                  oldChildreNode.properties = [oldChildreNode.properties];
+                }
+              }
+              const arr = [
                 {
                   name: "className",
                   type: "mdxJsxAttribute",
-                  value: `choose-one ${oldChildreNode.name}`,
+                  value: `choose-one ${
+                    oldChildreNode.name ||
+                    (oldChildreNode.lang
+                      ? (oldChildreNode.type || "") + "-" + oldChildreNode.lang
+                      : "")
+                  }`,
                 },
                 {
                   name: "style",
@@ -118,8 +131,12 @@ export const remarkConditions = () => {
                       },
                     },
                   },
-                }
-              );
+                },
+              ];
+              oldChildreNode.attributes.push(...arr);
+              // if (oldChildreNode.type === "code") {
+              //   oldChildreNode.properties.push(...arr);
+              // }
               // const temp = {
               //   name: "div",
               //   type: "mdxJsxFlowElement",
