@@ -1,2 +1,10 @@
-.choose-one {
+ul:not(.choose-one) {
+    &:has(~ .choose-one.list) {
+        margin-bottom: 14px;
+    }
+    & + li.choose-one.list {
+        & > ul {
+            margin-top: 14px;
+        }
+    }
 }

@@ -119,25 +119,25 @@ export const remarkConditions = () => {
                   },
                 },
               ];
-              // if (oldChildreNode.type === "list" && !oldChildreNode.name) {
-              //   const temp = {
-              //     name: "li",
-              //     type: "mdxJsxFlowElement",
-              //     attributes: [...arr],
-              //     children: [...oldChildreNode.children[0].children],
-              //     data: { _mdxExplicitJsx: true },
-              //   };
-              //   newChildren.push(temp);
-              // } else {
-              if (!oldChildreNode.attributes) {
-                oldChildreNode.attributes = [];
+              if (oldChildreNode.type === "list" && !oldChildreNode.name) {
+                const temp = {
+                  name: "li",
+                  type: "mdxJsxFlowElement",
+                  attributes: [...arr],
+                  children: [oldChildreNode],
+                  data: { _mdxExplicitJsx: true },
+                };
+                newChildren.push(temp);
+              } else {
+                if (!oldChildreNode.attributes) {
+                  oldChildreNode.attributes = [];
+                }
+                if (!Array.isArray(oldChildreNode.attributes)) {
+                  oldChildreNode.attributes = [oldChildreNode.attributes];
+                }
+                oldChildreNode.attributes.push(...arr);
+                newChildren.push(oldChildreNode);
               }
-              if (!Array.isArray(oldChildreNode.attributes)) {
-                oldChildreNode.attributes = [oldChildreNode.attributes];
-              }
-              oldChildreNode.attributes.push(...arr);
-              newChildren.push(oldChildreNode);
-              // }
             });
             if (newChildren.length) {
               node.children.splice(index, 1, ...newChildren);
