@@ -1,5 +1,10 @@
 import { visit } from "unist-util-visit";
 
+const tagNameMap = {
+  list: "li",
+  code: "div",
+};
+
 export const remarkConditions = () => {
   return (tree) => {
     visit(tree, function (node) {
@@ -119,9 +124,13 @@ export const remarkConditions = () => {
                   },
                 },
               ];
-              if (oldChildreNode.type === "list" && !oldChildreNode.name) {
+              if (
+                oldChildreNode.type &&
+                !oldChildreNode.name &&
+                node.name !== "CodeGroup"
+              ) {
                 const temp = {
-                  name: "li",
+                  name: tagNameMap[oldChildreNode.type] || oldChildreNode.type,
                   type: "mdxJsxFlowElement",
                   attributes: [...arr],
                   children: [oldChildreNode],
