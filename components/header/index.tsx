@@ -95,13 +95,13 @@ const Header = (props: Props) => {
           {...(copywriting[currentLanguage]
             ? copywriting[currentLanguage].search
             : copywriting.en.search)}
-          // searchParameters={{
-          //   facetFilters: [
-          //     `version:${currentVersion}`,
-          //     `instance:${currentInstanceID}`,
-          //     `language:${currentLanguageLabel || "en"}`,
-          //   ],
-          // }}
+          searchParameters={{
+            facetFilters: [
+              `version:${currentVersion}`,
+              `instance:${currentInstanceID}`,
+              `language:${currentLanguageLabel || "English"}`,
+            ],
+          }}
           maxResultsPerGroup={500}
         />
       </>
