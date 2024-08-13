@@ -12,6 +12,14 @@ export function rehypeLink(options: {
   return function updateLinkTag(tree, file) {
     visit(tree, "element", (node, i, parent) => {
       if (node.tagName !== "a" || !node.properties.href) return;
+      // support [leaveAllRoom\|\_blank](@leaveAllRoom)
+      if (node.children && node.children[0]) {
+        const temp = node.children[0];
+        if (temp && temp.type === "text" && temp.value.endsWith("|_blank")) {
+          temp.value = temp.value.replace("|_blank", "");
+          node.properties.target = "_blank";
+        }
+      }
       // http 链接在新标签打开
       if (node.properties.href.startsWith("http")) {
         node.properties.target = "_blank";

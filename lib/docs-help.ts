@@ -25,6 +25,7 @@ import {
 import LibControllerImpl from "./index";
 import SlugControllerImpl from "./slug-help";
 import VersionsControllerImpl from "./versions-help";
+import ShortLinkTransControllerImpl from "./trans-short-link";
 import { convertDocID, ignoreNumberPrefix, removeMdxSuffix } from "./utils";
 import { DEFAULT_INSTANCE_ID } from "./constants";
 import { InstanceType } from "./types";
@@ -105,6 +106,18 @@ class DocsController {
         originContent = fs.readFileSync(actualMdxFilePath, "utf8");
       }
     }
+
+    console.time("count transShortLink");
+    const regex = /^---\n+[\s|\S]*?articleID:\s?(\d+)[\s|\S]*?\n+---/;
+    const match = originContent.match(regex);
+    if (match && match[1]) {
+      originContent = await ShortLinkTransControllerImpl.replaceApiShortLink(
+        match[1],
+        originContent
+      );
+    }
+    console.timeEnd("count transShortLink");
+
     const tocRef: any = {};
     const temp = mdxFileUrl.split("/");
     const frontmatterRef: any = {

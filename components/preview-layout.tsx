@@ -98,18 +98,18 @@ const PreviewLayout = ({
   next,
 }: Props) => {
   // slug eg: instance routeBasePath/version/folder/filename
-  console.log(
-    "[Site]init params",
-    slug,
-    instanceID,
-    currentGroup,
-    currentGroupLabel,
-    displayGroups,
-    currentPlatform,
-    currentPlatformLabel,
-    displayPlatforms,
-    displayLanguages
-  );
+  // console.log(
+  //   "[Site]init params",
+  //   slug,
+  //   instanceID,
+  //   currentGroup,
+  //   currentGroupLabel,
+  //   displayGroups,
+  //   currentPlatform,
+  //   currentPlatformLabel,
+  //   displayPlatforms,
+  //   displayLanguages
+  // );
 
   // Avoid empty slug
   if (!slug) {

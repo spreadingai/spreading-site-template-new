@@ -27,6 +27,7 @@ import GroupControllerImpl from "@/lib/group-help";
 import PlatformControllerImpl from "@/lib/platform-help";
 import VersionsControllerImpl from "@/lib/versions-help";
 import PagerControllerImpl from "@/lib/pager-help";
+import ShortLinkTransControllerImpl from "@/lib/trans-short-link";
 import Link from "next/link";
 import {
   SlugData,
@@ -142,6 +143,7 @@ export const getStaticProps = async ({ params }: SlugData) => {
     GroupControllerImpl.getDisplayGroups(slug, currentLanguage);
   const { displayPlatforms, currentPlatform, currentPlatformLabel } =
     PlatformControllerImpl.getDisplayPlatforms(slug, currentLanguage);
+  ShortLinkTransControllerImpl.injectData({ locale: currentLanguage });
   const postData = await DocsControllerImpl.readDoc(slug);
   const instances = LibControllerImpl.getInstances(InstanceType.Normal);
   const versions = VersionsControllerImpl.getUsedVersions(instanceID);
