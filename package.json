@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "node ./lib/trans-short-link/init.mjs && next dev",
+    "dev": "next dev",
     "docuodev": "pnpm dev",
-    "build": "node ./lib/trans-short-link/init.mjs && next build && next-sitemap",
+    "build": "next build && next-sitemap",
     "docuobuild": "pnpm build",
     "deploy": "sh ./build.sh && pnpm build",
     "start": "next start",
