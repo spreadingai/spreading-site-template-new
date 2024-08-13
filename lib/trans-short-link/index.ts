@@ -23,7 +23,8 @@ class ShortLinkTransController {
   _zhLanguageKey = "zh";
   _locale = this._zhLanguageKey;
   _serverBaseUrl = "https://doc-zh.zego.im";
-  _menuData: Menu[];
+  _en_menuData: Menu[];
+  _zh_menuData: Menu[];
   _configData: any;
   _clientApiData: any = {};
   _mdKeyIdMap: any = {};
@@ -39,15 +40,22 @@ class ShortLinkTransController {
     }
   }
   getDataJson() {
-    if (this._menuData) {
-      return this._menuData;
+    if (this._locale === this._enLanguageKey && this._en_menuData) {
+      return this._en_menuData;
+    } else if (this._locale === this._zhLanguageKey && this._zh_menuData) {
+      return this._zh_menuData;
     } else {
       const temp = path.resolve(
         InitController.rootPath,
         `${this._locale}_${InitController.dataJsonPath}`
       );
       const text = fs.readFileSync(temp, { encoding: "utf-8" });
-      return (this._menuData = JSON.parse(text) as Menu[]);
+      try {
+        return (this[`_${this._locale}_menuData`] = JSON.parse(text) as Menu[]);
+      } catch (error) {
+        console.error("[ShortLinkTransController] getDataJson", error);
+        return;
+      }
     }
   }
   getCommonJsonConfig(keys: string[]) {
@@ -75,6 +83,7 @@ class ShortLinkTransController {
   }
   getArticleInfoByID(articleID: string | number) {
     const menuData = this.getDataJson();
+    if (!menuData) return;
     const articleInfo = DataUtil.getMenuById(Number(articleID), menuData);
     return articleInfo;
   }
@@ -132,7 +141,7 @@ class ShortLinkTransController {
     }
   }
   async getClientApiData(apiPathData: any) {
-    if (!apiPathData.language && !apiPathData.docId) return;
+    if (!apiPathData.language && !apiPathData.docId) return {};
     const proConfig = this.getCommonJsonConfig([
       "crossPlatformLangMapZh",
       "crossPlatformLangMapEn",
@@ -140,14 +149,14 @@ class ShortLinkTransController {
       "clientApiProductsMapEn",
     ]);
     const url = `${getMarkdownBaseUrl(apiPathData, proConfig)}data.json`;
-    if (this._clientApiData[url] !== undefined) return this._clientApiData[url];
+    if (this._clientApiData[url]) return this._clientApiData[url];
     let res: any = {};
     try {
       res = (await this.getClientApiTreeData(url)) || {};
     } catch (e) {
       console.error("getClientApiData url:", url, e);
     }
-    if (res) {
+    if (res && res.searchData) {
       res = {
         searchData: res.searchData.map((item: any) => {
           const shortName = (item.compoundName || item.name)
@@ -175,7 +184,7 @@ class ShortLinkTransController {
     }
     this.updateClientApiData({
       url,
-      data: res || "",
+      data: res,
     });
     return res;
   }
@@ -330,7 +339,7 @@ class ShortLinkTransController {
         });
       }
     };
-    collectChild(this._menuData);
+    collectChild(this[`_${this._locale}_menuData`]);
     this._mdKeyIdMap = mdKeyIdMap;
     this._shortLinkMap = shortLinkMap;
     return { mdKeyIdMap, shortLinkMap };
@@ -363,6 +372,7 @@ class ShortLinkTransController {
   };
   async replaceApiShortLink(articleID: string | number, content: string) {
     const articleInfo = this.getArticleInfoByID(articleID);
+    if (!articleInfo) return;
     const allApiTreeData = await this.getAllApiTreeData(articleInfo);
     const { shortLinkMap } = this.getMdKeyIdMap();
 
