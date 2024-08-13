@@ -14,9 +14,18 @@ export function rehypeLink(options: {
       if (node.tagName !== "a" || !node.properties.href) return;
       // support [leaveAllRoom\|\_blank](@leaveAllRoom)
       if (node.children && node.children[0]) {
-        const temp = node.children[0];
-        if (temp && temp.type === "text" && temp.value.endsWith("|_blank")) {
-          temp.value = temp.value.replace("|_blank", "");
+        const temp1 = node.children[0];
+        const temp2 = node.children[1];
+        if (temp1.type === "text" && temp1.value.endsWith("|_blank")) {
+          temp1.value = temp1.value.replace("|_blank", "");
+          node.properties.target = "_blank";
+        } else if (
+          temp1.tagName === "code" &&
+          temp2 &&
+          temp2.type === "text" &&
+          temp2.value.endsWith("|_blank")
+        ) {
+          temp2.value = temp2.value.replace("|_blank", "");
           node.properties.target = "_blank";
         }
       }

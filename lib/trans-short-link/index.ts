@@ -21,11 +21,8 @@ class ShortLinkTransController {
   }
   _enLanguageKey = "en";
   _zhLanguageKey = "zh";
-  _locale = process.env.LOCALE || this._zhLanguageKey;
-  _serverBaseUrl =
-    process.env.LOCALE === "en"
-      ? "https://docs.zegocloud.com"
-      : "https://doc-zh.zego.im";
+  _locale = this._zhLanguageKey;
+  _serverBaseUrl = "https://doc-zh.zego.im";
   _menuData: Menu[];
   _configData: any;
   _clientApiData: any = {};
@@ -35,9 +32,10 @@ class ShortLinkTransController {
     if (locale) {
       this._locale = locale;
       this._serverBaseUrl =
-        this._locale === "en"
+        this._locale === this._enLanguageKey
           ? "https://docs.zegocloud.com"
           : "https://doc-zh.zego.im";
+      DataUtil.setLocale(locale);
     }
   }
   getDataJson() {
@@ -46,7 +44,7 @@ class ShortLinkTransController {
     } else {
       const temp = path.resolve(
         InitController.rootPath,
-        InitController.dataJsonPath
+        `${this._locale}_${InitController.dataJsonPath}`
       );
       const text = fs.readFileSync(temp, { encoding: "utf-8" });
       return (this._menuData = JSON.parse(text) as Menu[]);
@@ -102,7 +100,7 @@ class ShortLinkTransController {
   async getClientApiTreeData(url: string, refresh = false) {
     // url: https://doc-zh.zego.im/client-api/zim/zh/java_android/data.json
     const splitStr = url
-      .split("https://doc-zh.zego.im/client-api/")[1]
+      .split(`${this._serverBaseUrl}/client-api/`)[1]
       .split("/data.json")[0];
     const apiTreeDataPath = splitStr.split("/").join("_") + ".json";
     const temp = path.resolve(InitController.rootPath, apiTreeDataPath);

@@ -1,7 +1,11 @@
 import { Menu } from "../../../types/Menu";
-import { treePlatformLangList } from "../data/platformList";
+import { getTreePlatformLangList } from "../data/platformList";
 
 export class DataUtil {
+  static locale: string;
+  static setLocale(locale: string) {
+    DataUtil.locale = locale;
+  }
   static getMenuById(id: number, data: Menu[]) {
     let _item: Menu = {} as Menu;
 
@@ -44,7 +48,7 @@ export class DataUtil {
         acc[cur.key] = cur;
         return acc;
       }, {});
-      for (const item of treePlatformLangList) {
+      for (const item of getTreePlatformLangList(DataUtil.locale)) {
         for (const language of item.langs) {
           const key = `${item.value}_${language}`;
           if (KeyItemMap[key]) {

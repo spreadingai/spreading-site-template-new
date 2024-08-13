@@ -1,6 +1,6 @@
-import { locale } from "../../config";
+import { DataUtil } from "../../assets/js/util/dataUtil";
 import invert from "lodash/invert";
-import { serverBaseUrl } from "../../utils";
+import { getMainDomain } from "../../utils";
 import { languageList } from "../../assets/js/data/platformList";
 
 const CLIENT_API_ES_MAP = {
@@ -101,7 +101,7 @@ export const getPreviewClientApiRootUrl = (docId) => {
   }
 
   if (docId.startsWith("out")) {
-    baseUrl = serverBaseUrl; // 正式环境
+    baseUrl = getMainDomain(); // 正式环境
     reqUrl = `/data/preview_file/${docId}`;
   }
 
@@ -113,9 +113,9 @@ export const dealSpecialFlag = (str: string) => {
 };
 
 const getPreviewMarkdownBaseUrl = (docId, sdkValue, langPlatform) => {
-  return `${getPreviewClientApiRootUrl(
-    docId
-  )}/${sdkValue}/${locale}/${langPlatform}/`;
+  return `${getPreviewClientApiRootUrl(docId)}/${sdkValue}/${
+    DataUtil.locale
+  }/${langPlatform}/`;
 };
 
 export const getMarkdownBaseUrl = (
@@ -145,9 +145,9 @@ export const getMarkdownBaseUrl = (
     clientApiProductsMapEn = {},
   } = commonJsonConfig;
   const crossPlatformLangMap =
-    locale === "en" ? crossPlatformLangMapEn : crossPlatformLangMapZh;
+    DataUtil.locale === "en" ? crossPlatformLangMapEn : crossPlatformLangMapZh;
   const clientApiPathMap =
-    locale === "en" ? clientApiProductsMapEn : clientApiProductsMapZh;
+    DataUtil.locale === "en" ? clientApiProductsMapEn : clientApiProductsMapZh;
   const tempClientApiPathMap = invert(clientApiPathMap);
   // 处理objective-c标识不一致
   language = dealSpecialFlag(language);
@@ -178,12 +178,12 @@ export const getMarkdownBaseUrl = (
     }
   }
 
-  let baseUrl = serverBaseUrl;
+  let baseUrl = getMainDomain();
   // TODO: ignore env
   // if (process.env.NODE_ENV.includes("dev"))
   //   // baseUrl = "https://doc-preview-test-zh.zego.im";
   //   baseUrl = "https://doc-preview-zh.zego.im";
-  return `${baseUrl}/client-api/${rootDirectory}/${locale}/${langPlatform}/`;
+  return `${baseUrl}/client-api/${rootDirectory}/${DataUtil.locale}/${langPlatform}/`;
 };
 
 export const filterSearchDataByLang = (searchData: any, lang: string) => {
