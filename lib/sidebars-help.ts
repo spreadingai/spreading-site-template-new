@@ -33,7 +33,7 @@ class SidebarsController {
       this._sidebarsMap[instanceID] &&
       this._sidebarsMap[instanceID][docVersion]
     ) {
-      console.log(`[SidebarsController]getSidebars cache`);
+      // console.log(`[SidebarsController]getSidebars cache`);
       return this._sidebarsMap[instanceID][docVersion];
     }
     let result: Sidebars = null;
@@ -126,12 +126,12 @@ class SidebarsController {
     this._sidebarsMap = this._sidebarsMap || {};
     this._sidebarsMap[instanceID] = this._sidebarsMap[instanceID] || {};
     this._sidebarsMap[instanceID][docVersion] = result;
-    console.log(`[SidebarsController]getSidebars`);
+    // console.log(`[SidebarsController]getSidebars`);
     return this._sidebarsMap[instanceID][docVersion];
   }
   getUsedSidebarIds(instanceID: string) {
     if (this._usedSidebarIdsMap[instanceID]) {
-      console.log(`[SidebarsController]getUsedSidebarIds cache`);
+      // console.log(`[SidebarsController]getUsedSidebarIds cache`);
       return JSON.parse(JSON.stringify(this._usedSidebarIdsMap[instanceID]));
     }
     const { themeConfig } = LibControllerImpl.getDocuoConfig();

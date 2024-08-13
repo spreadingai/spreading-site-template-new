@@ -28,7 +28,7 @@ class TreeController {
       this._folderTreeDataMap[instanceID] &&
       this._folderTreeDataMap[instanceID][docVersion]
     ) {
-      console.log(`[TreeController]getFolderTreeDataBySlug cache`);
+      // console.log(`[TreeController]getFolderTreeDataBySlug cache`);
       return JSON.parse(
         JSON.stringify(this._folderTreeDataMap[instanceID][docVersion])
       ) as FolderTreeData[];

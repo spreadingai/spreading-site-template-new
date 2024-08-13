@@ -28,9 +28,9 @@ class SlugController {
         allSlugs = allSlugs.concat(slugs);
       }
       this._allSlugs = allSlugs;
-      console.log(`[SlugController]getAllSlugs generate`);
+      // console.log(`[SlugController]getAllSlugs generate`);
     } else {
-      console.log(`[SlugController]getAllSlugs cache`);
+      // console.log(`[SlugController]getAllSlugs cache`);
     }
     return this._allSlugs;
   }

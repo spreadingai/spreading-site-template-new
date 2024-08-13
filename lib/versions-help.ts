@@ -23,7 +23,7 @@ class VersionsController {
   }
   getUsedVersions(instanceID: string) {
     if (this._usedVersionsMap[instanceID]) {
-      console.log(`[VersionsController]getUsedVersions cache`);
+      // console.log(`[VersionsController]getUsedVersions cache`);
       return JSON.parse(
         JSON.stringify(this._usedVersionsMap[instanceID])
       ) as string[];
@@ -117,7 +117,7 @@ class VersionsController {
         instanceID
       );
     }
-    console.log(`[DocsController]getActualVersions: `, versioned);
+    // console.log(`[DocsController]getActualVersions: `, versioned);
     this._actualVersionsMap[instanceID] = versioned;
     return JSON.parse(
       JSON.stringify(this._actualVersionsMap[instanceID])

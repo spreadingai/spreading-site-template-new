@@ -174,7 +174,7 @@ class LibController {
   }
   getDisplayInstances(currentLanguage: string): DisplayInstance[] {
     if (this._displayInstances) {
-      console.log(`[LibController]getDisplayInstances cache`);
+      // console.log(`[LibController]getDisplayInstances cache`);
       return JSON.parse(JSON.stringify(this._displayInstances));
     }
     if (!this._docuoConfig) return [];

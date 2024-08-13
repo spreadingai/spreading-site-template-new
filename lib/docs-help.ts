@@ -39,7 +39,7 @@ class DocsController {
     );
   }
   async readDoc(slug: string[]) {
-    console.log(`[DocsController]readDoc `, slug);
+    // console.log(`[DocsController]readDoc `, slug);
     const { docVersion, mdxFileID, instanceID, slugVersion, routeBasePath } =
       SlugControllerImpl.getExtractInfoFromSlug(slug);
     const versions = VersionsControllerImpl.getUsedVersions(instanceID);
@@ -49,11 +49,11 @@ class DocsController {
     let mdxFileUrl = "";
     let rootUrl = "",
       newRootUrl = "";
-    console.log(
-      `[DocsController]readDoc slugVersion、versions`,
-      slugVersion,
-      versions
-    );
+    // console.log(
+    //   `[DocsController]readDoc slugVersion、versions`,
+    //   slugVersion,
+    //   versions
+    // );
     if (!slugVersion || slugVersion !== versions[0]) {
       const temp = LibControllerImpl.getInstances(InstanceType.Normal)
         .find((instance) => instance.id === instanceID)
@@ -101,7 +101,7 @@ class DocsController {
       }
       const actualMdxFilePath = this.getActualMdxFilePath(rootUrl, mdxFileID);
       if (actualMdxFilePath) {
-        console.log("#####actualMdxFilePath", actualMdxFilePath);
+        // console.log("#####actualMdxFilePath", actualMdxFilePath);
         mdxFileUrl = actualMdxFilePath;
         originContent = fs.readFileSync(actualMdxFilePath, "utf8");
       }
@@ -272,10 +272,10 @@ class DocsController {
             const result = loop(targetPath, level + 1);
             if (result) return result;
           } else {
-            console.log(
-              `[DocsController]getActualMdxFilePath exceed level`,
-              level
-            );
+            // console.log(
+            //   `[DocsController]getActualMdxFilePath exceed level`,
+            //   level
+            // );
           }
         } else {
           let relativePath = path.relative(rootPath, joinPath);
