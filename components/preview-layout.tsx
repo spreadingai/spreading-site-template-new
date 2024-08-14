@@ -20,7 +20,7 @@ import {
 import Image from "next/image";
 import IconOutlink from "@/assets/images/icon_outlink.png";
 
-import Head from "next/head";
+import SearchMeta from "@/components/meta/SearchMeta";
 import DocuoTree from "./tree";
 import DocuoAnchor from "./Anchor";
 import AnchorNode from "./Anchor/Anchor";
@@ -38,6 +38,10 @@ import useColorMode from "./hooks/useColorMode";
 import ArticlePager, { PaginationData } from "./articlePager";
 import { copywriting } from "@/components/constant/language";
 import { LanguageContext } from "@/components/context/languageContext";
+import { GroupContext } from "@/components/context/groupContext";
+import { InstanceContext } from "@/components/context/instanceContext";
+import { PlatformContext } from "@/components/context/platformContext";
+import { VersionContext } from "@/components/context/versionContext";
 
 type Props = {
   children: React.ReactNode;
@@ -45,6 +49,8 @@ type Props = {
   instanceID: string;
   currentInstanceLabel: string;
   docVersion: string;
+  slugVersion: string;
+  versions: string[];
   mdxSource: any;
   toc: TocItem[];
   folderTreeData: TreeDataObject[];
@@ -80,6 +86,8 @@ const PreviewLayout = ({
   instanceID,
   currentInstanceLabel,
   docVersion,
+  slugVersion,
+  versions,
   toc,
   folderTreeData,
   docuoConfig,
@@ -357,7 +365,7 @@ const PreviewLayout = ({
 
   // @ts-ignore
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const versions = useMemo<any>(() => {
+  const menuVersions = useMemo<any>(() => {
     return {
       key: docVersion,
       label: docVersion,
@@ -371,7 +379,7 @@ const PreviewLayout = ({
   }, [docVersion, displayVersions]);
   // @ts-ignore
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const instances = useMemo<any>(() => {
+  const menuInstances = useMemo<any>(() => {
     return {
       key: instanceID,
       label: currentInstanceLabel,
@@ -382,11 +390,11 @@ const PreviewLayout = ({
         label: item.instance.label,
       })),
     };
-  }, [instanceID, displayInstances]);
+  }, [instanceID, currentInstanceLabel, displayInstances]);
 
   // @ts-ignore
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const groups = useMemo<any>(() => {
+  const menuGroups = useMemo<any>(() => {
     return {
       key: currentGroup,
       label: currentGroupLabel,
@@ -397,10 +405,10 @@ const PreviewLayout = ({
         label: item.groupLabel,
       })),
     };
-  }, [currentGroupLabel, displayGroups]);
+  }, [currentGroup, currentGroupLabel, displayGroups]);
   // @ts-ignore
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const platforms = useMemo<any>(() => {
+  const menuPlatforms = useMemo<any>(() => {
     return {
       key: currentPlatform,
       label: currentPlatformLabel,
@@ -411,7 +419,7 @@ const PreviewLayout = ({
         label: item.platformLabel,
       })),
     };
-  }, [currentPlatformLabel, displayPlatforms]);
+  }, [currentPlatform, currentPlatformLabel, displayPlatforms]);
 
   const gaId = docuoConfig?.analytics?.ga4?.measurementId;
   const isFooterHidden = !!docuoConfig?.themeConfig?.footer?.hidden;
@@ -425,158 +433,216 @@ const PreviewLayout = ({
           displayLanguages,
         }}
       >
-        <div className="preview-screen relative">
-          {!!gaId && <GoogleAnalytics gaId={gaId} />}
-          <Head>
-            <meta name="docsearch:version" content={docVersion} />
-            <meta name="docsearch:instance" content={instanceID} />
-            <meta
-              name="docsearch:language"
-              content={currentLanguageLabel || "en"}
-            />
-          </Head>
-          <Header
-            docuoConfig={docuoConfig}
-            currentVersion={docVersion}
-            currentInstanceID={instanceID}
-            tocFormatData={tocFormatData}
-            displayInstances={displayInstances}
-            displayVersions={displayVersions}
-            setDrawerOpen={setDrawerOpen}
-          ></Header>
-          <div className="only_pc__show absolute z-0 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
-            <div className="w-[108rem] flex-none flex justify-end">
-              <Image
-                src={theme === "dark" ? gradientFixedDark : gradientFixed}
-                alt=""
-                className="w-[71.75rem] flex-none max-w-none"
-                decoding="async"
-              />
-            </div>
-          </div>
-          <main className="preview-main">
-            <div className="preview-sider">
-              <div className={`mt-[16px] flex pl-8 flex-wrap`}>
-                {!displayGroups || !displayGroups.length ? (
-                  <>
-                    <InsVersionDropdown type="instance" menu={instances} />
-                    <InsVersionDropdown type="version" menu={versions} />
-                  </>
-                ) : (
-                  <>
-                    <InsVersionDropdown type="group" menu={groups} />
-                    <InsVersionDropdown type="platform" menu={platforms} />
-                    <InsVersionDropdown type="version" menu={versions} />
-                  </>
-                )}
-              </div>
-              <DocuoTree
-                docuoConfig={docuoConfig}
-                data={folderTreeData}
-                selectedKeys={selectedKeys}
-                onSelect={fileSelectHandle}
-                titleRender={titleRenderHandle}
-                setDrawerOpen={setDrawerOpen}
-              />
-            </div>
-            <div className="preview-content-wrap">
-              <div className="preview-content">
-                <div className="article">
-                  <div className="article-breadcrumb flex justify-between	items-center">
-                    <Breadcrumb
-                      items={breadCrumbData}
-                      separator={
-                        <IconBreadcrumbArrow className="breadcrumb-icon m-auto" />
-                      }
-                    />
-                    <div className={"middle__show  relative"}>
-                      <AnChorMobile tocFormatData={tocFormatData} />
-                    </div>
-                  </div>
-                  <div
-                    className="article-content"
-                    ref={(current) => {
-                      const titleElement =
-                        current?.querySelector("h1[class*='title']");
-                      setTitleElement(titleElement as HTMLElement);
-                    }}
-                  >
-                    {children}
-                  </div>
-                  <ArticlePager prev={prev} next={next} />
-                </div>
-                <div className="article-anchor-right">
-                  {toc?.length ? (
-                    <div className="pt-[28px]  pb-10 ml-8">
-                      <p
-                        className="mb-2.5 font-inter-bold font-semibold text-sm"
-                        onClick={() => setIsExpand(!isExpand)}
-                      >
-                        {copywriting[currentLanguage]
-                          ? copywriting[currentLanguage].toc.title
-                          : copywriting.en.toc.title}
-                      </p>
-                      <div className="toc-scroller overflow-auto overscroll-none relative pr-6 max-h-[70vh]">
-                        <DocuoAnchor data={tocFormatData} offsetTop={68} />
-                      </div>
-
-                      <div className="right-anchor-divide"></div>
-                      <div
-                        className="back-to-top hover:opacity-70"
-                        onClick={scrollToTop}
-                      >
-                        <div className="top-btn">
-                          {theme === "dark" ? (
-                            <IconBackTopDark />
-                          ) : (
-                            <IconBackTop />
-                          )}
-                        </div>
-                        {copywriting[currentLanguage]
-                          ? copywriting[currentLanguage].toc.backToTopText
-                          : copywriting.en.toc.backToTopText}
-                      </div>
-                    </div>
-                  ) : null}
-                </div>
-              </div>
-            </div>
-            <Drawer
-              rootClassName="mobile-tree-container"
-              placement="left"
-              onClose={onDrawerClose}
-              open={drawerOpen}
-              key="left"
-              getContainer={false}
+        <InstanceContext.Provider
+          value={{
+            instanceID,
+            currentInstanceLabel,
+            displayInstances,
+          }}
+        >
+          <VersionContext.Provider
+            value={{
+              docVersion,
+              slugVersion,
+              displayVersions,
+              versions,
+            }}
+          >
+            <GroupContext.Provider
+              value={{
+                currentGroup,
+                currentGroupLabel,
+                displayGroups,
+              }}
             >
-              <div className={`mt-[16px] flex pl-8 flex-wrap`}>
-                {!displayGroups || !displayGroups.length ? (
-                  <>
-                    <InsVersionDropdown type="instance" menu={instances} />
-                    <InsVersionDropdown type="version" menu={versions} />
-                  </>
-                ) : (
-                  <>
-                    <InsVersionDropdown type="group" menu={groups} />
-                    <InsVersionDropdown type="platform" menu={platforms} />
-                    <InsVersionDropdown type="version" menu={versions} />
-                  </>
-                )}
-              </div>
-              <DocuoTree
-                docuoConfig={docuoConfig}
-                data={folderTreeData}
-                selectedKeys={selectedKeys}
-                onSelect={fileSelectHandle}
-                titleRender={titleRenderHandle}
-                setDrawerOpen={setDrawerOpen}
-              />
-            </Drawer>
-          </main>
-          {!isFooterHidden && (
-            <Footer docuoConfig={docuoConfig} socials={[]} links={[]} />
-          )}
-        </div>
+              <PlatformContext.Provider
+                value={{
+                  currentPlatform,
+                  currentPlatformLabel,
+                  displayPlatforms,
+                }}
+              >
+                <div className="preview-screen relative">
+                  {!!gaId && <GoogleAnalytics gaId={gaId} />}
+                  <SearchMeta />
+                  <Header
+                    docuoConfig={docuoConfig}
+                    tocFormatData={tocFormatData}
+                    setDrawerOpen={setDrawerOpen}
+                  ></Header>
+                  <div className="only_pc__show absolute z-0 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
+                    <div className="w-[108rem] flex-none flex justify-end">
+                      <Image
+                        src={
+                          theme === "dark" ? gradientFixedDark : gradientFixed
+                        }
+                        alt=""
+                        className="w-[71.75rem] flex-none max-w-none"
+                        decoding="async"
+                      />
+                    </div>
+                  </div>
+                  <main className="preview-main">
+                    <div className="preview-sider">
+                      <div className={`mt-[16px] flex pl-8 flex-wrap`}>
+                        {!displayGroups || !displayGroups.length ? (
+                          <>
+                            <InsVersionDropdown
+                              type="instance"
+                              menu={menuInstances}
+                            />
+                            <InsVersionDropdown
+                              type="version"
+                              menu={menuVersions}
+                            />
+                          </>
+                        ) : (
+                          <>
+                            <InsVersionDropdown
+                              type="group"
+                              menu={menuGroups}
+                            />
+                            <InsVersionDropdown
+                              type="platform"
+                              menu={menuPlatforms}
+                            />
+                            <InsVersionDropdown
+                              type="version"
+                              menu={menuVersions}
+                            />
+                          </>
+                        )}
+                      </div>
+                      <DocuoTree
+                        docuoConfig={docuoConfig}
+                        data={folderTreeData}
+                        selectedKeys={selectedKeys}
+                        onSelect={fileSelectHandle}
+                        titleRender={titleRenderHandle}
+                        setDrawerOpen={setDrawerOpen}
+                      />
+                    </div>
+                    <div className="preview-content-wrap">
+                      <div className="preview-content">
+                        <div className="article">
+                          <div className="article-breadcrumb flex justify-between	items-center">
+                            <Breadcrumb
+                              items={breadCrumbData}
+                              separator={
+                                <IconBreadcrumbArrow className="breadcrumb-icon m-auto" />
+                              }
+                            />
+                            <div className={"middle__show  relative"}>
+                              <AnChorMobile tocFormatData={tocFormatData} />
+                            </div>
+                          </div>
+                          <div
+                            className="article-content"
+                            ref={(current) => {
+                              const titleElement =
+                                current?.querySelector("h1[class*='title']");
+                              setTitleElement(titleElement as HTMLElement);
+                            }}
+                          >
+                            {children}
+                          </div>
+                          <ArticlePager prev={prev} next={next} />
+                        </div>
+                        <div className="article-anchor-right">
+                          {toc?.length ? (
+                            <div className="pt-[28px]  pb-10 ml-8">
+                              <p
+                                className="mb-2.5 font-inter-bold font-semibold text-sm"
+                                onClick={() => setIsExpand(!isExpand)}
+                              >
+                                {copywriting[currentLanguage]
+                                  ? copywriting[currentLanguage].toc.title
+                                  : copywriting.en.toc.title}
+                              </p>
+                              <div className="toc-scroller overflow-auto overscroll-none relative pr-6 max-h-[70vh]">
+                                <DocuoAnchor
+                                  data={tocFormatData}
+                                  offsetTop={68}
+                                />
+                              </div>
+
+                              <div className="right-anchor-divide"></div>
+                              <div
+                                className="back-to-top hover:opacity-70"
+                                onClick={scrollToTop}
+                              >
+                                <div className="top-btn">
+                                  {theme === "dark" ? (
+                                    <IconBackTopDark />
+                                  ) : (
+                                    <IconBackTop />
+                                  )}
+                                </div>
+                                {copywriting[currentLanguage]
+                                  ? copywriting[currentLanguage].toc
+                                      .backToTopText
+                                  : copywriting.en.toc.backToTopText}
+                              </div>
+                            </div>
+                          ) : null}
+                        </div>
+                      </div>
+                    </div>
+                    <Drawer
+                      rootClassName="mobile-tree-container"
+                      placement="left"
+                      onClose={onDrawerClose}
+                      open={drawerOpen}
+                      key="left"
+                      getContainer={false}
+                    >
+                      <div className={`mt-[16px] flex pl-8 flex-wrap`}>
+                        {!displayGroups || !displayGroups.length ? (
+                          <>
+                            <InsVersionDropdown
+                              type="instance"
+                              menu={menuInstances}
+                            />
+                            <InsVersionDropdown
+                              type="version"
+                              menu={menuVersions}
+                            />
+                          </>
+                        ) : (
+                          <>
+                            <InsVersionDropdown
+                              type="group"
+                              menu={menuGroups}
+                            />
+                            <InsVersionDropdown
+                              type="platform"
+                              menu={menuPlatforms}
+                            />
+                            <InsVersionDropdown
+                              type="version"
+                              menu={menuVersions}
+                            />
+                          </>
+                        )}
+                      </div>
+                      <DocuoTree
+                        docuoConfig={docuoConfig}
+                        data={folderTreeData}
+                        selectedKeys={selectedKeys}
+                        onSelect={fileSelectHandle}
+                        titleRender={titleRenderHandle}
+                        setDrawerOpen={setDrawerOpen}
+                      />
+                    </Drawer>
+                  </main>
+                  {!isFooterHidden && (
+                    <Footer docuoConfig={docuoConfig} socials={[]} links={[]} />
+                  )}
+                </div>
+              </PlatformContext.Provider>
+            </GroupContext.Provider>
+          </VersionContext.Provider>
+        </InstanceContext.Provider>
       </LanguageContext.Provider>
     </ThemeContext.Provider>
   );

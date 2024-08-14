@@ -4,7 +4,7 @@ import {
   DEFAULT_LATEST_SLUG_VERSION,
   DEFAULT_CURRENT_DOC_VERSION,
 } from "@/lib/constants";
-import { DocInstance } from "@/lib/types";
+import { DisplayInstance } from "@/lib/types";
 
 export const docVersionToSlugVersion = (
   docVersion: string,
@@ -31,7 +31,7 @@ export const docVersionToSlugVersion = (
 
 export const parseByInfoPath = (
   infoPath: string,
-  instances: DocInstance[],
+  displayInstances: DisplayInstance[],
   versions: string[]
 ) => {
   let result = "";
@@ -80,9 +80,11 @@ export const parseByInfoPath = (
       docVersion = DEFAULT_CURRENT_SLUG_VERSION;
       docArr = splitArr.splice(1);
     }
-    const instance = instances.find((i) => i.id.toLowerCase() === instanceID);
-    if (instance) {
-      const routeBasePath = instance.routeBasePath;
+    const displayInstance = displayInstances.find(
+      (i) => i.instance.id.toLowerCase() === instanceID
+    );
+    if (displayInstance) {
+      const routeBasePath = displayInstance.instance.routeBasePath;
       const slugVersion = docVersionToSlugVersion(docVersion, versions);
       const temp = [];
       routeBasePath && temp.push(routeBasePath);

@@ -108,8 +108,6 @@ interface Props {
   docuoConfig: DocuoConfig;
   currentInstanceLabel: string;
   slugVersion: string;
-  instances: DocInstance[];
-  versions: string[];
   frontmatterRef: {
     fileName: string;
     firstParagraphContent: string;
@@ -145,7 +143,6 @@ export const getStaticProps = async ({ params }: SlugData) => {
     PlatformControllerImpl.getDisplayPlatforms(slug, currentLanguage);
   ShortLinkTransControllerImpl.injectData({ locale: currentLanguage });
   const postData = await DocsControllerImpl.readDoc(slug);
-  const instances = LibControllerImpl.getInstances(InstanceType.Normal);
   const versions = VersionsControllerImpl.getUsedVersions(instanceID);
   const currentInstance = displayInstances.find((item) => {
     // Matches multiple language instance id
@@ -172,7 +169,6 @@ export const getStaticProps = async ({ params }: SlugData) => {
       currentPlatform,
       currentPlatformLabel,
       displayPlatforms,
-      instances,
       versions,
       prev,
       next,

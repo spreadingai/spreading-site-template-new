@@ -31,14 +31,14 @@ import {
   DocContextType,
 } from "@/components/docuoOpenapi/context/docContext";
 import { parseByInfoPath } from "@/components/docuoOpenapi/utils";
+import useInstance from "@/components/hooks/useInstance";
+import useVersion from "@/components/hooks/useVersion";
 
 interface Props {
   mdxSource: any;
   toc: TocItem[];
   slug: string[];
   docuoConfig: DocuoConfig;
-  instances: DocInstance[];
-  versions: string[];
   children: React.ReactNode;
 }
 
@@ -47,6 +47,8 @@ interface ApiFrontMatter extends DocFrontMatter {
 }
 
 export default function ApiItem(props: Props): JSX.Element {
+  const { displayInstances } = useInstance();
+  const { versions } = useVersion();
   const docuoValues = {
     toc: props.toc,
     slug: props.slug,
@@ -62,7 +64,7 @@ export default function ApiItem(props: Props): JSX.Element {
   });
   let { info_path: infoPath } = frontMatter as DocFrontMatter;
   // Parse the instance and version
-  infoPath = parseByInfoPath(infoPath, props.instances, props.versions);
+  infoPath = parseByInfoPath(infoPath, displayInstances, versions);
   let { api } = frontMatter as ApiFrontMatter;
   // decompress and parse
   if (api) {

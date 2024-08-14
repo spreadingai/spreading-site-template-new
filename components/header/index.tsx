@@ -7,13 +7,7 @@ import DropdownItem from "./DropdownItem";
 import IconMenu from "@/assets/icons/iconMenu.svg";
 import AnChorMobile from "../Anchor/AnchorMobile";
 
-import {
-  DisplayInstance,
-  DisplayLanguage,
-  DisplayVersion,
-  DocuoConfig,
-  NavBarItemType,
-} from "@/lib/types";
+import { DocuoConfig, NavBarItemType } from "@/lib/types";
 import { DocSearch } from "@docsearch/react";
 import AnchorNode from "../Anchor/Anchor";
 import ThemeSwitch from "./ThemeSwitch";
@@ -21,28 +15,24 @@ import ThemeContext from "@/components/header/Theme.context";
 import LanguageSwitch from "./LanguageSwitch";
 import { copywriting } from "@/components/constant/language";
 import useLanguage from "@/components/hooks/useLanguage";
+import useInstance from "@/components/hooks/useInstance";
+import useVersion from "@/components/hooks/useVersion";
+import usePlatform from "@/components/hooks/usePlatform";
 // import "@docsearch/css";
 
 interface Props {
   docuoConfig: DocuoConfig;
-  currentVersion: string;
-  currentInstanceID: string;
   tocFormatData: AnchorNode[];
-  displayInstances: DisplayInstance[];
-  displayVersions: DisplayVersion[];
   setDrawerOpen: (value: boolean) => void;
 }
 
 const Header = (props: Props) => {
-  const {
-    docuoConfig,
-    currentVersion,
-    currentInstanceID,
-    tocFormatData,
-    setDrawerOpen,
-  } = props;
+  const { docuoConfig, tocFormatData, setDrawerOpen } = props;
   const { currentLanguage, currentLanguageLabel, displayLanguages } =
     useLanguage();
+  const { instanceID } = useInstance();
+  const { docVersion } = useVersion();
+  const { currentPlatformLabel } = usePlatform();
   const { themeConfig, search } = docuoConfig;
   const navbar = Object.assign(
     {},
@@ -97,9 +87,10 @@ const Header = (props: Props) => {
             : copywriting.en.search)}
           searchParameters={{
             facetFilters: [
-              `version:${currentVersion}`,
-              `instance:${currentInstanceID}`,
-              `language:${currentLanguageLabel || "English"}`,
+              `version:${docVersion}`,
+              `instance:${instanceID}`,
+              `language:${currentLanguageLabel}`,
+              `platform:${currentPlatformLabel}`,
             ],
           }}
           maxResultsPerGroup={500}
@@ -109,10 +100,11 @@ const Header = (props: Props) => {
   }, [
     algolia,
     searchHidden,
-    currentVersion,
-    currentInstanceID,
+    docVersion,
+    instanceID,
     currentLanguage,
     currentLanguageLabel,
+    currentPlatformLabel,
   ]);
 
   const isShowThemeBtn =
