@@ -5,6 +5,7 @@ import { Breadcrumb, Drawer } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Header from "./header";
+import PageBg from "./PageBg";
 import Footer from "./footer";
 
 import {
@@ -24,8 +25,6 @@ import SearchMeta from "@/components/meta/SearchMeta";
 import DocuoTree from "./tree";
 import DocuoAnchor from "./Anchor";
 import AnchorNode from "./Anchor/Anchor";
-import gradientFixed from "@/assets/images/gradient_fixed.png";
-import gradientFixedDark from "@/assets/images/gradient_fixed@dark.png";
 import IconBackTop from "@/assets/icons/anchor/IconBackTop.svg";
 import IconBackTopDark from "@/assets/icons/anchor/IconBackTopDark.svg";
 import IconBreadcrumbArrow from "@/assets/icons/breadcrumb/arrow.svg";
@@ -359,10 +358,6 @@ const PreviewLayout = ({
     );
   };
 
-  const onExpand = (expandedKeys) => {
-    setExpandedKeys(expandedKeys);
-  };
-
   // @ts-ignore
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const menuVersions = useMemo<any>(() => {
@@ -470,18 +465,7 @@ const PreviewLayout = ({
                     tocFormatData={tocFormatData}
                     setDrawerOpen={setDrawerOpen}
                   ></Header>
-                  <div className="only_pc__show absolute z-0 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
-                    <div className="w-[108rem] flex-none flex justify-end">
-                      <Image
-                        src={
-                          theme === "dark" ? gradientFixedDark : gradientFixed
-                        }
-                        alt=""
-                        className="w-[71.75rem] flex-none max-w-none"
-                        decoding="async"
-                      />
-                    </div>
-                  </div>
+                  <PageBg />
                   <main className="preview-main">
                     <div className="preview-sider">
                       <div className={`mt-[16px] flex pl-8 flex-wrap`}>

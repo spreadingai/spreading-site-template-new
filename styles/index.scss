@@ -67,7 +67,8 @@ html > body {
   height: 100%;
 }
 
-.preview-screen {
+.preview-screen,
+.search-screen {
   display: flex;
   flex-direction: column;
   color: var(--docuo-color-primary);
