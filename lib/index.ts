@@ -66,7 +66,7 @@ class LibController {
           }
         });
         if (Number(process.env.NEXT_PUBLIC_PLAN) === Plan.Free) {
-          // docuoConfig.instances.splice(1);
+          docuoConfig.instances.splice(1);
         } else {
           if (
             process.env.NEXT_PUBLIC_INSTANCE_LIMIT !== UNLIMITED_INSTANCE_NUMBER
@@ -74,7 +74,7 @@ class LibController {
             try {
               const limit = Number(process.env.NEXT_PUBLIC_INSTANCE_LIMIT);
               if (!isNaN(limit) && limit) {
-                // docuoConfig.instances.splice(limit);
+                docuoConfig.instances.splice(limit);
               }
             } catch (error) {
               console.log(
