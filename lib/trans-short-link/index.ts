@@ -1,6 +1,5 @@
 import { DataUtil } from "./assets/js/util/dataUtil";
 import { Menu } from "./types/Menu";
-import InitController from "./init.mjs";
 import {
   getClientRelatePathByPath,
   getMarkdownBaseUrl,
@@ -19,6 +18,9 @@ class ShortLinkTransController {
       (ShortLinkTransController._instance = new ShortLinkTransController())
     );
   }
+  _rootPath = "docs/external";
+  _dataJsonPath = "menuTree.json";
+  _commonJsonConfigPath = "commonJsonConfig.json";
   _enLanguageKey = "en";
   _zhLanguageKey = "zh";
   _locale = this._zhLanguageKey;
@@ -46,8 +48,8 @@ class ShortLinkTransController {
       return this._zh_menuData;
     } else {
       const temp = path.resolve(
-        InitController.rootPath,
-        `${this._locale}_${InitController.dataJsonPath}`
+        this._rootPath,
+        `${this._locale}_${this._dataJsonPath}`
       );
       const text = fs.readFileSync(temp, { encoding: "utf-8" });
       try {
@@ -65,10 +67,7 @@ class ShortLinkTransController {
         return obj;
       }, {});
     } else {
-      const temp = path.resolve(
-        InitController.rootPath,
-        InitController.commonJsonConfigPath
-      );
+      const temp = path.resolve(this._rootPath, this._commonJsonConfigPath);
       const text = fs.readFileSync(temp, { encoding: "utf-8" });
       const originConfigData = JSON.parse(text);
       const commonJsonConfig = originConfigData.reduce(
@@ -112,7 +111,7 @@ class ShortLinkTransController {
       .split(`${this._serverBaseUrl}/client-api/`)[1]
       .split("/data.json")[0];
     const apiTreeDataPath = splitStr.split("/").join("_") + ".json";
-    const temp = path.resolve(InitController.rootPath, apiTreeDataPath);
+    const temp = path.resolve(this._rootPath, apiTreeDataPath);
     if (refresh) {
       const text = await this.fetchFunc("get", url);
       fs.writeFileSync(temp, text, {
