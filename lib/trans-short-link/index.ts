@@ -427,8 +427,11 @@ class ShortLinkTransController {
       // mdxSource.code
       // eg: ...("a",{className:"11",href:"@createRoom",children:"333333"})... => href:"@createRoom"
       // eg: ...(n.a,{href:"@enterRoom",children:"444444"})... => href:"@enterRoom"
+      // eg: ...("a",{className:"11",href:t.a?"docuo-link@createRoom":"docuo-link@enterRoom",children:"333333"})... => href:t.a?"@createRoom":"@enterRoom"
       const mdxSourceCodeClientApiMdHrefReg = /(a.*?href:")@(.*?)"/gi;
       const mdxSourceCodeSelfKeyHrefReg = /(a.*?href:")!(.*?)"/gi;
+      const mdxSourceCodeClientApiMdHrefCommonReg = /(.*?")docuo-link@(.*?)"/gi;
+      const mdxSourceCodeSelfKeyHrefCommonReg = /(.*?")docuo-link!(.*?)"/gi;
       codeStr = codeStr.replace(
         mdxSourceCodeClientApiMdHrefReg,
         ($: string, $1: string, $2 = "") => {
@@ -438,6 +441,21 @@ class ShortLinkTransController {
       );
       codeStr = codeStr.replace(
         mdxSourceCodeSelfKeyHrefReg,
+        ($: string, $1: string, $2 = "") => {
+          const link = this.getCommonShortLink($2, shortLinkMap, articleInfo);
+          return `${$1}${this._serverBaseUrl}${link}"`;
+        }
+      );
+
+      codeStr = codeStr.replace(
+        mdxSourceCodeClientApiMdHrefCommonReg,
+        ($: string, $1: string, $2 = "") => {
+          const link = this.getApiShortLink($2, allApiTreeData);
+          return `${$1}${this._serverBaseUrl}${link}"`;
+        }
+      );
+      codeStr = codeStr.replace(
+        mdxSourceCodeSelfKeyHrefCommonReg,
         ($: string, $1: string, $2 = "") => {
           const link = this.getCommonShortLink($2, shortLinkMap, articleInfo);
           return `${$1}${this._serverBaseUrl}${link}"`;

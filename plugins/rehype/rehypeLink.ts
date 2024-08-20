@@ -51,7 +51,9 @@ export function rehypeLink(options: {
         node.properties.href.startsWith(":") ||
         node.properties.href.startsWith("#") ||
         node.properties.href.startsWith("@") ||
-        node.properties.href.startsWith("!")
+        node.properties.href.startsWith("!") ||
+        node.properties.href.startsWith("docuo-link@") ||
+        node.properties.href.startsWith("docuo-link!")
       ) {
         return;
       }
