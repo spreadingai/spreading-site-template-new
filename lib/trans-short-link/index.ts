@@ -369,7 +369,11 @@ class ShortLinkTransController {
     });
     return link;
   };
-  async replaceApiShortLink(articleID: string | number, content: string) {
+  async replaceApiShortLink(
+    articleID: string | number,
+    content: string,
+    codeStr?: string
+  ) {
     const articleInfo = this.getArticleInfoByID(articleID);
     if (!articleInfo) return;
     const allApiTreeData = await this.getAllApiTreeData(articleInfo);
@@ -419,7 +423,32 @@ class ShortLinkTransController {
       }
     );
 
-    return content;
+    if (codeStr) {
+      // mdxSource.code
+      // eg: ...("a",{className:"11",href:"@createRoom",children:"333333"})... => href:"@createRoom"
+      // eg: ...(n.a,{href:"@enterRoom",children:"444444"})... => href:"@enterRoom"
+      const mdxSourceCodeClientApiMdHrefReg = /(a.*?href:")@(.*?)"/gi;
+      const mdxSourceCodeSelfKeyHrefReg = /(a.*?href:")!(.*?)"/gi;
+      codeStr = codeStr.replace(
+        mdxSourceCodeClientApiMdHrefReg,
+        ($: string, $1: string, $2 = "") => {
+          const link = this.getApiShortLink($2, allApiTreeData);
+          return `${$1}${this._serverBaseUrl}${link}"`;
+        }
+      );
+      codeStr = codeStr.replace(
+        mdxSourceCodeSelfKeyHrefReg,
+        ($: string, $1: string, $2 = "") => {
+          const link = this.getCommonShortLink($2, shortLinkMap, articleInfo);
+          return `${$1}${this._serverBaseUrl}${link}"`;
+        }
+      );
+    }
+
+    return {
+      content,
+      codeStr,
+    };
   }
 }
 

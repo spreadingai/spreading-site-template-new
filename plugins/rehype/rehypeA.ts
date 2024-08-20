@@ -2,6 +2,27 @@ import { visit } from "unist-util-visit";
 import path from "path";
 import { ignoreNumberPrefix } from "@/lib/utils";
 
+// Standard a tag or tags similar to a (does not contain expression)
+
+// <a href="/xxx">xxx</a> Absolute paths are not supported
+// <a href="xxx">xxx</a> Support relative paths
+// <Comp href="/xxx">xxx</Comp> Absolute paths are not supported
+// <Comp href="xxx">xxx</Comp> Support relative paths
+
+// <a>xxx</a> Filter
+// <a href="">xxx</a> Filter
+// <a href="http://xxx">xxx</a> Filter
+// <a href="https://xxx">xxx</a> Filter
+// <a href=":xxx">xxx</a> Filter
+// <a href="#xxx">xxx</a> Filter
+
+// <Comp>xxx</Comp> Filter
+// <Comp href="">xxx</Comp> Filter
+// <Comp href="http://xxx">xxx</Comp> Filter
+// <Comp href="https://xxx">xxx</Comp> Filter
+// <Comp href=":xxx">xxx</Comp> Filter
+// <Comp href="#xxx">xxx</Comp> Filter
+
 export function rehypeA(options: {
   prefix: string;
   rootUrl: string;
@@ -16,9 +37,12 @@ export function rehypeA(options: {
       );
       if (
         !target ||
+        typeof target.value !== "string" ||
         target.value.startsWith("http") ||
         target.value.startsWith(":") ||
-        target.value.startsWith("#")
+        target.value.startsWith("#") ||
+        target.value.startsWith("@") ||
+        target.value.startsWith("!")
       )
         return;
       if (!options.rootUrl || !options.filePath) return;

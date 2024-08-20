@@ -107,16 +107,17 @@ class DocsController {
       }
     }
 
-    console.time("count transShortLink");
-    const regex = /^---\n+[\s|\S]*?articleID:\s?(\d+)[\s|\S]*?\n+---/;
-    const match = originContent.match(regex);
-    if (match && match[1]) {
-      originContent = await ShortLinkTransControllerImpl.replaceApiShortLink(
-        match[1],
-        originContent
-      );
-    }
-    console.timeEnd("count transShortLink");
+    // console.time("count transShortLink");
+    // const regex = /^---\n+[\s|\S]*?articleID:\s?(\d+)[\s|\S]*?\n+---/;
+    // const match = originContent.match(regex);
+    // if (match && match[1]) {
+    //   const result = await ShortLinkTransControllerImpl.replaceApiShortLink(
+    //     match[1],
+    //     originContent
+    //   );
+    //   originContent = result.content;
+    // }
+    // console.timeEnd("count transShortLink");
 
     const tocRef: any = {};
     const temp = mdxFileUrl.split("/");
@@ -193,6 +194,19 @@ class DocsController {
       mdxSource.frontmatter["og:image"],
       mdxFileUrl
     );
+
+    console.time("count transShortLink");
+    if (mdxSource.frontmatter && mdxSource.frontmatter.articleID) {
+      const result = await ShortLinkTransControllerImpl.replaceApiShortLink(
+        mdxSource.frontmatter.articleID,
+        mdxSource.matter.content,
+        mdxSource.code
+      );
+      mdxSource.matter.content = result.content;
+      mdxSource.code = result.codeStr;
+    }
+    console.timeEnd("count transShortLink");
+
     return {
       slug,
       mdxSource,

@@ -4,6 +4,19 @@ import path from "path";
 import fs from "fs";
 import { ignoreNumberPrefix } from "@/lib/utils";
 
+// [xxx](/xxx) Absolute paths are not supported (does not contain expression)
+// [xxx](xxx) Support relative paths
+
+// [xxx|_blank](!xxx) Support Open new window tab
+// [xxx\|\_blank]() Support Open new window tab
+
+// [xxx](http://xxx) Filter
+// [xxx](https://xxx) Filter
+// [xxx](:xxx) Filter
+// [xxx](#xxx) Filter
+// [xxx]() Filter
+// [](xxx) Filter
+
 export function rehypeLink(options: {
   prefix: string;
   rootUrl: string;
@@ -36,7 +49,9 @@ export function rehypeLink(options: {
       }
       if (
         node.properties.href.startsWith(":") ||
-        node.properties.href.startsWith("#")
+        node.properties.href.startsWith("#") ||
+        node.properties.href.startsWith("@") ||
+        node.properties.href.startsWith("!")
       ) {
         return;
       }
