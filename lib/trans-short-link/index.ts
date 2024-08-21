@@ -369,23 +369,27 @@ class ShortLinkTransController {
     });
     return link;
   };
-  async replaceApiShortLink(articleID: string | number, content: string) {
+  async replaceApiShortLink(
+    articleID: string | number,
+    content: string,
+    codeStr?: string
+  ) {
     const articleInfo = this.getArticleInfoByID(articleID);
     if (!articleInfo) return;
     const allApiTreeData = await this.getAllApiTreeData(articleInfo);
     const { shortLinkMap } = this.getMdKeyIdMap();
 
-    const clientApiMdHrefReg = /(\[.*?\])\(@(.*?)\)/g;
-    const clientApiAHrefReg = /(<a.*?href=")@(.*?)"/gi;
+    const clientApiMdHrefReg = /(\[.*?\])\((docuo-link)?@(.*?)\)/g;
+    const clientApiAHrefReg = /(<a.*?href=")(docuo-link)?@(.*?)"/gi;
 
-    const selfKeyMdHrefReg = /(\[.*?\])\(!(.*?)\)/g;
-    const selfKeyAHrefReg = /(<a.*?href=")!(.*?)"/gi;
+    const selfKeyMdHrefReg = /(\[.*?\])\((docuo-link)?!(.*?)\)/g;
+    const selfKeyAHrefReg = /(<a.*?href=")(docuo-link)?!(.*?)"/gi;
 
     // trans md "@" link
     content = content.replace(
       clientApiMdHrefReg,
-      ($: string, $1: string, $2 = "") => {
-        const link = this.getApiShortLink($2, allApiTreeData);
+      ($: string, $1: string, $2 = "", $3 = "") => {
+        const link = this.getApiShortLink($3, allApiTreeData);
         // console.log("md api", $, link);
         return `${$1}(${this._serverBaseUrl}${link})`;
       }
@@ -394,8 +398,8 @@ class ShortLinkTransController {
     // trans a "@" link
     content = content.replace(
       clientApiAHrefReg,
-      ($: string, $1: string, $2 = "") => {
-        const link = this.getApiShortLink($2, allApiTreeData);
+      ($: string, $1: string, $2 = "", $3 = "") => {
+        const link = this.getApiShortLink($3, allApiTreeData);
         // console.log("a api", $, link);
         return `${$1}${this._serverBaseUrl}${link}"`;
       }
@@ -404,8 +408,8 @@ class ShortLinkTransController {
     // trans md "!" link
     content = content.replace(
       selfKeyMdHrefReg,
-      ($: string, $1: string, $2 = "") => {
-        const link = this.getCommonShortLink($2, shortLinkMap, articleInfo);
+      ($: string, $1: string, $2 = "", $3 = "") => {
+        const link = this.getCommonShortLink($3, shortLinkMap, articleInfo);
         return `${$1}(${this._serverBaseUrl}${link})`;
       }
     );
@@ -413,13 +417,72 @@ class ShortLinkTransController {
     // trans a "!" link
     content = content.replace(
       selfKeyAHrefReg,
-      ($: string, $1: string, $2 = "") => {
-        const link = this.getCommonShortLink($2, shortLinkMap, articleInfo);
+      ($: string, $1: string, $2 = "", $3 = "") => {
+        const link = this.getCommonShortLink($3, shortLinkMap, articleInfo);
         return `${$1}${this._serverBaseUrl}${link}"`;
       }
     );
 
-    return content;
+    if (codeStr) {
+      // mdxSource.code
+      // eg: ...("a",{className:"11",href:"@createRoom",children:"333333"})... => href:"@createRoom"
+      // eg: ...(n.a,{href:"@enterRoom",children:"444444"})... => href:"@enterRoom"
+      // eg: ...("a",{className:"11",href:t.a?"docuo-link@createRoom":"docuo-link@enterRoom",children:"333333"})... => href:t.a?"@createRoom":"@enterRoom"
+      const mdxSourceCodeClientApiMdHrefReg =
+        /(a.*?href:")(docuo-link)?@(.*?)"/gi;
+      const mdxSourceCodeSelfKeyHrefReg = /(a.*?href:")(docuo-link)?!(.*?)"/gi;
+      const mdxSourceCodeClientApiMdHrefCommonReg = /(.*?")docuo-link@(.*?)"/gi;
+      const mdxSourceCodeSelfKeyHrefCommonReg = /(.*?")docuo-link!(.*?)"/gi;
+      codeStr = codeStr.replace(
+        mdxSourceCodeClientApiMdHrefReg,
+        ($: string, $1: string, $2 = "", $3 = "") => {
+          const link = this.getApiShortLink($3, allApiTreeData);
+          return `${$1}${this._serverBaseUrl}${link}"`;
+        }
+      );
+      codeStr = codeStr.replace(
+        mdxSourceCodeSelfKeyHrefReg,
+        ($: string, $1: string, $2 = "", $3 = "") => {
+          const link = this.getCommonShortLink($3, shortLinkMap, articleInfo);
+          return `${$1}${this._serverBaseUrl}${link}"`;
+        }
+      );
+
+      codeStr = codeStr.replace(
+        mdxSourceCodeClientApiMdHrefCommonReg,
+        ($: string, $1: string, $2 = "") => {
+          const link = this.getApiShortLink($2, allApiTreeData);
+          return `${$1}${this._serverBaseUrl}${link}"`;
+        }
+      );
+      codeStr = codeStr.replace(
+        mdxSourceCodeSelfKeyHrefCommonReg,
+        ($: string, $1: string, $2 = "") => {
+          const link = this.getCommonShortLink($2, shortLinkMap, articleInfo);
+          return `${$1}${this._serverBaseUrl}${link}"`;
+        }
+      );
+
+      content = content.replace(
+        mdxSourceCodeClientApiMdHrefCommonReg,
+        ($: string, $1: string, $2 = "") => {
+          const link = this.getApiShortLink($2, allApiTreeData);
+          return `${$1}${this._serverBaseUrl}${link}"`;
+        }
+      );
+      content = content.replace(
+        mdxSourceCodeSelfKeyHrefCommonReg,
+        ($: string, $1: string, $2 = "") => {
+          const link = this.getCommonShortLink($2, shortLinkMap, articleInfo);
+          return `${$1}${this._serverBaseUrl}${link}"`;
+        }
+      );
+    }
+
+    return {
+      content,
+      codeStr,
+    };
   }
 }
 
