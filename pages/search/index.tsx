@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
+// Warning: Not compatible with previous versions of navigationInfo
+import React from "react";
+import { Dropdown } from "antd";
 import algoliasearch from "algoliasearch";
 import {
   InstantSearch,
@@ -7,21 +8,28 @@ import {
   Hits,
   Pagination,
   Configure,
-  // @ts-ignore
 } from "react-instantsearch";
 import CustomHit from "@/components/search/CustomHit";
 import Layout from "@/components/search/layout";
 import "instantsearch.css/themes/satellite.css";
 import VersionsControllerImpl from "@/lib/versions-help";
+import useGroup from "@/components/hooks/useGroup";
+import usePlatform from "@/components/hooks/usePlatform";
+import useVersion from "@/components/hooks/useVersion";
+import useSet from "@/components/hooks/useSet";
+import IconLanguageNorLight from "@/assets/icons/header/icon_language_nor_light.svg";
+import IconLanguageNorDark from "@/assets/icons/header/icon_language_nor_dark.svg";
+import styles from "@/components/header/ThemeSwitch.module.scss";
 
 const searchClient = algoliasearch(
   "N61JOMLMAK",
   "cc55591748c47b1e5e24d363cdf1d5eb"
 );
 
-export const getStaticProps = () => {
+interface SearchPageProps {}
+
+export const getStaticProps = (props) => {
   const allUsedVersions = VersionsControllerImpl.getAllUsedVersions();
-  console.log("[SearchPage] allUsedVersions", allUsedVersions);
   return {
     props: {
       allUsedVersions,
@@ -29,7 +37,90 @@ export const getStaticProps = () => {
   };
 };
 
-export default function SearchPage() {
+const SearchSelectWrap = (props: SearchPageProps) => {
+  const { handleGroupChanged, handlePlatformChanged, handleVersionChanged } =
+    useSet();
+  const { currentGroup, displayGroups, setCurrentGroup, setCurrentGroupLabel } =
+    useGroup();
+  const { currentPlatform, displayPlatforms } = usePlatform();
+  const { docVersion, slugVersion, displayVersions } = useVersion();
+
+  // groups
+  const groupsItems = displayGroups.map((item) => ({
+    key: item.group,
+    label: <span>{item.groupLabel}</span>,
+    className: `${styles.modeItem} ${
+      item.group === currentGroup ? styles.active : ""
+    }`,
+  }));
+
+  // platforms
+  const platformsItems = displayPlatforms.map((item) => ({
+    key: item.platform,
+    label: <span>{item.platformLabel}</span>,
+    className: `${styles.modeItem} ${
+      item.platform === currentPlatform ? styles.active : ""
+    }`,
+  }));
+
+  // versions
+  const versionsItems = displayVersions.map((item) => ({
+    key: item.version,
+    label: <span>{item.version}</span>,
+    className: `${styles.modeItem} ${
+      item.version === docVersion ? styles.active : ""
+    }`,
+  }));
+
+  return (
+    <div className="search-select-wrap">
+      <Dropdown
+        trigger={["click"]}
+        menu={{
+          items: groupsItems,
+          className: styles.languageWrapper,
+          onClick: handleGroupChanged,
+        }}
+        placement="bottomRight"
+      >
+        <button className={styles.toggleButton}>
+          <IconLanguageNorLight className={styles.lightToggleIcon} />
+          <IconLanguageNorDark className={styles.darkToggleIcon} />
+        </button>
+      </Dropdown>
+      <Dropdown
+        trigger={["click"]}
+        menu={{
+          items: platformsItems,
+          className: styles.languageWrapper,
+          onClick: handlePlatformChanged,
+        }}
+        placement="bottomRight"
+      >
+        <button className={styles.toggleButton}>
+          <IconLanguageNorLight className={styles.lightToggleIcon} />
+          <IconLanguageNorDark className={styles.darkToggleIcon} />
+        </button>
+      </Dropdown>
+      <Dropdown
+        trigger={["click"]}
+        menu={{
+          items: versionsItems,
+          className: styles.languageWrapper,
+          onClick: handleVersionChanged,
+        }}
+        placement="bottomRight"
+      >
+        <button className={styles.toggleButton}>
+          <IconLanguageNorLight className={styles.lightToggleIcon} />
+          <IconLanguageNorDark className={styles.darkToggleIcon} />
+        </button>
+      </Dropdown>
+    </div>
+  );
+};
+
+export default function SearchPage(props: SearchPageProps) {
   return (
     <InstantSearch searchClient={searchClient} indexName="zegocloud">
       <Configure
@@ -65,7 +156,10 @@ export default function SearchPage() {
           `language:${"English"}`,
         ]}
       />
-      <SearchBox />
+      <div className="search-box-wrap">
+        <SearchBox />
+      </div>
+      <SearchSelectWrap {...props} />
       <Hits hitComponent={CustomHit} />
       <Pagination />
     </InstantSearch>

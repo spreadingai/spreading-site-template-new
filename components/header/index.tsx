@@ -15,10 +15,11 @@ import ThemeContext from "@/components/header/Theme.context";
 import LanguageSwitch from "./LanguageSwitch";
 import { copywriting } from "@/components/constant/language";
 import useLanguage from "@/components/hooks/useLanguage";
-import useInstance from "@/components/hooks/useInstance";
+// import useInstance from "@/components/hooks/useInstance";
+import useGroup from "@/components/hooks/useGroup";
 import useVersion from "@/components/hooks/useVersion";
 import usePlatform from "@/components/hooks/usePlatform";
-import { MenuProps } from "antd";
+import useSet from "@/components/hooks/useSet";
 // import "@docsearch/css";
 
 interface Props {
@@ -30,14 +31,11 @@ interface Props {
 
 const Header = (props: Props) => {
   const { docuoConfig, tocFormatData, setDrawerOpen, isSearchPage } = props;
-  const {
-    currentLanguage,
-    currentLanguageLabel,
-    displayLanguages,
-    setCurrentLanguage,
-    setCurrentLanguageLabel,
-  } = useLanguage();
-  const { instanceID } = useInstance();
+  const { handleLanguageChanged } = useSet();
+  const { currentLanguage, currentLanguageLabel, displayLanguages } =
+    useLanguage();
+  // const { instanceID } = useInstance();
+  const { currentGroupLabel } = useGroup();
   const { docVersion } = useVersion();
   const { currentPlatformLabel } = usePlatform();
   const { themeConfig, search } = docuoConfig;
@@ -95,7 +93,8 @@ const Header = (props: Props) => {
           searchParameters={{
             facetFilters: [
               `version:${docVersion}`,
-              `instance:${instanceID}`,
+              // `instance:${instanceID}`, // The previous versions of navigationInfo
+              `group:${currentGroupLabel}`,
               `language:${currentLanguageLabel}`,
               `platform:${currentPlatformLabel}`,
             ],
@@ -108,7 +107,8 @@ const Header = (props: Props) => {
     algolia,
     searchHidden,
     docVersion,
-    instanceID,
+    // instanceID,
+    currentGroupLabel,
     currentLanguage,
     currentLanguageLabel,
     currentPlatformLabel,
@@ -146,12 +146,6 @@ const Header = (props: Props) => {
     ) : null;
   };
 
-  const handleLanguageChanged: MenuProps["onClick"] = ({ key: language }) => {
-    const target = displayLanguages.find((item) => item.language === language);
-    setCurrentLanguage(target.language);
-    setCurrentLanguageLabel(target.languageLabel);
-  };
-
   const renderLanguageSwitch = () => {
     return !!displayLanguages?.length ? (
       !isSearchPage ? (
@@ -169,7 +163,7 @@ const Header = (props: Props) => {
     <header
       className={`header-container ${styles["header-container"]} ${
         scrollLength === 0 ? styles["header-bg-opacity"] : styles["header-bg"]
-      }`}
+      } ${isSearchPage ? styles["search-page"] : ""}`}
     >
       <div className={`container-wrap ${styles.container}`}>
         {logo ? (

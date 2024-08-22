@@ -4,6 +4,7 @@ import {
   DEFAULT_LATEST_SLUG_VERSION,
 } from "../constants";
 import { DisplayVersion } from "../types";
+import LibControllerImpl from "./index";
 
 class VersionsController {
   static _instance: VersionsController;
@@ -14,10 +15,19 @@ class VersionsController {
     );
   }
   getDisplayVersions(
-    instanceID: string,
+    currentGroup: string,
+    currentPlatform: string,
+    currentLanguage: string,
     allUsedVersions: Record<string, string[]>
   ) {
     const result: DisplayVersion[] = [];
+    // Get the instanceID from currentGroup and currentPlatform
+    const instanceID = this.getInstanceID(
+      currentLanguage,
+      currentGroup,
+      currentPlatform
+    );
+    if (!instanceID) return result;
     const usedVersions = allUsedVersions[instanceID];
     if (!usedVersions) return result;
     if (usedVersions.length) {
@@ -38,6 +48,26 @@ class VersionsController {
       result.push({
         version: DEFAULT_CURRENT_SLUG_VERSION,
       });
+    }
+    return result;
+  }
+  getInstanceID(
+    currentLanguage: string,
+    currentGroup: string,
+    currentPlatform: string
+  ) {
+    let result = "";
+    const instances = LibControllerImpl.getInstances();
+    const targetInstance = instances.find(
+      (instance) =>
+        instance.locale === currentLanguage &&
+        instance.navigationInfo &&
+        instance.navigationInfo.group &&
+        instance.navigationInfo.group.id === currentGroup &&
+        instance.navigationInfo.platform === currentPlatform
+    );
+    if (targetInstance) {
+      result = targetInstance.id;
     }
     return result;
   }

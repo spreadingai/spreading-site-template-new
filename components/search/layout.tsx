@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+// Warning: Not compatible with previous versions of navigationInfo
+import React, { useCallback, useState } from "react";
 import LibControllerImpl from "@/lib/client";
 import LanguageControllerImpl from "@/lib/client/language-help";
 import VersionsControllerImpl from "@/lib/client/versions-help";
@@ -11,13 +12,9 @@ import {
   defaultLanguageLabel,
 } from "@/components/context/languageContext";
 import {
-  InstanceContext,
-  defaultInstance,
-  defaultInstanceLabel,
-} from "@/components/context/instanceContext";
-import {
   VersionContext,
   defaultDocVersion,
+  defaultSlugVersion,
 } from "@/components/context/versionContext";
 import {
   GroupContext,
@@ -29,11 +26,13 @@ import {
   defaultPlatform,
   defaultPlatformLabel,
 } from "@/components/context/platformContext";
+import { SetContext } from "@/components/context/setContext";
 import useColors from "@/components/hooks/useColors";
 import useColorMode from "@/components/hooks/useColorMode";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Header from "@/components/header";
 import PageBg from "@/components/PageBg";
+import SearchMeta from "@/components/meta/SearchMeta";
 
 type Props = {
   allUsedVersions: Record<string, string[]>;
@@ -47,37 +46,168 @@ const Layout = ({ children, allUsedVersions }: Props) => {
   useColorMode(docuoConfig.themeConfig?.colorMode, theme, setTheme);
   useColors(docuoConfig.themeConfig?.colors);
 
+  // languages
   const { displayLanguages } = LanguageControllerImpl.getDisplayLanguages();
-  const [currentLanguage, setCurrentLanguage] = useState(defaultLanguage);
-  const [currentLanguageLabel, setCurrentLanguageLabel] =
-    useState(defaultLanguageLabel);
-
-  const displayInstances =
-    LibControllerImpl.getDisplayInstances(currentLanguage);
-  const [instanceID, setInstanceID] = useState(defaultInstance);
-  const [currentInstanceLabel, setCurrentInstanceLabel] =
-    useState(defaultInstanceLabel);
-
-  const displayVersions = VersionsControllerImpl.getDisplayVersions(
-    instanceID,
-    allUsedVersions
+  const [currentLanguage, setCurrentLanguage] = useState(
+    displayLanguages[0]?.language || defaultLanguage
   );
-  const [docVersion, setDocVersion] = useState(defaultDocVersion);
-
-  const { displayGroups } = GroupControllerImpl.getDisplayGroups(
-    instanceID,
-    currentLanguage
+  const [currentLanguageLabel, setCurrentLanguageLabel] = useState(
+    displayLanguages[0]?.languageLabel || defaultLanguageLabel
   );
-  const [currentGroup, setCurrentGroup] = useState(defaultGroup);
-  const [currentGroupLabel, setCurrentGroupLabel] = useState(defaultGroupLabel);
 
-  const { displayPlatforms } = PlatformControllerImpl.getDisplayPlatforms(
-    instanceID,
-    currentLanguage
+  // groups
+  const [displayGroups, setDisplayGroups] = useState(
+    GroupControllerImpl.getDisplayGroups(currentLanguage).displayGroups
   );
-  const [currentPlatform, setCurrentPlatform] = useState(defaultPlatform);
-  const [currentPlatformLabel, setCurrentPlatformLabel] =
-    useState(defaultPlatformLabel);
+  const [currentGroup, setCurrentGroup] = useState(
+    displayGroups[0]?.group || defaultGroup
+  );
+  const [currentGroupLabel, setCurrentGroupLabel] = useState(
+    displayGroups[0]?.groupLabel || defaultGroupLabel
+  );
+
+  // platforms
+  const [displayPlatforms, setDisplayPlatforms] = useState(
+    PlatformControllerImpl.getDisplayPlatforms(currentGroup, currentLanguage)
+      .displayPlatforms
+  );
+  const [currentPlatform, setCurrentPlatform] = useState(
+    displayPlatforms[0]?.platform || defaultPlatform
+  );
+  const [currentPlatformLabel, setCurrentPlatformLabel] = useState(
+    displayPlatforms[0]?.platformLabel || defaultPlatformLabel
+  );
+
+  // versions
+  const [displayVersions, setDisplayVersions] = useState(
+    VersionsControllerImpl.getDisplayVersions(
+      currentGroup,
+      currentPlatform,
+      currentLanguage,
+      allUsedVersions
+    )
+  );
+  const [slugVersion, setSlugVersion] = useState(
+    displayVersions[0]?.version || defaultSlugVersion
+  );
+  const [docVersion, setDocVersion] = useState(
+    displayVersions[0]?.version || defaultDocVersion
+  );
+
+  const setLanguage = useCallback(
+    (language: string) => {
+      const target = displayLanguages.find(
+        (item) => item.language === language
+      );
+      setCurrentLanguage(language);
+      target && setCurrentLanguageLabel(target.languageLabel);
+    },
+    [displayLanguages, setCurrentLanguage, setCurrentLanguageLabel]
+  );
+  const handleLanguageChanged = ({ key: language }) => {
+    setLanguage(language);
+
+    // update group
+    const _currentGroup = updateGroup(language);
+
+    // update platform
+    const _currentPlatform = updatePlatform(_currentGroup, language);
+
+    // update version
+    updateVersion(_currentGroup, _currentPlatform, language);
+  };
+
+  const setGroup = useCallback(
+    (group: string) => {
+      const target = displayGroups.find((item) => item.group === group);
+      setCurrentGroup(group);
+      target && setCurrentGroupLabel(target.groupLabel);
+    },
+    [displayGroups]
+  );
+  const updateGroup = useCallback(
+    (language) => {
+      const _displayGroups =
+        GroupControllerImpl.getDisplayGroups(language).displayGroups;
+      const _currentGroup = _displayGroups[0]?.group || defaultGroup;
+      setDisplayGroups(_displayGroups);
+      setGroup(_currentGroup);
+      return _currentGroup;
+    },
+    [setGroup]
+  );
+  const handleGroupChanged = ({ key: group }) => {
+    setGroup(group);
+    // update platform
+    const _currentPlatform = updatePlatform(group, currentLanguage);
+    // update version
+    updateVersion(group, _currentPlatform, currentLanguage);
+  };
+
+  const setPlatform = useCallback(
+    (platform: string) => {
+      const target = displayPlatforms.find(
+        (item) => item.platform === platform
+      );
+      setCurrentPlatform(platform);
+      target && setCurrentPlatformLabel(target.platformLabel);
+    },
+    [displayPlatforms]
+  );
+  const updatePlatform = useCallback(
+    (_currentGroup, language) => {
+      const _displayPlatforms = PlatformControllerImpl.getDisplayPlatforms(
+        _currentGroup,
+        language
+      ).displayPlatforms;
+      const temp1 = _displayPlatforms.find(
+        (displayPlaytform) => displayPlaytform.platform === currentPlatform
+      );
+      const _currentPlatform = temp1
+        ? temp1.platform
+        : _displayPlatforms[0]?.platform || defaultPlatform;
+      setDisplayPlatforms(_displayPlatforms);
+      setPlatform(_currentPlatform);
+      return _currentPlatform;
+    },
+    [currentPlatform, setPlatform]
+  );
+  const handlePlatformChanged = ({ key: platform }) => {
+    setPlatform(platform);
+    // update version
+    updateVersion(currentGroup, platform, currentLanguage);
+  };
+
+  const setVersion = useCallback(
+    (version) => {
+      setDocVersion(version);
+      setSlugVersion(version);
+    },
+    [setDocVersion, setSlugVersion]
+  );
+  const updateVersion = useCallback(
+    (_currentGroup, _currentPlatform, language) => {
+      const _displayVersions = VersionsControllerImpl.getDisplayVersions(
+        _currentGroup,
+        _currentPlatform,
+        language,
+        allUsedVersions
+      );
+      const temp2 = _displayVersions.find(
+        (displayVersion) => displayVersion.version === docVersion
+      );
+      const _version = temp2
+        ? temp2.version
+        : displayVersions[0]?.version || defaultDocVersion;
+      setDisplayVersions(_displayVersions);
+      setVersion(_version);
+      return _version;
+    },
+    [allUsedVersions, displayVersions, docVersion, setVersion]
+  );
+  const handleVersionChanged = ({ key: version }) => {
+    setVersion(version);
+  };
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
@@ -90,42 +220,47 @@ const Layout = ({ children, allUsedVersions }: Props) => {
           setCurrentLanguageLabel,
         }}
       >
-        <InstanceContext.Provider
+        <GroupContext.Provider
           value={{
-            instanceID,
-            currentInstanceLabel,
-            displayInstances,
-            setInstanceID,
-            setCurrentInstanceLabel,
+            currentGroup,
+            currentGroupLabel,
+            displayGroups,
+            setCurrentGroup,
+            setCurrentGroupLabel,
+            setDisplayGroups,
           }}
         >
-          <VersionContext.Provider
+          <PlatformContext.Provider
             value={{
-              docVersion,
-              displayVersions,
-              setDocVersion,
+              currentPlatform,
+              currentPlatformLabel,
+              displayPlatforms,
+              setCurrentPlatform,
+              setCurrentPlatformLabel,
+              setDisplayPlatforms,
             }}
           >
-            <GroupContext.Provider
+            <VersionContext.Provider
               value={{
-                currentGroup,
-                currentGroupLabel,
-                displayGroups,
-                setCurrentGroup,
-                setCurrentGroupLabel,
+                docVersion,
+                slugVersion,
+                displayVersions,
+                setSlugVersion,
+                setDocVersion,
+                setDisplayVersions,
               }}
             >
-              <PlatformContext.Provider
+              <SetContext.Provider
                 value={{
-                  currentPlatform,
-                  currentPlatformLabel,
-                  displayPlatforms,
-                  setCurrentPlatform,
-                  setCurrentPlatformLabel,
+                  handleLanguageChanged,
+                  handleGroupChanged,
+                  handlePlatformChanged,
+                  handleVersionChanged,
                 }}
               >
                 <div className="search-screen relative">
                   {!!gaId && <GoogleAnalytics gaId={gaId} />}
+                  <SearchMeta />
                   <Header
                     docuoConfig={docuoConfig}
                     isSearchPage={true}
@@ -133,10 +268,10 @@ const Layout = ({ children, allUsedVersions }: Props) => {
                   <PageBg />
                   <main className="search-main">{children}</main>
                 </div>
-              </PlatformContext.Provider>
-            </GroupContext.Provider>
-          </VersionContext.Provider>
-        </InstanceContext.Provider>
+              </SetContext.Provider>
+            </VersionContext.Provider>
+          </PlatformContext.Provider>
+        </GroupContext.Provider>
       </LanguageContext.Provider>
     </ThemeContext.Provider>
   );

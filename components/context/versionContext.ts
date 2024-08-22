@@ -1,9 +1,13 @@
 import { DisplayVersion } from "@/lib/types";
+import {
+  DEFAULT_CURRENT_DOC_VERSION,
+  DEFAULT_CURRENT_SLUG_VERSION,
+} from "@/lib/constants";
 import { Dispatch, SetStateAction, createContext } from "react";
 
 type VersionContentType = {
   docVersion: string;
-  slugVersion?: string;
+  slugVersion: string;
   displayVersions: DisplayVersion[];
   versions?: string[];
   setDocVersion?: Dispatch<SetStateAction<string>>;
@@ -12,8 +16,8 @@ type VersionContentType = {
   setVersions?: Dispatch<SetStateAction<string[]>>;
 };
 
-export const defaultDocVersion: string = "";
-export const defaultSlugVersion: string = "";
+export const defaultDocVersion: string = DEFAULT_CURRENT_DOC_VERSION;
+export const defaultSlugVersion: string = DEFAULT_CURRENT_SLUG_VERSION;
 export const defaultDisplayVersions: [] = [];
 export const defaultVersions: [] = [];
 

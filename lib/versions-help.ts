@@ -30,8 +30,12 @@ class VersionsController {
     }
     // Use the external current version if the file is not present or the list is empty
     const instance = LibControllerImpl.getTargetInstance(instanceID);
+    const temp = instance.path.split("/");
+    const instanceFolder = temp.slice(0, temp.length - 1).join("/");
     const versionsUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
-      instance.id === DEFAULT_INSTANCE_ID ? "" : instance.id + "_"
+      instance.id === DEFAULT_INSTANCE_ID
+        ? ""
+        : (instanceFolder ? instanceFolder + "/" : "") + instance.id + "_"
     }versions.json`;
     const versionsPath = path.resolve("./public", "..", versionsUrl);
     let versions: string[] = [];

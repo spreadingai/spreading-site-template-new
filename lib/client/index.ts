@@ -1,11 +1,5 @@
 import inputDocuoConfig from "@/docs/docuo.config.json";
-import {
-  DisplayInstance,
-  DocuoConfig,
-  Plan,
-  InstanceType,
-  DocInstance,
-} from "../types";
+import { DocuoConfig, Plan, InstanceType, DocInstance } from "../types";
 import { DEFAULT_INSTANCE_ID, UNLIMITED_INSTANCE_NUMBER } from "../constants";
 
 class LibController {
@@ -97,30 +91,6 @@ class LibController {
     } else {
       return instances;
     }
-  }
-  getDisplayInstances(currentLanguage?: string): DisplayInstance[] {
-    if (this._displayInstances) {
-      return JSON.parse(JSON.stringify(this._displayInstances));
-    }
-    if (!this._docuoConfig) return [];
-    const { i18n } = this._docuoConfig;
-    const result: DisplayInstance[] = [];
-    const instances = this.getInstances();
-    instances.forEach((instance) => {
-      if (
-        // Multiple languages are not configured
-        !currentLanguage ||
-        // No instance of locale is configured
-        (!instance.locale && i18n.defaultLocale === currentLanguage) ||
-        // Locale corresponding instance
-        instance.locale === currentLanguage
-      ) {
-        result.push({
-          instance,
-        });
-      }
-    });
-    return result;
   }
 }
 
