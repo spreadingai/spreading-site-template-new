@@ -5,6 +5,9 @@
     position: fixed;
     z-index: 100;
   }
+  &.search-page .mobile-menus {
+    margin-top: 74px; // TODO: header height
+  }
 
   .line {
     width: 100%;

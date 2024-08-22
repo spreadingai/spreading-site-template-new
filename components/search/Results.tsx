@@ -2,13 +2,7 @@ import React from "react";
 import { Snippet } from "./Snippet";
 import type { InternalDocSearchHit } from "./types";
 
-export function Result({
-  item,
-  index,
-  renderIcon,
-  renderAction,
-  hitComponent,
-}) {
+export function Result({ item, renderIcon, renderAction, hitComponent }) {
   const Hit = hitComponent!;
 
   return (
@@ -23,7 +17,7 @@ export function Result({
     >
       <Hit hit={item}>
         <div className="DocSearch-Hit-Container">
-          {renderIcon({ item, index })}
+          {renderIcon({ item })}
 
           {item.hierarchy[item.type] && item.type === "lvl1" && (
             <div className="DocSearch-Hit-content-wrapper">

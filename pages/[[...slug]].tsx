@@ -29,13 +29,7 @@ import VersionsControllerImpl from "@/lib/versions-help";
 import PagerControllerImpl from "@/lib/pager-help";
 import ShortLinkTransControllerImpl from "@/lib/trans-short-link";
 import Link from "next/link";
-import {
-  SlugData,
-  DocuoConfig,
-  TocItem,
-  DocInstance,
-  InstanceType,
-} from "@/lib/types";
+import { SlugData, DocuoConfig, TocItem } from "@/lib/types";
 import Head from "next/head";
 import ApiItem from "@/components/docuoOpenapi/theme/ApiItem";
 import MethodEndpoint from "@/components/docuoOpenapi/theme/ApiExplorer/MethodEndpoint";

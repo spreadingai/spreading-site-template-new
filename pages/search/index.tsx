@@ -12,6 +12,7 @@ import {
 import CustomHit from "@/components/search/CustomHit";
 import Layout from "@/components/search/layout";
 import "instantsearch.css/themes/satellite.css";
+import VersionsControllerImpl from "@/lib/versions-help";
 
 const searchClient = algoliasearch(
   "N61JOMLMAK",
@@ -19,14 +20,16 @@ const searchClient = algoliasearch(
 );
 
 export const getStaticProps = () => {
+  const allUsedVersions = VersionsControllerImpl.getAllUsedVersions();
+  console.log("[SearchPage] allUsedVersions", allUsedVersions);
   return {
     props: {
-      slug: "test",
+      allUsedVersions,
     },
   };
 };
 
-export default function Search({ slug }) {
+export default function SearchPage() {
   return (
     <InstantSearch searchClient={searchClient} indexName="zegocloud">
       <Configure
@@ -69,6 +72,6 @@ export default function Search({ slug }) {
   );
 }
 
-Search.getLayout = function getLayout(page, pageProps) {
+SearchPage.getLayout = function getLayout(page, pageProps) {
   return <Layout {...pageProps}>{page}</Layout>;
 };

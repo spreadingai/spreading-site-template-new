@@ -18,18 +18,25 @@ import useLanguage from "@/components/hooks/useLanguage";
 import useInstance from "@/components/hooks/useInstance";
 import useVersion from "@/components/hooks/useVersion";
 import usePlatform from "@/components/hooks/usePlatform";
+import { MenuProps } from "antd";
 // import "@docsearch/css";
 
 interface Props {
   docuoConfig: DocuoConfig;
-  tocFormatData: AnchorNode[];
-  setDrawerOpen: (value: boolean) => void;
+  tocFormatData?: AnchorNode[];
+  setDrawerOpen?: (value: boolean) => void;
+  isSearchPage?: boolean;
 }
 
 const Header = (props: Props) => {
-  const { docuoConfig, tocFormatData, setDrawerOpen } = props;
-  const { currentLanguage, currentLanguageLabel, displayLanguages } =
-    useLanguage();
+  const { docuoConfig, tocFormatData, setDrawerOpen, isSearchPage } = props;
+  const {
+    currentLanguage,
+    currentLanguageLabel,
+    displayLanguages,
+    setCurrentLanguage,
+    setCurrentLanguageLabel,
+  } = useLanguage();
   const { instanceID } = useInstance();
   const { docVersion } = useVersion();
   const { currentPlatformLabel } = usePlatform();
@@ -139,9 +146,22 @@ const Header = (props: Props) => {
     ) : null;
   };
 
+  const handleLanguageChanged: MenuProps["onClick"] = ({ key: language }) => {
+    const target = displayLanguages.find((item) => item.language === language);
+    setCurrentLanguage(target.language);
+    setCurrentLanguageLabel(target.languageLabel);
+  };
+
   const renderLanguageSwitch = () => {
     return !!displayLanguages?.length ? (
-      <LanguageSwitch className={isMobile ? "mobile" : ""} />
+      !isSearchPage ? (
+        <LanguageSwitch className={isMobile ? "mobile" : ""} />
+      ) : (
+        <LanguageSwitch
+          className={isMobile ? "mobile" : ""}
+          handleLanguageChanged={handleLanguageChanged}
+        />
+      )
     ) : null;
   };
 
@@ -191,6 +211,7 @@ const Header = (props: Props) => {
               renderThemeSwitch={renderThemeSwitch}
               renderLanguageSwitch={renderLanguageSwitch}
               isShowSearchIcon={!!algolia && !searchHidden}
+              isSearchPage={isSearchPage}
             />
           </div>
         ) : (
@@ -222,7 +243,7 @@ const Header = (props: Props) => {
           </div>
         )}
       </div>
-      {isMobile && (
+      {!isSearchPage && isMobile && (
         <div
           style={{ paddingLeft: 22, paddingRight: 22 }}
           className={`mobile-magic-btn-wrapper w-full flex justify-between ${styles["mobile-magic-btn-wrapper"]}`}

@@ -3,14 +3,13 @@ import { Result } from "./Results";
 import { SelectIcon, SourceIcon } from "./icons";
 import { Hit } from "./Hit";
 
-const Hits = ({ hit, index }) => {
+const Hits = ({ hit }) => {
   return (
     <section className="DocSearch-Hits">
       <Result
         hitComponent={Hit}
         item={hit}
-        index={index}
-        renderIcon={({ item, index }) => (
+        renderIcon={({ item }) => (
           <>
             <div className="DocSearch-Hit-icon">
               <SourceIcon type={item.type} />

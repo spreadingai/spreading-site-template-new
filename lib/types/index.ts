@@ -153,16 +153,16 @@ export interface Sidebars {
 }
 export interface DisplayVersion {
   version: string;
-  defaultLink: string;
+  defaultLink?: string;
 }
 export interface DisplayInstance {
   instance: DocInstance;
-  defaultLink: string;
+  defaultLink?: string;
 }
 export interface DisplayLanguage {
   language: string;
   languageLabel: string;
-  defaultLink: string;
+  defaultLink?: string;
 }
 export interface DisplayCategory {
   category: string;
@@ -173,12 +173,12 @@ export interface DisplayGroup {
   group: string;
   groupLabel: string;
   tag?: string;
-  defaultLink: string;
+  defaultLink?: string;
 }
 export interface DisplayPlatform {
   platform: string;
   platformLabel: string;
-  defaultLink: string;
+  defaultLink?: string;
 }
 export interface SlugData {
   params: {

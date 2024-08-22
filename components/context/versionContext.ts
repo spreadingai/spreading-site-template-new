@@ -3,9 +3,9 @@ import { Dispatch, SetStateAction, createContext } from "react";
 
 type VersionContentType = {
   docVersion: string;
-  slugVersion: string;
+  slugVersion?: string;
   displayVersions: DisplayVersion[];
-  versions: string[];
+  versions?: string[];
   setDocVersion?: Dispatch<SetStateAction<string>>;
   setSlugVersion?: Dispatch<SetStateAction<string>>;
   setDisplayVersions?: Dispatch<SetStateAction<DisplayVersion[]>>;

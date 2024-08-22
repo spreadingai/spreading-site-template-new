@@ -18,6 +18,7 @@ interface Props {
   renderThemeSwitch: () => any;
   renderLanguageSwitch: () => any;
   isShowSearchIcon: boolean;
+  isSearchPage: boolean;
 }
 
 const Mobile: FC<Props> = ({
@@ -25,13 +26,18 @@ const Mobile: FC<Props> = ({
   renderThemeSwitch,
   renderLanguageSwitch,
   isShowSearchIcon,
+  isSearchPage,
 }) => {
   const [open, setOpen] = useState(false);
   const { theme } = React.useContext(ThemeContext);
 
   const DropdownList = useMemo(() => {
     return (
-      <div className={styles["mobile-container"]}>
+      <div
+        className={`${styles["mobile-container"]} ${
+          isSearchPage ? styles["search-page"] : ""
+        }`}
+      >
         <div
           className={styles["mobile-mask"]}
           onClick={() => setOpen(() => false)}

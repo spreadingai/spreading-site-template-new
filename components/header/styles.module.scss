@@ -58,6 +58,7 @@
       color: var(--docuo-header-menu-link-color);
       line-height: 24px;
       margin-right: 32px;
+      transition: all 0.3s;
       &:last-child {
         margin-right: 0;
       }

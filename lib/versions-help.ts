@@ -3,7 +3,7 @@ import path from "path";
 import LibControllerImpl from "./index";
 // TODO:Here's the cross-reference
 import SlugControllerImpl from "./slug-help";
-import { DisplayVersion, Plan } from "./types";
+import { DisplayVersion, InstanceType, Plan } from "./types";
 import {
   DEFAULT_INSTANCE_ID,
   DEFAULT_CURRENT_SLUG_VERSION,
@@ -63,6 +63,17 @@ class VersionsController {
     return JSON.parse(
       JSON.stringify(this._usedVersionsMap[instanceID])
     ) as string[];
+  }
+  getAllUsedVersions() {
+    const instances = LibControllerImpl.getInstances(InstanceType.Normal);
+    instances.forEach((instance) => {
+      const usedVersions = this.getUsedVersions(instance.id);
+      this._usedVersionsMap[instance.id] = usedVersions;
+    });
+    return JSON.parse(JSON.stringify(this._usedVersionsMap)) as Record<
+      string,
+      string[]
+    >;
   }
   getActualVersions(instanceID: string) {
     const instance = LibControllerImpl.getTargetInstance(instanceID);

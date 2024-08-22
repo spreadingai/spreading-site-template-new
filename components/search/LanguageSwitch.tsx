@@ -3,22 +3,20 @@ import { Dropdown } from "antd";
 import type { MenuProps } from "antd";
 import IconLanguageNorLight from "@/assets/icons/header/icon_language_nor_light.svg";
 import IconLanguageNorDark from "@/assets/icons/header/icon_language_nor_dark.svg";
+import { DisplayLanguage } from "@/lib/types";
 import { useRouter } from "next/router";
 import useLanguage from "@/components/hooks/useLanguage";
 
-interface LanguageSwitchProps {
+export interface LanguageSwitchProps {
   className?: string;
-  handleLanguageChanged?: MenuProps["onClick"];
 }
 
 const LanguageSwitch = (props: LanguageSwitchProps) => {
   const { currentLanguage, displayLanguages } = useLanguage();
   const router = useRouter();
-  const { className = "", handleLanguageChanged } = props;
+  const { className = "" } = props;
 
-  const defaultHandleLanguageChanged: MenuProps["onClick"] = ({
-    key: language,
-  }) => {
+  const handleThemeChanged: MenuProps["onClick"] = ({ key: language }) => {
     const target = displayLanguages.find((item) => item.language === language);
     router.push({ pathname: target.defaultLink });
   };
@@ -38,7 +36,7 @@ const LanguageSwitch = (props: LanguageSwitchProps) => {
         menu={{
           items,
           className: styles.languageWrapper,
-          onClick: handleLanguageChanged || defaultHandleLanguageChanged,
+          onClick: handleThemeChanged,
         }}
         placement="bottomRight"
       >
