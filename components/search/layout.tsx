@@ -12,17 +12,24 @@ import {
   defaultLanguageLabel,
 } from "@/components/context/languageContext";
 import {
+  InstanceContext,
+  defaultInstanceID,
+  defaultInstanceLabel,
+} from "@/components/context/instanceContext";
+import {
   VersionContext,
   defaultDocVersion,
   defaultSlugVersion,
 } from "@/components/context/versionContext";
 import {
   GroupContext,
+  allGroupItem,
   defaultGroup,
   defaultGroupLabel,
 } from "@/components/context/groupContext";
 import {
   PlatformContext,
+  allPlatformItem,
   defaultPlatform,
   defaultPlatformLabel,
 } from "@/components/context/platformContext";
@@ -33,6 +40,12 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import Header from "@/components/header";
 import PageBg from "@/components/PageBg";
 import SearchMeta from "@/components/meta/SearchMeta";
+import {
+  DisplayGroup,
+  DisplayInstance,
+  DisplayPlatform,
+  DisplayVersion,
+} from "@/lib/types";
 
 type Props = {
   allUsedVersions: Record<string, string[]>;
@@ -53,6 +66,17 @@ const Layout = ({ children, allUsedVersions }: Props) => {
   );
   const [currentLanguageLabel, setCurrentLanguageLabel] = useState(
     displayLanguages[0]?.languageLabel || defaultLanguageLabel
+  );
+
+  // instances
+  const [displayInstances, setDisplayInstances] = useState(
+    LibControllerImpl.getDisplayInstances(currentLanguage)
+  );
+  const [instanceID, setInstanceID] = useState(
+    displayInstances[0]?.instance?.id || defaultInstanceID
+  );
+  const [currentInstanceLabel, setCurrentInstanceLabel] = useState(
+    displayInstances[0]?.instance?.label || defaultInstanceLabel
   );
 
   // groups
@@ -94,99 +118,22 @@ const Layout = ({ children, allUsedVersions }: Props) => {
     displayVersions[0]?.version || defaultDocVersion
   );
 
-  const setLanguage = useCallback(
-    (language: string) => {
-      const target = displayLanguages.find(
-        (item) => item.language === language
-      );
-      setCurrentLanguage(language);
-      target && setCurrentLanguageLabel(target.languageLabel);
-    },
-    [displayLanguages, setCurrentLanguage, setCurrentLanguageLabel]
-  );
-  const handleLanguageChanged = ({ key: language }) => {
-    setLanguage(language);
-
-    // update group
-    const _currentGroup = updateGroup(language);
-
-    // update platform
-    const _currentPlatform = updatePlatform(_currentGroup, language);
-
-    // update version
-    updateVersion(_currentGroup, _currentPlatform, language);
-  };
-
-  const setGroup = useCallback(
-    (group: string) => {
-      const target = displayGroups.find((item) => item.group === group);
-      setCurrentGroup(group);
-      target && setCurrentGroupLabel(target.groupLabel);
-    },
-    [displayGroups]
-  );
-  const updateGroup = useCallback(
-    (language) => {
-      const _displayGroups =
-        GroupControllerImpl.getDisplayGroups(language).displayGroups;
-      const _currentGroup = _displayGroups[0]?.group || defaultGroup;
-      setDisplayGroups(_displayGroups);
-      setGroup(_currentGroup);
-      return _currentGroup;
-    },
-    [setGroup]
-  );
-  const handleGroupChanged = ({ key: group }) => {
-    setGroup(group);
-    // update platform
-    const _currentPlatform = updatePlatform(group, currentLanguage);
-    // update version
-    updateVersion(group, _currentPlatform, currentLanguage);
-  };
-
-  const setPlatform = useCallback(
-    (platform: string) => {
-      const target = displayPlatforms.find(
-        (item) => item.platform === platform
-      );
-      setCurrentPlatform(platform);
-      target && setCurrentPlatformLabel(target.platformLabel);
-    },
-    [displayPlatforms]
-  );
-  const updatePlatform = useCallback(
-    (_currentGroup, language) => {
-      const _displayPlatforms = PlatformControllerImpl.getDisplayPlatforms(
-        _currentGroup,
-        language
-      ).displayPlatforms;
-      const temp1 = _displayPlatforms.find(
-        (displayPlaytform) => displayPlaytform.platform === currentPlatform
-      );
-      const _currentPlatform = temp1
-        ? temp1.platform
-        : _displayPlatforms[0]?.platform || defaultPlatform;
-      setDisplayPlatforms(_displayPlatforms);
-      setPlatform(_currentPlatform);
-      return _currentPlatform;
-    },
-    [currentPlatform, setPlatform]
-  );
-  const handlePlatformChanged = ({ key: platform }) => {
-    setPlatform(platform);
-    // update version
-    updateVersion(currentGroup, platform, currentLanguage);
-  };
-
+  // version
   const setVersion = useCallback(
-    (version) => {
+    (version: string, _displayVersions?: DisplayVersion[]) => {
+      console.log("[Layout]setVersion", _displayVersions, displayVersions);
       setDocVersion(version);
       setSlugVersion(version);
     },
-    [setDocVersion, setSlugVersion]
+    [setDocVersion, setSlugVersion, displayVersions]
   );
   const updateVersion = useCallback(
-    (_currentGroup, _currentPlatform, language) => {
+    (
+      _currentGroup: string,
+      _currentPlatform: string,
+      language: string,
+      targetVersion?: string
+    ) => {
       const _displayVersions = VersionsControllerImpl.getDisplayVersions(
         _currentGroup,
         _currentPlatform,
@@ -200,14 +147,203 @@ const Layout = ({ children, allUsedVersions }: Props) => {
         ? temp2.version
         : displayVersions[0]?.version || defaultDocVersion;
       setDisplayVersions(_displayVersions);
-      setVersion(_version);
+      setVersion(_version, _displayVersions);
       return _version;
     },
     [allUsedVersions, displayVersions, docVersion, setVersion]
   );
-  const handleVersionChanged = ({ key: version }) => {
-    setVersion(version);
-  };
+  const handleVersionChanged = useCallback(
+    ({ key: version }) => {
+      setVersion(version);
+    },
+    [setVersion]
+  );
+
+  // instance
+  const setInstance = useCallback(
+    (instanceID: string, _displayInstances?: DisplayInstance[]) => {
+      console.log("[Layout]setInstance", _displayInstances, displayInstances);
+      const target = (_displayInstances || displayInstances).find(
+        (item) => item.instance.id === instanceID
+      );
+      target && setInstanceID(instanceID);
+      target && setCurrentInstanceLabel(target.instance.label);
+      return target ? instanceID : "";
+    },
+    [displayInstances]
+  );
+  const updateInstance = useCallback(
+    (language: string, targetInstanceID?: string) => {
+      const _displayInstances = LibControllerImpl.getDisplayInstances(language);
+      const _instanceID =
+        _displayInstances[0]?.instance?.id || defaultInstanceID;
+      setDisplayInstances(_displayInstances);
+      setInstance(_instanceID, _displayInstances);
+      return _instanceID;
+    },
+    [setInstance]
+  );
+
+  // platform
+  const addPlatformAllItem = useCallback((displayPlatforms) => {
+    return [{ ...allPlatformItem }, ...displayPlatforms];
+  }, []);
+  const setPlatform = useCallback(
+    (platform: string, _displayPlatforms?: DisplayPlatform[]) => {
+      console.log("[Layout]setPlatform", _displayPlatforms, displayPlatforms);
+      const target = (_displayPlatforms || displayPlatforms).find(
+        (item) => item.platform === platform
+      );
+      target && setCurrentPlatform(platform);
+      target && setCurrentPlatformLabel(target.platformLabel);
+      return target ? platform : "";
+    },
+    [displayPlatforms]
+  );
+  const updatePlatform = useCallback(
+    (_currentGroup: string, language: string, targetPlatform?: string) => {
+      const _displayPlatforms = PlatformControllerImpl.getDisplayPlatforms(
+        _currentGroup,
+        language
+      ).displayPlatforms;
+      const temp1 = _displayPlatforms.find(
+        (displayPlaytform) => displayPlaytform.platform === currentPlatform
+      );
+      const _currentPlatform = temp1
+        ? temp1.platform
+        : _displayPlatforms[0]?.platform || defaultPlatform;
+      setDisplayPlatforms(_displayPlatforms);
+      setPlatform(_currentPlatform, _displayPlatforms);
+      return _currentPlatform;
+    },
+    [currentPlatform, setPlatform]
+  );
+  const handlePlatformChanged = useCallback(
+    ({ key: platform }) => {
+      // compatible with all
+      const _platform = setPlatform(platform);
+
+      if (_platform) {
+        // update instance
+        updateInstance(currentLanguage);
+
+        // update version
+        updateVersion(currentGroup, _platform, currentLanguage);
+      }
+    },
+    [currentGroup, currentLanguage, setPlatform, updateInstance, updateVersion]
+  );
+
+  // group
+  const addGroupAllItem = useCallback((displayGroups) => {
+    return [{ ...allGroupItem }, ...displayGroups];
+  }, []);
+  const setGroup = useCallback(
+    (group: string, _displayGroups?: DisplayGroup[]) => {
+      console.log("[Layout]setGroup", _displayGroups, displayGroups);
+      const target = addGroupAllItem(_displayGroups || displayGroups).find(
+        (item) => item.group === group
+      );
+      target && setCurrentGroup(group);
+      target && setCurrentGroupLabel(target.groupLabel);
+      return target ? group : "";
+    },
+    [addGroupAllItem, displayGroups]
+  );
+  const updateGroup = useCallback(
+    (language: string, targetGroup?: string) => {
+      const _displayGroups =
+        GroupControllerImpl.getDisplayGroups(language).displayGroups;
+      const _currentGroup = _displayGroups[0]?.group || defaultGroup;
+      setDisplayGroups(_displayGroups);
+      setGroup(_currentGroup, _displayGroups);
+      return _currentGroup;
+    },
+    [setGroup]
+  );
+  const handleGroupChanged = useCallback(
+    ({ key: group }) => {
+      // compatible with all
+      const _group = setGroup(group);
+
+      if (_group) {
+        // update platform
+        const _currentPlatform = updatePlatform(_group, currentLanguage);
+
+        if (_currentPlatform) {
+          // update instance
+          updateInstance(currentLanguage);
+
+          // update version
+          updateVersion(_group, _currentPlatform, currentLanguage);
+        }
+      }
+    },
+    [currentLanguage, setGroup, updateInstance, updatePlatform, updateVersion]
+  );
+
+  // language
+  const setLanguage = useCallback(
+    (language: string) => {
+      const target = displayLanguages.find(
+        (item) => item.language === language
+      );
+      target && setCurrentLanguage(language);
+      target && setCurrentLanguageLabel(target.languageLabel);
+      return target ? language : "";
+    },
+    [displayLanguages, setCurrentLanguage, setCurrentLanguageLabel]
+  );
+  const handleLanguageChanged = useCallback(
+    ({ key: language }) => {
+      const _language = setLanguage(language);
+
+      if (_language) {
+        // update instance
+        updateInstance(_language);
+
+        // update group
+        const _currentGroup = updateGroup(_language);
+
+        if (_currentGroup) {
+          // update platform
+          const _currentPlatform = updatePlatform(_currentGroup, _language);
+
+          // update version
+          _currentPlatform &&
+            updateVersion(_currentGroup, _currentPlatform, _language);
+        }
+      }
+    },
+    [setLanguage, updateGroup, updateInstance, updatePlatform, updateVersion]
+  );
+
+  const initSelect = useCallback(
+    (targetInfo) => {
+      console.log("[Layout]initSelect");
+      // if (!language) return;
+      // const _language = setLanguage(language);
+
+      // if (_language) {
+      //   // update group
+      //   const _currentGroup = updateGroup(_language, group);
+
+      //   if (_currentGroup) {
+      //     // update platform
+      //     const _currentPlatform = updatePlatform(
+      //       _currentGroup,
+      //       _language,
+      //       platform
+      //     );
+
+      //     // update version
+      //     _currentPlatform &&
+      //       updateVersion(_currentGroup, _currentPlatform, _language, version);
+      //   }
+      // }
+    },
+    [setLanguage, updateGroup, updatePlatform, updateVersion]
+  );
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
@@ -220,58 +356,70 @@ const Layout = ({ children, allUsedVersions }: Props) => {
           setCurrentLanguageLabel,
         }}
       >
-        <GroupContext.Provider
+        <InstanceContext.Provider
           value={{
-            currentGroup,
-            currentGroupLabel,
-            displayGroups,
-            setCurrentGroup,
-            setCurrentGroupLabel,
-            setDisplayGroups,
+            instanceID,
+            currentInstanceLabel,
+            displayInstances,
+            setDisplayInstances,
+            setInstanceID,
+            setCurrentInstanceLabel,
           }}
         >
-          <PlatformContext.Provider
+          <GroupContext.Provider
             value={{
-              currentPlatform,
-              currentPlatformLabel,
-              displayPlatforms,
-              setCurrentPlatform,
-              setCurrentPlatformLabel,
-              setDisplayPlatforms,
+              currentGroup,
+              currentGroupLabel,
+              displayGroups,
+              setCurrentGroup,
+              setCurrentGroupLabel,
+              setDisplayGroups,
             }}
           >
-            <VersionContext.Provider
+            <PlatformContext.Provider
               value={{
-                docVersion,
-                slugVersion,
-                displayVersions,
-                setSlugVersion,
-                setDocVersion,
-                setDisplayVersions,
+                currentPlatform,
+                currentPlatformLabel,
+                displayPlatforms,
+                setCurrentPlatform,
+                setCurrentPlatformLabel,
+                setDisplayPlatforms,
               }}
             >
-              <SetContext.Provider
+              <VersionContext.Provider
                 value={{
-                  handleLanguageChanged,
-                  handleGroupChanged,
-                  handlePlatformChanged,
-                  handleVersionChanged,
+                  docVersion,
+                  slugVersion,
+                  displayVersions,
+                  setSlugVersion,
+                  setDocVersion,
+                  setDisplayVersions,
                 }}
               >
-                <div className="search-screen relative">
-                  {!!gaId && <GoogleAnalytics gaId={gaId} />}
-                  <SearchMeta />
-                  <Header
-                    docuoConfig={docuoConfig}
-                    isSearchPage={true}
-                  ></Header>
-                  <PageBg />
-                  <main className="search-main">{children}</main>
-                </div>
-              </SetContext.Provider>
-            </VersionContext.Provider>
-          </PlatformContext.Provider>
-        </GroupContext.Provider>
+                <SetContext.Provider
+                  value={{
+                    handleLanguageChanged,
+                    handleGroupChanged,
+                    handlePlatformChanged,
+                    handleVersionChanged,
+                    initSelect,
+                  }}
+                >
+                  <div className="search-screen relative">
+                    {!!gaId && <GoogleAnalytics gaId={gaId} />}
+                    <SearchMeta />
+                    <Header
+                      docuoConfig={docuoConfig}
+                      isSearchPage={true}
+                    ></Header>
+                    <PageBg />
+                    <main className="search-main">{children}</main>
+                  </div>
+                </SetContext.Provider>
+              </VersionContext.Provider>
+            </PlatformContext.Provider>
+          </GroupContext.Provider>
+        </InstanceContext.Provider>
       </LanguageContext.Provider>
     </ThemeContext.Provider>
   );

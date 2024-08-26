@@ -266,6 +266,7 @@ function PageHead(props: Props) {
   const twitterSite = frontmatter["twitter:site"] || "";
   const ogImageWidth = frontmatter["og:image:width"] || "";
   const ogImageHeight = frontmatter["og:image:height"] || "";
+  const searchDocType = frontmatter["docType"] || "";
   return (
     <Head>
       <title>{title}</title>
@@ -298,6 +299,9 @@ function PageHead(props: Props) {
       ) : null}
       {ogImageHeight ? (
         <meta property="og:image:height" content={ogImageHeight}></meta>
+      ) : null}
+      {searchDocType ? (
+        <meta name="docsearch:doctype" content={searchDocType} />
       ) : null}
       <link
         rel="canonical"

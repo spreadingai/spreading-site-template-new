@@ -19,6 +19,7 @@ import "@/styles/openapi/request.cover.scss";
 import "@/styles/openapi/badge.cover.scss";
 import "@/styles/openapi/schema.cover.scss";
 import "@/styles/remark.directive.scss";
+import "@/styles/docsearch.cover.scss";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
   // Use the layout defined at the page level, if available

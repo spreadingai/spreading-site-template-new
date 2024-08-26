@@ -17,8 +17,10 @@ const SearchMeta = () => {
       <meta name="docsearch:version" content={docVersion} />
       {/* The previous versions of navigationInfo */}
       {/* <meta name="docsearch:instance" content={instanceID} /> */}
+      {/* The later versions of navigationInfo */}
       <meta name="docsearch:group" content={currentGroupLabel} />
       <meta name="docsearch:language" content={currentLanguageLabel} />
+      {/* The later versions of navigationInfo */}
       <meta name="docsearch:platform" content={currentPlatformLabel} />
     </Head>
   );

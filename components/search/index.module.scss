@@ -1,0 +1,57 @@
+.searchCriteria {
+    position: fixed;
+    background: var(--docuo-background-primary);
+    z-index: 1;
+    width: 100%;
+}
+.searchBoxWrap {
+    display: flex;
+    padding: 20px;
+    .searchInput {
+        margin-right: 20px;
+    }
+}
+.searchSelectWrap {
+    display: flex;
+    padding: 0 20px;
+    flex-direction: column;
+}
+.platformAndVersionWrap {
+    display: flex;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.platformList {
+    display: flex;
+    .platformItem {
+        border: 1px solid var(--docuo-m-drawer-close-color);
+        color: var(--docuo-color-primary);
+        margin-right: 30px;
+        border-radius: 20px;
+        padding: 5px 10px;
+        &.active {
+            border-color: var(--docuo-color-primary-active);
+            color: var(--docuo-color-primary-active);
+        }
+    }
+}
+.hitWrap {
+    padding-top: 128px;
+    padding-bottom: 71px;
+}
+.paginationWrap {
+    background: var(--docuo-background-primary);
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    z-index: 1;
+    bottom: -1px;
+    width: 100%;
+}
+// Cover
+.DocSearch-Hits {
+    &:last-of-type {
+        margin-bottom: 0;
+    }
+}

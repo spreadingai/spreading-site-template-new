@@ -10,12 +10,12 @@ type InstanceContentType = {
   setDisplayInstances?: Dispatch<SetStateAction<DisplayInstance[]>>;
 };
 
-export const defaultInstance: string = "";
+export const defaultInstanceID: string = "";
 export const defaultInstanceLabel: string = "";
 export const defaultDisplayInstances: [] = [];
 
 export const InstanceContext = createContext<InstanceContentType>({
-  instanceID: defaultInstance,
+  instanceID: defaultInstanceID,
   currentInstanceLabel: defaultInstanceLabel,
   displayInstances: defaultDisplayInstances,
   setInstanceID: (instanceID) => instanceID,

@@ -15,7 +15,7 @@ import ThemeContext from "@/components/header/Theme.context";
 import LanguageSwitch from "./LanguageSwitch";
 import { copywriting } from "@/components/constant/language";
 import useLanguage from "@/components/hooks/useLanguage";
-// import useInstance from "@/components/hooks/useInstance";
+import useInstance from "@/components/hooks/useInstance";
 import useGroup from "@/components/hooks/useGroup";
 import useVersion from "@/components/hooks/useVersion";
 import usePlatform from "@/components/hooks/usePlatform";
@@ -34,7 +34,7 @@ const Header = (props: Props) => {
   const { handleLanguageChanged } = useSet();
   const { currentLanguage, currentLanguageLabel, displayLanguages } =
     useLanguage();
-  // const { instanceID } = useInstance();
+  const { instanceID } = useInstance();
   const { currentGroupLabel } = useGroup();
   const { docVersion } = useVersion();
   const { currentPlatformLabel } = usePlatform();
@@ -93,10 +93,10 @@ const Header = (props: Props) => {
           searchParameters={{
             facetFilters: [
               `version:${docVersion}`,
-              // `instance:${instanceID}`, // The previous versions of navigationInfo
-              `group:${currentGroupLabel}`,
+              `instance:${instanceID}`, // The previous versions of navigationInfo
+              // `group:${currentGroupLabel}`, // The later versions of navigationInfo
               `language:${currentLanguageLabel}`,
-              `platform:${currentPlatformLabel}`,
+              // `platform:${currentPlatformLabel}`, // The later versions of navigationInfo
             ],
           }}
           maxResultsPerGroup={500}

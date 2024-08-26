@@ -10,8 +10,12 @@ type GroupContentType = {
   setDisplayGroups?: Dispatch<SetStateAction<DisplayGroup[]>>;
 };
 
-export const defaultGroup: string = "";
-export const defaultGroupLabel: string = "";
+export const allGroupItem = {
+  group: "all",
+  groupLabel: "All",
+};
+export const defaultGroup: string = allGroupItem.group;
+export const defaultGroupLabel: string = allGroupItem.groupLabel;
 export const defaultDisplayGroups: [] = [];
 
 export const GroupContext = createContext<GroupContentType>({

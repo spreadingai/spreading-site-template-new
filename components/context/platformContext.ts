@@ -10,8 +10,12 @@ type PlatformContentType = {
   setDisplayPlatforms?: Dispatch<SetStateAction<DisplayPlatform[]>>;
 };
 
-export const defaultPlatform: string = "";
-export const defaultPlatformLabel: string = "";
+export const allPlatformItem = {
+  platform: "all",
+  platformLabel: "All",
+};
+export const defaultPlatform: string = allPlatformItem.platform;
+export const defaultPlatformLabel: string = allPlatformItem.platformLabel;
 export const defaultDisplayPlatforms: [] = [];
 
 export const PlatformContext = createContext<PlatformContentType>({

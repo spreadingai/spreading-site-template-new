@@ -1,0 +1,23 @@
+#search-page {
+    .DocSearch-Hits {
+        &:last-of-type {
+            margin-bottom: 0;
+        }
+        .DocSearch-Hit {
+            a {
+                background: none;
+            }
+        }
+    }
+    .ais-Hits-item {
+        padding: 0;
+    }
+    .ant-tabs {
+        & > .ant-tabs-nav {
+            margin-bottom: 0;
+        }
+        .ant-tabs-content-holder {
+            display: none !important;
+        }
+    }
+}
