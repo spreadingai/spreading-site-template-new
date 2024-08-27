@@ -236,7 +236,7 @@ export default function SearchPage(props) {
   const router = useRouter();
   const [searchKey, setSearchKey] = useState("");
   const { currentLanguageLabel } = useLanguage();
-  const { instanceID } = useInstance();
+  const { instanceIDs } = useInstance();
   // const { currentGroupLabel } = useGroup();
   // const { currentPlatformLabel } = usePlatform();
   const { docVersion, slugVersion } = useVersion();
@@ -246,7 +246,9 @@ export default function SearchPage(props) {
 
   const [facetFilters, setFacetFilters] = useState([
     `version:${docVersion}`,
-    `instance:${instanceID}`, // The previous versions of navigationInfo
+    instanceIDs.map((instanceID) => {
+      return `instance:${instanceID}`;
+    }), // The previous versions of navigationInfo
     // `group:${currentGroupLabel}`, // The later versions of navigationInfo
     `language:${currentLanguageLabel}`,
     // `platform:${currentPlatformLabel}`, // The later versions of navigationInfo
@@ -254,8 +256,11 @@ export default function SearchPage(props) {
   ]);
 
   useEffect(() => {
+    console.log("[SearchPage] instanceIDs", instanceIDs);
     const versionFilter = `version:${docVersion}`;
-    const instanceFilter = `instance:${instanceID}`;
+    const instanceFilter = instanceIDs.map((instanceID) => {
+      return `instance:${instanceID}`;
+    });
     // const groupFilter = `group:${currentGroupLabel}`;
     const languageFilter = `language:${currentLanguageLabel}`;
     // const platformFilter = `platform:${currentPlatformLabel}`;
@@ -270,7 +275,7 @@ export default function SearchPage(props) {
     ]);
   }, [
     docVersion,
-    instanceID,
+    instanceIDs,
     // currentGroupLabel,
     currentLanguageLabel,
     // currentPlatformLabel,

@@ -302,7 +302,10 @@ const PreviewLayout = ({
       return {
         title: item.title,
         className:
-          `breadcrumb-label` + (index === len - 2 ? " doc-search-lvl0" : ""),
+          `breadcrumb-label` +
+          (index === len - 2
+            ? " doc-search-lvl0"
+            : ` doc-search-lvl${index + 1}`),
       };
     });
   };
@@ -430,8 +433,8 @@ const PreviewLayout = ({
       >
         <InstanceContext.Provider
           value={{
-            instanceID,
-            currentInstanceLabel,
+            instanceIDs: [instanceID],
+            currentInstanceLabels: [currentInstanceLabel],
             displayInstances,
           }}
         >

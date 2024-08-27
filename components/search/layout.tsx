@@ -13,8 +13,8 @@ import {
 } from "@/components/context/languageContext";
 import {
   InstanceContext,
-  defaultInstanceID,
-  defaultInstanceLabel,
+  defaultInstanceIDs,
+  defaultInstanceLabels,
 } from "@/components/context/instanceContext";
 import {
   VersionContext,
@@ -73,11 +73,12 @@ const Layout = ({ children, allUsedVersions }: Props) => {
   const _displayInstances =
     LibControllerImpl.getDisplayInstances(currentLanguage);
   const [displayInstances, setDisplayInstances] = useState(_displayInstances);
-  const [instanceID, setInstanceID] = useState(
-    _displayInstances[0]?.instance?.id || defaultInstanceID
+  const [instanceIDs, setInstanceIDs] = useState(
+    _displayInstances.map((item) => item.instance.id) || defaultInstanceIDs
   );
-  const [currentInstanceLabel, setCurrentInstanceLabel] = useState(
-    _displayInstances[0]?.instance?.label || defaultInstanceLabel
+  const [currentInstanceLabels, setCurrentInstanceLabels] = useState(
+    _displayInstances.map((item) => item.instance.label) ||
+      defaultInstanceLabels
   );
 
   // groups
@@ -164,28 +165,38 @@ const Layout = ({ children, allUsedVersions }: Props) => {
 
   // instance
   const setInstance = useCallback(
-    (instanceID: string, _displayInstances?: DisplayInstance[]) => {
+    (instanceIDs: string[], _displayInstances?: DisplayInstance[]) => {
       console.log("[Layout]setInstance", _displayInstances, displayInstances);
-      const target = LibControllerImpl.getDisplayInstance(
-        instanceID,
-        _displayInstances || displayInstances
-      );
-      target && setInstanceID(instanceID);
-      target && setCurrentInstanceLabel(target.instance.label);
-      return target ? instanceID : "";
+      const result1 = [];
+      const result2 = [];
+      instanceIDs.forEach((instanceID) => {
+        const target = LibControllerImpl.getDisplayInstance(
+          instanceID,
+          _displayInstances || displayInstances
+        );
+        if (target) {
+          result1.push(instanceID);
+          result2.push(target.instance.label);
+        }
+      });
+      if (result2.length) {
+        setInstanceIDs(result1);
+        setCurrentInstanceLabels(result2);
+      }
+      return result1;
     },
     [displayInstances]
   );
   const updateInstance = useCallback(
     (language: string, targetInstanceIDs?: string[]) => {
       const _displayInstances = LibControllerImpl.getDisplayInstances(language);
-      const _instanceID =
-        (targetInstanceIDs && targetInstanceIDs[0]) ||
-        _displayInstances[0]?.instance?.id ||
-        defaultInstanceID;
+      const _instanceIDs =
+        targetInstanceIDs ||
+        _displayInstances.map((item) => item.instance.id).slice(0, 1) ||
+        defaultInstanceIDs;
       setDisplayInstances(_displayInstances);
-      setInstance(_instanceID, _displayInstances);
-      return _instanceID;
+      setInstance(_instanceIDs, _displayInstances);
+      return _instanceIDs;
     },
     [setInstance]
   );
@@ -316,7 +327,12 @@ const Layout = ({ children, allUsedVersions }: Props) => {
 
       if (_language) {
         // update instance
-        updateInstance(_language);
+        const targetInstanceIDs = VersionsControllerImpl.getInstanceIDs(
+          language,
+          currentGroup,
+          currentPlatform
+        );
+        updateInstance(_language, targetInstanceIDs);
 
         // update group
         const _currentGroup = updateGroup(_language);
@@ -331,7 +347,15 @@ const Layout = ({ children, allUsedVersions }: Props) => {
         }
       }
     },
-    [setLanguage, updateGroup, updateInstance, updatePlatform, updateVersion]
+    [
+      currentGroup,
+      currentPlatform,
+      setLanguage,
+      updateGroup,
+      updateInstance,
+      updatePlatform,
+      updateVersion,
+    ]
   );
 
   const initSelect = useCallback(
@@ -389,12 +413,12 @@ const Layout = ({ children, allUsedVersions }: Props) => {
       >
         <InstanceContext.Provider
           value={{
-            instanceID,
-            currentInstanceLabel,
+            instanceIDs,
+            currentInstanceLabels,
             displayInstances,
             setDisplayInstances,
-            setInstanceID,
-            setCurrentInstanceLabel,
+            setInstanceIDs,
+            setCurrentInstanceLabels,
           }}
         >
           <GroupContext.Provider

@@ -34,7 +34,7 @@ const Header = (props: Props) => {
   const { handleLanguageChanged } = useSet();
   const { currentLanguage, currentLanguageLabel, displayLanguages } =
     useLanguage();
-  const { instanceID } = useInstance();
+  const { instanceIDs } = useInstance();
   const { currentGroupLabel } = useGroup();
   const { docVersion } = useVersion();
   const { currentPlatformLabel } = usePlatform();
@@ -93,7 +93,7 @@ const Header = (props: Props) => {
           searchParameters={{
             facetFilters: [
               `version:${docVersion}`,
-              `instance:${instanceID}`, // The previous versions of navigationInfo
+              `instance:${instanceIDs[0]}`, // The previous versions of navigationInfo
               // `group:${currentGroupLabel}`, // The later versions of navigationInfo
               `language:${currentLanguageLabel}`,
               // `platform:${currentPlatformLabel}`, // The later versions of navigationInfo
@@ -107,11 +107,11 @@ const Header = (props: Props) => {
     algolia,
     searchHidden,
     docVersion,
-    // instanceID,
-    currentGroupLabel,
+    instanceIDs,
+    // currentGroupLabel,
     currentLanguage,
     currentLanguageLabel,
-    currentPlatformLabel,
+    // currentPlatformLabel,
   ]);
 
   const isShowThemeBtn =

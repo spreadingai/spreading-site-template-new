@@ -22,7 +22,6 @@ class VersionsController {
     currentLanguage: string,
     allUsedVersions: Record<string, string[]>
   ) {
-    debugger;
     // Compatible with all
     const result: DisplayVersion[] = [];
     // Get the instanceID from currentGroup and currentPlatform

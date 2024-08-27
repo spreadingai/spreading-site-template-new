@@ -33,6 +33,17 @@ export function Result({ item, renderIcon, renderAction, hitComponent }) {
                   attribute="content"
                 />
               )}
+              {!item.content && (
+                <span className="DocSearch-Hit-path">
+                  {item.hierarchy.lvl0}
+                  {item.hierarchy.lvl1 ? " > " + item.hierarchy.lvl1 : ""}
+                  {item.hierarchy.lvl2 ? " > " + item.hierarchy.lvl2 : ""}
+                  {item.hierarchy.lvl3 ? " > " + item.hierarchy.lvl3 : ""}
+                  {item.hierarchy.lvl4 ? " > " + item.hierarchy.lvl4 : ""}
+                  {item.hierarchy.lvl5 ? " > " + item.hierarchy.lvl5 : ""}
+                  {item.hierarchy.lvl6 ? " > " + item.hierarchy.lvl6 : ""}
+                </span>
+              )}
             </div>
           )}
 
