@@ -15,6 +15,7 @@ import {
   Configure,
   useSearchBox,
   useInstantSearch,
+  PoweredBy,
 } from "react-instantsearch";
 import CustomHit from "@/components/search/CustomHit";
 import Layout from "@/components/search/layout";
@@ -92,6 +93,7 @@ const SearchSelectWrap = (props: SearchSelectProps) => {
     return (
       <div className={styles.docTypeList}>
         <Tabs
+          rootClassName="doc-type-tab"
           defaultActiveKey={currentDocType}
           items={docTypesItems}
           onChange={(activeKey: string) => {
@@ -117,14 +119,11 @@ const SearchSelectWrap = (props: SearchSelectProps) => {
                 platformsItem.value === currentPlatform ? styles.active : ""
               }`}
               key={platformsItem.value}
+              onClick={() => {
+                handlePlatformChanged({ key: platformsItem.value });
+              }}
             >
-              <button
-                onClick={() => {
-                  handlePlatformChanged({ key: platformsItem.value });
-                }}
-              >
-                {platformsItem.label}
-              </button>
+              {platformsItem.label}
             </div>
           );
         })}
@@ -140,9 +139,10 @@ const SearchSelectWrap = (props: SearchSelectProps) => {
     }));
     return (
       <Select
+        className="version-select"
+        popupClassName="version-select-popup"
         defaultValue={docVersion}
         value={docVersion}
-        style={{ width: 100 }}
         onChange={(value) => {
           handleVersionChanged({ key: value });
         }}
@@ -199,10 +199,10 @@ const SearchBoxWrap = (props) => {
     }));
     return (
       <Select
-        className={styles.groupSelect}
+        className="group-select"
+        popupClassName="group-select-popup"
         defaultValue={currentGroup}
         value={currentGroup}
-        style={{ width: 300 }}
         onChange={(value) => {
           handleGroupChanged({ key: value });
         }}
@@ -335,6 +335,9 @@ export default function SearchPage(props) {
             ]}
             facetFilters={facetFilters}
           />
+          <div className={styles.poweredByWrap}>
+            <PoweredBy />
+          </div>
           <div className={styles.searchCriteria}>
             {/* <SearchBox /> */}
             <SearchBoxWrap searchKey={searchKey} />

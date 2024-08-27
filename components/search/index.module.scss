@@ -1,34 +1,51 @@
+.poweredByWrap {
+    position: fixed;
+    width: 100%;
+    max-width: 1440px;
+    padding: 16px 32px 8px;
+    background: var(--docuo-background-primary);
+    z-index: 1;
+}
 .searchCriteria {
     position: fixed;
+    max-width: 1440px;
     background: var(--docuo-background-primary);
     z-index: 1;
     width: 100%;
+    top: 131px;
 }
 .searchBoxWrap {
     display: flex;
-    padding: 20px;
+    padding: 8px 32px 0;
     .searchInput {
         margin-right: 20px;
     }
 }
 .searchSelectWrap {
     display: flex;
-    padding: 0 20px;
+    padding: 0 32px;
     flex-direction: column;
 }
 .platformAndVersionWrap {
     display: flex;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    flex-wrap: wrap;
 }
 .platformList {
     display: flex;
     .platformItem {
-        border: 1px solid var(--docuo-m-drawer-close-color);
+        margin-top: 16px;
+        margin-bottom: 20px;
+        cursor: pointer;
+        border: var(--docsearch-searchbox-border);
         color: var(--docuo-color-primary);
-        margin-right: 30px;
+        margin-right: 20px;
         border-radius: 20px;
-        padding: 5px 10px;
+        padding: 5px 20px;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 30px;
         &.active {
             border-color: var(--docuo-color-primary-active);
             color: var(--docuo-color-primary-active);
@@ -36,8 +53,7 @@
     }
 }
 .hitWrap {
-    padding-top: 128px;
-    padding-bottom: 71px;
+    padding: 203px 32px 71px;
 }
 .paginationWrap {
     background: var(--docuo-background-primary);
@@ -48,10 +64,5 @@
     z-index: 1;
     bottom: -1px;
     width: 100%;
-}
-// Cover
-.DocSearch-Hits {
-    &:last-of-type {
-        margin-bottom: 0;
-    }
+    max-width: 1440px;
 }

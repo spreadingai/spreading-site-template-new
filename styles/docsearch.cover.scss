@@ -1,4 +1,11 @@
 #search-page {
+    .ais-PoweredBy {
+        .ais-PoweredBy-link {
+            path:first-of-type {
+                fill: var(--docsearch-searchbox-color);
+            }
+        }
+    }
     .DocSearch-Hits {
         &:last-of-type {
             margin-bottom: 0;
@@ -9,8 +16,20 @@
             }
         }
     }
+    .DocSearch-Hit-title {
+        color: var(--docuo-color-primary);
+    }
+    .DocSearch-Hit-path {
+        color: var(--docuo-breadcrumb-color);
+    }
+    .DocSearch-Hit-icon {
+        color: var(--docuo-breadcrumb-color);
+    }
     .ais-Hits-item {
         padding: 0;
+        box-shadow: none;
+        border-bottom: var(--docsearch-searchbox-border);
+        background: var(--docuo-background-primary);
     }
     .ant-tabs {
         & > .ant-tabs-nav {
@@ -18,6 +37,111 @@
         }
         .ant-tabs-content-holder {
             display: none !important;
+        }
+    }
+    .ant-input-affix-wrapper {
+        color: var(--docsearch-muted-color);
+        border: var(--docsearch-searchbox-border);
+        background-color: var(--docsearch-searchbox-background);
+        border-radius: 6px;
+        box-shadow: unset;
+        outline: none;
+        height: 36px;
+        padding: 0 11px;
+        &:active,
+        &:focus,
+        &:hover {
+            color: unset;
+            background: var(--docsearch-searchbox-background-hover);
+            border: var(--docsearch-searchbox-border-hover);
+        }
+        & > input.ant-input {
+            &::placeholder {
+                color: var(--docsearch-searchbox-color);
+            }
+        }
+    }
+    .ant-select {
+        &.group-select,
+        &.version-select {
+            font-family: Inter-Medium;
+            font-weight: 500;
+            color: var(--docuo-color-primary);
+            .ant-select-selector {
+                box-shadow: unset;
+                outline: none;
+                background: var(--docuo-dropdown-label-bg);
+                border-radius: 6px;
+                border: var(--docuo-dropdown-label-border);
+                .ant-select-selection-item {
+                    color: var(--docuo-color-primary);
+                }
+            }
+            .ant-select-arrow {
+                transition: transform 0.3s;
+                color: var(--docuo-dropdown-icon-color);
+            }
+            &.ant-select-open {
+                .ant-select-arrow {
+                    transform: rotate(-180deg);
+                }
+            }
+        }
+        &.group-select {
+            height: 36px;
+            min-width: 240px;
+        }
+        &.version-select {
+            height: 30px;
+            min-width: 100px;
+            margin-top: 16px;
+            margin-bottom: 20px;
+        }
+    }
+    .doc-type-tab {
+        &.ant-tabs {
+            .ant-tabs-tab {
+                color: var(--docuo-color-primary);
+                padding: 14px 0;
+                & + .ant-tabs-tab {
+                    margin-left: 20px;
+                }
+                &.ant-tabs-tab-active .ant-tabs-tab-btn {
+                    color: var(--docuo-color-primary-active);
+                }
+                &:hover {
+                    color: var(--docuo-color-primary-active);
+                }
+            }
+            &.ant-tabs-top > .ant-tabs-nav::before {
+                border-bottom: var(--docsearch-searchbox-border);
+            }
+        }
+    }
+}
+.ant-select-dropdown {
+    &.group-select-popup,
+    &.version-select-popup {
+        padding: 8px;
+        box-shadow: 0px 1px 12px 0px rgba(0, 0, 0, 0.05);
+        border-radius: 6px;
+        border: var(--docuo-popup-border);
+        background: var(--docuo-popup-bg);
+        .ant-select-item {
+            height: 40px;
+            padding: 6px 8px;
+            font-size: 14px;
+            font-family: Inter-Medium;
+            font-weight: 500;
+            color: var(--docuo-popup-color);
+            border-radius: 4px;
+        }
+        .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
+            color: var(--docuo-color-primary-active);
+            background: none;
+        }
+        .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+            background: var(--docuo-popup-bg-hover);
         }
     }
 }

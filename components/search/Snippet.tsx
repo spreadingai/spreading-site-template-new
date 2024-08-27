@@ -30,15 +30,13 @@ export function Snippet<TItem extends StoredDocSearchHit>({
       __html:
         attribute === "hierarchy.lvl1" &&
         rest.className === "DocSearch-Hit-path"
-          ? hit.type !== "content"
-            ? hit.hierarchy.lvl0
-            : hit.hierarchy.lvl0 +
-              (hit.hierarchy.lvl1 ? " > " + hit.hierarchy.lvl1 : "") +
-              (hit.hierarchy.lvl2 ? " > " + hit.hierarchy.lvl2 : "") +
-              (hit.hierarchy.lvl3 ? " > " + hit.hierarchy.lvl3 : "") +
-              (hit.hierarchy.lvl4 ? " > " + hit.hierarchy.lvl4 : "") +
-              (hit.hierarchy.lvl5 ? " > " + hit.hierarchy.lvl5 : "") +
-              (hit.hierarchy.lvl6 ? " > " + hit.hierarchy.lvl6 : "")
+          ? hit.hierarchy.lvl0 +
+            (hit.hierarchy.lvl1 ? " > " + hit.hierarchy.lvl1 : "") +
+            (hit.hierarchy.lvl2 ? " > " + hit.hierarchy.lvl2 : "") +
+            (hit.hierarchy.lvl3 ? " > " + hit.hierarchy.lvl3 : "") +
+            (hit.hierarchy.lvl4 ? " > " + hit.hierarchy.lvl4 : "") +
+            (hit.hierarchy.lvl5 ? " > " + hit.hierarchy.lvl5 : "") +
+            (hit.hierarchy.lvl6 ? " > " + hit.hierarchy.lvl6 : "")
           : "" +
             (getPropertyByPath(hit, `_snippetResult.${attribute}.value`) ||
               getPropertyByPath(hit, attribute)),
