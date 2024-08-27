@@ -252,7 +252,7 @@ export default function SearchPage(props) {
     // `group:${currentGroupLabel}`, // The later versions of navigationInfo
     `language:${currentLanguageLabel}`,
     // `platform:${currentPlatformLabel}`, // The later versions of navigationInfo
-    // `doctype:${currentDocTypeLabel}`, // The later versions of navigationInfo
+    currentDocTypeLabel === "All" ? `` : `doctype:${currentDocTypeLabel}`, // The later versions of navigationInfo
   ]);
 
   useEffect(() => {
@@ -264,14 +264,15 @@ export default function SearchPage(props) {
     // const groupFilter = `group:${currentGroupLabel}`;
     const languageFilter = `language:${currentLanguageLabel}`;
     // const platformFilter = `platform:${currentPlatformLabel}`;
-    // const doctypeFilter = `doctype:${currentDocTypeLabel}`;
+    const doctypeFilter =
+      currentDocTypeLabel === "All" ? `` : `doctype:${currentDocTypeLabel}`;
     setFacetFilters([
       versionFilter,
       instanceFilter,
       // groupFilter,
       languageFilter,
       // platformFilter,
-      // doctypeFilter,
+      doctypeFilter,
     ]);
   }, [
     docVersion,
@@ -279,7 +280,7 @@ export default function SearchPage(props) {
     // currentGroupLabel,
     currentLanguageLabel,
     // currentPlatformLabel,
-    // currentDocTypeLabel,
+    currentDocTypeLabel,
   ]);
   useEffect(() => {
     // type

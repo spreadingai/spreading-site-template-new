@@ -31,6 +31,19 @@
         border-bottom: var(--docsearch-searchbox-border);
         background: var(--docuo-background-primary);
     }
+    .ais-Pagination-link {
+        color: var(--docuo-color-primary);
+        border: var(--docsearch-searchbox-border);
+        box-shadow: none;
+        background: none;
+    }
+    .ais-Pagination-item--selected .ais-Pagination-link {
+        color: var(--docuo-color-primary-active);
+    }
+    .ais-Pagination-item--disabled .ais-Pagination-link {
+        cursor: not-allowed;
+        color: var(--docsearch-searchbox-color);
+    }
     .ant-tabs {
         & > .ant-tabs-nav {
             margin-bottom: 0;
@@ -40,7 +53,7 @@
         }
     }
     .ant-input-affix-wrapper {
-        color: var(--docsearch-muted-color);
+        color: var(--docuo-color-primary);
         border: var(--docsearch-searchbox-border);
         background-color: var(--docsearch-searchbox-background);
         border-radius: 6px;
@@ -94,7 +107,6 @@
         &.version-select {
             height: 30px;
             min-width: 100px;
-            margin-top: 16px;
             margin-bottom: 20px;
         }
     }

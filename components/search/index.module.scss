@@ -12,7 +12,7 @@
     background: var(--docuo-background-primary);
     z-index: 1;
     width: 100%;
-    top: 131px;
+    top: 111px;
 }
 .searchBoxWrap {
     display: flex;
@@ -29,11 +29,12 @@
 .platformAndVersionWrap {
     display: flex;
     flex-wrap: wrap;
+    padding-top: 20px;
 }
 .platformList {
     display: flex;
+    flex-wrap: wrap;
     .platformItem {
-        margin-top: 16px;
         margin-bottom: 20px;
         cursor: pointer;
         border: var(--docsearch-searchbox-border);
@@ -45,7 +46,7 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        height: 30px;
+        min-height: 30px;
         &.active {
             border-color: var(--docuo-color-primary-active);
             color: var(--docuo-color-primary-active);
@@ -53,7 +54,7 @@
     }
 }
 .hitWrap {
-    padding: 203px 32px 71px;
+    padding: 209px 32px 71px;
 }
 .paginationWrap {
     background: var(--docuo-background-primary);
@@ -65,4 +66,12 @@
     bottom: -1px;
     width: 100%;
     max-width: 1440px;
+}
+@media screen and (max-width: 1024px) {
+    .searchCriteria {
+        top: 131px;
+    }
+    .hitWrap {
+        padding-top: 209px;
+    }
 }
