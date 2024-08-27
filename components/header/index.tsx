@@ -189,12 +189,11 @@ const Header = (props: Props) => {
                 {decodeURI(navbar.title)}
               </span>
             </Link>
-            {DocSearchComponent}
+            {!isSearchPage ? DocSearchComponent : null}
           </div>
         ) : null}
         {isMobile ? (
           <div className={styles["menus"]}>
-            {/* {DocSearchComponent} */}
             <Mobile
               // @ts-ignore
               menus={(items || []).map((item) => {
@@ -204,7 +203,7 @@ const Header = (props: Props) => {
               })}
               renderThemeSwitch={renderThemeSwitch}
               renderLanguageSwitch={renderLanguageSwitch}
-              isShowSearchIcon={!!algolia && !searchHidden}
+              isShowSearchIcon={!!algolia && !searchHidden && !isSearchPage}
               isSearchPage={isSearchPage}
             />
           </div>

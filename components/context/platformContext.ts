@@ -14,6 +14,11 @@ export const allPlatformItem = {
   platform: "all",
   platformLabel: "All",
 };
+export const addPlatformAllItem = (displayPlatforms) => {
+  return displayPlatforms && displayPlatforms.length > 0
+    ? [{ ...allPlatformItem }, ...displayPlatforms]
+    : [];
+};
 export const defaultPlatform: string = allPlatformItem.platform;
 export const defaultPlatformLabel: string = allPlatformItem.platformLabel;
 export const defaultDisplayPlatforms: [] = [];

@@ -31,6 +31,10 @@ class LanguageController {
     }
     return result;
   }
+  getDisplayLanguage(language: string, displayLanguages: DisplayLanguage[]) {
+    const target = displayLanguages.find((item) => item.language === language);
+    return target;
+  }
 }
 
 export default LanguageController.getInstance();

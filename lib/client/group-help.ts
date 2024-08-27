@@ -44,6 +44,10 @@ class GroupController {
     });
     return result;
   }
+  getDisplayGroup(group: string, displayGroups: DisplayGroup[]) {
+    const target = displayGroups.find((item) => item.group === group);
+    return target;
+  }
 }
 
 export default GroupController.getInstance();

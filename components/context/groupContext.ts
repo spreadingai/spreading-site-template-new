@@ -14,6 +14,11 @@ export const allGroupItem = {
   group: "all",
   groupLabel: "All",
 };
+export const addGroupAllItem = (displayGroups) => {
+  return displayGroups && displayGroups.length > 0
+    ? [{ ...allGroupItem }, ...displayGroups]
+    : [];
+};
 export const defaultGroup: string = allGroupItem.group;
 export const defaultGroupLabel: string = allGroupItem.groupLabel;
 export const defaultDisplayGroups: [] = [];

@@ -118,6 +118,12 @@ class LibController {
     });
     return result;
   }
+  getDisplayInstance(instanceID: string, displayInstances: DisplayInstance[]) {
+    const target = displayInstances.find(
+      (item) => item.instance.id === instanceID
+    );
+    return target;
+  }
 }
 
 export default LibController.getInstance();

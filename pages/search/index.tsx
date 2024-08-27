@@ -35,11 +35,8 @@ import {
   defaultDocType,
   defaultDocTypeLabel,
   DocTypeContext,
-  allDocTypeItem,
 } from "@/components/context/docTypeContext";
 import { copywriting } from "@/components/constant/language";
-import { allPlatformItem } from "@/components/context/platformContext";
-import { allGroupItem } from "@/components/context/groupContext";
 
 const searchClient = algoliasearch(
   "N61JOMLMAK",
@@ -53,9 +50,7 @@ interface TargetInfo {
   platform?: string;
   version?: string;
 }
-interface SearchSelectProps {
-  targetInfo: null | TargetInfo;
-}
+interface SearchSelectProps {}
 
 export const getStaticProps = (props) => {
   const allUsedVersions = VersionsControllerImpl.getAllUsedVersions();
@@ -67,8 +62,7 @@ export const getStaticProps = (props) => {
 };
 
 const SearchSelectWrap = (props: SearchSelectProps) => {
-  const { targetInfo } = props;
-  const { handlePlatformChanged, handleVersionChanged, initSelect } = useSet();
+  const { handlePlatformChanged, handleVersionChanged } = useSet();
   const { currentPlatform, displayPlatforms } = usePlatform();
   const { docVersion, slugVersion, displayVersions } = useVersion();
   const {
@@ -80,21 +74,16 @@ const SearchSelectWrap = (props: SearchSelectProps) => {
   } = useDocType();
 
   // doc types
-  const addDocTypeAllItem = useCallback((docTypes) => {
-    return [{ ...allDocTypeItem }, ...docTypes];
-  }, []);
   const handleDocTypeChanged = useCallback(
     ({ key: docType }) => {
-      const target = addDocTypeAllItem(docTypes).find(
-        (item) => item.key === docType
-      );
+      const target = docTypes.find((item) => item.key === docType);
       setCurrentDocType(docType);
       setCurrentDocTypeLabel(target.label);
     },
-    [docTypes, addDocTypeAllItem, setCurrentDocType, setCurrentDocTypeLabel]
+    [docTypes, setCurrentDocType, setCurrentDocTypeLabel]
   );
   const DocTypeListView = useMemo(() => {
-    const docTypesItems = addDocTypeAllItem(docTypes).map((item) => {
+    const docTypesItems = docTypes.map((item) => {
       return {
         key: item.key,
         label: item.label,
@@ -111,14 +100,11 @@ const SearchSelectWrap = (props: SearchSelectProps) => {
         />
       </div>
     );
-  }, [currentDocType, docTypes, addDocTypeAllItem, handleDocTypeChanged]);
+  }, [currentDocType, docTypes, handleDocTypeChanged]);
 
   // platforms
-  const addPlatformAllItem = useCallback((displayPlatforms) => {
-    return [{ ...allPlatformItem }, ...displayPlatforms];
-  }, []);
   const PlatformListView = useMemo(() => {
-    const platformsItems = addPlatformAllItem(displayPlatforms).map((item) => ({
+    const platformsItems = displayPlatforms.map((item) => ({
       value: item.platform,
       label: item.platformLabel,
     }));
@@ -144,12 +130,7 @@ const SearchSelectWrap = (props: SearchSelectProps) => {
         })}
       </div>
     );
-  }, [
-    currentPlatform,
-    displayPlatforms,
-    addPlatformAllItem,
-    handlePlatformChanged,
-  ]);
+  }, [currentPlatform, displayPlatforms, handlePlatformChanged]);
 
   // versions
   const VersionListView = useMemo(() => {
@@ -169,8 +150,6 @@ const SearchSelectWrap = (props: SearchSelectProps) => {
       />
     );
   }, [docVersion, displayVersions, handleVersionChanged]);
-
-  initSelect(targetInfo);
 
   return (
     <div className={styles.searchSelectWrap}>
@@ -213,11 +192,8 @@ const SearchBoxWrap = (props) => {
   const handlePressEnter = useCallback(() => {}, []);
 
   // groups
-  const addGroupAllItem = useCallback((displayGroups) => {
-    return [{ ...allGroupItem }, ...displayGroups];
-  }, []);
   const GroupListView = useMemo(() => {
-    const groupsItems = addGroupAllItem(displayGroups).map((item) => ({
+    const groupsItems = displayGroups.map((item) => ({
       value: item.group,
       label: item.groupLabel,
     }));
@@ -233,7 +209,7 @@ const SearchBoxWrap = (props) => {
         options={groupsItems}
       />
     );
-  }, [currentGroup, displayGroups, addGroupAllItem, handleGroupChanged]);
+  }, [currentGroup, displayGroups, handleGroupChanged]);
 
   useEffect(() => {
     setQuery(searchKey || "");
@@ -259,7 +235,6 @@ const SearchBoxWrap = (props) => {
 export default function SearchPage(props) {
   const router = useRouter();
   const [searchKey, setSearchKey] = useState("");
-  const [targetInfo, setTargetInfo] = useState<TargetInfo>(null);
   const { currentLanguageLabel } = useLanguage();
   const { instanceID } = useInstance();
   // const { currentGroupLabel } = useGroup();
@@ -269,18 +244,51 @@ export default function SearchPage(props) {
   const [currentDocTypeLabel, setCurrentDocTypeLabel] =
     useState(defaultDocTypeLabel);
 
+  const [facetFilters, setFacetFilters] = useState([
+    `version:${docVersion}`,
+    `instance:${instanceID}`, // The previous versions of navigationInfo
+    // `group:${currentGroupLabel}`, // The later versions of navigationInfo
+    `language:${currentLanguageLabel}`,
+    // `platform:${currentPlatformLabel}`, // The later versions of navigationInfo
+    // `doctype:${currentDocTypeLabel}`, // The later versions of navigationInfo
+  ]);
+
+  useEffect(() => {
+    const versionFilter = `version:${docVersion}`;
+    const instanceFilter = `instance:${instanceID}`;
+    // const groupFilter = `group:${currentGroupLabel}`;
+    const languageFilter = `language:${currentLanguageLabel}`;
+    // const platformFilter = `platform:${currentPlatformLabel}`;
+    // const doctypeFilter = `doctype:${currentDocTypeLabel}`;
+    setFacetFilters([
+      versionFilter,
+      instanceFilter,
+      // groupFilter,
+      languageFilter,
+      // platformFilter,
+      // doctypeFilter,
+    ]);
+  }, [
+    docVersion,
+    instanceID,
+    // currentGroupLabel,
+    currentLanguageLabel,
+    // currentPlatformLabel,
+    // currentDocTypeLabel,
+  ]);
+  useEffect(() => {
+    // type
+    const type = localStorage.getItem("search-type") as string;
+
+    const target = defaultDocTypes.find((item) => item.key === type);
+    target && setCurrentDocType(type);
+    target && setCurrentDocTypeLabel(target.label);
+  }, []);
   useEffect(() => {
     if (router.isReady) {
-      // k, group, type, platform, version
-      const { k, language, group, type, platform, version } = router.query;
+      // k
+      const { k } = router.query;
       setSearchKey((k as string) || "");
-      setTargetInfo({
-        language: language as string,
-        type: type as string,
-        group: group as string,
-        platform: platform as string,
-        version: version as string,
-      });
     }
   }, [router.isReady, router.query]);
 
@@ -320,19 +328,12 @@ export default function SearchPage(props) {
               "hierarchy.lvl6:5",
               "content:5",
             ]}
-            facetFilters={[
-              `version:${docVersion}`,
-              `instance:${instanceID}`, // The previous versions of navigationInfo
-              // `group:${currentGroupLabel}`, // The later versions of navigationInfo
-              `language:${currentLanguageLabel}`,
-              // `platform:${currentPlatformLabel}`, // The later versions of navigationInfo
-              // `doctype:${currentDocTypeLabel}`, // The later versions of navigationInfo
-            ]}
+            facetFilters={facetFilters}
           />
           <div className={styles.searchCriteria}>
             {/* <SearchBox /> */}
             <SearchBoxWrap searchKey={searchKey} />
-            <SearchSelectWrap {...props} targetInfo={targetInfo} />
+            <SearchSelectWrap {...props} />
           </div>
           <div className={styles.hitWrap}>
             <Hits hitComponent={CustomHit} />

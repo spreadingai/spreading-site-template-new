@@ -1,5 +1,6 @@
 import LibControllerImpl from "./index";
 import { DisplayPlatform, NavigationInfo } from "../types";
+import { allGroupItem } from "@/components/context/groupContext";
 
 class PlatformController {
   static _instance: PlatformController;
@@ -9,7 +10,8 @@ class PlatformController {
       (PlatformController._instance = new PlatformController())
     );
   }
-  getDisplayPlatforms(groupID: string, currentLanguage: string) {
+  getDisplayPlatforms(currentGroup: string, currentLanguage: string) {
+    // Compatible with all
     const result: {
       displayPlatforms: DisplayPlatform[];
     } = { displayPlatforms: [] };
@@ -20,20 +22,31 @@ class PlatformController {
       // The new version uses locale judgment, and we're going to replace the suffix judgment later
       if (instance.locale === currentLanguage) {
         if (
-          instance.navigationInfo &&
-          instance.navigationInfo.group &&
-          instance.navigationInfo.group.id === groupID
+          (currentGroup !== allGroupItem.group &&
+            instance.navigationInfo &&
+            instance.navigationInfo.group &&
+            instance.navigationInfo.group.id === currentGroup) ||
+          currentGroup === allGroupItem.group
         ) {
           const platform = (instance.navigationInfo as NavigationInfo)
             .platform as string;
-          result.displayPlatforms.push({
-            platform,
-            platformLabel: platform,
-          });
+          // Filter duplicate elements
+          const isExist = result.displayPlatforms.find(
+            (item) => item.platform === platform
+          );
+          !isExist &&
+            result.displayPlatforms.push({
+              platform,
+              platformLabel: platform,
+            });
         }
       }
     });
     return result;
+  }
+  getDisplayPlatform(platform: string, displayPlatforms: DisplayPlatform[]) {
+    const target = displayPlatforms.find((item) => item.platform === platform);
+    return target;
   }
 }
 

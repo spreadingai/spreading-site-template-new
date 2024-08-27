@@ -19,9 +19,10 @@ export const allDocTypeItem = {
 };
 
 export const defaultDocTypes = [
+  { ...allDocTypeItem },
   {
-    key: "docs",
-    label: "Docs",
+    key: "doc",
+    label: "Doc",
   },
   {
     key: "api",
