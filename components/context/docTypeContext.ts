@@ -22,7 +22,7 @@ export const defaultDocTypes = [
   { ...allDocTypeItem },
   {
     key: "doc",
-    label: "Doc",
+    label: "Docs",
   },
   {
     key: "api",
