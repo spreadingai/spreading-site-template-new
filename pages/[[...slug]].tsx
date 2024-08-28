@@ -111,10 +111,6 @@ interface Props {
 
 export const getStaticProps = async ({ params }: SlugData) => {
   // TODO: Here some methods are executed multiple times
-  console.log(
-    new Date().toISOString().slice(0, 23),
-    "[Spreading] getStaticProps..."
-  );
   const slug = params.slug;
   // Remove the effect of anchor points
   slug[slug.length - 1] = slug[slug.length - 1].replace(/#.*$/, "");
