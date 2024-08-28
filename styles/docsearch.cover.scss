@@ -130,6 +130,9 @@
             }
         }
     }
+    .search-loading {
+        color: var(--docuo-color-primary-active);
+    }
 }
 .ant-select-dropdown {
     &.group-select-popup,

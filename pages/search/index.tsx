@@ -15,6 +15,8 @@ import {
   Configure,
   useSearchBox,
   useInstantSearch,
+  usePagination,
+  useHits,
   PoweredBy,
 } from "react-instantsearch";
 import CustomHit from "@/components/search/CustomHit";
@@ -29,7 +31,7 @@ import useInstance from "@/components/hooks/useInstance";
 import useSet from "@/components/hooks/useSet";
 import styles from "@/components/search/index.module.scss";
 import { useRouter } from "next/router";
-import { Input, Select, Tabs } from "antd";
+import { Input, Select, Tabs, Spin } from "antd";
 import useDocType from "@/components/hooks/useDocType";
 import {
   defaultDocTypes,
@@ -166,21 +168,20 @@ const SearchBoxWrap = (props) => {
   const { handleGroupChanged } = useSet();
   const { currentLanguage } = useLanguage();
   const { currentGroup, displayGroups } = useGroup();
-  const { searchKey } = props;
+  const { searchKey, setSearchKey } = props;
   const { query, refine } = useSearchBox(props);
-  const { status } = useInstantSearch();
   const [inputValue, setInputValue] = useState(query);
   const inputRef = useRef(null);
-  const isSearchStalled = status === "stalled";
 
-  console.log("[SearchBoxWrap]", searchKey, query, isSearchStalled);
+  console.log("[SearchBoxWrap]", searchKey, query);
 
   const setQuery = useCallback(
     (newQuery) => {
+      setSearchKey(newQuery);
       setInputValue(newQuery);
       refine(newQuery);
     },
-    [refine]
+    [refine, setSearchKey]
   );
   const handleChange = useCallback(
     (event) => {
@@ -232,10 +233,54 @@ const SearchBoxWrap = (props) => {
   );
 };
 
+const HitWrap = (props) => {
+  const { currentLanguage, searchKey } = props;
+  // loading: The search is in progress.
+  // stalled: The search is in progress, but the response is taking longer than expected.
+  // error: The search failed.
+  // idle: The search succeeded.
+  const { status } = useInstantSearch();
+  const { results } = useHits();
+  const { hits } = results;
+  console.log("[HitWrap] status, hits", status, hits);
+  console.log("[HitWrap] searchKey", searchKey);
+
+  return (
+    <div className={styles.hitWrap}>
+      <Hits hitComponent={CustomHit} />
+      {status !== "idle" ? (
+        <div className={styles.loadingWrap}>
+          <Spin className="search-loading" />
+        </div>
+      ) : null}
+      {status === "idle" && !hits.length ? (
+        <div className={styles.noResultsWrap}>
+          <span>
+            {
+              copywriting[currentLanguage].search.translations.modal
+                .noResultsScreen.noResultsText
+            }
+            {` "${searchKey}"`}
+          </span>
+        </div>
+      ) : null}
+    </div>
+  );
+};
+
+const PaginationWrap = (props) => {
+  const { pages } = usePagination();
+  return (
+    <div className={styles.paginationWrap}>
+      <Pagination />
+    </div>
+  );
+};
+
 export default function SearchPage(props) {
   const router = useRouter();
   const [searchKey, setSearchKey] = useState("");
-  const { currentLanguageLabel } = useLanguage();
+  const { currentLanguageLabel, currentLanguage } = useLanguage();
   const { instanceIDs } = useInstance();
   // const { currentGroupLabel } = useGroup();
   // const { currentPlatformLabel } = usePlatform();
@@ -341,15 +386,11 @@ export default function SearchPage(props) {
           </div>
           <div className={styles.searchCriteria}>
             {/* <SearchBox /> */}
-            <SearchBoxWrap searchKey={searchKey} />
+            <SearchBoxWrap searchKey={searchKey} setSearchKey={setSearchKey} />
             <SearchSelectWrap {...props} />
           </div>
-          <div className={styles.hitWrap}>
-            <Hits hitComponent={CustomHit} />
-          </div>
-          <div className={styles.paginationWrap}>
-            <Pagination />
-          </div>
+          <HitWrap currentLanguage={currentLanguage} searchKey={searchKey} />
+          <PaginationWrap />
         </InstantSearch>
       </DocTypeContext.Provider>
     </div>

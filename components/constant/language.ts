@@ -44,7 +44,7 @@ export const copywriting = {
             selectText: "选择",
             navigateText: "导航",
             closeText: "关闭",
-            searchByText: "搜索来源",
+            searchByText: "Search by",
           },
           noResultsScreen: {
             noResultsText: "没有找到",
@@ -74,7 +74,7 @@ export const copywriting = {
             selectText: "选择",
             navigateText: "导航",
             closeText: "关闭",
-            searchByText: "搜索来源",
+            searchByText: "Search by",
           },
           noResultsScreen: {
             noResultsText: "没有找到",
