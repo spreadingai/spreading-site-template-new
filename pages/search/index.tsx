@@ -280,10 +280,10 @@ const PaginationWrap = (props) => {
 export default function SearchPage(props) {
   const router = useRouter();
   const [searchKey, setSearchKey] = useState("");
-  const { currentLanguageLabel, currentLanguage } = useLanguage();
+  const { currentLanguage, currentLanguageLabel } = useLanguage();
   const { instanceIDs } = useInstance();
-  // const { currentGroupLabel } = useGroup();
-  // const { currentPlatformLabel } = usePlatform();
+  const { currentGroup, currentGroupLabel } = useGroup();
+  const { currentPlatform, currentPlatformLabel } = usePlatform();
   const { docVersion, slugVersion } = useVersion();
   const [currentDocType, setCurrentDocType] = useState(defaultDocType);
   const [currentDocTypeLabel, setCurrentDocTypeLabel] =
@@ -294,10 +294,10 @@ export default function SearchPage(props) {
     instanceIDs.map((instanceID) => {
       return `instance:${instanceID}`;
     }), // The previous versions of navigationInfo
-    // `group:${currentGroupLabel}`, // The later versions of navigationInfo
-    `language:${currentLanguageLabel}`,
-    // `platform:${currentPlatformLabel}`, // The later versions of navigationInfo
-    currentDocTypeLabel === "All" ? `` : `doctype:${currentDocTypeLabel}`, // The later versions of navigationInfo
+    // `group:${currentGroup}`, // The later versions of navigationInfo
+    `language:${currentLanguage}`,
+    // `platform:${currentPlatform}`, // The later versions of navigationInfo
+    currentDocType === "all" ? `` : `doctype:${currentDocType}`, // The later versions of navigationInfo
   ]);
 
   useEffect(() => {
@@ -306,11 +306,11 @@ export default function SearchPage(props) {
     const instanceFilter = instanceIDs.map((instanceID) => {
       return `instance:${instanceID}`;
     });
-    // const groupFilter = `group:${currentGroupLabel}`;
-    const languageFilter = `language:${currentLanguageLabel}`;
-    // const platformFilter = `platform:${currentPlatformLabel}`;
+    // const groupFilter = `group:${currentGroup}`;
+    const languageFilter = `language:${currentLanguage}`;
+    // const platformFilter = `platform:${currentPlatform}`;
     const doctypeFilter =
-      currentDocTypeLabel === "All" ? `` : `doctype:${currentDocTypeLabel}`;
+      currentDocType === "all" ? `` : `doctype:${currentDocType}`;
     setFacetFilters([
       versionFilter,
       instanceFilter,
@@ -322,10 +322,10 @@ export default function SearchPage(props) {
   }, [
     docVersion,
     instanceIDs,
-    // currentGroupLabel,
-    currentLanguageLabel,
-    // currentPlatformLabel,
-    currentDocTypeLabel,
+    // currentGroup,
+    currentLanguage,
+    // currentPlatform,
+    currentDocType,
   ]);
   useEffect(() => {
     // type

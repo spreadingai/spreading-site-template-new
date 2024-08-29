@@ -262,12 +262,7 @@ function PageHead(props: Props) {
   const twitterSite = frontmatter["twitter:site"] || "";
   const ogImageWidth = frontmatter["og:image:width"] || "";
   const ogImageHeight = frontmatter["og:image:height"] || "";
-  const searchDocType =
-    frontmatter["docType"] === "doc"
-      ? "Docs"
-      : frontmatter["docType"] === "api"
-      ? "API"
-      : "Docs";
+  const searchDocType = frontmatter["docType"] || "doc";
   return (
     <Head>
       <title>{title}</title>

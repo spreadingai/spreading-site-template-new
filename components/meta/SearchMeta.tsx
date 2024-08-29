@@ -8,20 +8,20 @@ import usePlatform from "@/components/hooks/usePlatform";
 
 const SearchMeta = () => {
   const { instanceIDs } = useInstance();
-  const { currentGroupLabel } = useGroup();
+  const { currentGroup, currentGroupLabel } = useGroup();
   const { docVersion } = useVersion();
-  const { currentLanguageLabel } = useLanguage();
-  const { currentPlatformLabel } = usePlatform();
+  const { currentLanguage, currentLanguageLabel } = useLanguage();
+  const { currentPlatform, currentPlatformLabel } = usePlatform();
   return (
     <Head>
       <meta name="docsearch:version" content={docVersion} />
       {/* The previous versions of navigationInfo */}
       <meta name="docsearch:instance" content={instanceIDs[0]} />
       {/* The later versions of navigationInfo */}
-      <meta name="docsearch:group" content={currentGroupLabel} />
-      <meta name="docsearch:language" content={currentLanguageLabel} />
+      <meta name="docsearch:group" content={currentGroup} />
+      <meta name="docsearch:language" content={currentLanguage} />
       {/* The later versions of navigationInfo */}
-      <meta name="docsearch:platform" content={currentPlatformLabel} />
+      <meta name="docsearch:platform" content={currentPlatform} />
     </Head>
   );
 };

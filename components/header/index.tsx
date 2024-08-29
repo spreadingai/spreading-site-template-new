@@ -35,9 +35,9 @@ const Header = (props: Props) => {
   const { currentLanguage, currentLanguageLabel, displayLanguages } =
     useLanguage();
   const { instanceIDs } = useInstance();
-  const { currentGroupLabel } = useGroup();
+  const { currentGroup, currentGroupLabel } = useGroup();
   const { docVersion } = useVersion();
-  const { currentPlatformLabel } = usePlatform();
+  const { currentPlatform, currentPlatformLabel } = usePlatform();
   const { themeConfig, search } = docuoConfig;
   const navbar = Object.assign(
     {},
@@ -94,9 +94,9 @@ const Header = (props: Props) => {
             facetFilters: [
               `version:${docVersion}`,
               `instance:${instanceIDs[0]}`, // The previous versions of navigationInfo
-              // `group:${currentGroupLabel}`, // The later versions of navigationInfo
-              `language:${currentLanguageLabel}`,
-              // `platform:${currentPlatformLabel}`, // The later versions of navigationInfo
+              // `group:${currentGroup}`, // The later versions of navigationInfo
+              `language:${currentLanguage}`,
+              // `platform:${currentPlatform}`, // The later versions of navigationInfo
             ],
           }}
           maxResultsPerGroup={500}
@@ -108,10 +108,9 @@ const Header = (props: Props) => {
     searchHidden,
     docVersion,
     instanceIDs,
-    // currentGroupLabel,
+    // currentGroup,
     currentLanguage,
-    currentLanguageLabel,
-    // currentPlatformLabel,
+    // currentPlatform,
   ]);
 
   const isShowThemeBtn =
