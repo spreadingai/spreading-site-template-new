@@ -16,13 +16,17 @@ import {
   useSearchBox,
   useInstantSearch,
   usePagination,
+  useConfigure,
   useHits,
   PoweredBy,
+  Index,
 } from "react-instantsearch";
 import CustomHit from "@/components/search/CustomHit";
 import Layout from "@/components/search/layout";
 import "instantsearch.css/themes/satellite.css";
 import VersionsControllerImpl from "@/lib/versions-help";
+import GroupControllerImpl from "@/lib/client/group-help";
+import PlatformControllerImpl from "@/lib/client/platform-help";
 import useGroup from "@/components/hooks/useGroup";
 import usePlatform from "@/components/hooks/usePlatform";
 import useVersion from "@/components/hooks/useVersion";
@@ -38,22 +42,23 @@ import {
   defaultDocType,
   defaultDocTypeLabel,
   DocTypeContext,
+  allDocTypeItem,
 } from "@/components/context/docTypeContext";
 import { copywriting } from "@/components/constant/language";
+import { DEFAULT_CURRENT_SLUG_VERSION } from "@/lib/constants";
+import { allGroupItem } from "@/components/context/groupContext";
+import { allPlatformItem } from "@/components/context/platformContext";
 
 const searchClient = algoliasearch(
   "N61JOMLMAK",
   "cc55591748c47b1e5e24d363cdf1d5eb"
 );
 
-interface TargetInfo {
-  language?: string;
-  type?: string;
-  group?: string;
-  platform?: string;
-  version?: string;
-}
-interface SearchSelectProps {}
+const ignoreStr = "docuoignoreinitsearch";
+
+const isNumber = (value: any) => {
+  return !isNaN(parseFloat(value)) && isFinite(value);
+};
 
 export const getStaticProps = (props) => {
   const allUsedVersions = VersionsControllerImpl.getAllUsedVersions();
@@ -64,7 +69,8 @@ export const getStaticProps = (props) => {
   };
 };
 
-const SearchSelectWrap = (props: SearchSelectProps) => {
+const SearchSelectWrap = (props) => {
+  const { searchKey, changeKey, setChangeKey } = props;
   const { handlePlatformChanged, handleVersionChanged } = useSet();
   const { currentPlatform, displayPlatforms } = usePlatform();
   const { docVersion, slugVersion, displayVersions } = useVersion();
@@ -75,6 +81,8 @@ const SearchSelectWrap = (props: SearchSelectProps) => {
     setCurrentDocType,
     setCurrentDocTypeLabel,
   } = useDocType();
+  const { results } = useHits();
+  const { facets, nbHits } = results;
 
   // doc types
   const handleDocTypeChanged = useCallback(
@@ -82,39 +90,129 @@ const SearchSelectWrap = (props: SearchSelectProps) => {
       const target = docTypes.find((item) => item.key === docType);
       setCurrentDocType(docType);
       setCurrentDocTypeLabel(target.label);
+      setChangeKey("doctype");
     },
-    [docTypes, setCurrentDocType, setCurrentDocTypeLabel]
+    [docTypes, setChangeKey, setCurrentDocType, setCurrentDocTypeLabel]
   );
-  const DocTypeListView = useMemo(() => {
-    const docTypesItems = docTypes.map((item) => {
-      return {
-        key: item.key,
-        label: item.label,
-      };
+  // const DocTypeListView = useMemo(() => {
+  //   const docTypesItems = docTypes.map((item) => {
+  //     return {
+  //       key: item.key,
+  //       label: item.label,
+  //     };
+  //   });
+  //   return (
+  //     <div className={styles.docTypeList}>
+  //       <Tabs
+  //         rootClassName="doc-type-tab"
+  //         defaultActiveKey={currentDocType}
+  //         items={docTypesItems}
+  //         onChange={(activeKey: string) => {
+  //           handleDocTypeChanged({ key: activeKey });
+  //         }}
+  //       />
+  //     </div>
+  //   );
+  // }, [currentDocType, docTypes, handleDocTypeChanged]);
+  const DynamicDocTypeListView = useMemo(() => {
+    console.log("[SearchSelectWrap] DynamicDocTypeListView", changeKey, {
+      ...facets,
     });
+    const searchCountData = facets.find((item) => item.name === "doctype");
+    let menuItems = [];
+    if (searchCountData && searchCountData.data) {
+      const keys = Object.keys(searchCountData.data);
+      let total = 0;
+      keys.forEach((key) => {
+        if (isNumber(searchCountData.data[key])) {
+          const target = docTypes.find((item) => item.key === key);
+          menuItems.push({
+            key: key,
+            label:
+              (target ? target.key : key) + `(${searchCountData.data[key]})`,
+          });
+          total += searchCountData.data[key];
+        }
+      });
+      menuItems.unshift({
+        key: allDocTypeItem.key,
+        label: allDocTypeItem.label + `(${total})`,
+      });
+    }
     return (
       <div className={styles.docTypeList}>
-        <Tabs
-          rootClassName="doc-type-tab"
-          defaultActiveKey={currentDocType}
-          items={docTypesItems}
-          onChange={(activeKey: string) => {
-            handleDocTypeChanged({ key: activeKey });
-          }}
-        />
+        {menuItems.length ? (
+          <Tabs
+            rootClassName="doc-type-tab"
+            defaultActiveKey={currentDocType}
+            items={menuItems}
+            onChange={(activeKey: string) => {
+              handleDocTypeChanged({ key: activeKey });
+            }}
+          />
+        ) : null}
       </div>
     );
-  }, [currentDocType, docTypes, handleDocTypeChanged]);
+  }, [changeKey, currentDocType, docTypes, facets, handleDocTypeChanged]);
 
   // platforms
-  const PlatformListView = useMemo(() => {
-    const platformsItems = displayPlatforms.map((item) => ({
-      value: item.platform,
-      label: item.platformLabel,
-    }));
+  // const PlatformListView = useMemo(() => {
+  //   const platformsItems = displayPlatforms.map((item) => ({
+  //     value: item.platform,
+  //     label: item.platformLabel,
+  //   }));
+  //   return (
+  //     <div className={styles.platformList}>
+  //       {platformsItems.map((platformsItem) => {
+  //         return (
+  //           <div
+  //             className={`${styles.platformItem} ${
+  //               platformsItem.value === currentPlatform ? styles.active : ""
+  //             }`}
+  //             key={platformsItem.value}
+  //             onClick={() => {
+  //               handlePlatformChanged({ key: platformsItem.value });
+  //             }}
+  //           >
+  //             {platformsItem.label}
+  //           </div>
+  //         );
+  //       })}
+  //     </div>
+  //   );
+  // }, [currentPlatform, displayPlatforms, handlePlatformChanged]);
+  const DynamicPlatformListView = useMemo(() => {
+    console.log("[SearchSelectWrap] DynamicPlatformListView", changeKey, {
+      ...facets,
+    });
+    const searchCountData = facets.find((item) => item.name === "platform");
+    let menuItems = [];
+    if (searchCountData && searchCountData.data) {
+      const keys = Object.keys(searchCountData.data);
+      let total = 0;
+      keys.forEach((key) => {
+        if (isNumber(searchCountData.data[key])) {
+          const target = PlatformControllerImpl.getDisplayPlatform(
+            key,
+            displayPlatforms
+          );
+          menuItems.push({
+            value: key,
+            label:
+              (target ? target.platformLabel : key) +
+              `(${searchCountData.data[key]})`,
+          });
+          total += searchCountData.data[key];
+        }
+      });
+      menuItems.unshift({
+        value: allPlatformItem.platform,
+        label: allPlatformItem.platformLabel + `(${total})`,
+      });
+    }
     return (
       <div className={styles.platformList}>
-        {platformsItems.map((platformsItem) => {
+        {menuItems.map((platformsItem) => {
           return (
             <div
               className={`${styles.platformItem} ${
@@ -122,6 +220,7 @@ const SearchSelectWrap = (props: SearchSelectProps) => {
               }`}
               key={platformsItem.value}
               onClick={() => {
+                setChangeKey("platform");
                 handlePlatformChanged({ key: platformsItem.value });
               }}
             >
@@ -131,34 +230,82 @@ const SearchSelectWrap = (props: SearchSelectProps) => {
         })}
       </div>
     );
-  }, [currentPlatform, displayPlatforms, handlePlatformChanged]);
+  }, [
+    currentPlatform,
+    displayPlatforms,
+    facets,
+    handlePlatformChanged,
+    changeKey,
+    setChangeKey,
+  ]);
 
   // versions
-  const VersionListView = useMemo(() => {
-    const versionsItems = displayVersions.map((item) => ({
-      value: item.version,
-      label: item.version,
-    }));
+  // const VersionListView = useMemo(() => {
+  //   const versionsItems = displayVersions.map((item) => ({
+  //     value: item.version,
+  //     label: item.version,
+  //   }));
+  //   return versionsItems.length === 1 &&
+  //     versionsItems[0].value === DEFAULT_CURRENT_SLUG_VERSION ? null : (
+  //     <Select
+  //       className="version-select"
+  //       popupClassName="version-select-popup"
+  //       defaultValue={docVersion}
+  //       value={docVersion}
+  //       onChange={(value) => {
+  //         handleVersionChanged({ key: value });
+  //       }}
+  //       options={versionsItems}
+  //     />
+  //   );
+  // }, [docVersion, displayVersions, handleVersionChanged]);
+  const DynamicVersionListView = useMemo(() => {
+    console.log("[SearchSelectWrap] DynamicVersionListView", changeKey, {
+      ...facets,
+    });
+    const searchCountData = facets.find((item) => item.name === "version");
+    let menuItems = [];
+    if (searchCountData && searchCountData.data) {
+      const keys = Object.keys(searchCountData.data);
+      let total = 0;
+      keys.forEach((key) => {
+        if (isNumber(searchCountData.data[key])) {
+          menuItems.push({
+            value: key,
+            label: key + `(${searchCountData.data[key]})`,
+          });
+          total += searchCountData.data[key];
+        }
+      });
+    }
     return (
-      <Select
-        className="version-select"
-        popupClassName="version-select-popup"
-        defaultValue={docVersion}
-        value={docVersion}
-        onChange={(value) => {
-          handleVersionChanged({ key: value });
-        }}
-        options={versionsItems}
-      />
+      <>
+        {menuItems.length ? (
+          <Select
+            className="version-select"
+            popupClassName="version-select-popup"
+            defaultValue={docVersion}
+            value={docVersion}
+            onChange={(value) => {
+              setChangeKey("version");
+              handleVersionChanged({ key: value });
+            }}
+            options={menuItems}
+          />
+        ) : null}
+      </>
     );
-  }, [docVersion, displayVersions, handleVersionChanged]);
+  }, [changeKey, docVersion, facets, handleVersionChanged, setChangeKey]);
 
   return (
     <div className={styles.searchSelectWrap}>
-      {DocTypeListView}
+      {/* {DocTypeListView} */}
+      {searchKey ? DynamicDocTypeListView : null}
       <div className={styles.platformAndVersionWrap}>
-        {PlatformListView}
-        {VersionListView}
+        {/* {PlatformListView} */}
+        {searchKey ? DynamicPlatformListView : null}
+        {/* {VersionListView} */}
+        {searchKey ? DynamicVersionListView : null}
       </div>
     </div>
   );
@@ -168,20 +315,25 @@ const SearchBoxWrap = (props) => {
   const { handleGroupChanged } = useSet();
   const { currentLanguage } = useLanguage();
   const { currentGroup, displayGroups } = useGroup();
-  const { searchKey, setSearchKey } = props;
-  const { query, refine } = useSearchBox(props);
+  const { searchKey, setSearchKey, changeKey, setChangeKey } = props;
+  const { status } = useInstantSearch();
+  const { query, refine } = useSearchBox();
   const [inputValue, setInputValue] = useState(query);
   const inputRef = useRef(null);
+  const { results } = useHits();
+  const { facets, nbHits } = results;
 
-  console.log("[SearchBoxWrap]", searchKey, query);
+  console.log("[SearchBoxWrap] query", query);
+  console.log("[SearchBoxWrap] results", results);
 
   const setQuery = useCallback(
     (newQuery) => {
       setSearchKey(newQuery);
       setInputValue(newQuery);
-      refine(newQuery);
+      newQuery && refine(newQuery);
+      setChangeKey("searchKey");
     },
-    [refine, setSearchKey]
+    [refine, setChangeKey, setSearchKey]
   );
   const handleChange = useCallback(
     (event) => {
@@ -193,24 +345,88 @@ const SearchBoxWrap = (props) => {
   const handlePressEnter = useCallback(() => {}, []);
 
   // groups
-  const GroupListView = useMemo(() => {
-    const groupsItems = displayGroups.map((item) => ({
-      value: item.group,
-      label: item.groupLabel,
-    }));
-    return (
-      <Select
-        className="group-select"
-        popupClassName="group-select-popup"
-        defaultValue={currentGroup}
-        value={currentGroup}
-        onChange={(value) => {
-          handleGroupChanged({ key: value });
-        }}
-        options={groupsItems}
-      />
+  // const GroupListView = useMemo(() => {
+  //   const groupsItems = displayGroups.map((item) => ({
+  //     value: item.group,
+  //     label: item.groupLabel,
+  //   }));
+  //   return (
+  //     <Select
+  //       className="group-select"
+  //       popupClassName="group-select-popup"
+  //       defaultValue={currentGroup}
+  //       value={currentGroup}
+  //       onChange={(value) => {
+  //         handleGroupChanged({ key: value });
+  //       }}
+  //       options={groupsItems}
+  //     />
+  //   );
+  // }, [currentGroup, displayGroups, handleGroupChanged]);
+
+  const DynamicGroupListView = useMemo(() => {
+    console.log("[SearchBoxWrap] DynamicGroupListView", changeKey, {
+      ...facets,
+    });
+    const cacheData =
+      changeKey === "group" && sessionStorage.getItem("search-cache")
+        ? JSON.parse(sessionStorage.getItem("search-cache"))
+        : null;
+    console.log("[SearchBoxWrap] cacheData", cacheData);
+    const searchCountData = (cacheData || facets).find(
+      (item) => item.name === "group"
     );
-  }, [currentGroup, displayGroups, handleGroupChanged]);
+    let menuItems = [];
+    let total = 0;
+    if (searchCountData && searchCountData.data) {
+      const keys = Object.keys(searchCountData.data);
+      keys.forEach((key) => {
+        if (isNumber(searchCountData.data[key])) {
+          const target = GroupControllerImpl.getDisplayGroup(
+            key,
+            displayGroups
+          );
+          menuItems.push({
+            value: key,
+            label:
+              (target ? target.groupLabel : key) +
+              `(${searchCountData.data[key]})`,
+          });
+          total += searchCountData.data[key];
+        }
+      });
+      menuItems.unshift({
+        value: allGroupItem.group,
+        label: allGroupItem.groupLabel + `(${total})`,
+      });
+    }
+    console.log("menuItems", menuItems, currentGroup);
+    return (
+      <>
+        {menuItems.length ? (
+          <Select
+            className="group-select"
+            popupClassName="group-select-popup"
+            defaultValue={currentGroup}
+            value={currentGroup}
+            onChange={(value) => {
+              // sessionStorage.setItem("search-cache", JSON.stringify(facets));
+              setChangeKey("group");
+              handleGroupChanged({ key: value });
+            }}
+            options={menuItems}
+          />
+        ) : null}
+      </>
+    );
+  }, [
+    changeKey,
+    currentGroup,
+    displayGroups,
+    facets,
+    handleGroupChanged,
+    setChangeKey,
+  ]);
 
   useEffect(() => {
     setQuery(searchKey || "");
@@ -218,7 +434,8 @@ const SearchBoxWrap = (props) => {
 
   return (
     <div className={styles.searchBoxWrap}>
-      <Input
+      <Input.Search
+        loading={searchKey && status !== "idle"}
         className={styles.searchInput}
         allowClear
         onChange={handleChange}
@@ -228,7 +445,8 @@ const SearchBoxWrap = (props) => {
         value={inputValue}
         placeholder={copywriting[currentLanguage].search.placeholder}
       />
-      {GroupListView}
+      {/* {GroupListView} */}
+      {searchKey ? DynamicGroupListView : null}
     </div>
   );
 };
@@ -242,17 +460,22 @@ const HitWrap = (props) => {
   const { status } = useInstantSearch();
   const { results } = useHits();
   const { hits } = results;
-  console.log("[HitWrap] status, hits", status, hits);
+  console.log("[HitWrap] status", status);
   console.log("[HitWrap] searchKey", searchKey);
 
-  return (
+  // if (status === "idle") {
+  //   console.log("[HitWrap] sessionStorage set", ...results.facets);
+  //   sessionStorage.setItem("search-cache", JSON.stringify(results.facets));
+  // }
+
+  return searchKey ? (
     <div className={styles.hitWrap}>
       <Hits hitComponent={CustomHit} />
-      {status !== "idle" ? (
+      {/* {status !== "idle" ? (
         <div className={styles.loadingWrap}>
           <Spin className="search-loading" />
         </div>
-      ) : null}
+      ) : null} */}
       {status === "idle" && !hits.length ? (
         <div className={styles.noResultsWrap}>
           <span>
@@ -265,21 +488,23 @@ const HitWrap = (props) => {
         </div>
       ) : null}
     </div>
-  );
+  ) : null;
 };
 
 const PaginationWrap = (props) => {
+  const { searchKey } = props;
   const { pages } = usePagination();
-  return (
+  return searchKey ? (
     <div className={styles.paginationWrap}>
       <Pagination />
     </div>
-  );
+  ) : null;
 };
 
 export default function SearchPage(props) {
   const router = useRouter();
   const [searchKey, setSearchKey] = useState("");
+  const [changeKey, setChangeKey] = useState("");
   const { currentLanguage, currentLanguageLabel } = useLanguage();
   const { instanceIDs } = useInstance();
   const { currentGroup, currentGroupLabel } = useGroup();
@@ -289,16 +514,16 @@ export default function SearchPage(props) {
   const [currentDocTypeLabel, setCurrentDocTypeLabel] =
     useState(defaultDocTypeLabel);
 
-  const [facetFilters, setFacetFilters] = useState([
-    `version:${docVersion}`,
-    instanceIDs.map((instanceID) => {
-      return `instance:${instanceID}`;
-    }), // The previous versions of navigationInfo
-    // `group:${currentGroup}`, // The later versions of navigationInfo
-    `language:${currentLanguage}`,
-    // `platform:${currentPlatform}`, // The later versions of navigationInfo
-    currentDocType === "all" ? `` : `doctype:${currentDocType}`, // The later versions of navigationInfo
-  ]);
+  const initFacetFilters = [["init"], "init"];
+  const [facetFilters, setFacetFilters] = useState(initFacetFilters);
+  const initFacets = [
+    "language",
+    "instance",
+    "group",
+    "doctype",
+    "platform",
+    "version",
+  ];
 
   useEffect(() => {
     console.log("[SearchPage] instanceIDs", instanceIDs);
@@ -334,6 +559,10 @@ export default function SearchPage(props) {
     const target = defaultDocTypes.find((item) => item.key === type);
     target && setCurrentDocType(type);
     target && setCurrentDocTypeLabel(target.label);
+
+    return () => {
+      sessionStorage.clear();
+    };
   }, []);
   useEffect(() => {
     if (router.isReady) {
@@ -354,10 +583,19 @@ export default function SearchPage(props) {
           setCurrentDocTypeLabel,
         }}
       >
-        <InstantSearch searchClient={searchClient} indexName="zegocloud">
+        <InstantSearch
+          searchClient={searchClient}
+          indexName="zegocloud"
+          initialUiState={{
+            zegocloud: {
+              query: ignoreStr,
+            },
+          }}
+        >
           <Configure
             snippetEllipsisText="…"
-            clickAnalytics={false}
+            clickAnalytics={true}
+            analytics={true}
             attributesToRetrieve={[
               "hierarchy.lvl0",
               "hierarchy.lvl1",
@@ -380,17 +618,38 @@ export default function SearchPage(props) {
               "content:5",
             ]}
             facetFilters={facetFilters}
+            facets={initFacets}
           />
+
           <div className={styles.poweredByWrap}>
             <PoweredBy />
           </div>
           <div className={styles.searchCriteria}>
             {/* <SearchBox /> */}
-            <SearchBoxWrap searchKey={searchKey} setSearchKey={setSearchKey} />
-            <SearchSelectWrap {...props} />
+            <SearchBoxWrap
+              searchKey={searchKey}
+              setSearchKey={setSearchKey}
+              changeKey={changeKey}
+              setChangeKey={setChangeKey}
+            />
+            <SearchSelectWrap
+              searchKey={searchKey}
+              changeKey={changeKey}
+              setChangeKey={setChangeKey}
+            />
           </div>
           <HitWrap currentLanguage={currentLanguage} searchKey={searchKey} />
-          <PaginationWrap />
+          <PaginationWrap searchKey={searchKey} />
+          {/* <Index indexName="zegocloud">
+            <Configure
+              facetFilters={[
+                "version:next",
+                ["instance:live_streaming_kit_ios"],
+                "language:en",
+                "",
+              ]}
+            />
+          </Index> */}
         </InstantSearch>
       </DocTypeContext.Provider>
     </div>

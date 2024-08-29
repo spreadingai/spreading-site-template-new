@@ -54,19 +54,17 @@
 }
 .hitWrap {
     padding: 209px 32px 71px;
-    min-height: 500px;
     position: relative;
     .loadingWrap,
     .noResultsWrap {
-        min-height: 220px;
         width: 100%;
         z-index: 1;
         position: absolute;
         display: flex;
         align-items: center;
         justify-content: center;
-        top: 240px;
         left: 0;
+        top: 100%;
     }
 }
 .paginationWrap {
