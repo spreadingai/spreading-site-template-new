@@ -317,7 +317,9 @@ const SearchSelectWrap = (props) => {
     }
     return (
       <>
-        {menuItems.length ? (
+        {!menuItems.length ||
+        (menuItems.length === 1 &&
+          menuItems[0].value === DEFAULT_CURRENT_SLUG_VERSION) ? null : (
           <Select
             className="version-select"
             popupClassName="version-select-popup"
@@ -329,7 +331,7 @@ const SearchSelectWrap = (props) => {
             }}
             options={menuItems}
           />
-        ) : null}
+        )}
       </>
     );
   }, [changeKey, docVersion, facets, handleVersionChanged, setChangeKey]);
