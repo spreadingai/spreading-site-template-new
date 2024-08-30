@@ -131,21 +131,31 @@ const Layout = ({ children, allUsedVersions }: Props) => {
     [setDocVersion, setSlugVersion, displayVersions]
   );
   const updateVersion = useCallback(
-    (
-      _currentGroup: string,
-      _currentPlatform: string,
-      language: string,
-      targetVersion?: string
-    ) => {
+    (params: {
+      group: string;
+      platform: string;
+      language: string;
+      version?: string;
+      initChild?: boolean;
+    }) => {
+      const {
+        language,
+        version: targetVersion,
+        group: _currentGroup,
+        platform: _currentPlatform,
+        initChild,
+      } = params;
       const _displayVersions = VersionsControllerImpl.getDisplayVersions(
         _currentGroup,
         _currentPlatform,
         language,
         allUsedVersions
       );
-      const temp2 = _displayVersions.find(
-        (displayVersion) => displayVersion.version === docVersion
-      );
+      const temp2 = !initChild
+        ? _displayVersions.find(
+            (displayVersion) => displayVersion.version === docVersion
+          )
+        : null;
       const _version =
         targetVersion ||
         (temp2 ? temp2.version : _displayVersions[0]?.version) ||
@@ -157,7 +167,7 @@ const Layout = ({ children, allUsedVersions }: Props) => {
     [allUsedVersions, docVersion, setVersion]
   );
   const handleVersionChanged = useCallback(
-    ({ key: version }) => {
+    ({ key: version, initChild }) => {
       setVersion(version);
     },
     [setVersion]
@@ -188,12 +198,14 @@ const Layout = ({ children, allUsedVersions }: Props) => {
     [displayInstances]
   );
   const updateInstance = useCallback(
-    (language: string, targetInstanceIDs?: string[]) => {
+    (params: { language: string; instanceIDs?: string[] }) => {
+      const { language, instanceIDs: targetInstanceIDs } = params;
       const _displayInstances = LibControllerImpl.getDisplayInstances(language);
       const _instanceIDs =
-        targetInstanceIDs ||
-        _displayInstances.map((item) => item.instance.id).slice(0, 1) ||
-        defaultInstanceIDs;
+        targetInstanceIDs && targetInstanceIDs.length
+          ? targetInstanceIDs
+          : _displayInstances.map((item) => item.instance.id).slice(0, 1) ||
+            defaultInstanceIDs;
       setDisplayInstances(_displayInstances);
       setInstance(_instanceIDs, _displayInstances);
       return _instanceIDs;
@@ -216,14 +228,27 @@ const Layout = ({ children, allUsedVersions }: Props) => {
     [displayPlatforms]
   );
   const updatePlatform = useCallback(
-    (_currentGroup: string, language: string, targetPlatform?: string) => {
+    (params: {
+      group: string;
+      language: string;
+      platform?: string;
+      initChild?: boolean;
+    }) => {
+      const {
+        group: _currentGroup,
+        language,
+        platform: targetPlatform,
+        initChild,
+      } = params;
       const _displayPlatforms = addPlatformAllItem(
         PlatformControllerImpl.getDisplayPlatforms(_currentGroup, language)
           .displayPlatforms
       );
-      const temp1 = _displayPlatforms.find(
-        (displayPlaytform) => displayPlaytform.platform === currentPlatform
-      );
+      const temp1 = !initChild
+        ? _displayPlatforms.find(
+            (displayPlaytform) => displayPlaytform.platform === currentPlatform
+          )
+        : null;
       const _currentPlatform =
         targetPlatform ||
         (temp1 ? temp1.platform : _displayPlatforms[0]?.platform) ||
@@ -235,7 +260,7 @@ const Layout = ({ children, allUsedVersions }: Props) => {
     [currentPlatform, setPlatform]
   );
   const handlePlatformChanged = useCallback(
-    ({ key: platform }) => {
+    ({ key: platform, initChild }) => {
       // compatible with all
       const _platform = setPlatform(platform);
 
@@ -246,10 +271,18 @@ const Layout = ({ children, allUsedVersions }: Props) => {
           currentGroup,
           _platform
         );
-        updateInstance(currentLanguage, targetInstanceIDs);
+        updateInstance({
+          language: currentLanguage,
+          instanceIDs: targetInstanceIDs,
+        });
 
         // update version
-        updateVersion(currentGroup, _platform, currentLanguage);
+        updateVersion({
+          group: currentGroup,
+          platform: _platform,
+          language: currentLanguage,
+          initChild,
+        });
       }
     },
     [currentGroup, currentLanguage, setPlatform, updateInstance, updateVersion]
@@ -270,7 +303,8 @@ const Layout = ({ children, allUsedVersions }: Props) => {
     [displayGroups]
   );
   const updateGroup = useCallback(
-    (language: string, targetGroup?: string) => {
+    (params: { language: string; group?: string }) => {
+      const { language, group: targetGroup } = params;
       const _displayGroups = addGroupAllItem(
         GroupControllerImpl.getDisplayGroups(language).displayGroups
       );
@@ -283,13 +317,17 @@ const Layout = ({ children, allUsedVersions }: Props) => {
     [setGroup]
   );
   const handleGroupChanged = useCallback(
-    ({ key: group }) => {
+    ({ key: group, initChild }) => {
       // compatible with all
       const _group = setGroup(group);
 
       if (_group) {
         // update platform
-        const _currentPlatform = updatePlatform(_group, currentLanguage);
+        const _currentPlatform = updatePlatform({
+          group: _group,
+          language: currentLanguage,
+          initChild,
+        });
 
         if (_currentPlatform) {
           // update instance
@@ -298,10 +336,18 @@ const Layout = ({ children, allUsedVersions }: Props) => {
             _group,
             _currentPlatform
           );
-          updateInstance(currentLanguage, targetInstanceIDs);
+          updateInstance({
+            language: currentLanguage,
+            instanceIDs: targetInstanceIDs,
+          });
 
           // update version
-          updateVersion(_group, _currentPlatform, currentLanguage);
+          updateVersion({
+            group: _group,
+            platform: _currentPlatform,
+            language: currentLanguage,
+            initChild,
+          });
         }
       }
     },
@@ -322,7 +368,7 @@ const Layout = ({ children, allUsedVersions }: Props) => {
     [_displayLanguages, setCurrentLanguage, setCurrentLanguageLabel]
   );
   const handleLanguageChanged = useCallback(
-    ({ key: language }) => {
+    ({ key: language, initChild }) => {
       const _language = setLanguage(language);
 
       if (_language) {
@@ -332,18 +378,30 @@ const Layout = ({ children, allUsedVersions }: Props) => {
           currentGroup,
           currentPlatform
         );
-        updateInstance(_language, targetInstanceIDs);
+        updateInstance({
+          language: _language,
+          instanceIDs: targetInstanceIDs,
+        });
 
         // update group
-        const _currentGroup = updateGroup(_language);
+        const _currentGroup = updateGroup({ language: _language });
 
         if (_currentGroup) {
           // update platform
-          const _currentPlatform = updatePlatform(_currentGroup, _language);
+          const _currentPlatform = updatePlatform({
+            group: _currentGroup,
+            language: _language,
+            initChild,
+          });
 
           // update version
           _currentPlatform &&
-            updateVersion(_currentGroup, _currentPlatform, _language);
+            updateVersion({
+              group: _currentGroup,
+              platform: _currentPlatform,
+              language: _language,
+              initChild,
+            });
         }
       }
     },
@@ -365,22 +423,33 @@ const Layout = ({ children, allUsedVersions }: Props) => {
       // update language
       const _language = setLanguage(language) || defaultLanguage;
       // update group
-      const _currentGroup = updateGroup(_language, group);
+      const _currentGroup = updateGroup({
+        language: _language,
+        group,
+      });
       // update platform
-      const _currentPlatform = updatePlatform(
-        _currentGroup,
-        _language,
-        platform
-      );
+      const _currentPlatform = updatePlatform({
+        group: _currentGroup,
+        language: _language,
+        platform,
+      });
       // update instance
       const targetInstanceIDs = VersionsControllerImpl.getInstanceIDs(
         _language,
         _currentGroup,
         _currentPlatform
       );
-      updateInstance(_language, targetInstanceIDs);
+      updateInstance({
+        language: _language,
+        instanceIDs: targetInstanceIDs,
+      });
       // update version
-      updateVersion(_currentGroup, _currentPlatform, _language, version);
+      updateVersion({
+        group: _currentGroup,
+        platform: _currentPlatform,
+        language: _language,
+        version,
+      });
     },
     [setLanguage, updateGroup, updateInstance, updatePlatform, updateVersion]
   );

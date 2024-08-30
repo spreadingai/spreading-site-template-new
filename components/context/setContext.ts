@@ -1,8 +1,32 @@
 import React from "react";
 
 export const SetContext = React.createContext({
-  handleLanguageChanged: ({ key: language }: { key: string }) => {},
-  handleGroupChanged: ({ key: group }: { key: string }) => {},
-  handlePlatformChanged: ({ key: platform }: { key: string }) => {},
-  handleVersionChanged: ({ key: version }: { key: string }) => {},
+  handleLanguageChanged: ({
+    key: language,
+    initChild,
+  }: {
+    key: string;
+    initChild?: boolean;
+  }) => {},
+  handleGroupChanged: ({
+    key: group,
+    initChild,
+  }: {
+    key: string;
+    initChild?: boolean;
+  }) => {},
+  handlePlatformChanged: ({
+    key: platform,
+    initChild,
+  }: {
+    key: string;
+    initChild?: boolean;
+  }) => {},
+  handleVersionChanged: ({
+    key: version,
+    initChild,
+  }: {
+    key: string;
+    initChild?: boolean;
+  }) => {},
 });

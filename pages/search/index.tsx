@@ -86,13 +86,20 @@ const SearchSelectWrap = (props) => {
 
   // doc types
   const handleDocTypeChanged = useCallback(
-    ({ key: docType }) => {
+    ({ key: docType, initChild }) => {
       const target = docTypes.find((item) => item.key === docType);
       setCurrentDocType(docType);
       setCurrentDocTypeLabel(target.label);
       setChangeKey("doctype");
+      handlePlatformChanged({ key: "all", initChild: true });
     },
-    [docTypes, setChangeKey, setCurrentDocType, setCurrentDocTypeLabel]
+    [
+      docTypes,
+      handlePlatformChanged,
+      setChangeKey,
+      setCurrentDocType,
+      setCurrentDocTypeLabel,
+    ]
   );
   // const DocTypeListView = useMemo(() => {
   //   const docTypesItems = docTypes.map((item) => {
@@ -118,11 +125,24 @@ const SearchSelectWrap = (props) => {
     console.log("[SearchSelectWrap] DynamicDocTypeListView", changeKey, {
       ...facets,
     });
-    const searchCountData = facets.find((item) => item.name === "doctype");
+    let searchCountData;
+    if (
+      (changeKey === "doctype" || changeKey === "platform") &&
+      sessionStorage.getItem("doctype-search-cache")
+    ) {
+      searchCountData = JSON.parse(
+        sessionStorage.getItem("doctype-search-cache")
+      );
+      // currentDocType !== "all" &&
+      //   (searchCountData.data[currentDocType] = nbHits);
+    } else {
+      searchCountData = facets.find((item) => item.name === "doctype");
+    }
     let menuItems = [];
     if (searchCountData && searchCountData.data) {
       const keys = Object.keys(searchCountData.data);
       let total = 0;
+      // let total = nbHits;
       keys.forEach((key) => {
         if (isNumber(searchCountData.data[key])) {
           const target = docTypes.find((item) => item.key === key);
@@ -147,7 +167,7 @@ const SearchSelectWrap = (props) => {
             defaultActiveKey={currentDocType}
             items={menuItems}
             onChange={(activeKey: string) => {
-              handleDocTypeChanged({ key: activeKey });
+              handleDocTypeChanged({ key: activeKey, initChild: true });
             }}
           />
         ) : null}
@@ -171,7 +191,7 @@ const SearchSelectWrap = (props) => {
   //             }`}
   //             key={platformsItem.value}
   //             onClick={() => {
-  //               handlePlatformChanged({ key: platformsItem.value });
+  //               handlePlatformChanged({ key: platformsItem.value, initChild: true });
   //             }}
   //           >
   //             {platformsItem.label}
@@ -185,11 +205,22 @@ const SearchSelectWrap = (props) => {
     console.log("[SearchSelectWrap] DynamicPlatformListView", changeKey, {
       ...facets,
     });
-    const searchCountData = facets.find((item) => item.name === "platform");
+    let searchCountData;
+    if (
+      changeKey === "platform" &&
+      sessionStorage.getItem("platform-search-cache")
+    ) {
+      searchCountData = JSON.parse(
+        sessionStorage.getItem("platform-search-cache")
+      );
+    } else {
+      searchCountData = facets.find((item) => item.name === "platform");
+    }
     let menuItems = [];
     if (searchCountData && searchCountData.data) {
       const keys = Object.keys(searchCountData.data);
       let total = 0;
+      // let total = nbHits;
       keys.forEach((key) => {
         if (isNumber(searchCountData.data[key])) {
           const target = PlatformControllerImpl.getDisplayPlatform(
@@ -220,8 +251,14 @@ const SearchSelectWrap = (props) => {
               }`}
               key={platformsItem.value}
               onClick={() => {
+                // if (platformsItem.value === "all") {
+                //   sessionStorage.removeItem("platform-search-cache");
+                // }
                 setChangeKey("platform");
-                handlePlatformChanged({ key: platformsItem.value });
+                handlePlatformChanged({
+                  key: platformsItem.value,
+                  initChild: true,
+                });
               }}
             >
               {platformsItem.label}
@@ -231,12 +268,12 @@ const SearchSelectWrap = (props) => {
       </div>
     );
   }, [
-    currentPlatform,
-    displayPlatforms,
-    facets,
-    handlePlatformChanged,
     changeKey,
+    facets,
+    displayPlatforms,
+    currentPlatform,
     setChangeKey,
+    handlePlatformChanged,
   ]);
 
   // versions
@@ -253,7 +290,7 @@ const SearchSelectWrap = (props) => {
   //       defaultValue={docVersion}
   //       value={docVersion}
   //       onChange={(value) => {
-  //         handleVersionChanged({ key: value });
+  //         handleVersionChanged({ key: value, initChild: true });
   //       }}
   //       options={versionsItems}
   //     />
@@ -288,7 +325,7 @@ const SearchSelectWrap = (props) => {
             value={docVersion}
             onChange={(value) => {
               setChangeKey("version");
-              handleVersionChanged({ key: value });
+              handleVersionChanged({ key: value, initChild: true });
             }}
             options={menuItems}
           />
@@ -315,6 +352,8 @@ const SearchBoxWrap = (props) => {
   const { handleGroupChanged } = useSet();
   const { currentLanguage } = useLanguage();
   const { currentGroup, displayGroups } = useGroup();
+  const { currentPlatform } = usePlatform();
+  const { currentDocType } = useDocType();
   const { searchKey, setSearchKey, changeKey, setChangeKey } = props;
   const { status } = useInstantSearch();
   const { query, refine } = useSearchBox();
@@ -357,7 +396,7 @@ const SearchBoxWrap = (props) => {
   //       defaultValue={currentGroup}
   //       value={currentGroup}
   //       onChange={(value) => {
-  //         handleGroupChanged({ key: value });
+  //         handleGroupChanged({ key: value, initChild: true });
   //       }}
   //       options={groupsItems}
   //     />
@@ -368,16 +407,20 @@ const SearchBoxWrap = (props) => {
     console.log("[SearchBoxWrap] DynamicGroupListView", changeKey, {
       ...facets,
     });
-    const cacheData =
-      changeKey === "group" && sessionStorage.getItem("search-cache")
-        ? JSON.parse(sessionStorage.getItem("search-cache"))
-        : null;
-    console.log("[SearchBoxWrap] cacheData", cacheData);
-    const searchCountData = (cacheData || facets).find(
-      (item) => item.name === "group"
-    );
+    let searchCountData;
+    if (
+      (changeKey === "group" ||
+        changeKey === "doctype" ||
+        changeKey === "platform") &&
+      sessionStorage.getItem("group-search-cache")
+    ) {
+      searchCountData = JSON.parse(
+        sessionStorage.getItem("group-search-cache")
+      );
+    } else {
+      searchCountData = facets.find((item) => item.name === "group");
+    }
     let menuItems = [];
-    let total = 0;
     if (searchCountData && searchCountData.data) {
       const keys = Object.keys(searchCountData.data);
       keys.forEach((key) => {
@@ -388,16 +431,13 @@ const SearchBoxWrap = (props) => {
           );
           menuItems.push({
             value: key,
-            label:
-              (target ? target.groupLabel : key) +
-              `(${searchCountData.data[key]})`,
+            label: target ? target.groupLabel : key,
           });
-          total += searchCountData.data[key];
         }
       });
       menuItems.unshift({
         value: allGroupItem.group,
-        label: allGroupItem.groupLabel + `(${total})`,
+        label: allGroupItem.groupLabel,
       });
     }
     console.log("menuItems", menuItems, currentGroup);
@@ -410,9 +450,8 @@ const SearchBoxWrap = (props) => {
             defaultValue={currentGroup}
             value={currentGroup}
             onChange={(value) => {
-              // sessionStorage.setItem("search-cache", JSON.stringify(facets));
               setChangeKey("group");
-              handleGroupChanged({ key: value });
+              handleGroupChanged({ key: value, initChild: true });
             }}
             options={menuItems}
           />
@@ -431,6 +470,84 @@ const SearchBoxWrap = (props) => {
   useEffect(() => {
     setQuery(searchKey || "");
   }, [searchKey, setQuery]);
+
+  useEffect(() => {
+    if (status === "idle") {
+      console.log(`[SearchBoxWrap] ${changeKey} cache`, { ...facets });
+      const searchGroupCountData = facets.find((item) => item.name === "group");
+      const searchDoctypeCountData = facets.find(
+        (item) => item.name === "doctype"
+      );
+      const searchPlatformCountData = facets.find(
+        (item) => item.name === "platform"
+      );
+      if (changeKey === "searchKey") {
+        if (currentGroup === "all") {
+          if (searchGroupCountData) {
+            sessionStorage.setItem(
+              "group-search-cache",
+              JSON.stringify(searchGroupCountData)
+            );
+          } else {
+            sessionStorage.removeItem("group-search-cache");
+          }
+        }
+        if (currentDocType === "all") {
+          if (searchDoctypeCountData) {
+            sessionStorage.setItem(
+              "doctype-search-cache",
+              JSON.stringify(searchDoctypeCountData)
+            );
+          } else {
+            sessionStorage.removeItem("doctype-search-cache");
+          }
+        }
+        if (currentPlatform === "all") {
+          if (searchPlatformCountData) {
+            sessionStorage.setItem(
+              "platform-search-cache",
+              JSON.stringify(searchPlatformCountData)
+            );
+          } else {
+            sessionStorage.removeItem("platform-search-cache");
+          }
+        }
+      } else if (changeKey === "group") {
+        if (searchDoctypeCountData) {
+          sessionStorage.setItem(
+            "doctype-search-cache",
+            JSON.stringify(searchDoctypeCountData)
+          );
+        } else {
+          sessionStorage.removeItem("doctype-search-cache");
+        }
+        if (searchPlatformCountData) {
+          sessionStorage.setItem(
+            "platform-search-cache",
+            JSON.stringify(searchPlatformCountData)
+          );
+        } else {
+          sessionStorage.removeItem("platform-search-cache");
+        }
+      } else if (changeKey === "doctype") {
+        if (searchPlatformCountData) {
+          sessionStorage.setItem(
+            "platform-search-cache",
+            JSON.stringify(searchPlatformCountData)
+          );
+        } else {
+          sessionStorage.removeItem("platform-search-cache");
+        }
+      }
+    }
+  }, [
+    changeKey,
+    currentDocType,
+    currentGroup,
+    currentPlatform,
+    facets,
+    status,
+  ]);
 
   return (
     <div className={styles.searchBoxWrap}>
@@ -462,11 +579,6 @@ const HitWrap = (props) => {
   const { hits } = results;
   console.log("[HitWrap] status", status);
   console.log("[HitWrap] searchKey", searchKey);
-
-  // if (status === "idle") {
-  //   console.log("[HitWrap] sessionStorage set", ...results.facets);
-  //   sessionStorage.setItem("search-cache", JSON.stringify(results.facets));
-  // }
 
   return searchKey ? (
     <div className={styles.hitWrap}>
@@ -504,7 +616,7 @@ const PaginationWrap = (props) => {
 export default function SearchPage(props) {
   const router = useRouter();
   const [searchKey, setSearchKey] = useState("");
-  const [changeKey, setChangeKey] = useState("");
+  const [changeKey, setChangeKey] = useState("searchKey");
   const { currentLanguage, currentLanguageLabel } = useLanguage();
   const { instanceIDs } = useInstance();
   const { currentGroup, currentGroupLabel } = useGroup();
@@ -571,6 +683,10 @@ export default function SearchPage(props) {
       setSearchKey((k as string) || "");
     }
   }, [router.isReady, router.query]);
+  useEffect(() => {
+    sessionStorage.clear();
+    setChangeKey("searchKey");
+  }, [currentLanguage]);
 
   return (
     <div id="search-page">
