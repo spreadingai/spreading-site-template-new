@@ -113,9 +113,9 @@ const SearchSelectWrap = (props) => {
   //   );
   // }, [currentDocType, currentLanguage, handleDocTypeChanged]);
   const DynamicDocTypeListView = useMemo(() => {
-    console.log("[SearchSelectWrap] DynamicDocTypeListView", changeKey, {
-      ...facets,
-    });
+    // console.log("[SearchSelectWrap] DynamicDocTypeListView", changeKey, {
+    //   ...facets,
+    // });
     let searchCountData;
     if (
       (changeKey === "doctype" || changeKey === "platform") &&
@@ -195,9 +195,9 @@ const SearchSelectWrap = (props) => {
   //   );
   // }, [currentPlatform, displayPlatforms, handlePlatformChanged]);
   const DynamicPlatformListView = useMemo(() => {
-    console.log("[SearchSelectWrap] DynamicPlatformListView", changeKey, {
-      ...facets,
-    });
+    // console.log("[SearchSelectWrap] DynamicPlatformListView", changeKey, {
+    //   ...facets,
+    // });
     let searchCountData;
     if (
       changeKey === "platform" &&
@@ -288,9 +288,9 @@ const SearchSelectWrap = (props) => {
   //   );
   // }, [docVersion, displayVersions, handleVersionChanged]);
   const DynamicVersionListView = useMemo(() => {
-    console.log("[SearchSelectWrap] DynamicVersionListView", changeKey, {
-      ...facets,
-    });
+    // console.log("[SearchSelectWrap] DynamicVersionListView", changeKey, {
+    //   ...facets,
+    // });
     const searchCountData = facets.find((item) => item.name === "version");
     let menuItems = [];
     if (searchCountData && searchCountData.data) {
@@ -356,8 +356,8 @@ const SearchBoxWrap = (props) => {
   const { results } = useHits();
   const { facets } = results;
 
-  console.log("[SearchBoxWrap] query", query);
-  console.log("[SearchBoxWrap] results", results);
+  // console.log("[SearchBoxWrap] query", query);
+  // console.log("[SearchBoxWrap] results", results);
 
   const setQuery = useCallback(
     (newQuery) => {
@@ -399,9 +399,9 @@ const SearchBoxWrap = (props) => {
   // }, [currentGroup, displayGroups, handleGroupChanged, updateDocType]);
 
   const DynamicGroupListView = useMemo(() => {
-    console.log("[SearchBoxWrap] DynamicGroupListView", changeKey, {
-      ...facets,
-    });
+    // console.log("[SearchBoxWrap] DynamicGroupListView", changeKey, {
+    //   ...facets,
+    // });
     let searchCountData;
     if (
       (changeKey === "group" ||
@@ -435,7 +435,7 @@ const SearchBoxWrap = (props) => {
         label: allGroupItem[`${currentLanguage}_groupLabel`],
       });
     }
-    console.log("menuItems", menuItems, currentGroup);
+    // console.log("menuItems", menuItems, currentGroup);
     return (
       <>
         {menuItems.length ? (
@@ -471,7 +471,7 @@ const SearchBoxWrap = (props) => {
 
   useEffect(() => {
     if (status === "idle") {
-      console.log(`[SearchBoxWrap] ${changeKey} cache`, { ...facets });
+      // console.log(`[SearchBoxWrap] ${changeKey} cache`, { ...facets });
       const searchGroupCountData = facets.find((item) => item.name === "group");
       const searchDoctypeCountData = facets.find(
         (item) => item.name === "doctype"
@@ -576,8 +576,8 @@ const HitWrap = (props) => {
   const { status } = useInstantSearch();
   const { results } = useHits();
   const { hits } = results;
-  console.log("[HitWrap] status", status);
-  console.log("[HitWrap] searchKey", searchKey);
+  // console.log("[HitWrap] status", status);
+  // console.log("[HitWrap] searchKey", searchKey);
 
   return searchKey ? (
     <div className={styles.hitWrap}>

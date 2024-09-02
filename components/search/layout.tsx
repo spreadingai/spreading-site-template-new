@@ -124,7 +124,7 @@ const Layout = ({ children, allUsedVersions }: Props) => {
   // version
   const setVersion = useCallback(
     (version: string, _displayVersions?: DisplayVersion[]) => {
-      console.log("[Layout]setVersion", _displayVersions, displayVersions);
+      // console.log("[Layout]setVersion", _displayVersions, displayVersions);
       setDocVersion(version);
       setSlugVersion(version);
     },
@@ -176,7 +176,7 @@ const Layout = ({ children, allUsedVersions }: Props) => {
   // instance
   const setInstance = useCallback(
     (instanceIDs: string[], _displayInstances?: DisplayInstance[]) => {
-      console.log("[Layout]setInstance", _displayInstances, displayInstances);
+      // console.log("[Layout]setInstance", _displayInstances, displayInstances);
       const result1 = [];
       const result2 = [];
       instanceIDs.forEach((instanceID) => {
@@ -216,7 +216,7 @@ const Layout = ({ children, allUsedVersions }: Props) => {
   // platform
   const setPlatform = useCallback(
     (platform: string, _displayPlatforms?: DisplayPlatform[]) => {
-      console.log("[Layout]setPlatform", _displayPlatforms, displayPlatforms);
+      // console.log("[Layout]setPlatform", _displayPlatforms, displayPlatforms);
       const target = PlatformControllerImpl.getDisplayPlatform(
         platform,
         _displayPlatforms || displayPlatforms
@@ -291,7 +291,7 @@ const Layout = ({ children, allUsedVersions }: Props) => {
   // group
   const setGroup = useCallback(
     (group: string, _displayGroups?: DisplayGroup[]) => {
-      console.log("[Layout]setGroup", _displayGroups, displayGroups);
+      // console.log("[Layout]setGroup", _displayGroups, displayGroups);
       const target = GroupControllerImpl.getDisplayGroup(
         group,
         _displayGroups || displayGroups
@@ -420,42 +420,45 @@ const Layout = ({ children, allUsedVersions }: Props) => {
 
   const initSelect = useCallback(
     (targetInfo) => {
-      console.log("[Layout]initSelect", targetInfo);
+      // console.log("[Layout]initSelect", targetInfo);
       const { language, group, platform, version } = targetInfo;
-      // update language
-      const _language = setLanguage(language) || defaultLanguage;
-      // // update group
-      // const _currentGroup = updateGroup({
-      //   language: _language,
-      //   group,
-      // });
-      // // update platform
-      // const _currentPlatform = updatePlatform({
-      //   group: _currentGroup,
-      //   language: _language,
-      //   platform,
-      // });
-      // // update instance
-      // const targetInstanceIDs = VersionsControllerImpl.getInstanceIDs(
-      //   _language,
-      //   _currentGroup,
-      //   _currentPlatform
-      // );
-      // updateInstance({
-      //   language: _language,
-      //   instanceIDs: targetInstanceIDs,
-      // });
-      // // update version
-      // updateVersion({
-      //   group: _currentGroup,
-      //   platform: _currentPlatform,
-      //   language: _language,
-      //   version,
-      // });
+      if (language) {
+        handleLanguageChanged({ key: language, initChild: true });
+      }
+      //   // update language
+      //   const _language = setLanguage(language) || defaultLanguage;
+      //   // update group
+      //   const _currentGroup = updateGroup({
+      //     language: _language,
+      //     // group,
+      //   });
+      //   // update platform
+      //   const _currentPlatform = updatePlatform({
+      //     group: _currentGroup,
+      //     language: _language,
+      //     // platform,
+      //   });
+      //   // update instance
+      //   const targetInstanceIDs = VersionsControllerImpl.getInstanceIDs(
+      //     _language,
+      //     _currentGroup,
+      //     _currentPlatform
+      //   );
+      //   updateInstance({
+      //     language: _language,
+      //     instanceIDs: targetInstanceIDs,
+      //   });
+      //   // update version
+      //   updateVersion({
+      //     group: _currentGroup,
+      //     platform: _currentPlatform,
+      //     language: _language,
+      //     // version,
+      //   });
     },
     [
-      setLanguage,
-      // updateGroup, updateInstance, updatePlatform, updateVersion
+      handleLanguageChanged,
+      // setLanguage,updateGroup, updateInstance, updatePlatform, updateVersion
     ]
   );
 
