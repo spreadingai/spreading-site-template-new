@@ -93,10 +93,10 @@ const Header = (props: Props) => {
           searchParameters={{
             facetFilters: [
               `version:${docVersion}`,
-              `instance:${instanceIDs[0]}`, // The previous versions of navigationInfo
-              // `group:${currentGroup}`, // The later versions of navigationInfo
+              // `instance:${instanceIDs[0]}`, // The previous versions of navigationInfo
+              `group:${currentGroup}`, // The later versions of navigationInfo
               `language:${currentLanguage}`,
-              // `platform:${currentPlatform}`, // The later versions of navigationInfo
+              `platform:${currentPlatform}`, // The later versions of navigationInfo
             ],
           }}
           maxResultsPerGroup={20}
@@ -107,10 +107,10 @@ const Header = (props: Props) => {
     algolia,
     searchHidden,
     docVersion,
-    instanceIDs,
-    // currentGroup,
+    // instanceIDs,
+    currentGroup,
     currentLanguage,
-    // currentPlatform,
+    currentPlatform,
   ]);
 
   const isShowThemeBtn =
