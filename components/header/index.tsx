@@ -109,13 +109,13 @@ const Header = (props: Props) => {
             const { state } = props;
             const { query, context } = state;
             const { nbHits } = context;
-            return nbHits > 20 ? (
+            return (
               <Link href={`/search?k=${query}`}>
                 {currentLanguage === defaultLanguage
                   ? `See all ${nbHits} results`
                   : `查看全部 ${nbHits} 条结果`}
               </Link>
-            ) : null;
+            );
           }}
         />
       </>
