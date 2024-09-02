@@ -16,6 +16,10 @@ type VersionContentType = {
   setVersions?: Dispatch<SetStateAction<string[]>>;
 };
 
+export const allVersionItem = {
+  docVersion: "all",
+  slugVersion: "All Version",
+};
 export const defaultDocVersion: string = DEFAULT_CURRENT_DOC_VERSION;
 export const defaultSlugVersion: string = DEFAULT_CURRENT_SLUG_VERSION;
 export const defaultDisplayVersions: [] = [];

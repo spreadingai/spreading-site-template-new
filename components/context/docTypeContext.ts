@@ -1,41 +1,41 @@
 import { Dispatch, SetStateAction, createContext } from "react";
 
 export interface DocType {
-  key: string;
-  label: string;
+  en_key: string;
+  zh_key: string;
+  en_label: string;
+  zh_label: string;
 }
 
 type DocTypeContentType = {
   currentDocType: string;
-  currentDocTypeLabel: string;
-  docTypes: DocType[];
   setCurrentDocType: Dispatch<SetStateAction<string>>;
-  setCurrentDocTypeLabel: Dispatch<SetStateAction<string>>;
 };
 
 export const allDocTypeItem = {
-  key: "all",
-  label: "All",
+  en_key: "All Sections",
+  zh_key: "全部文档",
+  en_label: "All Sections",
+  zh_label: "全部文档",
 };
-
-export const defaultDocTypes = [
+export const defaultDocType: string = allDocTypeItem.en_key;
+export const defaultDocTypes: DocType[] = [
   { ...allDocTypeItem },
   {
-    key: "doc",
-    label: "Docs",
+    en_key: "Docs",
+    zh_key: "技术文档",
+    en_label: "Docs",
+    zh_label: "技术文档",
   },
   {
-    key: "api",
-    label: "API",
+    en_key: "API",
+    zh_key: "API 文档",
+    en_label: "API",
+    zh_label: "API 文档",
   },
 ];
-export const defaultDocType: string = defaultDocTypes[0].key;
-export const defaultDocTypeLabel: string = defaultDocTypes[0].label;
 
 export const DocTypeContext = createContext<DocTypeContentType>({
   currentDocType: defaultDocType,
-  currentDocTypeLabel: defaultDocTypeLabel,
-  docTypes: defaultDocTypes,
   setCurrentDocType: (docType) => docType,
-  setCurrentDocTypeLabel: (currentDocTypeLabel) => currentDocTypeLabel,
 });

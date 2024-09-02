@@ -12,7 +12,9 @@ type GroupContentType = {
 
 export const allGroupItem = {
   group: "all",
-  groupLabel: "All",
+  groupLabel: "All product",
+  en_groupLabel: "All product",
+  zh_groupLabel: "所有产品",
 };
 export const addGroupAllItem = (displayGroups) => {
   return displayGroups && displayGroups.length > 0

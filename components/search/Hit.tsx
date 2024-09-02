@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import type { InternalDocSearchHit, StoredDocSearchHit } from './types';
+import type { InternalDocSearchHit, StoredDocSearchHit } from "./types";
 
 interface HitProps {
   hit: InternalDocSearchHit | StoredDocSearchHit;
@@ -8,5 +8,9 @@ interface HitProps {
 }
 
 export function Hit({ hit, children }: HitProps) {
-  return <a href={hit.url}>{children}</a>;
+  return (
+    <a href={hit.url} target="_blank">
+      {children}
+    </a>
+  );
 }

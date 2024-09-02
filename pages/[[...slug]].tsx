@@ -50,6 +50,7 @@ import { DocFrontMatter } from "@/components/docuoOpenapi/types";
 import { DEFAULT_CURRENT_SLUG_VERSION } from "@/lib/constants";
 import { getMDXComponent } from "mdx-bundler/client";
 import { Mermaid } from "mdx-mermaid/lib/Mermaid";
+import { defaultLanguage } from "@/components/context/languageContext";
 
 const MDX_GLOBAL_CONFIG = {
   MdxJsReact: {
@@ -102,6 +103,7 @@ interface Props {
   docuoConfig: DocuoConfig;
   currentInstanceLabel: string;
   slugVersion: string;
+  currentLanguage: string;
   frontmatterRef: {
     fileName: string;
     firstParagraphContent: string;
@@ -216,6 +218,7 @@ function PageHead(props: Props) {
     slug,
     currentInstanceLabel,
     slugVersion,
+    currentLanguage,
   } = props;
   const frontmatter = mdxSource.frontmatter as DocFrontMatter;
   const str = `${currentInstanceLabel ? currentInstanceLabel + " " : ""}${
@@ -262,7 +265,9 @@ function PageHead(props: Props) {
   const twitterSite = frontmatter["twitter:site"] || "";
   const ogImageWidth = frontmatter["og:image:width"] || "";
   const ogImageHeight = frontmatter["og:image:height"] || "";
-  const searchDocType = frontmatter["docType"] || "doc";
+  const searchDocType =
+    frontmatter["docType"] ||
+    (currentLanguage === defaultLanguage ? "Docs" : "技术文档");
   return (
     <Head>
       <title>{title}</title>

@@ -99,7 +99,7 @@ const Header = (props: Props) => {
               // `platform:${currentPlatform}`, // The later versions of navigationInfo
             ],
           }}
-          maxResultsPerGroup={500}
+          maxResultsPerGroup={20}
         />
       </>
     );

@@ -12,7 +12,9 @@ type PlatformContentType = {
 
 export const allPlatformItem = {
   platform: "all",
-  platformLabel: "All",
+  platformLabel: "All platform",
+  en_platformLabel: "All platform",
+  zh_platformLabel: "所有平台",
 };
 export const addPlatformAllItem = (displayPlatforms) => {
   return displayPlatforms && displayPlatforms.length > 0
