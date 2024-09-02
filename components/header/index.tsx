@@ -20,6 +20,7 @@ import useGroup from "@/components/hooks/useGroup";
 import useVersion from "@/components/hooks/useVersion";
 import usePlatform from "@/components/hooks/usePlatform";
 import useSet from "@/components/hooks/useSet";
+import { defaultLanguage } from "../context/languageContext";
 // import "@docsearch/css";
 
 interface Props {
@@ -32,8 +33,12 @@ interface Props {
 const Header = (props: Props) => {
   const { docuoConfig, tocFormatData, setDrawerOpen, isSearchPage } = props;
   const { handleLanguageChanged } = useSet();
-  const { currentLanguage, currentLanguageLabel, displayLanguages } =
-    useLanguage();
+  const {
+    currentLanguage,
+    currentLanguageLabel,
+    displayLanguages,
+    setCurrentLanguage,
+  } = useLanguage();
   const { instanceIDs } = useInstance();
   const { currentGroup, currentGroupLabel } = useGroup();
   const { docVersion } = useVersion();
@@ -100,16 +105,27 @@ const Header = (props: Props) => {
             ],
           }}
           maxResultsPerGroup={20}
+          resultsFooterComponent={(props: any) => {
+            const { state } = props;
+            const { query, context } = state;
+            const { nbHits } = context;
+            return nbHits > 20 ? (
+              <Link href={`/search?k=${query}`}>
+                {currentLanguage === defaultLanguage
+                  ? `See all ${nbHits} results`
+                  : `查看全部 ${nbHits} 条结果`}
+              </Link>
+            ) : null;
+          }}
         />
       </>
     );
   }, [
     algolia,
     searchHidden,
-    docVersion,
-    // instanceIDs,
-    currentGroup,
     currentLanguage,
+    docVersion,
+    currentGroup,
     currentPlatform,
   ]);
 

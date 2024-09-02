@@ -373,6 +373,7 @@ const Layout = ({ children, allUsedVersions }: Props) => {
       const _language = setLanguage(language);
 
       if (_language) {
+        localStorage.setItem("search-language", language);
         // update instance
         const targetInstanceIDs = VersionsControllerImpl.getInstanceIDs(
           language,
@@ -417,58 +418,61 @@ const Layout = ({ children, allUsedVersions }: Props) => {
     ]
   );
 
-  // const initSelect = useCallback(
-  //   (targetInfo) => {
-  //     console.log("[Layout]initSelect", targetInfo);
-  //     const { language, group, platform, version } = targetInfo;
-  //     // update language
-  //     const _language = setLanguage(language) || defaultLanguage;
-  //     // update group
-  //     const _currentGroup = updateGroup({
-  //       language: _language,
-  //       group,
-  //     });
-  //     // update platform
-  //     const _currentPlatform = updatePlatform({
-  //       group: _currentGroup,
-  //       language: _language,
-  //       platform,
-  //     });
-  //     // update instance
-  //     const targetInstanceIDs = VersionsControllerImpl.getInstanceIDs(
-  //       _language,
-  //       _currentGroup,
-  //       _currentPlatform
-  //     );
-  //     updateInstance({
-  //       language: _language,
-  //       instanceIDs: targetInstanceIDs,
-  //     });
-  //     // update version
-  //     updateVersion({
-  //       group: _currentGroup,
-  //       platform: _currentPlatform,
-  //       language: _language,
-  //       version,
-  //     });
-  //   },
-  //   [setLanguage, updateGroup, updateInstance, updatePlatform, updateVersion]
-  // );
+  const initSelect = useCallback(
+    (targetInfo) => {
+      console.log("[Layout]initSelect", targetInfo);
+      const { language, group, platform, version } = targetInfo;
+      // update language
+      const _language = setLanguage(language) || defaultLanguage;
+      // // update group
+      // const _currentGroup = updateGroup({
+      //   language: _language,
+      //   group,
+      // });
+      // // update platform
+      // const _currentPlatform = updatePlatform({
+      //   group: _currentGroup,
+      //   language: _language,
+      //   platform,
+      // });
+      // // update instance
+      // const targetInstanceIDs = VersionsControllerImpl.getInstanceIDs(
+      //   _language,
+      //   _currentGroup,
+      //   _currentPlatform
+      // );
+      // updateInstance({
+      //   language: _language,
+      //   instanceIDs: targetInstanceIDs,
+      // });
+      // // update version
+      // updateVersion({
+      //   group: _currentGroup,
+      //   platform: _currentPlatform,
+      //   language: _language,
+      //   version,
+      // });
+    },
+    [
+      setLanguage,
+      // updateGroup, updateInstance, updatePlatform, updateVersion
+    ]
+  );
 
-  // useEffect(() => {
-  //   // language, group, platform, version
-  //   const language = localStorage.getItem("search-language") as string;
-  //   const group = localStorage.getItem("search-group") as string;
-  //   const platform = localStorage.getItem("search-platform") as string;
-  //   const version = localStorage.getItem("search-version") as string;
-  //   // can only be executed once
-  //   initSelect({
-  //     language,
-  //     group,
-  //     platform,
-  //     version,
-  //   });
-  // }, []);
+  useEffect(() => {
+    // language, group, platform, version
+    const language = localStorage.getItem("search-language") as string;
+    // const group = localStorage.getItem("search-group") as string;
+    // const platform = localStorage.getItem("search-platform") as string;
+    // const version = localStorage.getItem("search-version") as string;
+    // can only be executed once
+    initSelect({
+      language,
+      // group,
+      // platform,
+      // version,
+    });
+  }, []);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>

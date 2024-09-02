@@ -20,6 +20,7 @@ const LanguageSwitch = (props: LanguageSwitchProps) => {
     key: language,
   }) => {
     const target = displayLanguages.find((item) => item.language === language);
+    localStorage.setItem("search-language", language);
     router.push({ pathname: target.defaultLink });
   };
 
