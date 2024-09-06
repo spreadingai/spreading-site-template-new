@@ -81,7 +81,7 @@ const SearchSelectWrap = (props) => {
   const { docVersion, slugVersion, displayVersions } = useVersion();
   const { currentDocType, setCurrentDocType } = useDocType();
   const { results } = useHits();
-  const { facets } = results;
+  const { facets, nbHits } = results;
 
   // doc types
   const handleDocTypeChanged = useCallback(
@@ -219,6 +219,10 @@ const SearchSelectWrap = (props) => {
             key,
             displayPlatforms
           );
+          // Update count
+          if (key === currentPlatform) {
+            searchCountData.data[key] = nbHits;
+          }
           menuItems.push({
             value: key,
             label:
@@ -263,6 +267,7 @@ const SearchSelectWrap = (props) => {
     currentLanguage,
     displayPlatforms,
     currentPlatform,
+    nbHits,
     setChangeKey,
     handlePlatformChanged,
   ]);
@@ -325,7 +330,7 @@ const SearchSelectWrap = (props) => {
         )}
       </>
     );
-  }, [changeKey, docVersion, facets, handleVersionChanged, setChangeKey]);
+  }, [docVersion, facets, handleVersionChanged, setChangeKey]);
 
   return (
     <div className={styles.searchSelectWrap}>
