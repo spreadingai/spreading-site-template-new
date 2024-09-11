@@ -15,11 +15,18 @@ export const remarkToc = (options) => {
       if (textContent === "") return;
 
       let id = slug(textContent);
+      let ignore = false;
+
       if (!uniqueId[id]) {
         uniqueId[id] = 1;
       } else {
-        uniqueId[id]++;
-        id += `-${uniqueId[id]}`;
+        if (parent.name === "if") {
+          // ignore repetition
+          ignore = true;
+        } else {
+          uniqueId[id]++;
+          id += `-${uniqueId[id]}`;
+        }
       }
       const Heading = {
         type: "mdxJsxFlowElement",
@@ -32,11 +39,12 @@ export const remarkToc = (options) => {
       };
       parent.children[i] = Heading;
 
-      headings.push({
-        level: node.depth,
-        id,
-        title: textContent,
-      });
+      !ignore &&
+        headings.push({
+          level: node.depth,
+          id,
+          title: textContent,
+        });
     });
     if (headings.length) {
       const toc = parseHeadingsToTocs(headings);

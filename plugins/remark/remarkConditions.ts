@@ -22,7 +22,7 @@ export const remarkConditions = () => {
             const operator = "===";
             const expression = `{"display": ${key}${operator}${
               typeof value !== "string" ? value : '"' + value + '"'
-            } ? "block" : "none"}`;
+            } ? "null" : "none"}`;
 
             let rightObj: any = {
               type: "Literal",
@@ -102,8 +102,8 @@ export const remarkConditions = () => {
                                     },
                                     consequent: {
                                       type: "Literal",
-                                      value: "block",
-                                      raw: '"block"',
+                                      value: "null",
+                                      raw: '"null"',
                                     },
                                     alternate: {
                                       type: "Literal",

@@ -37,6 +37,35 @@ const AnchorNodeMobile: FC<AnchorNodeProps> = ({ tocFormatData }) => {
     setLoaded(true);
   }, [isShowMobile]);
 
+  useEffect(() => {
+    // 删除重复且不显示的 h 标签
+    const loop = (tocFormatData) => {
+      tocFormatData.forEach((element) => {
+        if (element.children) {
+          loop(element.children);
+        } else {
+          const hDoms = document.querySelectorAll(element.href);
+          hDoms.forEach((hDom) => {
+            if (
+              hDom &&
+              hDom.style.display === "none" &&
+              hDom.className &&
+              hDom.className.includes("choose-one") &&
+              hDom.parentNode
+            ) {
+              hDom.parentNode.removeChild(hDom);
+            }
+          });
+        }
+      });
+    };
+    try {
+      loop(tocFormatData);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [tocFormatData]);
+
   return (
     <div
       onClick={() => {
