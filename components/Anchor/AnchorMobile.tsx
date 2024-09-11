@@ -53,7 +53,11 @@ const AnchorNodeMobile: FC<AnchorNodeProps> = ({ tocFormatData }) => {
               hDom.className.includes("choose-one") &&
               hDom.parentNode
             ) {
-              hDom.parentNode.removeChild(hDom);
+              try {
+                hDom.id = hDom.id + "-display-none";
+              } catch (error) {
+                console.error(error);
+              }
             }
           });
         }
