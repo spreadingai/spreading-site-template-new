@@ -40,12 +40,18 @@ const AnchorNodeMobile: FC<AnchorNodeProps> = ({ tocFormatData }) => {
   useEffect(() => {
     // 删除重复且不显示的 h 标签
     const loop = (tocFormatData) => {
-      tocFormatData.forEach((element) => {
+      for (let index = 0; index < tocFormatData.length; index++) {
+        const element = tocFormatData[index];
         if (element.children) {
           loop(element.children);
         } else {
           const hDoms = document.querySelectorAll(element.href);
-          hDoms.forEach((hDom) => {
+          for (
+            let subIndex = 0, subLen = hDoms.length;
+            subIndex < subLen;
+            subIndex++
+          ) {
+            const hDom = hDoms[subIndex];
             if (
               hDom &&
               hDom.style.display === "none" &&
@@ -53,15 +59,18 @@ const AnchorNodeMobile: FC<AnchorNodeProps> = ({ tocFormatData }) => {
               hDom.className.includes("choose-one") &&
               hDom.parentNode
             ) {
+              // 删除对应 toc 数据
+              tocFormatData.splice(index, 1);
+              index--;
               try {
                 hDom.id = hDom.id + "-display-none";
               } catch (error) {
                 console.error(error);
               }
             }
-          });
+          }
         }
-      });
+      }
     };
     try {
       loop(tocFormatData);
