@@ -105,8 +105,8 @@ class LibController {
     instances.forEach((instance) => {
       if (
         // Multiple languages are not configured
-        !currentLanguage ||
         !i18n ||
+        !currentLanguage ||
         // No instance of locale is configured
         (!instance.locale && i18n.defaultLocale === currentLanguage) ||
         // Locale corresponding instance
