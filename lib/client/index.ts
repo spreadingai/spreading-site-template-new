@@ -106,6 +106,7 @@ class LibController {
       if (
         // Multiple languages are not configured
         !currentLanguage ||
+        !i18n ||
         // No instance of locale is configured
         (!instance.locale && i18n.defaultLocale === currentLanguage) ||
         // Locale corresponding instance
