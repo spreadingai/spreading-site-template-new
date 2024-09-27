@@ -3,6 +3,8 @@ import { visit } from "unist-util-visit";
 const tagNameMap = {
   list: "li",
   code: "div",
+  blockquote: "div",
+  thematicBreak: "div",
 };
 
 export const remarkConditions = () => {
