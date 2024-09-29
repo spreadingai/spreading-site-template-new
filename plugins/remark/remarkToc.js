@@ -20,13 +20,13 @@ export const remarkToc = (options) => {
       if (!uniqueId[id]) {
         uniqueId[id] = 1;
       } else {
-        if (parent.name === "if") {
-          // ignore repetition
-          ignore = true;
-        } else {
-          uniqueId[id]++;
-          id += `-${uniqueId[id]}`;
-        }
+        // if (parent.name === "if") {
+        //   // ignore repetition
+        //   ignore = true;
+        // } else {
+        uniqueId[id]++;
+        id += `-${uniqueId[id]}`;
+        // }
       }
       const Heading = {
         type: "mdxJsxFlowElement",
