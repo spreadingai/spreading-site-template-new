@@ -183,7 +183,7 @@ const Header = (props: Props) => {
       <div className={`container-wrap ${styles.container}`}>
         {logo ? (
           <div className="flex items-center">
-            <Link
+            <a
               className={styles["logo-container"]}
               href={navbar.iconRedirectUrl || ""}
               ref={logoRef}
@@ -203,7 +203,7 @@ const Header = (props: Props) => {
               <span className={styles["logo-title"]}>
                 {decodeURI(navbar.title)}
               </span>
-            </Link>
+            </a>
             {!isSearchPage ? DocSearchComponent : null}
           </div>
         ) : null}
