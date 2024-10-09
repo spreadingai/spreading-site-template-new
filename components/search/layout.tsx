@@ -45,16 +45,19 @@ import {
   DisplayInstance,
   DisplayPlatform,
   DisplayVersion,
+  DocuoConfig,
 } from "@/lib/types";
 
 type Props = {
   allUsedVersions: Record<string, string[]>;
+  inputDocuoConfig: DocuoConfig;
   children: React.ReactNode;
 };
 
-const Layout = ({ children, allUsedVersions }: Props) => {
+const Layout = ({ children, allUsedVersions, inputDocuoConfig }: Props) => {
   const [theme, setTheme] = useState<Theme>("light");
-  const docuoConfig = LibControllerImpl.getDocuoConfig();
+  LibControllerImpl.setClientDocuoConfig(inputDocuoConfig);
+  const docuoConfig = LibControllerImpl.getClientDocuoConfig();
   const gaId = docuoConfig?.analytics?.ga4?.measurementId;
   useColorMode(docuoConfig.themeConfig?.colorMode, theme, setTheme);
   useColors(docuoConfig.themeConfig?.colors);

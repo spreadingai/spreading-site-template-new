@@ -10,7 +10,7 @@ class LanguageController {
     );
   }
   getDisplayLanguages() {
-    const { i18n } = LibControllerImpl.getDocuoConfig();
+    const { i18n } = LibControllerImpl.getClientDocuoConfig();
     const result: {
       displayLanguages: DisplayLanguage[];
     } = { displayLanguages: [] };
