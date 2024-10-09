@@ -1,3 +1,5 @@
+import fs from "fs";
+import path from "path";
 import inputDocuoConfig from "@/docs/docuo.config.json";
 import SlugControllerImpl from "./slug-help";
 import {
@@ -28,9 +30,25 @@ class LibController {
   getDocuoConfig() {
     // Complete the default value
     if (!this._docuoConfig) {
-      const docuoConfig: DocuoConfig = JSON.parse(
-        JSON.stringify(inputDocuoConfig)
-      );
+      let docuoConfig: DocuoConfig;
+      try {
+        const docuoConfigPath = path.resolve(
+          "./public",
+          "..",
+          `${this.getEntityRootDirectory()}/${
+            process.env.NEXT_PUBLIC_CONFIG_FILE
+          }`
+        );
+        console.log(
+          "[LibController]getDocuoConfig docuoConfigPath",
+          docuoConfigPath
+        );
+        const readDocuoConfig = fs.readFileSync(docuoConfigPath, "utf8");
+        docuoConfig = JSON.parse(readDocuoConfig);
+      } catch (error) {
+        console.error("[LibController]getDocuoConfig docuoConfigPath");
+        docuoConfig = JSON.parse(JSON.stringify(inputDocuoConfig));
+      }
       const defaultInstance = {
         id: DEFAULT_INSTANCE_ID, // Host instance
         label: "docs",

@@ -1,4 +1,3 @@
-import inputDocuoConfig from "@/docs/docuo.config.json";
 import {
   DocuoConfig,
   Plan,
@@ -17,74 +16,16 @@ class LibController {
       LibController._instance || (LibController._instance = new LibController())
     );
   }
-  getDocuoConfig() {
-    // Complete the default value
-    if (!this._docuoConfig) {
-      const docuoConfig: DocuoConfig = JSON.parse(
-        JSON.stringify(inputDocuoConfig)
-      );
-      const defaultInstance = {
-        id: DEFAULT_INSTANCE_ID, // Host instance
-        label: "docs",
-        path: "docs",
-        routeBasePath: "",
-      };
-      // Check instances
-      if (!docuoConfig.instances || !docuoConfig.instances.length) {
-        // Insert host instance
-        docuoConfig.instances = [defaultInstance];
-      } else {
-        docuoConfig.instances.forEach((instance) => {
-          if (!instance.id) {
-            instance.id = defaultInstance.id;
-          }
-          if (!instance.path) {
-            instance.path = defaultInstance.path;
-          }
-          if (!instance.label) {
-            instance.label = defaultInstance.label;
-          }
-          if (!instance.routeBasePath) {
-            instance.routeBasePath = "";
-          } else {
-            // Compatible with old implementations, removing the "/" before and after
-            instance.routeBasePath = instance.routeBasePath.replace(
-              /^\/|\/$/g,
-              ""
-            );
-          }
-          if (docuoConfig.i18n && !instance.locale) {
-            instance.locale = docuoConfig.i18n.defaultLocale;
-          }
-        });
-        if (Number(process.env.NEXT_PUBLIC_PLAN) === Plan.Free) {
-          docuoConfig.instances.splice(1);
-        } else {
-          if (
-            process.env.NEXT_PUBLIC_INSTANCE_LIMIT !== UNLIMITED_INSTANCE_NUMBER
-          ) {
-            try {
-              const limit = Number(process.env.NEXT_PUBLIC_INSTANCE_LIMIT);
-              if (!isNaN(limit) && limit) {
-                docuoConfig.instances.splice(limit);
-              }
-            } catch (error) {
-              console.log(
-                `[LibController]getDocuoConfig process.env.NEXT_PUBLIC_INSTANCE_LIMIT: `,
-                process.env.NEXT_PUBLIC_INSTANCE_LIMIT
-              );
-            }
-          }
-        }
-      }
-      this._docuoConfig = docuoConfig;
-    }
+  setClientDocuoConfig(inputDocuoConfig) {
+    this._docuoConfig = inputDocuoConfig;
+  }
+  getClientDocuoConfig() {
     return this._docuoConfig;
   }
   getInstances(type?: InstanceType) {
     let instances: DocInstance[];
     if (!this._docuoConfig) {
-      instances = this.getDocuoConfig().instances;
+      instances = this.getClientDocuoConfig().instances;
     } else {
       instances = this._docuoConfig.instances;
     }
@@ -98,8 +39,8 @@ class LibController {
       return instances;
     }
   }
-  getDisplayInstances(currentLanguage: string): DisplayInstance[] {
-    const { i18n } = this.getDocuoConfig();
+  getDisplayInstances(currentLanguage: string) {
+    const { i18n } = this.getClientDocuoConfig();
     const result: DisplayInstance[] = [];
     const instances = this.getInstances();
     instances.forEach((instance) => {

@@ -24,6 +24,7 @@ import {
 import CustomHit from "@/components/search/CustomHit";
 import Layout from "@/components/search/layout";
 import "instantsearch.css/themes/satellite.css";
+import LibControllerImpl from "@/lib/index";
 import VersionsControllerImpl from "@/lib/versions-help";
 import GroupControllerImpl from "@/lib/client/group-help";
 import PlatformControllerImpl from "@/lib/client/platform-help";
@@ -66,8 +67,10 @@ const isNumber = (value: any) => {
 
 export const getStaticProps = (props) => {
   const allUsedVersions = VersionsControllerImpl.getAllUsedVersions();
+  const inputDocuoConfig = LibControllerImpl.getDocuoConfig();
   return {
     props: {
+      inputDocuoConfig,
       allUsedVersions,
     },
   };
