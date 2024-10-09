@@ -33,22 +33,26 @@ const LanguageSwitch = (props: LanguageSwitchProps) => {
   }));
 
   return (
-    <div className={`${styles.languageToggle} ${className}`}>
-      <Dropdown
-        trigger={["click"]}
-        menu={{
-          items,
-          className: styles.languageWrapper,
-          onClick: handleLanguageChanged || defaultHandleLanguageChanged,
-        }}
-        placement="bottomRight"
-      >
-        <button className={styles.toggleButton}>
-          <IconLanguageNorLight className={styles.lightToggleIcon} />
-          <IconLanguageNorDark className={styles.darkToggleIcon} />
-        </button>
-      </Dropdown>
-    </div>
+    <>
+      {items && items.length > 1 ? (
+        <div className={`${styles.languageToggle} ${className}`}>
+          <Dropdown
+            trigger={["click"]}
+            menu={{
+              items,
+              className: styles.languageWrapper,
+              onClick: handleLanguageChanged || defaultHandleLanguageChanged,
+            }}
+            placement="bottomRight"
+          >
+            <button className={styles.toggleButton}>
+              <IconLanguageNorLight className={styles.lightToggleIcon} />
+              <IconLanguageNorDark className={styles.darkToggleIcon} />
+            </button>
+          </Dropdown>
+        </div>
+      ) : null}
+    </>
   );
 };
 
