@@ -1,11 +1,9 @@
 import {
   DocuoConfig,
-  Plan,
   InstanceType,
   DocInstance,
   DisplayInstance,
 } from "../types";
-import { DEFAULT_INSTANCE_ID, UNLIMITED_INSTANCE_NUMBER } from "../constants";
 
 class LibController {
   static _instance: LibController;
