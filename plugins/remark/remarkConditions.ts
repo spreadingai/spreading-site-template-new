@@ -13,7 +13,12 @@ export const remarkConditions = () => {
       if (node.children) {
         for (let index = 0; index < node.children.length; ) {
           const childrenNode = node.children[index];
-          if (childrenNode.name === "if") {
+          if (
+            (childrenNode.type === "containerDirective" ||
+              childrenNode.type === "leafDirective" ||
+              childrenNode.type === "textDirective") &&
+            childrenNode.name === "if"
+          ) {
             const key = Object.keys(childrenNode.attributes)[0];
             let value =
               childrenNode.attributes[Object.keys(childrenNode.attributes)[0]];

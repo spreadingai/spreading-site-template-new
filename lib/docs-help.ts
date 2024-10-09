@@ -20,6 +20,7 @@ import {
   remarkFrontmatter,
   rehypeNestedFormat,
   remarkConditions,
+  // remarkTest,
 } from "@/plugins";
 
 import LibControllerImpl from "./index";
@@ -30,6 +31,8 @@ import { convertDocID, ignoreNumberPrefix, removeMdxSuffix } from "./utils";
 import { DEFAULT_INSTANCE_ID } from "./constants";
 import { InstanceType } from "./types";
 
+import Markdoc from "@markdoc/markdoc";
+
 class DocsController {
   static _instance: DocsController;
   static getInstance() {
@@ -39,6 +42,13 @@ class DocsController {
     );
   }
   async readDoc(slug: string[]) {
+    // const source = "# Markdoc";
+
+    // const ast = Markdoc.parse(source);
+    // const content = Markdoc.transform(ast /* config */);
+
+    // const html = Markdoc.renderers.html(content);
+
     // console.log(`[DocsController]readDoc `, slug);
     const { docVersion, mdxFileID, instanceID, slugVersion, routeBasePath } =
       SlugControllerImpl.getExtractInfoFromSlug(slug);
@@ -132,6 +142,7 @@ class DocsController {
       }${slugVersion}`,
     };
     const remarkPlugins = [
+      // remarkTest,
       remarkDirective,
       remarkGfm,
       remarkMath,
