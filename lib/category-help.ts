@@ -28,10 +28,11 @@ class CategoryController {
         if (navigationInfo && navigationInfo.category) {
           navigationInfo.category.forEach((item) => {
             const exist = result.find((element) => element.key === item);
-            result.push({
-              key: item,
-              name: item,
-            });
+            exist &&
+              result.push({
+                key: item,
+                name: item,
+              });
           });
         }
       }
