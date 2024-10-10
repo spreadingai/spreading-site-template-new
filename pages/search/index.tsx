@@ -616,13 +616,22 @@ const PaginationWrap = (props) => {
 };
 
 export default function SearchPage(props) {
-  const searchClient = algoliasearch(
-    "N61JOMLMAK",
-    "cc55591748c47b1e5e24d363cdf1d5eb"
-  );
-  const indexName = "zegocloud";
+  const { inputDocuoConfig } = props;
+  let appId = "N61JOMLMAK";
+  let apiKey = "cc55591748c47b1e5e24d363cdf1d5eb";
+  let indexName = "zegocloud";
+  if (
+    inputDocuoConfig &&
+    inputDocuoConfig.search &&
+    inputDocuoConfig.search.algolia
+  ) {
+    appId = inputDocuoConfig.search.algolia.appId;
+    apiKey = inputDocuoConfig.search.algolia.apiKey;
+    indexName = inputDocuoConfig.search.algolia.indexName;
+  }
+  const searchClient = algoliasearch(appId, apiKey);
   const initialUiState = {
-    zegocloud: {
+    [indexName]: {
       query: ignoreStr,
     },
   };
