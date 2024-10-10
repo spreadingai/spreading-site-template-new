@@ -28,6 +28,7 @@ import PlatformControllerImpl from "@/lib/platform-help";
 import VersionsControllerImpl from "@/lib/versions-help";
 import PagerControllerImpl from "@/lib/pager-help";
 import ShortLinkTransControllerImpl from "@/lib/trans-short-link";
+import CategoryTransControllerImpl from "@/lib/category-help";
 import Link from "next/link";
 import { SlugData, DocuoConfig, TocItem } from "@/lib/types";
 import Head from "next/head";
@@ -141,6 +142,13 @@ export const getStaticProps = async ({ params }: SlugData) => {
     return item.instance.id === instanceID;
   });
   const { prev, next } = PagerControllerImpl.getPageTurningData(slug);
+  const displayCategorys = CategoryTransControllerImpl.getDisplayCategorys(
+    slug,
+    currentLanguage,
+    currentGroup,
+    displayGroups
+  );
+  console.log("######displayCategorys", JSON.stringify(displayCategorys));
   return {
     props: {
       ...postData,
@@ -164,6 +172,7 @@ export const getStaticProps = async ({ params }: SlugData) => {
       versions,
       prev,
       next,
+      displayCategorys,
     },
   };
 };

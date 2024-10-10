@@ -54,11 +54,6 @@ import { DEFAULT_CURRENT_SLUG_VERSION } from "@/lib/constants";
 import { allGroupItem } from "@/components/context/groupContext";
 import { allPlatformItem } from "@/components/context/platformContext";
 
-const searchClient = algoliasearch(
-  "N61JOMLMAK",
-  "cc55591748c47b1e5e24d363cdf1d5eb"
-);
-
 const ignoreStr = "docuoignoreinitsearch";
 
 const isNumber = (value: any) => {
@@ -621,6 +616,16 @@ const PaginationWrap = (props) => {
 };
 
 export default function SearchPage(props) {
+  const searchClient = algoliasearch(
+    "N61JOMLMAK",
+    "cc55591748c47b1e5e24d363cdf1d5eb"
+  );
+  const indexName = "zegocloud";
+  const initialUiState = {
+    zegocloud: {
+      query: ignoreStr,
+    },
+  };
   const router = useRouter();
   const [searchKey, setSearchKey] = useState("");
   const [changeKey, setChangeKey] = useState("searchKey");
@@ -722,12 +727,8 @@ export default function SearchPage(props) {
       >
         <InstantSearch
           searchClient={searchClient}
-          indexName="zegocloud"
-          initialUiState={{
-            zegocloud: {
-              query: ignoreStr,
-            },
-          }}
+          indexName={indexName}
+          initialUiState={initialUiState}
         >
           <Configure
             snippetEllipsisText="…"
