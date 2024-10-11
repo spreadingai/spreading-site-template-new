@@ -107,7 +107,6 @@
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
-    height: 20px;
     line-height: 20px;
     margin-bottom: 12px;
     cursor: pointer;
@@ -135,5 +134,16 @@
     &.hotTag {
         color: #fea533;
         background-color: #fef6ec;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .currentGroupWrap {
+        :global(.ant-tabs-nav) {
+            min-width: 104px;
+        }
+        :global(.ant-tabs-left > .ant-tabs-nav .ant-tabs-tab) {
+            height: 38px;
+        }
     }
 }

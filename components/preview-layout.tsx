@@ -600,7 +600,7 @@ const PreviewLayout = ({
                         key="left"
                         getContainer={false}
                       >
-                        <div className={`mt-[16px] flex pl-8 flex-wrap`}>
+                        <div className={`mt-[30px] flex pl-8 flex-wrap`}>
                           {!displayGroups || !displayGroups.length ? (
                             <>
                               <InsVersionDropdown
