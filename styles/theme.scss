@@ -91,6 +91,9 @@ html {
   --docuo-pager-arrow-color: #353c4e;
   --docuo-pager-title-color: #515869;
   --docuo-pager-desc-color: #171717;
+
+  // Category
+  --docuo-popup-bg-active: linear-gradient(107deg, #e8efff 0%, #ffffff 100%);
 }
 
 html[data-theme="dark"] {
@@ -186,4 +189,7 @@ html[data-theme="dark"] {
   --docuo-pager-arrow-color: #b6b6b6;
   --docuo-pager-title-color: #b6b6b6;
   --docuo-pager-desc-color: #fff;
+
+  // Category
+  --docuo-popup-bg-active: #252525;
 }

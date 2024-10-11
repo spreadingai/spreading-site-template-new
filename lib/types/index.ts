@@ -228,3 +228,12 @@ export interface FolderTreeData {
   title: string;
   type: SidebarItemType;
 }
+
+export interface CategoryMenuData {
+  id: string;
+  key: string;
+  name: string;
+  tag?: string;
+  defaultLink?: string;
+  children?: CategoryMenuData[];
+}

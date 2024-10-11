@@ -142,13 +142,12 @@ export const getStaticProps = async ({ params }: SlugData) => {
     return item.instance.id === instanceID;
   });
   const { prev, next } = PagerControllerImpl.getPageTurningData(slug);
-  const displayCategorys = CategoryTransControllerImpl.getDisplayCategorys(
-    slug,
-    currentLanguage,
-    currentGroup,
-    displayGroups
-  );
-  console.log("######displayCategorys", JSON.stringify(displayCategorys));
+  const { displayCategorys, currentCategory, currentProduct } =
+    CategoryTransControllerImpl.getDisplayCategorys(
+      currentLanguage,
+      instanceID,
+      displayGroups
+    );
   return {
     props: {
       ...postData,
@@ -172,6 +171,8 @@ export const getStaticProps = async ({ params }: SlugData) => {
       versions,
       prev,
       next,
+      currentCategory,
+      currentProduct,
       displayCategorys,
     },
   };
