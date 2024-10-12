@@ -30,6 +30,7 @@ const DocuoTree: FC<TreeProps> = ({
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
 
   const onExpand = (expandedKeys) => {
+    debugger;
     setExpandedKeys(expandedKeys);
   };
 

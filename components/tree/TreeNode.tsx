@@ -128,10 +128,10 @@ const TreeNode: FC<TreeNodeProps> = ({
               defaultExpandAll={!child.collapsed}
               onSelect={onSelect}
               titleRender={titleRender}
-              onExpand={() => {
-                setIsOpen(true);
-                onExpand && onExpand();
-              }}
+              // onExpand={() => {
+              //   setIsOpen(true);
+              //   onExpand && onExpand();
+              // }}
             />
           ))}
         </div>
