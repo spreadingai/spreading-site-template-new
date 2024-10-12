@@ -24,6 +24,7 @@
     :global(.ant-tabs-content-holder) {
         padding-bottom: 24px;
         border-left: var(--docuo-popup-border);
+        overflow-y: auto;
     }
     :global(.ant-tabs-left > .ant-tabs-nav .ant-tabs-tab) {
         height: 48px;
@@ -84,6 +85,11 @@
 
 .tabItem {
     color: var(--docuo-color-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    max-width: 180px;
     &.activeTab {
         color: var(--docuo-color-primary-active);
     }
@@ -138,6 +144,14 @@
     }
 }
 
+@media screen and (max-width: 1024px) {
+    .currentGroupWrap {
+        .tabItem {
+            max-width: 140px;
+        }
+    }
+}
+
 @media screen and (max-width: 750px) {
     .currentGroupWrap {
         :global(.ant-tabs-nav) {
@@ -145,6 +159,9 @@
         }
         :global(.ant-tabs-left > .ant-tabs-nav .ant-tabs-tab) {
             height: 38px;
+        }
+        .tabItem {
+            max-width: 120px;
         }
     }
 }
