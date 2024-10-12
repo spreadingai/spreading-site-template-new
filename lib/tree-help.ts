@@ -129,7 +129,10 @@ class TreeController {
           slugVersion,
           indexStr: `${level}-${index}`,
         };
-        children && (temp.children = children);
+        if (children) {
+          temp.children = children;
+          temp.collapsed = !!item.collapsed;
+        }
         if (item.id) {
           temp.mdxFileID = item.id;
           temp.originID = `${idPrefixKey}${idPrefixKey ? "/" : ""}${item.id}`;

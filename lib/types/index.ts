@@ -228,6 +228,7 @@ export interface FolderTreeData {
   title: string;
   type: SidebarItemType;
   indexStr: string;
+  collapsed?: boolean;
 }
 
 export interface CategoryMenuData {

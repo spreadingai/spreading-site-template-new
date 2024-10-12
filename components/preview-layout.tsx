@@ -81,6 +81,7 @@ type TreeDataObject = {
   type: SidebarItemType;
   link?: string;
   id?: string;
+  collapsed?: boolean;
   children?: TreeDataObject[];
 };
 

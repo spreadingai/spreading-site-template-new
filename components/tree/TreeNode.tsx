@@ -10,6 +10,7 @@ interface TreeNode {
   title: string;
   children?: TreeNode[];
   isOpen?: boolean;
+  collapsed?: boolean;
 }
 interface TreeNodeProps {
   node: TreeNode;
@@ -35,7 +36,8 @@ const TreeNode: FC<TreeNodeProps> = ({
   const hasChildren = node.children && node.children.length > 0;
 
   const [isOpen, setIsOpen] = useState(
-    level !== 0 ? (defaultExpandAll ? defaultExpandAll : !!node.isOpen) : true
+    // level !== 0 ? (defaultExpandAll ? defaultExpandAll : !!node.isOpen) : true
+    !!defaultExpandAll || !!node.isOpen
   );
 
   useEffect(() => {
@@ -122,7 +124,8 @@ const TreeNode: FC<TreeNodeProps> = ({
               showLines={showLines}
               level={level + 1}
               selectedKeys={selectedKeys}
-              defaultExpandAll={defaultExpandAll}
+              // defaultExpandAll={defaultExpandAll}
+              defaultExpandAll={!child.collapsed}
               onSelect={onSelect}
               titleRender={titleRender}
               onExpand={() => {

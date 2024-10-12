@@ -13,7 +13,7 @@ interface TreeProps {
   selectedKeys?: string[];
   onSelect?: (selectedKeys: string[], node: TreeNode) => void;
   titleRender?: (node: TreeNode) => React.ReactNode;
-  defaultExpandAll?: boolean;
+  // defaultExpandAll?: boolean;
   setDrawerOpen: (value: boolean) => void;
 }
 
@@ -24,7 +24,7 @@ const DocuoTree: FC<TreeProps> = ({
   selectedKeys,
   titleRender,
   onSelect,
-  defaultExpandAll = false,
+  // defaultExpandAll = false,
   setDrawerOpen,
 }) => {
   const [expandedKeys, setExpandedKeys] = useState<string[]>([]);
@@ -38,10 +38,14 @@ const DocuoTree: FC<TreeProps> = ({
   };
 
   const isHideWaterMark =
-    Number(process.env.NEXT_PUBLIC_PLAN) !== Plan.Free && docuoConfig?.themeConfig?.removeWatermark === true;
+    Number(process.env.NEXT_PUBLIC_PLAN) !== Plan.Free &&
+    docuoConfig?.themeConfig?.removeWatermark === true;
   return (
     <div className={classNames("pt-[28px] pb-10 pl-8 pr-6", className)}>
-      <span onClick={handleClose} className="w-6 absolute right-5 top-2 cursor-pointer z-10 preview-side-close-btn">
+      <span
+        onClick={handleClose}
+        className="w-6 absolute right-5 top-2 cursor-pointer z-10 preview-side-close-btn"
+      >
         <IconClose />
       </span>
       {data.map((node, index) => (
@@ -52,7 +56,8 @@ const DocuoTree: FC<TreeProps> = ({
           selectedKeys={selectedKeys || expandedKeys}
           onSelect={onSelect || onExpand}
           titleRender={titleRender}
-          defaultExpandAll={defaultExpandAll}
+          // defaultExpandAll={defaultExpandAll}
+          defaultExpandAll={!node.collapsed}
         />
       ))}
       {!isHideWaterMark && (
