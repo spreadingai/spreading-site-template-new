@@ -35,8 +35,7 @@ const TreeNode: FC<TreeNodeProps> = ({
   const hasChildren = node.children && node.children.length > 0;
 
   const [isOpen, setIsOpen] = useState(
-    // level !== 0 ? (defaultExpandAll ? defaultExpandAll : !!node.isOpen) : true
-    defaultExpandAll ? defaultExpandAll : !!node.isOpen
+    level !== 0 ? (defaultExpandAll ? defaultExpandAll : !!node.isOpen) : true
   );
 
   useEffect(() => {
