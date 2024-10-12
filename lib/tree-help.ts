@@ -127,6 +127,7 @@ class TreeController {
           instanceID,
           docVersion,
           slugVersion,
+          indexStr: `${level}-${index}`,
         };
         children && (temp.children = children);
         if (item.id) {
@@ -154,6 +155,7 @@ class TreeController {
           instanceID,
           docVersion,
           slugVersion,
+          indexStr: `${level}-${index}`,
         });
       }
     }

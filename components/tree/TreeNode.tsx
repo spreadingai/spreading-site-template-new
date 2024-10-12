@@ -48,7 +48,8 @@ const TreeNode: FC<TreeNodeProps> = ({
   }, [node.children, node.key, onExpand, selectedKeys]);
 
   const toggleNode = () => {
-    if (hasChildren && level !== 0) {
+    // if (hasChildren && level !== 0) {
+    if (hasChildren) {
       setIsOpen(!isOpen);
     }
 
@@ -65,14 +66,16 @@ const TreeNode: FC<TreeNodeProps> = ({
     >
       <div
         className={classNames(
-          `${styles.treeNodeContainer} text-sm flex items-center tree-node-container`,
+          // `${styles.treeNodeContainer} text-sm flex items-center tree-node-container`,
+          `${styles.treeNodeContainer} text-sm flex items-center tree-node-container cursor-pointer`,
           {
             "mb-2.5": level === 0,
             "mb-2 cursor-pointer": level > 0,
             "hover:opacity-70": level > 0 && hasChildren,
           }
         )}
-        onClick={level > 0 ? toggleNode : undefined}
+        // onClick={level > 0 ? toggleNode : undefined}
+        onClick={toggleNode}
       >
         <span
           className={classNames(`${styles.treeNodeLabel} tree-node-label`, {
@@ -87,7 +90,8 @@ const TreeNode: FC<TreeNodeProps> = ({
           <span>{titleRender ? titleRender(node) : node.title}</span>
         </span>
 
-        {hasChildren && level > 0 ? (
+        {/* {hasChildren && level > 0 ? ( */}
+        {hasChildren ? (
           <span
             className={classNames("duration-200 ml-1.5", styles.treeNodeIcon, {
               "rotate-90": isOpen,

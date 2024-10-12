@@ -227,6 +227,7 @@ export interface FolderTreeData {
   slugVersion: string;
   title: string;
   type: SidebarItemType;
+  indexStr: string;
 }
 
 export interface CategoryMenuData {

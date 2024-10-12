@@ -271,6 +271,7 @@ html > body {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      user-select: none;
       img {
         margin-left: 8px;
         width: 16px;
@@ -476,6 +477,7 @@ html > body {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      user-select: none;
       img {
         margin-left: 8px;
         width: 16px;
@@ -679,6 +681,7 @@ html > body {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      user-select: none;
       img {
         margin-left: 8px;
         width: 16px;
