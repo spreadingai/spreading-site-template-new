@@ -52,6 +52,7 @@ import { DEFAULT_CURRENT_SLUG_VERSION } from "@/lib/constants";
 import { getMDXComponent } from "mdx-bundler/client";
 import { Mermaid } from "mdx-mermaid/lib/Mermaid";
 import { defaultLanguage } from "@/components/context/languageContext";
+import { PaginationData } from "@/components/articlePager";
 
 const MDX_GLOBAL_CONFIG = {
   MdxJsReact: {
@@ -110,6 +111,7 @@ interface Props {
     firstParagraphContent: string;
     firstImgSrc: string;
   };
+  curr: PaginationData;
 }
 
 export const getStaticProps = async ({ params }: SlugData) => {
@@ -141,7 +143,7 @@ export const getStaticProps = async ({ params }: SlugData) => {
     // Matches multiple language instance id
     return item.instance.id === instanceID;
   });
-  const { prev, next } = PagerControllerImpl.getPageTurningData(slug);
+  const { prev, curr, next } = PagerControllerImpl.getPageTurningData(slug);
   const { displayCategorys, currentCategory, currentProduct } =
     CategoryTransControllerImpl.getDisplayCategorys(
       currentLanguage,
@@ -170,6 +172,7 @@ export const getStaticProps = async ({ params }: SlugData) => {
       displayPlatforms,
       versions,
       prev,
+      curr,
       next,
       currentCategory,
       currentProduct,
@@ -229,6 +232,7 @@ function PageHead(props: Props) {
     currentInstanceLabel,
     slugVersion,
     currentLanguage,
+    curr,
   } = props;
   const frontmatter = mdxSource.frontmatter as DocFrontMatter;
   const str = `${currentInstanceLabel ? currentInstanceLabel + " " : ""}${
@@ -236,7 +240,11 @@ function PageHead(props: Props) {
   }`;
   let { title, description } = frontmatter;
   title = `${str}${
-    title || frontmatterRef.fileName || docuoConfig.title || ""
+    title ||
+    curr.description ||
+    frontmatterRef.fileName ||
+    docuoConfig.title ||
+    ""
   }`;
   description = `${str}${
     description ||

@@ -12,9 +12,14 @@ class PageController {
     );
   }
   getPageTurningData(slug: string[]) {
-    const result: { prev: PaginationData; next: PaginationData } = {
+    const result: {
+      prev: PaginationData;
+      next: PaginationData;
+      curr: PaginationData;
+    } = {
       prev: { description: "", href: "" },
       next: { description: "", href: "" },
+      curr: { description: this.findSitebarItemLabel(slug), href: "" },
     };
     const allSlugs = SlugControllerImpl.getAllSlugs();
     for (let index = 0, len = allSlugs.length; index < len; index++) {
