@@ -25,6 +25,7 @@ class TreeController {
       mdxFileID: currentMdxFileID,
     } = SlugControllerImpl.getExtractInfoFromSlug(slug);
     if (
+      process.env.NODE_ENV !== "development" &&
       this._folderTreeDataMap[instanceID] &&
       this._folderTreeDataMap[instanceID][docVersion]
     ) {
