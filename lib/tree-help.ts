@@ -131,7 +131,8 @@ class TreeController {
         };
         if (children) {
           temp.children = children;
-          temp.collapsed = !!item.collapsed;
+          temp.collapsed =
+            item.collapsed === undefined ? true : !!item.collapsed;
         }
         if (item.id) {
           temp.mdxFileID = item.id;
