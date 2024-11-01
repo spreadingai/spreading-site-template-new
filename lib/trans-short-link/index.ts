@@ -31,6 +31,7 @@ class ShortLinkTransController {
   _clientApiData: any = {};
   _mdKeyIdMap: any = {};
   _shortLinkMap: any = {};
+  _defaultNotFoundPath = "/";
   injectData({ locale }: any) {
     if (locale) {
       this._locale = locale;
@@ -296,11 +297,11 @@ class ShortLinkTransController {
       });
     }
 
-    return "/404";
+    return this._defaultNotFoundPath;
   }
   getApiShortLink(str: string, apiTreeData: any) {
     const [attr = "", name = "", kind = ""] = str.split("-");
-    if (!attr && !name) return `/404`;
+    if (!attr && !name) return this._defaultNotFoundPath;
     let link = this.getClientApiMatchedLink(apiTreeData, {
       attr,
       name,
@@ -357,7 +358,7 @@ class ShortLinkTransController {
     const id =
       shortLinkMap[url + "-" + articleKey] || shortLinkMap[url + "-all"];
     if (id) return `/article/${id}${hash ? "#" + hash : ""}`;
-    return "/404";
+    return this._defaultNotFoundPath;
   }
   getCommonShortLink = (str: string, shortLinkMap: any, articleInfo: Menu) => {
     const [url = "", hash = ""] = str.split("#");
