@@ -50,7 +50,10 @@ const InsVersionDropdown = ({ type, menu }: InsVersionDropdownProps) => {
     }
   };
 
-  if ((type === "instance" || type === "version") && menu.items.length <= 1)
+  if (
+    (type === "instance" || type === "version" || type === "platform") &&
+    menu.items.length <= 1
+  )
     return null;
 
   return (
