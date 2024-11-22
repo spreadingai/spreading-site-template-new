@@ -33,6 +33,8 @@ const nextConfig = {
     "rc-picker",
     "rc-tree",
     "rc-table",
+    "@ant-design/pro-chat",
+    "@ant-design/pro-editor",
   ],
   basePath: process.env.NEXT_PUBLIC_BASE_PATH || "",
   webpack(config) {

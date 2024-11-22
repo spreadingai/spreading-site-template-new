@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo } from "react";
+import { useRouter } from "next/router";
 import styles from "./styles.module.scss";
 import Link from "next/link";
 import { useMediaQuery } from "usehooks-ts";
@@ -21,6 +22,7 @@ import useVersion from "@/components/hooks/useVersion";
 import usePlatform from "@/components/hooks/usePlatform";
 import useSet from "@/components/hooks/useSet";
 import { defaultLanguage } from "../context/languageContext";
+import AISearch from "./AISearch";
 // import "@docsearch/css";
 
 interface Props {
@@ -31,6 +33,7 @@ interface Props {
 }
 
 const Header = (props: Props) => {
+  const router = useRouter();
   const { docuoConfig, tocFormatData, setDrawerOpen, isSearchPage } = props;
   const { handleLanguageChanged } = useSet();
   const {
@@ -181,32 +184,35 @@ const Header = (props: Props) => {
       } ${isSearchPage ? styles["search-page"] : ""}`}
     >
       <div className={`container-wrap ${styles.container}`}>
-        {logo ? (
-          <div className="flex items-center">
-            <a
-              className={styles["logo-container"]}
-              href={navbar.iconRedirectUrl || ""}
-              ref={logoRef}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                className={styles.logo}
-                src={
-                  (logo as string).includes("http")
-                    ? `${logo}`
-                    : `${
-                        process.env.NEXT_PUBLIC_BASE_PATH || ""
-                      }/${logo.replace(/^\//, "")}`
-                }
-                alt={"logo"}
-              />
-              <span className={styles["logo-title"]}>
-                {decodeURI(navbar.title)}
-              </span>
-            </a>
-            {!isSearchPage ? DocSearchComponent : null}
-          </div>
-        ) : null}
+        <div className="flex items-center">
+          {logo ? (
+            <div className="flex items-center">
+              <a
+                className={styles["logo-container"]}
+                href={navbar.iconRedirectUrl || ""}
+                ref={logoRef}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  className={styles.logo}
+                  src={
+                    (logo as string).includes("http")
+                      ? `${logo}`
+                      : `${
+                          process.env.NEXT_PUBLIC_BASE_PATH || ""
+                        }/${logo.replace(/^\//, "")}`
+                  }
+                  alt={"logo"}
+                />
+                <span className={styles["logo-title"]}>
+                  {decodeURI(navbar.title)}
+                </span>
+              </a>
+            </div>
+          ) : null}
+          {!isSearchPage ? DocSearchComponent : null}
+          {!isSearchPage && router.query.askai ? <AISearch /> : null}
+        </div>
         {isMobile ? (
           <div className={styles["menus"]}>
             <Mobile

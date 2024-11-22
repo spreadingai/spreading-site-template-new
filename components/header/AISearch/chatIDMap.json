@@ -1,0 +1,2029 @@
+{
+  "real_time_video_zh": {
+    "小程序: JS": {
+      "chat_id": "a926082ea6e911efafe10242ac120003",
+      "assistant_name": "RTC MiniProgram",
+      "questions": [
+        "实时音视频有哪些功能？",
+        "如何修改编码分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "Web: JS": {
+      "chat_id": "10295102a6ea11efbd670242ac120003",
+      "assistant_name": "RTC Web",
+      "questions": [
+        "实时音视频有哪些功能？",
+        "如何修改编码分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "Android: Java": {
+      "chat_id": "a25a695a92c011ef87010242ac120004",
+      "assistant_name": "RTC Android",
+      "questions": [
+        "实时音视频有哪些功能？",
+        "如何修改编码分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "iOS: Objective-C": {
+      "chat_id": "04877278a6e711efba7f0242ac120003",
+      "assistant_name": "RTC iOS",
+      "questions": [
+        "实时音视频有哪些功能？",
+        "如何修改编码分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "iOS: Swift": {
+      "chat_id": "04877278a6e711efba7f0242ac120003",
+      "assistant_name": "RTC iOS",
+      "questions": [
+        "实时音视频有哪些功能？",
+        "如何修改编码分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "Android: Kotlin": {
+      "chat_id": "a25a695a92c011ef87010242ac120004",
+      "assistant_name": "RTC Android",
+      "questions": [
+        "实时音视频有哪些功能？",
+        "如何修改编码分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "macOS: Objective-C": {
+      "chat_id": "37a4d4d2a6e911efb3b20242ac120003",
+      "assistant_name": "RTC macOS",
+      "questions": [
+        "实时音视频有哪些功能？",
+        "如何修改编码分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "macOS: Swift": {
+      "chat_id": "37a4d4d2a6e911efb3b20242ac120003",
+      "assistant_name": "RTC macOS",
+      "questions": [
+        "实时音视频有哪些功能？",
+        "如何修改编码分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "macOS: C++": {
+      "chat_id": "37a4d4d2a6e911efb3b20242ac120003",
+      "assistant_name": "RTC macOS",
+      "questions": [
+        "实时音视频有哪些功能？",
+        "如何修改编码分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "Windows: C++": {
+      "chat_id": "1be60292a6ea11ef88f40242ac120003",
+      "assistant_name": "RTC Windows",
+      "questions": [
+        "实时音视频有哪些功能？",
+        "如何修改编码分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "Windows: C#": {
+      "chat_id": "1be60292a6ea11ef88f40242ac120003",
+      "assistant_name": "RTC Windows",
+      "questions": [
+        "实时音视频有哪些功能？",
+        "如何修改编码分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "HarmonyOS: ArkTS": {
+      "chat_id": "ee343542a6e611ef814e0242ac120003",
+      "assistant_name": "RTC HarmonyOS",
+      "questions": [
+        "实时音视频有哪些功能？",
+        "如何修改编码分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "Linux: C++": {
+      "chat_id": "28413a30a6e911efab3b0242ac120003",
+      "assistant_name": "RTC Linux",
+      "questions": [
+        "实时音视频有哪些功能？",
+        "如何修改编码分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "Linux: Java": {
+      "chat_id": "28413a30a6e911efab3b0242ac120003",
+      "assistant_name": "RTC Linux",
+      "questions": [
+        "实时音视频有哪些功能？",
+        "如何修改编码分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "Flutter: Dart": {
+      "chat_id": "d80b1786a6e611ef89a50242ac120003",
+      "assistant_name": "RTC Flutter",
+      "questions": [
+        "实时音视频有哪些功能？",
+        "如何修改编码分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "Electron: JS": {
+      "chat_id": "c9d69398a6e611ef8daa0242ac120003",
+      "assistant_name": "RTC Electron",
+      "questions": [
+        "实时音视频有哪些功能？",
+        "如何修改编码分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "Unreal Engine: C++": {
+      "chat_id": "ff33e9d4a6e911efba830242ac120003",
+      "assistant_name": "RTC Unreal",
+      "questions": [
+        "实时音视频有哪些功能？",
+        "如何修改编码分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "Unity3D: C#": {
+      "chat_id": "ec86a3b2a6e911ef87120242ac120003",
+      "assistant_name": "RTC Unity",
+      "questions": [
+        "实时音视频有哪些功能？",
+        "如何修改编码分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "uni-app: JS": {
+      "chat_id": "d0170cf8a6e911efb32e0242ac120003",
+      "assistant_name": "RTC uni-app",
+      "questions": [
+        "实时音视频有哪些功能？",
+        "如何修改编码分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "React Native: JS": {
+      "chat_id": "beb47874a6e911efb4650242ac120003",
+      "assistant_name": "RTC React Native",
+      "questions": [
+        "实时音视频有哪些功能？",
+        "如何修改编码分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "Cocos Creator: TS": {
+      "chat_id": "a3f5fac4a6e611ef9faa0242ac120003",
+      "assistant_name": "RTC Cocos",
+      "questions": [
+        "实时音视频有哪些功能？",
+        "如何修改编码分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    }
+  },
+  "real_time_voice_zh": {
+    "Android: Java": {
+      "chat_id": "a25a695a92c011ef87010242ac120004",
+      "assistant_name": "RTC Android",
+      "questions": [
+        "实时语音有哪些功能？",
+        "可以把男声变成女声吗？",
+        "登录房间失败了会有什么可能的原因？"
+      ]
+    },
+    "iOS: Objective-C": {
+      "chat_id": "04877278a6e711efba7f0242ac120003",
+      "assistant_name": "RTC iOS",
+      "questions": [
+        "实时语音有哪些功能？",
+        "可以把男声变成女声吗？",
+        "登录房间失败了会有什么可能的原因？"
+      ]
+    },
+    "iOS: Swift": {
+      "chat_id": "04877278a6e711efba7f0242ac120003",
+      "assistant_name": "RTC iOS",
+      "questions": [
+        "实时语音有哪些功能？",
+        "可以把男声变成女声吗？",
+        "登录房间失败了会有什么可能的原因？"
+      ]
+    },
+    "Android: Kotlin": {
+      "chat_id": "a25a695a92c011ef87010242ac120004",
+      "assistant_name": "RTC Android",
+      "questions": [
+        "实时语音有哪些功能？",
+        "可以把男声变成女声吗？",
+        "登录房间失败了会有什么可能的原因？"
+      ]
+    },
+    "macOS: Objective-C": {
+      "chat_id": "37a4d4d2a6e911efb3b20242ac120003",
+      "assistant_name": "RTC macOS",
+      "questions": [
+        "实时语音有哪些功能？",
+        "可以把男声变成女声吗？",
+        "登录房间失败了会有什么可能的原因？"
+      ]
+    },
+    "macOS: Swift": {
+      "chat_id": "37a4d4d2a6e911efb3b20242ac120003",
+      "assistant_name": "RTC macOS",
+      "questions": [
+        "实时语音有哪些功能？",
+        "可以把男声变成女声吗？",
+        "登录房间失败了会有什么可能的原因？"
+      ]
+    },
+    "macOS: C++": {
+      "chat_id": "37a4d4d2a6e911efb3b20242ac120003",
+      "assistant_name": "RTC macOS",
+      "questions": [
+        "实时语音有哪些功能？",
+        "可以把男声变成女声吗？",
+        "登录房间失败了会有什么可能的原因？"
+      ]
+    },
+    "Windows: C++": {
+      "chat_id": "1be60292a6ea11ef88f40242ac120003",
+      "assistant_name": "RTC Windows",
+      "questions": [
+        "实时语音有哪些功能？",
+        "可以把男声变成女声吗？",
+        "登录房间失败了会有什么可能的原因？"
+      ]
+    },
+    "Windows: C#": {
+      "chat_id": "1be60292a6ea11ef88f40242ac120003",
+      "assistant_name": "RTC Windows",
+      "questions": [
+        "实时语音有哪些功能？",
+        "可以把男声变成女声吗？",
+        "登录房间失败了会有什么可能的原因？"
+      ]
+    },
+    "HarmonyOS: ArkTS": {
+      "chat_id": "ee343542a6e611ef814e0242ac120003",
+      "assistant_name": "RTC HarmonyOS",
+      "questions": [
+        "实时语音有哪些功能？",
+        "可以把男声变成女声吗？",
+        "登录房间失败了会有什么可能的原因？"
+      ]
+    },
+    "Linux: C++": {
+      "chat_id": "28413a30a6e911efab3b0242ac120003",
+      "assistant_name": "RTC Linux",
+      "questions": [
+        "实时语音有哪些功能？",
+        "可以把男声变成女声吗？",
+        "登录房间失败了会有什么可能的原因？"
+      ]
+    },
+    "Linux: Java": {
+      "chat_id": "28413a30a6e911efab3b0242ac120003",
+      "assistant_name": "RTC Linux",
+      "questions": [
+        "实时语音有哪些功能？",
+        "可以把男声变成女声吗？",
+        "登录房间失败了会有什么可能的原因？"
+      ]
+    },
+    "Web: JS": {
+      "chat_id": "10295102a6ea11efbd670242ac120003",
+      "assistant_name": "RTC Web",
+      "questions": [
+        "实时语音有哪些功能？",
+        "可以把男声变成女声吗？",
+        "登录房间失败了会有什么可能的原因？"
+      ]
+    },
+    "小程序: JS": {
+      "chat_id": "a926082ea6e911efafe10242ac120003",
+      "assistant_name": "RTC MiniProgram",
+      "questions": [
+        "实时语音有哪些功能？",
+        "可以把男声变成女声吗？",
+        "登录房间失败了会有什么可能的原因？"
+      ]
+    },
+    "Flutter: Dart": {
+      "chat_id": "d80b1786a6e611ef89a50242ac120003",
+      "assistant_name": "RTC Flutter",
+      "questions": [
+        "实时语音有哪些功能？",
+        "可以把男声变成女声吗？",
+        "登录房间失败了会有什么可能的原因？"
+      ]
+    },
+    "Electron: JS": {
+      "chat_id": "c9d69398a6e611ef8daa0242ac120003",
+      "assistant_name": "RTC Electron",
+      "questions": [
+        "实时语音有哪些功能？",
+        "可以把男声变成女声吗？",
+        "登录房间失败了会有什么可能的原因？"
+      ]
+    },
+    "Unreal Engine: C++": {
+      "chat_id": "ff33e9d4a6e911efba830242ac120003",
+      "assistant_name": "RTC UnrealEngine",
+      "questions": [
+        "实时语音有哪些功能？",
+        "可以把男声变成女声吗？",
+        "登录房间失败了会有什么可能的原因？"
+      ]
+    },
+    "Unity3D: C#": {
+      "chat_id": "ec86a3b2a6e911ef87120242ac120003",
+      "assistant_name": "RTC Unity3D",
+      "questions": [
+        "实时语音有哪些功能？",
+        "可以把男声变成女声吗？",
+        "登录房间失败了会有什么可能的原因？"
+      ]
+    },
+    "uni-app: JS": {
+      "chat_id": "d0170cf8a6e911efb32e0242ac120003",
+      "assistant_name": "RTC uni-app",
+      "questions": [
+        "实时语音有哪些功能？",
+        "可以把男声变成女声吗？",
+        "登录房间失败了会有什么可能的原因？"
+      ]
+    },
+    "React Native: JS": {
+      "chat_id": "beb47874a6e911efb4650242ac120003",
+      "assistant_name": "RTC React Native",
+      "questions": [
+        "实时语音有哪些功能？",
+        "可以把男声变成女声吗？",
+        "登录房间失败了会有什么可能的原因？"
+      ]
+    },
+    "Cocos Creator: TS": {
+      "chat_id": "a3f5fac4a6e611ef9faa0242ac120003",
+      "assistant_name": "RTC Cocos",
+      "questions": [
+        "实时语音有哪些功能？",
+        "可以把男声变成女声吗？",
+        "登录房间失败了会有什么可能的原因？"
+      ]
+    }
+  },
+  "live_streaming_zh": {
+    "Android: Java": {
+      "chat_id": "a25a695a92c011ef87010242ac120004",
+      "assistant_name": "RTC Android",
+      "questions": [
+        "超低延时直播有什么优势？",
+        "如何设置视频分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "iOS: Objective-C": {
+      "chat_id": "04877278a6e711efba7f0242ac120003",
+      "assistant_name": "RTC iOS",
+      "questions": [
+        "超低延时直播有什么优势？",
+        "如何设置视频分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "iOS: Swift": {
+      "chat_id": "04877278a6e711efba7f0242ac120003",
+      "assistant_name": "RTC iOS",
+      "questions": [
+        "超低延时直播有什么优势？",
+        "如何设置视频分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "Android: Kotlin": {
+      "chat_id": "a25a695a92c011ef87010242ac120004",
+      "assistant_name": "RTC Android",
+      "questions": [
+        "超低延时直播有什么优势？",
+        "如何设置视频分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "macOS: Objective-C": {
+      "chat_id": "37a4d4d2a6e911efb3b20242ac120003",
+      "assistant_name": "RTC macOS",
+      "questions": [
+        "超低延时直播有什么优势？",
+        "如何设置视频分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "macOS: Swift": {
+      "chat_id": "37a4d4d2a6e911efb3b20242ac120003",
+      "assistant_name": "RTC macOS",
+      "questions": [
+        "超低延时直播有什么优势？",
+        "如何设置视频分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "macOS: C++": {
+      "chat_id": "37a4d4d2a6e911efb3b20242ac120003",
+      "assistant_name": "RTC macOS",
+      "questions": [
+        "超低延时直播有什么优势？",
+        "如何设置视频分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "Windows: C++": {
+      "chat_id": "1be60292a6ea11ef88f40242ac120003",
+      "assistant_name": "RTC Windows",
+      "questions": [
+        "超低延时直播有什么优势？",
+        "如何设置视频分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "Windows: C#": {
+      "chat_id": "1be60292a6ea11ef88f40242ac120003",
+      "assistant_name": "RTC Windows",
+      "questions": [
+        "超低延时直播有什么优势？",
+        "如何设置视频分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "HarmonyOS: ArkTS": {
+      "chat_id": "ee343542a6e611ef814e0242ac120003",
+      "assistant_name": "RTC HarmonyOS",
+      "questions": [
+        "超低延时直播有什么优势？",
+        "如何设置视频分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "Linux: C++": {
+      "chat_id": "28413a30a6e911efab3b0242ac120003",
+      "assistant_name": "RTC Linux",
+      "questions": [
+        "超低延时直播有什么优势？",
+        "如何设置视频分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "Linux: Java": {
+      "chat_id": "28413a30a6e911efab3b0242ac120003",
+      "assistant_name": "RTC Linux",
+      "questions": [
+        "超低延时直播有什么优势？",
+        "如何设置视频分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "Web: JS": {
+      "chat_id": "10295102a6ea11efbd670242ac120003",
+      "assistant_name": "RTC Web",
+      "questions": [
+        "超低延时直播有什么优势？",
+        "如何设置视频分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "小程序: JS": {
+      "chat_id": "a926082ea6e911efafe10242ac120003",
+      "assistant_name": "RTC MiniProgram",
+      "questions": [
+        "超低延时直播有什么优势？",
+        "如何设置视频分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "Flutter: Dart": {
+      "chat_id": "d80b1786a6e611ef89a50242ac120003",
+      "assistant_name": "RTC Flutter",
+      "questions": [
+        "超低延时直播有什么优势？",
+        "如何设置视频分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "Electron: JS": {
+      "chat_id": "c9d69398a6e611ef8daa0242ac120003",
+      "assistant_name": "RTC Electron",
+      "questions": [
+        "超低延时直播有什么优势？",
+        "如何设置视频分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "Unreal Engine: C++": {
+      "chat_id": "ff33e9d4a6e911efba830242ac120003",
+      "assistant_name": "RTC UnrealEngine",
+      "questions": [
+        "超低延时直播有什么优势？",
+        "如何设置视频分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "Unity3D: C#": {
+      "chat_id": "ec86a3b2a6e911ef87120242ac120003",
+      "assistant_name": "RTC Unity3D",
+      "questions": [
+        "超低延时直播有什么优势？",
+        "如何设置视频分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "uni-app: JS": {
+      "chat_id": "d0170cf8a6e911efb32e0242ac120003",
+      "assistant_name": "RTC uni-app",
+      "questions": [
+        "超低延时直播有什么优势？",
+        "如何设置视频分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "React Native: JS": {
+      "chat_id": "beb47874a6e911efb4650242ac120003",
+      "assistant_name": "RTC React Native",
+      "questions": [
+        "超低延时直播有什么优势？",
+        "如何设置视频分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    },
+    "Cocos Creator: TS": {
+      "chat_id": "a3f5fac4a6e611ef9faa0242ac120003",
+      "assistant_name": "RTC Cocos",
+      "questions": [
+        "超低延时直播有什么优势？",
+        "如何设置视频分辨率？",
+        "非洲用户反馈画面卡顿，有什么优化方案？"
+      ]
+    }
+  },
+  "zim_zh": {
+    "Android: Java": {
+      "chat_id": "ff6f6e4aa71c11efabbe0242ac120003",
+      "assistant_name": "ZIM Android",
+      "questions": [
+        "ZIM 有什么功能？",
+        "ZIM 支持哪些消息类型？",
+        "怎么给一条消息点赞？"
+      ]
+    },
+    "Flutter: Dart": {
+      "chat_id": "c33ebd6ca71d11ef94ee0242ac120003",
+      "assistant_name": "ZIM Flutter",
+      "questions": [
+        "ZIM 有什么功能？",
+        "ZIM 支持哪些消息类型？",
+        "怎么给一条消息点赞？"
+      ]
+    },
+    "iOS: Objective-C": {
+      "chat_id": "a975836aa71e11efbade0242ac120003",
+      "assistant_name": "ZIM iOS",
+      "questions": [
+        "ZIM 有什么功能？",
+        "ZIM 支持哪些消息类型？",
+        "怎么给一条消息点赞？"
+      ]
+    },
+    "macOS: Objective-C": {
+      "chat_id": "5e9a028ea71f11ef83720242ac120003",
+      "assistant_name": "ZIM macOS",
+      "questions": [
+        "ZIM 有什么功能？",
+        "ZIM 支持哪些消息类型？",
+        "怎么给一条消息点赞？"
+      ]
+    },
+    "React Native: JS": {
+      "chat_id": "e5f3d944a71f11efbeb80242ac120003",
+      "assistant_name": "ZIM React Native",
+      "questions": [
+        "ZIM 有什么功能？",
+        "ZIM 支持哪些消息类型？",
+        "怎么给一条消息点赞？"
+      ]
+    },
+    "Unity3D: C#": {
+      "chat_id": "09a57e88a72011efbd760242ac120003",
+      "assistant_name": "ZIM Unity",
+      "questions": [
+        "ZIM 有什么功能？",
+        "ZIM 支持哪些消息类型？",
+        "怎么给一条消息点赞？"
+      ]
+    },
+    "Web: JS": {
+      "chat_id": "1ce87694a72011efad6d0242ac120003",
+      "assistant_name": "ZIM Web",
+      "questions": [
+        "ZIM 有什么功能？",
+        "ZIM 支持哪些消息类型？",
+        "怎么给一条消息点赞？"
+      ]
+    },
+    "Windows: C++": {
+      "chat_id": "6b55eb68a72011ef867e0242ac120003",
+      "assistant_name": "ZIM Windows",
+      "questions": [
+        "ZIM 有什么功能？",
+        "ZIM 支持哪些消息类型？",
+        "怎么给一条消息点赞？"
+      ]
+    },
+    "小程序: JS": {
+      "chat_id": "939fc134a72011efb3cc0242ac120003",
+      "assistant_name": "ZIM 小程序",
+      "questions": [
+        "ZIM 有什么功能？",
+        "ZIM 支持哪些消息类型？",
+        "怎么给一条消息点赞？"
+      ]
+    },
+    "uni-app: JS": {
+      "chat_id": "af8454aaa72011ef8d210242ac120003",
+      "assistant_name": "ZIM uni-app",
+      "questions": [
+        "ZIM 有什么功能？",
+        "ZIM 支持哪些消息类型？",
+        "怎么给一条消息点赞？"
+      ]
+    },
+    "服务端 API": {
+      "chat_id": "d2f1aeeca72011efa8cc0242ac120003",
+      "assistant_name": "ZIM Server",
+      "questions": [
+        "ZIM 有什么功能？",
+        "ZIM 支持哪些消息类型？",
+        "怎么给一条消息点赞？"
+      ]
+    }
+  },
+  "callkit_zh": {
+    "Android: Java": {
+      "chat_id": "4705145ea72111efad6d0242ac120003",
+      "assistant_name": "音视频通话 UIKit (Android)",
+      "questions": [
+        "怎么设置头像？",
+        "我想挂断通话后扣除用户费用如何实现？",
+        "怎么把挂断按钮放在最右边？"
+      ]
+    },
+    "iOS: Swift": {
+      "chat_id": "9877f3eca72111ef9f710242ac120003",
+      "assistant_name": "音视频通话 UIKit (iOS)",
+      "questions": [
+        "怎么设置头像？",
+        "我想挂断通话后扣除用户费用如何实现？",
+        "怎么把挂断按钮放在最右边？"
+      ]
+    },
+    "Web: JS": {
+      "chat_id": "b32483d6a72111efaae80242ac120003",
+      "assistant_name": "音视频通话 UIKit (Web)",
+      "questions": [
+        "怎么设置头像？",
+        "我想挂断通话后扣除用户费用如何实现？",
+        "怎么把挂断按钮放在最右边？"
+      ]
+    },
+    "小程序: JS": {
+      "chat_id": "ca0db810a72111efb4010242ac120003",
+      "assistant_name": "音视频通话 UIKit (小程序)",
+      "questions": [
+        "怎么设置头像？",
+        "我想挂断通话后扣除用户费用如何实现？",
+        "怎么把挂断按钮放在最右边？"
+      ]
+    },
+    "uni-app: JS": {
+      "chat_id": "ddd5fbd2a72111efadb10242ac120003",
+      "assistant_name": "音视频通话 UIKit (uni-app)",
+      "questions": [
+        "怎么设置头像？",
+        "我想挂断通话后扣除用户费用如何实现？",
+        "怎么把挂断按钮放在最右边？"
+      ]
+    }
+  },
+  "live_streaming_kit_zh": {
+    "Android: Java": {
+      "chat_id": "707b900aa72211ef84420242ac120003x",
+      "assistant_name": "互动直播 UIKit (Android)",
+      "questions": [
+        "怎么设置头像？",
+        "怎么在工具栏放一个奖杯按钮？",
+        "怎么给主播送礼？"
+      ]
+    },
+    "iOS: Swift": {
+      "chat_id": "7ba91f74a72211efb8b70242ac120003",
+      "assistant_name": "互动直播 UIKit (iOS)",
+      "questions": [
+        "怎么设置头像？",
+        "怎么在工具栏放一个奖杯按钮？",
+        "怎么给主播送礼？"
+      ]
+    },
+    "Web: JS": {
+      "chat_id": "83b0a03ea72211ef9b840242ac120003",
+      "assistant_name": "互动直播 UIKit (Web)",
+      "questions": [
+        "怎么设置头像？",
+        "怎么在工具栏放一个奖杯按钮？",
+        "怎么给主播送礼？"
+      ]
+    }
+  },
+  "live_audio_room_kit_zh": {
+    "Android: Java": {
+      "chat_id": "f542e86aa72211ef869f0242ac120003",
+      "assistant_name": "语聊房 UIKit (Android)",
+      "questions": [
+        "怎么设置头像？",
+        "怎么把一个人标记为榜一大哥？",
+        "怎么在第一行只显示房主一个人？"
+      ]
+    },
+    "iOS: Swift": {
+      "chat_id": "fe92af86a72211efbe750242ac120003",
+      "assistant_name": "语聊房 UIKit (iOS)",
+      "questions": [
+        "怎么设置头像？",
+        "怎么把一个人标记为榜一大哥？",
+        "怎么在第一行只显示房主一个人？"
+      ]
+    }
+  },
+  "imkit_zh": {
+    "Android: Java": {
+      "chat_id": "64401d46a72311ef84fe0242ac120003",
+      "assistant_name": "IMKit (Android)",
+      "questions": ["IMKit有什么功能？", "怎么跟朋友语音通话？"]
+    },
+    "iOS: Swift": {
+      "chat_id": "abee8966a72311efab550242ac120003",
+      "assistant_name": "IMKit (iOS)",
+      "questions": ["IMKit有什么功能？", "怎么跟朋友语音通话？"]
+    }
+  },
+  "supper_board_zh": {
+    "Android: Java": {
+      "chat_id": "e485b3a8a72311efb5ba0242ac120003",
+      "assistant_name": "超级白板(Android)",
+      "questions": [
+        "超级白板有什么功能？",
+        "怎么在白板上画图？",
+        "怎么共享一个文件？"
+      ]
+    },
+    "iOS: Objective-C": {
+      "chat_id": "ebf8f668a72311ef9f870242ac120003",
+      "assistant_name": "超级白板(iOS)",
+      "questions": [
+        "超级白板有什么功能？",
+        "怎么在白板上画图？",
+        "怎么共享一个文件？"
+      ]
+    },
+    "Web: JS": {
+      "chat_id": "fe33d56ea72311ef80020242ac120003",
+      "assistant_name": "超级白板(Web)",
+      "questions": [
+        "超级白板有什么功能？",
+        "怎么在白板上画图？",
+        "怎么共享一个文件？"
+      ]
+    },
+    "Electron: JS": {
+      "chat_id": "0a1f2536a72411ef93720242ac120003",
+      "assistant_name": "超级白板(Electron)",
+      "questions": [
+        "超级白板有什么功能？",
+        "怎么在白板上画图？",
+        "怎么共享一个文件？"
+      ]
+    },
+    "React Native: JS": {
+      "chat_id": "173ca7b6a72411ef9ddb0242ac120003",
+      "assistant_name": "超级白板(React Native)",
+      "questions": [
+        "超级白板有什么功能？",
+        "怎么在白板上画图？",
+        "怎么共享一个文件？"
+      ]
+    }
+  },
+  "cloud_player_zh": {
+    "All": {
+      "chat_id": "a81aea04a72411ef93fa0242ac120003",
+      "assistant_name": "云端播放器",
+      "questions": ["云端播放器有什么功能？", "怎么播放一个视频？"]
+    }
+  },
+  "ai_effects_zh": {
+    "Android: Java": {
+      "chat_id": "e97c230aa72411ef93be0242ac120003",
+      "assistant_name": "AI 美颜(Android)",
+      "questions": [
+        "AI 美颜有什么功能？",
+        "怎么启用美白功能？",
+        "怎么把背景变模糊？"
+      ]
+    },
+    "iOS: Objective-C": {
+      "chat_id": "f5be438ca72411efb4a60242ac120003",
+      "assistant_name": "AI 美颜(iOS)",
+      "questions": [
+        "AI 美颜有什么功能？",
+        "怎么启用美白功能？",
+        "怎么把背景变模糊？"
+      ]
+    },
+    "macOS: Objective-C": {
+      "chat_id": "023189c6a72511efb3a40242ac120003",
+      "assistant_name": "AI 美颜(macOS-Objc)",
+      "questions": [
+        "AI 美颜有什么功能？",
+        "怎么启用美白功能？",
+        "怎么把背景变模糊？"
+      ]
+    },
+    "macOS: C": {
+      "chat_id": "2e5bf126a72511ef88510242ac120003",
+      "assistant_name": "AI 美颜(macOS-C)",
+      "questions": [
+        "AI 美颜有什么功能？",
+        "怎么启用美白功能？",
+        "怎么把背景变模糊？"
+      ]
+    },
+    "Windows: C": {
+      "chat_id": "4ab78254a72511efa7a20242ac120003",
+      "assistant_name": "AI 美颜(Windows)",
+      "questions": [
+        "AI 美颜有什么功能？",
+        "怎么启用美白功能？",
+        "怎么把背景变模糊？"
+      ]
+    }
+  },
+  "cloud_recording_zh": {
+    "All": {
+      "chat_id": "cbd52f58a72511ef91760242ac120003",
+      "assistant_name": "云端录制",
+      "questions": ["云端录制有什么功能？", "怎么把房间所有流录制成一个文件？"]
+    }
+  },
+  "mini-game-zh": {
+    "Android: Java": {
+      "chat_id": "27b7a7d8a72611efaa810242ac120003",
+      "assistant_name": "小游戏平台(Android)",
+      "questions": ["都支持哪些游戏？", "怎么实现弹幕游戏？"]
+    },
+    "iOS: Objective-C": {
+      "chat_id": "43ab4f1ca72611efb9c10242ac120003",
+      "assistant_name": "小游戏平台(iOS)",
+      "questions": ["都支持哪些游戏？", "怎么实现弹幕游戏？"]
+    },
+    "Web: JS": {
+      "chat_id": "591bd77ca72611ef833d0242ac120003",
+      "assistant_name": "小游戏平台(Web)",
+      "questions": ["都支持哪些游戏？", "怎么实现弹幕游戏？"]
+    }
+  },
+  "local-recording": {
+    "Linux: C++": {
+      "chat_id": "c10ed9b0a72611ef82b50242ac120003",
+      "assistant_name": "本地服务端录制(Linux)",
+      "questions": [
+        "从哪里下载 SDK？",
+        "怎么录制一个视频？",
+        "怎么把房间所有流录制成一个文件？"
+      ]
+    },
+    "Linux: Java": {
+      "chat_id": "cccf40faa72611ef99800242ac120003",
+      "assistant_name": "本地服务端录制(Linux)",
+      "questions": [
+        "从哪里下载 SDK？",
+        "怎么录制一个视频？",
+        "怎么把房间所有流录制成一个文件？"
+      ]
+    }
+  },
+  "analytics-dashboard-zh": {
+    "All": {
+      "chat_id": "fbc91f48a72611efaaa10242ac120003",
+      "assistant_name": "星图",
+      "questions": ["星图有什么功能？", "怎么查询一个用户登录过哪些房间？"]
+    }
+  },
+  "aigc_digital_human_zh": {
+    "Server": {
+      "chat_id": "2556dee0a72711efbc540242ac120003",
+      "assistant_name": "数字人 PaSS 服务",
+      "questions": ["数字人能做什么？", "可以只用一张图片创建一个数字人吗？"]
+    }
+  },
+  "shumei_moderation_zh": {
+    "All": {
+      "chat_id": "9308a72aa72711efab120242ac120003",
+      "assistant_name": "数美内容审核",
+      "questions": ["能对哪些内容进行审核？", "怎么审核一条视频流？"]
+    }
+  },
+  "dabing_voice_changer_zh": {
+    "Android: Java": {
+      "chat_id": "e2a8ad98a72711efadc60242ac120003",
+      "assistant_name": "大饼 AI 变声(Android)",
+      "questions": ["怎么把男声变成女声？", "支持哪些平台？"]
+    },
+    "iOS: Objective-C": {
+      "chat_id": "eb8e2a00a72711efa4bf0242ac120003",
+      "assistant_name": "大饼 AI 变声(iOS)",
+      "questions": ["怎么把男声变成女声？", "支持哪些平台？"]
+    },
+    "Windows: C++": {
+      "chat_id": "075d605ca72811ef8bb80242ac120003",
+      "assistant_name": "大饼 AI 变声(Windows)",
+      "questions": ["怎么把男声变成女声？", "支持哪些平台？"]
+    },
+    "Flutter: Dart": {
+      "chat_id": "16a6ceaea72811efa46b0242ac120003",
+      "assistant_name": "大饼 AI 变声(Flutter)",
+      "questions": ["怎么把男声变成女声？", "支持哪些平台？"]
+    }
+  },
+  "real_time_translation_zh": {
+    "Android: Java": {
+      "chat_id": "6273c17aa72811efb0520242ac120003",
+      "assistant_name": "实时传译(Android)",
+      "questions": ["支持什么语言？", "有哪些应用场景？"]
+    },
+    "iOS: Objective-C": {
+      "chat_id": "6be47bc8a72811ef86dc0242ac120003",
+      "assistant_name": "实时传译(iOS)",
+      "questions": ["支持什么语言？", "有哪些应用场景？"]
+    }
+  },
+  "solution_audio_room_zh": {
+    "Android: Java": {
+      "chat_id": "e2a1baaaa72811efb5b70242ac120003",
+      "assistant_name": "语聊房(Android)",
+      "questions": ["怎么管理麦位？", "怎么实现上麦请求？"]
+    },
+    "iOS: Objective-C": {
+      "chat_id": "eb889738a72811efaf2a0242ac120003",
+      "assistant_name": "语聊房(iOS-Objc)",
+      "questions": ["怎么管理麦位？", "怎么实现上麦请求？"]
+    },
+    "iOS: Swift": {
+      "chat_id": "f8879272a72811efae4f0242ac120003",
+      "assistant_name": "语聊房(iOS-Swift)",
+      "questions": ["怎么管理麦位？", "怎么实现上麦请求？"]
+    }
+  },
+  "solution_live_streaming_zh": {
+    "Android: Java": {
+      "chat_id": "6a52ad38a72911ef87700242ac120003",
+      "assistant_name": "秀场直播(Android)",
+      "questions": ["怎么推流到CDN？", "怎么跟其他主播PK？"]
+    },
+    "iOS: Objective-C": {
+      "chat_id": "741972dea72911efb0170242ac120003",
+      "assistant_name": "秀场直播(iOS)",
+      "questions": ["怎么推流到CDN？", "怎么跟其他主播PK？"]
+    },
+    "Web: JS": {
+      "chat_id": "6a52ad38a72911ef87700242ac120003",
+      "assistant_name": "秀场直播(Web)",
+      "questions": ["怎么推流到CDN？", "怎么跟其他主播PK？"]
+    }
+  },
+  "solution_ktv_zh": {
+    "Android: Java": {
+      "chat_id": "cc3cc786a72911ef9a6a0242ac120003",
+      "assistant_name": "在线 KTV(Android)",
+      "questions": ["在线KTV有哪些玩法？", "怎么实现一个房间多人合唱？"]
+    },
+    "iOS: Objective-C": {
+      "chat_id": "d6c0beb0a72911efa5710242ac120003",
+      "assistant_name": "在线 KTV(iOS)",
+      "questions": ["在线KTV有哪些玩法？", "怎么实现一个房间多人合唱？"]
+    },
+    "Windows: C++": {
+      "chat_id": "bb44d718a72c11efb95a0242ac120003",
+      "assistant_name": "在线 KTV(Windows)",
+      "questions": ["在线KTV有哪些玩法？", "怎么实现一个房间多人合唱？"]
+    },
+    "Linux: C++": {
+      "chat_id": "c45c8bf2a72c11efa2d10242ac120003",
+      "assistant_name": "在线 KTV(Linux)",
+      "questions": ["在线KTV有哪些玩法？", "怎么实现一个房间多人合唱？"]
+    },
+    "Web: JS": {
+      "chat_id": "d0156eaaa72c11efa4420242ac120003",
+      "assistant_name": "在线 KTV(Web)",
+      "questions": ["在线KTV有哪些玩法？", "怎么实现一个房间多人合唱？"]
+    },
+    "Flutter: Dart": {
+      "chat_id": "d89381fca72c11ef90d10242ac120003",
+      "assistant_name": "在线 KTV(Flutter)",
+      "questions": ["在线KTV有哪些玩法？", "怎么实现一个房间多人合唱？"]
+    },
+    "Electron: JS": {
+      "chat_id": "e73d8b30a72c11efac940242ac120003",
+      "assistant_name": "在线 KTV(Electron)",
+      "questions": ["在线KTV有哪些玩法？", "怎么实现一个房间多人合唱？"]
+    },
+    "Unity3D: C#": {
+      "chat_id": "e73d8b30a72c11efac940242ac120003",
+      "assistant_name": "在线 KTV(Unity3D)",
+      "questions": ["在线KTV有哪些玩法？", "怎么实现一个房间多人合唱？"]
+    }
+  },
+  "solution_online_fitness_zh": {
+    "Android: Java": {
+      "chat_id": "87f0ce0ca72d11ef85a20242ac120003",
+      "assistant_name": "在线健身(Android)",
+      "questions": ["适合哪些场景？", "怎么录制教学内容？"]
+    }
+  },
+  "solution_interactive_podcast_zh": {
+    "Android: Java": {
+      "chat_id": "9b14c0baa72d11ef86230242ac120003",
+      "assistant_name": "互动播客(Android)",
+      "questions": ["xxx"]
+    }
+  },
+  "solution_small_class_zh": {
+    "Android: Java": {
+      "chat_id": "19f5fdb4a7af11ef8f030242ac120003",
+      "assistant_name": "小班课(Android)",
+      "questions": ["适合哪些场景？", "有哪些功能？"]
+    }
+  },
+  "solution_big_class_zh": {
+    "Android: Java": {
+      "chat_id": "2e915c46a7af11efba0b0242ac120003",
+      "assistant_name": "大班课(Android)",
+      "questions": ["适合哪些场景？", "有哪些功能？"]
+    }
+  },
+  "solution_online_music_lessons_zh": {
+    "Android: Java": {
+      "chat_id": "51c4fb8ca7af11efbd630242ac120003",
+      "assistant_name": "在线音乐教学(Android)",
+      "questions": ["适合哪些场景？", "有哪些功能？"]
+    }
+  },
+  "solution_online_painting_lessons_zh": {
+    "Android: Java": {
+      "chat_id": "62efd90ea7af11efb96c0242ac120003",
+      "assistant_name": "在线美术教学(Android)",
+      "questions": ["适合哪些场景？", "有哪些功能？"]
+    }
+  },
+  "solution_online_programming_lessons_zh": {
+    "Android: Java": {
+      "chat_id": "76f43472a7af11efbe680242ac120003",
+      "assistant_name": "在线编程教学(Android)",
+      "questions": ["适合哪些场景？", "有哪些功能？"]
+    }
+  },
+  "solution_telemedicine_zh": {
+    "Android: Java": {
+      "chat_id": "893b863aa7af11ef9cc90242ac120003",
+      "assistant_name": "远程医疗(Android)",
+      "questions": ["适合哪些场景？", "有哪些功能？"]
+    }
+  },
+  "solution_voice_call_zh": {
+    "Android: Java": {
+      "chat_id": "b74d888ea7af11efb9370242ac120003",
+      "assistant_name": "语音通话(Android)",
+      "questions": ["适合哪些场景？", "有哪些功能？"]
+    }
+  },
+  "solution_video_call_zh": {
+    "Android: Java": {
+      "chat_id": "c86fc7e4a7af11efa7080242ac120003",
+      "assistant_name": "视频通话(Android)",
+      "questions": ["适合哪些场景？", "有哪些功能？"]
+    }
+  },
+  "solution_meeting_zh": {
+    "Android: Java": {
+      "chat_id": "f0941e82a7af11efbcc40242ac120003",
+      "assistant_name": "视频会议(Android)",
+      "questions": ["适合哪些场景？", "有哪些功能？"]
+    }
+  },
+  "admin_console_zh": {
+    "All": {
+      "chat_id": "01e2ef06a7b011efbd420242ac120003",
+      "assistant_name": "控制台",
+      "questions": ["有什么功能？", "怎么添加Apple离线推送证书？"]
+    }
+  },
+  "safety_zh": {
+    "All": {
+      "chat_id": "250859f8a7b011efbd0d0242ac120003",
+      "assistant_name": "安全合规",
+      "questions": ["如何确保开发安全？", "如何确保运营安全？"]
+    }
+  },
+  "glossary_zh": {
+    "All": {
+      "chat_id": "36efb0eea7b011ef9a750242ac120003",
+      "assistant_name": "术语表",
+      "questions": ["什么是回声消除？", "什么是大小流？"]
+    }
+  },
+  "real_time_video": {
+    "Android: Java": {
+      "chat_id": "5d528996a7b011ef8b130242ac120003",
+      "assistant_name": "EN RTC Android-Java",
+      "questions": [
+        "What features does Video call have?",
+        "How to modify the encoding resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "Android: Kotlin": {
+      "chat_id": "88476ce8a7b011efa1990242ac120003",
+      "assistant_name": "EN RTC Android-Kotlin",
+      "questions": [
+        "What features does Video call have?",
+        "How to modify the encoding resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "iOS: Objective-C": {
+      "chat_id": "a7830806a7b011ef97ac0242ac120003",
+      "assistant_name": "EN RTC iOS-Objc",
+      "questions": [
+        "What features does Video call have?",
+        "How to modify the encoding resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "iOS: Swift": {
+      "chat_id": "ba7ed2d2a7b011ef9cb90242ac120003",
+      "assistant_name": "EN RTC iOS-Swift",
+      "questions": [
+        "What features does Video call have?",
+        "How to modify the encoding resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "Flutter: Dart": {
+      "chat_id": "d580cb80a7b011efbdd80242ac120003",
+      "assistant_name": "EN RTC Flutter",
+      "questions": [
+        "What features does Video call have?",
+        "How to modify the encoding resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "Electron: JS": {
+      "chat_id": "edcb4742a7b011efb7b00242ac120003",
+      "assistant_name": "EN RTC Electron",
+      "questions": [
+        "What features does Video call have?",
+        "How to modify the encoding resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "Unity3D: C#": {
+      "chat_id": "ff97dc6aa7b011efa6b20242ac120003",
+      "assistant_name": "EN RTC Unity",
+      "questions": [
+        "What features does Video call have?",
+        "How to modify the encoding resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "Windows: C++": {
+      "chat_id": "145d193aa7b111ef9a4e0242ac120003",
+      "assistant_name": "EN RTC Windows-Cpp",
+      "questions": [
+        "What features does Video call have?",
+        "How to modify the encoding resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "Windows: C#": {
+      "chat_id": "282f785ea7b111ef90890242ac120003",
+      "assistant_name": "EN RTC Windows-C#",
+      "questions": [
+        "What features does Video call have?",
+        "How to modify the encoding resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "macOS: Objective-C": {
+      "chat_id": "37f19e70a7b111efb4d80242ac120003",
+      "assistant_name": "EN RTC macOS-Objc",
+      "questions": [
+        "What features does Video call have?",
+        "How to modify the encoding resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "macOS: Swift": {
+      "chat_id": "500a9912a7b111efb83a0242ac120003",
+      "assistant_name": "EN RTC macOS-Swift",
+      "questions": [
+        "What features does Video call have?",
+        "How to modify the encoding resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "macOS: C++": {
+      "chat_id": "5d367962a7b111ef82dd0242ac120003",
+      "assistant_name": "EN RTC macOS-Cpp",
+      "questions": [
+        "What features does Video call have?",
+        "How to modify the encoding resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "Web: JS": {
+      "chat_id": "6bc4b3f4a7b111efb21e0242ac120003",
+      "assistant_name": "EN RTC Web",
+      "questions": [
+        "What features does Video call have?",
+        "How to modify the encoding resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "Linux: C++": {
+      "chat_id": "7a396628a7b111ef9bcd0242ac120003",
+      "assistant_name": "EN RTC Linux-Cpp",
+      "questions": [
+        "What features does Video call have?",
+        "How to modify the encoding resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "Linux: Java": {
+      "chat_id": "9c0c53b4a7b111efbff20242ac120003",
+      "assistant_name": "EN RTC Linux-Java",
+      "questions": [
+        "What features does Video call have?",
+        "How to modify the encoding resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "React Native: JS": {
+      "chat_id": "ba684714a7b111ef9ec60242ac120003",
+      "assistant_name": "EN RTC React Native",
+      "questions": [
+        "What features does Video call have?",
+        "How to modify the encoding resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "Cocos Creator: TS": {
+      "chat_id": "c871e8c4a7b111ef8cb30242ac120003",
+      "assistant_name": "EN RTC Cocos",
+      "questions": [
+        "What features does Video call have?",
+        "How to modify the encoding resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    }
+  },
+  "real_time_voice": {
+    "Android: Java": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC Android",
+      "questions": [
+        "What features does Voice call have?",
+        "Can I change male voice to female voice?",
+        "What are the possible reasons for failing to join a room?"
+      ]
+    },
+    "Android: Kotlin": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC Android",
+      "questions": [
+        "What features does Voice call have?",
+        "Can I change male voice to female voice?",
+        "What are the possible reasons for failing to join a room?"
+      ]
+    },
+    "iOS: Objective-C": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC iOS",
+      "questions": [
+        "What features does Voice call have?",
+        "Can I change male voice to female voice?",
+        "What are the possible reasons for failing to join a room?"
+      ]
+    },
+    "iOS: Swift": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC iOS",
+      "questions": [
+        "What features does Voice call have?",
+        "Can I change male voice to female voice?",
+        "What are the possible reasons for failing to join a room?"
+      ]
+    },
+    "Flutter: Dart": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC Flutter",
+      "questions": [
+        "What features does Voice call have?",
+        "Can I change male voice to female voice?",
+        "What are the possible reasons for failing to join a room?"
+      ]
+    },
+    "Electron: JS": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC Electron",
+      "questions": [
+        "What features does Voice call have?",
+        "Can I change male voice to female voice?",
+        "What are the possible reasons for failing to join a room?"
+      ]
+    },
+    "Unity3D: C#": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC Unity",
+      "questions": [
+        "What features does Voice call have?",
+        "Can I change male voice to female voice?",
+        "What are the possible reasons for failing to join a room?"
+      ]
+    },
+    "Windows: C++": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC Windows",
+      "questions": [
+        "What features does Voice call have?",
+        "Can I change male voice to female voice?",
+        "What are the possible reasons for failing to join a room?"
+      ]
+    },
+    "Windows: C#": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC Windows",
+      "questions": [
+        "What features does Voice call have?",
+        "Can I change male voice to female voice?",
+        "What are the possible reasons for failing to join a room?"
+      ]
+    },
+    "macOS: Objective-C": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC macOS",
+      "questions": [
+        "What features does Voice call have?",
+        "Can I change male voice to female voice?",
+        "What are the possible reasons for failing to join a room?"
+      ]
+    },
+    "macOS: Swift": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC macOS",
+      "questions": [
+        "What features does Voice call have?",
+        "Can I change male voice to female voice?",
+        "What are the possible reasons for failing to join a room?"
+      ]
+    },
+    "macOS: C++": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC macOS",
+      "questions": [
+        "What features does Voice call have?",
+        "Can I change male voice to female voice?",
+        "What are the possible reasons for failing to join a room?"
+      ]
+    },
+    "Web: JS": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC Web",
+      "questions": [
+        "What features does Voice call have?",
+        "Can I change male voice to female voice?",
+        "What are the possible reasons for failing to join a room?"
+      ]
+    },
+    "Linux: C++": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC Linux",
+      "questions": [
+        "What features does Voice call have?",
+        "Can I change male voice to female voice?",
+        "What are the possible reasons for failing to join a room?"
+      ]
+    },
+    "Linux: Java": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC Linux",
+      "questions": [
+        "What features does Voice call have?",
+        "Can I change male voice to female voice?",
+        "What are the possible reasons for failing to join a room?"
+      ]
+    },
+    "React Native: JS": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC React Native",
+      "questions": [
+        "What features does Voice call have?",
+        "Can I change male voice to female voice?",
+        "What are the possible reasons for failing to join a room?"
+      ]
+    },
+    "Cocos Creator: TS": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC Cocos",
+      "questions": [
+        "What features does Voice call have?",
+        "Can I change male voice to female voice?",
+        "What are the possible reasons for failing to join a room?"
+      ]
+    }
+  },
+  "live_streaming": {
+    "Android: Java": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC Android",
+      "questions": [
+        "How to publishing stream via CDN?",
+        "How to set video resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "Android: Kotlin": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC Android",
+      "questions": [
+        "How to publishing stream via CDN?",
+        "How to set video resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "iOS: Objective-C": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC iOS",
+      "questions": [
+        "How to publishing stream via CDN?",
+        "How to set video resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "iOS: Swift": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC iOS",
+      "questions": [
+        "How to publishing stream via CDN?",
+        "How to set video resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "Flutter: Dart": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC Flutter",
+      "questions": [
+        "How to publishing stream via CDN?",
+        "How to set video resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "Electron: JS": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC Electron",
+      "questions": [
+        "How to publishing stream via CDN?",
+        "How to set video resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "Unity3D: C#": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC Unity",
+      "questions": [
+        "How to publishing stream via CDN?",
+        "How to set video resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "Windows: C++": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC Windows",
+      "questions": [
+        "How to publishing stream via CDN?",
+        "How to set video resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "Windows: C#": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC Windows",
+      "questions": [
+        "How to publishing stream via CDN?",
+        "How to set video resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "macOS: Objective-C": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC macOS",
+      "questions": [
+        "How to publishing stream via CDN?",
+        "How to set video resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "macOS: Swift": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC macOS",
+      "questions": [
+        "How to publishing stream via CDN?",
+        "How to set video resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "macOS: C++": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC macOS",
+      "questions": [
+        "How to publishing stream via CDN?",
+        "How to set video resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "Web: JS": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC Web",
+      "questions": [
+        "How to publishing stream via CDN?",
+        "How to set video resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "Linux: C++": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC Linux",
+      "questions": [
+        "How to publishing stream via CDN?",
+        "How to set video resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "Linux: Java": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC Linux",
+      "questions": [
+        "How to publishing stream via CDN?",
+        "How to set video resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "React Native: JS": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC React Native",
+      "questions": [
+        "How to publishing stream via CDN?",
+        "How to set video resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    },
+    "Cocos Creator: TS": {
+      "chat_id": "xxx",
+      "assistant_name": "EN RTC Cocos",
+      "questions": [
+        "How to publishing stream via CDN?",
+        "How to set video resolution?",
+        "Users in Africa reported video lag, what are the optimization solutions?"
+      ]
+    }
+  },
+  "zim": {
+    "Android: Java": {
+      "chat_id": "47d1b514a7bb11ef96e50242ac120003",
+      "assistant_name": "ZIM(Android)",
+      "questions": [
+        "What features does In-app chat have?",
+        "What message types does In-app chat support?",
+        "How to like a message?"
+      ]
+    },
+    "Flutter: Dart": {
+      "chat_id": "489b6eaea7bb11efbbc00242ac120003",
+      "assistant_name": "ZIM(Flutter)",
+      "questions": [
+        "What features does In-app chat have?",
+        "What message types does In-app chat support?",
+        "How to like a message?"
+      ]
+    },
+    "iOS: Objective-C": {
+      "chat_id": "49357bc0a7bb11ef88780242ac120003",
+      "assistant_name": "ZIM(iOS)",
+      "questions": [
+        "What features does In-app chat have?",
+        "What message types does In-app chat support?",
+        "How to like a message?"
+      ]
+    },
+    "macOS: Objective-C": {
+      "chat_id": "49f6d1eea7bb11efa8f50242ac120003",
+      "assistant_name": "ZIM(macOS)",
+      "questions": [
+        "What features does In-app chat have?",
+        "What message types does In-app chat support?",
+        "How to like a message?"
+      ]
+    },
+    "React Native: JS": {
+      "chat_id": "4a778ee2a7bb11ef87e00242ac120003",
+      "assistant_name": "ZIM(RN)",
+      "questions": [
+        "What features does In-app chat have?",
+        "What message types does In-app chat support?",
+        "How to like a message?"
+      ]
+    },
+    "Unity3D: C#": {
+      "chat_id": "4b8a1854a7bb11efaedb0242ac120003",
+      "assistant_name": "ZIM(Unity 3D)",
+      "questions": [
+        "What features does In-app chat have?",
+        "What message types does In-app chat support?",
+        "How to like a message?"
+      ]
+    },
+    "Web: JS": {
+      "chat_id": "4c453e40a7bb11ef824d0242ac120003",
+      "assistant_name": "ZIM(Web)",
+      "questions": [
+        "What features does In-app chat have?",
+        "What message types does In-app chat support?",
+        "How to like a message?"
+      ]
+    },
+    "Windows: C++": {
+      "chat_id": "4d397c8aa7bb11ef92d20242ac120003",
+      "assistant_name": "ZIM(Windows)",
+      "questions": [
+        "What features does In-app chat have?",
+        "What message types does In-app chat support?",
+        "How to like a message?"
+      ]
+    },
+    "服务端 API": {
+      "chat_id": "4e2cf798a7bb11ef972d0242ac120003",
+      "assistant_name": "ZIM(Server)",
+      "questions": [
+        "What features does In-app chat have?",
+        "What message types does In-app chat support?",
+        "How to like a message?"
+      ]
+    }
+  },
+  "callkit": {
+    "Android: Java": {
+      "chat_id": "4f39a442a7bb11efa4330242ac120003",
+      "assistant_name": "UIKit-Call Kit(Android)",
+      "questions": [
+        "How to set avatar?",
+        "How to deduct user fees after hanging up the call?",
+        "How to place the hang up button on the right side?"
+      ]
+    },
+    "iOS: Swift": {
+      "chat_id": "504d4dcaa7bb11efb0f40242ac120003",
+      "assistant_name": "UIKit-Call Kit(iOS)",
+      "questions": [
+        "How to set avatar?",
+        "How to deduct user fees after hanging up the call?",
+        "How to place the hang up button on the right side?"
+      ]
+    },
+    "Flutter: Dart": {
+      "chat_id": "50fc806aa7bb11ef8e3f0242ac120003",
+      "assistant_name": "UIKit-Call Kit(Flutter)",
+      "questions": [
+        "How to set avatar?",
+        "How to deduct user fees after hanging up the call?",
+        "How to place the hang up button on the right side?"
+      ]
+    },
+    "React Native: JS": {
+      "chat_id": "51a69ba4a7bb11ef8b6c0242ac120003",
+      "assistant_name": "UIKit-Call Kit(RN)",
+      "questions": [
+        "How to set avatar?",
+        "How to deduct user fees after hanging up the call?",
+        "How to place the hang up button on the right side?"
+      ]
+    },
+    "Web: JS": {
+      "chat_id": "52cae2a6a7bb11ef89ac0242ac120003",
+      "assistant_name": "UIKit-Call Kit(Web)",
+      "questions": [
+        "How to set avatar?",
+        "How to deduct user fees after hanging up the call?",
+        "How to place the hang up button on the right side?"
+      ]
+    }
+  },
+  "live_streaming_kit": {
+    "Android: Java": {
+      "chat_id": "5455de00a7bb11efb0ea0242ac120003",
+      "assistant_name": "UIKit-Live Streaming Kit(Android)",
+      "questions": [
+        "How to set avatar?",
+        "How to add a trophy button to the toolbar?",
+        "How to send gifts to the host?"
+      ]
+    },
+    "iOS: Swift": {
+      "chat_id": "5563a606a7bb11ef89970242ac120003",
+      "assistant_name": "UIKit-Live Streaming Kit(iOS)",
+      "questions": [
+        "How to set avatar?",
+        "How to add a trophy button to the toolbar?",
+        "How to send gifts to the host?"
+      ]
+    },
+    "Flutter: Dart": {
+      "chat_id": "56c7829ca7bb11efa46b0242ac120003",
+      "assistant_name": "UIKit-Live Streaming Kit(Flutter)",
+      "questions": [
+        "How to set avatar?",
+        "How to add a trophy button to the toolbar?",
+        "How to send gifts to the host?"
+      ]
+    },
+    "React Native: JS": {
+      "chat_id": "577daf7ca7bb11ef816d0242ac120003",
+      "assistant_name": "UIKit-Live Streaming Kit(RN)",
+      "questions": [
+        "How to set avatar?",
+        "How to add a trophy button to the toolbar?",
+        "How to send gifts to the host?"
+      ]
+    },
+    "Web: JS": {
+      "chat_id": "58a0bb42a7bb11efa5d30242ac120003",
+      "assistant_name": "UIKit-Live Streaming Kit(Web)",
+      "questions": [
+        "How to set avatar?",
+        "How to add a trophy button to the toolbar?",
+        "How to send gifts to the host?"
+      ]
+    }
+  },
+  "live_audio_room_kit": {
+    "Android: Java": {
+      "chat_id": "59761ef4a7bb11efa33a0242ac120003",
+      "assistant_name": "UIKit-Live Audio Room Kit(Android)",
+      "questions": [
+        "How to set avatar?",
+        "How to mark someone as the top contributor?",
+        "How to only show the host in the first row?"
+      ]
+    },
+    "iOS: Swift": {
+      "chat_id": "5a25b3dca7bb11ef91560242ac120003",
+      "assistant_name": "UIKit-Live Audio Room Kit(iOS)",
+      "questions": [
+        "How to set avatar?",
+        "How to mark someone as the top contributor?",
+        "How to only show the host in the first row?"
+      ]
+    },
+    "Flutter: Dart": {
+      "chat_id": "5ac5f6f8a7bb11ef972f0242ac120003",
+      "assistant_name": "UIKit-Live Audio Room Kit(Flutter)",
+      "questions": [
+        "How to set avatar?",
+        "How to mark someone as the top contributor?",
+        "How to only show the host in the first row?"
+      ]
+    },
+    "React Native: JS": {
+      "chat_id": "5b72d8e6a7bb11ef99750242ac120003",
+      "assistant_name": "UIKit-Live Audio Room Kit(RN)",
+      "questions": [
+        "How to set avatar?",
+        "How to mark someone as the top contributor?",
+        "How to only show the host in the first row?"
+      ]
+    }
+  },
+  "imkit": {
+    "Android: Java": {
+      "chat_id": "5c5aa400a7bb11efaa2e0242ac120003",
+      "assistant_name": "UIKit-In-app Chat Kit(Android)",
+      "questions": [
+        "What features does In-app Chat Kit have?",
+        "How to make voice calls with friends?"
+      ]
+    },
+    "iOS: Swift": {
+      "chat_id": "5dd44142a7bb11ef915c0242ac120003",
+      "assistant_name": "UIKit-In-app Chat Kit(iOS)",
+      "questions": [
+        "What features does In-app Chat Kit have?",
+        "How to make voice calls with friends?"
+      ]
+    },
+    "Flutter: Dart": {
+      "chat_id": "5e80f00ea7bb11efa2310242ac120003",
+      "assistant_name": "UIKit-In-app Chat Kit(Flutter)",
+      "questions": [
+        "What features does In-app Chat Kit have?",
+        "How to make voice calls with friends?"
+      ]
+    },
+    "React Native: JS": {
+      "chat_id": "5f447d3aa7bb11efa3b00242ac120003",
+      "assistant_name": "UIKit-In-app Chat Kit(RN)",
+      "questions": [
+        "What features does In-app Chat Kit have?",
+        "How to make voice calls with friends?"
+      ]
+    }
+  },
+  "video_conference_kit": {
+    "Android: Java": {
+      "chat_id": "600aa8d4a7bb11efbd3d0242ac120003",
+      "assistant_name": "UIKit-Video Conference Kit(Android)",
+      "questions": [
+        "What features does Video Conference Kit have?",
+        "How to mute microphone when joining a meeting?"
+      ]
+    },
+    "iOS: Swift": {
+      "chat_id": "6123b8e6a7bb11efbe990242ac120003",
+      "assistant_name": "UIKit-Video Conference Kit(iOS)",
+      "questions": [
+        "What features does Video Conference Kit have?",
+        "How to mute microphone when joining a meeting?"
+      ]
+    },
+    "Flutter: Dart": {
+      "chat_id": "61ddf38ca7bb11ef8daf0242ac120003",
+      "assistant_name": "UIKit-Video Conference Kit(Flutter)",
+      "questions": [
+        "What features does Video Conference Kit have?",
+        "How to mute microphone when joining a meeting?"
+      ]
+    },
+    "React Native: JS": {
+      "chat_id": "62f955eaa7bb11efacdc0242ac120003",
+      "assistant_name": "UIKit-Video Conference Kit(RN)",
+      "questions": [
+        "What features does Video Conference Kit have?",
+        "How to mute microphone when joining a meeting?"
+      ]
+    },
+    "Web: JS": {
+      "chat_id": "641f1a0ea7bb11efa1e60242ac120003",
+      "assistant_name": "UIKit-Video Conference Kit(Web)",
+      "questions": [
+        "What features does Video Conference Kit have?",
+        "How to mute microphone when joining a meeting?"
+      ]
+    }
+  },
+  "supper_board": {
+    "Android: Java": {
+      "chat_id": "64c00720a7bb11efaf2a0242ac120003",
+      "assistant_name": "Super Board(Android)",
+      "questions": [
+        "What features does Super Board have?",
+        "How to draw on the whiteboard?",
+        "How to share a file?"
+      ]
+    },
+    "iOS: Objective-C": {
+      "chat_id": "656ba81ea7bb11ef92ac0242ac120003",
+      "assistant_name": "Super Board(iOS)",
+      "questions": [
+        "What features does Super Board have?",
+        "How to draw on the whiteboard?",
+        "How to share a file?"
+      ]
+    },
+    "Flutter: Dart": {
+      "chat_id": "66414fc8a7bb11ef93b00242ac120003",
+      "assistant_name": "Super Board(Flutter)",
+      "questions": [
+        "What features does Super Board have?",
+        "How to draw on the whiteboard?",
+        "How to share a file?"
+      ]
+    },
+    "Web: JS": {
+      "chat_id": "66e97a18a7bb11efba490242ac120003",
+      "assistant_name": "Super Board(Web)",
+      "questions": [
+        "What features does Super Board have?",
+        "How to draw on the whiteboard?",
+        "How to share a file?"
+      ]
+    },
+    "React Native: JS": {
+      "chat_id": "3f4323aaa7bc11ef82740242ac120003",
+      "assistant_name": "Super Board(React Native)",
+      "questions": [
+        "What features does Super Board have?",
+        "How to draw on the whiteboard?",
+        "How to share a file?"
+      ]
+    }
+  },
+  "ai_effects": {
+    "Android: Java": {
+      "chat_id": "41a68c5ea7bc11efbfc10242ac120003",
+      "assistant_name": "AI Effects(Android)",
+      "questions": [
+        "What features does AI Effects have?",
+        "How to enable skin whitening?",
+        "How to blur the background?"
+      ]
+    },
+    "iOS: Objective-C": {
+      "chat_id": "42d6fac8a7bc11ef88410242ac120003",
+      "assistant_name": "AI Effects(iOS)",
+      "questions": [
+        "What features does AI Effects have?",
+        "How to enable skin whitening?",
+        "How to blur the background?"
+      ]
+    }
+  },
+  "cloud_recording": {
+    "Server": {
+      "chat_id": "4426a838a7bc11efa7eb0242ac120003",
+      "assistant_name": "Cloud Recording",
+      "questions": [
+        "What features does Cloud Recording have?",
+        "How to record all streams in a room into one file?"
+      ]
+    }
+  },
+  "mini-game": {
+    "Android: Java": {
+      "chat_id": "457ab814a7bc11ef8d030242ac120003",
+      "assistant_name": "Mini Game Engine(Android)",
+      "questions": [
+        "What games are supported?",
+        "How to implement a live comment-based game?"
+      ]
+    },
+    "iOS: Objective-C": {
+      "chat_id": "4698d4a6a7bc11efaaa10242ac120003",
+      "assistant_name": "Mini Game Engine(iOS)",
+      "questions": [
+        "What games are supported?",
+        "How to implement a live comment-based game?"
+      ]
+    }
+  },
+  "admin-console": {
+    "Android: Java": {
+      "chat_id": "47cfd6a8a7bc11efaa020242ac120003",
+      "assistant_name": "Admin Console",
+      "questions": [
+        "What features are available?",
+        "How to add Apple offline push certificate?"
+      ]
+    }
+  },
+  "aigc_digital_human": {
+    "Server": {
+      "chat_id": "2bd55762a7cf11efb1310242ac120003",
+      "assistant_name": "Digital Human",
+      "questions": [
+        "What can a digital human do?",
+        "Can I create a digital human with just one image?"
+      ]
+    }
+  }
+}
