@@ -722,7 +722,7 @@
   },
   "live_streaming_kit_zh": {
     "Android: Java": {
-      "chat_id": "707b900aa72211ef84420242ac120003x",
+      "chat_id": "707b900aa72211ef84420242ac120003",
       "assistant_name": "互动直播 UIKit (Android)",
       "questions": [
         "怎么设置头像？",
@@ -1010,7 +1010,7 @@
       "questions": ["怎么推流到CDN？", "怎么跟其他主播PK？"]
     },
     "Web: JS": {
-      "chat_id": "6a52ad38a72911ef87700242ac120003",
+      "chat_id": "8a3aac54a72911ef9ab30242ac120003",
       "assistant_name": "秀场直播(Web)",
       "questions": ["怎么推流到CDN？", "怎么跟其他主播PK？"]
     }
@@ -1047,7 +1047,7 @@
       "questions": ["在线KTV有哪些玩法？", "怎么实现一个房间多人合唱？"]
     },
     "Electron: JS": {
-      "chat_id": "e73d8b30a72c11efac940242ac120003",
+      "chat_id": "73f8dfd4a72d11efbbfa0242ac120003",
       "assistant_name": "在线 KTV(Electron)",
       "questions": ["在线KTV有哪些玩法？", "怎么实现一个房间多人合唱？"]
     },

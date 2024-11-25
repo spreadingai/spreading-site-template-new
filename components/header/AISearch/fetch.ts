@@ -10,8 +10,7 @@ const baseURL =
 console.log(process.env.NODE_ENV, baseURL);
 
 export const getChatIDMap = () => {
-  const url =
-    "https://media-resource.spreading.io/docuo/workspace564/27e54a759d23575969552654cb45bf89/4e5193d31c.json";
+  const url = "https://storage.zego.im/sdk-doc/ai_search_mapping.json";
   return fetch(url, {
     method: "get",
     headers: {
@@ -124,7 +123,12 @@ export const scoreFetch = (
     body: JSON.stringify(reqData),
   })
     .then((res) => {
-      if (res.ok) return Promise.resolve(res);
+      if (res.ok) {
+        return Promise.resolve(res);
+      } else {
+        const { status, statusText } = res;
+        return Promise.reject(`status: ${status}, statusText: ${statusText}`);
+      }
     })
     .then((_res) => {
       return _res.body;
