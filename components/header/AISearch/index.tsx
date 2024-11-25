@@ -709,7 +709,7 @@ const AISearch = (props: Props) => {
               </div> */}
           </>
           <div className={styles["converse-content"]}>
-            {/* <ProChat
+            <ProChat
               loading={loading}
               chats={chats}
               helloMessage={
@@ -767,7 +767,7 @@ const AISearch = (props: Props) => {
                 };
                 return data;
               }}
-            /> */}
+            />
           </div>
         </div>
       </Modal>
