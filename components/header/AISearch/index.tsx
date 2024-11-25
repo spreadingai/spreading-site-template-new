@@ -123,16 +123,20 @@ const AISearch = (props: Props) => {
         currentPlatform,
         chatID
       );
-      const { code, data } = res;
+      const { code, data, message } = res;
       if (code === 0) {
+        console.log("createSessions success");
         const { id, name, messages } = data;
         setSessionID(id);
 
         if (messages && messages[0] && messages[0].role === "assistant") {
           setDefaultHelloMessage(messages[0].content);
         }
+      } else {
+        console.log(`createSessions error, code: ${code}, message: ${message}`);
       }
     } catch (error) {
+      console.log(`createSessions error`);
       console.log(error);
     } finally {
       setLoading(false);
@@ -148,7 +152,14 @@ const AISearch = (props: Props) => {
         chatID,
         [sessionID]
       );
+      const { code, message } = res;
+      if (code === 0) {
+        console.log("deleteSessions success");
+      } else {
+        console.log(`deleteSessions error, code: ${code}, message: ${message}`);
+      }
     } catch (error) {
+      console.log(`deleteSessions error`);
       console.log(error);
     } finally {
       setSessionID("");
@@ -199,6 +210,7 @@ const AISearch = (props: Props) => {
               .read()
               .then(({ done, value }) => {
                 if (done) {
+                  console.log("read stream done");
                   controller.close();
                   lastChunkText.current = "";
                   blockChunkText.current = "";
@@ -210,15 +222,20 @@ const AISearch = (props: Props) => {
                 // Handles special characters for hover tips
                 result = result.replaceAll(/\s*##\d+\$\$/g, "");
                 // console.log("answerStr value", value);
-                console.log("answerStr result", result);
+                // console.log("answerStr result", result);
                 const regex1 = /}}\n*$/;
                 const regex2 = /^data:{"code": 0, "data": true}\n*$/;
                 const regex3 = /\n*data:{"code": 0, "data": true}\n*$/;
-                let caseType = 0; // 0: no block 1: start block 2: blocking 3: end block 4: last chunk
-                if (
+                // "{"code":102,"message":"Session does not exist"} \n"
+                const regex4 = /^{"code":\s*[1-9][0-9]*,[\s\S]*}\s*\n*$/;
+                let caseType = 0; // 0: no block 1: start block 2: blocking 3: end block 4: last chunk 5: code non-0 error
+                if (regex4.test(result)) {
+                  caseType = 5;
+                } else if (
                   result.startsWith("data:{") &&
                   !regex1.test(result) &&
-                  !regex2.test(result)
+                  !regex2.test(result) &&
+                  !regex3.test(result)
                 ) {
                   console.log("answerStr result - Start to block");
                   caseType = 1;
@@ -254,10 +271,10 @@ const AISearch = (props: Props) => {
                     result = blockChunkText.current;
                   }
                 }
-                if (caseType !== 1 && caseType !== 2) {
+                if (caseType !== 1 && caseType !== 2 && caseType !== 5) {
                   const str = result.split("data:")[1];
                   try {
-                    console.log("answerStr str", str);
+                    // console.log("answerStr str", str);
                     if (str) {
                       const temp = JSON.parse(str);
                       if (temp.data !== true && temp.data.answer) {
@@ -278,10 +295,14 @@ const AISearch = (props: Props) => {
                   } catch (error) {
                     console.log(error);
                   }
+                } else if (caseType === 5) {
+                  console.log("read stream interface error ", result);
+                  controller.enqueue(encoder.encode("Unable to answer"));
                 }
                 push();
               })
               .catch((error) => {
+                console.log("read stream error");
                 console.log(error);
                 controller.error(error);
                 lastChunkText.current = "";
@@ -294,6 +315,7 @@ const AISearch = (props: Props) => {
       });
       return readableStream;
     } catch (error) {
+      console.log("startConverse error");
       console.log(error);
       lastChunkText.current = "";
       blockChunkText.current = "";
@@ -396,6 +418,7 @@ const AISearch = (props: Props) => {
     if (!parentChat) return;
     updateScoreStyle(e);
     const { id, answer } = answerData;
+    const oldScore = answerData.score;
     const targetScore = answerData.score === score ? ScoreType.ZERO : score;
     const questionData: Question = {
       answerID: id,
@@ -405,7 +428,12 @@ const AISearch = (props: Props) => {
     };
     targetScore !== ScoreType.FIVE && (questionData.answer = answer);
     answerData.score = score;
-    scoreFetch(currentGroup, currentPlatform, sessionID, [questionData]);
+    scoreFetch(currentGroup, currentPlatform, sessionID, [questionData]).catch(
+      (error) => {
+        console.log("scoreFetch error", error);
+        answerData.score = oldScore;
+      }
+    );
   };
 
   useEffect(() => {
@@ -681,7 +709,7 @@ const AISearch = (props: Props) => {
               </div> */}
           </>
           <div className={styles["converse-content"]}>
-            <ProChat
+            {/* <ProChat
               loading={loading}
               chats={chats}
               helloMessage={
@@ -739,7 +767,7 @@ const AISearch = (props: Props) => {
                 };
                 return data;
               }}
-            />
+            /> */}
           </div>
         </div>
       </Modal>

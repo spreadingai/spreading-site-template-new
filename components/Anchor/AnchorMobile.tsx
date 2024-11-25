@@ -65,7 +65,7 @@ const AnchorNodeMobile: FC<AnchorNodeProps> = ({ tocFormatData }) => {
               try {
                 hDom.id = hDom.id + "-display-none";
               } catch (error) {
-                console.error(error);
+                console.log(error);
               }
             }
           }
@@ -75,7 +75,7 @@ const AnchorNodeMobile: FC<AnchorNodeProps> = ({ tocFormatData }) => {
     try {
       loop(tocFormatData);
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   }, [tocFormatData]);
 

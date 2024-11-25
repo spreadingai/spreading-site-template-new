@@ -11,7 +11,7 @@
 .ai-search-dialog {
     width: 80% !important;
     height: 80% !important;
-    & > div:nth-of-type(2) {
+    & > div {
         height: 100%;
     }
     :global(.ant-modal-content) {
