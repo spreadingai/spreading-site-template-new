@@ -1,7 +1,9 @@
 import React, {
   Component,
+  MouseEventHandler,
   ReactNode,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -19,6 +21,7 @@ import {
   ActionIconGroup,
   ActionIcon,
   ActionIconGroupProps,
+  BackBottomProps,
 } from "@ant-design/pro-chat";
 import {
   startConverseFetch,
@@ -36,6 +39,7 @@ import {
   LikeOutlined,
   DislikeOutlined,
   RollbackOutlined,
+  UserOutlined,
   // @ts-ignore
 } from "@ant-design/icons";
 import { actionsClickProps } from "@ant-design/pro-chat/es/ChatItem/type";
@@ -43,6 +47,11 @@ import usePlatform from "@/components/hooks/usePlatform";
 import useGroup from "@/components/hooks/useGroup";
 import { ActionIconGroupItems } from "@ant-design/pro-chat/es/ActionIconGroup";
 import { Question, ScoreType } from "./types";
+import { ThemeProvider } from "antd-style";
+import { theme } from "antd";
+import ThemeContext from "../Theme.context";
+import { copywriting } from "@/components/constant/language";
+import useLanguage from "@/components/hooks/useLanguage";
 
 interface AnswerData {
   score?: ScoreType;
@@ -62,33 +71,36 @@ interface AnswerData {
 
 interface Props {}
 
-const testAnswerData = {
-  answer:
-    '接入 L3 直播（互动直播）的具体步骤如下 ##1$$。以下是详细的步骤说明：\n\n### 步骤 1: 注册和创建项目\n1. **注册账号**：\n   - 访问直播平台的官方网站，注册一个账号。\n2. **创建项目**：\n   - 登录后，在控制台中创建一个新的项目，并获取项目的 AppID 和其他必要信息。\n\n### 步骤 2: 集成 SDK\n1. **下载 SDK**：\n   - 前往开发者文档页面，下载适用于你开发环境的 L3 直播 SDK。\n2. **集成 SDK**：\n   - 将下载的 SDK 文件添加到项目中。\n   - 修改 `build.gradle` 或 `Podfile` 文件，引入必要的依赖项。\n   - 运行项目，确保 SDK 成功集成。\n\n### 步骤 3: 初始化 SDK\n1. **初始化 SDK**：\n   - 在应用启动时，调用 SDK 的初始化方法。通常需要传入你的 AppID 和其他配置参数。\n   ```java\n   // 示例代码（Java）\n   LiveStreamingKit.init(context, "your_app_id");\n   ```\n\n\n### 步骤 4: 创建直播间\n1. **创建直播间**：\n   - 调用 SDK 提供的方法创建一个新的直播间。你可以设置直播间的基本信息，如房间名称、房间 ID 等。\n   ```java\n   // 示例代码（Java）\n   LiveRoom room = new LiveRoom("room_name", "room_id");\n   room.create();\n   ```\n\n\n### 步骤 5: 加入直播间\n1. **加入直播间**：\n   - 调用 SDK 提供的方法让用户加入已创建的直播间。\n   ```java\n   // 示例代码（Java）\n   room.join("user_id");\n   ```\n\n\n### 步骤 6: 实现互动功能\n1. **实现互动功能**：\n   - 根据需求实现各种互动功能，如连麦、弹幕、礼物等。SDK 通常会提供相应的 API 方法。\n   ```java\n   // 示例代码（Java）\n   room.sendChatMessage("Hello, everyone!");\n   room.requestCoHost("co_host_user_id");\n   ```\n\n\n### 步骤 7: 处理事件和回调\n1. **处理事件和回调**：\n   - 监听并处理 SDK 发出的各种事件和回调，如用户进入房间、消息接收等。\n   ```java\n   // 示例代码（Java）\n   room.setOnEventListener(new OnEventListener() {\n       @Override\n       public void onUserJoined(String userId) {\n           Log.d("LiveRoom", "User joined: " + userId);\n       }\n\n       @Override\n       public void onChatMessageReceived(String message) {\n           Log.d("LiveRoom", "Message received: " + message);\n       }\n   });\n   ```\n\n\n### 步骤 8: 测试和调试\n1. **测试和调试**：\n   - 在真实环境中测试直播间的各项功能，确保一切正常运行。可以使用日志和调试工具来排查问题。\n\n### 步骤 9: 上线发布\n1. **上线发布**：\n   - 完成所有测试后，将应用正式发布到应用商店或部署到服务器。\n\n### 注意事项\n- **权限配置**：确保应用具有必要的权限，如网络访问、摄像头���麦克风权限。\n- **性能优化**：优化应用的性能，确保在高并发情况下也能稳定运行。\n- **用户体验**：关注用户体验，提供流畅的直播体验和友好的界面设计。\n\n### 示例代码汇总\n以下是一个完整的示例代码，展示了如何集成和使用 L3 直播 SDK：\n\n```java\n// 初始化 SDK\nLiveStreamingKit.init(context, "your_app_id");\n\n// 创建直播间\nLiveRoom room = new LiveRoom("room_name", "room_id");\nroom.create();\n\n// 加入直播间\nroom.join("user_id");\n\n// 发送聊天消息\nroom.sendChatMessage("Hello, everyone!");\n\n// 请求连麦\nroom.requestCoHost("co_host_user_id");\n\n// 设置事件监听器\nroom.setOnEventListener(new OnEventListener() {\n    @Override\n    public void onUserJoined(String userId) {\n        Log.d("LiveRoom", "User joined: " + userId);\n    }\n\n    @Override\n    public void onChatMessageReceived(String message) {\n        Log.d("LiveRoom", "Message received: " + message);\n    }\n});\n```\n\n\n### 参考文档\n- **官方文档**：建议详细阅读官方文档，了解更多的配置选项和高级功能。\n- **API 文档**：查看 SDK 的 API 文档，了解各个方法的具体用法和参数。\n\n希望这些步骤对你有所帮助！如果有更多具体问题，欢迎继续提问。',
-  reference: {
-    total: 7,
-    doc_aggs: [
-      {
-        doc_name: "Glossary - 产品&Features.csv",
-        doc_id: "4273fadc966d11efabe20242ac140003",
-        count: 7,
-      },
-    ],
-  },
-  prompt:
-    '# 角色\n你是一个智能助手，名字叫Miss R。你的主要职责是基于知识库中的信息来总结并回答用户的问题。\n\n## 技能\n### 技能1: 信息总结与问题解答\n- 根据用户提出的问题，从知识库中提取相关信息。\n- 先总结实现步骤，再详细解释每个步骤的具体内容。\n- 如果知识库中没有相关的信息，则直接告知用户：“抱歉，没有提供相关信息。”\n\n### 技能2: 提供示例代码\n- 在回答涉及编程或技术性问题时，尽可能包含示例代码以帮助用户更好地理解。\n- 确保提供的代码准确无误，并且易于理解和执行。\n- 代码应包括必要的注释，以便用户理解关键逻辑和配置方法。\n\n### 技能3: 多语言支持\n- 使用中文进行回答，确保沟通无障碍。\n- 如果用户提问的语言不在支持范围内，可以提示用户使用支持的语言重新提问。\n\n## 限制\n- 绝对不能捏造信息，特别是涉及到数字和代码时，必须保证信息的准确性。\n- 回答格式需遵循Markdown规范，使答案结构清晰、易读。\n- 当知识库中的信息与用户问题无关时，直接回复：“抱歉，没有提供相关信息。”\n- 所有回答都应基于知识库中的现有资料，不得超出其范围。\n\n## 知识库\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming Kit,可直接使用的直播,Ready-to-use live streaming,,2023/04/07\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming,互动直播 （原L3）,Interactive Live Streaming,,2023/04/07\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming Kit,开箱即用的直播接口,Out-of-the-box livestream interface,,2023/04/04\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming,CDN直播,Live Streaming,,2023/04/04\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming Kit,直播邀请,Livestream invitation,,2023/04/07\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming,直播连麦,Co\'-hosting,,2023/04/07\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming,直播混流、转推、转码服务,Livestream Creation,,2023/04/07\n\n以上就是相关的知识。\n\n### Query:\n如何接入 L3 直播？\n\n### Elapsed\n  - Retrieval: 15929.2 ms\n  - LLM: 84465.3 ms',
-  id: "a3fbedb7-a609-47bd-8450-aa18ce9ed893",
-  session_id: "96cb332ea18b11efaf9f0242ac120006",
-};
+// const testAnswerData = {
+//   answer:
+//     '接入 L3 直播（互动直播）的具体步骤如下 ##1$$。以下是详细的步骤说明：\n\n### 步骤 1: 注册和创建项目\n1. **注册账号**：\n   - 访问直播平台的官方网站，注册一个账号。\n2. **创建项目**：\n   - 登录后，在控制台中创建一个新的项目，并获取项目的 AppID 和其他必要信息。\n\n### 步骤 2: 集成 SDK\n1. **下载 SDK**：\n   - 前往开发者文档页面，下载适用于你开发环境的 L3 直播 SDK。\n2. **集成 SDK**：\n   - 将下载的 SDK 文件添加到项目中。\n   - 修改 `build.gradle` 或 `Podfile` 文件，引入必要的依赖项。\n   - 运行项目，确保 SDK 成功集成。\n\n### 步骤 3: 初始化 SDK\n1. **初始化 SDK**：\n   - 在应用启动时，调用 SDK 的初始化方法。通常需要传入你的 AppID 和其他配置参数。\n   ```java\n   // 示例代码（Java）\n   LiveStreamingKit.init(context, "your_app_id");\n   ```\n\n\n### 步骤 4: 创建直播间\n1. **创建直播间**：\n   - 调用 SDK 提供的方法创建一个新的直播间。你可以设置直播间的基本信息，如房间名称、房间 ID 等。\n   ```java\n   // 示例代码（Java）\n   LiveRoom room = new LiveRoom("room_name", "room_id");\n   room.create();\n   ```\n\n\n### 步骤 5: 加入直播间\n1. **加入直播间**：\n   - 调用 SDK 提供的方法让用户加入已创建的直播间。\n   ```java\n   // 示例代码（Java）\n   room.join("user_id");\n   ```\n\n\n### 步骤 6: 实现互动功能\n1. **实现互动功能**：\n   - 根据需求实现各种互动功能，如连麦、弹幕、礼物等。SDK 通常会提供相应的 API 方法。\n   ```java\n   // 示例代码（Java）\n   room.sendChatMessage("Hello, everyone!");\n   room.requestCoHost("co_host_user_id");\n   ```\n\n\n### 步骤 7: 处理事件和回调\n1. **处理事件和回调**：\n   - 监听并处理 SDK 发出的各种事件和回调，如用户进入房间、消息接收等。\n   ```java\n   // 示例代码（Java）\n   room.setOnEventListener(new OnEventListener() {\n       @Override\n       public void onUserJoined(String userId) {\n           Log.d("LiveRoom", "User joined: " + userId);\n       }\n\n       @Override\n       public void onChatMessageReceived(String message) {\n           Log.d("LiveRoom", "Message received: " + message);\n       }\n   });\n   ```\n\n\n### 步骤 8: 测试和调试\n1. **测试和调试**：\n   - 在真实环境中测试直播间的各项功能，确保一切正常运行。可以使用日志和调试工具来排查问题。\n\n### 步骤 9: 上线发布\n1. **上线发布**：\n   - 完成所有测试后，将应用正式发布到应用商店或部署到服务器。\n\n### 注意事项\n- **权限配置**：确保应用具有必要的权限，如网络访问、摄像头���麦克风权限。\n- **性能优化**：优化应用的性能，确保在高并发情况下也能稳定运行。\n- **用户体验**：关注用户体验，提供流畅的直播体验和友好的界面设计。\n\n### 示例代码汇总\n以下是一个完整的示例代码，展示了如何集成和使用 L3 直播 SDK：\n\n```java\n// 初始化 SDK\nLiveStreamingKit.init(context, "your_app_id");\n\n// 创建直播间\nLiveRoom room = new LiveRoom("room_name", "room_id");\nroom.create();\n\n// 加入直播间\nroom.join("user_id");\n\n// 发送聊天消息\nroom.sendChatMessage("Hello, everyone!");\n\n// 请求连麦\nroom.requestCoHost("co_host_user_id");\n\n// 设置事件监听器\nroom.setOnEventListener(new OnEventListener() {\n    @Override\n    public void onUserJoined(String userId) {\n        Log.d("LiveRoom", "User joined: " + userId);\n    }\n\n    @Override\n    public void onChatMessageReceived(String message) {\n        Log.d("LiveRoom", "Message received: " + message);\n    }\n});\n```\n\n\n### 参考文档\n- **官方文档**：建议详细阅读官方文档，了解更多的配置选项和高级功能。\n- **API 文档**：查看 SDK 的 API 文档，了解各个方法的具体用法和参数。\n\n希望这些步骤对你有所帮助！如果有更多具体问题，欢迎继续提问。',
+//   reference: {
+//     total: 7,
+//     doc_aggs: [
+//       {
+//         doc_name: "Glossary - 产品&Features.csv",
+//         doc_id: "4273fadc966d11efabe20242ac140003",
+//         count: 7,
+//       },
+//     ],
+//   },
+//   prompt:
+//     '# 角色\n你是一个智能助手，名字叫Miss R。你的主要职责是基于知识库中的信息来总结并回答用户的问题。\n\n## 技能\n### 技能1: 信息总结与问题解答\n- 根据用户提出的问题，从知识库中提取相关信息。\n- 先总结实现步骤，再详细解释每个步骤的具体内容。\n- 如果知识库中没有相关的信息，则直接告知用户：“抱歉，没有提供相关信息。”\n\n### 技能2: 提供示例代码\n- 在回答涉及编程或技术性问题时，尽可能包含示例代码以帮助用户更好地理解。\n- 确保提供的代码准确无误，并且易于理解和执行。\n- 代码应包括必要的注释，以便用户理解关键逻辑和配置方法。\n\n### 技能3: 多语言支持\n- 使用中文进行回答，确保沟通无障碍。\n- 如果用户提问的语言不在支持范围内，可以提示用户使用支持的语言重新提问。\n\n## 限制\n- 绝对不能捏造信息，特别是涉及到数字和代码时，必须保证信息的准确性。\n- 回答格式需遵循Markdown规范，使答案结构清晰、易读。\n- 当知识库中的信息与用户问题无关时，直接回复：“抱歉，没有提供相关信息。”\n- 所有回答都应基于知识库中的现有资料，不得超出其范围。\n\n## 知识库\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming Kit,可直接使用的直播,Ready-to-use live streaming,,2023/04/07\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming,互动直播 （原L3）,Interactive Live Streaming,,2023/04/07\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming Kit,开箱即用的直播接口,Out-of-the-box livestream interface,,2023/04/04\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming,CDN直播,Live Streaming,,2023/04/04\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming Kit,直播邀请,Livestream invitation,,2023/04/07\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming,直播连麦,Co\'-hosting,,2023/04/07\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming,直播混流、转推、转码服务,Livestream Creation,,2023/04/07\n\n以上就是相关的知识。\n\n### Query:\n如何接入 L3 直播？\n\n### Elapsed\n  - Retrieval: 15929.2 ms\n  - LLM: 84465.3 ms',
+//   id: "a3fbedb7-a609-47bd-8450-aa18ce9ed893",
+//   session_id: "96cb332ea18b11efaf9f0242ac120006",
+// };
 
-const delay = (text: string) =>
-  new Promise<string>((resolve) => {
-    setTimeout(() => {
-      resolve(text);
-    }, 10000);
-  });
+// const delay = (text: string) =>
+//   new Promise<string>((resolve) => {
+//     setTimeout(() => {
+//       resolve(text);
+//     }, 10000);
+//   });
 
 const AISearch = (props: Props) => {
+  const { theme: currentTheme } = useContext(ThemeContext);
+  console.log("AISearch currentTheme", currentTheme);
+  const { currentLanguage } = useLanguage();
   const { currentGroup, currentGroupLabel } = useGroup();
   const { currentPlatform, currentPlatformLabel } = usePlatform();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -102,7 +114,7 @@ const AISearch = (props: Props) => {
   const [isSending, setIsSending] = useState(false);
   const [sessionID, setSessionID] = useState("");
   const [chats, setChats] = useState<ChatMessage<Record<string, any>>[]>([]);
-  const defaultRemarks = ["您好", "请问有什么可以帮到您！"];
+  const defaultRemarks = copywriting[currentLanguage].aiSearch.defaultRemarks;
   const proChatRef = useRef<ProChatInstance>();
   const abortControllerRef = useRef<AbortController>(null);
   const customInputAreaRef = useRef<HTMLDivElement>();
@@ -521,7 +533,7 @@ const AISearch = (props: Props) => {
             {docAggs && docAggs.length ? (
               <div className={styles["custom-chat-item-doc-agg"]}>
                 <div className={styles["custom-chat-item-doc-agg-title"]}>
-                  参考来源：
+                  {copywriting[currentLanguage].aiSearch.referenceSource}
                 </div>
                 {docAggs.map((item) => {
                   return (
@@ -558,6 +570,16 @@ const AISearch = (props: Props) => {
           </>
         ) : null}
       </>
+    );
+  };
+
+  const CustomBackToBottom = (
+    defaultDom: React.ReactNode,
+    scrollToBottom: MouseEventHandler<HTMLDivElement>,
+    BackBottomConfig: BackBottomProps
+  ) => {
+    return (
+      <span className={styles["custom-back-to-bottom-wrap"]}>{defaultDom}</span>
     );
   };
 
@@ -606,8 +628,18 @@ const AISearch = (props: Props) => {
         </div>
       );
     },
-    actionsProps: {},
-    // avatarRender
+    avatarRender: (props: ChatItemProps, defaultDom: ReactNode) => {
+      const role = props.originData.role;
+      if (role === "assistant") {
+        return defaultDom;
+      } else {
+        return (
+          <div className={styles["user-avatar-wrap"]}>
+            <UserOutlined />
+          </div>
+        );
+      }
+    },
     // render: (
     //   props: ChatItemProps,
     //   domsMap: {
@@ -650,10 +682,10 @@ const AISearch = (props: Props) => {
   return (
     <div className={styles["ai-search-wrap"]}>
       <div onClick={showModal} className={styles["ai-btn"]}>
-        Ask AI
+        {copywriting[currentLanguage].aiSearch.askAI}
       </div>
       <Modal
-        title="AI 文档助手"
+        title={copywriting[currentLanguage].aiSearch.modalTitle}
         open={isModalOpen}
         onCancel={cancelHandle}
         footer={null}
@@ -676,7 +708,9 @@ const AISearch = (props: Props) => {
                 ))}
               </div>
               <div className={styles["default-question-wrap"]}>
-                <div className={styles["question-tips"]}>猜您想了解：</div>
+                <div className={styles["question-tips"]}>
+                  {copywriting[currentLanguage].aiSearch.guessText}
+                </div>
                 <>
                   {defaultQuestions.map((question, index) => (
                     <div
@@ -709,65 +743,84 @@ const AISearch = (props: Props) => {
               </div> */}
           </>
           <div className={styles["converse-content"]}>
-            <ProChat
-              loading={loading}
-              chats={chats}
-              helloMessage={
-                defaultHelloMessage ? <p>{defaultHelloMessage}</p> : null
-              }
-              placeholder="请输入您的问题"
-              inputAreaProps={{
-                value: question,
-                onChange: changeHandle,
+            <ThemeProvider
+              appearance={currentTheme}
+              theme={{
+                algorithm:
+                  currentTheme === "dark"
+                    ? theme.darkAlgorithm
+                    : theme.defaultAlgorithm,
+                token: {
+                  colorText: "var(--docuo-text-color)",
+                },
               }}
-              actions={{ render: () => null }}
-              inputAreaRender={CustomInputArea}
-              inputRender={CustomInput}
-              messageItemExtraRender={CustomMessageItemExtra}
-              onChatEnd={chatEndHandle}
-              onChatStart={chatStartHandle}
-              onChatGenerate={chatGenerateHandle}
-              onChatsChange={chatsChangeHandle}
-              onScroll={scrollHandle}
-              sendButtonRender={CustomSendButton}
-              chatItemRenderConfig={customChatItemRenderConfig}
-              chatRef={proChatRef}
-              transformToChatMessage={transformToChatMessageHandle}
-              request={async (messages, extra, signal) => {
-                console.log(question);
-                console.log(messages);
-                // Send a request with Message as the parameter
-                // const mockedData: string = `# 角色\n你是一个智能助手，名字叫Miss R。你的主要职责是基于知识库中的信息来总结并回答用户的问题。\n\n## 技能\n### 技能1: 信息总结与问题解答\n- 根据用户提出的问题，从知识库中提取相关信息。\n- 先总结实现步骤，再详细解释每个步骤的具体内容。\n- 如果知识库中没有相关的信息，则直接告知用户：“抱歉，没有提供相关信息。”\n\n### 技能2: 提供示例代码\n- 在回答涉及编程或技术性问题时，尽可能包含示例代码以帮助用户更好地理解。\n- 确保提供的代码准确无误，并且易于理解和执行。\n- 代码应包括必要的注释，以便用户理解关键逻辑和配置方法。\n\n### 技能3: 多语言支持\n- 使用中文进行回答，确保沟通无障碍。\n- 如果用户提问的语言不在支持范围内，可以提示用户使用支持的语言重新提问。\n\n## 限制\n- 绝对不能捏造信息，特别是涉及到数字和代码时，必须保证信息的准确性。\n- 回答格式需遵循Markdown规范，使答案结构清晰、易读。\n- 当知识库中的信息与用户问题无关时，直接回复：“抱歉，没有提供相关信息。”\n- 所有回答都应基于知识库中的现有资料，不得超出其范围。\n\n## 知识库\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming Kit,可直接使用的直播,Ready-to-use live streaming,,2023/04/07\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming,互动直播 （原L3）,Interactive Live Streaming,,2023/04/07\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming Kit,开箱即用的直播接口,Out-of-the-box livestream interface,,2023/04/04\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming,CDN直播,Live Streaming,,2023/04/04\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming Kit,直播邀请,Livestream invitation,,2023/04/07\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming,直播连麦,Co\'-hosting,,2023/04/07\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming,直播混流、转推、转码服务,Livestream Creation,,2023/04/07\n\n以上就是相关的知识。\n\n### Query:\n如何接入 L3 直播？\n\n### Elapsed\n  - Retrieval: 15929.2 ms\n  - LLM: 84465.3 ms`; // Supports both streaming and non-streaming
-                // return {
-                //   content: new Response(mockedData),
-                //   docAggs: testAnswerData.reference.doc_aggs.map((item) => {
-                //     return {
-                //       docID: item.doc_id,
-                //       docName: item.doc_name,
-                //     };
-                //   }),
-                // };
+            >
+              <ProChat
+                loading={loading}
+                chats={chats}
+                helloMessage={
+                  defaultHelloMessage ? <p>{defaultHelloMessage}</p> : null
+                }
+                placeholder={
+                  copywriting[currentLanguage].aiSearch.inputPlaceholder
+                }
+                inputAreaProps={{
+                  value: question,
+                  onChange: changeHandle,
+                }}
+                actions={{ render: () => null }}
+                inputAreaRender={CustomInputArea}
+                inputRender={CustomInput}
+                messageItemExtraRender={CustomMessageItemExtra}
+                onChatEnd={chatEndHandle}
+                onChatStart={chatStartHandle}
+                onChatGenerate={chatGenerateHandle}
+                onChatsChange={chatsChangeHandle}
+                onScroll={scrollHandle}
+                sendButtonRender={CustomSendButton}
+                chatItemRenderConfig={customChatItemRenderConfig}
+                chatRef={proChatRef}
+                transformToChatMessage={transformToChatMessageHandle}
+                backToBottomConfig={{
+                  render: CustomBackToBottom,
+                  text: copywriting[currentLanguage].aiSearch.backToBottomText,
+                }}
+                request={async (messages, extra, signal) => {
+                  console.log(question);
+                  console.log(messages);
+                  // Send a request with Message as the parameter
+                  // const mockedData: string = `# 角色\n你是一个智能助手，名字叫Miss R。你的主要职责是基于知识库中的信息来总结并回答用户的问题。\n\n## 技能\n### 技能1: 信息总结与问题解答\n- 根据用户提出的问题，从知识库中提取相关信息。\n- 先总结实现步骤，再详细解释每个步骤的具体内容。\n- 如果知识库中没有相关的信息，则直接告知用户：“抱歉，没有提供相关信息。”\n\n### 技能2: 提供示例代码\n- 在回答涉及编程或技术性问题时，尽可能包含示例代码以帮助用户更好地理解。\n- 确保提供的代码准确无误，并且易于理解和执行。\n- 代码应包括必要的注释，以便用户理解关键逻辑和配置方法。\n\n### 技能3: 多语言支持\n- 使用中文进行回答，确保沟通无障碍。\n- 如果用户提问的语言不在支持范围内，可以提示用户使用支持的语言重新提问。\n\n## 限制\n- 绝对不能捏造信息，特别是涉及到数字和代码时，必须保证信息的准确性。\n- 回答格式需遵循Markdown规范，使答案结构清晰、易读。\n- 当知识库中的信息与用户问题无关时，直接回复：“抱歉，没有提供相关信息。”\n- 所有回答都应基于知识库中的现有资料，不得超出其范围。\n\n## 知识库\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming Kit,可直接使用的直播,Ready-to-use live streaming,,2023/04/07\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming,互动直播 （原L3）,Interactive Live Streaming,,2023/04/07\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming Kit,开箱即用的直播接口,Out-of-the-box livestream interface,,2023/04/04\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming,CDN直播,Live Streaming,,2023/04/04\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming Kit,直播邀请,Livestream invitation,,2023/04/07\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming,直播连麦,Co\'-hosting,,2023/04/07\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming,直播混流、转推、转码服务,Livestream Creation,,2023/04/07\n\n以上就是相关的知识。\n\n### Query:\n如何接入 L3 直播？\n\n### Elapsed\n  - Retrieval: 15929.2 ms\n  - LLM: 84465.3 ms`; // Supports both streaming and non-streaming
+                  // return {
+                  //   content: new Response(mockedData),
+                  //   docAggs: testAnswerData.reference.doc_aggs.map((item) => {
+                  //     return {
+                  //       docID: item.doc_id,
+                  //       docName: item.doc_name,
+                  //     };
+                  //   }),
+                  // };
 
-                // const text = await delay(
-                //   `这是一条模拟非流式输出的消息的消息。本次会话传入了${messages.length}条消息`
-                // );
-                // return new Response(text);
+                  // const text = await delay(
+                  //   `这是一条模拟非流式输出的消息的消息。本次会话传入了${messages.length}条消息`
+                  // );
+                  // return new Response(text);
 
-                const currentQuestion = messages[messages.length - 1]
-                  .content as string;
-                const customID = Date.now().toString();
-                const readableStream = await startConverse(
-                  customID,
-                  question || currentQuestion
-                  //  signal
-                );
-                const data: any = {
-                  content: new Response(readableStream),
-                  customID,
-                };
-                return data;
-              }}
-            />
+                  const currentQuestion = messages[messages.length - 1]
+                    .content as string;
+                  const customID = Date.now().toString();
+                  const readableStream = await startConverse(
+                    customID,
+                    question || currentQuestion
+                    //  signal
+                  );
+                  const data: any = {
+                    content: new Response(readableStream),
+                    customID,
+                  };
+                  return data;
+                }}
+              />
+            </ThemeProvider>
           </div>
         </div>
       </Modal>

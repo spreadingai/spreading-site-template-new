@@ -28,6 +28,15 @@ export const copywriting = {
       title: "On this page",
       backToTopText: "Back to top",
     },
+    aiSearch: {
+      defaultRemarks: ["Hello", "What can I do for you?"],
+      modalTitle: "AI document assistant",
+      referenceSource: "Reference source:",
+      inputPlaceholder: "Please enter your question",
+      backToBottomText: "Back to bottom",
+      askAI: "AI search",
+      guessText: "Guess you want to know:",
+    },
   },
   zh: {
     search: {
@@ -57,6 +66,15 @@ export const copywriting = {
     toc: {
       title: "当前页",
       backToTopText: "返回到顶部",
+    },
+    aiSearch: {
+      defaultRemarks: ["您好", "请问有什么可以帮到您？"],
+      modalTitle: "AI 文档助手",
+      referenceSource: "参考来源：",
+      inputPlaceholder: "请输入您的问题",
+      backToBottomText: "返回底部",
+      askAI: "AI 搜索",
+      guessText: "猜您想了解：",
     },
   },
 };
