@@ -121,6 +121,7 @@ const AISearch = (props: Props) => {
   const lastChunkText = useRef<string>("");
   const blockChunkText = useRef<string>("");
   const customIDMap = useRef<Record<string, AnswerData>>({});
+  const isSendingRef = useRef<boolean>(false);
 
   const showModal = () => {
     createSessions();
@@ -309,7 +310,11 @@ const AISearch = (props: Props) => {
                   }
                 } else if (caseType === 5) {
                   console.log("read stream interface error ", result);
-                  controller.enqueue(encoder.encode("Unable to answer"));
+                  controller.enqueue(
+                    encoder.encode(
+                      copywriting[currentLanguage].aiSearch.unableToReply
+                    )
+                  );
                 }
                 push();
               })
@@ -331,9 +336,9 @@ const AISearch = (props: Props) => {
       console.log(error);
       lastChunkText.current = "";
       blockChunkText.current = "";
-      if (proChatRef.current) {
-        proChatRef.current.stopGenerateMessage();
-      }
+      // if (proChatRef.current) {
+      //   proChatRef.current.stopGenerateMessage();
+      // }
     }
   };
 
@@ -357,11 +362,13 @@ const AISearch = (props: Props) => {
   const chatEndHandle = (id: string, type: SSEFinishType) => {
     console.log("### chatEndHandle", id, type, chats);
     setIsSending(false);
+    isSendingRef.current = false;
   };
 
   const chatStartHandle = (messages: ChatMessage<Record<string, any>>[]) => {
     console.log("### chatStartHandle", messages, chats);
     setIsSending(true);
+    isSendingRef.current = true;
   };
   const chatGenerateHandle = (chunkText: string) => {
     console.log("### chatGenerateHandle", chunkText, chats);
@@ -601,9 +608,19 @@ const AISearch = (props: Props) => {
       defaultDom: ReactNode,
       actionsClick: actionsClickProps
     ) => {
-      console.log("### actionsRender", props, customIDMap.current);
+      console.log(
+        "### actionsRender",
+        props,
+        customIDMap.current,
+        isSending,
+        isSendingRef.current
+      );
       return (
-        <div className={styles["custom-chat-item-operation-wrap"]}>
+        <div
+          className={`${styles["custom-chat-item-operation-wrap"]} ${
+            isSendingRef.current ? styles["sending"] : ""
+          }`}
+        >
           {defaultDom}
           <div className={styles["custom-chat-item-operation"]}>
             {/* <CopyOutlined
@@ -814,7 +831,10 @@ const AISearch = (props: Props) => {
                     //  signal
                   );
                   const data: any = {
-                    content: new Response(readableStream),
+                    content: new Response(
+                      readableStream ||
+                        copywriting[currentLanguage].aiSearch.unableToReply
+                    ),
                     customID,
                   };
                   return data;

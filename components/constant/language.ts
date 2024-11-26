@@ -36,6 +36,8 @@ export const copywriting = {
       backToBottomText: "Back to bottom",
       askAI: "AI search",
       guessText: "Guess you want to know:",
+      unableToReply:
+        "Oops, there's a little issue. Please click the regenerate button or try asking me another question!",
     },
   },
   zh: {
@@ -75,6 +77,8 @@ export const copywriting = {
       backToBottomText: "返回底部",
       askAI: "AI 搜索",
       guessText: "猜您想了解：",
+      unableToReply:
+        "噢，出了一点小问题，请点击重新生成按钮或者重新问我其他问题试试吧！",
     },
   },
 };
