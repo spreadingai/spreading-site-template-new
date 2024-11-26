@@ -38,7 +38,7 @@ import {
   RedoOutlined,
   LikeOutlined,
   DislikeOutlined,
-  RollbackOutlined,
+  ReloadOutlined,
   UserOutlined,
   // @ts-ignore
 } from "@ant-design/icons";
@@ -235,7 +235,7 @@ const AISearch = (props: Props) => {
                 // Handles special characters for hover tips
                 result = result.replaceAll(/\s*##\d+\$\$/g, "");
                 // console.log("answerStr value", value);
-                // console.log("answerStr result", result);
+                console.log("answerStr result", result);
                 const regex1 = /}}\n*$/;
                 const regex2 = /^data:{"code": 0, "data": true}\n*$/;
                 const regex3 = /\n*data:{"code": 0, "data": true}\n*$/;
@@ -287,7 +287,7 @@ const AISearch = (props: Props) => {
                 if (caseType !== 1 && caseType !== 2 && caseType !== 5) {
                   const str = result.split("data:")[1];
                   try {
-                    // console.log("answerStr str", str);
+                    console.log("answerStr str", str);
                     if (str) {
                       const temp = JSON.parse(str);
                       if (temp.data !== true && temp.data.answer) {
@@ -360,30 +360,29 @@ const AISearch = (props: Props) => {
   };
 
   const chatEndHandle = (id: string, type: SSEFinishType) => {
-    console.log("### chatEndHandle", id, type, chats);
+    // console.log("### chatEndHandle", id, type, chats);
     setIsSending(false);
     isSendingRef.current = false;
   };
 
   const chatStartHandle = (messages: ChatMessage<Record<string, any>>[]) => {
-    console.log("### chatStartHandle", messages, chats);
+    // console.log("### chatStartHandle", messages, chats);
     setIsSending(true);
     isSendingRef.current = true;
   };
   const chatGenerateHandle = (chunkText: string) => {
-    console.log("### chatGenerateHandle", chunkText, chats);
+    // console.log("### chatGenerateHandle", chunkText, chats);
   };
   const chatsChangeHandle = (
     originChats: ChatMessage<Record<string, any>>[]
   ) => {
-    console.log("### chatsChangeHandle", originChats);
+    // console.log("### chatsChangeHandle", originChats);
     setChats(originChats);
   };
   const scrollHandle = () => {};
 
   const clearInput = () => {
     setQuestion("");
-    console.log(customInputAreaRef.current);
     if (customInputAreaRef.current) {
       const inputDom = customInputAreaRef.current.querySelector(
         ".ant-input"
@@ -471,7 +470,7 @@ const AISearch = (props: Props) => {
 
   const transDocStr = (docStr) => {
     // RTC-Android-ZH/Android Java 实时音视频 SDK 秀场直播秒开方案 - 开发者中心 - ZEGO即构科技---doc-zh.zego.im>article>19389.html
-    console.log("### transDocStr", docStr);
+    // console.log("### transDocStr", docStr);
     const temp = docStr.split("---");
     let [docName, docLink] = temp;
     docLink =
@@ -511,7 +510,7 @@ const AISearch = (props: Props) => {
             className={styles["custom-converse-reset"]}
             onClick={resetConverse}
           >
-            <RollbackOutlined />
+            <ReloadOutlined />
           </div>
         ) : null}
       </div>
@@ -526,7 +525,7 @@ const AISearch = (props: Props) => {
     message: ChatMessage<Record<string, any>>,
     type: "assistant" | "user"
   ) => {
-    console.log("### CustomMessageItemExtra", message, customIDMap.current);
+    // console.log("### CustomMessageItemExtra", message, customIDMap.current);
     // @ts-ignore
     const { id, customID } = message;
     const target = customIDMap.current[customID] as AnswerData;
@@ -593,7 +592,7 @@ const AISearch = (props: Props) => {
   const customChatItemRenderConfig = {
     // titleRender
     contentRender: (props: ChatItemProps, defaultDom: ReactNode) => {
-      console.log("### contentRender", props);
+      // console.log("### contentRender", props);
       const role = props.originData.role;
       return (
         <div
@@ -608,13 +607,13 @@ const AISearch = (props: Props) => {
       defaultDom: ReactNode,
       actionsClick: actionsClickProps
     ) => {
-      console.log(
-        "### actionsRender",
-        props,
-        customIDMap.current,
-        isSending,
-        isSendingRef.current
-      );
+      // console.log(
+      //   "### actionsRender",
+      //   props,
+      //   customIDMap.current,
+      //   isSending,
+      //   isSendingRef.current
+      // );
       return (
         <div
           className={`${styles["custom-chat-item-operation-wrap"]} ${
@@ -688,11 +687,11 @@ const AISearch = (props: Props) => {
     preChatMessage: string,
     currentContent: string
   ) => {
-    console.log(
-      "### transformToChatMessageHandle",
-      preChatMessage,
-      currentContent
-    );
+    // console.log(
+    //   "### transformToChatMessageHandle",
+    //   preChatMessage,
+    //   currentContent
+    // );
     return preChatMessage;
   };
 
