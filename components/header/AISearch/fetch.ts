@@ -5,7 +5,7 @@ export const defaultChatID = "ae8051de91e611efaeac0242ac120004";
 
 const baseURL =
   process.env.NODE_ENV === "development"
-    ? "http://localhost:3000" // http://localhost:3000
+    ? "https://ai-search.zegocloud.com" // http://localhost:3000
     : "https://ai-search.zegocloud.com";
 console.log(process.env.NODE_ENV, baseURL);
 

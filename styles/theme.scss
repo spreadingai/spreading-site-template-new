@@ -95,6 +95,9 @@ html {
   // Category
   --docuo-popup-category-tabs-item-bg-active: linear-gradient(107deg, #e8efff 0%, #ffffff 100%);
   --docuo-popup-category-tabs-bg: #f7f7f8;
+
+  //Ai search
+  --docuo-ai-search-operate-btn-bg-hover: rgba(0, 0, 0, 0.06);
 }
 
 html[data-theme="dark"] {
@@ -194,4 +197,7 @@ html[data-theme="dark"] {
   // Category
   --docuo-popup-category-tabs-item-bg-active: #252525;
   --docuo-popup-category-tabs-bg: transparent;
+
+  //Ai search
+  --docuo-ai-search-operate-btn-bg-hover: rgba(255, 255, 255, 0.12);
 }
