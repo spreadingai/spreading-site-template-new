@@ -345,7 +345,7 @@ const AISearch = (props: Props) => {
   const startDefaultConverse = (question: string) => {
     setConverseStatus(1);
     setTimeout(() => {
-      proChatRef.current.sendMessage(question);
+      proChatRef.current && proChatRef.current.sendMessage(question);
     }, 0);
   };
 
@@ -468,20 +468,25 @@ const AISearch = (props: Props) => {
     });
   }, []);
 
-  const transDocStr = (docStr) => {
-    // RTC-Android-ZH/Android Java 实时音视频 SDK 秀场直播秒开方案 - 开发者中心 - ZEGO即构科技---doc-zh.zego.im>article>19389.html
-    // console.log("### transDocStr", docStr);
-    const temp = docStr.split("---");
-    let [docName, docLink] = temp;
-    docLink =
-      "https://" +
-      docLink
-        .replaceAll("^^^", "=")
-        .replaceAll("^^", "&")
-        .replaceAll("^", "/")
-        .replaceAll(">", "/")
-        .replaceAll(/\.html$/gi, "");
-    return { docName, docLink };
+  const transDocStr = (docStr = "") => {
+    try {
+      // RTC-Android-ZH/Android Java 实时音视频 SDK 秀场直播秒开方案 - 开发者中心 - ZEGO即构科技---doc-zh.zego.im>article>19389.html
+      // console.log("### transDocStr", docStr);
+      const temp = docStr.split("---");
+      let [docName, docLink] = temp;
+      docLink &&
+        (docLink =
+          "https://" +
+          docLink
+            .replaceAll("^^^", "=")
+            .replaceAll("^^", "&")
+            .replaceAll("^", "/")
+            .replaceAll(">", "/")
+            .replaceAll(/\.(html|md|mdx|pdf|ppt|pptx|txt)$/gi, ""));
+      return { docName, docLink };
+    } catch (error) {
+      return { docName: "", docLink: "" };
+    }
   };
 
   const CustomSendButton = (defaultDom, defaultProps) => {
@@ -531,28 +536,36 @@ const AISearch = (props: Props) => {
     const target = customIDMap.current[customID] as AnswerData;
     const docAggs =
       target && target.reference ? target.reference.doc_aggs || [] : [];
+    const renderData = [];
+    docAggs.forEach((docAgg) => {
+      const { docLink, docName } = transDocStr(docAgg.doc_name);
+      if (docLink && docName) {
+        renderData.push({ docLink, docName, docID: docAgg.doc_id });
+      }
+    });
+    console.log("### CustomMessageItemExtra", docAggs, renderData);
 
     return (
       <>
         {type === "assistant" ? (
           <>
-            {docAggs && docAggs.length ? (
+            {renderData.length ? (
               <div className={styles["custom-chat-item-doc-agg"]}>
                 <div className={styles["custom-chat-item-doc-agg-title"]}>
                   {copywriting[currentLanguage].aiSearch.referenceSource}
                 </div>
-                {docAggs.map((item) => {
+                {renderData.map((item, index) => {
                   return (
                     <div
-                      key={item.doc_id}
+                      key={item.docID}
                       className={styles["custom-chat-item-doc-agg-item"]}
                     >
                       <Link
-                        key={item.doc_id}
-                        href={transDocStr(item.doc_name).docLink}
+                        key={"" + item.docID + index}
+                        href={item.docLink}
                         target="_blank"
                       >
-                        {transDocStr(item.doc_name).docName}
+                        {item.docName}
                       </Link>
                     </div>
                   );
