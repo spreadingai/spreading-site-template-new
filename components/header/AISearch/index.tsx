@@ -285,22 +285,40 @@ const AISearch = (props: Props) => {
                   }
                 }
                 if (caseType !== 1 && caseType !== 2 && caseType !== 5) {
-                  const str = result.split("data:")[1];
+                  // There could be multiple pieces of data. Take the last one
+                  const temp = result.split("data:");
+                  let str = temp[temp.length - 1];
+                  // try {
+                  //   const regex =
+                  //     /data:\s*\{"code":\s*0,\s*"data":\s*\{"answer":\s*\S*\}\}\s*$/;
+                  //   const match = result.match(regex);
+                  //   if (match && match[0]) {
+                  //     str = match[0].split("data:")[1];
+                  //   }
+                  // } catch (error) {
+                  //   console.log("match last error", error);
+                  // }
                   try {
-                    console.log("answerStr str", str);
+                    // console.log("answerStr str", str);
                     if (str) {
                       const temp = JSON.parse(str);
                       if (temp.data !== true && temp.data.answer) {
                         const data = temp.data as AnswerData;
                         // console.log("answerStr data.answer", data.answer);
-                        if (caseType !== 3) {
-                          controller.enqueue(
-                            encoder.encode(
-                              data.answer.replaceAll(lastChunkText.current, "")
-                            )
-                          );
-                          lastChunkText.current = data.answer;
-                        }
+                        controller.enqueue(
+                          encoder.encode(
+                            data.answer
+                              .replaceAll(/\n{2,}/g, "\n\n")
+                              .replaceAll(
+                                lastChunkText.current.replaceAll(
+                                  /\n{2,}/g,
+                                  "\n\n"
+                                ),
+                                ""
+                              )
+                          )
+                        );
+                        lastChunkText.current = data.answer;
                         customIDMap.current[customID] = data;
                         setSessionID(data.session_id || "");
                       }
