@@ -1,5 +1,6 @@
 import { Question } from "./types";
 import chatIDMap from "./chatIDMap.json";
+// import axios from "axios";
 
 export const defaultChatID = "ae8051de91e611efaeac0242ac120004";
 
@@ -105,6 +106,34 @@ export const startConverseFetch = async (
       const reader = _res.body.getReader();
       return reader;
     });
+  // return axios({
+  //   method: "post",
+  //   headers: {
+  //     "Content-Type": "application/json",
+  //   },
+  //   url,
+  //   data: reqData,
+  //   // responseType: "stream",
+  // }).then((res) => {
+  //   res.data.on("data", (chunk) => {
+  //     // 当接收到数据块时触发此函数
+  //     console.log("Received chunk:", chunk.toString());
+
+  //     // 这里可以进一步对数据块进行处理，比如解析JSON格式的数据块（如果是JSON格式）
+  //     // 假设数据是JSON格式的示例处理如下：
+  //     // try {
+  //     //     const dataObj = JSON.parse(chunk.toString());
+  //     //     // 然后可以根据解析后的对象进行相应操作，比如更新页面显示等
+  //     // } catch (e) {
+  //     //     console.error('Error parsing JSON:', e);
+  //     // }
+  //   });
+
+  //   res.data.on("end", () => {
+  //     // 当流结束时触发此函数
+  //     console.log("Stream ended");
+  //   });
+  // });
 };
 
 export const scoreFetch = (
