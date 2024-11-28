@@ -269,6 +269,7 @@ const AISearch = (props: Props) => {
                     console.log(
                       "answerStr result - End block - Remove the json at the end"
                     );
+                    // Remove data with code 0 at the end
                     result = result.replace(regex3, "");
                   }
                 } else if (result.startsWith("data:{") && regex1.test(result)) {
@@ -285,6 +286,8 @@ const AISearch = (props: Props) => {
                   }
                 }
                 if (caseType !== 1 && caseType !== 2 && caseType !== 5) {
+                  // Remove data with code 0 at the end
+                  result = result.replace(regex3, "");
                   // There could be multiple pieces of data. Take the last one
                   const temp = result.split("data:");
                   let str = temp[temp.length - 1];
@@ -309,11 +312,11 @@ const AISearch = (props: Props) => {
                           encoder.encode(
                             data.answer
                               .replaceAll(/\n{2,}/g, "\n\n")
+                              .replaceAll(/(\n)+(?=#)/g, "\n")
                               .replaceAll(
-                                lastChunkText.current.replaceAll(
-                                  /\n{2,}/g,
-                                  "\n\n"
-                                ),
+                                lastChunkText.current
+                                  .replaceAll(/\n{2,}/g, "\n\n")
+                                  .replaceAll(/(\n)+(?=#)/g, "\n"),
                                 ""
                               )
                           )
