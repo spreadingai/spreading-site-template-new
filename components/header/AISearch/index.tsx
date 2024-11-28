@@ -306,28 +306,20 @@ const AISearch = (props: Props) => {
                     if (str) {
                       const temp = JSON.parse(str);
                       if (temp.data !== true && temp.data.answer) {
+                        temp.data.answer = temp.data.answer
+                          .replaceAll(/(\n)+(?=#)/g, "\n\n")
+                          .replaceAll(/\n{2,}/g, "\n\n")
+                          // .replaceAll(/\s*```/g, "\n ```")
+                          // .replaceAll(/```\n+/g, "```\n\n")
+                          .replaceAll(/\*\*\s?。/g, "**。/");
+                        const data = temp.data as AnswerData;
                         const func = () => {
                           controller.enqueue(
                             encoder.encode(
-                              data.answer
-                                .replaceAll(/(\n)+(?=#)/g, "\n\n")
-                                .replaceAll(/\n{2,}/g, "\n\n")
-                                // .replaceAll(/\s*```/g, "\n ```")
-                                // .replaceAll(/```\n+/g, "```\n\n")
-                                .replaceAll(/\*\*\s?。/g, "**。/")
-                                .replaceAll(
-                                  lastChunkText.current
-                                    .replaceAll(/(\n)+(?=#)/g, "\n\n")
-                                    .replaceAll(/\n{2,}/g, "\n\n")
-                                    // .replaceAll(/\s*```/g, "\n ```")
-                                    // .replaceAll(/```\n+/g, "```\n\n")
-                                    .replaceAll(/\*\*\s?。/g, "**。/"),
-                                  ""
-                                )
+                              data.answer.replaceAll(lastChunkText.current, "")
                             )
                           );
                         };
-                        const data = temp.data as AnswerData;
                         // console.log("answerStr data.answer", data.answer);
                         if (
                           data.answer.length > 100 &&
