@@ -306,23 +306,74 @@ const AISearch = (props: Props) => {
                     if (str) {
                       const temp = JSON.parse(str);
                       if (temp.data !== true && temp.data.answer) {
+                        const func = () => {
+                          controller.enqueue(
+                            encoder.encode(
+                              data.answer
+                                .replaceAll(/(\n)+(?=#)/g, "\n\n")
+                                .replaceAll(/\n{2,}/g, "\n\n")
+                                // .replaceAll(/\s*```/g, "\n ```")
+                                // .replaceAll(/```\n+/g, "```\n\n")
+                                .replaceAll(/\*\*\s?。/g, "**。/")
+                                .replaceAll(
+                                  lastChunkText.current
+                                    .replaceAll(/(\n)+(?=#)/g, "\n\n")
+                                    .replaceAll(/\n{2,}/g, "\n\n")
+                                    // .replaceAll(/\s*```/g, "\n ```")
+                                    // .replaceAll(/```\n+/g, "```\n\n")
+                                    .replaceAll(/\*\*\s?。/g, "**。/"),
+                                  ""
+                                )
+                            )
+                          );
+                        };
                         const data = temp.data as AnswerData;
                         // console.log("answerStr data.answer", data.answer);
-                        controller.enqueue(
-                          encoder.encode(
-                            data.answer
-                              .replaceAll(/(\n)+(?=#)/g, "\n\n")
-                              .replaceAll(/\n{2,}/g, "\n\n")
-                              .replaceAll(/\s*```/g, "\n ```")
-                              .replaceAll(
-                                lastChunkText.current
-                                  .replaceAll(/(\n)+(?=#)/g, "\n\n")
-                                  .replaceAll(/\n{2,}/g, "\n\n")
-                                  .replaceAll(/\s*```/g, "\n ```"),
-                                ""
+                        if (
+                          data.answer.length > 100 &&
+                          lastChunkText.current &&
+                          lastChunkText.current.length > 40
+                        ) {
+                          const length = lastChunkText.current.length;
+                          const lastStr40 = lastChunkText.current.slice(
+                            length - 40
+                          );
+                          const lastStr35 = lastChunkText.current.slice(
+                            length - 35
+                          );
+                          const lastStr30 = lastChunkText.current.slice(
+                            length - 30
+                          );
+                          const lastIndex40 =
+                            data.answer.lastIndexOf(lastStr40);
+                          const lastIndex35 =
+                            data.answer.lastIndexOf(lastStr35);
+                          const lastIndex30 =
+                            data.answer.lastIndexOf(lastStr30);
+                          if (lastIndex40 !== -1) {
+                            controller.enqueue(
+                              encoder.encode(
+                                data.answer.slice(lastIndex40 + 40)
                               )
-                          )
-                        );
+                            );
+                          } else if (lastIndex35 !== -1) {
+                            controller.enqueue(
+                              encoder.encode(
+                                data.answer.slice(lastIndex35 + 35)
+                              )
+                            );
+                          } else if (lastIndex30 !== -1) {
+                            controller.enqueue(
+                              encoder.encode(
+                                data.answer.slice(lastIndex30 + 30)
+                              )
+                            );
+                          } else {
+                            func();
+                          }
+                        } else {
+                          func();
+                        }
                         lastChunkText.current = data.answer;
                         customIDMap.current[customID] = data;
                         setSessionID(data.session_id || "");
@@ -344,7 +395,12 @@ const AISearch = (props: Props) => {
               .catch((error) => {
                 console.log("read stream error");
                 console.log(error);
-                controller.error(error);
+                // controller.error(error);
+                controller.error(
+                  encoder.encode(
+                    copywriting[currentLanguage].aiSearch.unableToReply
+                  )
+                );
                 lastChunkText.current = "";
                 blockChunkText.current = "";
                 return;
