@@ -312,11 +312,11 @@ const AISearch = (props: Props) => {
                           encoder.encode(
                             data.answer
                               .replaceAll(/\n{2,}/g, "\n\n")
+                              .replaceAll(/(\n)+(?=#)/g, "\n")
                               .replaceAll(
-                                lastChunkText.current.replaceAll(
-                                  /\n{2,}/g,
-                                  "\n\n"
-                                ),
+                                lastChunkText.current
+                                  .replaceAll(/\n{2,}/g, "\n\n")
+                                  .replaceAll(/(\n)+(?=#)/g, "\n"),
                                 ""
                               )
                           )
