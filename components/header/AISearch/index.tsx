@@ -311,12 +311,12 @@ const AISearch = (props: Props) => {
                         controller.enqueue(
                           encoder.encode(
                             data.answer
-                              .replaceAll(/\n{2,}/g, "\n\n")
                               .replaceAll(/(\n)+(?=#)/g, "\n")
+                              .replaceAll(/\n{2,}/g, "\n\n")
                               .replaceAll(
                                 lastChunkText.current
-                                  .replaceAll(/\n{2,}/g, "\n\n")
-                                  .replaceAll(/(\n)+(?=#)/g, "\n"),
+                                  .replaceAll(/(\n)+(?=#)/g, "\n")
+                                  .replaceAll(/\n{2,}/g, "\n\n"),
                                 ""
                               )
                           )
