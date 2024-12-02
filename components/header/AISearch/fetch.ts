@@ -1,6 +1,7 @@
 import { Question } from "./types";
 import chatIDMap from "./chatIDMap.json";
 // import axios from "axios";
+import { EventSourceParserStream } from "eventsource-parser/stream";
 
 export const defaultChatID = "ae8051de91e611efaeac0242ac120004";
 
@@ -103,7 +104,14 @@ export const startConverseFetch = async (
       if (res.ok) return Promise.resolve(res);
     })
     .then((_res) => {
-      const reader = _res.body.getReader();
+      // Custom parsing
+      // const reader = _res.body.getReader();
+
+      // Plugin parsing
+      const reader = _res.body
+        .pipeThrough(new TextDecoderStream())
+        .pipeThrough(new EventSourceParserStream())
+        .getReader();
       return reader;
     });
   // return axios({

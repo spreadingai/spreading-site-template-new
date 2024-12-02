@@ -229,159 +229,228 @@ const AISearch = (props: Props) => {
                   blockChunkText.current = "";
                   return;
                 }
-                let result = decoder.decode(value, {
-                  stream: true,
-                });
-                // Handles special characters for hover tips
-                result = result.replaceAll(/\s*##\d+\$\$/g, "");
-                // console.log("answerStr value", value);
-                console.log("answerStr result", result);
-                const regex1 = /}}\n*$/;
-                const regex2 = /^data:{"code": 0, "data": true}\n*$/;
-                const regex3 = /\n*data:{"code": 0, "data": true}\n*$/;
-                // "{"code":102,"message":"Session does not exist"} \n"
-                const regex4 = /^{"code":\s*[1-9][0-9]*,[\s\S]*}\s*\n*$/;
-                let caseType = 0; // 0: no block 1: start block 2: blocking 3: end block 4: last chunk 5: code non-0 error
-                if (regex4.test(result)) {
-                  caseType = 5;
-                } else if (
-                  result.startsWith("data:{") &&
-                  !regex1.test(result) &&
-                  !regex2.test(result) &&
-                  !regex3.test(result)
-                ) {
-                  console.log("answerStr result - Start to block");
-                  caseType = 1;
-                } else if (
-                  !result.startsWith("data:{") &&
-                  !regex1.test(result) &&
-                  !regex3.test(result)
-                ) {
-                  console.log("answerStr result - Blocking");
-                  caseType = 2;
-                } else if (
-                  !result.startsWith("data:{") &&
-                  (regex1.test(result) || regex3.test(result))
-                ) {
-                  console.log("answerStr result - End block");
-                  caseType = 3;
-                  if (regex3.test(result)) {
-                    console.log(
-                      "answerStr result - End block - Remove the json at the end"
+                // Custom parsing start
+                // let result = decoder.decode(value, {
+                //   stream: true,
+                // });
+                // // console.log("answerStr value", value);
+                // console.log("answerStr result", result);
+                // const regex1 = /}}\n*$/;
+                // const regex2 = /^data:{"code": 0, "data": true}\n*$/;
+                // const regex3 = /\n*data:{"code": 0, "data": true}\n*$/;
+                // // "{"code":102,"message":"Session does not exist"} \n"
+                // const regex4 = /^{"code":\s*[1-9][0-9]*,[\s\S]*}\s*\n*$/;
+                // let caseType = 0; // 0: no block 1: start block 2: blocking 3: end block 4: last chunk 5: code non-0 error
+                // if (regex4.test(result)) {
+                //   caseType = 5;
+                // } else if (
+                //   result.startsWith("data:{") &&
+                //   !regex1.test(result) &&
+                //   !regex2.test(result) &&
+                //   !regex3.test(result)
+                // ) {
+                //   console.log("answerStr result - Start to block");
+                //   caseType = 1;
+                // } else if (
+                //   !result.startsWith("data:{") &&
+                //   !regex1.test(result) &&
+                //   !regex3.test(result)
+                // ) {
+                //   console.log("answerStr result - Blocking");
+                //   caseType = 2;
+                // } else if (
+                //   !result.startsWith("data:{") &&
+                //   (regex1.test(result) || regex3.test(result))
+                // ) {
+                //   console.log("answerStr result - End block");
+                //   caseType = 3;
+                //   if (regex3.test(result)) {
+                //     console.log(
+                //       "answerStr result - End block - Remove the json at the end"
+                //     );
+                //     // Remove data with code 0 at the end
+                //     result = result.replace(regex3, "");
+                //   }
+                // } else if (result.startsWith("data:{") && regex1.test(result)) {
+                //   console.log("answerStr result - No block");
+                //   caseType = 0;
+                // } else if (regex2.test(result)) {
+                //   console.log("answerStr result - Last chunk");
+                //   caseType = 4;
+                // }
+                // if (caseType === 1 || caseType === 2 || caseType === 3) {
+                //   blockChunkText.current += result;
+                //   if (caseType === 3) {
+                //     result = blockChunkText.current;
+                //   }
+                // }
+                // if (caseType !== 1 && caseType !== 2 && caseType !== 5) {
+                //   // Remove data with code 0 at the end
+                //   result = result.replace(regex3, "");
+                //   // There could be multiple pieces of data. Take the last one
+                //   const temp = result.split("data:");
+                //   let str = temp[temp.length - 1];
+                //   try {
+                //     // console.log("answerStr str", str);
+                //     if (str) {
+                //       const temp = JSON.parse(str);
+                //       if (temp.data !== true && temp.data.answer) {
+                //         temp.data.answer = temp.data.answer
+                //           .replaceAll(/\s*##\d+\$\$/g, "") // Handles special characters for hover tips
+                //           .replaceAll(/(\n)+(?=#)/g, "\n\n")
+                //           .replaceAll(/\n{2,}/g, "\n\n")
+                //           // .replaceAll(/\s*```/g, "\n ```")
+                //           // .replaceAll(/```\n+/g, "```\n\n")
+                //           .replaceAll(/\*\*\s?。/g, "**。")
+                //           .replaceAll(/\*\*\s?\./g, "**.");
+                //         const data = temp.data as AnswerData;
+                //         const func = () => {
+                //           controller.enqueue(
+                //             encoder.encode(
+                //               data.answer.replaceAll(lastChunkText.current, "")
+                //             )
+                //           );
+                //         };
+                //         // console.log("answerStr data.answer", data.answer);
+                //         if (
+                //           data.answer.length > 100 &&
+                //           lastChunkText.current &&
+                //           lastChunkText.current.length > 40
+                //         ) {
+                //           const length = lastChunkText.current.length;
+                //           const lastStr40 = lastChunkText.current.slice(
+                //             length - 40
+                //           );
+                //           const lastStr35 = lastChunkText.current.slice(
+                //             length - 35
+                //           );
+                //           const lastStr30 = lastChunkText.current.slice(
+                //             length - 30
+                //           );
+                //           const lastIndex40 =
+                //             data.answer.lastIndexOf(lastStr40);
+                //           const lastIndex35 =
+                //             data.answer.lastIndexOf(lastStr35);
+                //           const lastIndex30 =
+                //             data.answer.lastIndexOf(lastStr30);
+                //           if (lastIndex40 !== -1) {
+                //             controller.enqueue(
+                //               encoder.encode(
+                //                 data.answer.slice(lastIndex40 + 40)
+                //               )
+                //             );
+                //           } else if (lastIndex35 !== -1) {
+                //             controller.enqueue(
+                //               encoder.encode(
+                //                 data.answer.slice(lastIndex35 + 35)
+                //               )
+                //             );
+                //           } else if (lastIndex30 !== -1) {
+                //             controller.enqueue(
+                //               encoder.encode(
+                //                 data.answer.slice(lastIndex30 + 30)
+                //               )
+                //             );
+                //           } else {
+                //             func();
+                //           }
+                //         } else {
+                //           func();
+                //         }
+                //         lastChunkText.current = data.answer;
+                //         customIDMap.current[customID] = data;
+                //         data.session_id && setSessionID(data.session_id);
+                //       }
+                //     }
+                //   } catch (error) {
+                //     console.log(error);
+                //   }
+                // } else if (caseType === 5) {
+                //   console.log("read stream interface error ", result);
+                //   controller.enqueue(
+                //     encoder.encode(
+                //       copywriting[currentLanguage].aiSearch.unableToReply
+                //     )
+                //   );
+                // }
+                // Custom parsing end
+
+                // Plugin parsing start
+                try {
+                  console.log("### plugin parsing", value);
+                  const temp = JSON.parse(value.data || "");
+                  if (temp.code !== 0) {
+                    console.log("read stream interface error ", value.data);
+                    controller.enqueue(
+                      encoder.encode(
+                        copywriting[currentLanguage].aiSearch.unableToReply
+                      )
                     );
-                    // Remove data with code 0 at the end
-                    result = result.replace(regex3, "");
-                  }
-                } else if (result.startsWith("data:{") && regex1.test(result)) {
-                  console.log("answerStr result - No block");
-                  caseType = 0;
-                } else if (regex2.test(result)) {
-                  console.log("answerStr result - Last chunk");
-                  caseType = 4;
-                }
-                if (caseType === 1 || caseType === 2 || caseType === 3) {
-                  blockChunkText.current += result;
-                  if (caseType === 3) {
-                    result = blockChunkText.current;
-                  }
-                }
-                if (caseType !== 1 && caseType !== 2 && caseType !== 5) {
-                  // Remove data with code 0 at the end
-                  result = result.replace(regex3, "");
-                  // There could be multiple pieces of data. Take the last one
-                  const temp = result.split("data:");
-                  let str = temp[temp.length - 1];
-                  // try {
-                  //   const regex =
-                  //     /data:\s*\{"code":\s*0,\s*"data":\s*\{"answer":\s*\S*\}\}\s*$/;
-                  //   const match = result.match(regex);
-                  //   if (match && match[0]) {
-                  //     str = match[0].split("data:")[1];
-                  //   }
-                  // } catch (error) {
-                  //   console.log("match last error", error);
-                  // }
-                  try {
-                    // console.log("answerStr str", str);
-                    if (str) {
-                      const temp = JSON.parse(str);
-                      if (temp.data !== true && temp.data.answer) {
-                        temp.data.answer = temp.data.answer
-                          .replaceAll(/(\n)+(?=#)/g, "\n\n")
-                          .replaceAll(/\n{2,}/g, "\n\n")
-                          // .replaceAll(/\s*```/g, "\n ```")
-                          // .replaceAll(/```\n+/g, "```\n\n")
-                          .replaceAll(/\*\*\s?。/g, "**。/");
-                        const data = temp.data as AnswerData;
-                        const func = () => {
+                  } else {
+                    if (temp.data !== true && temp.data.answer) {
+                      temp.data.answer = temp.data.answer
+                        .replaceAll(/\s*##\d+\$\$/g, "") // Handles special characters for hover tips
+                        .replaceAll(/(\n)+(?=#)/g, "\n\n")
+                        .replaceAll(/\n{2,}/g, "\n\n")
+                        // .replaceAll(/\s*```/g, "\n ```")
+                        // .replaceAll(/```\n+/g, "```\n\n")
+                        .replaceAll(/\*\*\s?。/g, "**。")
+                        .replaceAll(/\*\*\s?\./g, "**.");
+                      const data = temp.data as AnswerData;
+                      const func = () => {
+                        controller.enqueue(
+                          encoder.encode(
+                            data.answer.replaceAll(lastChunkText.current, "")
+                          )
+                        );
+                      };
+                      // console.log("answerStr data.answer", data.answer);
+                      if (
+                        data.answer.length > 100 &&
+                        lastChunkText.current &&
+                        lastChunkText.current.length > 40
+                      ) {
+                        const length = lastChunkText.current.length;
+                        const lastStr40 = lastChunkText.current.slice(
+                          length - 40
+                        );
+                        const lastStr35 = lastChunkText.current.slice(
+                          length - 35
+                        );
+                        const lastStr30 = lastChunkText.current.slice(
+                          length - 30
+                        );
+                        const lastIndex40 = data.answer.lastIndexOf(lastStr40);
+                        const lastIndex35 = data.answer.lastIndexOf(lastStr35);
+                        const lastIndex30 = data.answer.lastIndexOf(lastStr30);
+                        if (lastIndex40 !== -1) {
                           controller.enqueue(
-                            encoder.encode(
-                              data.answer.replaceAll(lastChunkText.current, "")
-                            )
+                            encoder.encode(data.answer.slice(lastIndex40 + 40))
                           );
-                        };
-                        // console.log("answerStr data.answer", data.answer);
-                        if (
-                          data.answer.length > 100 &&
-                          lastChunkText.current &&
-                          lastChunkText.current.length > 40
-                        ) {
-                          const length = lastChunkText.current.length;
-                          const lastStr40 = lastChunkText.current.slice(
-                            length - 40
+                        } else if (lastIndex35 !== -1) {
+                          controller.enqueue(
+                            encoder.encode(data.answer.slice(lastIndex35 + 35))
                           );
-                          const lastStr35 = lastChunkText.current.slice(
-                            length - 35
+                        } else if (lastIndex30 !== -1) {
+                          controller.enqueue(
+                            encoder.encode(data.answer.slice(lastIndex30 + 30))
                           );
-                          const lastStr30 = lastChunkText.current.slice(
-                            length - 30
-                          );
-                          const lastIndex40 =
-                            data.answer.lastIndexOf(lastStr40);
-                          const lastIndex35 =
-                            data.answer.lastIndexOf(lastStr35);
-                          const lastIndex30 =
-                            data.answer.lastIndexOf(lastStr30);
-                          if (lastIndex40 !== -1) {
-                            controller.enqueue(
-                              encoder.encode(
-                                data.answer.slice(lastIndex40 + 40)
-                              )
-                            );
-                          } else if (lastIndex35 !== -1) {
-                            controller.enqueue(
-                              encoder.encode(
-                                data.answer.slice(lastIndex35 + 35)
-                              )
-                            );
-                          } else if (lastIndex30 !== -1) {
-                            controller.enqueue(
-                              encoder.encode(
-                                data.answer.slice(lastIndex30 + 30)
-                              )
-                            );
-                          } else {
-                            func();
-                          }
                         } else {
                           func();
                         }
-                        lastChunkText.current = data.answer;
-                        customIDMap.current[customID] = data;
-                        setSessionID(data.session_id || "");
+                      } else {
+                        func();
                       }
+                      lastChunkText.current = data.answer;
+                      customIDMap.current[customID] = data;
+                      data.session_id && setSessionID(data.session_id);
                     }
-                  } catch (error) {
-                    console.log(error);
                   }
-                } else if (caseType === 5) {
-                  console.log("read stream interface error ", result);
-                  controller.enqueue(
-                    encoder.encode(
-                      copywriting[currentLanguage].aiSearch.unableToReply
-                    )
-                  );
+                } catch (error) {
+                  console.log(error);
                 }
+                // Plugin parsing end
+
                 push();
               })
               .catch((error) => {

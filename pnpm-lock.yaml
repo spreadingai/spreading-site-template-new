@@ -74,6 +74,9 @@ importers:
       docusaurus-theme-openapi-docs:
         specifier: ^2.0.4
         version: 2.0.4(@docusaurus/core@2.4.3(@docusaurus/types@2.4.3(esbuild@0.21.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(esbuild@0.21.1)(eslint@8.56.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.3.3))(@docusaurus/types@2.4.3(esbuild@0.21.1)(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(@types/react@18.2.51)(esbuild@0.21.1)(eslint@8.56.0)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(typescript@5.3.3)
+      eventsource-parser:
+        specifier: ^3.0.0
+        version: 3.0.0
       file-saver:
         specifier: ^2.0.5
         version: 2.0.5
@@ -4047,6 +4050,10 @@ packages:
   events@3.3.0:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
     engines: {node: '>=0.8.x'}
+
+  eventsource-parser@3.0.0:
+    resolution: {integrity: sha512-T1C0XCUimhxVQzW4zFipdx0SficT651NnkR0ZSH3yQwh+mFMdLfgjABVi4YtMTtaL4s168593DaoaRLMqryavA==}
+    engines: {node: '>=18.0.0'}
 
   evp_bytestokey@1.0.3:
     resolution: {integrity: sha512-/f2Go4TognH/KvCISP7OUsHn85hT9nUkxxA9BEWxFn+Oj9o8ZNLm/40hdlgSLyuOimsrTKLUMEorQexp/aPQeA==}
@@ -13623,6 +13630,8 @@ snapshots:
   eventemitter3@4.0.7: {}
 
   events@3.3.0: {}
+
+  eventsource-parser@3.0.0: {}
 
   evp_bytestokey@1.0.3:
     dependencies:
