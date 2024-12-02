@@ -22,7 +22,7 @@ import useVersion from "@/components/hooks/useVersion";
 import usePlatform from "@/components/hooks/usePlatform";
 import useSet from "@/components/hooks/useSet";
 import { defaultLanguage } from "../context/languageContext";
-// import AISearch from "./AISearch";
+import AISearch from "./AISearch";
 // import "@docsearch/css";
 
 interface Props {
@@ -211,7 +211,7 @@ const Header = (props: Props) => {
             </div>
           ) : null}
           {!isSearchPage ? DocSearchComponent : null}
-          {/* {!isSearchPage && router.query.askai ? <AISearch /> : null} */}
+          {!isSearchPage && router.query.askai ? <AISearch /> : null}
         </div>
         {isMobile ? (
           <div className={styles["menus"]}>

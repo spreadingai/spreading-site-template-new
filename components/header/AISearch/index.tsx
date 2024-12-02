@@ -98,11 +98,13 @@ interface Props {}
 //   });
 
 const AISearch = (props: Props) => {
+  const isIframe = window.self === window.top;
+  console.log("AISearch is iframe", isIframe);
   const { theme: currentTheme } = useContext(ThemeContext);
   console.log("AISearch currentTheme", currentTheme);
   const { currentLanguage } = useLanguage();
-  const { currentGroup, currentGroupLabel } = useGroup();
-  const { currentPlatform, currentPlatformLabel } = usePlatform();
+  const { currentGroup } = useGroup();
+  const { currentPlatform } = usePlatform();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [converseStatus, setConverseStatus] = useState(0); // 0: init 1: ing
   const [question, setQuestion] = useState("");
@@ -114,7 +116,6 @@ const AISearch = (props: Props) => {
   const [isSending, setIsSending] = useState(false);
   const [sessionID, setSessionID] = useState("");
   const [chats, setChats] = useState<ChatMessage<Record<string, any>>[]>([]);
-  const defaultRemarks = copywriting[currentLanguage].aiSearch.defaultRemarks;
   const proChatRef = useRef<ProChatInstance>();
   const abortControllerRef = useRef<AbortController>(null);
   const customInputAreaRef = useRef<HTMLDivElement>();
@@ -122,6 +123,27 @@ const AISearch = (props: Props) => {
   const blockChunkText = useRef<string>("");
   const customIDMap = useRef<Record<string, AnswerData>>({});
   const isSendingRef = useRef<boolean>(false);
+  const iframeData = useRef<{
+    language: string;
+    product: string;
+    platform: string;
+  }>(null);
+
+  const getCurrentLanguage = (isIframe = false) => {
+    return currentLanguage;
+  };
+
+  const getCurrentGroup = (isIframe = false) => {
+    return currentGroup;
+  };
+
+  const getCurrentPlatform = (isIframe = false) => {
+    return currentPlatform;
+  };
+
+  const getAiSearchData = (isIframe = false) => {
+    return copywriting[getCurrentLanguage()].aiSearch;
+  };
 
   const showModal = () => {
     createSessions();
@@ -132,8 +154,8 @@ const AISearch = (props: Props) => {
     setLoading(true);
     try {
       const res = await createSessionsFetch(
-        currentGroup,
-        currentPlatform,
+        getCurrentGroup(),
+        getCurrentPlatform(),
         chatID
       );
       const { code, data, message } = res;
@@ -160,8 +182,8 @@ const AISearch = (props: Props) => {
     if (!sessionID) return;
     try {
       const res = await deleteSessionsFetch(
-        currentGroup,
-        currentPlatform,
+        getCurrentGroup(),
+        getCurrentPlatform(),
         chatID,
         [sessionID]
       );
@@ -206,8 +228,8 @@ const AISearch = (props: Props) => {
     abortControllerRef.current = new AbortController();
     try {
       const reader = await startConverseFetch(
-        currentGroup,
-        currentPlatform,
+        getCurrentGroup(),
+        getCurrentPlatform(),
         chatID,
         sessionID,
         undefined,
@@ -368,9 +390,7 @@ const AISearch = (props: Props) => {
                 // } else if (caseType === 5) {
                 //   console.log("read stream interface error ", result);
                 //   controller.enqueue(
-                //     encoder.encode(
-                //       copywriting[currentLanguage].aiSearch.unableToReply
-                //     )
+                //     encoder.encode(getAiSearchData().unableToReply)
                 //   );
                 // }
                 // Custom parsing end
@@ -382,9 +402,7 @@ const AISearch = (props: Props) => {
                   if (temp.code !== 0) {
                     console.log("read stream interface error ", value.data);
                     controller.enqueue(
-                      encoder.encode(
-                        copywriting[currentLanguage].aiSearch.unableToReply
-                      )
+                      encoder.encode(getAiSearchData().unableToReply)
                     );
                   } else {
                     if (temp.data !== true && temp.data.answer) {
@@ -458,9 +476,7 @@ const AISearch = (props: Props) => {
                 console.log(error);
                 // controller.error(error);
                 controller.error(
-                  encoder.encode(
-                    copywriting[currentLanguage].aiSearch.unableToReply
-                  )
+                  encoder.encode(getAiSearchData().unableToReply)
                 );
                 lastChunkText.current = "";
                 blockChunkText.current = "";
@@ -587,13 +603,39 @@ const AISearch = (props: Props) => {
     };
     targetScore !== ScoreType.FIVE && (questionData.answer = answer);
     answerData.score = score;
-    scoreFetch(currentGroup, currentPlatform, sessionID, [questionData]).catch(
-      (error) => {
-        console.log("scoreFetch error", error);
-        answerData.score = oldScore;
-      }
-    );
+    scoreFetch(getCurrentGroup(), getCurrentPlatform(), sessionID, [
+      questionData,
+    ]).catch((error) => {
+      console.log("scoreFetch error", error);
+      answerData.score = oldScore;
+    });
   };
+
+  useEffect(() => {
+    const receiveMessage = (event) => {
+      const whiteList = [
+        "http://localhost:5666",
+        "https://doc-zh.zego.im",
+        "https://www.zegocloud.com",
+        "https://docs.zegocloud.com",
+      ];
+      if (!whiteList.includes(event.origin)) return;
+
+      event.source.postMessage("### the message has been received");
+
+      // Parse data
+      try {
+        const data = JSON.parse(event.data);
+        iframeData.current = data;
+      } catch (error) {
+        console.log("### parse message data error ", error);
+      }
+    };
+    window.addEventListener("message", receiveMessage, false);
+    return () => {
+      window.removeEventListener("message", receiveMessage, false);
+    };
+  }, []);
 
   useEffect(() => {
     isSending && setConverseStatus(1);
@@ -601,8 +643,8 @@ const AISearch = (props: Props) => {
 
   useEffect(() => {
     getChatIDMap().then((chatIDMap) => {
-      const temp = chatIDMap[currentGroup]
-        ? chatIDMap[currentGroup][currentPlatform] || {}
+      const temp = chatIDMap[getCurrentGroup()]
+        ? chatIDMap[getCurrentGroup()][getCurrentPlatform()] || {}
         : {};
       setChatID(temp.chat_id || defaultChatID);
       setDefaultQuestions(temp.questions || []);
@@ -693,7 +735,7 @@ const AISearch = (props: Props) => {
             {renderData.length ? (
               <div className={styles["custom-chat-item-doc-agg"]}>
                 <div className={styles["custom-chat-item-doc-agg-title"]}>
-                  {copywriting[currentLanguage].aiSearch.referenceSource}
+                  {getAiSearchData().referenceSource}
                 </div>
                 {renderData.map((item, index) => {
                   return (
@@ -852,10 +894,10 @@ const AISearch = (props: Props) => {
   return (
     <div className={styles["ai-search-wrap"]}>
       <div onClick={showModal} className={styles["ai-btn"]}>
-        {copywriting[currentLanguage].aiSearch.askAI}
+        {getAiSearchData().askAI}
       </div>
       <Modal
-        title={copywriting[currentLanguage].aiSearch.modalTitle}
+        title={getAiSearchData().modalTitle}
         open={isModalOpen}
         onCancel={cancelHandle}
         footer={null}
@@ -871,7 +913,7 @@ const AISearch = (props: Props) => {
               }`}
             >
               <div className={styles["opening-remarks-wrap"]}>
-                {defaultRemarks.map((remark, index) => (
+                {getAiSearchData().defaultRemarks.map((remark, index) => (
                   <div key={index} className={styles["remark"]}>
                     {remark}
                   </div>
@@ -879,7 +921,7 @@ const AISearch = (props: Props) => {
               </div>
               <div className={styles["default-question-wrap"]}>
                 <div className={styles["question-tips"]}>
-                  {copywriting[currentLanguage].aiSearch.guessText}
+                  {getAiSearchData().guessText}
                 </div>
                 <>
                   {defaultQuestions.map((question, index) => (
@@ -931,9 +973,7 @@ const AISearch = (props: Props) => {
                 helloMessage={
                   defaultHelloMessage ? <p>{defaultHelloMessage}</p> : null
                 }
-                placeholder={
-                  copywriting[currentLanguage].aiSearch.inputPlaceholder
-                }
+                placeholder={getAiSearchData().inputPlaceholder}
                 inputAreaProps={{
                   value: question,
                   onChange: changeHandle,
@@ -953,7 +993,7 @@ const AISearch = (props: Props) => {
                 transformToChatMessage={transformToChatMessageHandle}
                 backToBottomConfig={{
                   render: CustomBackToBottom,
-                  text: copywriting[currentLanguage].aiSearch.backToBottomText,
+                  text: getAiSearchData().backToBottomText,
                 }}
                 request={async (messages, extra, signal) => {
                   console.log(question);
@@ -990,8 +1030,7 @@ const AISearch = (props: Props) => {
                   );
                   const data: any = {
                     content: new Response(
-                      readableStream ||
-                        copywriting[currentLanguage].aiSearch.unableToReply
+                      readableStream || getAiSearchData().unableToReply
                     ),
                     customID,
                   };
