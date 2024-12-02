@@ -421,6 +421,7 @@ const AISearch = (props: Props) => {
   };
 
   const changeHandle = (e) => {
+    console.log("### changeHandle", typeof e === "string" ? e : e.target.value);
     setQuestion(typeof e === "string" ? e : e.target.value);
   };
 
@@ -904,13 +905,18 @@ const AISearch = (props: Props) => {
                   //   `这是一条模拟非流式输出的消息的消息。本次会话传入了${messages.length}条消息`
                   // );
                   // return new Response(text);
-
-                  const currentQuestion = messages[messages.length - 1]
-                    .content as string;
+                  const currentmessage = messages[messages.length - 1];
+                  const currentQuestion = (
+                    currentmessage &&
+                    currentmessage.role === "user" &&
+                    currentmessage.content
+                      ? currentmessage.content
+                      : ""
+                  ) as string;
                   const customID = Date.now().toString();
                   const readableStream = await startConverse(
                     customID,
-                    question || currentQuestion
+                    currentQuestion || question
                     //  signal
                   );
                   const data: any = {
