@@ -1,0 +1,365 @@
+.ai-search-page {
+    :global(.ant-modal-mask) {
+        display: none;
+    }
+    .ai-search-dialog {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: unset;
+        top: 0;
+        padding-bottom: 0;
+    }
+}
+
+.ai-search-dialog {
+    width: 80% !important;
+    height: 80% !important;
+    max-width: 1000px;
+    & > div {
+        height: 100%;
+    }
+    :global(.ant-modal-content) {
+        overflow: hidden;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        color: var(--docuo-color-primary);
+        background: var(--docuo-background-primary);
+        border: var(--docsearch-searchbox-border);
+    }
+    :global(.ant-modal-close) {
+        color: var(--docuo-color-primary);
+        transition: all 0.3s;
+        &:hover {
+            color: var(--docuo-color-primary);
+            background: var(--docsearch-searchbox-background-hover);
+        }
+    }
+    :global(.ant-modal-header) {
+        color: var(--docuo-color-primary);
+        background: var(--docuo-background-primary);
+    }
+    :global(.ant-modal-title) {
+        color: var(--docuo-color-primary);
+    }
+    :global(.ant-modal-body) {
+        flex: 1;
+    }
+    :global(.ant-input-outlined) {
+        background: unset;
+        border: var(--docsearch-searchbox-border);
+        color: var(--docuo-color-primary);
+        outline: unset;
+        box-shadow: unset;
+        &:hover {
+            background: unset;
+            border: var(--docsearch-searchbox-border-hover);
+        }
+    }
+    :global(.ant-input-group-wrapper-outlined .ant-input-group-addon) {
+        background: unset;
+        border: var(--docsearch-searchbox-border);
+        border-left: unset;
+        color: var(--docuo-color-primary);
+        cursor: pointer;
+        &:hover {
+            background: var(--docsearch-searchbox-background-hover);
+            border: var(--docsearch-searchbox-border-hover);
+            border-left: unset;
+        }
+    }
+    :global(.ant-pro-chat-chat-list-container) {
+    }
+    .converse-wrap {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+    .init-content,
+    .converse-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+    }
+    .init-content {
+        position: absolute;
+        width: 100%;
+        display: flex;
+        background: var(--docuo-background-primary);
+        bottom: 78px;
+        top: 0;
+        &.show {
+            opacity: 1;
+            z-index: 1;
+        }
+        &.hidden {
+            opacity: 0;
+            z-index: 0;
+        }
+    }
+    :global(.ant-pro-chat-input-area) {
+        background: unset;
+        flex: 1;
+    }
+    :global(.ant-pro-chat-input-area-action-bar) {
+        display: none;
+    }
+    :global(.ant-pro-chat-list-item-message-content) {
+        background-color: transparent;
+    }
+    :global(.ant-editor-icon) {
+        svg {
+            stroke-width: 2px;
+        }
+    }
+    .custom-converse-reset {
+        cursor: pointer;
+        font-size: 16px;
+        color: var(--docuo-text-color);
+        transition: all 0.3s;
+        height: 32px;
+        width: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+        opacity: 0.6;
+        &:hover {
+            opacity: 1 !important;
+            background: var(--docuo-ai-search-operate-btn-bg-hover);
+        }
+    }
+    .custom-chat-item-content-wrap {
+        color: var(--docuo-color-primary);
+        background: var(--docuo-m-drawer-btn-bg);
+        border: var(--docuo-m-drawer-btn-border);
+        border-radius: 8px;
+        & + .custom-chat-item-operation-wrap {
+            display: none;
+        }
+        &.assistant {
+            margin-inline-end: 100px;
+            padding-bottom: 40px;
+            min-width: 122px;
+            & + .custom-chat-item-operation-wrap {
+                display: flex;
+                position: absolute;
+                left: 12px;
+                bottom: 10px;
+                display: flex;
+                align-items: center;
+                :global(.ant-pro-chat-list-item-actions) {
+                    opacity: 1;
+                    :global(.ant-editor-action-group-content) {
+                        border: unset;
+                        background: unset;
+                        button {
+                            color: var(--docuo-text-color);
+                            opacity: 0.6;
+                            &:first-of-type {
+                                display: none;
+                            }
+                            &:last-of-type {
+                                display: none;
+                            }
+                            &:hover {
+                                opacity: 1 !important;
+                            }
+                        }
+                    }
+                }
+                &.sending {
+                    :global(.ant-pro-chat-list-item-actions) {
+                        :global(.ant-editor-action-group-content) {
+                            button {
+                                &:first-of-type {
+                                    display: none !important;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &.user {
+            & + .custom-chat-item-operation-wrap {
+                display: none;
+                // :global(.ant-pro-chat-list-item-actions) {
+                //     display: none;
+                // }
+                // .custom-chat-item-operation {
+                //     display: none;
+                // }
+            }
+        }
+    }
+    .custom-chat-item-doc-agg {
+        color: var(--docuo-color-primary);
+        background: var(--docsearch-searchbox-background);
+        border-radius: 8px;
+        padding: 12px;
+        margin-top: 10px;
+        a {
+            color: var(--docuo-color-primary-active);
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+    .custom-chat-item-operation {
+        display: flex;
+        align-items: center;
+        .custom-chat-item-operation-btn {
+            opacity: 0.6;
+            cursor: pointer;
+            color: var(--docuo-text-color);
+            transition: all 0.3s;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            &:hover {
+                opacity: 1 !important;
+                background: var(--docuo-ai-search-operate-btn-bg-hover);
+                border-radius: 6px;
+            }
+            &:active {
+                opacity: 1 !important;
+                color: var(--docuo-color-primary-active);
+            }
+        }
+    }
+    .custom-chat-item-doc-agg-title {
+        font-size: 10px;
+        color: var(--docsearch-searchbox-color);
+        margin-bottom: 10px;
+    }
+    .custom-chat-item-doc-agg-item {
+        line-height: 20px;
+        & + .custom-chat-item-doc-agg-item {
+            margin-top: 10px;
+        }
+    }
+    .custom-input-area {
+        display: flex;
+        align-items: center;
+    }
+    .opening-remarks-wrap {
+        margin-bottom: 4%;
+        margin-top: 10%;
+        width: 60%;
+        .remark {
+            font-size: 28px;
+        }
+    }
+    .default-question-wrap {
+        width: 60%;
+    }
+    .question-tips {
+        font-size: 10px;
+        color: var(--docsearch-searchbox-color);
+        margin-bottom: 3%;
+    }
+    .input-wrap {
+        padding-top: 3%;
+    }
+    .default-question {
+        background: unset;
+        border: var(--docsearch-searchbox-border);
+        border-radius: 6px;
+        font-size: 16px;
+        padding: 4px 12px;
+        cursor: pointer;
+        margin-bottom: 1.5%;
+        transition: all 0.3s;
+        &:hover {
+            background: var(--docsearch-searchbox-background-hover);
+            border: var(--docsearch-searchbox-border-hover);
+        }
+    }
+    .custom-back-to-bottom-wrap {
+        :global(.ant-btn-default:not(:disabled):not(.ant-btn-disabled)) {
+            &:hover {
+                color: var(--docuo-color-primary-active);
+            }
+        }
+    }
+    .user-avatar-wrap {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        color: var(--docuo-text-color);
+        width: 40px;
+        height: 40px;
+    }
+    :global(.ant-pro-chat-list-item-left) {
+        &:last-of-type {
+            .custom-chat-item-content-wrap {
+                &.assistant {
+                    & + .custom-chat-item-operation-wrap {
+                        :global(.ant-pro-chat-list-item-actions) {
+                            :global(.ant-editor-action-group-content) {
+                                button {
+                                    &:first-of-type {
+                                        display: flex;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .ai-search-dialog {
+        .custom-chat-item-content-wrap {
+            &.assistant {
+                margin-inline-end: 120px;
+            }
+        }
+    }
+}
+@media screen and (max-width: 750px) {
+    .ai-search-dialog {
+        :global(.ant-modal-content) {
+            padding: 20px 16px;
+        }
+        :global(.ant-pro-chat-list-item) {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+        .custom-chat-item-content-wrap {
+            &.assistant {
+                margin-inline-end: 80px;
+            }
+        }
+    }
+}
+@media screen and (max-width: 576px) {
+    .ai-search-dialog {
+        :global(.ant-modal-content) {
+            padding: 20px 16px;
+        }
+        .custom-chat-item-content-wrap {
+            &.assistant {
+                margin-inline-end: 40px;
+            }
+        }
+    }
+}
+@media screen and (max-width: 576px) {
+    .ai-search-dialog {
+        .custom-chat-item-content-wrap {
+            &.assistant {
+                margin-inline-end: 20px;
+            }
+        }
+    }
+}
