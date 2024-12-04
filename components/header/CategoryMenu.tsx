@@ -29,33 +29,59 @@ const CategoryContent = (props: {
             >
               {item.children.map((subItem) => {
                 return (
-                  <Link
-                    href={subItem.defaultLink}
-                    key={subItem.id}
-                    className={styles.groupContent}
-                    prefetch={
-                      subItem.defaultLink.startsWith("http") ? false : null
-                    }
-                  >
-                    <span
-                      className={`${styles.groupName} ${
-                        subItem.id === currentGroup ? styles.activeGroup : ""
-                      }`}
+                  // Setting prefetch does not take effect here
+                  subItem.defaultLink.startsWith("http") ? (
+                    <a
+                      href={subItem.defaultLink}
+                      key={subItem.id}
+                      className={styles.groupContent}
+                      target="_blank"
                     >
-                      {subItem.name}
-                    </span>
-                    {subItem.tag ? (
                       <span
-                        className={`${styles.groupTag} ${
-                          subItem.tag.toLowerCase() === "new"
-                            ? styles.newTag
-                            : styles.hotTag
+                        className={`${styles.groupName} ${
+                          subItem.id === currentGroup ? styles.activeGroup : ""
                         }`}
                       >
-                        {subItem.tag}
+                        {subItem.name}
                       </span>
-                    ) : null}
-                  </Link>
+                      {subItem.tag ? (
+                        <span
+                          className={`${styles.groupTag} ${
+                            subItem.tag.toLowerCase() === "new"
+                              ? styles.newTag
+                              : styles.hotTag
+                          }`}
+                        >
+                          {subItem.tag}
+                        </span>
+                      ) : null}
+                    </a>
+                  ) : (
+                    <Link
+                      href={subItem.defaultLink}
+                      key={subItem.id}
+                      className={styles.groupContent}
+                    >
+                      <span
+                        className={`${styles.groupName} ${
+                          subItem.id === currentGroup ? styles.activeGroup : ""
+                        }`}
+                      >
+                        {subItem.name}
+                      </span>
+                      {subItem.tag ? (
+                        <span
+                          className={`${styles.groupTag} ${
+                            subItem.tag.toLowerCase() === "new"
+                              ? styles.newTag
+                              : styles.hotTag
+                          }`}
+                        >
+                          {subItem.tag}
+                        </span>
+                      ) : null}
+                    </Link>
+                  )
                 );
               })}
             </div>
