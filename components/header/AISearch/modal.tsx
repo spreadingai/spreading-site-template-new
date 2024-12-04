@@ -48,6 +48,8 @@ import { Question, ScoreType } from "./types";
 import { ThemeProvider } from "antd-style";
 import { theme } from "antd";
 import { copywriting } from "@/components/constant/language";
+import Robot1 from "@/assets/icons/ai-search/Robot1.svg";
+import Robot2 from "@/assets/icons/ai-search/Robot2.svg";
 
 interface AnswerData {
   score?: ScoreType;
@@ -809,7 +811,11 @@ const AISearchModal = (props: Props) => {
     avatarRender: (props: ChatItemProps, defaultDom: ReactNode) => {
       const role = props.originData.role;
       if (role === "assistant") {
-        return defaultDom;
+        return (
+          <div className={styles["user-avatar-wrap"]}>
+            {currentTheme === "light" ? <Robot1 /> : <Robot2 />}
+          </div>
+        );
       } else {
         return (
           <div className={styles["user-avatar-wrap"]}>
@@ -930,7 +936,7 @@ const AISearchModal = (props: Props) => {
               },
             }}
           >
-            {process.env.NODE_ENV !== "development" ? (
+            {process.env.NODE_ENV === "development" ? (
               <ProChat
                 loading={loading}
                 chats={chats}
