@@ -3,7 +3,7 @@ export const copywriting = {
     search: {
       translations: {
         button: {
-          buttonText: "Quick search...",
+          buttonText: "Search the product documentation",
         },
         modal: {
           startScreen: {
@@ -32,7 +32,8 @@ export const copywriting = {
       defaultRemarks: ["Hello", "What can I do for you?"],
       modalTitle: "AI document assistant",
       referenceSource: "Reference source:",
-      inputPlaceholder: "Please enter your question",
+      inputPlaceholder:
+        "You can ask any questions about the product of this platform",
       backToBottomText: "Back to bottom",
       askAI: "AI search",
       guessText: "Guess you want to know:",
@@ -44,7 +45,7 @@ export const copywriting = {
     search: {
       translations: {
         button: {
-          buttonText: "快速搜索...",
+          buttonText: "搜索本产品文档内容",
         },
         modal: {
           startScreen: {
@@ -73,7 +74,7 @@ export const copywriting = {
       defaultRemarks: ["您好", "请问有什么可以帮到您？"],
       modalTitle: "AI 文档助手",
       referenceSource: "参考来源：",
-      inputPlaceholder: "请输入您的问题",
+      inputPlaceholder: "您可以询问关于本平台产品的任何问题",
       backToBottomText: "返回底部",
       askAI: "AI 搜索",
       guessText: "猜您想了解：",
