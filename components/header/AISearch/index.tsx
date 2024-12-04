@@ -6,6 +6,8 @@ import AISearchModal from "./modal";
 import ThemeContext from "../Theme.context";
 import useGroup from "@/components/hooks/useGroup";
 import usePlatform from "@/components/hooks/usePlatform";
+import iconAshAI from "@/assets/icons/ai-search/icon_ask_ai.png";
+import Image from "next/image";
 
 interface Props {}
 
@@ -30,7 +32,7 @@ const AISearch = (props: Props) => {
   return (
     <div className={styles["ai-search-wrap"]}>
       <div onClick={showModal} className={styles["ai-btn"]}>
-        {aiSearchData.askAI}
+        <Image src={iconAshAI} alt="" decoding="async" />
       </div>
       <AISearchModal
         isModalOpen={isModalOpen}

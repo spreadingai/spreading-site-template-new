@@ -1,9 +1,8 @@
 .ai-btn {
-    background: var(--docuo-m-drawer-btn-bg);
-    border: var(--docuo-m-drawer-btn-border);
     margin-left: 10px;
-    color: var(--docuo-color-primary);
-    padding: 5px 16px;
-    border-radius: 6px;
     cursor: pointer;
+    img {
+        height: 42px;
+        width: auto;
+    }
 }

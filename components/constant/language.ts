@@ -35,7 +35,7 @@ export const copywriting = {
       inputPlaceholder:
         "You can ask any questions about the product of this platform",
       backToBottomText: "Back to bottom",
-      askAI: "AI search",
+      askAI: "Ask AI",
       guessText: "Guess you want to know:",
       unableToReply:
         "Oops, there's a little issue. Please click the regenerate button or try asking me another question!",
@@ -76,7 +76,7 @@ export const copywriting = {
       referenceSource: "参考来源：",
       inputPlaceholder: "您可以询问关于本平台产品的任何问题",
       backToBottomText: "返回底部",
-      askAI: "AI 搜索",
+      askAI: "Ask AI",
       guessText: "猜您想了解：",
       unableToReply:
         "噢，出了一点小问题，请点击重新生成按钮或者重新问我其他问题试试吧！",

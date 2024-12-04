@@ -48,8 +48,7 @@ import { Question, ScoreType } from "./types";
 import { ThemeProvider } from "antd-style";
 import { theme } from "antd";
 import { copywriting } from "@/components/constant/language";
-import Robot1 from "@/assets/icons/ai-search/Robot1.svg";
-import Robot2 from "@/assets/icons/ai-search/Robot2.svg";
+import Robot from "@/assets/icons/ai-search/Robot.svg";
 
 interface AnswerData {
   score?: ScoreType;
@@ -813,7 +812,7 @@ const AISearchModal = (props: Props) => {
       if (role === "assistant") {
         return (
           <div className={styles["user-avatar-wrap"]}>
-            {currentTheme === "light" ? <Robot2 /> : <Robot2 />}
+            {currentTheme === "light" ? <Robot /> : <Robot />}
           </div>
         );
       } else {
