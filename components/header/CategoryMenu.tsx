@@ -33,6 +33,9 @@ const CategoryContent = (props: {
                     href={subItem.defaultLink}
                     key={subItem.id}
                     className={styles.groupContent}
+                    prefetch={
+                      subItem.defaultLink.startsWith("http") ? false : null
+                    }
                   >
                     <span
                       className={`${styles.groupName} ${
