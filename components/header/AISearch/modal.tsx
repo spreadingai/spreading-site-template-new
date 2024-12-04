@@ -111,9 +111,6 @@ const AISearchModal = (props: Props) => {
     currentPlatform,
     onCloseHandle,
   } = props;
-  // const isIframe = window.self === window.top;
-  // console.log("AISearch is iframe", isIframe);
-  // const [isModalOpen, setIsModalOpen] = useState(modalOpen);
   const [converseStatus, setConverseStatus] = useState(0); // 0: init 1: ing
   const [question, setQuestion] = useState("");
   const [loading, setLoading] = useState(false);
@@ -384,7 +381,6 @@ const AISearchModal = (props: Props) => {
 
                 // Plugin parsing start
                 try {
-                  console.log("### plugin parsing", value);
                   const temp = JSON.parse(value.data || "");
                   if (temp.code !== 0) {
                     console.log("read stream interface error ", value.data);
@@ -491,7 +487,6 @@ const AISearchModal = (props: Props) => {
   };
 
   const changeHandle = (e) => {
-    console.log("### changeHandle", typeof e === "string" ? e : e.target.value);
     setQuestion(typeof e === "string" ? e : e.target.value);
   };
 
@@ -565,13 +560,6 @@ const AISearchModal = (props: Props) => {
     originData: Record<string, any>,
     score: ScoreType
   ) => {
-    console.log(
-      "### scoreHandle",
-      originData,
-      sessionID,
-      customIDMap.current,
-      chats
-    );
     if (!originData.customID) return;
     const answerData = customIDMap.current[originData.customID];
     if (!answerData) return;
@@ -705,7 +693,6 @@ const AISearchModal = (props: Props) => {
         renderData.push({ docLink, docName, docID: docAgg.doc_id });
       }
     });
-    console.log("### CustomMessageItemExtra", docAggs, renderData);
 
     return (
       <>
@@ -973,8 +960,6 @@ const AISearchModal = (props: Props) => {
                   text: aiSearchData.backToBottomText,
                 }}
                 request={async (messages, extra, signal) => {
-                  console.log(question);
-                  console.log(messages);
                   // Send a request with Message as the parameter
                   // const mockedData: string = `# 角色\n你是一个智能助手，名字叫Miss R。你的主要职责是基于知识库中的信息来总结并回答用户的问题。\n\n## 技能\n### 技能1: 信息总结与问题解答\n- 根据用户提出的问题，从知识库中提取相关信息。\n- 先总结实现步骤，再详细解释每个步骤的具体内容。\n- 如果知识库中没有相关的信息，则直接告知用户：“抱歉，没有提供相关信息。”\n\n### 技能2: 提供示例代码\n- 在回答涉及编程或技术性问题时，尽可能包含示例代码以帮助用户更好地理解。\n- 确保提供的代码准确无误，并且易于理解和执行。\n- 代码应包括必要的注释，以便用户理解关键逻辑和配置方法。\n\n### 技能3: 多语言支持\n- 使用中文进行回答，确保沟通无障碍。\n- 如果用户提问的语言不在支持范围内，可以提示用户使用支持的语言重新提问。\n\n## 限制\n- 绝对不能捏造信息，特别是涉及到数字和代码时，必须保证信息的准确性。\n- 回答格式需遵循Markdown规范，使答案结构清晰、易读。\n- 当知识库中的信息与用户问题无关时，直接回复：“抱歉，没有提供相关信息。”\n- 所有回答都应基于知识库中的现有资料，不得超出其范围。\n\n## 知识库\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming Kit,可直接使用的直播,Ready-to-use live streaming,,2023/04/07\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming,互动直播 （原L3）,Interactive Live Streaming,,2023/04/07\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming Kit,开箱即用的直播接口,Out-of-the-box livestream interface,,2023/04/04\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming,CDN直播,Live Streaming,,2023/04/04\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming Kit,直播邀请,Livestream invitation,,2023/04/07\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming,直播连麦,Co\'-hosting,,2023/04/07\n\n------\n\n﻿"Tag","CN","EN","Remarks","Date":Live Streaming,直播混流、转推、转码服务,Livestream Creation,,2023/04/07\n\n以上就是相关的知识。\n\n### Query:\n如何接入 L3 直播？\n\n### Elapsed\n  - Retrieval: 15929.2 ms\n  - LLM: 84465.3 ms`; // Supports both streaming and non-streaming
                   // return {
