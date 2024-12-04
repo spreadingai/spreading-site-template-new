@@ -936,7 +936,7 @@ const AISearchModal = (props: Props) => {
               },
             }}
           >
-            {process.env.NODE_ENV === "development" ? (
+            {process.env.NODE_ENV !== "development" ? (
               <ProChat
                 loading={loading}
                 chats={chats}
