@@ -79,7 +79,12 @@ const components = {
   CardGroup,
   Step,
   Steps,
-  a: Link,
+  a: (props) =>
+    props.href && props.href.startsWith("http") ? (
+      <a {...props} target="_blank" />
+    ) : (
+      <Link {...props} />
+    ),
   mermaid: (props) => <Mermaid config={{ theme: "default" }} {...props} />,
   Mermaid: (props) => <Mermaid config={{ theme: "default" }} {...props} />,
   MethodEndpoint,
