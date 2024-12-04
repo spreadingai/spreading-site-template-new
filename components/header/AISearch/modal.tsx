@@ -608,13 +608,20 @@ const AISearchModal = (props: Props) => {
   }, [isModalOpen, createSessions]);
 
   useEffect(() => {
-    if (localChatIDMap) {
-      const temp = localChatIDMap[currentGroup]
-        ? localChatIDMap[currentGroup][currentPlatform] || {}
-        : {};
-      setChatID(temp.chat_id || defaultChatID);
-      setDefaultQuestions(temp.questions || []);
+    let currentID: string = defaultChatID;
+    let currentQuestions: string[] = [];
+    if (localChatIDMap && localChatIDMap[currentGroup]) {
+      // Handle situations where there is only one platform
+      const keys = Object.keys(localChatIDMap[currentGroup]);
+      const key = keys.length === 1 ? keys[0] : currentPlatform;
+      const temp = localChatIDMap[currentGroup][key];
+      try {
+        currentID = temp.chat_id || defaultChatID;
+        currentQuestions = temp.questions || [];
+      } catch (error) {}
     }
+    setChatID(currentID);
+    setDefaultQuestions(currentQuestions);
   }, [currentGroup, currentPlatform, localChatIDMap]);
 
   useEffect(() => {
