@@ -11,16 +11,26 @@ const FooterMobile: FC<{ items: FooterLinkGroup[] }> = ({ items }) => {
       label: <div className={styles["mobile-items-title"]}>{item.title}</div>,
       children: (
         <div className={styles["mobile-items"]}>
-          {item.items.map((child, index) => (
-            <Link
-              key={index}
-              className={styles["mobile-item"]}
-              href={child.href || { pathname: child.to } || "/"}
-              target={child.href ? "_blank" : "_self"}
-            >
-              {child.label}
-            </Link>
-          ))}
+          {item.items.map((child, index) =>
+            child.href ? (
+              <a
+                key={index}
+                className={styles["mobile-item"]}
+                href={child.href}
+                target="_blank"
+              >
+                {child.label}
+              </a>
+            ) : (
+              <Link
+                key={index}
+                className={styles["mobile-item"]}
+                href={child.to || "/"}
+              >
+                {child.label}
+              </Link>
+            )
+          )}
         </div>
       ),
       className: styles["collapse-item"],

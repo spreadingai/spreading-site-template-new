@@ -17,18 +17,14 @@ const InsVersionDropdown = ({ type, menu }: InsVersionDropdownProps) => {
     return menu.items.map((item, index) => {
       return {
         key: index,
-        label: (
-          <Link
-            href={item.href || item.to || item.defaultLink || "/"}
-            target={
-              item.href || /^https?:/i.test(item.defaultLink)
-                ? "_blank"
-                : "_self"
-            }
-          >
-            {item.label}
-          </Link>
-        ),
+        label:
+          item.href || /^https?:/i.test(item.defaultLink) ? (
+            <a href={item.href || item.defaultLink || "/"} target="_blank">
+              {item.label}
+            </a>
+          ) : (
+            <Link href={item.to || item.defaultLink || "/"}>{item.label}</Link>
+          ),
         className: `${styles["popup-list-item"]} ${
           menu.key === item.key ? styles.active : ""
         }`,

@@ -715,13 +715,13 @@ const AISearchModal = (props: Props) => {
                       key={item.docID}
                       className={styles["custom-chat-item-doc-agg-item"]}
                     >
-                      <Link
+                      <a
                         key={"" + item.docID + index}
                         href={item.docLink}
                         target="_blank"
                       >
                         {item.docName}
-                      </Link>
+                      </a>
                     </div>
                   );
                 })}

@@ -351,9 +351,9 @@ const PreviewLayout = ({
             {nodeData.title}
           </Link>
         ) : nodeData.type === SidebarItemType.Link ? (
-          <Link className="title" href={nodeData.link || ""} target="_blank">
+          <a className="title" href={nodeData.link || ""} target="_blank">
             {nodeData.title}
-          </Link>
+          </a>
         ) : (
           <span className="title">{nodeData.title}</span>
         )}

@@ -76,7 +76,7 @@ const Footer: FC<footerProps> = ({ docuoConfig }) => {
           <div className={styles["left"]}>
             {logo && (
               <div className={styles["logo-container"]}>
-                <Link
+                <a
                   href={
                     footer.logoUrl ||
                     `${
@@ -99,7 +99,7 @@ const Footer: FC<footerProps> = ({ docuoConfig }) => {
                     }
                     alt={"logo"}
                   />
-                </Link>
+                </a>
               </div>
             )}
 
@@ -139,12 +139,20 @@ const Footer: FC<footerProps> = ({ docuoConfig }) => {
                     <div className={styles["group-title"]}>{group.title}</div>
                     <div className={styles["group-items"]}>
                       {group.items.map((item: any, index) => {
-                        return (
+                        return item.href ? (
+                          <a
+                            key={index}
+                            className={styles["group-item"]}
+                            href={item.href}
+                            target="_blank"
+                          >
+                            {item.label}
+                          </a>
+                        ) : (
                           <Link
                             key={index}
                             className={styles["group-item"]}
-                            href={item.href || { pathname: item.to } || "/"}
-                            target={item.href ? "_blank" : "_self"}
+                            href={item.to || "/"}
                           >
                             {item.label}
                           </Link>

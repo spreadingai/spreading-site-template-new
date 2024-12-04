@@ -11,13 +11,12 @@ const DropdownItem: FC<{ menu: NavbarLink }> = ({ menu }) => {
     return menu.items.map((item, index) => {
       return {
         key: index,
-        label: (
-          <Link
-            href={item.href || item.to || item.defaultLink || "/"}
-            target={item.href ? "_blank" : "_self"}
-          >
+        label: item.href ? (
+          <a href={item.href} target="_blank">
             {item.label}
-          </Link>
+          </a>
+        ) : (
+          <Link href={item.to || item.defaultLink || "/"}>{item.label}</Link>
         ),
         className: styles["popup-list-items"],
       };

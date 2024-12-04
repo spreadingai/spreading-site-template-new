@@ -55,18 +55,26 @@ const Mobile: FC<Props> = ({
                   ),
                   children: (
                     <div className={styles["mobile-down-items"]}>
-                      {menu.items.map((child, index) => (
-                        <Link
-                          key={index}
-                          className={styles["mobile-down-item"]}
-                          href={
-                            child.href || child.to || child.defaultLink || "/"
-                          }
-                          target={child.href ? "_blank" : "_self"}
-                        >
-                          {child.label}
-                        </Link>
-                      ))}
+                      {menu.items.map((child, index) =>
+                        child.href ? (
+                          <a
+                            key={index}
+                            className={styles["mobile-down-item"]}
+                            href={child.href}
+                            target="_blank"
+                          >
+                            {child.label}
+                          </a>
+                        ) : (
+                          <Link
+                            key={index}
+                            className={styles["mobile-down-item"]}
+                            href={child.to || child.defaultLink || "/"}
+                          >
+                            {child.label}
+                          </Link>
+                        )
+                      )}
                     </div>
                   ),
                   // showArrow: false,
@@ -107,13 +115,22 @@ const Mobile: FC<Props> = ({
             }
             return (
               <React.Fragment key={index}>
-                <Link
-                  className={styles["mobile-item"]}
-                  href={menu.href || menu.to || menu.defaultLink || "/"}
-                  target={menu.href ? "_blank" : "_self"}
-                >
-                  {menu.label}
-                </Link>
+                {menu.href ? (
+                  <a
+                    className={styles["mobile-item"]}
+                    href={menu.href}
+                    target="_blank"
+                  >
+                    {menu.label}
+                  </a>
+                ) : (
+                  <Link
+                    className={styles["mobile-item"]}
+                    href={menu.to || menu.defaultLink || "/"}
+                  >
+                    {menu.label}
+                  </Link>
+                )}
                 {arr.length - 1 !== index && <div className={styles["line"]} />}
               </React.Fragment>
             );
