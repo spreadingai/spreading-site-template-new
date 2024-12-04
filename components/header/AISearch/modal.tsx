@@ -813,7 +813,7 @@ const AISearchModal = (props: Props) => {
       if (role === "assistant") {
         return (
           <div className={styles["user-avatar-wrap"]}>
-            {currentTheme === "light" ? <Robot1 /> : <Robot2 />}
+            {currentTheme === "light" ? <Robot2 /> : <Robot2 />}
           </div>
         );
       } else {
