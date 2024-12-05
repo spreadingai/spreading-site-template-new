@@ -173,7 +173,7 @@ const AISearchModal = (props: Props) => {
   }, [chatID, currentGroup, currentPlatform]);
 
   const deleteSessions = async () => {
-    if (!sessionID) return;
+    if (!chatID || !sessionID) return;
     try {
       const res = await deleteSessionsFetch(
         currentGroup,
@@ -624,13 +624,8 @@ const AISearchModal = (props: Props) => {
   useEffect(() => {
     let currentID: string = "";
     let currentQuestions: string[] = [];
-    if (
-      currentGroup &&
-      currentPlatform &&
-      localChatIDMap &&
-      localChatIDMap[currentGroup]
-    ) {
-      // Handle situations where there is only one platform
+    if (currentGroup && localChatIDMap && localChatIDMap[currentGroup]) {
+      // Handle situations where there is only one platform, the incoming platform may be empty
       const keys = Object.keys(localChatIDMap[currentGroup]);
       const key = keys.length === 1 ? keys[0] : currentPlatform;
       const temp = localChatIDMap[currentGroup][key];
