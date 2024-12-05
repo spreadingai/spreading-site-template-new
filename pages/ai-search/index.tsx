@@ -18,7 +18,7 @@ const AISearchPage = (props: Props) => {
     language: string;
     product: string;
     platform: string;
-  }>({ language: "zh", product: "zim_zh", platform: "Android: Java" });
+  }>({ language: "zh", product: "", platform: "" });
 
   const showModal = () => {
     setIsModalOpen(true);

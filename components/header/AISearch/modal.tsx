@@ -102,6 +102,15 @@ interface Props {
 //     }, 10000);
 //   });
 
+// Add a target to all A labels and md link
+// const addTargetToLink = (mdString: string) => {
+//   const linkRegex = /\[([^\]]+)\]\(([^\)]+)\)/gi;
+//   const result = mdString.replace(linkRegex, (match, linkText, linkUrl) => {
+//     return `<a href="${linkUrl}" target="_blank">${linkText}</a>`;
+//   });
+//   return result;
+// };
+
 const AISearchModal = (props: Props) => {
   const {
     rootClassName,
@@ -135,7 +144,7 @@ const AISearchModal = (props: Props) => {
   const aiSearchData = copywriting[currentLanguage].aiSearch;
 
   const createSessions = useCallback(async () => {
-    if (!chatID) return;
+    if (!chatID || !currentGroup || !currentPlatform) return;
     setLoading(true);
     try {
       const res = await createSessionsFetch(
@@ -502,6 +511,7 @@ const AISearchModal = (props: Props) => {
     // console.log("### chatEndHandle", id, type, chats);
     setIsSending(false);
     isSendingRef.current = false;
+    updateATagAttr();
   };
 
   const chatStartHandle = (messages: ChatMessage<Record<string, any>>[]) => {
@@ -556,6 +566,21 @@ const AISearchModal = (props: Props) => {
     }
   };
 
+  const updateATagAttr = () => {
+    const chatListItems = document.querySelectorAll(
+      ".ant-pro-chat-list .ant-pro-chat-list-item"
+    );
+    const lastChatListItem = chatListItems[chatListItems.length - 1];
+    if (lastChatListItem) {
+      const aTags = lastChatListItem.querySelectorAll(
+        ".ant-pro-chat-message-content article a"
+      );
+      aTags.forEach((item) => {
+        item.setAttribute("target", "_blank");
+      });
+    }
+  };
+
   const scoreHandle = (
     e: React.MouseEvent<HTMLElement, MouseEvent>,
     originData: Record<string, any>,
@@ -597,15 +622,20 @@ const AISearchModal = (props: Props) => {
   }, [isModalOpen, createSessions]);
 
   useEffect(() => {
-    let currentID: string = defaultChatID;
+    let currentID: string = "";
     let currentQuestions: string[] = [];
-    if (localChatIDMap && localChatIDMap[currentGroup]) {
+    if (
+      currentGroup &&
+      currentPlatform &&
+      localChatIDMap &&
+      localChatIDMap[currentGroup]
+    ) {
       // Handle situations where there is only one platform
       const keys = Object.keys(localChatIDMap[currentGroup]);
       const key = keys.length === 1 ? keys[0] : currentPlatform;
       const temp = localChatIDMap[currentGroup][key];
       try {
-        currentID = temp.chat_id || defaultChatID;
+        currentID = temp.chat_id || "";
         currentQuestions = temp.questions || [];
       } catch (error) {}
     }

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styles from "./index.module.scss";
 import useLanguage from "@/components/hooks/useLanguage";
-import { copywriting } from "@/components/constant/language";
 import AISearchModal from "./modal";
 import ThemeContext from "../Theme.context";
 import useGroup from "@/components/hooks/useGroup";
@@ -16,8 +15,6 @@ const AISearch = (props: Props) => {
   const { currentLanguage } = useLanguage();
   const { currentGroup } = useGroup();
   const { currentPlatform } = usePlatform();
-
-  const aiSearchData = copywriting[currentLanguage].aiSearch;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
