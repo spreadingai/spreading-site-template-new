@@ -624,10 +624,19 @@ const AISearchModal = (props: Props) => {
   useEffect(() => {
     let currentID: string = "";
     let currentQuestions: string[] = [];
-    if (currentGroup && localChatIDMap && localChatIDMap[currentGroup]) {
-      // Handle situations where there is only one platform, the incoming platform may be empty
+    if (
+      currentGroup &&
+      currentPlatform &&
+      localChatIDMap &&
+      localChatIDMap[currentGroup]
+    ) {
       const keys = Object.keys(localChatIDMap[currentGroup]);
-      const key = keys.length === 1 ? keys[0] : currentPlatform;
+      const key =
+        keys.length === 1
+          ? keys[0]
+          : keys.includes(currentPlatform)
+          ? currentPlatform
+          : keys[0];
       const temp = localChatIDMap[currentGroup][key];
       try {
         currentID = temp.chat_id || "";
