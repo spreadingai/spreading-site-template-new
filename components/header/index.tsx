@@ -211,7 +211,7 @@ const Header = (props: Props) => {
             </div>
           ) : null}
           {!isSearchPage ? DocSearchComponent : null}
-          {!isSearchPage && router.query.askai ? <AISearch /> : null}
+          {!isSearchPage ? <AISearch /> : null}
         </div>
         {isMobile ? (
           <div className={styles["menus"]}>
