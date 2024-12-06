@@ -27,12 +27,28 @@ const AISearchPage = (props: Props) => {
 
   const onCloseHandle = () => {
     setIsModalOpen(false);
+    const language = iframeData.current.language;
+    const targetDomain =
+      process.env.NODE_ENV === "development"
+        ? language === "zh"
+          ? whiteList[0]
+          : whiteList[1]
+        : language === "zh"
+        ? whiteList[2]
+        : whiteList[3];
     window.parent.postMessage(
       {
         origin: "docuo children",
         close: true,
       },
-      window.parent.origin
+      targetDomain
+    );
+    window.parent.postMessage(
+      {
+        origin: "docuo children",
+        close: true,
+      },
+      whiteList[4]
     );
   };
 
