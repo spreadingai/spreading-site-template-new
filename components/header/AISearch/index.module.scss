@@ -6,3 +6,8 @@
         width: auto;
     }
 }
+@media screen and (max-width: 750px) {
+    .ai-search-wrap {
+        display: none;
+    }
+}
