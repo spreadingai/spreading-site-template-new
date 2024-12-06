@@ -329,6 +329,7 @@
 }
 @media screen and (max-width: 750px) {
     .ai-search-dialog {
+        min-height: 400px !important;
         :global(.ant-modal-content) {
             padding: 20px 16px;
         }
@@ -336,10 +337,23 @@
             padding-left: 0px;
             padding-right: 0px;
         }
+        :global(.ant-select-single.ant-pro-chat-input-area-component textarea) {
+            padding-right: 40px;
+        }
         .custom-chat-item-content-wrap {
             &.assistant {
                 margin-inline-end: 80px;
             }
+        }
+        .opening-remarks-wrap {
+            width: 75%;
+            margin-top: 12%;
+            .remark {
+                font-size: 22px;
+            }
+        }
+        .default-question-wrap {
+            width: 75%;
         }
     }
 }
@@ -350,17 +364,28 @@
         }
         .custom-chat-item-content-wrap {
             &.assistant {
-                margin-inline-end: 40px;
+                margin-inline-end: 20px;
             }
+        }
+        .opening-remarks-wrap {
+            width: 80%;
+            .remark {
+                font-size: 20px;
+            }
+        }
+        .default-question-wrap {
+            width: 80%;
         }
     }
 }
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 375px) {
     .ai-search-dialog {
-        .custom-chat-item-content-wrap {
-            &.assistant {
-                margin-inline-end: 20px;
-            }
+        .opening-remarks-wrap {
+            width: 90%;
+            margin-top: 15%;
+        }
+        .default-question-wrap {
+            width: 90%;
         }
     }
 }
