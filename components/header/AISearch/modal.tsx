@@ -581,6 +581,15 @@ const AISearchModal = (props: Props) => {
     }
   };
 
+  const updateInputPlaceholder = useCallback(() => {
+    const input = document.querySelector(
+      ".custom-input-area .ant-select-selection-search textarea"
+    );
+    if (input) {
+      input.setAttribute("placeholder", aiSearchData.inputPlaceholder);
+    }
+  }, [aiSearchData.inputPlaceholder]);
+
   const scoreHandle = (
     e: React.MouseEvent<HTMLElement, MouseEvent>,
     originData: Record<string, any>,
@@ -620,6 +629,14 @@ const AISearchModal = (props: Props) => {
       createSessions();
     }
   }, [isModalOpen, createSessions]);
+
+  useEffect(() => {
+    if (isModalOpen) {
+      setTimeout(() => {
+        updateInputPlaceholder();
+      }, 0);
+    }
+  }, [isModalOpen, updateInputPlaceholder]);
 
   useEffect(() => {
     let currentID: string = "";
@@ -693,7 +710,10 @@ const AISearchModal = (props: Props) => {
 
   const CustomInputArea = (defaultDom, onMessageSend, onClearAllHistory) => {
     return (
-      <div className={styles["custom-input-area"]} ref={customInputAreaRef}>
+      <div
+        className={`${styles["custom-input-area"]} custom-input-area`}
+        ref={customInputAreaRef}
+      >
         {defaultDom}
         {converseStatus === 1 ? (
           <div
