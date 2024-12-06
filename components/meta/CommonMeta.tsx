@@ -22,7 +22,7 @@ const Meta = () => {
       <meta name="theme-color" content="#000" />
       <meta
         http-equiv="Content-Security-Policy"
-        content="frame-ancestors'self' https://docs.zegocloud.com"
+        content="frame-ancestors 'self' https://docs.zegocloud.com"
       />
     </>
   );
