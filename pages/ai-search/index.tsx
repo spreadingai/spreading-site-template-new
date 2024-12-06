@@ -7,6 +7,7 @@ const whiteList = [
   "http://localhost:5668",
   "https://doc-zh.zego.im",
   "https://www.zegocloud.com",
+  "https://docs.zegocloud.com",
 ];
 
 interface Props {}
@@ -26,21 +27,12 @@ const AISearchPage = (props: Props) => {
 
   const onCloseHandle = () => {
     setIsModalOpen(false);
-    const language = iframeData.current.language;
-    const targetDomain =
-      process.env.NODE_ENV === "development"
-        ? language === "zh"
-          ? whiteList[0]
-          : whiteList[1]
-        : language === "zh"
-        ? whiteList[2]
-        : whiteList[3];
     window.parent.postMessage(
       {
         origin: "docuo children",
         close: true,
       },
-      targetDomain
+      window.parent.origin
     );
   };
 
