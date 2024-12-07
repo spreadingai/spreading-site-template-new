@@ -49,6 +49,7 @@ import { ThemeProvider } from "antd-style";
 import { theme } from "antd";
 import { copywriting } from "@/components/constant/language";
 import Robot from "@/assets/icons/ai-search/Robot.svg";
+import chatIDMap from "./chatIDMap.json";
 
 interface AnswerData {
   score?: ScoreType;
@@ -131,7 +132,7 @@ const AISearchModal = (props: Props) => {
   const [isSending, setIsSending] = useState(false);
   const [sessionID, setSessionID] = useState("");
   const [chats, setChats] = useState<ChatMessage<Record<string, any>>[]>([]);
-  const [localChatIDMap, setLocalChatIDMap] = useState<any>(null);
+  const [localChatIDMap, setLocalChatIDMap] = useState<any>(chatIDMap);
 
   const proChatRef = useRef<ProChatInstance>();
   const abortControllerRef = useRef<AbortController>(null);
@@ -664,11 +665,11 @@ const AISearchModal = (props: Props) => {
     setDefaultQuestions(currentQuestions);
   }, [currentGroup, currentPlatform, localChatIDMap]);
 
-  useEffect(() => {
-    getChatIDMap().then((chatIDMap) => {
-      setLocalChatIDMap(chatIDMap);
-    });
-  }, []);
+  // useEffect(() => {
+  //   getChatIDMap().then((chatIDMap) => {
+  //     setLocalChatIDMap(chatIDMap);
+  //   });
+  // }, []);
 
   const transDocStr = (docStr = "") => {
     try {
