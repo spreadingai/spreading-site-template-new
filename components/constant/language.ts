@@ -34,6 +34,8 @@ export const copywriting = {
       referenceSource: "Reference source:",
       inputPlaceholder:
         "You can ask any questions about the product of this platform",
+      inputPlaceholderM1: "You can ask any questions",
+      inputPlaceholderM2: "Questions",
       backToBottomText: "Back to bottom",
       askAI: "Ask AI",
       guessText: "Guess you want to know:",
@@ -75,6 +77,8 @@ export const copywriting = {
       modalTitle: "AI 文档助手",
       referenceSource: "参考来源：",
       inputPlaceholder: "您可以询问关于本平台产品的任何问题",
+      inputPlaceholderM1: "您可以询问任何问题",
+      inputPlaceholderM2: "任何问题",
       backToBottomText: "返回底部",
       askAI: "Ask AI",
       guessText: "猜您想了解：",
