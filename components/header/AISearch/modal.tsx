@@ -133,6 +133,7 @@ const AISearchModal = (props: Props) => {
   const [sessionID, setSessionID] = useState("");
   const [chats, setChats] = useState<ChatMessage<Record<string, any>>[]>([]);
   const [localChatIDMap, setLocalChatIDMap] = useState<any>(chatIDMap);
+  const [screenType, setScreenType] = useState<0 | 1 | 2>(0); // 0: > 700, 1: 400 ~ 700, 2: < 400
 
   const proChatRef = useRef<ProChatInstance>();
   const abortControllerRef = useRef<AbortController>(null);
@@ -587,9 +588,21 @@ const AISearchModal = (props: Props) => {
       ".custom-input-area .ant-select-selection-search textarea"
     );
     if (input) {
-      input.setAttribute("placeholder", aiSearchData.inputPlaceholder);
+      input.setAttribute(
+        "placeholder",
+        screenType === 0
+          ? aiSearchData.inputPlaceholder
+          : screenType === 1
+          ? aiSearchData.inputPlaceholderM1
+          : aiSearchData.inputPlaceholderM2
+      );
     }
-  }, [aiSearchData.inputPlaceholder]);
+  }, [
+    aiSearchData.inputPlaceholder,
+    aiSearchData.inputPlaceholderM1,
+    aiSearchData.inputPlaceholderM2,
+    screenType,
+  ]);
 
   const scoreHandle = (
     e: React.MouseEvent<HTMLElement, MouseEvent>,
@@ -665,11 +678,29 @@ const AISearchModal = (props: Props) => {
     setDefaultQuestions(currentQuestions);
   }, [currentGroup, currentPlatform, localChatIDMap]);
 
-  // useEffect(() => {
-  //   getChatIDMap().then((chatIDMap) => {
-  //     setLocalChatIDMap(chatIDMap);
-  //   });
-  // }, []);
+  useEffect(() => {
+    //   getChatIDMap().then((chatIDMap) => {
+    //     setLocalChatIDMap(chatIDMap);
+    //   });
+
+    const sizeChangeHandle = () => {
+      const clientWidth = document.documentElement.clientWidth;
+      if (!clientWidth || clientWidth > 700) {
+        setScreenType(0);
+      } else if (clientWidth > 400) {
+        setScreenType(1);
+      } else {
+        setScreenType(2);
+      }
+    };
+    sizeChangeHandle();
+    typeof window !== "undefined" &&
+      window.addEventListener("resize", sizeChangeHandle);
+    return () => {
+      typeof window !== "undefined" &&
+        window.removeEventListener("resize", sizeChangeHandle);
+    };
+  }, []);
 
   const transDocStr = (docStr = "") => {
     try {
@@ -728,7 +759,7 @@ const AISearchModal = (props: Props) => {
     );
   };
 
-  const CustomInput = (defaultDom, onMessageSend) => {
+  const CustomInput = (defaultDom, onMessageSend, defaultProps) => {
     return defaultDom;
   };
 
@@ -997,7 +1028,13 @@ const AISearchModal = (props: Props) => {
                 helloMessage={
                   defaultHelloMessage ? <p>{defaultHelloMessage}</p> : null
                 }
-                placeholder={aiSearchData.inputPlaceholder}
+                placeholder={
+                  screenType === 0
+                    ? aiSearchData.inputPlaceholder
+                    : screenType === 1
+                    ? aiSearchData.inputPlaceholderM1
+                    : aiSearchData.inputPlaceholderM2
+                }
                 inputAreaProps={{
                   value: question,
                   onChange: changeHandle,

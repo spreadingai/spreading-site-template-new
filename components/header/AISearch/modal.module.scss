@@ -89,7 +89,7 @@
         width: 100%;
         display: flex;
         background: var(--docuo-background-primary);
-        bottom: 78px;
+        bottom: 100px;
         top: 0;
         &.show {
             opacity: 1;
@@ -329,7 +329,7 @@
 }
 @media screen and (max-width: 750px) {
     .ai-search-dialog {
-        min-height: 400px !important;
+        min-height: 480px !important;
         :global(.ant-modal-content) {
             padding: 20px 16px;
         }
@@ -339,6 +339,8 @@
         }
         :global(.ant-select-single.ant-pro-chat-input-area-component textarea) {
             padding-right: 40px;
+            max-height: 68px !important;
+            overflow-y: auto;
         }
         .custom-chat-item-content-wrap {
             &.assistant {
@@ -368,13 +370,19 @@
             }
         }
         .opening-remarks-wrap {
-            width: 80%;
+            width: 85%;
             .remark {
                 font-size: 20px;
             }
         }
         .default-question-wrap {
-            width: 80%;
+            width: 85%;
+        }
+        .question-tips {
+            font-size: 10px;
+        }
+        .default-question {
+            font-size: 15px;
         }
     }
 }
@@ -382,10 +390,16 @@
     .ai-search-dialog {
         .opening-remarks-wrap {
             width: 90%;
+            .remark {
+                font-size: 17px;
+            }
             margin-top: 15%;
         }
         .default-question-wrap {
             width: 90%;
+        }
+        .default-question {
+            font-size: 14px;
         }
     }
 }
