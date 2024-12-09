@@ -694,12 +694,12 @@ const AISearchModal = (props: Props) => {
       }
     };
     sizeChangeHandle();
-    typeof window !== "undefined" &&
-      window.addEventListener("resize", sizeChangeHandle);
-    return () => {
-      typeof window !== "undefined" &&
-        window.removeEventListener("resize", sizeChangeHandle);
-    };
+    // typeof window !== "undefined" &&
+    //   window.addEventListener("resize", sizeChangeHandle);
+    // return () => {
+    //   typeof window !== "undefined" &&
+    //     window.removeEventListener("resize", sizeChangeHandle);
+    // };
   }, []);
 
   const transDocStr = (docStr = "") => {
