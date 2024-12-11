@@ -108,10 +108,10 @@ importers:
         specifier: ^10.0.2
         version: 10.0.2(esbuild@0.21.1)
       mdx-mermaid:
-        specifier: ^2.0.0
+        specifier: 2.0.0
         version: 2.0.0(mermaid@10.9.0)(react@18.2.0)(unist-util-visit@4.1.2)
       mermaid:
-        specifier: ^10.9.0
+        specifier: 10.9.0
         version: 10.9.0
       next:
         specifier: ^14.1.1
