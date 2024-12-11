@@ -65,6 +65,7 @@ interface AnswerData {
       count: number;
     }[];
   };
+  question?: string;
 }
 
 interface Props {
@@ -455,7 +456,10 @@ const AISearchModal = (props: Props) => {
                         func();
                       }
                       lastChunkText.current = data.answer;
-                      customIDMap.current[customID] = data;
+                      customIDMap.current[customID] = {
+                        ...data,
+                        question,
+                      };
                       data.session_id && setSessionID(data.session_id);
                     }
                   }
@@ -514,6 +518,8 @@ const AISearchModal = (props: Props) => {
     setIsSending(false);
     isSendingRef.current = false;
     updateATagAttr();
+
+    autoInsertHandle();
   };
 
   const chatStartHandle = (messages: ChatMessage<Record<string, any>>[]) => {
@@ -632,6 +638,26 @@ const AISearchModal = (props: Props) => {
         answerData.score = oldScore;
       }
     );
+  };
+
+  const autoInsertHandle = () => {
+    console.log("autoInsertHandle", customIDMap.current);
+    const keys = Object.keys(customIDMap.current).sort(
+      (i: string, j: string) => Number(i) - Number(j)
+    );
+    if (!keys.length) return;
+    const lastKey = keys[keys.length - 1];
+    const temp = customIDMap.current[lastKey];
+    scoreFetch(currentGroup, currentPlatform, temp.session_id, [
+      {
+        answerID: temp.id,
+        question: temp.question,
+        score: ScoreType.ZERO,
+        answer: "",
+      },
+    ]).catch((error) => {
+      console.log("auto insert error", error);
+    });
   };
 
   useEffect(() => {
