@@ -97,6 +97,9 @@
 			margin-top: 0;
 			margin-bottom: 0;
 		}
+		.choose-one.list[style*="display:null"] {
+			display: unset !important;
+		}
 	}
 
 	// 无序排序序号
