@@ -89,12 +89,13 @@
 			font-weight: 400;
 			color: var(--docuo-text-color);
 			margin: 14px 0;
-
-			& > ul,
-			& > ol {
-				margin-top: 0;
-				margin-bottom: 0;
-			}
+		}
+	}
+	li {
+		& > ul,
+		& > ol {
+			margin-top: 0;
+			margin-bottom: 0;
 		}
 	}
 
@@ -212,6 +213,9 @@
 			font-size: 14px;
 			line-height: 22px;
 			padding: 14px 12px;
+			ul > li {
+				font-size: 14px;
+			}
 		}
 
 		th {
