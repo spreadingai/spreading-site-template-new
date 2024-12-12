@@ -97,7 +97,7 @@
 			margin-top: 0;
 			margin-bottom: 0;
 		}
-		.choose-one.list[style*="display:null"] {
+		&.choose-one.list[style*="display:null"] {
 			display: unset !important;
 		}
 	}
