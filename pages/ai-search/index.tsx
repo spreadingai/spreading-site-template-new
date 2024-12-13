@@ -15,11 +15,16 @@ interface Props {}
 const AISearchPage = (props: Props) => {
   // const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(true);
-  const iframeData = useRef<{
+  const [iframeData, setIframeData] = useState<{
     language: string;
     product: string;
     platform: string;
   }>({ language: "zh", product: "", platform: "" });
+  // const iframeData = useRef<{
+  //   language: string;
+  //   product: string;
+  //   platform: string;
+  // }>({ language: "zh", product: "", platform: "" });
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -27,7 +32,8 @@ const AISearchPage = (props: Props) => {
 
   const onCloseHandle = () => {
     setIsModalOpen(false);
-    const language = iframeData.current.language;
+    // const language = iframeData.current.language;
+    const language = iframeData.language;
     const targetDomain =
       process.env.NODE_ENV === "development"
         ? language === "zh"
@@ -78,7 +84,10 @@ const AISearchPage = (props: Props) => {
       console.log("[AISearchPage] receive message from zego", event.data);
       if (event.data.open) {
         showModal();
-        iframeData.current = event.data;
+        // iframeData.current = { ...event.data };
+        setIframeData({
+          ...event.data,
+        });
       }
     };
     window.addEventListener("message", receiveMessage, false);
@@ -87,15 +96,30 @@ const AISearchPage = (props: Props) => {
     };
   }, []);
 
+  // useEffect(() => {
+  //   // test
+  //   setTimeout(() => {
+  //     showModal();
+  //     setIframeData({
+  //       language: "zh",
+  //       product: "real_time_voice_zh",
+  //       platform: "Android: Java",
+  //     });
+  //   }, 3000);
+  // }, []);
+
   return (
     <AISearchModal
       rootClassName="ai-search-page"
       isModalOpen={isModalOpen}
       onCloseHandle={onCloseHandle}
       currentTheme="light"
-      currentLanguage={iframeData.current.language}
-      currentGroup={iframeData.current.product}
-      currentPlatform={iframeData.current.platform}
+      // currentLanguage={iframeData.current.language}
+      // currentGroup={iframeData.current.product}
+      // currentPlatform={iframeData.current.platform}
+      currentLanguage={iframeData.language}
+      currentGroup={iframeData.product}
+      currentPlatform={iframeData.platform}
     />
   );
 };
