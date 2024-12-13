@@ -111,6 +111,8 @@ interface Props {
   currentInstanceLabel: string;
   slugVersion: string;
   currentLanguage: string;
+  currentGroupLabel: string;
+  currentPlatformLabel: string;
   frontmatterRef: {
     fileName: string;
     firstParagraphContent: string;
@@ -237,13 +239,15 @@ function PageHead(props: Props) {
     currentInstanceLabel,
     slugVersion,
     currentLanguage,
+    currentGroupLabel,
+    currentPlatformLabel,
     curr,
   } = props;
   const frontmatter = mdxSource.frontmatter as DocFrontMatter;
   const str = `${currentInstanceLabel ? currentInstanceLabel + " " : ""}${
     slugVersion ? slugVersion + " " : ""
   }`;
-  let { title, description } = frontmatter;
+  let { title, keywords = [], description } = frontmatter;
   title = `${str}${
     title ||
     curr.description ||
@@ -291,10 +295,27 @@ function PageHead(props: Props) {
   const searchDocType =
     frontmatter["docType"] ||
     (currentLanguage === defaultLanguage ? "Docs" : "技术文档");
+
+  if (currentLanguage !== defaultLanguage) {
+    // 平台+开发语言+产品名称+SDK+文档标题 - 开发者中心 - ZEGO即构科技
+    // Android Java 实时音视频 SDK 概述 - 开发者中心 - ZEGO即构科技
+    title = `${currentPlatformLabel.replaceAll(
+      /:\s*/g,
+      " "
+    )} ${currentGroupLabel} SDK ${
+      frontmatter.title ||
+      curr.description ||
+      frontmatterRef.fileName ||
+      docuoConfig.title
+    } - 开发者中心 - ZEGO即构科技`;
+    description = "";
+    keywords = [];
+  }
   return (
     <Head>
       <title>{title}</title>
       <meta name="description" content={description} />
+      <meta name="keywords" content={keywords.join(",")} />
       {ogSiteName ? (
         <meta property="og:site_name" content={ogSiteName}></meta>
       ) : null}
