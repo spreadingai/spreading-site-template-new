@@ -630,7 +630,8 @@ const AISearchModal = (props: Props) => {
       score: targetScore,
       answer: "",
     };
-    targetScore !== ScoreType.FIVE && (questionData.answer = answer);
+    // targetScore !== ScoreType.FIVE && (questionData.answer = answer);
+    questionData.answer = answer;
     answerData.score = score;
     scoreFetch(currentGroup, currentPlatform, sessionID, [questionData]).catch(
       (error) => {
