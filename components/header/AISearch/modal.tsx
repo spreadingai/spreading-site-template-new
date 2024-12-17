@@ -654,7 +654,7 @@ const AISearchModal = (props: Props) => {
         answerID: temp.id,
         question: temp.question,
         score: ScoreType.ZERO,
-        answer: "",
+        answer: temp.answer,
       },
     ]).catch((error) => {
       console.log("auto insert error", error);
