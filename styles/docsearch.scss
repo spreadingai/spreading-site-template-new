@@ -340,12 +340,16 @@ html[data-theme="dark"] {
 }
 .DocSearch-Help {
   font-size: 0.9em;
-  margin: 0;
+  margin: 4px 0;
   user-select: none;
+  & > a {
+    border-bottom: 1px solid;
+    font-size: 1.2em;
+  }
 }
 .DocSearch-Title {
   font-size: 1.2em;
-  color: #171717;
+  color: var(--docuo-color-primary);
 }
 .DocSearch-Logo a {
   display: flex;
@@ -544,6 +548,14 @@ svg.DocSearch-Hit-Select-Icon {
   text-align: center;
   width: 80%;
 }
+// .DocSearch-StartScreen {
+//   &::after {
+//     content: "是是是";
+//     color: var(--docsearch-muted-color);
+//     font-size: 0.95em;
+//     text-decoration: underline;
+//   }
+// }
 .DocSearch-Screen-Icon {
   color: var(--docsearch-muted-color);
   padding-bottom: 12px;
