@@ -642,7 +642,12 @@ const AISearchModal = (props: Props) => {
   };
 
   const autoInsertHandle = () => {
-    console.log("autoInsertHandle", customIDMap.current);
+    console.log(
+      "autoInsertHandle",
+      customIDMap.current,
+      currentGroup,
+      currentPlatform
+    );
     const keys = Object.keys(customIDMap.current).sort(
       (i: string, j: string) => Number(i) - Number(j)
     );
