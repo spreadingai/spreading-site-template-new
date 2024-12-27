@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import styles from "./index.module.scss";
 import useLanguage from "@/components/hooks/useLanguage";
-import AISearchModal from "./modal";
+// import AISearchModal from "./modal";
+import AISearchModal from "./modal-new";
 import ThemeContext from "../Theme.context";
 import useGroup from "@/components/hooks/useGroup";
 import usePlatform from "@/components/hooks/usePlatform";
