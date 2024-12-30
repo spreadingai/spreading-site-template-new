@@ -22,8 +22,19 @@ import {
   ReadOutlined,
   ShareAltOutlined,
   SmileOutlined,
+  // @ts-ignore
 } from "@ant-design/icons";
 import { Badge, Button, type GetProp, Space } from "antd";
+
+interface Props {
+  rootClassName?: string;
+  currentTheme: string;
+  currentLanguage: string;
+  currentGroup: string;
+  currentPlatform: string;
+  isModalOpen: boolean;
+  onCloseHandle: () => void;
+}
 
 const renderTitle = (icon: React.ReactElement, title: string) => (
   <Space align="start">
@@ -196,7 +207,7 @@ const roles: GetProp<typeof Bubble.List, "roles"> = {
   },
 };
 
-const Independent: React.FC = () => {
+const Independent = (props: Props) => {
   // ==================== Style ====================
   const { styles } = useStyle();
 
@@ -348,6 +359,7 @@ const Independent: React.FC = () => {
 
   const logoNode = (
     <div className={styles.logo}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src="https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*eco6RrQhxbMAAAAAAAAAAAAADgCCAQ/original"
         draggable={false}

@@ -76,8 +76,8 @@ export const startConverseFetch = async (
   chatID: string,
   sessionID: string, // ae8051de91e611efaeac0242ac120004
   stream = true,
-  question = ""
-  // signal
+  question = "",
+  signal
 ) => {
   const reqData: any = {
     product,
@@ -108,12 +108,12 @@ export const startConverseFetch = async (
       // const reader = _res.body.getReader();
 
       // Plugin parsing
-      // const reader = _res.body
-      //   .pipeThrough(new TextDecoderStream())
-      //   .pipeThrough(new EventSourceParserStream())
-      //   .getReader();
-      // return reader;
-      return _res;
+      const reader = _res.body
+        .pipeThrough(new TextDecoderStream())
+        .pipeThrough(new EventSourceParserStream())
+        .getReader();
+      return reader;
+      // return _res;
     });
   // return axios({
   //   method: "post",
