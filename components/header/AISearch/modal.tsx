@@ -509,7 +509,6 @@ const AISearchModal = (props: Props) => {
   const cancelHandle = () => {
     resetConverse();
     deleteSessions();
-    // setIsModalOpen(false);
     onCloseHandle();
   };
 

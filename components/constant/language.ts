@@ -41,6 +41,7 @@ export const copywriting = {
       guessText: "Guess you want to know:",
       unableToReply:
         "Oops, there's a little issue. Please click the regenerate button or try asking me another question!",
+      copySuccess: "Successful replication",
     },
   },
   zh: {
@@ -84,6 +85,7 @@ export const copywriting = {
       guessText: "猜您想了解：",
       unableToReply:
         "噢，出了一点小问题，请点击重新生成按钮或者重新问我其他问题试试吧！",
+      copySuccess: "复制成功",
     },
   },
 };

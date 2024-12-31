@@ -45,6 +45,7 @@
     }
     :global(.ant-modal-body) {
         flex: 1;
+        overflow: hidden;
     }
     :global(.ant-input-outlined) {
         background: unset;
@@ -321,6 +322,7 @@
     :global(.acss-bohbbh) {
         height: 100%;
         max-width: unset;
+        min-width: unset;
     }
 }
 
