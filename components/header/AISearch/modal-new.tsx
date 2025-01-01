@@ -9,8 +9,9 @@ import {
   useXChat,
   XStream,
   BubbleProps,
+  XProvider,
 } from "@ant-design/x";
-import { createStyles } from "antd-style";
+import { createStyles, ThemeProvider } from "antd-style";
 import React, {
   useCallback,
   useEffect,
@@ -35,6 +36,7 @@ import {
   CopyOutlined,
   LikeOutlined,
   DislikeOutlined,
+  ReloadOutlined,
   // @ts-ignore
 } from "@ant-design/icons";
 import {
@@ -45,11 +47,14 @@ import {
   Modal,
   Space,
   Spin,
+  theme,
   Typography,
+  ConfigProvider,
 } from "antd";
 import { copywriting } from "@/components/constant/language";
 import { ChatMessage, ProChatInstance } from "@ant-design/pro-chat";
 import { Question, ScoreType } from "./types";
+import Robot from "@/assets/icons/ai-search/Robot.svg";
 import chatIDMap from "./chatIDMap.json";
 import {
   createSessionsFetch,
@@ -58,10 +63,14 @@ import {
   startConverseFetch,
 } from "./fetch";
 import outStyles from "./modal.new.module.scss";
-import markdownit from "markdown-it";
+import Shiki from "@shikijs/markdown-it";
+import MarkdownIt from "markdown-it";
 import { MessageInfo } from "@ant-design/x/es/useXChat";
+import { v4 as uuidv4 } from "uuid";
+// import type { BundledLanguage } from 'shiki'
+// import { codeToHtml } from 'shiki'
 
-const md = markdownit({ html: true, breaks: true });
+const md = MarkdownIt();
 
 interface AnswerData {
   score?: ScoreType;
@@ -101,6 +110,15 @@ type AgentUserMessage = {
   content: string;
 };
 
+enum RequestStatus {
+  Start = 0,
+  Progress,
+  End,
+  Cancel,
+  InterfaceError,
+  ServerError,
+}
+
 type AgentAIMessage = {
   type: "ai";
   content?: string;
@@ -115,6 +133,7 @@ type AgentAIMessage = {
       }
   )[];
   customID: string;
+  requestStatus?: RequestStatus;
 };
 
 type AgentMessage = AgentUserMessage | AgentAIMessage;
@@ -224,24 +243,6 @@ const useStyle = createStyles(({ token, css }) => {
 //   },
 // ];
 
-const roles: GetProp<typeof Bubble.List, "roles"> = {
-  ai: {
-    typing: { step: 5, interval: 20 },
-    placement: "start",
-    avatar: { icon: <UserOutlined />, style: { background: "#fde3cf" } },
-    loadingRender: () => (
-      <Space>
-        <Spin size="small" />
-        Custom loading...
-      </Space>
-    ),
-  },
-  local: {
-    placement: "end",
-    avatar: { icon: <UserOutlined />, style: { background: "#87d068" } },
-  },
-};
-
 const Independent = (props: Props) => {
   const {
     rootClassName,
@@ -264,9 +265,10 @@ const Independent = (props: Props) => {
   const [chats, setChats] = useState<ChatMessage<Record<string, any>>[]>([]);
   const [localChatIDMap, setLocalChatIDMap] = useState<any>(chatIDMap);
   const [screenType, setScreenType] = useState<0 | 1 | 2>(0); // 0: > 700, 1: 400 ~ 700, 2: < 400
+  const [messageApi, contextHolder] = message.useMessage();
 
   const proChatRef = useRef<ProChatInstance>();
-  const abortControllerRef = useRef(() => {});
+  const abortControllerRef = useRef<AbortController>(null);
   const customInputAreaRef = useRef<HTMLDivElement>();
   const lastChunkText = useRef<string>("");
   const customIDMap = useRef<Record<string, AnswerData>>({});
@@ -274,7 +276,6 @@ const Independent = (props: Props) => {
   const chatIDRef = useRef<string>("");
 
   const aiSearchData = copywriting[currentLanguage].aiSearch;
-  const [messageApi, contextHolder] = message.useMessage();
 
   // ==================== Style ====================
   const { styles } = useStyle();
@@ -298,20 +299,219 @@ const Independent = (props: Props) => {
     GetProp<typeof Bubble.List, "items">
   >([]);
 
+  const roles: GetProp<typeof Bubble.List, "roles"> = {
+    ai: {
+      typing: { step: 2, interval: 20 },
+      placement: "start",
+      avatar: (
+        <div className={outStyles["user-avatar-wrap"]}>
+          {currentTheme === "light" ? <Robot /> : <Robot />}
+        </div>
+      ),
+      loadingRender: () => (
+        <Space>
+          <Spin size="small" />
+          {aiSearchData.beQuerying}
+        </Space>
+      ),
+    },
+    user: {
+      placement: "end",
+      avatar: (
+        <div className={outStyles["user-avatar-wrap"]}>
+          <UserOutlined />
+        </div>
+      ),
+    },
+  };
+
+  // ==================== Runtime ====================
+  const [agent] = useXAgent<AgentMessage>({
+    request: async (messageInfo, { onSuccess, onUpdate, onError }) => {
+      // onUpdate(`Mock success return. You said: ${message}`);
+      // setTimeout(() => {
+      //   onSuccess(`Mock success return. You said: ${message}`);
+      // }, 1000);
+      // const fullContent = `Streaming output instead of Bubble typing effect. You typed: ${message}`;
+      // let currentContent = "";
+      // const id = setInterval(() => {
+      //   currentContent = fullContent.slice(0, currentContent.length + 2);
+      //   onUpdate(currentContent);
+      //   if (currentContent === fullContent) {
+      //     clearInterval(id);
+      //     onSuccess(fullContent);
+      //   }
+      // }, 100);
+
+      const { message, messages } = messageInfo;
+      const customID = Date.now().toString();
+      const customAnswerID = generateCustomAnswerID();
+      lastChunkText.current = "";
+      try {
+        onUpdate({
+          type: "ai",
+          content: "",
+          customID,
+          requestStatus: RequestStatus.Start,
+        });
+        abortControllerRef.current = new AbortController();
+        const response = await startConverseFetch(
+          currentGroup,
+          currentPlatform,
+          chatIDRef.current,
+          activeKey,
+          true,
+          message.content,
+          abortControllerRef.current.signal
+        );
+        const stream = XStream({
+          readableStream: response.body,
+        });
+        for await (const chunk of stream) {
+          console.log("chunk", chunk);
+          try {
+            const temp = JSON.parse(chunk.data || "");
+            const {
+              code,
+              data,
+              message: msg,
+            } = temp as {
+              code: number;
+              data: true | AnswerData;
+              message: string;
+            };
+            if (code !== 0) {
+              console.log(
+                `read stream interface error code: ${code}, message: ${msg}`
+              );
+              console.log("request onSuccess");
+              onSuccess({
+                type: "ai",
+                content: aiSearchData.unableToReply,
+                customID,
+                requestStatus: RequestStatus.InterfaceError,
+              });
+              customIDMap.current[customID] = {
+                id: customAnswerID,
+                answer: aiSearchData.unableToReply,
+                reference: {},
+                question: message.content,
+              } as AnswerData;
+            } else {
+              if (data !== true) {
+                if (data.answer as string) {
+                  console.log("request onUpdate");
+                  data.answer = data.answer
+                    .replaceAll(/\s*##\d+\$\$/g, "") // Handles special characters for hover tips
+                    .replaceAll(/(\n)+(?=#)/g, "\n\n")
+                    .replaceAll(/\n{2,}/g, "\n\n")
+                    // .replaceAll(/\s*```/g, "\n ```")
+                    // .replaceAll(/```\n+/g, "```\n\n")
+                    .replaceAll(/\*\*\s?。/g, "**。")
+                    .replaceAll(/\*\*\s?\./g, "**.");
+                  onUpdate({
+                    type: "ai",
+                    content: data.answer,
+                    customID,
+                    requestStatus: RequestStatus.Progress,
+                  });
+                  lastChunkText.current = data.answer;
+                  data.reference && delete data.reference.chunks;
+                  customIDMap.current[customID] = {
+                    id: data.id,
+                    answer: data.answer,
+                    reference: data.reference || {},
+                    question: message.content,
+                  } as AnswerData;
+                }
+              } else {
+                console.log("request onSuccess");
+                onSuccess({
+                  type: "ai",
+                  content: lastChunkText.current,
+                  customID,
+                  requestStatus: RequestStatus.End,
+                });
+                autoInsertHandle();
+              }
+            }
+          } catch (error) {
+            console.log("JSON parse error");
+            console.log(error);
+          }
+        }
+      } catch (error) {
+        console.log("startConverse error");
+        console.log(error);
+        if (lastChunkText.current) {
+          onSuccess({
+            type: "ai",
+            content: lastChunkText.current,
+            customID,
+            requestStatus: RequestStatus.End,
+          });
+          autoInsertHandle();
+        } else {
+          if (typeof error === "string" && error === "cancel") {
+            onSuccess({
+              type: "ai",
+              content: aiSearchData.unableToReply,
+              customID,
+              requestStatus: RequestStatus.Cancel,
+            });
+          } else if (error.toString().includes("AbortError")) {
+            onSuccess({
+              type: "ai",
+              content: aiSearchData.unableToReply,
+              customID,
+              requestStatus: RequestStatus.Cancel,
+            });
+          } else {
+            onSuccess({
+              type: "ai",
+              content: aiSearchData.unableToReply,
+              customID,
+              requestStatus: RequestStatus.ServerError,
+            });
+            autoInsertHandle();
+          }
+        }
+        customIDMap.current[customID] = {
+          id: customAnswerID,
+          answer: aiSearchData.unableToReply,
+          reference: {},
+          question: message.content,
+        } as AnswerData;
+      }
+    },
+  });
+
+  const { onRequest, messages, setMessages } = useXChat({
+    agent,
+    // requestPlaceholder: "Waiting...",
+    // requestFallback: aiSearchData.unableToReply,
+    // parser: (agentMessage) => {
+    //   const list = agentMessage.content ? [agentMessage] : (agentMessage as AgentAIMessage).list;
+
+    //   return (list || []).map((msg) => ({
+    //     role: msg.type,
+    //     content: msg.content,
+    //   }));
+    // },
+  });
+
   // ==================== Method ====================
   const resetConverse = useCallback(() => {
     setConverseStatus(0);
 
-    setContent("");
-    abortControllerRef.current();
+    setMessages([]);
 
-    if (proChatRef.current) {
-      proChatRef.current.stopGenerateMessage();
-      proChatRef.current.clearMessage();
-    }
+    setContent("");
+    onCancel();
+
     customIDMap.current = {};
     lastChunkText.current = "";
-  }, []);
+  }, [setMessages]);
 
   const createSessions = useCallback(async () => {
     if (!chatID || !currentGroup || !currentPlatform) return;
@@ -369,9 +569,6 @@ const Independent = (props: Props) => {
       } catch (error) {
         console.log(`deleteSessions error`);
         console.log(error);
-      } finally {
-        setConversationsItems([]);
-        setActiveKey("");
       }
     },
     [chatID, conversationsItems, currentGroup, currentPlatform]
@@ -427,113 +624,68 @@ const Independent = (props: Props) => {
     []
   );
 
-  // ==================== Runtime ====================
-  const [agent] = useXAgent<AgentMessage>({
-    request: async (messageInfo, { onSuccess, onUpdate, onError }) => {
-      // onUpdate(`Mock success return. You said: ${message}`);
-      // setTimeout(() => {
-      //   onSuccess(`Mock success return. You said: ${message}`);
-      // }, 1000);
-      // const fullContent = `Streaming output instead of Bubble typing effect. You typed: ${message}`;
-      // let currentContent = "";
-      // const id = setInterval(() => {
-      //   currentContent = fullContent.slice(0, currentContent.length + 2);
-      //   onUpdate(currentContent);
-      //   if (currentContent === fullContent) {
-      //     clearInterval(id);
-      //     onSuccess(fullContent);
-      //   }
-      // }, 100);
+  const updateFooterStyle = useCallback((messageID: string | number) => {
+    setTimeout(() => {
+      const docAggDom = document.querySelector(
+        `.${messageID}-item-doc-agg`
+      ) as HTMLElement;
+      const operationDom = document.querySelector(
+        `.${messageID}-item-operation`
+      ) as HTMLElement;
+      console.log("updateFooterStyle", messageID, docAggDom, operationDom);
+      docAggDom && (docAggDom.style.display = "block");
+      operationDom && (operationDom.style.display = "flex");
+    }, 0);
+  }, []);
 
-      const { message, messages } = messageInfo;
-      const customID = Date.now().toString();
-      onUpdate({
-        type: "ai",
-        content: "",
-        customID,
+  const generateCustomAnswerID = useCallback(() => {
+    return uuidv4();
+  }, []);
+
+  const updateATagAttr = useCallback(() => {
+    const chatListItems = document.querySelectorAll(
+      ".ant-pro-chat-list .ant-pro-chat-list-item"
+    );
+    const lastChatListItem = chatListItems[chatListItems.length - 1];
+    if (lastChatListItem) {
+      const aTags = lastChatListItem.querySelectorAll(
+        ".ant-pro-chat-message-content article a"
+      );
+      aTags.forEach((item) => {
+        item.setAttribute("target", "_blank");
       });
-      try {
-        const response = await startConverseFetch(
-          currentGroup,
-          currentPlatform,
-          chatIDRef.current,
-          activeKey,
-          true,
-          message.content
-        );
-        const stream = XStream({
-          readableStream: response.body,
-        });
-        for await (const chunk of stream) {
-          console.log("chunk", chunk);
-          try {
-            const temp = JSON.parse(chunk.data || "");
-            const {
-              code,
-              data,
-              message: msg,
-            } = temp as {
-              code: number;
-              data: true | AnswerData;
-              message: string;
-            };
-            if (code !== 0) {
-              console.log(
-                `read stream interface error code: ${code}, message: ${msg}`
-              );
-              onError(aiSearchData.unableToReply);
-            } else {
-              if (data !== true) {
-                if (data.answer as string) {
-                  onUpdate({
-                    type: "ai",
-                    content: data.answer,
-                    customID,
-                  });
-                  lastChunkText.current = data.answer;
-                  data.reference && delete data.reference.chunks;
-                  customIDMap.current[customID] = {
-                    id: data.id,
-                    answer: data.answer,
-                    reference: data.reference || {},
-                    question: message.content,
-                  } as AnswerData;
-                }
-              } else {
-                onSuccess({
-                  type: "ai",
-                  content: lastChunkText.current,
-                  customID,
-                });
-              }
-            }
-          } catch (error) {
-            console.log("JSON parse error");
-            console.log(error);
-          }
-        }
-      } catch (error) {
-        console.log("startConverse error");
-        console.log(error);
-        lastChunkText.current = "";
-        onError(aiSearchData.unableToReply);
-      }
-    },
-  });
+    }
+  }, []);
 
-  const { onRequest, messages, setMessages } = useXChat({
-    agent,
-    // requestPlaceholder: 'Waiting...',
-    // requestFallback: 'Mock failed return. Please try again later.',
-    // parser: (agentMessage) => {
-    //   const list = agentMessage.content ? [agentMessage] : (agentMessage as AgentAIMessage).list;
+  const autoInsertHandle = useCallback(() => {
+    console.log("autoInsertHandle", customIDMap.current);
+    const keys = Object.keys(customIDMap.current).sort(
+      (i: string, j: string) => Number(i) - Number(j)
+    );
+    if (!keys.length) return;
+    const lastKey = keys[keys.length - 1];
+    const temp = customIDMap.current[lastKey];
+    scoreFetch(currentGroup, currentPlatform, temp.session_id, [
+      {
+        answerID: temp.id,
+        question: temp.question,
+        score: ScoreType.ZERO,
+        answer: "",
+      },
+    ]).catch((error) => {
+      console.log("auto insert error", error);
+    });
+  }, [currentGroup, currentPlatform]);
 
-    //   return (list || []).map((msg) => ({
-    //     role: msg.type,
-    //     content: msg.content,
-    //   }));
-    // },
-  });
+  const initMd = useCallback(async () => {
+    const temp = await Shiki({
+      themes: {
+        light: "github-light",
+        dark: "github-dark",
+      },
+    });
+    md.use(temp);
+  }, []);
 
   // ==================== Event ====================
   const onSubmit = (nextContent: string) => {
@@ -545,8 +697,15 @@ const Independent = (props: Props) => {
     setContent("");
   };
 
+  const onCancel = () => {
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort("cancel");
+      abortControllerRef.current = null;
+    }
+  };
+
   const onPromptsItemClick: GetProp<typeof Prompts, "onItemClick"> = (info) => {
-    if (activeKey) {
+    if (activeKey && !agent.isRequesting()) {
       onRequest({
         type: "user",
         content: info.data.description as string,
@@ -569,7 +728,12 @@ const Independent = (props: Props) => {
 
   const cancelHandle = () => {
     resetConverse();
+
     deleteSessions();
+
+    setConversationsItems([]);
+    setActiveKey("");
+
     onCloseHandle();
   };
 
@@ -757,16 +921,26 @@ const Independent = (props: Props) => {
     </div>
   );
 
-  const renderMarkdown: BubbleProps["messageRender"] = (content) => (
-    <Typography>
-      {/* biome-ignore lint/security/noDangerouslySetInnerHtml: used in demo */}
-      <div dangerouslySetInnerHTML={{ __html: md.render(content) }} />
-    </Typography>
-  );
+  const renderMarkdown: BubbleProps["messageRender"] = (content) => {
+    return (
+      <Typography>
+        {/* biome-ignore lint/security/noDangerouslySetInnerHtml: used in demo */}
+        <div
+          dangerouslySetInnerHTML={{
+            // __html: md.render(
+            //   '要使用 ZIM SDK 发送单聊消息，可以按照以下步骤进行 ##1$$。以下是发送单聊消息的示例代码： ##0$$\n\n```java\n// 1. 创建 ZIM 实例并登录\nZIMAppConfig appConfig = new ZIMAppConfig();\nappConfig.appID = YOUR_APP_ID; // 替换为你的 AppID\nappConfig.appSign = "YOUR_APP_SIGN"; // 替换为你的 AppSign\nzim = ZIM.create(appConfig, application);\n\n// 2. 设置事件回调\nzim.setEventHandler(new ZIMEventHandler() {\n    @Override\n    public void onReceivePeerMessage(ZIM zim, ArrayList<ZIMMessage> messageList, String fromUserID) {\n        // 处理接收到的消息\n        for (ZIMMessage message : messageList) {\n            // 处理每条消息\n        }\n    }\n});\n\n// 3. 登录 ZIM\nzim.login("USER_ID", "USER_NAME", new ZIMLoginCallback() {\n    @Override\n    public void onLogin(int errorCode, String errorMessage, String userID) {\n        if (errorCode == 0) {\n            // 登录成功\n        } else {\n            // 登录失败，处理错误\n        }\n    }\n});\n\n// 4. 发送单聊消息\nString toUserID = "RECIPIENT_USER_ID"; // 替换为接收方的用户ID\nString messageContent = "Hello, this is a peer-to-peer message."; // 消息内容\n\nZIMTextMessage textMessage = new ZIMTextMessage(messageContent);\n\nZIMMessageSendConfig config = new ZIMMessageSendConfig();\nconfig.priority = ZIMMessagePriority.NORMAL;\n\nzim.sendMessage(textMessage, toUserID, ZIMConversationType.Peer, config, new ZIMMessageSentCallback() {\n    @Override\n    public void onMessageAttached(ZIMMessage zimMessage) {\n        // 消息附加完成\n    }\n\n    @Override\n    public void onMessageSent(ZIMMessage zimMessage, ZIMError error) {\n        if (error == null) {\n            // 消息发送成功\n        } else {\n            // 消息发送失败，处理错误\n        }\n    }\n});\n```\n ##4$$\n\n### 注意事项：\n- **ZIMAppConfig**：需要替换 `YOUR_APP_ID` 和 `YOUR_APP_SIGN` 为实际的值。\n- **用户登录**：确保用户已经成功登录 ZIM。\n- **消息类型**：这里使用的是 `ZIMTextMessage`，如果你需要发送其他类型的消息（如自定义消息），可以使用相应的消息类。\n- **回调处理**：确保在回调中处理消息发送成功或失败的情况 ##2$$。\n\n如果有任何疑问，请联系 ZEGO 技术支持。'
+            // ),
+            __html: md.render(content),
+          }}
+        />
+      </Typography>
+    );
+  };
 
   const footerRender = useCallback(
     (messageInfo: MessageInfo<AgentMessage>) => {
       console.log("footerRender", customIDMap.current);
+      // export type MessageStatus = 'local' | 'loading' | 'success' | 'error';
       const { id, message, status } = messageInfo;
       const { type, customID } = message as AgentAIMessage;
       const target = customIDMap.current[customID];
@@ -782,7 +956,9 @@ const Independent = (props: Props) => {
       return (
         <>
           {renderData.length ? (
-            <div className={outStyles["custom-chat-item-doc-agg"]}>
+            <div
+              className={`${outStyles["custom-chat-item-doc-agg"]} ${id}-item-doc-agg`}
+            >
               <div className={outStyles["custom-chat-item-doc-agg-title"]}>
                 {aiSearchData.referenceSource}
               </div>
@@ -804,41 +980,43 @@ const Independent = (props: Props) => {
               })}
             </div>
           ) : null}
-          {status !== "loading" ? (
-            <div className={`${outStyles["custom-chat-item-operation-wrap"]}`}>
-              <div className={outStyles["custom-chat-item-operation"]}>
-                <SyncOutlined
-                  className={outStyles["custom-chat-item-operation-btn"]}
-                  onClick={(e) => {
-                    regenerateHandle(e, message as AgentAIMessage);
-                  }}
-                />
-                <CopyOutlined
-                  className={outStyles["custom-chat-item-operation-btn"]}
-                  onClick={(e) => {
-                    copyHandle(e, message as AgentAIMessage);
-                  }}
-                />
-                <LikeOutlined
-                  className={outStyles["custom-chat-item-operation-btn"]}
-                  onClick={(e) => {
-                    scoreHandle(e, message as AgentAIMessage, ScoreType.FIVE);
-                  }}
-                />
-                <DislikeOutlined
-                  className={`${outStyles["custom-chat-item-operation-btn"]}`}
-                  onClick={(e) => {
-                    scoreHandle(e, message as AgentAIMessage, ScoreType.ONE);
-                  }}
-                />
-              </div>
+          <div className={`${outStyles["custom-chat-item-operation-wrap"]}`}>
+            <div
+              className={`${outStyles["custom-chat-item-operation"]} ${id}-item-operation`}
+            >
+              <SyncOutlined
+                className={outStyles["custom-chat-item-operation-btn"]}
+                onClick={(e) => {
+                  regenerateHandle(e, message as AgentAIMessage);
+                }}
+              />
+              <CopyOutlined
+                className={outStyles["custom-chat-item-operation-btn"]}
+                onClick={(e) => {
+                  copyHandle(e, message as AgentAIMessage);
+                }}
+              />
+              <LikeOutlined
+                className={outStyles["custom-chat-item-operation-btn"]}
+                onClick={(e) => {
+                  scoreHandle(e, message as AgentAIMessage, ScoreType.FIVE);
+                }}
+              />
+              <DislikeOutlined
+                className={`${outStyles["custom-chat-item-operation-btn"]}`}
+                onClick={(e) => {
+                  scoreHandle(e, message as AgentAIMessage, ScoreType.ONE);
+                }}
+              />
             </div>
-          ) : null}
+          </div>
         </>
       );
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       aiSearchData.referenceSource,
+      customIDMap.current,
       transDocStr,
       regenerateHandle,
       copyHandle,
@@ -849,19 +1027,23 @@ const Independent = (props: Props) => {
   // ==================== useEffect =================
   useEffect(() => {
     const items = messages.map((messageInfo) => {
+      // export type MessageStatus = 'local' | 'loading' | 'success' | 'error';
       const { id, message, status } = messageInfo;
       return {
         key: id,
-        loading: status === "loading",
-        role: status === "local" ? "local" : "ai",
-        typing: status !== "local",
+        loading: !message.content,
+        role: status === "local" ? "user" : "ai",
+        typing: status !== "local" ? { step: 2, interval: 20 } : false,
         content: message.content,
         messageRender: renderMarkdown,
-        footer: status === "local" ? null : footerRender(messageInfo),
+        footer: status !== "success" ? null : footerRender(messageInfo),
+        // onTypingComplete: () => {
+        //   status === "success" && updateFooterStyle(id);
+        // },
       };
     });
     setBubbleList(items);
-  }, [messages, footerRender]);
+  }, [messages, footerRender, updateFooterStyle]);
 
   useEffect(() => {
     if (activeKey !== undefined) {
@@ -904,10 +1086,34 @@ const Independent = (props: Props) => {
   }, [currentGroup, currentPlatform, localChatIDMap]);
 
   useEffect(() => {
+    initMd();
     return () => {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      abortControllerRef.current();
+      onCancel();
     };
+  }, [initMd]);
+
+  useEffect(() => {
+    //   getChatIDMap().then((chatIDMap) => {
+    //     setLocalChatIDMap(chatIDMap);
+    //   });
+
+    const sizeChangeHandle = () => {
+      const clientWidth = document.documentElement.clientWidth;
+      if (!clientWidth || clientWidth > 700) {
+        setScreenType(0);
+      } else if (clientWidth > 400) {
+        setScreenType(1);
+      } else {
+        setScreenType(2);
+      }
+    };
+    sizeChangeHandle();
+    // typeof window !== "undefined" &&
+    //   window.addEventListener("resize", sizeChangeHandle);
+    // return () => {
+    //   typeof window !== "undefined" &&
+    //     window.removeEventListener("resize", sizeChangeHandle);
+    // };
   }, []);
 
   // ==================== Render =================
@@ -923,56 +1129,89 @@ const Independent = (props: Props) => {
       rootClassName={outStyles[rootClassName]}
     >
       {contextHolder}
-      <div className={styles.layout}>
-        <div className={styles.menu}>
-          {/* 🌟 Logo */}
-          {logoNode}
-          {/* 🌟 添加会话 */}
-          <Button
-            onClick={onAddConversation}
-            type="link"
-            className={styles.addBtn}
-            icon={<PlusOutlined />}
-          >
-            New Conversation
-          </Button>
-          {/* 🌟 会话管理 */}
-          <Conversations
-            items={conversationsItems}
-            className={styles.conversations}
-            activeKey={activeKey}
-            onActiveChange={onConversationClick}
-          />
+      <XProvider
+        theme={{
+          algorithm:
+            currentTheme === "dark"
+              ? theme.darkAlgorithm
+              : theme.defaultAlgorithm,
+          token: {
+            colorText: "var(--docuo-text-color)",
+          },
+        }}
+      >
+        <div className={styles.layout}>
+          <div className={styles.menu}>
+            {/* 🌟 Logo */}
+            {logoNode}
+            {/* 🌟 添加会话 */}
+            <Button
+              onClick={onAddConversation}
+              type="link"
+              className={styles.addBtn}
+              icon={<PlusOutlined />}
+            >
+              New Conversation
+            </Button>
+            {/* 🌟 会话管理 */}
+            <Conversations
+              items={conversationsItems}
+              className={styles.conversations}
+              activeKey={activeKey}
+              onActiveChange={onConversationClick}
+            />
+          </div>
+          <div className={styles.chat}>
+            {/* 🌟 消息列表 */}
+            <Bubble.List
+              items={
+                bubbleList.length > 0
+                  ? bubbleList
+                  : [{ content: placeholderNode, variant: "borderless" }]
+              }
+              roles={roles}
+              className={styles.messages}
+            />
+            {/* 🌟 提示词 */}
+            {/* <Prompts
+              items={senderPromptsItems}
+              onItemClick={onPromptsItemClick}
+            /> */}
+            {/* 🌟 输入框 */}
+            <div
+              className={`${outStyles["custom-input-area"]} custom-input-area`}
+              ref={customInputAreaRef}
+            >
+              <Sender
+                value={content}
+                // header={senderHeader}
+                onSubmit={onSubmit}
+                onChange={setContent}
+                // prefix={attachmentsNode}
+                loading={agent.isRequesting()}
+                className={styles.sender}
+                disabled={!activeKey}
+                onCancel={onCancel}
+                placeholder={
+                  screenType === 0
+                    ? aiSearchData.inputPlaceholder
+                    : screenType === 1
+                    ? aiSearchData.inputPlaceholderM1
+                    : aiSearchData.inputPlaceholderM2
+                }
+              />
+              {messages.length ? (
+                <div
+                  className={outStyles["custom-converse-reset"]}
+                  onClick={resetConverse}
+                >
+                  <ReloadOutlined />
+                </div>
+              ) : null}
+            </div>
+          </div>
         </div>
-        <div className={styles.chat}>
-          {/* 🌟 消息列表 */}
-          <Bubble.List
-            items={
-              bubbleList.length > 0
-                ? bubbleList
-                : [{ content: placeholderNode, variant: "borderless" }]
-            }
-            roles={roles}
-            className={styles.messages}
-          />
-          {/* 🌟 提示词 */}
-          {/* <Prompts
-            items={senderPromptsItems}
-            onItemClick={onPromptsItemClick}
-          /> */}
-          {/* 🌟 输入框 */}
-          <Sender
-            value={content}
-            // header={senderHeader}
-            onSubmit={onSubmit}
-            onChange={setContent}
-            // prefix={attachmentsNode}
-            loading={agent.isRequesting()}
-            className={styles.sender}
-            disabled={!activeKey}
-          />
-        </div>
-      </div>
+      </XProvider>
     </Modal>
   );
 };

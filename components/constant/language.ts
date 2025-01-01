@@ -42,6 +42,7 @@ export const copywriting = {
       unableToReply:
         "Oops, there's a little issue. Please click the regenerate button or try asking me another question!",
       copySuccess: "Successful replication",
+      beQuerying:"Checking, please wait a moment...",
     },
   },
   zh: {
@@ -86,6 +87,7 @@ export const copywriting = {
       unableToReply:
         "噢，出了一点小问题，请点击重新生成按钮或者重新问我其他问题试试吧！",
       copySuccess: "复制成功",
+      beQuerying: "正在查询，请稍等..."
     },
   },
 };

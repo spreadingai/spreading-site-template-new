@@ -20,6 +20,7 @@
     "@mdx-js/react": "3.0.1",
     "@next/third-parties": "^14.1.3",
     "@reduxjs/toolkit": "^1.7.1",
+    "@shikijs/markdown-it": "^1.24.4",
     "@spreading/docuo-mdx-component": "^2.5.2",
     "@svgr/webpack": "^8.1.0",
     "@types/mdx": "^2.0.10",
@@ -38,6 +39,7 @@
     "eventsource-parser": "^3.0.0",
     "file-saver": "^2.0.5",
     "github-slugger": "^2.0.0",
+    "highlight.js": "^11.11.1",
     "history": "4.10.1",
     "infima": "0.2.0-alpha.43",
     "instantsearch.css": "^8.4.0",
@@ -77,6 +79,7 @@
     "use-sync-external-store": "^1.2.0",
     "usehooks-ts": "^2.9.1",
     "utility-types": "^3.11.0",
+    "uuid": "^11.0.3",
     "xml-formatter": "^3.6.2"
   },
   "devDependencies": {

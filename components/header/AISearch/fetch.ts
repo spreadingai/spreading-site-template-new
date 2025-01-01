@@ -76,8 +76,8 @@ export const startConverseFetch = async (
   chatID: string,
   sessionID: string, // ae8051de91e611efaeac0242ac120004
   stream = true,
-  question = ""
-  // signal
+  question = "",
+  signal
 ) => {
   const reqData: any = {
     product,
@@ -98,7 +98,7 @@ export const startConverseFetch = async (
       // Authorization: `Bearer ragflow-k0MzlkZjM0OTdmOTExZWZiNjM4MDI0Mm`,
     },
     body: JSON.stringify(reqData),
-    // signal,
+    signal,
   })
     .then((res) => {
       if (res.ok) return Promise.resolve(res);
