@@ -50,6 +50,7 @@ import { theme } from "antd";
 import { copywriting } from "@/components/constant/language";
 import Robot from "@/assets/icons/ai-search/Robot.svg";
 import chatIDMap from "./chatIDMap.json";
+import { EventSourceParserStream } from "eventsource-parser/stream";
 
 interface AnswerData {
   score?: ScoreType;
@@ -226,7 +227,7 @@ const AISearchModal = (props: Props) => {
   ) => {
     abortControllerRef.current = new AbortController();
     try {
-      const reader = await startConverseFetch(
+      const res = await startConverseFetch(
         currentGroup,
         currentPlatform,
         chatID,
@@ -235,6 +236,10 @@ const AISearchModal = (props: Props) => {
         question,
         signal || abortControllerRef.current.signal
       );
+      const reader = res.body
+        .pipeThrough(new TextDecoderStream())
+        .pipeThrough(new EventSourceParserStream())
+        .getReader();
       const decoder = new TextDecoder("utf-8");
       const encoder = new TextEncoder();
       const readableStream = new ReadableStream({
