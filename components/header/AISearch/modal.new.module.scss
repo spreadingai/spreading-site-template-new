@@ -84,6 +84,7 @@
         flex-direction: column;
         align-items: center;
         flex: 1;
+        overflow: hidden;
     }
     .init-content {
         position: absolute;
@@ -121,8 +122,8 @@
         font-size: 16px;
         color: var(--docuo-text-color);
         transition: all 0.3s;
-        height: 32px;
-        width: 32px;
+        height: 42px;
+        width: 42px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -198,11 +199,13 @@
         }
     }
     .custom-chat-item-doc-agg {
+        display: none;
         color: var(--docuo-color-primary);
         background: var(--docsearch-searchbox-background);
         border-radius: 8px;
         padding: 12px;
-        margin-top: 10px;
+        margin-inline-start: 12px;
+        margin-inline-end: 12px;
         a {
             color: var(--docuo-color-primary-active);
             &:hover {
@@ -211,8 +214,12 @@
         }
     }
     .custom-chat-item-operation {
-        display: flex;
+        display: none;
         align-items: center;
+        margin-inline-start: 12px;
+        margin-inline-end: 12px;
+        margin-top: 12px;
+        margin-bottom: 12px;
         .custom-chat-item-operation-btn {
             opacity: 0.6;
             cursor: pointer;
@@ -246,6 +253,9 @@
         }
     }
     .custom-input-area {
+        margin-top: 20px;
+        gap: 10px;
+        width: 100%;
         display: flex;
         align-items: flex-end;
     }
@@ -261,9 +271,9 @@
         width: 60%;
     }
     .question-tips {
-        font-size: 11px;
+        font-size: 12px;
         color: var(--docsearch-searchbox-color);
-        margin-bottom: 3%;
+        margin-bottom: 5%;
     }
     .input-wrap {
         padding-top: 3%;
@@ -324,6 +334,161 @@
         max-width: unset;
         min-width: unset;
     }
+    :global(.ant-bubble-list) {
+        width: 100%;
+        flex: 1;
+        padding: 0 20px;
+    }
+    :global(.ant-bubble-start) {
+        &:not(:has(.placeholderContent)) {
+            padding-right: 52px;
+        }
+    }
+    :global(.ant-bubble-end) {
+        &:not(:has(.placeholderContent)) {
+            padding-left: 52px;
+        }
+    }
+    :global(.ant-bubble-content-wrapper) {
+        color: var(--docuo-color-primary);
+        background: var(--docuo-m-drawer-btn-bg);
+        border: var(--docuo-m-drawer-btn-border);
+        border-radius: 8px;
+    }
+    :global(.ant-bubble-avatar + .ant-bubble-content) {
+        color: var(--docuo-color-primary);
+        background: var(--docuo-m-drawer-btn-bg);
+        border: var(--docuo-m-drawer-btn-border);
+        border-radius: 8px;
+    }
+    .customBubbleContent {
+        background: unset;
+    }
+    .customBubbleFooter {
+        width: 100%;
+    }
+    :global(.ant-sender-content) {
+        padding-block: 8px;
+    }
+    .placeholderContent {
+        margin: 10% auto 0;
+    }
+    .placeholderNode {
+    }
+    .welcomeWrap {
+        margin-bottom: 30px;
+    }
+    .welcomeIcon {
+    }
+    :global(.ant-welcome-icon) {
+    }
+    .welcomeTitle {
+        font-weight: normal;
+        font-size: 28px;
+        color: var(--docuo-color-primary);
+    }
+    :global(.ant-welcome-title) {
+        font-weight: normal;
+        font-size: 28px;
+        color: var(--docuo-color-primary);
+    }
+    .welcomeDescription {
+        font-size: 28px;
+        color: var(--docuo-color-primary);
+    }
+    .questionList {
+    }
+    .questionItem {
+        background: var(--docuo-background-primary);
+        border: var(--docsearch-searchbox-border);
+    }
+    .questionSubItem {
+        color: var(--docuo-color-primary);
+        background: var(--docsearch-searchbox-background) !important;
+        padding-block: 8px;
+        &:hover {
+            background: var(--docsearch-searchbox-background-hover) !important;
+        }
+    }
+    .sender {
+        box-shadow: unset !important;
+        border: var(--docsearch-searchbox-border);
+        border-width: 0;
+        &:focus-within {
+            border-color: var(--docuo-color-primary-active);
+        }
+        :global(.ant-input) {
+            color: var(--docuo-color-primary);
+            &::placeholder {
+                color: var(--docuo-text-color);
+                opacity: 0.3;
+            }
+        }
+    }
+    .senderActions {
+        :global(.ant-btn) {
+            height: 28px;
+        }
+        :global(.ant-btn.ant-btn-circle) {
+            width: 28px;
+        }
+        :global(.ant-btn.ant-btn-icon-only) {
+            min-width: 28px;
+        }
+        :global(.ant-btn-variant-solid) {
+            background: unset;
+            color: var(--docuo-text-color);
+            box-shadow: unset;
+            opacity: 0.6;
+            padding-left: 2px;
+            &:hover {
+                background: var(--docuo-ai-search-operate-btn-bg-hover);
+                opacity: 1;
+                color: var(--docuo-text-color);
+                border-radius: 4px;
+            }
+        }
+        :global(.ant-btn-variant-solid.ant-sender-actions-btn-disabled) {
+            &:hover {
+                opacity: 0.6;
+                background: unset;
+                color: var(--docuo-text-color);
+                box-shadow: unset;
+                cursor: not-allowed;
+            }
+        }
+        :global(.ant-btn-color-primary.ant-btn-variant-text) {
+            color: var(--docuo-color-primary-active);
+        }
+        :global(.ant-btn-color-primary.ant-btn-variant-text:not(:disabled):not(.ant-btn-disabled):hover) {
+            color: var(--docuo-color-primary-active);
+            background: unset;
+            opacity: 0.8;
+        }
+    }
+    .queryLoading {
+        color: var(--docuo-color-primary-active);
+    }
+    .queryTips {
+        color: var(--docuo-color-primary);
+    }
+    .articleWrap {
+        p {
+            line-height: 1.8;
+        }
+        pre {
+            max-height: 400px;
+            overflow-y: auto;
+            font-size: 12px;
+            padding: 16px 24px;
+            border: none;
+            line-height: 1.8;
+            border-radius: 6px;
+        }
+        & > *:last-child {
+            margin-bottom: 0 !important;
+        }
+    }
 }
 
 @media screen and (max-width: 1024px) {
@@ -365,6 +530,20 @@
         .default-question-wrap {
             width: 75%;
         }
+
+        // new modal
+        .welcomeTitle {
+            font-size: 22px;
+        }
+        :global(.ant-welcome-title) {
+            font-size: 22px;
+        }
+        .welcomeDescription {
+            font-size: 22px;
+        }
+        .welcomeWrap {
+            margin-bottom: 25px;
+        }
     }
 }
 @media screen and (max-width: 576px) {
@@ -392,6 +571,64 @@
         .default-question {
             font-size: 15px;
         }
+
+        // new modal
+        .welcomeTitle {
+            font-size: 20px;
+        }
+        :global(.ant-welcome-title) {
+            font-size: 20px;
+        }
+        .welcomeDescription {
+            font-size: 20px;
+        }
+        :global(.ant-bubble-list) {
+            padding: 0 5px;
+        }
+        .user-avatar-wrap {
+            width: 36px;
+            height: 36px;
+        }
+        :global(.ant-bubble-start) {
+            &:not(:has(.placeholderContent)) {
+                padding-right: 48px;
+            }
+        }
+        :global(.ant-bubble-end) {
+            &:not(:has(.placeholderContent)) {
+                padding-left: 48px;
+            }
+        }
+        .welcomeWrap {
+            margin-bottom: 20px;
+        }
+    }
+}
+@media screen and (max-width: 500px) {
+    .ai-search-dialog {
+        .welcomeIcon {
+            display: none;
+        }
+        :global(.ant-welcome-icon) {
+            display: none;
+        }
+        :global(.ant-bubble-list) {
+            padding: 0;
+        }
+        .user-avatar-wrap {
+            width: 30px;
+            height: 30px;
+        }
+        :global(.ant-bubble-start) {
+            &:not(:has(.placeholderContent)) {
+                padding-right: 42px;
+            }
+        }
+        :global(.ant-bubble-end) {
+            &:not(:has(.placeholderContent)) {
+                padding-left: 42px;
+            }
+        }
     }
 }
 @media screen and (max-width: 375px) {
@@ -408,6 +645,17 @@
         }
         .default-question {
             font-size: 14px;
+        }
+
+        // new modal
+        .welcomeTitle {
+            font-size: 17px;
+        }
+        :global(.ant-welcome-title) {
+            font-size: 17px;
+        }
+        .welcomeDescription {
+            font-size: 17px;
         }
     }
 }
