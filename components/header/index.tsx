@@ -120,6 +120,9 @@ const Header = (props: Props) => {
               </Link>
             );
           }}
+          getMissingResultsUrl={({ query }) => {
+            return `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/search`;
+          }}
         />
       </>
     );

@@ -143,6 +143,8 @@ const AISearchModal = (props: Props) => {
   const blockChunkText = useRef<string>("");
   const customIDMap = useRef<Record<string, AnswerData>>({});
   const isSendingRef = useRef<boolean>(false);
+  const currentGroupRef = useRef<string>("");
+  const currentPlatformRef = useRef<string>("");
 
   const aiSearchData = copywriting[currentLanguage].aiSearch;
 
@@ -629,7 +631,8 @@ const AISearchModal = (props: Props) => {
       score: targetScore,
       answer: "",
     };
-    targetScore !== ScoreType.FIVE && (questionData.answer = answer);
+    // targetScore !== ScoreType.FIVE && (questionData.answer = answer);
+    questionData.answer = answer;
     answerData.score = score;
     scoreFetch(currentGroup, currentPlatform, sessionID, [questionData]).catch(
       (error) => {
@@ -640,24 +643,42 @@ const AISearchModal = (props: Props) => {
   };
 
   const autoInsertHandle = () => {
-    console.log("autoInsertHandle", customIDMap.current);
+    console.log(
+      "autoInsertHandle",
+      customIDMap.current,
+      currentGroup,
+      currentPlatform,
+      currentGroupRef.current,
+      currentPlatformRef.current
+    );
     const keys = Object.keys(customIDMap.current).sort(
       (i: string, j: string) => Number(i) - Number(j)
     );
     if (!keys.length) return;
     const lastKey = keys[keys.length - 1];
     const temp = customIDMap.current[lastKey];
-    scoreFetch(currentGroup, currentPlatform, temp.session_id, [
-      {
-        answerID: temp.id,
-        question: temp.question,
-        score: ScoreType.ZERO,
-        answer: "",
-      },
-    ]).catch((error) => {
+    scoreFetch(
+      currentGroupRef.current,
+      currentPlatformRef.current,
+      temp.session_id,
+      [
+        {
+          answerID: temp.id,
+          question: temp.question,
+          score: ScoreType.ZERO,
+          answer: temp.answer,
+        },
+      ]
+    ).catch((error) => {
       console.log("auto insert error", error);
     });
   };
+
+  // Solve closure problems
+  useEffect(() => {
+    currentGroupRef.current = currentGroup;
+    currentPlatformRef.current = currentPlatform;
+  }, [currentGroup, currentPlatform]);
 
   useEffect(() => {
     isSending && setConverseStatus(1);

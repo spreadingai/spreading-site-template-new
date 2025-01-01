@@ -19,6 +19,8 @@ export const copywriting = {
           noResultsScreen: {
             noResultsText: "No results for",
             suggestedQueryText: "Try searching for",
+            reportMissingResultsText: "",
+            reportMissingResultsLinkText: "Search all products",
           },
         },
       },
@@ -65,6 +67,8 @@ export const copywriting = {
           noResultsScreen: {
             noResultsText: "没有找到",
             suggestedQueryText: "正在查找",
+            reportMissingResultsText: "",
+            reportMissingResultsLinkText: "搜索全部产品",
           },
         },
       },

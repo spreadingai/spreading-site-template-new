@@ -82,6 +82,8 @@ const components = {
   a: (props) =>
     props.href && props.href.startsWith("http") ? (
       <a {...props} target="_blank" />
+    ) : props.href && props.href.startsWith("/article/") ? (
+      <a {...props} />
     ) : (
       <Link {...props} />
     ),

@@ -44,7 +44,8 @@ export function rehypeA(options: {
         target.value.startsWith("@") ||
         target.value.startsWith("!") ||
         target.value.startsWith("docuo-link@") ||
-        target.value.startsWith("docuo-link!")
+        target.value.startsWith("docuo-link!") ||
+        target.value.startsWith("/article/")
       )
         return;
       if (!options.rootUrl || !options.filePath) return;

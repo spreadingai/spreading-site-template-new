@@ -24,7 +24,12 @@ export function rehypeLink(options: {
 }) {
   return function updateLinkTag(tree, file) {
     visit(tree, "element", (node, i, parent) => {
-      if (node.tagName !== "a" || !node.properties.href) return;
+      if (
+        node.tagName !== "a" ||
+        !node.properties.href ||
+        node.properties.href.startsWith("/article/")
+      )
+        return;
       // support [leaveAllRoom\|\_blank](@leaveAllRoom)
       if (node.children && node.children[0]) {
         const temp1 = node.children[0];
