@@ -503,6 +503,7 @@ const AISearchModal = (props: Props) => {
   };
 
   const startDefaultConverse = (question: string) => {
+    if (process.env.NODE_ENV === "development") return;
     setConverseStatus(1);
     setTimeout(() => {
       proChatRef.current && proChatRef.current.sendMessage(question);

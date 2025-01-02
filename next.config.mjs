@@ -29,6 +29,7 @@ const nextConfig = {
     "@babel/runtime",
     "@ant-design/icons",
     "@ant-design/icons-svg",
+    "rc-input",
     "rc-pagination",
     "rc-picker",
     "rc-tree",
