@@ -21,7 +21,15 @@ import {
   SendOutlined,
   // @ts-ignore
 } from "@ant-design/icons";
-import { type GetProp, message, Modal, Space, Spin, Typography } from "antd";
+import {
+  type GetProp,
+  message,
+  Modal,
+  Space,
+  Spin,
+  Typography,
+  theme,
+} from "antd";
 import { copywriting } from "@/components/constant/language";
 import { Question, ScoreType } from "./types";
 import Robot from "@/assets/icons/ai-search/Robot.svg";

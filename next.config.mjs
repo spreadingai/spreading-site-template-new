@@ -26,6 +26,7 @@ const nextConfig = {
   transpilePackages: [
     "antd",
     "rc-util",
+    "@babel",
     "@babel/runtime",
     "@ant-design/icons",
     "@ant-design/icons-svg",
@@ -34,6 +35,7 @@ const nextConfig = {
     "rc-picker",
     "rc-tree",
     "rc-table",
+    "@ant-design",
     "@ant-design/pro-chat",
     "@ant-design/pro-editor",
     "@ant-design/x",
