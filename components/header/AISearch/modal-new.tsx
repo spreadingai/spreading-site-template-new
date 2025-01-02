@@ -7,7 +7,6 @@ import {
   useXChat,
   XStream,
   BubbleProps,
-  XProvider,
 } from "@ant-design/x";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
@@ -22,15 +21,7 @@ import {
   SendOutlined,
   // @ts-ignore
 } from "@ant-design/icons";
-import {
-  type GetProp,
-  message,
-  Modal,
-  Space,
-  Spin,
-  theme,
-  Typography,
-} from "antd";
+import { type GetProp, message, Modal, Space, Spin, Typography } from "antd";
 import { copywriting } from "@/components/constant/language";
 import { Question, ScoreType } from "./types";
 import Robot from "@/assets/icons/ai-search/Robot.svg";
@@ -46,6 +37,8 @@ import { bundledLanguages, createHighlighter } from "shiki";
 import MarkdownIt from "markdown-it";
 import { MessageInfo } from "@ant-design/x/es/useXChat";
 import { v4 as uuidv4 } from "uuid";
+import { ThemeProvider } from "antd-style";
+import { Markdown } from "@ant-design/pro-editor";
 
 interface AnswerData {
   score?: ScoreType;
@@ -172,9 +165,9 @@ const Independent = (props: Props) => {
           <span className={outStyles.queryTips}>{aiSearchData.beQuerying}</span>
         </Space>
       ),
-      onTypingComplete: () => {
-        console.log("onTypingComplete");
-      },
+      // onTypingComplete: () => {
+      //   console.log("onTypingComplete");
+      // },
       classNames: {
         content: outStyles.customBubbleContent,
         footer: outStyles.customBubbleFooter,
@@ -538,23 +531,28 @@ const Independent = (props: Props) => {
   }, []);
 
   const initMd = useCallback(async () => {
-    const langs = Object.keys(bundledLanguages);
-    const highlighter = await createHighlighter({
-      themes: ["one-light", "one-dark-pro"],
-      langs,
-    });
-    const md = MarkdownIt({
-      highlight: function (str: string, lang: string) {
-        if (lang && langs.includes(lang)) {
-          return `${highlighter.codeToHtml(str, {
-            lang,
-            theme: currentTheme === "light" ? "one-light" : "one-dark-pro",
-          })}`;
-        }
-        return str;
-      },
-    });
-    mdRef.current = md;
+    try {
+      const langs = Object.keys(bundledLanguages);
+      const highlighter = await createHighlighter({
+        themes: ["one-light", "one-dark-pro"],
+        langs,
+      });
+      const md = MarkdownIt({
+        highlight: function (str: string, lang: string) {
+          if (lang && langs.includes(lang)) {
+            try {
+              const codeHtml = highlighter.codeToHtml(str, {
+                lang,
+                theme: currentTheme === "light" ? "one-light" : "one-dark-pro",
+              });
+              return codeHtml;
+            } catch (__) {}
+          }
+          return "";
+        },
+      });
+      mdRef.current = md;
+    } catch (error) {}
   }, [currentTheme]);
 
   // ==================== Event ====================
@@ -575,7 +573,12 @@ const Independent = (props: Props) => {
   };
 
   const onPromptsItemClick: GetProp<typeof Prompts, "onItemClick"> = (info) => {
-    if (activeKey && !agent.isRequesting()) {
+    if (
+      activeKey &&
+      !agent.isRequesting() &&
+      ((process.env.NODE_ENV === "development" && mdRef.current) ||
+        process.env.NODE_ENV !== "development")
+    ) {
       onRequest({
         type: "user",
         content: info.data.description as string,
@@ -706,19 +709,18 @@ const Independent = (props: Props) => {
   );
 
   const renderMarkdown: BubbleProps["messageRender"] = (content) => {
-    return (
+    return process.env.NODE_ENV === "development" ? (
       <Typography>
         {/* biome-ignore lint/security/noDangerouslySetInnerHtml: used in demo */}
         <div
           className={outStyles.articleWrap}
           dangerouslySetInnerHTML={{
-            // __html: mdRef.current.render(
-            //   '"在使用 ZPNs SDK 注册厂商推送后，可以根据 `onRegister` 回调获得 `error code` 和 `error message`，且当 `error code` 为 0 时，获得 `PushID` ##0$$。\n\n具体步骤如下：\n\n1. **配置第三方推送通道**：根据前提条件集成的第三方厂商离线推送 SDK，调用 `enableHWPush` / `enableMiPush` / `enableOppoPush` / `enableVivoPush` 接口，启用各厂商的推送功能，然后调用 `setPushConfig` 接口，配置第三方推送通道 ##1$$。\n\n2. **注册离线推送功能**：调用 `ZPNsManager.getInstance().registerPush(this.getApplication())` 注册离线推送功能。\n\n3. **获取 PushID**：注册离线推送功能后，可以通过继承 `ZPNsMessageReceiver` 类中的 `onRegistered` 回调，获取到离线推送的 `pushID`。\n\n示例代码：\n```java\npublic class MyZPNsReceiver extends ZPNsMessageReceiver {\n    @Override\n    protected void onRegistered(Context context, ZPNsRegisterMessage message) {\n        if (message.getCommandResult().getCode() == 0) {\n            String pushID = message.getPushID();\n            Log.e("MyZPNsReceiver", "onRegistered: pushID:" + pushID);\n        } else {\n            Log.e("MyZPNsReceiver", "onRegistered: error:" + message.getCommandResult().getMessage());\n        }\n    }\n}\n```\n ##3$$\n\n如果有任何疑问，请联系 ZEGO 技术支持。",'
-            // ),
             __html: mdRef.current.render(content),
           }}
         />
       </Typography>
+    ) : (
+      <Markdown>{content}</Markdown>
     );
   };
 
@@ -929,12 +931,9 @@ const Independent = (props: Props) => {
       rootClassName={outStyles[rootClassName]}
     >
       {contextHolder}
-      <XProvider
+      <ThemeProvider
+        appearance={currentTheme}
         theme={{
-          // algorithm:
-          //   currentTheme === "dark"
-          //     ? theme.darkAlgorithm
-          //     : theme.defaultAlgorithm,
           token: {
             colorText: "var(--docuo-text-color)",
           },
@@ -970,7 +969,10 @@ const Independent = (props: Props) => {
                 onChange={setContent}
                 loading={agent.isRequesting()}
                 className={outStyles.sender}
-                disabled={!activeKey}
+                disabled={
+                  !activeKey ||
+                  (process.env.NODE_ENV === "development" && !mdRef.current)
+                }
                 onCancel={onCancel}
                 placeholder={
                   screenType === 0
@@ -1002,7 +1004,7 @@ const Independent = (props: Props) => {
             </div>
           </div>
         </div>
-      </XProvider>
+      </ThemeProvider>
     </Modal>
   );
 };

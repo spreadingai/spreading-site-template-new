@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@ant-design/pro-chat": "^1.15.3",
+    "@ant-design/pro-editor": "^1.3.0",
     "@ant-design/x": "^1.0.3",
     "@docsearch/react": "^3.5.2",
     "@hookform/error-message": "^2.0.1",
@@ -20,7 +21,6 @@
     "@mdx-js/react": "3.0.1",
     "@next/third-parties": "^14.1.3",
     "@reduxjs/toolkit": "^1.7.1",
-    "@shikijs/markdown-it": "^1.24.4",
     "@spreading/docuo-mdx-component": "^2.5.2",
     "@svgr/webpack": "^8.1.0",
     "@types/mdx": "^2.0.10",

@@ -11,6 +11,9 @@ importers:
       '@ant-design/pro-chat':
         specifier: ^1.15.3
         version: 1.15.3(@types/react@18.2.51)(antd-style@3.7.1(@types/react@18.2.51)(antd@5.22.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd@5.22.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@ant-design/pro-editor':
+        specifier: ^1.3.0
+        version: 1.3.0(@emotion/react@11.13.3(@types/react@18.2.51)(react@18.2.0))(@types/react@18.2.51)(antd-style@3.7.1(@types/react@18.2.51)(antd@5.22.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(antd@5.22.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       '@ant-design/x':
         specifier: ^1.0.3
         version: 1.0.3(antd@5.22.5(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -28,13 +31,10 @@ importers:
         version: 3.0.1(@types/react@18.2.51)(react@18.2.0)
       '@next/third-parties':
         specifier: ^14.1.3
-        version: 14.1.3(next@14.1.1(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.70.0))(react@18.2.0)
+        version: 14.1.3(next@14.1.1(@babel/core@7.12.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.70.0))(react@18.2.0)
       '@reduxjs/toolkit':
         specifier: ^1.7.1
         version: 1.9.7(react-redux@7.2.9(react-dom@18.2.0(react@18.2.0))(react@18.2.0))(react@18.2.0)
-      '@shikijs/markdown-it':
-        specifier: ^1.24.4
-        version: 1.24.4
       '@spreading/docuo-mdx-component':
         specifier: ^2.5.2
         version: 2.5.2(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
@@ -127,13 +127,13 @@ importers:
         version: 11.4.1
       next:
         specifier: ^14.1.1
-        version: 14.1.1(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.70.0)
+        version: 14.1.1(@babel/core@7.12.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.70.0)
       next-seo:
         specifier: ^6.4.0
-        version: 6.4.0(next@14.1.1(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.70.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+        version: 6.4.0(next@14.1.1(@babel/core@7.12.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.70.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
       next-sitemap:
         specifier: ^4.2.3
-        version: 4.2.3(next@14.1.1(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.70.0))
+        version: 4.2.3(next@14.1.1(@babel/core@7.12.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.70.0))
       parse-numeric-range:
         specifier: ^1.3.0
         version: 1.3.0
@@ -1980,9 +1980,6 @@ packages:
 
   '@shikijs/engine-oniguruma@1.24.4':
     resolution: {integrity: sha512-Do2ry6flp2HWdvpj2XOwwa0ljZBRy15HKZITzPcNIBOGSeprnA8gOooA/bLsSPuy8aJBa+Q/r34dMmC3KNL/zw==}
-
-  '@shikijs/markdown-it@1.24.4':
-    resolution: {integrity: sha512-zSY4o6N6QudVd4SMw1G0fFe9l2ujOKhzR8vGPHUZTVGKhOTdSdp0JM0Zr8Vt3mSdgUxQC3dkdUOZQcSMwdG0Og==}
 
   '@shikijs/types@1.24.4':
     resolution: {integrity: sha512-0r0XU7Eaow0PuDxuWC1bVqmWCgm3XqizIaT7SM42K03vc69LGooT0U8ccSR44xP/hGlNx4FKhtYpV+BU6aaKAA==}
@@ -10949,9 +10946,9 @@ snapshots:
   '@next/swc-win32-x64-msvc@14.1.1':
     optional: true
 
-  '@next/third-parties@14.1.3(next@14.1.1(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.70.0))(react@18.2.0)':
+  '@next/third-parties@14.1.3(next@14.1.1(@babel/core@7.12.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.70.0))(react@18.2.0)':
     dependencies:
-      next: 14.1.1(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.70.0)
+      next: 14.1.1(@babel/core@7.12.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.70.0)
       react: 18.2.0
       third-party-capital: 1.0.20
 
@@ -11219,11 +11216,6 @@ snapshots:
     dependencies:
       '@shikijs/types': 1.24.4
       '@shikijs/vscode-textmate': 9.3.1
-
-  '@shikijs/markdown-it@1.24.4':
-    dependencies:
-      markdown-it: 14.1.0
-      shiki: 1.24.4
 
   '@shikijs/types@1.24.4':
     dependencies:
@@ -16777,21 +16769,21 @@ snapshots:
   netmask@2.0.2:
     optional: true
 
-  next-seo@6.4.0(next@14.1.1(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.70.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
+  next-seo@6.4.0(next@14.1.1(@babel/core@7.12.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.70.0))(react-dom@18.2.0(react@18.2.0))(react@18.2.0):
     dependencies:
-      next: 14.1.1(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.70.0)
+      next: 14.1.1(@babel/core@7.12.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.70.0)
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
 
-  next-sitemap@4.2.3(next@14.1.1(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.70.0)):
+  next-sitemap@4.2.3(next@14.1.1(@babel/core@7.12.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.70.0)):
     dependencies:
       '@corex/deepmerge': 4.0.43
       '@next/env': 13.5.6
       fast-glob: 3.3.2
       minimist: 1.2.8
-      next: 14.1.1(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.70.0)
+      next: 14.1.1(@babel/core@7.12.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.70.0)
 
-  next@14.1.1(@babel/core@7.23.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.70.0):
+  next@14.1.1(@babel/core@7.12.9)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)(sass@1.70.0):
     dependencies:
       '@next/env': 14.1.1
       '@swc/helpers': 0.5.2
@@ -16801,7 +16793,7 @@ snapshots:
       postcss: 8.4.31
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
-      styled-jsx: 5.1.1(@babel/core@7.23.9)(react@18.2.0)
+      styled-jsx: 5.1.1(@babel/core@7.12.9)(react@18.2.0)
     optionalDependencies:
       '@next/swc-darwin-arm64': 14.1.1
       '@next/swc-darwin-x64': 14.1.1
@@ -19192,12 +19184,12 @@ snapshots:
     dependencies:
       inline-style-parser: 0.2.2
 
-  styled-jsx@5.1.1(@babel/core@7.23.9)(react@18.2.0):
+  styled-jsx@5.1.1(@babel/core@7.12.9)(react@18.2.0):
     dependencies:
       client-only: 0.0.1
       react: 18.2.0
     optionalDependencies:
-      '@babel/core': 7.23.9
+      '@babel/core': 7.12.9
 
   stylehacks@5.1.1(postcss@8.4.33):
     dependencies:
