@@ -206,7 +206,7 @@ class DocsController {
       mdxFileUrl
     );
 
-    console.time("count transShortLink");
+    // console.time("count transShortLink");
     if (mdxSource.frontmatter && mdxSource.frontmatter.articleID) {
       const result = await ShortLinkTransControllerImpl.replaceApiShortLink(
         mdxSource.frontmatter.articleID,
@@ -216,7 +216,7 @@ class DocsController {
       mdxSource.matter.content = result.content;
       mdxSource.code = result.codeStr;
     }
-    console.timeEnd("count transShortLink");
+    // console.timeEnd("count transShortLink");
 
     return {
       slug,
