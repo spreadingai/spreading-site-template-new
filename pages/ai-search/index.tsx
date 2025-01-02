@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import AISearchModal from "@/components/header/AISearch/modal";
-// import { useRouter } from "next/router";
+import NewAISearchModal from "@/components/header/AISearch/modal-new";
+import { useRouter } from "next/router";
 
 const whiteList = [
   "http://localhost:5666",
@@ -13,7 +14,7 @@ const whiteList = [
 interface Props {}
 
 const AISearchPage = (props: Props) => {
-  // const router = useRouter();
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [iframeData, setIframeData] = useState<{
     language: string;
@@ -108,8 +109,21 @@ const AISearchPage = (props: Props) => {
   //   }, 3000);
   // }, []);
 
-  return (
+  return !router.query.askai ? (
     <AISearchModal
+      rootClassName="ai-search-page"
+      isModalOpen={isModalOpen}
+      onCloseHandle={onCloseHandle}
+      currentTheme="light"
+      // currentLanguage={iframeData.current.language}
+      // currentGroup={iframeData.current.product}
+      // currentPlatform={iframeData.current.platform}
+      currentLanguage={iframeData.language}
+      currentGroup={iframeData.product}
+      currentPlatform={iframeData.platform}
+    />
+  ) : (
+    <NewAISearchModal
       rootClassName="ai-search-page"
       isModalOpen={isModalOpen}
       onCloseHandle={onCloseHandle}

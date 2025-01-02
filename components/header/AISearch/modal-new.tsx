@@ -686,25 +686,27 @@ const Independent = (props: Props) => {
           description: outStyles.welcomeDescription,
         }}
       />
-      <Prompts
-        title={aiSearchData.guessText}
-        items={placeholderPromptsItems}
-        classNames={{
-          title: outStyles["question-tips"],
-          list: outStyles.questionList,
-          item: outStyles.questionItem,
-          subItem: outStyles.questionSubItem,
-        }}
-        styles={{
-          list: {
-            width: "100%",
-          },
-          item: {
-            flex: 1,
-          },
-        }}
-        onItemClick={onPromptsItemClick}
-      />
+      {defaultQuestions.length ? (
+        <Prompts
+          title={aiSearchData.guessText}
+          items={placeholderPromptsItems}
+          classNames={{
+            title: outStyles["question-tips"],
+            list: outStyles.questionList,
+            item: outStyles.questionItem,
+            subItem: outStyles.questionSubItem,
+          }}
+          styles={{
+            list: {
+              width: "100%",
+            },
+            item: {
+              flex: 1,
+            },
+          }}
+          onItemClick={onPromptsItemClick}
+        />
+      ) : null}
     </Space>
   );
 
