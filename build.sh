@@ -11,7 +11,6 @@ echo $deploy_branch
 
 echo "start delete cache"
 rm -rf .next
-rm -rf node_modules
 echo "delete cache end"
 
 echo "start delete template docs"
