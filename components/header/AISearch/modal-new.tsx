@@ -160,7 +160,7 @@ const Independent = (props: Props) => {
 
   const roles: GetProp<typeof Bubble.List, "roles"> = {
     ai: {
-      typing: { step: 2, interval: 10 },
+      typing: { step: 5, interval: 10 },
       placement: "start",
       avatar: (
         <div className={outStyles["user-avatar-wrap"]}>
@@ -487,7 +487,7 @@ const Independent = (props: Props) => {
             behavior: "smooth",
           });
       }
-    }, 100);
+    }, 300);
   }, []);
 
   const generateCustomAnswerID = useCallback(() => {
@@ -836,7 +836,7 @@ const Independent = (props: Props) => {
           key: id,
           loading: !message.content,
           role: status === "local" ? "user" : "ai",
-          typing: status !== "local" ? { step: 2, interval: 10 } : false,
+          typing: status !== "local" ? { step: 5, interval: 10 } : false,
           content: message.content,
           messageRender: renderMarkdown,
           footer: status !== "success" ? null : footerRender(messageInfo),
