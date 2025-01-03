@@ -329,6 +329,9 @@
     }
 
     // modal new
+    :global(.zcss-49fjj) {
+        max-height: unset !important;
+    }
     :global(.acss-bohbbh) {
         height: 100%;
         max-width: unset;
@@ -532,6 +535,9 @@
         }
 
         // new modal
+        :global(.zcss-49fjj) {
+            max-height: 400px !important;
+        }
         .welcomeTitle {
             font-size: 22px;
         }

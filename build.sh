@@ -9,6 +9,11 @@ echo $deploy_branch
 #  安装环境依赖
 # build build test
 
+echo "start delete cache"
+rm -rf .next
+rm -rf node_modules
+echo "delete cache end"
+
 echo "start delete template docs"
 rm -rf docs
 echo "delete template docs end"
