@@ -160,7 +160,7 @@ const Independent = (props: Props) => {
 
   const roles: GetProp<typeof Bubble.List, "roles"> = {
     ai: {
-      typing: { step: 2, interval: 20 },
+      typing: { step: 2, interval: 10 },
       placement: "start",
       avatar: (
         <div className={outStyles["user-avatar-wrap"]}>
@@ -487,7 +487,7 @@ const Independent = (props: Props) => {
             behavior: "smooth",
           });
       }
-    }, 500);
+    }, 100);
   }, []);
 
   const generateCustomAnswerID = useCallback(() => {
@@ -509,7 +509,7 @@ const Independent = (props: Props) => {
           item.setAttribute("target", "_blank");
         });
       });
-    }, 2000);
+    }, 1000);
   }, []);
 
   const autoInsertHandle = useCallback((customID: string) => {
@@ -836,7 +836,7 @@ const Independent = (props: Props) => {
           key: id,
           loading: !message.content,
           role: status === "local" ? "user" : "ai",
-          typing: status !== "local" ? { step: 2, interval: 20 } : false,
+          typing: status !== "local" ? { step: 2, interval: 10 } : false,
           content: message.content,
           messageRender: renderMarkdown,
           footer: status !== "success" ? null : footerRender(messageInfo),
@@ -886,7 +886,9 @@ const Independent = (props: Props) => {
   }, [currentGroup, currentPlatform, localChatIDMap]);
 
   useEffect(() => {
-    initMd();
+    if (process.env.NODE_ENV === "development") {
+      initMd();
+    }
   }, [initMd]);
 
   useEffect(() => {
