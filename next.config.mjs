@@ -76,6 +76,7 @@ const nextConfig = {
       },
     ];
   },
+  staticPageGenerationTimeout: 180,
 };
 
 export default withBundleAnalyzer(nextConfig);
