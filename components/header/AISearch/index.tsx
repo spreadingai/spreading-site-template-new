@@ -44,7 +44,7 @@ const AISearch = (props: Props) => {
           currentPlatform={currentPlatform}
         />
       ) : (
-        <NewAISearchModal
+        <AISearchModal
           isModalOpen={isModalOpen}
           onCloseHandle={onCloseHandle}
           currentTheme={theme}
