@@ -37,7 +37,7 @@ const nextConfig = {
     "@ant-design",
     "@ant-design/pro-chat",
     "@ant-design/pro-editor",
-    "@ant-design/x",
+    // "@ant-design/x",
   ],
   basePath: process.env.NEXT_PUBLIC_BASE_PATH || "",
   webpack(config) {

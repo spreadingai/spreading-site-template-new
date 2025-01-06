@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./index.module.scss";
 import useLanguage from "@/components/hooks/useLanguage";
 import AISearchModal from "./modal";
-import NewAISearchModal from "./modal-new";
+// import NewAISearchModal from "./modal-new";
 import ThemeContext from "../Theme.context";
 import useGroup from "@/components/hooks/useGroup";
 import usePlatform from "@/components/hooks/usePlatform";
@@ -44,7 +44,7 @@ const AISearch = (props: Props) => {
           currentPlatform={currentPlatform}
         />
       ) : (
-        <NewAISearchModal
+        <AISearchModal
           isModalOpen={isModalOpen}
           onCloseHandle={onCloseHandle}
           currentTheme={theme}
