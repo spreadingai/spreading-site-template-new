@@ -961,7 +961,7 @@ const Independent = (props: Props) => {
         <div className={outStyles["converse-wrap"]}>
           <div className={outStyles["converse-content"]}>
             {/* 🌟 消息列表 */}
-            {/* <Bubble.List
+            <Bubble.List
               items={
                 bubbleList.length > 0
                   ? bubbleList
@@ -976,13 +976,13 @@ const Independent = (props: Props) => {
                     ]
               }
               roles={roles}
-            /> */}
+            />
             {/* 🌟 输入框 */}
             <div
               className={`${outStyles["custom-input-area"]} custom-input-area`}
               ref={customInputAreaRef}
             >
-              {/* <Sender
+              <Sender
                 value={content}
                 onSubmit={onSubmit}
                 onChange={setContent}
@@ -1019,7 +1019,7 @@ const Independent = (props: Props) => {
                 >
                   <ReloadOutlined />
                 </div>
-              ) : null} */}
+              ) : null}
             </div>
           </div>
         </div>
