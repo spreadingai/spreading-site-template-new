@@ -218,6 +218,7 @@ class DocsController {
     }
     // console.timeEnd("count transShortLink");
 
+    console.log(`[DocsController]readDoc end`);
     delete mdxSource.matter.content;
     return {
       slug,

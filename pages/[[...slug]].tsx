@@ -207,6 +207,7 @@ export function getStaticPaths() {
 
 export default function DocPage(props: Props) {
   const { mdxSource, slug } = props;
+  console.log("DocPage", slug);
   if (!slug) {
     return null;
   }
