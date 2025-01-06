@@ -39,10 +39,10 @@ class LibController {
             process.env.NEXT_PUBLIC_CONFIG_FILE
           }`
         );
-        console.log(
-          "[LibController]getDocuoConfig docuoConfigPath",
-          docuoConfigPath
-        );
+        // console.log(
+        //   "[LibController]getDocuoConfig docuoConfigPath",
+        //   docuoConfigPath
+        // );
         const readDocuoConfig = fs.readFileSync(docuoConfigPath, "utf8");
         docuoConfig = JSON.parse(readDocuoConfig);
       } catch (error) {

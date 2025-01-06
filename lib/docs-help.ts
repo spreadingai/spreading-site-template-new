@@ -31,7 +31,7 @@ import { convertDocID, ignoreNumberPrefix, removeMdxSuffix } from "./utils";
 import { DEFAULT_INSTANCE_ID } from "./constants";
 import { InstanceType } from "./types";
 
-import Markdoc from "@markdoc/markdoc";
+// import Markdoc from "@markdoc/markdoc";
 
 class DocsController {
   static _instance: DocsController;
@@ -49,7 +49,7 @@ class DocsController {
 
     // const html = Markdoc.renderers.html(content);
 
-    // console.log(`[DocsController]readDoc `, slug);
+    console.log(`[DocsController]readDoc `, slug);
     const { docVersion, mdxFileID, instanceID, slugVersion, routeBasePath } =
       SlugControllerImpl.getExtractInfoFromSlug(slug);
     const versions = VersionsControllerImpl.getUsedVersions(instanceID);
@@ -218,6 +218,7 @@ class DocsController {
     }
     // console.timeEnd("count transShortLink");
 
+    delete mdxSource.matter.content;
     return {
       slug,
       mdxSource,
