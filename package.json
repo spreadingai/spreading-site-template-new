@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "clear": "sh ./clear.sh",
     "dev": "node ./lib/trans-short-link/init.mjs && next dev",
     "docuodev": "pnpm dev",
     "build": "node ./lib/trans-short-link/init.mjs && next build && next-sitemap",
