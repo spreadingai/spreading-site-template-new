@@ -27,7 +27,6 @@ const nextConfig = {
     "antd",
     "rc-util",
     "@babel",
-    "@babel/runtime",
     "@ant-design/icons",
     "@ant-design/icons-svg",
     "rc-input",

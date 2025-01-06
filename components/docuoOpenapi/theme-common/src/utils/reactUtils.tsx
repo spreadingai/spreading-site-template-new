@@ -78,6 +78,7 @@ export class ReactContextError extends Error {
     super();
     this.name = "ReactContextError";
     this.message = `Hook ${
+      // @ts-ignore
       this.stack?.split("\n")[1]?.match(/at (?:\w+\.)?(?<name>\w+)/)?.groups!
         .name ?? ""
     } is called outside the <${providerName}>. ${additionalInfo ?? ""}`;

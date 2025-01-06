@@ -9,7 +9,9 @@ import type { CSSProperties } from "react";
 import rangeParser from "parse-numeric-range";
 import type { PrismTheme } from "prism-react-renderer";
 
+// @ts-ignore
 const codeBlockTitleRegex = /title=(?<quote>["'])(?<title>.*?)\1/;
+// @ts-ignore
 const metastringLinesRangeRegex = /\{(?<range>[\d,-]+)\}/;
 
 // Supported types of highlight comments
