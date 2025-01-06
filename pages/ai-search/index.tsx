@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import AISearchModal from "@/components/header/AISearch/modal";
-// import NewAISearchModal from "@/components/header/AISearch/modal-new";
+import NewAISearchModal from "@/components/header/AISearch/modal-new";
 import { useRouter } from "next/router";
 
 const whiteList = [
@@ -123,7 +123,7 @@ const AISearchPage = (props: Props) => {
       currentPlatform={iframeData.platform}
     />
   ) : (
-    <AISearchModal
+    <NewAISearchModal
       rootClassName="ai-search-page"
       isModalOpen={isModalOpen}
       onCloseHandle={onCloseHandle}
