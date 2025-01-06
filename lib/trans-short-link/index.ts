@@ -154,7 +154,7 @@ class ShortLinkTransController {
     try {
       res = (await this.getClientApiTreeData(url)) || {};
     } catch (e) {
-      console.error("getClientApiData url:", url, e);
+      console.log("getClientApiData url:", url, e);
     }
     if (res && res.searchData) {
       res = {
