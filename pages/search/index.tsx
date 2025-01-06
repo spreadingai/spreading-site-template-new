@@ -6,7 +6,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import algoliasearch from "algoliasearch";
+import { algoliasearch } from "algoliasearch";
 import {
   InstantSearch,
   // SearchBox,
