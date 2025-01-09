@@ -89,7 +89,7 @@ export const getTreePlatformLangList = (locale: string) => {
     {
       value: "harmony",
       name: "HarmonyOS",
-      langs: ["arkts"],
+      langs: ["arkts", "javascript"],
       type: "platform",
       iconClass: "doc-icon_language_harmonyos",
     },
