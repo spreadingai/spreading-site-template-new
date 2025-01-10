@@ -30,6 +30,9 @@ export interface DocuoConfig {
     ga4?: {
       measurementId: string;
     };
+    baidu?: {
+      tongjiID?: string;
+    };
   };
   i18n?: {
     defaultLocale: string;
