@@ -237,7 +237,7 @@ const SearchSelectWrap = (props) => {
       });
     }
     return (
-      <div className={styles.platformList}>
+      <div className={`${styles.platformList} platform_list`}>
         {menuItems.map((platformsItem) => {
           return (
             <div
@@ -468,6 +468,17 @@ const SearchBoxWrap = (props) => {
     updateDocType,
   ]);
 
+  const updateHitWrapStyle = () => {
+    const platformListDom = document.querySelector(".platform_list");
+    const hitWrapDom = document.querySelector(".hit_wrap") as HTMLElement;
+    if (platformListDom && hitWrapDom) {
+      const clientHeight = platformListDom.clientHeight;
+      // 53、106、159...
+      const paddingTop = `${156 + clientHeight}px`;
+      hitWrapDom.style.paddingTop = paddingTop;
+    }
+  };
+
   useEffect(() => {
     setQuery(searchKey || "");
   }, [searchKey, setQuery]);
@@ -540,6 +551,9 @@ const SearchBoxWrap = (props) => {
           sessionStorage.removeItem("platform-search-cache");
         }
       }
+
+      // Update style
+      updateHitWrapStyle();
     }
   }, [
     changeKey,
@@ -550,6 +564,16 @@ const SearchBoxWrap = (props) => {
     facets,
     status,
   ]);
+
+  useEffect(() => {
+    const resizeHandle = () => {
+      updateHitWrapStyle();
+    };
+    window.addEventListener("resize", resizeHandle);
+    return () => {
+      window.removeEventListener("resize", resizeHandle);
+    };
+  }, []);
 
   return (
     <div className={styles.searchBoxWrap}>
@@ -583,7 +607,7 @@ const HitWrap = (props) => {
   // console.log("[HitWrap] searchKey", searchKey);
 
   return searchKey ? (
-    <div className={styles.hitWrap}>
+    <div className={`${styles.hitWrap} hit_wrap`}>
       <Hits hitComponent={CustomHit} />
       {/* {status !== "idle" ? (
         <div className={styles.loadingWrap}>
@@ -649,7 +673,7 @@ export default function SearchPage(props) {
   const [facetFilters, setFacetFilters] = useState(initFacetFilters);
   const initFacets = [
     "language",
-    "instance",
+    // "instance",
     "group",
     "doctype",
     "platform",
