@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import AISearchModal from "@/components/header/AISearch/modal";
+// import AISearchModal from "@/components/header/AISearch/modal";
 import NewAISearchModal from "@/components/header/AISearch/modal-new";
 import { useRouter } from "next/router";
 
@@ -109,20 +109,7 @@ const AISearchPage = (props: Props) => {
   //   }, 3000);
   // }, []);
 
-  return !router.query.askai ? (
-    <AISearchModal
-      rootClassName="ai-search-page"
-      isModalOpen={isModalOpen}
-      onCloseHandle={onCloseHandle}
-      currentTheme="light"
-      // currentLanguage={iframeData.current.language}
-      // currentGroup={iframeData.current.product}
-      // currentPlatform={iframeData.current.platform}
-      currentLanguage={iframeData.language}
-      currentGroup={iframeData.product}
-      currentPlatform={iframeData.platform}
-    />
-  ) : (
+  return (
     <NewAISearchModal
       rootClassName="ai-search-page"
       isModalOpen={isModalOpen}
