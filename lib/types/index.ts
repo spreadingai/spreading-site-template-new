@@ -131,6 +131,7 @@ export interface DocInstance {
   routeBasePath: string;
   locale?: string;
   navigationInfo?: NavigationInfo;
+  visible?: boolean;
 }
 
 export enum SidebarItemType {
@@ -241,4 +242,5 @@ export interface CategoryMenuData {
   tag?: string;
   defaultLink?: string;
   children?: CategoryMenuData[];
+  visible?: boolean;
 }

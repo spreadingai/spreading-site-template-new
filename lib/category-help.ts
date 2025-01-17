@@ -1,7 +1,7 @@
 import { defaultLanguage } from "@/components/context/languageContext";
 import LibControllerImpl from "./index";
 import SlugControllerImpl from "./slug-help";
-import { CategoryMenuData, DisplayGroup } from "./types";
+import { CategoryMenuData, DisplayGroup, NavigationGroupInfo } from "./types";
 
 class CategoryController {
   static _instance: CategoryController;
@@ -21,7 +21,12 @@ class CategoryController {
     let currentCategory: string;
     let currentProduct: string;
     let index = 0;
-    const genetateTreeData = (category, group, defaultLink) => {
+    const genetateTreeData = (
+      category: string[],
+      group: NavigationGroupInfo,
+      defaultLink: string,
+      visible: boolean
+    ) => {
       // ["Products", "ZEGO UIKits", "xxx", "xxx", ...]
       let treeData: CategoryMenuData = {
         id: category[0],
@@ -59,6 +64,7 @@ class CategoryController {
                     name: group.name,
                     tag: group.tag,
                     defaultLink,
+                    visible: visible !== false,
                   },
                 ],
               };
@@ -75,6 +81,7 @@ class CategoryController {
               name: group.name,
               tag: group.tag,
               defaultLink,
+              visible: visible !== false,
             });
         } else {
           currentLevelChildren.push(newNode);
@@ -102,7 +109,12 @@ class CategoryController {
             (item) => item.group === navigationInfo.group.id
           ).defaultLink;
           const category = navigationInfo.category;
-          genetateTreeData(category, navigationInfo.group, defaultLink);
+          genetateTreeData(
+            category,
+            navigationInfo.group,
+            defaultLink,
+            instance.visible
+          );
         }
       }
     });

@@ -36,6 +36,9 @@ const CategoryContent = (props: {
                       key={subItem.id}
                       className={styles.groupContent}
                       target="_blank"
+                      style={{
+                        display: subItem.visible === false ? "none" : "flex",
+                      }}
                     >
                       <span
                         className={`${styles.groupName} ${
@@ -61,6 +64,9 @@ const CategoryContent = (props: {
                       href={subItem.defaultLink}
                       key={subItem.id}
                       className={styles.groupContent}
+                      style={{
+                        display: subItem.visible === false ? "none" : "flex",
+                      }}
                     >
                       <span
                         className={`${styles.groupName} ${
