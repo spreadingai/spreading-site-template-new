@@ -37,12 +37,7 @@ import useInstance from "@/components/hooks/useInstance";
 import useSet from "@/components/hooks/useSet";
 import styles from "@/components/search/index.module.scss";
 import { useRouter } from "next/router";
-import {
-  Input,
-  Select,
-  Tabs,
-  // Spin
-} from "antd";
+import { Input, Select, Tabs, Spin } from "antd";
 import useDocType from "@/components/hooks/useDocType";
 import {
   defaultDocTypes,
@@ -54,6 +49,8 @@ import { copywriting } from "@/components/constant/language";
 import { DEFAULT_CURRENT_SLUG_VERSION } from "@/lib/constants";
 import { allGroupItem } from "@/components/context/groupContext";
 import { allPlatformItem } from "@/components/context/platformContext";
+// @ts-ignore
+import { LoadingOutlined } from "@ant-design/icons";
 
 const ignoreStr = "docuoignoreinitsearch";
 
@@ -615,11 +612,14 @@ const HitWrap = (props) => {
   return searchKey ? (
     <div className={`${styles.hitWrap} hit_wrap`}>
       <Hits hitComponent={NewCustomHit} transformItems={transformItems} />
-      {/* {status !== "idle" ? (
-        <div className={styles.loadingWrap}>
-          <Spin className="search-loading" />
-        </div>
-      ) : null} */}
+      {status !== "idle" ? (
+        <Spin
+          className="search-loading"
+          fullscreen
+          indicator={<LoadingOutlined spin />}
+          size="large"
+        />
+      ) : null}
       {status === "idle" && !hits.length ? (
         <div className={styles.noResultsWrap}>
           <span>
@@ -818,16 +818,6 @@ export default function SearchPage(props) {
           </div>
           <HitWrap currentLanguage={currentLanguage} searchKey={searchKey} />
           <PaginationWrap searchKey={searchKey} />
-          {/* <Index indexName="zegocloud">
-            <Configure
-              facetFilters={[
-                "version:next",
-                ["instance:live_streaming_kit_ios"],
-                "language:en",
-                "",
-              ]}
-            />
-          </Index> */}
         </InstantSearch>
       </DocTypeContext.Provider>
     </div>
