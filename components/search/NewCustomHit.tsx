@@ -59,7 +59,8 @@ const NewCustomHit = ({ hit }: { hit: CustomHitType }) => {
     } else {
       titleHtmlStr = _highlightResult.hierarchy[type].value;
       for (let index = level; index >= 0; index--) {
-        if (_highlightResult.hierarchy[`lvl${index}`].matchedWords.length) {
+        const temp = _highlightResult.hierarchy[`lvl${index}`];
+        if (temp && temp.matchedWords.length) {
           titleHtmlStr = _highlightResult.hierarchy[`lvl${index}`].value;
           break;
         }
