@@ -86,3 +86,9 @@
         padding-top: 209px;
     }
 }
+@media screen and (max-width: 750px) {
+    .platformList {
+        max-height: 159px;
+        overflow-y: auto;
+    }
+}

@@ -21,7 +21,8 @@ import {
   PoweredBy,
   // Index,
 } from "react-instantsearch";
-import CustomHit from "@/components/search/CustomHit";
+// import CustomHit from "@/components/search/CustomHit";
+import NewCustomHit from "@/components/search/NewCustomHit";
 import Layout from "@/components/search/layout";
 import "instantsearch.css/themes/satellite.css";
 import LibControllerImpl from "@/lib/index";
@@ -606,9 +607,14 @@ const HitWrap = (props) => {
   // console.log("[HitWrap] status", status);
   // console.log("[HitWrap] searchKey", searchKey);
 
+  const transformItems = useCallback((items) => {
+    // sort by group
+    return items;
+  }, []);
+
   return searchKey ? (
     <div className={`${styles.hitWrap} hit_wrap`}>
-      <Hits hitComponent={CustomHit} />
+      <Hits hitComponent={NewCustomHit} transformItems={transformItems} />
       {/* {status !== "idle" ? (
         <div className={styles.loadingWrap}>
           <Spin className="search-loading" />
@@ -780,13 +786,13 @@ export default function SearchPage(props) {
               "url",
             ]}
             attributesToSnippet={[
-              "hierarchy.lvl1:5",
-              "hierarchy.lvl2:5",
-              "hierarchy.lvl3:5",
-              "hierarchy.lvl4:5",
-              "hierarchy.lvl5:5",
-              "hierarchy.lvl6:5",
-              "content:5",
+              "hierarchy.lvl1:30",
+              "hierarchy.lvl2:30",
+              "hierarchy.lvl3:30",
+              "hierarchy.lvl4:30",
+              "hierarchy.lvl5:30",
+              "hierarchy.lvl6:30",
+              "content:100",
             ]}
             facetFilters={facetFilters}
             facets={initFacets}

@@ -12,16 +12,28 @@
             margin-bottom: 0;
         }
         .DocSearch-Hit {
+            padding-top: 20px;
+            padding-bottom: 20px;
             a {
                 background: none;
+            }
+            .DocSearch-Hit-Container {
+                height: unset;
             }
         }
     }
     .DocSearch-Hit-title {
         color: var(--docuo-color-primary);
+        text-wrap: wrap;
+        margin-bottom: 6px;
+        font-size: 14px;
+        line-height: normal;
+        font-weight: normal;
     }
     .DocSearch-Hit-path {
         color: var(--docuo-breadcrumb-color);
+        line-height: normal;
+        font-size: 12px;
     }
     .DocSearch-Hit-icon {
         color: var(--docuo-breadcrumb-color);
