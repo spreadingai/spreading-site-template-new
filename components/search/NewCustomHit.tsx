@@ -53,8 +53,9 @@ const NewCustomHit = ({ hit }: { hit: CustomHitType }) => {
   if (type === "content") {
     const { content } = _snippetResult;
     const { matchLevel, value } = content;
-    titleHtmlStr =
-      matchLevel !== "none" ? value : _highlightResult.content.value;
+    // titleHtmlStr =
+    //   matchLevel !== "none" ? value : _highlightResult.content.value;
+    titleHtmlStr = value;
   } else {
     const level = Number(type.split("lvl")[1]);
     if (level === 0) {

@@ -794,15 +794,15 @@ export default function SearchPage(props) {
               "hierarchy.lvl6:30",
               "content:100",
             ]}
-            attributesToHighlight={[
-              "hierarchy.lvl1:30",
-              "hierarchy.lvl2:30",
-              "hierarchy.lvl3:30",
-              "hierarchy.lvl4:30",
-              "hierarchy.lvl5:30",
-              "hierarchy.lvl6:30",
-              "content:100",
-            ]}
+            // attributesToHighlight={[
+            //   "hierarchy.lvl1:30",
+            //   "hierarchy.lvl2:30",
+            //   "hierarchy.lvl3:30",
+            //   "hierarchy.lvl4:30",
+            //   "hierarchy.lvl5:30",
+            //   "hierarchy.lvl6:30",
+            //   "content:100",
+            // ]}
             facetFilters={facetFilters}
             facets={initFacets}
           />
