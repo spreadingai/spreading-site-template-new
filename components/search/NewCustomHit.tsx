@@ -21,7 +21,7 @@ interface CustomHitType {
     lvl6: string | null;
   };
   _snippetResult: {
-    content: { value: string };
+    content: { value: string; matchLevel?: string };
     hierarchy: {
       lvl0?: { value: string; matchedWords: string[] };
       lvl1?: { value: string; matchedWords: string[] };
@@ -33,7 +33,7 @@ interface CustomHitType {
     };
   };
   _highlightResult: {
-    content: { value: string };
+    content: { value: string; matchLevel?: string };
     hierarchy: {
       lvl0?: { value: string; matchedWords: string[] };
       lvl1?: { value: string; matchedWords: string[] };
@@ -51,7 +51,10 @@ const NewCustomHit = ({ hit }: { hit: CustomHitType }) => {
   let titleHtmlStr = "",
     pathHtmlStr = "";
   if (type === "content") {
-    titleHtmlStr = _snippetResult.content.value;
+    const { content } = _snippetResult;
+    const { matchLevel, value } = content;
+    titleHtmlStr =
+      matchLevel !== "none" ? value : _highlightResult.content.value;
   } else {
     const level = Number(type.split("lvl")[1]);
     if (level === 0) {
