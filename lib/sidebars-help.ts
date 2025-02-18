@@ -15,6 +15,7 @@ import {
   SEQUENCE_PREFIX_REGEX,
   IGNORE_FILE_NAME,
   IGNORE_FOLDER_NAME,
+  ENTITY_ROOT_DIRECTORY,
 } from "./constants";
 
 class SidebarsController {
@@ -39,17 +40,17 @@ class SidebarsController {
     let result: Sidebars = null;
 
     // Old Logic
-    // let rootUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
+    // let rootUrl = `${ENTITY_ROOT_DIRECTORY}/${
     //   instanceID === DEFAULT_INSTANCE_ID ? "" : instanceID + "_"
     // }docs`;
-    // let newRootUrl = `${LibControllerImpl.getEntityRootDirectory()}/docs${
+    // let newRootUrl = `${ENTITY_ROOT_DIRECTORY}/docs${
     //   instanceID === DEFAULT_INSTANCE_ID ? "" : "_" + instanceID
     // }`;
     // if (docVersion) {
-    //   rootUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
+    //   rootUrl = `${ENTITY_ROOT_DIRECTORY}/${
     //     instanceID === DEFAULT_INSTANCE_ID ? "" : instanceID + "_"
     //   }versioned_docs/version-${docVersion}`;
-    //   newRootUrl = `${LibControllerImpl.getEntityRootDirectory()}/docs_${
+    //   newRootUrl = `${ENTITY_ROOT_DIRECTORY}/docs_${
     //     instanceID === DEFAULT_INSTANCE_ID ? "" : instanceID + "_"
     //   }versioned/version-${docVersion}`;
     // }
@@ -60,23 +61,23 @@ class SidebarsController {
     ).find((instance) => instance.id === instanceID);
     const temp = targetInstance.path.split("/");
     const instanceFolder = temp.slice(0, temp.length - 1).join("/");
-    let rootUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
+    let rootUrl = `${ENTITY_ROOT_DIRECTORY}/${
       instanceID === DEFAULT_INSTANCE_ID
         ? ""
         : (instanceFolder ? instanceFolder + "/" : "") + instanceID + "_"
     }docs`;
-    let newRootUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
+    let newRootUrl = `${ENTITY_ROOT_DIRECTORY}/${
       instanceID === DEFAULT_INSTANCE_ID
         ? "docs"
         : (instanceFolder ? instanceFolder + "/" : "") + "docs_" + instanceID
     }`;
     if (docVersion) {
-      rootUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
+      rootUrl = `${ENTITY_ROOT_DIRECTORY}/${
         instanceID === DEFAULT_INSTANCE_ID
           ? ""
           : (instanceFolder ? instanceFolder + "/" : "") + instanceID + "_"
       }versioned_docs/version-${docVersion}`;
-      newRootUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
+      newRootUrl = `${ENTITY_ROOT_DIRECTORY}/${
         instanceID === DEFAULT_INSTANCE_ID
           ? "docs_"
           : (instanceFolder ? instanceFolder + "/" : "") +

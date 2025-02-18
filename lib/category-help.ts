@@ -1,6 +1,5 @@
 import { defaultLanguage } from "@/components/context/languageContext";
 import LibControllerImpl from "./index";
-import SlugControllerImpl from "./slug-help";
 import { CategoryMenuData, DisplayGroup, NavigationGroupInfo } from "./types";
 
 class CategoryController {

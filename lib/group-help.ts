@@ -1,6 +1,6 @@
 import LibControllerImpl from "./index";
 import SlugControllerImpl from "./slug-help";
-import { DisplayGroup, InstanceType, NavigationGroupInfo } from "./types";
+import { DisplayGroup, NavigationGroupInfo } from "./types";
 
 class GroupController {
   static _instance: GroupController;

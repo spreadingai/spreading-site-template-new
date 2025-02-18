@@ -9,6 +9,7 @@ import {
   DEFAULT_CURRENT_SLUG_VERSION,
   UNLIMITED_VERSION_NUMBER,
   DEFAULT_CURRENT_DOC_VERSION,
+  ENTITY_ROOT_DIRECTORY,
 } from "./constants";
 
 class VersionsController {
@@ -32,7 +33,7 @@ class VersionsController {
     const instance = LibControllerImpl.getTargetInstance(instanceID);
     const temp = instance.path.split("/");
     const instanceFolder = temp.slice(0, temp.length - 1).join("/");
-    const versionsUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
+    const versionsUrl = `${ENTITY_ROOT_DIRECTORY}/${
       instance.id === DEFAULT_INSTANCE_ID
         ? ""
         : (instanceFolder ? instanceFolder + "/" : "") + instance.id + "_"
@@ -83,22 +84,22 @@ class VersionsController {
     const instance = LibControllerImpl.getTargetInstance(instanceID);
 
     // Old Logic
-    // const versionedUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
+    // const versionedUrl = `${ENTITY_ROOT_DIRECTORY}/${
     //   instance.id === DEFAULT_INSTANCE_ID ? "" : instance.id + "_"
     // }versioned_docs`;
-    // const newVersionedUrl = `${LibControllerImpl.getEntityRootDirectory()}/docs_${
+    // const newVersionedUrl = `${ENTITY_ROOT_DIRECTORY}/docs_${
     //   instance.id === DEFAULT_INSTANCE_ID ? "" : instance.id + "_"
     // }versioned`;
 
     // New logic: Use the path of the instance directly
     const temp = instance.path.split("/");
     const instanceFolder = temp.slice(0, temp.length - 1).join("/");
-    const versionedUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
+    const versionedUrl = `${ENTITY_ROOT_DIRECTORY}/${
       instance.id === DEFAULT_INSTANCE_ID
         ? ""
         : (instanceFolder ? instanceFolder + "/" : "") + instance.id + "_"
     }versioned_docs`;
-    const newVersionedUrl = `${LibControllerImpl.getEntityRootDirectory()}/${
+    const newVersionedUrl = `${ENTITY_ROOT_DIRECTORY}/${
       instance.id === DEFAULT_INSTANCE_ID
         ? "docs_versioned"
         : (instanceFolder ? instanceFolder + "/" : "") +

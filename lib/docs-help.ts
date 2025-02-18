@@ -28,7 +28,7 @@ import SlugControllerImpl from "./slug-help";
 import VersionsControllerImpl from "./versions-help";
 import ShortLinkTransControllerImpl from "./trans-short-link";
 import { convertDocID, ignoreNumberPrefix, removeMdxSuffix } from "./utils";
-import { DEFAULT_INSTANCE_ID } from "./constants";
+import { DEFAULT_INSTANCE_ID, ENTITY_ROOT_DIRECTORY } from "./constants";
 import { InstanceType } from "./types";
 
 // import Markdoc from "@markdoc/markdoc";
@@ -70,21 +70,21 @@ class DocsController {
         .path.split("/");
       const instanceFolder = temp.slice(0, temp.length - 1).join("/");
       rootUrl = path.join(
-        LibControllerImpl.getEntityRootDirectory(),
+        ENTITY_ROOT_DIRECTORY,
         (instanceID === DEFAULT_INSTANCE_ID
           ? ""
           : (instanceFolder ? instanceFolder + "/" : "") + instanceID + "_") +
           "docs"
       );
       newRootUrl = path.join(
-        LibControllerImpl.getEntityRootDirectory(),
+        ENTITY_ROOT_DIRECTORY,
         instanceID === DEFAULT_INSTANCE_ID
           ? "docs"
           : (instanceFolder ? instanceFolder + "/" : "") + "docs_" + instanceID
       );
       if (docVersion) {
         rootUrl = path.join(
-          LibControllerImpl.getEntityRootDirectory(),
+          ENTITY_ROOT_DIRECTORY,
           `${
             instanceID === DEFAULT_INSTANCE_ID
               ? ""
@@ -93,7 +93,7 @@ class DocsController {
           `version-${docVersion}`
         );
         newRootUrl = path.join(
-          LibControllerImpl.getEntityRootDirectory(),
+          ENTITY_ROOT_DIRECTORY,
           `${
             instanceID === DEFAULT_INSTANCE_ID
               ? "docs_"
@@ -257,7 +257,7 @@ class DocsController {
     )}`;
   }
   copyStaticFile() {
-    const staticFileUrl = `${LibControllerImpl.getEntityRootDirectory()}/static`;
+    const staticFileUrl = `${ENTITY_ROOT_DIRECTORY}/static`;
     const staticFilePath = path.resolve("./public", "..", staticFileUrl);
     const targetFileUrl = "public";
     const targetFilePath = path.resolve("./public", "..", targetFileUrl);

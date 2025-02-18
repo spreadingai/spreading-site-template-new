@@ -13,12 +13,15 @@ import {
   InstanceType,
   DocInstance,
 } from "./types";
-import { DEFAULT_INSTANCE_ID, UNLIMITED_INSTANCE_NUMBER } from "./constants";
+import {
+  DEFAULT_INSTANCE_ID,
+  ENTITY_ROOT_DIRECTORY,
+  UNLIMITED_INSTANCE_NUMBER,
+} from "./constants";
 
 class LibController {
   static _instance: LibController;
   _docuoConfig: DocuoConfig;
-  _entityRootDirectory = "docs";
   _addDefaultLinkMarker = false;
   _updateFooterLinksMarker = false;
   _displayInstances = null;
@@ -35,9 +38,7 @@ class LibController {
         const docuoConfigPath = path.resolve(
           "./public",
           "..",
-          `${this.getEntityRootDirectory()}/${
-            process.env.NEXT_PUBLIC_CONFIG_FILE
-          }`
+          `${ENTITY_ROOT_DIRECTORY}/${process.env.NEXT_PUBLIC_CONFIG_FILE}`
         );
         // console.log(
         //   "[LibController]getDocuoConfig docuoConfigPath",
@@ -123,9 +124,6 @@ class LibController {
     } else {
       return instances;
     }
-  }
-  getEntityRootDirectory() {
-    return this._entityRootDirectory;
   }
   getFirstSlug(allSlugs: SlugData[], instanceID: string, sidebarIds: string[]) {
     let firstSlug: string[] = [];
