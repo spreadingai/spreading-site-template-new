@@ -26,7 +26,7 @@ import NewCustomHit from "@/components/search/NewCustomHit";
 import Layout from "@/components/search/layout";
 import "instantsearch.css/themes/satellite.css";
 import LibControllerImpl from "@/lib/index";
-import VersionsControllerImpl from "@/lib/versions-help";
+import CommonControllerImpl from "@/lib/debug/common";
 import GroupControllerImpl from "@/lib/client/group-help";
 import PlatformControllerImpl from "@/lib/client/platform-help";
 import useGroup from "@/components/hooks/useGroup";
@@ -51,6 +51,7 @@ import { allGroupItem } from "@/components/context/groupContext";
 import { allPlatformItem } from "@/components/context/platformContext";
 // @ts-ignore
 import { LoadingOutlined } from "@ant-design/icons";
+import { InstanceType } from "@/lib/types";
 
 const ignoreStr = "docuoignoreinitsearch";
 
@@ -59,8 +60,9 @@ const isNumber = (value: any) => {
 };
 
 export const getStaticProps = (props) => {
-  const allUsedVersions = VersionsControllerImpl.getAllUsedVersions();
   const inputDocuoConfig = LibControllerImpl.getDocuoConfig();
+  const instances = LibControllerImpl.getInstances(InstanceType.Normal);
+  const allUsedVersions = CommonControllerImpl.getAllUsedVersions(instances);
   return {
     props: {
       inputDocuoConfig,

@@ -1,12 +1,13 @@
 import { useRouter } from "next/router";
-import SlugControllerImpl from "@/lib/slug-help";
+import CommonControllerImpl from "@/lib/debug/common";
 
 interface Props {
   slug: string[];
 }
 
 export const getStaticProps = async () => {
-  const allSlugs = SlugControllerImpl.getAllSlugs();
+  const allSlugs = CommonControllerImpl.readAllSlugsByFile();
+  console.log("[Index] getStaticProps allSlugs: ", allSlugs);
   return {
     props: {
       slug: allSlugs[0] ? allSlugs[0].params.slug : ["404"],
