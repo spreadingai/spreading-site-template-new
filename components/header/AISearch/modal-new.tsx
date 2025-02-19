@@ -41,13 +41,15 @@ import {
   startConverseFetch,
 } from "./fetch";
 import outStyles from "./modal.new.module.scss";
-import { bundledLanguages, createHighlighter } from "shiki";
+// import { bundledLanguages, createHighlighter } from "shiki";
 import MarkdownIt from "markdown-it";
 import { MessageInfo } from "@ant-design/x/es/useXChat";
 import { v4 as uuidv4 } from "uuid";
 import { ThemeProvider } from "antd-style";
 import { Markdown } from "@ant-design/pro-editor";
-const langs = Object.keys(bundledLanguages);
+// const langs = Object.keys(bundledLanguages);
+
+const md = MarkdownIt({ html: true, breaks: true });
 
 interface AnswerData {
   score?: ScoreType;
@@ -143,7 +145,7 @@ const Independent = (props: Props) => {
   const currentPlatformRef = useRef<string>("");
   const chatIDRef = useRef<string>("");
   const activeKeyRef = useRef<string>("");
-  const mdRef = useRef(null);
+  // const mdRef = useRef(null);
 
   const aiSearchData = copywriting[currentLanguage].aiSearch;
 
@@ -540,15 +542,15 @@ const Independent = (props: Props) => {
       });
   }, []);
 
-  const initHighlighter = useCallback(async () => {
-    try {
-      const highlighter = await createHighlighter({
-        themes: ["one-light", "one-dark-pro"],
-        langs,
-      });
-      setHighlighter(highlighter);
-    } catch (error) {}
-  }, []);
+  // const initHighlighter = useCallback(async () => {
+  //   try {
+  //     const highlighter = await createHighlighter({
+  //       themes: ["one-light", "one-dark-pro"],
+  //       langs,
+  //     });
+  //     setHighlighter(highlighter);
+  //   } catch (error) {}
+  // }, []);
 
   // ==================== Event ====================
   const onSubmit = (nextContent: string) => {
@@ -570,9 +572,10 @@ const Independent = (props: Props) => {
   const onPromptsItemClick: GetProp<typeof Prompts, "onItemClick"> = (info) => {
     if (
       activeKey &&
-      !agent.isRequesting() &&
-      ((process.env.NODE_ENV === "development" && mdRef.current) ||
-        process.env.NODE_ENV !== "development")
+      !agent.isRequesting()
+      // &&
+      // ((process.env.NODE_ENV === "development" && mdRef.current) ||
+      //   process.env.NODE_ENV !== "development")
     ) {
       onRequest({
         type: "user",
@@ -712,7 +715,8 @@ const Independent = (props: Props) => {
         <div
           className={outStyles.articleWrap}
           dangerouslySetInnerHTML={{
-            __html: mdRef.current.render(content),
+            // __html: mdRef.current.render(content),
+            __html: md.render(content),
           }}
         />
       </Typography>
@@ -872,31 +876,31 @@ const Independent = (props: Props) => {
     setDefaultQuestions(currentQuestions);
   }, [currentGroup, currentPlatform, localChatIDMap]);
 
-  useEffect(() => {
-    if (process.env.NODE_ENV === "development") {
-      initHighlighter();
-    }
-  }, [initHighlighter]);
+  // useEffect(() => {
+  //   if (process.env.NODE_ENV === "development") {
+  //     initHighlighter();
+  //   }
+  // }, [initHighlighter]);
 
-  useEffect(() => {
-    if (highlighter) {
-      const md = MarkdownIt({
-        highlight: function (str: string, lang: string) {
-          if (lang && langs.includes(lang)) {
-            try {
-              const codeHtml = highlighter.codeToHtml(str, {
-                lang,
-                theme: currentTheme === "light" ? "one-light" : "one-dark-pro",
-              });
-              return codeHtml;
-            } catch (__) {}
-          }
-          return "";
-        },
-      });
-      mdRef.current = md;
-    }
-  }, [currentTheme, highlighter]);
+  // useEffect(() => {
+  //   if (highlighter) {
+  //     const md = MarkdownIt({
+  //       highlight: function (str: string, lang: string) {
+  //         if (lang && langs.includes(lang)) {
+  //           try {
+  //             const codeHtml = highlighter.codeToHtml(str, {
+  //               lang,
+  //               theme: currentTheme === "light" ? "one-light" : "one-dark-pro",
+  //             });
+  //             return codeHtml;
+  //           } catch (__) {}
+  //         }
+  //         return "";
+  //       },
+  //     });
+  //     mdRef.current = md;
+  //   }
+  // }, [currentTheme, highlighter]);
 
   useEffect(() => {
     //   getChatIDMap().then((chatIDMap) => {
@@ -989,8 +993,9 @@ const Independent = (props: Props) => {
                 loading={agent.isRequesting()}
                 className={outStyles.sender}
                 disabled={
-                  !activeKey ||
-                  (process.env.NODE_ENV === "development" && !mdRef.current)
+                  !activeKey
+                  // ||
+                  // (process.env.NODE_ENV === "development" && !mdRef.current)
                 }
                 onCancel={onCancel}
                 placeholder={
