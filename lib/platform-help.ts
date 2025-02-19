@@ -1,5 +1,5 @@
 import LibControllerImpl from "./index";
-import SlugControllerImpl from "./slug-help";
+import CommonControllerImpl from "./debug/common";
 import LanguageControllerImpl from "./language-help";
 import { DisplayPlatform, NavigationInfo } from "./types";
 
@@ -24,7 +24,7 @@ class PlatformController {
       slugVersion: currentSlugVersion,
       docVersion: currentDocVersion,
       mdxFileID,
-    } = SlugControllerImpl.getExtractInfoFromSlug(slug);
+    } = CommonControllerImpl.getExtractInfoFromSlug(slug, instances);
     const targetInstance = instances.find(
       (instance) => instance.id === targetInstanceID
     );

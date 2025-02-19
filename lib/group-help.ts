@@ -1,6 +1,6 @@
 import LibControllerImpl from "./index";
-import SlugControllerImpl from "./slug-help";
 import { DisplayGroup, NavigationGroupInfo } from "./types";
+import CommonControllerImpl from "./debug/common";
 
 class GroupController {
   static _instance: GroupController;
@@ -19,7 +19,7 @@ class GroupController {
 
     const instances = LibControllerImpl.getInstances();
     const { instanceID: targetInstanceID } =
-      SlugControllerImpl.getExtractInfoFromSlug(slug);
+      CommonControllerImpl.getExtractInfoFromSlug(slug, instances);
     const targetInstance = instances.find(
       (instance) => instance.id === targetInstanceID
     );
@@ -28,7 +28,7 @@ class GroupController {
       if (navigationInfo && navigationInfo.group) {
         result.currentGroup = navigationInfo.group.id;
         result.currentGroupLabel = navigationInfo.group.name;
-        const allSlugs = SlugControllerImpl.getAllSlugs();
+        const allSlugs = CommonControllerImpl.readAllSlugsByFile();
         // Aggregate group data
         instances.forEach((instance) => {
           // The new version uses locale judgment, and we're going to replace the suffix judgment later

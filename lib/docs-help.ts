@@ -24,8 +24,7 @@ import {
 } from "@/plugins";
 
 import LibControllerImpl from "./index";
-import SlugControllerImpl from "./slug-help";
-import VersionsControllerImpl from "./versions-help";
+import CommonControllerImpl from "./debug/common";
 import ShortLinkTransControllerImpl from "./trans-short-link";
 import { convertDocID, ignoreNumberPrefix, removeMdxSuffix } from "./utils";
 import { DEFAULT_INSTANCE_ID, ENTITY_ROOT_DIRECTORY } from "./constants";
@@ -50,9 +49,11 @@ class DocsController {
     // const html = Markdoc.renderers.html(content);
 
     console.log(`[DocsController]readDoc `, slug);
+    const instances = LibControllerImpl.getInstances();
     const { docVersion, mdxFileID, instanceID, slugVersion, routeBasePath } =
-      SlugControllerImpl.getExtractInfoFromSlug(slug);
-    const versions = VersionsControllerImpl.getUsedVersions(instanceID);
+      CommonControllerImpl.getExtractInfoFromSlug(slug, instances);
+    const instance = LibControllerImpl.getTargetInstance(instanceID);
+    const versions = CommonControllerImpl.getUsedVersions(instanceID, instance);
 
     let originContent =
       "The conversion of the article content encountered an exception and cannot be displayed.";
@@ -255,33 +256,6 @@ class DocsController {
     return `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/docs/${path.join(
       publicPath
     )}`;
-  }
-  copyStaticFile() {
-    const staticFileUrl = `${ENTITY_ROOT_DIRECTORY}/static`;
-    const staticFilePath = path.resolve("./public", "..", staticFileUrl);
-    const targetFileUrl = "public";
-    const targetFilePath = path.resolve("./public", "..", targetFileUrl);
-
-    function loop(source, target) {
-      if (!fs.existsSync(source)) {
-        return;
-      }
-      if (!fs.existsSync(target)) {
-        fs.mkdirSync(target);
-      }
-      const files = fs.readdirSync(source);
-      files.forEach((file) => {
-        const sourcePath = path.join(source, file);
-        const targetPath = path.join(target, file);
-
-        if (fs.statSync(sourcePath).isDirectory()) {
-          loop(sourcePath, targetPath);
-        } else {
-          fs.copyFileSync(sourcePath, targetPath);
-        }
-      });
-    }
-    loop(staticFilePath, targetFilePath);
   }
   getActualMdxFilePath(rootUrl: string, mdxFileID: string) {
     const rootPath = path.resolve("./public", "..", rootUrl);

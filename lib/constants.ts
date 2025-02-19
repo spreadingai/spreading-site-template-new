@@ -16,6 +16,8 @@ export const UNLIMITED_VERSION_NUMBER = "-1";
 
 // Ignore file, folder
 export const IGNORE_FILE_NAME = [".DS_Store"];
-export const IGNORE_FOLDER_NAME = ["snippets"];
+export const IGNORE_FOLDER_NAME = ["snippets", "middleware"];
 
 export const ENTITY_ROOT_DIRECTORY = "docs";
+
+export const MIDDLEWARE_DIRECTORY = "middleware";

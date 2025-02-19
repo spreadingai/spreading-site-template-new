@@ -1,7 +1,6 @@
 import LibControllerImpl from "./index";
-import SlugControllerImpl from "./slug-help";
-import VersionsControllerImpl from "./versions-help";
-import { DisplayLanguage, InstanceType } from "./types";
+import CommonControllerImpl from "./debug/common";
+import { DisplayLanguage } from "./types";
 import {
   DEFAULT_CURRENT_DOC_VERSION,
   DEFAULT_LATEST_SLUG_VERSION,
@@ -44,12 +43,13 @@ class LanguageController {
       displayLanguages: DisplayLanguage[];
     } = { currentLanguage: "", currentLanguageLabel: "", displayLanguages: [] };
     if (i18n && i18n.localeConfigs) {
+      const instances = LibControllerImpl.getInstances();
       const {
         instanceID,
         slugVersion: currentSlugVersion,
         docVersion: currentDocVersion,
         mdxFileID,
-      } = SlugControllerImpl.getExtractInfoFromSlug(slug);
+      } = CommonControllerImpl.getExtractInfoFromSlug(slug, instances);
       const keys = Object.keys(i18n.localeConfigs);
       const { baseInstanceID, currentLanguage } =
         this.getInfoByInstanceID(instanceID);
@@ -119,14 +119,16 @@ class LanguageController {
     targetInstance
   ) {
     let targetSlugVersion = currentSlugVersion;
-    const targetUsedVersions = VersionsControllerImpl.getUsedVersions(
-      targetInstance.id
-    ).concat([DEFAULT_CURRENT_DOC_VERSION]);
+    const versions = CommonControllerImpl.getUsedVersions(
+      targetInstance.id,
+      targetInstance
+    );
+    const targetUsedVersions = versions.concat([DEFAULT_CURRENT_DOC_VERSION]);
     if (currentSlugVersion === DEFAULT_LATEST_SLUG_VERSION) {
       if (targetUsedVersions.includes(currentDocVersion)) {
-        const temp = SlugControllerImpl.docVersionToSlugVersion(
-          targetInstance.id,
-          currentDocVersion
+        const temp = CommonControllerImpl.docVersionToSlugVersion(
+          currentDocVersion,
+          versions
         );
         if (temp !== DEFAULT_LATEST_SLUG_VERSION) {
           targetSlugVersion = temp;
@@ -134,9 +136,9 @@ class LanguageController {
       }
     } else {
       if (targetUsedVersions.includes(currentDocVersion)) {
-        const temp = SlugControllerImpl.docVersionToSlugVersion(
-          targetInstance.id,
-          currentDocVersion
+        const temp = CommonControllerImpl.docVersionToSlugVersion(
+          currentDocVersion,
+          versions
         );
         if (temp === DEFAULT_LATEST_SLUG_VERSION) {
           targetSlugVersion = DEFAULT_LATEST_SLUG_VERSION;
@@ -150,7 +152,7 @@ class LanguageController {
     }/${targetSlugVersion}${targetSlugVersion ? "/" : ""}`;
     let defaultLink = defaultPrefix + mdxFileID;
     // Check whether the document corresponding to the path exists
-    const allSlugs = SlugControllerImpl.getAllSlugs();
+    const allSlugs = CommonControllerImpl.readAllSlugsByFile();
     if (
       !allSlugs.find((item) => `/${item.params.slug.join("/")}` === defaultLink)
     ) {

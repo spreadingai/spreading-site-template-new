@@ -1,6 +1,7 @@
 import { PaginationData } from "@/components/articlePager";
-import SlugControllerImpl from "./slug-help";
+import LibControllerImpl from "./index";
 import SidebarsControllerImpl from "./sidebars-help";
+import CommonControllerImpl from "./debug/common";
 import { SidebarItem } from "./types";
 
 class PageController {
@@ -21,7 +22,7 @@ class PageController {
       next: { description: "", href: "" },
       curr: { description: this.findSitebarItemLabel(slug), href: "" },
     };
-    const allSlugs = SlugControllerImpl.getAllSlugs();
+    const allSlugs = CommonControllerImpl.readAllSlugsByFile();
     for (let index = 0, len = allSlugs.length; index < len; index++) {
       const element = allSlugs[index];
       const params = element.params;
@@ -63,8 +64,9 @@ class PageController {
   }
   findSitebarItemLabel(slug) {
     let targetLabel = "";
+    const instances = LibControllerImpl.getInstances();
     const { instanceID, docVersion, mdxFileID } =
-      SlugControllerImpl.getExtractInfoFromSlug(slug);
+      CommonControllerImpl.getExtractInfoFromSlug(slug, instances);
     const sidebars = SidebarsControllerImpl.getSidebars(instanceID, docVersion);
     const temp = mdxFileID.split("/");
     const arr = Object.values(sidebars)[0] as SidebarItem[];

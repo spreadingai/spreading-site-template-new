@@ -1,9 +1,8 @@
 import fs from "fs";
 import path from "path";
 import LibControllerImpl from "./index";
-// TODO:Here's the cross-reference
-import SlugControllerImpl from "./slug-help";
-import { DisplayVersion, InstanceType, Plan } from "./types";
+import CommonControllerImpl from "./debug/common";
+import { DisplayVersion, Plan } from "./types";
 import {
   DEFAULT_INSTANCE_ID,
   DEFAULT_CURRENT_SLUG_VERSION,
@@ -21,64 +20,6 @@ class VersionsController {
       VersionsController._instance ||
       (VersionsController._instance = new VersionsController())
     );
-  }
-  getUsedVersions(instanceID: string) {
-    if (this._usedVersionsMap[instanceID]) {
-      // console.log(`[VersionsController]getUsedVersions cache`);
-      return JSON.parse(
-        JSON.stringify(this._usedVersionsMap[instanceID])
-      ) as string[];
-    }
-    // Use the external current version if the file is not present or the list is empty
-    const instance = LibControllerImpl.getTargetInstance(instanceID);
-    const temp = instance.path.split("/");
-    const instanceFolder = temp.slice(0, temp.length - 1).join("/");
-    const versionsUrl = `${ENTITY_ROOT_DIRECTORY}/${
-      instance.id === DEFAULT_INSTANCE_ID
-        ? ""
-        : (instanceFolder ? instanceFolder + "/" : "") + instance.id + "_"
-    }versions.json`;
-    const versionsPath = path.resolve("./public", "..", versionsUrl);
-    let versions: string[] = [];
-    // Increased the version limit
-    if (Number(process.env.NEXT_PUBLIC_PLAN) !== Plan.Free) {
-      if (fs.existsSync(versionsPath)) {
-        versions = (
-          JSON.parse(fs.readFileSync(versionsPath, "utf8")) as string[]
-        ).filter((version) => version);
-      }
-      if (
-        process.env.NEXT_PUBLIC_VERSION_LIMIT &&
-        process.env.NEXT_PUBLIC_VERSION_LIMIT !== UNLIMITED_VERSION_NUMBER
-      ) {
-        try {
-          const limit = Number(process.env.NEXT_PUBLIC_VERSION_LIMIT);
-          if (!isNaN(limit) && limit) {
-            versions.splice(limit - 1);
-          }
-        } catch (error) {
-          console.log(
-            `[DocsController]getUsedVersions process.env.NEXT_PUBLIC_VERSION_LIMIT: `,
-            process.env.NEXT_PUBLIC_VERSION_LIMIT
-          );
-        }
-      }
-    }
-    this._usedVersionsMap[instanceID] = versions;
-    return JSON.parse(
-      JSON.stringify(this._usedVersionsMap[instanceID])
-    ) as string[];
-  }
-  getAllUsedVersions() {
-    const instances = LibControllerImpl.getInstances(InstanceType.Normal);
-    instances.forEach((instance) => {
-      const usedVersions = this.getUsedVersions(instance.id);
-      this._usedVersionsMap[instance.id] = usedVersions;
-    });
-    return JSON.parse(JSON.stringify(this._usedVersionsMap)) as Record<
-      string,
-      string[]
-    >;
   }
   getActualVersions(instanceID: string) {
     const instance = LibControllerImpl.getTargetInstance(instanceID);
@@ -141,16 +82,22 @@ class VersionsController {
   }
   getDisplayVersions(slug: string[]) {
     const result: DisplayVersion[] = [];
+    const instances = LibControllerImpl.getInstances();
     const { instanceID, routeBasePath, mdxFileID } =
-      SlugControllerImpl.getExtractInfoFromSlug(slug);
-    const usedVersions = this.getUsedVersions(instanceID);
+      CommonControllerImpl.getExtractInfoFromSlug(slug, instances);
+    const instance = LibControllerImpl.getTargetInstance(instanceID);
+    const usedVersions = CommonControllerImpl.getUsedVersions(
+      instanceID,
+      instance
+    );
+    const usedVersions_copy = JSON.parse(JSON.stringify(usedVersions));
     if (usedVersions.length) {
       // ["1.1.0", "1.0.0", ""]
       usedVersions.push(DEFAULT_CURRENT_DOC_VERSION);
       usedVersions.forEach((docVersion) => {
-        const slugVersion = SlugControllerImpl.docVersionToSlugVersion(
-          instanceID,
-          docVersion
+        const slugVersion = CommonControllerImpl.docVersionToSlugVersion(
+          docVersion,
+          usedVersions_copy
         );
         const version = slugVersion || docVersion; // Here's the latest version to show
         result.push({

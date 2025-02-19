@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import inputDocuoConfig from "@/docs/docuo.config.json";
-import SlugControllerImpl from "./slug-help";
+import CommonControllerImpl from "./debug/common";
 import {
   DisplayInstance,
   DocuoConfig,
@@ -137,7 +137,7 @@ class LibController {
   }
   addDefaultLink() {
     if (this._addDefaultLinkMarker) return;
-    const allSlugs = SlugControllerImpl.getAllSlugs();
+    const allSlugs = CommonControllerImpl.readAllSlugsByFile();
     const { themeConfig } = this.getDocuoConfig();
     const instances = this.getInstances();
     if (!themeConfig) return;
@@ -195,7 +195,7 @@ class LibController {
     }
     if (!this._docuoConfig) return [];
     const { i18n } = this._docuoConfig;
-    const allSlugs = SlugControllerImpl.getAllSlugs();
+    const allSlugs = CommonControllerImpl.readAllSlugsByFile();
     const result: DisplayInstance[] = [];
     const instances = this.getInstances();
     instances.forEach((instance) => {

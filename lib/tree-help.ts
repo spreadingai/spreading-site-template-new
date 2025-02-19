@@ -1,6 +1,6 @@
-import SlugControllerImpl from "./slug-help";
 import { FolderTreeData, SidebarItem, SidebarItemType } from "./types";
-import VersionsControllerImpl from "./versions-help";
+import LibControllerImpl from "./index";
+import CommonControllerImpl from "./debug/common";
 import SidebarsControllerImpl from "./sidebars-help";
 
 class TreeController {
@@ -17,13 +17,14 @@ class TreeController {
     );
   }
   getFolderTreeDataBySlug(slug: string[], customID?: string) {
+    const instances = LibControllerImpl.getInstances();
     const {
       instanceID,
       routeBasePath,
       docVersion,
       slugVersion,
       mdxFileID: currentMdxFileID,
-    } = SlugControllerImpl.getExtractInfoFromSlug(slug);
+    } = CommonControllerImpl.getExtractInfoFromSlug(slug, instances);
     if (
       process.env.NODE_ENV !== "development" &&
       this._folderTreeDataMap[instanceID] &&
@@ -36,8 +37,8 @@ class TreeController {
     }
 
     let tree: FolderTreeData[] = [];
-
-    const versions = VersionsControllerImpl.getUsedVersions(instanceID);
+    const instance = LibControllerImpl.getTargetInstance(instanceID);
+    const versions = CommonControllerImpl.getUsedVersions(instanceID, instance);
     if (slugVersion && slugVersion === versions[0]) {
       tree = [];
     } else {
