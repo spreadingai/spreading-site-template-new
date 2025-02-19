@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import inputDocuoConfig from "@/docs/docuo.config.json";
-import CommonControllerImpl from "./debug/common";
+import CommonControllerImpl from "./optimize/common";
 import {
   DisplayInstance,
   DocuoConfig,

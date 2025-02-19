@@ -2,6 +2,12 @@
 
 import NextBundleAnalyzer from "@next/bundle-analyzer";
 
+import SpeedMeasurePlugin from "speed-measure-webpack-plugin";
+const smp = new SpeedMeasurePlugin({
+  disable: process.env.ANALYZE !== "true",
+  outputFormat: "humanVerbose",
+});
+
 const withBundleAnalyzer = NextBundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
 });
@@ -12,7 +18,7 @@ const nextConfig = {
   // Optionally, add any other Next.js config below
   reactStrictMode: true, // Version 13.4 or later is true by default in the app router
   swcMinify: true, // Version 13 or later is true by default
-  compress: false, // TODO:Why disable gzip
+  compress: true, // TODO:Why disable gzip
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -22,7 +28,7 @@ const nextConfig = {
     //   "pages/**/*.tsx": [".next/cache/webpack/*"],
     // },
   },
-  cacheMaxMemorySize: 0,
+  // cacheMaxMemorySize: 0,
   transpilePackages: [
     "antd",
     "rc-util",
@@ -65,6 +71,7 @@ const nextConfig = {
     // Modify the file loader rule to ignore *.svg, since we have it handled now.
     fileLoaderRule.exclude = /\.svg$/i;
 
+    config.plugins.push(smp);
     return config;
   },
   rewrites() {

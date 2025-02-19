@@ -1,5 +1,5 @@
 import LibControllerImpl from "./index";
-import CommonControllerImpl from "./debug/common";
+import CommonControllerImpl from "./optimize/common";
 import { DisplayLanguage } from "./types";
 import {
   DEFAULT_CURRENT_DOC_VERSION,

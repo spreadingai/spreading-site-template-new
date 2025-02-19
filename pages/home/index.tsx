@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import CommonControllerImpl from "@/lib/debug/common";
+import CommonControllerImpl from "@/lib/optimize/common";
 
 interface Props {
   slug: string[];

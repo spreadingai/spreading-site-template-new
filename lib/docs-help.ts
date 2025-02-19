@@ -24,7 +24,7 @@ import {
 } from "@/plugins";
 
 import LibControllerImpl from "./index";
-import CommonControllerImpl from "./debug/common";
+import CommonControllerImpl from "./optimize/common";
 import ShortLinkTransControllerImpl from "./trans-short-link";
 import { convertDocID, ignoreNumberPrefix, removeMdxSuffix } from "./utils";
 import { DEFAULT_INSTANCE_ID, ENTITY_ROOT_DIRECTORY } from "./constants";

@@ -1,7 +1,7 @@
 import fs from "fs";
 import path from "path";
 import LibControllerImpl from "./index";
-import CommonControllerImpl from "./debug/common";
+import CommonControllerImpl from "./optimize/common";
 import { DisplayVersion, Plan } from "./types";
 import {
   DEFAULT_INSTANCE_ID,

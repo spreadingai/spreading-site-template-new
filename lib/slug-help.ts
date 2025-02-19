@@ -1,7 +1,7 @@
 import LibControllerImpl from "./index";
 import { InstanceType, SidebarItem, SidebarItemType, SlugData } from "./types";
 import SidebarsControllerImpl from "./sidebars-help";
-import CommonControllerImpl from "./debug/common";
+import CommonControllerImpl from "./optimize/common";
 import {
   DEFAULT_CURRENT_SLUG_VERSION,
   DEFAULT_LATEST_SLUG_VERSION,

@@ -29,6 +29,7 @@ import VersionsControllerImpl from "@/lib/versions-help";
 import PagerControllerImpl from "@/lib/pager-help";
 import ShortLinkTransControllerImpl from "@/lib/trans-short-link";
 import CategoryTransControllerImpl from "@/lib/category-help";
+import CommonControllerImpl from "@/lib/optimize/common";
 import Link from "next/link";
 import { SlugData, DocuoConfig, TocItem } from "@/lib/types";
 import Head from "next/head";
@@ -131,8 +132,9 @@ export const getStaticProps = async ({ params }: SlugData) => {
   // Reason: `undefined` cannot be serialized as JSON. Please use `null` or omit this value.
   const docuoConfig = LibControllerImpl.getDocuoConfig();
   LibControllerImpl.addDefaultLink();
+  const instances = LibControllerImpl.getInstances();
   const { instanceID, slugVersion, docVersion } =
-    SlugControllerImpl.getExtractInfoFromSlug(slug);
+    CommonControllerImpl.getExtractInfoFromSlug(slug, instances);
   const { currentLanguage } =
     LanguageControllerImpl.getInfoByInstanceID(instanceID);
   const folderTreeData = TreeControllerImpl.getFolderTreeDataBySlug(slug);
@@ -147,7 +149,10 @@ export const getStaticProps = async ({ params }: SlugData) => {
     PlatformControllerImpl.getDisplayPlatforms(slug, currentLanguage);
   ShortLinkTransControllerImpl.injectData({ locale: currentLanguage });
   const postData = await DocsControllerImpl.readDoc(slug);
-  const versions = VersionsControllerImpl.getUsedVersions(instanceID);
+  const versions = CommonControllerImpl.getUsedVersions(
+    instanceID,
+    LibControllerImpl.getTargetInstance(instanceID)
+  );
   const currentInstance = displayInstances.find((item) => {
     // Matches multiple language instance id
     return item.instance.id === instanceID;
@@ -188,6 +193,9 @@ export const getStaticProps = async ({ params }: SlugData) => {
       displayCategorys,
     },
   };
+  // return {
+  //   props: {},
+  // };
 };
 
 export function getStaticPaths() {
@@ -195,10 +203,14 @@ export function getStaticPaths() {
     new Date().toISOString().slice(0, 23),
     "[Spreading] getStaticPaths..."
   );
-  const paths = SlugControllerImpl.getAllSlugs();
+  console.time("getAllSlugs");
+  const paths = SlugControllerImpl.generateAllSlugs();
+  console.timeEnd("getAllSlugs");
+
   console.time("copyStaticFile");
-  DocsControllerImpl.copyStaticFile();
+  CommonControllerImpl.copyStaticFile();
   console.timeEnd("copyStaticFile");
+  // paths || paths.slice(0, 1) ||
   return {
     paths,
     fallback: true,
@@ -207,7 +219,7 @@ export function getStaticPaths() {
 
 export default function DocPage(props: Props) {
   const { mdxSource, slug } = props;
-  console.log("DocPage", slug);
+  // console.log("DocPage", slug);
   if (!slug) {
     return null;
   }

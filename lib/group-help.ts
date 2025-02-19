@@ -1,6 +1,6 @@
 import LibControllerImpl from "./index";
 import { DisplayGroup, NavigationGroupInfo } from "./types";
-import CommonControllerImpl from "./debug/common";
+import CommonControllerImpl from "./optimize/common";
 
 class GroupController {
   static _instance: GroupController;

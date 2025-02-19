@@ -1,5 +1,5 @@
 import LibControllerImpl from "./index";
-import CommonControllerImpl from "./debug/common";
+import CommonControllerImpl from "./optimize/common";
 import LanguageControllerImpl from "./language-help";
 import { DisplayPlatform, NavigationInfo } from "./types";
 

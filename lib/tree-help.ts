@@ -1,6 +1,6 @@
 import { FolderTreeData, SidebarItem, SidebarItemType } from "./types";
 import LibControllerImpl from "./index";
-import CommonControllerImpl from "./debug/common";
+import CommonControllerImpl from "./optimize/common";
 import SidebarsControllerImpl from "./sidebars-help";
 
 class TreeController {

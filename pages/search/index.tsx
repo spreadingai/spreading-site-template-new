@@ -26,7 +26,7 @@ import NewCustomHit from "@/components/search/NewCustomHit";
 import Layout from "@/components/search/layout";
 import "instantsearch.css/themes/satellite.css";
 import LibControllerImpl from "@/lib/index";
-import CommonControllerImpl from "@/lib/debug/common";
+import CommonControllerImpl from "@/lib/optimize/common";
 import GroupControllerImpl from "@/lib/client/group-help";
 import PlatformControllerImpl from "@/lib/client/platform-help";
 import useGroup from "@/components/hooks/useGroup";

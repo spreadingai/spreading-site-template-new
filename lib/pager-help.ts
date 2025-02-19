@@ -1,7 +1,7 @@
 import { PaginationData } from "@/components/articlePager";
 import LibControllerImpl from "./index";
 import SidebarsControllerImpl from "./sidebars-help";
-import CommonControllerImpl from "./debug/common";
+import CommonControllerImpl from "./optimize/common";
 import { SidebarItem } from "./types";
 
 class PageController {
