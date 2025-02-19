@@ -7,7 +7,7 @@ interface Props {
 
 export const getStaticProps = async () => {
   const allSlugs = CommonControllerImpl.readAllSlugsByFile();
-  console.log("[Index] getStaticProps allSlugs: ", allSlugs);
+  // console.log("[Index] getStaticProps allSlugs: ", allSlugs);
   return {
     props: {
       slug: allSlugs[0] ? allSlugs[0].params.slug : ["404"],
