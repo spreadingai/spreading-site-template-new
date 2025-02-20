@@ -199,10 +199,6 @@ export const getStaticProps = async ({ params }: SlugData) => {
 };
 
 export function getStaticPaths() {
-  console.log(
-    new Date().toISOString().slice(0, 23),
-    "[Spreading] getStaticPaths..."
-  );
   console.time("getAllSlugs");
   const paths = SlugControllerImpl.generateAllSlugs();
   console.timeEnd("getAllSlugs");
@@ -210,7 +206,6 @@ export function getStaticPaths() {
   console.time("copyStaticFile");
   CommonControllerImpl.copyStaticFile();
   console.timeEnd("copyStaticFile");
-  // paths || paths.slice(0, 1) ||
   return {
     paths,
     fallback: true,
