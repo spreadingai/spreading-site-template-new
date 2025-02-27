@@ -20,6 +20,10 @@ class GroupController {
     const instances = LibControllerImpl.getInstances();
     const { instanceID: targetInstanceID } =
       CommonControllerImpl.getExtractInfoFromSlug(slug, instances);
+    console.log(
+      "[GroupController]getDisplayGroups targetInstanceID",
+      targetInstanceID
+    );
     const targetInstance = instances.find(
       (instance) => instance.id === targetInstanceID
     );
@@ -42,6 +46,11 @@ class GroupController {
                 const targetSlug = allSlugs.find((item) => {
                   return item.params.instanceID === instance.id;
                 });
+                console.log(
+                  "[GroupController]getDisplayGroups targetSlug",
+                  instance,
+                  targetSlug
+                );
                 defaultLink = targetSlug
                   ? `/${targetSlug.params.slug.join("/")}`
                   : "";
