@@ -49,7 +49,8 @@ class GroupController {
                 console.log(
                   "[GroupController]getDisplayGroups targetSlug",
                   instance,
-                  targetSlug
+                  targetSlug,
+                  allSlugs.length
                 );
                 defaultLink = targetSlug
                   ? `/${targetSlug.params.slug.join("/")}`
