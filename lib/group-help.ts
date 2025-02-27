@@ -46,12 +46,6 @@ class GroupController {
                 const targetSlug = allSlugs.find((item) => {
                   return item.params.instanceID === instance.id;
                 });
-                console.log(
-                  "[GroupController]getDisplayGroups targetSlug",
-                  instance,
-                  targetSlug,
-                  allSlugs.length
-                );
                 defaultLink = targetSlug
                   ? `/${targetSlug.params.slug.join("/")}`
                   : "";
