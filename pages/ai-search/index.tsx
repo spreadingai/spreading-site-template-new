@@ -1,7 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 // import AISearchModal from "@/components/header/AISearch/modal";
-import NewAISearchModal from "@/components/header/AISearch/modal-new";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
+const NewAISearchModal = dynamic(
+  () => import("@/components/header/AISearch/modal-new"),
+  {
+    ssr: false,
+  }
+);
 
 const whiteList = [
   "http://localhost:5666",

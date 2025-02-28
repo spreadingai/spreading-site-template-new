@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import styles from "./index.module.scss";
 import useLanguage from "@/components/hooks/useLanguage";
 // import AISearchModal from "./modal";
-import NewAISearchModal from "./modal-new";
 import ThemeContext from "../Theme.context";
 import useGroup from "@/components/hooks/useGroup";
 import usePlatform from "@/components/hooks/usePlatform";
 import iconAshAI from "@/assets/icons/ai-search/icon_ask_ai.png";
 import Image from "next/image";
 import { useRouter } from "next/router";
+import dynamic from "next/dynamic";
+const NewAISearchModal = dynamic(() => import("./modal-new"), {
+  ssr: false,
+});
 
 interface Props {}
 
