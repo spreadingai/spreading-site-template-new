@@ -14,7 +14,7 @@ import {
 class CommonController {
   static _instance: CommonController;
   _usedVersionsMap: Record<string, string[]> = {};
-  // _allSlugs: SlugData[];
+  _allSlugs: SlugData[];
   static getInstance() {
     return (
       CommonController._instance ||
@@ -22,30 +22,29 @@ class CommonController {
     );
   }
   readAllSlugsByFile(): SlugData[] {
-    // if (this._allSlugs) {
-    //   // console.log("[CommonController]readAllSlugsByFile: memory cache");
-    //   return this._allSlugs;
-    // } else {
-    let allSlugs: SlugData[] = [];
-    const slugsFileUrl = `${ENTITY_ROOT_DIRECTORY}/${MIDDLEWARE_DIRECTORY}/all-slugs.json`;
-    const slugsFilePath = path.resolve("./public", "..", slugsFileUrl);
-    try {
-      if (fs.existsSync(slugsFilePath)) {
-        allSlugs = JSON.parse(
-          fs.readFileSync(slugsFilePath, "utf8")
-        ) as SlugData[];
-      } else {
-        console.error(
-          "[CommonController]readAllSlugsByFile: failed to generate"
-        );
+    if (this._allSlugs) {
+      // console.log("[CommonController]readAllSlugsByFile: memory cache");
+      return this._allSlugs;
+    } else {
+      let allSlugs: SlugData[] = [];
+      const slugsFileUrl = `${ENTITY_ROOT_DIRECTORY}/${MIDDLEWARE_DIRECTORY}/all-slugs.json`;
+      const slugsFilePath = path.resolve("./public", "..", slugsFileUrl);
+      try {
+        if (fs.existsSync(slugsFilePath)) {
+          allSlugs = JSON.parse(
+            fs.readFileSync(slugsFilePath, "utf8")
+          ) as SlugData[];
+        } else {
+          console.error(
+            "[CommonController]readAllSlugsByFile: failed to generate"
+          );
+        }
+      } catch (error) {
+        console.error("[CommonController]readAllSlugsByFile: error", error);
       }
-    } catch (error) {
-      console.error("[CommonController]readAllSlugsByFile: error", error);
+      this._allSlugs = allSlugs;
+      return this._allSlugs;
     }
-    return allSlugs;
-    // this._allSlugs = allSlugs;
-    // return this._allSlugs;
-    // }
   }
   writeAllSlugsByFile(allSlugs: SlugData[]): boolean {
     let result = false;
