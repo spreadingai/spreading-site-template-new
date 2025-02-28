@@ -1,6 +1,7 @@
 import LibControllerImpl from "./index";
-import { DisplayGroup, NavigationGroupInfo } from "./types";
+import { DisplayGroup, DocInstance, NavigationGroupInfo } from "./types";
 import CommonControllerImpl from "./optimize/common";
+import { defaultLanguage } from "@/components/context/languageContext";
 
 class GroupController {
   static _instance: GroupController;
@@ -48,7 +49,9 @@ class GroupController {
                 });
                 defaultLink = targetSlug
                   ? `/${targetSlug.params.slug.join("/")}`
-                  : "";
+                  : // TODO: 先特殊处理
+                    this.getGroupDefaultLink(instance, currentLanguage);
+                // : "";
               } else {
                 // Determine whether there is a platform that is not an external chain
                 const temp = instances.find(
@@ -94,6 +97,30 @@ class GroupController {
       }
     }
     return result;
+  }
+  getGroupDefaultLink(instance: DocInstance, currentLanguage: string) {
+    console.log("[GroupController]getGroupDefaultLink", instance.id);
+    let defaultLink = "";
+    if (
+      currentLanguage === defaultLanguage &&
+      !instance.id.endsWith("_zh") &&
+      (instance.locale === defaultLanguage || !instance.locale)
+    ) {
+      if (instance.id.startsWith("zim_")) {
+        defaultLink = `/zim-android/introduction/overview`;
+      } else if (instance.id.startsWith("callkit_")) {
+        defaultLink = `/uikit/callkit-android/overview`;
+      } else if (instance.id.startsWith("live_streaming_kit_")) {
+        defaultLink = `/uikit/live-streaming-kit-android/overview`;
+      } else if (instance.id.startsWith("live_audio_room_kit_")) {
+        defaultLink = `/uikit/live-audio-room-kit-android/overview`;
+      } else if (instance.id.startsWith("in_app_chat_kit_")) {
+        defaultLink = `/uikit/in-app-chat-kit-android/overview`;
+      } else if (instance.id.startsWith("video_conference_kit_")) {
+        defaultLink = `/uikit/video-conference-kit-android/overview`;
+      }
+    }
+    return defaultLink;
   }
 }
 
