@@ -92,6 +92,7 @@
 		}
 	}
 	li {
+		word-break: break-word;
 		& > ul,
 		& > ol {
 			margin-top: 0;
