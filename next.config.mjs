@@ -2,11 +2,11 @@
 
 import NextBundleAnalyzer from "@next/bundle-analyzer";
 
-import SpeedMeasurePlugin from "speed-measure-webpack-plugin";
-const smp = new SpeedMeasurePlugin({
-  disable: process.env.ANALYZE !== "true",
-  outputFormat: "humanVerbose",
-});
+// import SpeedMeasurePlugin from "speed-measure-webpack-plugin";
+// const smp = new SpeedMeasurePlugin({
+//   disable: process.env.ANALYZE !== "true",
+//   outputFormat: "humanVerbose",
+// });
 
 const withBundleAnalyzer = NextBundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
@@ -71,7 +71,7 @@ const nextConfig = {
     // Modify the file loader rule to ignore *.svg, since we have it handled now.
     fileLoaderRule.exclude = /\.svg$/i;
 
-    config.plugins.push(smp);
+    // config.plugins.push(smp);
     return config;
   },
   rewrites() {

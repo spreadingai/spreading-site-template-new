@@ -44,6 +44,11 @@ import { PlatformContext } from "@/components/context/platformContext";
 import { VersionContext } from "@/components/context/versionContext";
 import { CategoryContext } from "@/components/context/categoryContext";
 import CategoryMenu from "./header/CategoryMenu";
+import dynamic from "next/dynamic";
+// 动态导入
+const FloatingFrame = dynamic(() => import("@/components/FloatingFrame"), {
+  ssr: false,
+});
 
 type Props = {
   children: React.ReactNode;
@@ -648,6 +653,7 @@ const PreviewLayout = ({
                         links={[]}
                       />
                     )}
+                    <FloatingFrame locale={currentLanguage} />
                   </div>
                 </PlatformContext.Provider>
               </GroupContext.Provider>
