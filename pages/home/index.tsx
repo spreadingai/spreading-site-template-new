@@ -1,15 +1,15 @@
 import { useRouter } from "next/router";
-import CommonControllerImpl from "@/lib/optimize/common";
-
+import SlugControllerImpl from "@/lib/slug-help";
 interface Props {
   slug: string[];
 }
 
 export const getStaticProps = async () => {
-  const allSlugs = CommonControllerImpl.readAllSlugsByFile();
+  const allSlugs = SlugControllerImpl.generateAllSlugs();
   return {
     props: {
       slug: allSlugs[0] ? allSlugs[0].params.slug : [],
+      fallback: true,
     },
   };
 };
