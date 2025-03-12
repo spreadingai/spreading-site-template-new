@@ -41,13 +41,13 @@ class LibController {
           `${ENTITY_ROOT_DIRECTORY}/${process.env.NEXT_PUBLIC_CONFIG_FILE}`
         );
         // console.log(
-        //   "[LibController]getDocuoConfig docuoConfigPath",
+        //   "[LibController]getDocuoConfig docuoConfigPath ",
         //   docuoConfigPath
         // );
         const readDocuoConfig = fs.readFileSync(docuoConfigPath, "utf8");
         docuoConfig = JSON.parse(readDocuoConfig);
       } catch (error) {
-        console.error("[LibController]getDocuoConfig docuoConfigPath");
+        // console.log("[LibController]getDocuoConfig docuoConfigPath ", "docs/docuo.config.json");
         docuoConfig = JSON.parse(JSON.stringify(inputDocuoConfig));
       }
       const defaultInstance = {
