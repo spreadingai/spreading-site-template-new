@@ -17,8 +17,8 @@ class CategoryController {
   ) {
     const instances = LibControllerImpl.getInstances();
     const displayCategorys: CategoryMenuData[] = [];
-    let currentCategory: string;
-    let currentProduct: string;
+    let currentCategory: string = "";
+    let currentProduct: string = "";
     let index = 0;
     const genetateTreeData = (
       category: string[],

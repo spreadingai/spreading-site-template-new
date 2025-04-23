@@ -49,6 +49,7 @@ import { MessageInfo } from "@ant-design/x/es/useXChat";
 import { v4 as uuidv4 } from "uuid";
 import { ThemeProvider } from "antd-style";
 import { Markdown } from "@ant-design/pro-editor";
+import { defaultLanguage } from "@/components/context/languageContext";
 // const langs = Object.keys(bundledLanguages);
 
 const md = MarkdownIt({ html: true, breaks: true });
@@ -149,7 +150,7 @@ const Independent = (props: Props) => {
   const activeKeyRef = useRef<string>("");
   // const mdRef = useRef(null);
 
-  const aiSearchData = copywriting[currentLanguage].aiSearch;
+  const aiSearchData = copywriting[currentLanguage || defaultLanguage].aiSearch;
 
   // ==================== State ====================
   const [content, setContent] = React.useState("");

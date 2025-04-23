@@ -17,6 +17,7 @@ export interface DocuoConfig {
     colorMode?: ColorMode;
     colors?: Colors;
     removeWatermark?: boolean;
+    showAskAI?: boolean;
   };
   search?: {
     hidden?: boolean;

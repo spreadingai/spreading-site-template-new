@@ -214,7 +214,9 @@ const Header = (props: Props) => {
             </div>
           ) : null}
           {!isSearchPage ? DocSearchComponent : null}
-          {!isSearchPage ? <AISearch /> : null}
+          {!isSearchPage && themeConfig.showAskAI !== false ? (
+            <AISearch />
+          ) : null}
         </div>
         {isMobile ? (
           <div className={styles["menus"]}>

@@ -51,6 +51,7 @@ import { copywriting } from "@/components/constant/language";
 import Robot from "@/assets/icons/ai-search/Robot.svg";
 import chatIDMap from "./chatIDMap.json";
 import { EventSourceParserStream } from "eventsource-parser/stream";
+import { defaultLanguage } from "@/components/context/languageContext";
 
 interface AnswerData {
   score?: ScoreType;
@@ -147,7 +148,7 @@ const AISearchModal = (props: Props) => {
   const currentGroupRef = useRef<string>("");
   const currentPlatformRef = useRef<string>("");
 
-  const aiSearchData = copywriting[currentLanguage].aiSearch;
+  const aiSearchData = copywriting[currentLanguage || defaultLanguage].aiSearch;
 
   const createSessions = useCallback(async () => {
     if (!chatID || !currentGroup || !currentPlatform) return;
