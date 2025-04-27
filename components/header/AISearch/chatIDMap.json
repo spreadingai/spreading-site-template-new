@@ -2260,5 +2260,34 @@
         "Can I create a digital human with just one image?"
       ]
     }
+  },
+  "aiagent_zh": {
+    "Android: Java": {
+      "chat_id": "ac56bdcc21cd11f0951c0242ac120006",
+      "dataset_names": ["AIGC-AIAgent-Android-ZH", "FAQ-ZH"],
+      "assistant_name": "ZH_aigc_ai_agent_Android_Java",
+      "questions": ["如何提高语音识别准确度？", "如何提高语音识别准确度？？"]
+    },
+    "iOS: Objective-C": {
+      "chat_id": "ad7041ec21cd11f0b7e50242ac120006",
+      "dataset_names": ["AIGC-AIAgent-iOS-ZH", "FAQ-ZH"],
+      "assistant_name": "ZH_aigc_ai_agent_iOS_Objective-C",
+      "questions": ["如何提高语音识别准确度？", "如何提高语音识别准确度？？"]
+    },
+    "Web: JS": {
+      "chat_id": "adfcc59a21cd11f0b29a0242ac120006",
+      "dataset_names": ["AIGC-AIAgent-Web-ZH", "FAQ-ZH"],
+      "assistant_name": "ZH_aigc_ai_agent_Web_JS",
+      "questions": ["如何提高语音识别准确度？", "如何提高语音识别准确度？？"]
+    },
+    "Server": {
+      "chat_id": "aeb2237221cd11f086b40242ac120006",
+      "dataset_names": ["AIGC-AIAgent-Server-ZH", "FAQ-ZH"],
+      "assistant_name": "ZH_aigc_ai_agent_Server",
+      "questions": [
+        "如何提高语音识别准确度？",
+        "智能体跟智能体实例是什么关系？"
+      ]
+    }
   }
 }
