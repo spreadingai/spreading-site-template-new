@@ -118,8 +118,8 @@ class GroupController {
         defaultLink = `/uikit/in-app-chat-kit-android/overview`;
       } else if (instance.id.startsWith("video_conference_kit_")) {
         defaultLink = `/uikit/video-conference-kit-android/overview`;
-      } else if (instance.id.startsWith("aiagent-")) {
-        defaultLink = `/aiagent-android/overview`;
+      } else if (instance.id.startsWith("aiagent_")) {
+        defaultLink = `/aiagent-android/introduction/overview`;
       }
     }
     return defaultLink;
