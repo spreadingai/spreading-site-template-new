@@ -16,6 +16,7 @@ const defaultFooter = {
   caption: undefined,
   links: [],
   socials: [],
+  policies: [],
 };
 
 const Footer: FC<footerProps> = ({ docuoConfig }) => {
@@ -29,6 +30,7 @@ const Footer: FC<footerProps> = ({ docuoConfig }) => {
   const itemWidth = 200;
   const links = footer?.links || [];
   const socials = footer?.socials || [];
+  const policies = (footer?.policies || []).slice(0, 6); // 最多显示6个
   const len = links.slice(0, 4).length;
   const [width, setWidth] = React.useState(0);
   const [towRowWidth, setTowRowWidth] = React.useState(0);
@@ -166,7 +168,52 @@ const Footer: FC<footerProps> = ({ docuoConfig }) => {
           </div>
         </div>
         {footer["copyright"] && (
-          <div className={styles["copyright"]}>{footer["copyright"]}</div>
+          <div className={styles["copyright-container"]}>
+            <div className={styles["copyright-content"]}>
+              <div className={styles["copyright"]}>
+                {typeof footer["copyright"] === "string" ? (
+                  footer["copyright"]
+                ) : footer["copyright"].href ? (
+                  <a
+                    href={footer["copyright"].href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {footer["copyright"].label}
+                  </a>
+                ) : (
+                  <Link href={footer["copyright"].to || "/"}>
+                    {footer["copyright"].label}
+                  </Link>
+                )}
+              </div>
+              {policies.length > 0 && (
+                <div className={styles["policies"]}>
+                  {policies.map((policy, index) => (
+                    <React.Fragment key={index}>
+                      {policy.href ? (
+                        <a
+                          href={policy.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={styles["policy-link"]}
+                        >
+                          {policy.label}
+                        </a>
+                      ) : (
+                        <Link
+                          href={policy.to || "/"}
+                          className={styles["policy-link"]}
+                        >
+                          {policy.label}
+                        </Link>
+                      )}
+                    </React.Fragment>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
         )}
       </div>
     </footer>
