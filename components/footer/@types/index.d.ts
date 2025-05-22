@@ -31,8 +31,9 @@ export interface FooterLinkGroup {
 export interface footerProps {
   docuoConfig: DocuoConfig;
   logo?: string;
-  copyright?: string;
+  copyright?: string | FooterLinkItem;
   caption?: string;
   links: FooterLinkGroup[];
   socials: Socials[];
+  policies?: FooterLinkItem[];
 }

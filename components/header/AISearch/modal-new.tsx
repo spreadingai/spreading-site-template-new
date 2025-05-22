@@ -45,7 +45,7 @@ import {
 import outStyles from "./modal.new.module.scss";
 // import { bundledLanguages, createHighlighter } from "shiki";
 import MarkdownIt from "markdown-it";
-import { MessageInfo } from "@ant-design/x/es/useXChat";
+import { MessageInfo } from "@ant-design/x/es/use-x-chat";
 import { v4 as uuidv4 } from "uuid";
 import { ThemeProvider } from "antd-style";
 import { Markdown } from "@ant-design/pro-editor";

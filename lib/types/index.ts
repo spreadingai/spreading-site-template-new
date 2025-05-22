@@ -100,10 +100,11 @@ export interface FooterConfig {
         light?: string;
       };
   logoUrl?: string;
-  copyright: string;
+  copyright: string | FooterItem;
   caption: string;
   links: FooterLink[];
   socials: SocialItem[];
+  policies?: FooterItem[];
 }
 export interface ColorMode {
   defaultMode: "light" | "dark" | "system";
