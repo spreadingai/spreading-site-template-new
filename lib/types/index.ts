@@ -41,6 +41,13 @@ export interface DocuoConfig {
       [index: string]: string;
     };
   };
+  redirects?: RedirectConfig[];
+}
+
+export interface RedirectConfig {
+  source: string;
+  destination: string;
+  permanent?: boolean; // 默认为 true（永久重定向），设置为 false 时为临时重定向
 }
 export enum InstanceType {
   All = 1,
