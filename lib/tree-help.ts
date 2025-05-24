@@ -131,6 +131,11 @@ class TreeController {
           slugVersion,
           indexStr: `${level}-${index}`,
         };
+
+        // 传递tag信息
+        if (item.tag) {
+          temp.tag = item.tag;
+        }
         if (children) {
           temp.children = children;
           temp.collapsed =
@@ -151,7 +156,7 @@ class TreeController {
         result.push(temp);
       } else {
         // SidebarItemType.Link
-        result.push({
+        const linkItem: any = {
           title: item.label,
           type: item.type,
           key: `${prefixKey}${prefixKey ? "/" : ""}${
@@ -162,7 +167,14 @@ class TreeController {
           docVersion,
           slugVersion,
           indexStr: `${level}-${index}`,
-        });
+        };
+
+        // 传递tag信息
+        if (item.tag) {
+          linkItem.tag = item.tag;
+        }
+
+        result.push(linkItem);
       }
     }
     return result;

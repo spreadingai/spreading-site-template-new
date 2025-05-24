@@ -3,6 +3,7 @@ import classNames from "classnames";
 import { FC, useEffect, useState } from "react";
 import IconTreeArrow from "@/assets/icons/tree/sidebar_arrow_open.svg";
 import { SidebarItemType } from "@/lib/types";
+import SidebarTag from "./SidebarTag";
 
 interface TreeNode {
   key: string;
@@ -11,6 +12,10 @@ interface TreeNode {
   children?: TreeNode[];
   isOpen?: boolean;
   collapsed?: boolean;
+  tag?: {
+    label: string;
+    color: string;
+  };
 }
 interface TreeNodeProps {
   node: TreeNode;
@@ -89,7 +94,18 @@ const TreeNode: FC<TreeNodeProps> = ({
               node.type === SidebarItemType.Link,
           })}
         >
-          <span>{titleRender ? titleRender(node) : node.title}</span>
+          <div className={styles.treeNodeContent}>
+            {node.tag && (
+              <SidebarTag
+                label={node.tag.label}
+                color={node.tag.color as "Check" | "Tip" | "Note" | "Warning" | "Error"}
+                className={styles.sidebarTag}
+              />
+            )}
+            <span className={styles.titleText}>
+              {titleRender ? titleRender(node) : node.title}
+            </span>
+          </div>
         </span>
 
         {/* {hasChildren && level > 0 ? ( */}

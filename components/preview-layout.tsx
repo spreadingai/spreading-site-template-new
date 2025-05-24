@@ -88,6 +88,10 @@ type TreeDataObject = {
   id?: string;
   collapsed?: boolean;
   children?: TreeDataObject[];
+  tag?: {
+    label: string;
+    color: string;
+  };
 };
 
 let WsConnecting = false;
@@ -363,11 +367,6 @@ const PreviewLayout = ({
           <span className="title">{nodeData.title}</span>
         )}
         <span className="right-content">
-          {/* @ts-ignore */}
-          {nodeData.tag ? (
-            // @ts-ignore
-            <span className="title-tag">{nodeData.tag || "POST"}</span>
-          ) : null}
           {nodeData.type === SidebarItemType.Link ? (
             <Image src={IconOutlink} alt={"link"} />
           ) : null}

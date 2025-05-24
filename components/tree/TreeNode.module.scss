@@ -42,6 +42,26 @@
   }
 }
 
+.treeNodeContent {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  min-height: 20px; // 确保有最小高度
+}
+
+.sidebarTag {
+  flex-shrink: 0; // 防止标签被压缩
+  align-self: center; // 垂直居中
+  margin-right: 6px;
+}
+
+.titleText {
+  flex: 1; // 占据剩余空间
+  word-wrap: break-word;
+  word-break: break-word;
+  line-height: 1.4;
+}
+
 .treeNodeIcon {
   color: var(--docuo-sidebar-color);
 }

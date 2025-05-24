@@ -153,6 +153,10 @@ export interface SidebarItem {
 
   collapsible?: boolean;
   collapsed?: boolean;
+  tag?: {
+    label: string;
+    color: string;
+  };
 }
 export interface Sidebars {
   [index: string]: (string | SidebarItem)[];
@@ -223,6 +227,10 @@ export interface FolderTreeItem {
   mdxFileID?: string;
   originID?: string;
   link?: string;
+  tag?: {
+    label: string;
+    color: string;
+  };
 }
 
 export interface FolderTreeData {

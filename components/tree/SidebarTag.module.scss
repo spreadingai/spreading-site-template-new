@@ -1,0 +1,79 @@
+.sidebarTag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+
+  // Check (Success/Green) - 基于Callout Check的颜色
+  &--check {
+    background-color: rgba(0, 164, 0, 0.15);
+    color: #00a400;
+    border: 1px solid rgba(0, 164, 0, 0.3);
+  }
+
+  // Tip (Info/Blue) - 基于Callout Tip的颜色
+  &--tip {
+    background-color: rgba(84, 199, 236, 0.15);
+    color: #54c7ec;
+    border: 1px solid rgba(84, 199, 236, 0.3);
+  }
+
+  // Note (Secondary/Gray) - 基于Callout Note的颜色
+  &--note {
+    background-color: rgba(235, 237, 240, 0.15);
+    color: #6b7280;
+    border: 1px solid rgba(235, 237, 240, 0.3);
+  }
+
+  // Warning (Warning/Orange) - 基于Callout Warning的颜色
+  &--warning {
+    background-color: rgba(255, 186, 0, 0.15);
+    color: #ffba00;
+    border: 1px solid rgba(255, 186, 0, 0.3);
+  }
+
+  // Error (Danger/Red) - 基于Callout Error的颜色
+  &--error {
+    background-color: rgba(250, 56, 62, 0.15);
+    color: #fa383e;
+    border: 1px solid rgba(250, 56, 62, 0.3);
+  }
+}
+
+// 暗色主题适配
+[data-theme="dark"] .sidebarTag {
+  &--check {
+    background-color: rgba(0, 164, 0, 0.2);
+    color: #4ade80;
+    border: 1px solid rgba(0, 164, 0, 0.4);
+  }
+
+  &--tip {
+    background-color: rgba(84, 199, 236, 0.2);
+    color: #60a5fa;
+    border: 1px solid rgba(84, 199, 236, 0.4);
+  }
+
+  &--note {
+    background-color: rgba(156, 163, 175, 0.2);
+    color: #d1d5db;
+    border: 1px solid rgba(156, 163, 175, 0.4);
+  }
+
+  &--warning {
+    background-color: rgba(255, 186, 0, 0.2);
+    color: #fbbf24;
+    border: 1px solid rgba(255, 186, 0, 0.4);
+  }
+
+  &--error {
+    background-color: rgba(250, 56, 62, 0.2);
+    color: #f87171;
+    border: 1px solid rgba(250, 56, 62, 0.4);
+  }
+}
