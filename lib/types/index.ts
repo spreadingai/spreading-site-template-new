@@ -41,6 +41,10 @@ export interface DocuoConfig {
       [index: string]: string;
     };
   };
+  sitemap?: {
+    exclude?: string[];
+    siteUrl?: string;
+  };
 }
 export enum InstanceType {
   All = 1,
