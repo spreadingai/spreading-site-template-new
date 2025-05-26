@@ -17,7 +17,7 @@ const withBundleAnalyzer = NextBundleAnalyzer({
 // 读取 docuo.config.json 中的重定向配置
 function getRedirectsFromConfig() {
   try {
-    const configPath = path.resolve("./docs/docuo.config.json");
+    const configPath = path.resolve(process.env.NEXT_PUBLIC_CONFIG_FILE ? `./docs/${process.env.NEXT_PUBLIC_CONFIG_FILE}` : './docs/docuo.config.json');
     const configContent = fs.readFileSync(configPath, "utf8");
     const config = JSON.parse(configContent);
 

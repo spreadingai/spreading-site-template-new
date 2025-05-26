@@ -6,7 +6,7 @@ console.log("process.env.SITE_URL", process.env.SITE_URL);
 // 读取docuo.config.json配置
 let docuoConfig = {};
 try {
-  const configPath = path.resolve('./docs/docuo.config.json');
+  const configPath = path.resolve(process.env.NEXT_PUBLIC_CONFIG_FILE ? `./docs/${process.env.NEXT_PUBLIC_CONFIG_FILE}` : './docs/docuo.config.json');
   if (fs.existsSync(configPath)) {
     const configContent = fs.readFileSync(configPath, 'utf8');
     docuoConfig = JSON.parse(configContent);
