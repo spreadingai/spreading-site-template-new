@@ -20,8 +20,11 @@ const sitemapConfig = docuoConfig.sitemap || {};
 const customSiteUrl = sitemapConfig.siteUrl;
 const customExclude = sitemapConfig.exclude || [];
 
+console.log("sitemap: customSiteUrl:", customSiteUrl);
+console.log("sitemap: SITE_URL env:", process.env.SITE_URL);
+
 // 确定最终的siteUrl
-const siteUrl = customSiteUrl || `https://${process.env.SITE_URL}${process.env.NEXT_PUBLIC_BASE_PATH || ""}`;
+const siteUrl = customSiteUrl || `${process.env.SITE_URL}`;
 
 // 合并exclude数组
 const defaultExclude = ["/home"];
