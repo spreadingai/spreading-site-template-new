@@ -59,6 +59,13 @@ class SidebarsController {
     const targetInstance = LibControllerImpl.getInstances(
       InstanceType.Normal
     ).find((instance) => instance.id === instanceID);
+
+    // 如果找不到实例，可能是因为路径已被重定向，返回空的 sidebars
+    if (!targetInstance) {
+      console.warn(`[SidebarsController]getSidebars: Instance not found: ${instanceID}. This might be a redirected path.`);
+      return {};
+    }
+
     const temp = targetInstance.path.split("/");
     const instanceFolder = temp.slice(0, temp.length - 1).join("/");
     let rootUrl = `${ENTITY_ROOT_DIRECTORY}/${

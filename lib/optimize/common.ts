@@ -194,7 +194,18 @@ class CommonController {
       }
     }
     const instance = instances.find((instance) => instance.id === instanceID);
-    const versions = this.getUsedVersions(instanceID, instance);
+
+    // 如果找不到实例，可能是因为路径已被重定向，使用默认实例
+    if (!instance) {
+      console.warn(`[CommonController]getExtractInfoFromSlug: Instance not found: ${instanceID}. Using default instance.`);
+      const defaultInstance = instances.find((instance) => instance.id === DEFAULT_INSTANCE_ID) || instances[0];
+      if (defaultInstance) {
+        instanceID = defaultInstance.id;
+      }
+    }
+
+    const finalInstance = instances.find((instance) => instance.id === instanceID);
+    const versions = finalInstance ? this.getUsedVersions(instanceID, finalInstance) : [];
     // mdxFileID: complex-components/test1/link_test.md
     let mdxFileID = slug
       .slice(routeBasePath ? routeBasePath.split("/").length + 1 : 1)

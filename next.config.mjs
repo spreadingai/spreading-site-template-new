@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 
 import NextBundleAnalyzer from "@next/bundle-analyzer";
+import fs from "fs";
+import path from "path";
 
 // import SpeedMeasurePlugin from "speed-measure-webpack-plugin";
 // const smp = new SpeedMeasurePlugin({
@@ -11,6 +13,28 @@ import NextBundleAnalyzer from "@next/bundle-analyzer";
 const withBundleAnalyzer = NextBundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
 });
+
+// 读取 docuo.config.json 中的重定向配置
+function getRedirectsFromConfig() {
+  try {
+    const configPath = path.resolve("./docs/docuo.config.json");
+    const configContent = fs.readFileSync(configPath, "utf8");
+    const config = JSON.parse(configContent);
+
+    if (!config.redirects || !Array.isArray(config.redirects)) {
+      return [];
+    }
+
+    return config.redirects.map(redirect => ({
+      source: redirect.source,
+      destination: redirect.destination,
+      permanent: redirect.permanent !== false, // 默认为 true（永久重定向）
+    }));
+  } catch (error) {
+    console.warn("Failed to load redirects from docuo.config.json:", error.message);
+    return [];
+  }
+}
 
 const nextConfig = {
   // Configure `pageExtensions` to include MDX files
@@ -81,6 +105,9 @@ const nextConfig = {
         destination: "/home",
       },
     ];
+  },
+  redirects() {
+    return getRedirectsFromConfig();
   },
   staticPageGenerationTimeout: 180,
 };
