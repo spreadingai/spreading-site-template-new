@@ -112,9 +112,11 @@ class DocsController {
       }
       const actualMdxFilePath = this.getActualMdxFilePath(rootUrl, mdxFileID);
       if (actualMdxFilePath) {
-        // console.log("#####actualMdxFilePath", actualMdxFilePath);
+        // console.log(`[DocsController]readDoc found MDX file: ${actualMdxFilePath}`);
         mdxFileUrl = actualMdxFilePath;
         originContent = fs.readFileSync(actualMdxFilePath, "utf8");
+      } else {
+        console.warn(`[DocsController]readDoc MDX file not found - rootUrl: ${rootUrl}, mdxFileID: ${mdxFileID}`);
       }
     }
 

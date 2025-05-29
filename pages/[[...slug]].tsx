@@ -129,6 +129,27 @@ export const getStaticProps = async ({ params }: SlugData) => {
   const slug = params.slug;
   // Remove the effect of anchor points
   slug[slug.length - 1] = slug[slug.length - 1].replace(/#.*$/, "");
+  
+  // console.log(`[getStaticProps] Validating slug: ${slug.join("/")}`);
+  
+  // 验证slug是否有效
+  const allSlugs = CommonControllerImpl.readAllSlugsByFile();
+  const currentSlugPath = slug.join("/");
+  const isValidSlug = allSlugs.some((slugData) => {
+    const validSlugPath = slugData.params.slug.join("/");
+    return validSlugPath === currentSlugPath;
+  });
+  
+  // console.log(`[getStaticProps] Slug validation result: ${isValidSlug}`);
+  
+  // 如果slug无效，返回404
+  if (!isValidSlug) {
+    console.warn(`[getStaticProps] Invalid slug detected: ${currentSlugPath}, redirecting to 404`);
+    return {
+      notFound: true,
+    };
+  }
+  
   // Reason: `undefined` cannot be serialized as JSON. Please use `null` or omit this value.
   const docuoConfig = LibControllerImpl.getDocuoConfig();
   LibControllerImpl.addDefaultLink();
