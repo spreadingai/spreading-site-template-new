@@ -33,41 +33,19 @@ class VersionsController {
     // }versioned`;
 
     // New logic: Use the path of the instance directly
-    const temp = instance.path.split("/");
-    const instanceFolder = temp.slice(0, temp.length - 1).join("/");
-    const versionedUrl = `${ENTITY_ROOT_DIRECTORY}/${
-      instance.id === DEFAULT_INSTANCE_ID
-        ? ""
-        : (instanceFolder ? instanceFolder + "/" : "") + instance.id + "_"
-    }versioned_docs`;
-    const newVersionedUrl = `${ENTITY_ROOT_DIRECTORY}/${
-      instance.id === DEFAULT_INSTANCE_ID
-        ? "docs_versioned"
-        : (instanceFolder ? instanceFolder + "/" : "") +
-          "docs_" +
-          instance.id +
-          "_versioned"
-    }`;
+    // 直接使用实例配置中的path，支持任意路径结构
+    const versionedUrl = `${ENTITY_ROOT_DIRECTORY}/${instance.path}/versioned_docs`;
 
     const versionedPath = path.resolve("./public", "..", versionedUrl);
-    const newVersionedPath = path.resolve("./public", "..", newVersionedUrl);
     let versioned: string[] = [];
-    if (fs.existsSync(newVersionedPath)) {
-      const files = fs.readdirSync(newVersionedPath);
+    if (fs.existsSync(versionedPath)) {
+      const files = fs.readdirSync(versionedPath);
       versioned = files.map((file) => {
         const temp = file.split("-");
         temp.shift();
         return temp.join("-");
       });
     } else {
-      if (fs.existsSync(versionedPath)) {
-        const files = fs.readdirSync(versionedPath);
-        versioned = files.map((file) => {
-          const temp = file.split("-");
-          temp.shift();
-          return temp.join("-");
-        });
-      }
       // There is only one default version
       console.error(
         `[DocsController]getActualVersions: No version is currently defined `,

@@ -110,13 +110,8 @@ class CommonController {
       ) as string[];
     }
     // Use the external current version if the file is not present or the list is empty
-    const temp = instance.path.split("/");
-    const instanceFolder = temp.slice(0, temp.length - 1).join("/");
-    const versionsUrl = `${ENTITY_ROOT_DIRECTORY}/${
-      instance.id === DEFAULT_INSTANCE_ID
-        ? ""
-        : (instanceFolder ? instanceFolder + "/" : "") + instance.id + "_"
-    }versions.json`;
+    // 直接使用实例配置中的path，支持任意路径结构
+    const versionsUrl = `${ENTITY_ROOT_DIRECTORY}/${instance.path}/versions.json`;
     const versionsPath = path.resolve("./public", "..", versionsUrl);
     let versions: string[] = [];
     // Increased the version limit

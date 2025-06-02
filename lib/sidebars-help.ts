@@ -66,42 +66,15 @@ class SidebarsController {
       return {};
     }
 
-    const temp = targetInstance.path.split("/");
-    const instanceFolder = temp.slice(0, temp.length - 1).join("/");
-    let rootUrl = `${ENTITY_ROOT_DIRECTORY}/${
-      instanceID === DEFAULT_INSTANCE_ID
-        ? ""
-        : (instanceFolder ? instanceFolder + "/" : "") + instanceID + "_"
-    }docs`;
-    let newRootUrl = `${ENTITY_ROOT_DIRECTORY}/${
-      instanceID === DEFAULT_INSTANCE_ID
-        ? "docs"
-        : (instanceFolder ? instanceFolder + "/" : "") + "docs_" + instanceID
-    }`;
+    // 直接使用实例配置中的path，支持任意路径结构
+    let rootUrl = `${ENTITY_ROOT_DIRECTORY}/${targetInstance.path}`;
+
+    // 如果有版本，在path后面添加版本目录
     if (docVersion) {
-      rootUrl = `${ENTITY_ROOT_DIRECTORY}/${
-        instanceID === DEFAULT_INSTANCE_ID
-          ? ""
-          : (instanceFolder ? instanceFolder + "/" : "") + instanceID + "_"
-      }versioned_docs/version-${docVersion}`;
-      newRootUrl = `${ENTITY_ROOT_DIRECTORY}/${
-        instanceID === DEFAULT_INSTANCE_ID
-          ? "docs_"
-          : (instanceFolder ? instanceFolder + "/" : "") +
-            "docs_" +
-            instanceID +
-            "_"
-      }versioned/version-${docVersion}`;
+      rootUrl = `${ENTITY_ROOT_DIRECTORY}/${targetInstance.path}/versioned_docs/version-${docVersion}`;
     }
 
     let rootPath = path.resolve("./public", "..", rootUrl);
-    const newRootPath = path.resolve("./public", "..", newRootUrl);
-
-    // Compatible prefixes and suffixes
-    if (fs.existsSync(newRootPath)) {
-      rootPath = newRootPath;
-      rootUrl = newRootUrl;
-    }
     if (fs.existsSync(rootPath)) {
       const sidebarsUrl = `${rootUrl}/sidebars.json`;
       const sidebarsPath = path.resolve("./public", "..", sidebarsUrl);

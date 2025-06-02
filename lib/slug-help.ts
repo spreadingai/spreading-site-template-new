@@ -61,6 +61,10 @@ class SlugController {
           slugVersions_copy
         )
       );
+      // 如果sidebars为空，跳过这个版本
+      if (!sidebars || Object.keys(sidebars).length === 0) {
+        continue;
+      }
       const temp = usedSidebarIds.length
         ? usedSidebarIds
         : Object.keys(sidebars);
