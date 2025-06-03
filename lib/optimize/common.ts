@@ -168,22 +168,29 @@ class CommonController {
     for (let index = 0, len = instances.length; index < len; index++) {
       const instance = instances[index];
       if (instance.routeBasePath) {
-        const temp = `${instance.routeBasePath}/`;
+        const routeBasePathSegments = instance.routeBasePath.split("/");
         const slugStr = slug.join("/");
-        const index = slugStr.indexOf(temp);
-        if (index !== -1) {
-          if (exist === undefined) {
-            exist = index;
-            routeBasePath = slugStr.slice(0, temp.length - 1);
-            slugVersion = slug[routeBasePath.split("/").length];
-            instanceID = instance.id;
-          } else {
-            if (index < exist) {
-              exist = index;
-              routeBasePath = slugStr.slice(0, temp.length - 1);
-              slugVersion = slug[routeBasePath.split("/").length];
-              instanceID = instance.id;
+
+        // 检查slug是否以routeBasePath开头（精确匹配）
+        let isMatch = true;
+        if (routeBasePathSegments.length <= slug.length) {
+          for (let i = 0; i < routeBasePathSegments.length; i++) {
+            if (slug[i] !== routeBasePathSegments[i]) {
+              isMatch = false;
+              break;
             }
+          }
+        } else {
+          isMatch = false;
+        }
+
+        if (isMatch) {
+          const matchLength = routeBasePathSegments.length;
+          if (exist === undefined || matchLength > exist) {
+            exist = matchLength;
+            routeBasePath = routeBasePathSegments.join("/");
+            slugVersion = slug[routeBasePathSegments.length];
+            instanceID = instance.id;
           }
         }
       }
