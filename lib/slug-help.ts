@@ -51,7 +51,7 @@ class SlugController {
       );
     }
     for (let index = 0, len = slugVersions.length; index < len; index++) {
-      let preSlug = instance.routeBasePath ? [instance.routeBasePath] : [];
+      let preSlug = instance.routeBasePath ? instance.routeBasePath.split('/') : [];
       const slugVersion = slugVersions[index];
       slugVersion && (preSlug = preSlug.concat([slugVersion]));
       const sidebars = SidebarsControllerImpl.getSidebars(
