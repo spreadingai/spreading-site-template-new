@@ -384,7 +384,11 @@ const PreviewLayout = ({
             {nodeData.title}
           </Link>
         ) : nodeData.type === SidebarItemType.Link ? (
-          <a className="title" href={nodeData.link || ""} target="_blank">
+          <a
+            className="title"
+            href={processLinkHref(nodeData.link || "")}
+            target={isExternalLink(nodeData.link || "") ? "_blank" : "_self"}
+          >
             {nodeData.title}
           </a>
         ) : (
