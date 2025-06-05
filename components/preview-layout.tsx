@@ -353,6 +353,30 @@ const PreviewLayout = ({
   };
 
   const titleRenderHandle = (nodeData: TreeDataObject) => {
+    // 处理链接的函数，为站内链接添加 BASE_PATH
+    const processLinkHref = (href: string) => {
+      if (!href) return "";
+
+      // 如果是外部链接（以 http 开头），直接返回
+      if (href.startsWith("http")) {
+        return href;
+      }
+
+      // 如果是站内链接（以 / 开头），添加 BASE_PATH
+      if (href.startsWith("/")) {
+        const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+        return `${basePath}${href}`;
+      }
+
+      // 其他情况直接返回
+      return href;
+    };
+
+    // 判断是否为外部链接
+    const isExternalLink = (href: string) => {
+      return href && href.startsWith("http");
+    };
+
     return (
       <div className="custom-node-title">
         {nodeData.id ? (
