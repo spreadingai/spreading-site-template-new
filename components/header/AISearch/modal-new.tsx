@@ -40,6 +40,7 @@ import {
   createSessionsFetch,
   deleteSessionsFetch,
   scoreFetch,
+  getChatIDMap,
   startConverseFetch,
 } from "./fetch";
 import outStyles from "./modal.new.module.scss";
@@ -906,10 +907,14 @@ const Independent = (props: Props) => {
   // }, [currentTheme, highlighter]);
 
   useEffect(() => {
-    //   getChatIDMap().then((chatIDMap) => {
-    //     setLocalChatIDMap(chatIDMap);
-    //   });
+    console.log("🚀 NewAISearchModal useEffect triggered!");
+    getChatIDMap().then((chatIDMap) => {
+      console.log("getChatIDMap success", chatIDMap);
+      setLocalChatIDMap(chatIDMap);
+    });
+  }, []);
 
+  useEffect(() => {
     const sizeChangeHandle = () => {
       console.log("sizeChangeHandle");
       const clientWidth = document.documentElement.clientWidth;

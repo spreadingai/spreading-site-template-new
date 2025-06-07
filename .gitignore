@@ -45,3 +45,5 @@ next-env.d.ts
 # analyze
 
 /analyze
+
+public/data/ai_search_mapping.json

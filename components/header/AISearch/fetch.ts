@@ -12,18 +12,28 @@ const baseURL =
 console.log(process.env.NODE_ENV, baseURL);
 
 export const getChatIDMap = () => {
-  const url = "https://storage.zego.im/sdk-doc/ai_search_mapping.json";
+  // const url = "https://storage.zego.im/sdk-doc/ai_search_mapping.json";
+  const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+  const url = `${basePath}/data/ai_search_mapping.json`;
+
   return fetch(url, {
     method: "get",
     headers: {
       "Content-Type": "application/json",
     },
   })
-    .then((res) => res.json())
+    .then((res) => {
+      if (!res.ok) {
+        throw new Error(`HTTP ${res.status}: ${res.statusText}`);
+      }
+      return res.json();
+    })
     .then((data) => {
       return data;
     })
     .catch((error) => {
+      console.log("getChatIDMap error >>>>>>>", error);
+      console.log("Falling back to local chatIDMap");
       // Use local
       return chatIDMap;
     });

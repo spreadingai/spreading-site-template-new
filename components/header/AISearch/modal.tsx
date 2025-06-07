@@ -732,9 +732,9 @@ const AISearchModal = (props: Props) => {
   }, [currentGroup, currentPlatform, localChatIDMap]);
 
   useEffect(() => {
-    //   getChatIDMap().then((chatIDMap) => {
-    //     setLocalChatIDMap(chatIDMap);
-    //   });
+      // getChatIDMap().then((chatIDMap) => {
+      //   setLocalChatIDMap(chatIDMap);
+      // });
 
     const sizeChangeHandle = () => {
       const clientWidth = document.documentElement.clientWidth;
