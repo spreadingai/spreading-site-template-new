@@ -3,6 +3,10 @@
 import NextBundleAnalyzer from "@next/bundle-analyzer";
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // import SpeedMeasurePlugin from "speed-measure-webpack-plugin";
 // const smp = new SpeedMeasurePlugin({
@@ -13,6 +17,50 @@ import path from "path";
 const withBundleAnalyzer = NextBundleAnalyzer({
   enabled: process.env.ANALYZE === "true",
 });
+
+// 复制静态文件函数
+function copyStaticFiles() {
+  const staticSourcePath = path.resolve('./docs/static');
+  const publicTargetPath = path.resolve('./public');
+
+  if (!fs.existsSync(staticSourcePath)) {
+    console.log('[Next.js] Static source directory does not exist:', staticSourcePath);
+    return;
+  }
+
+  function copyRecursive(source, target) {
+    if (!fs.existsSync(target)) {
+      fs.mkdirSync(target, { recursive: true });
+    }
+
+    const files = fs.readdirSync(source);
+    files.forEach((file) => {
+      const sourcePath = path.join(source, file);
+      const targetPath = path.join(target, file);
+
+      if (fs.statSync(sourcePath).isDirectory()) {
+        copyRecursive(sourcePath, targetPath);
+      } else {
+        // 只在目标文件不存在或源文件更新时才复制
+        if (!fs.existsSync(targetPath) ||
+            fs.statSync(sourcePath).mtime > fs.statSync(targetPath).mtime) {
+          console.log(`[Next.js] Copying: ${sourcePath} -> ${targetPath}`);
+          fs.copyFileSync(sourcePath, targetPath);
+        }
+      }
+    });
+  }
+
+  copyRecursive(staticSourcePath, publicTargetPath);
+  console.log('[Next.js] Static files copy check completed');
+}
+
+// 在构建时复制静态文件
+try {
+  copyStaticFiles();
+} catch (error) {
+  console.warn('[Next.js] Failed to copy static files:', error.message);
+}
 
 // 读取 docuo.config.json 中的重定向配置
 function getRedirectsFromConfig() {

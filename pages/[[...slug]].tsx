@@ -224,9 +224,6 @@ export function getStaticPaths() {
   const paths = SlugControllerImpl.generateAllSlugs();
   console.timeEnd("getAllSlugs");
 
-  console.time("copyStaticFile");
-  CommonControllerImpl.copyStaticFile();
-  console.timeEnd("copyStaticFile");
   return {
     paths,
     fallback: true,
