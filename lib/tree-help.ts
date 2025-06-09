@@ -103,6 +103,12 @@ class TreeController {
     const result = [];
     for (let index = 0; index < sidebarItems.length; index++) {
       const item = sidebarItems[index];
+
+      // 跳过 visible: false 的项目
+      if (item.visible === false) {
+        continue;
+      }
+
       let children;
       if (item.items) {
         children = this.getChildrenFromChildren(

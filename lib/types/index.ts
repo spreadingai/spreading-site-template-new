@@ -164,6 +164,7 @@ export interface SidebarItem {
 
   collapsible?: boolean;
   collapsed?: boolean;
+  visible?: boolean;
   tag?: {
     label: string;
     color: string;
