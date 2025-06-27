@@ -1,7 +1,7 @@
 import { visit } from "unist-util-visit";
 
 const tagNameMap = {
-  list: "li",
+  list: "div",
   code: "div",
   blockquote: "div",
   thematicBreak: "div",

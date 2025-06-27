@@ -105,7 +105,6 @@ export const startConverseFetch = async (
     method: "post",
     headers: {
       "Content-Type": "application/json",
-      // Authorization: `Bearer ragflow-k0MzlkZjM0OTdmOTExZWZiNjM4MDI0Mm`,
     },
     body: JSON.stringify(reqData),
     signal,
