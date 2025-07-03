@@ -9,6 +9,9 @@ import scrollTo, {
 } from "./utils";
 import AnchorContext from "./context";
 import { throttle } from "lodash-es";
+
+const headerHeight = 68;
+const subHeaderHeight = 55;
 interface TreeProps {
   className?: string;
   targetOffset?: number;
@@ -83,7 +86,10 @@ const DocuoAnchor: FC<TreeProps> = ({
         return "";
       };
 
-      const currentActiveLink = getInternalCurrentAnchor(links, 68);
+      const currentActiveLink = getInternalCurrentAnchor(
+        links,
+        headerHeight
+      );
       if (currentActiveLink) {
         setCurrentActiveLink(currentActiveLink);
         scrollIntoViewIfNeeded(currentActiveLink);

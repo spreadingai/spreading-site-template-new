@@ -9,6 +9,9 @@ import React, { FC, useEffect, useMemo } from "react";
 import AnchorNode from "./Anchor";
 import useLanguage from "@/components/hooks/useLanguage";
 
+const headerHeight = 68;
+const subHeaderHeight = 55;
+
 interface AnchorNodeProps {
   tocFormatData: AnchorNode[];
 }
@@ -98,7 +101,7 @@ const AnchorNodeMobile: FC<AnchorNodeProps> = ({ tocFormatData }) => {
           <div style={{ display: openToc ? "block" : "none" }}>
             <div className={styles["mobile-toc-mask"]}></div>
             <div className={styles["mobile-toc-container"]}>
-              <DocuoAnchor data={tocFormatData} offsetTop={68} />
+              <DocuoAnchor data={tocFormatData} offsetTop={headerHeight} />
             </div>
           </div>,
           isMobile ? document.body : document.querySelector(".middle__show"),

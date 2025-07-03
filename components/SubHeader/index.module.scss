@@ -1,0 +1,23 @@
+.previewSubHeader {
+    position: sticky;
+    height: var(--preview-sub-header-height);
+    top: var(--preview-header-height);
+    display: flex;
+    flex-direction: column;
+    padding-left: 2rem;
+    padding-right: calc(32px + 15px);
+    padding-top: 12px;
+    z-index: 100;
+    background: var(--docuo-header-bg);
+    &.bgOpacity {
+        background: var(--docuo-header-bg-opacity);
+    }
+    &.hiddenTab {
+        display: none;
+    }
+}
+@media screen and (max-width: 1024px) {
+    .previewSubHeader {
+        display: none;
+    }
+}

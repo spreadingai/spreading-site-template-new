@@ -74,6 +74,7 @@ export default function scrollTo(y: number, options: ScrollToOptions = {}) {
   const startTime = Date.now();
 
   const frameFunc = () => {
+    debugger
     const timestamp = Date.now();
     const time = timestamp - startTime;
     const nextScrollTop = easeInOutCubic(

@@ -41,7 +41,7 @@ const DocuoTree: FC<TreeProps> = ({
     Number(process.env.NEXT_PUBLIC_PLAN) !== Plan.Free &&
     docuoConfig?.themeConfig?.removeWatermark === true;
   return (
-    <div className={classNames("pt-[28px] pb-10 pl-8 pr-6", className)}>
+    <div className={classNames("preview-sider-tree-content", className)}>
       <span
         onClick={handleClose}
         className="w-6 absolute right-5 top-2 cursor-pointer z-10 preview-side-close-btn"

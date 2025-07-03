@@ -1,5 +1,6 @@
 :root {
   --preview-header-height: 68px;
+  --preview-sub-header-height: 55px;
   --preview-sider-width: 312px;
 }
 
@@ -19,7 +20,6 @@ body {
 html > body {
   overflow: auto;
   scroll-padding-top: 128px;
-  // height: calc(100vh - var(--preview-header-height));
 }
 
 @media screen and (min-width: 1025px) {
@@ -29,7 +29,8 @@ html > body {
   // PC端自定义滚动条样式
   body,
   .preview-sider,
-  .toc-scroller {
+  .toc-scroller,
+  .preview-sider-tree-content {
     // 滚动条
     &::-webkit-scrollbar {
       width: 8px;
@@ -55,7 +56,8 @@ html > body {
   html[data-theme="dark"] {
     body,
     .preview-sider,
-    .toc-scroller {
+    .toc-scroller,
+    .preview-sider-tree-content {
       &::-webkit-scrollbar-thumb {
         background: rgba(255, 255, 255, 0.1);
       }
@@ -78,28 +80,34 @@ html > body {
 .preview-main {
   min-height: calc(100vh - var(--preview-header-height));
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   position: relative;
   width: 100%;
   max-width: 1440px;
   margin: var(--preview-header-height) auto 0;
+}
 
-  .powered-by {
-    display: flex;
-    align-items: center;
-    transform: translateY(8px);
-    span {
-      font-family: Inter-SemiBold;
-      font-size: 14px;
-      font-weight: bold;
-      color: #aeb1b8;
-    }
+.preview-sub-main {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}
 
-    img {
-      margin-left: 4px;
-      width: 78px;
-      height: 24px;
-    }
+.powered-by {
+  display: flex;
+  align-items: center;
+  transform: translateY(8px);
+  span {
+    font-family: Inter-SemiBold;
+    font-size: 14px;
+    font-weight: bold;
+    color: #aeb1b8;
+  }
+
+  img {
+    margin-left: 4px;
+    width: 78px;
+    height: 24px;
   }
 }
 
@@ -120,10 +128,27 @@ html > body {
   overflow: auto;
   // border-right: 1px solid #efefef;
   position: sticky;
-  top: var(--preview-header-height);
+  top: calc(var(--preview-header-height) + var(--preview-sub-header-height));
   left: 0;
   z-index: 99;
-  height: calc(100vh - var(--preview-header-height));
+  height: calc(100vh - var(--preview-header-height) - var(--preview-sub-header-height));
+  &.hidden-tab {
+    top: var(--preview-header-height);
+    height: calc(100vh - var(--preview-header-height));
+  }
+}
+.preview-sider-tree-top {
+  padding-left: 2rem;
+  flex-wrap: wrap;
+  display: flex;
+  margin-top: 16px;
+}
+.preview-sider-tree-content {
+  padding-right: 1.5rem;
+  padding-left: 2rem;
+  padding-bottom: 2.5rem;
+  overflow: auto;
+  margin-top: 28px;
 }
 .preview-side-close-btn {
   display: none;
@@ -378,12 +403,16 @@ html > body {
       display: flex;
       flex-direction: column;
       width: 312px;
-      max-height: calc(100vh - var(--preview-header-height));
+      max-height: calc(100vh - var(--preview-header-height) - var(--preview-sub-header-height));
       border: none;
       position: sticky;
-      top: var(--preview-header-height);
+      top: calc(var(--preview-header-height) + var(--preview-sub-header-height));
       flex: none;
       overflow: auto;
+      &.hidden-tab {
+        max-height: calc(100vh - var(--preview-header-height));
+        top: var(--preview-header-height);
+      }
 
       .ant-anchor::before {
         display: none;
@@ -641,6 +670,25 @@ html > body {
   :root {
     --preview-sider-width: 0px;
     --preview-header-height: 128px;
+  }
+  body,
+  .preview-sider,
+  .toc-scroller,
+  .preview-sider-tree-content {
+    // 滚动条
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+    /* 滑块样式 */
+    &::-webkit-scrollbar-thumb {
+      background: rgba(81, 88, 105, 0.2);
+      border-radius: 4px;
+    }
+
+    /* 轨道样式 */
+    &::-webkit-scrollbar-track {
+      background: var(--docuo-background-primary);
+    }
   }
   .middle__show {
     display: none;
