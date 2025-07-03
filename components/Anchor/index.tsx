@@ -9,6 +9,7 @@ import scrollTo, {
 } from "./utils";
 import AnchorContext from "./context";
 import { throttle } from "lodash-es";
+import useTab from "@/components/hooks/useTab";
 
 const headerHeight = 68;
 const subHeaderHeight = 55;
@@ -37,7 +38,8 @@ const DocuoAnchor: FC<TreeProps> = ({
   const [activeLink, setActiveLink] = useState<string>();
   const activeLinkRef = useRef<string | null>(activeLink);
   const wrapperRef = useRef<HTMLElement | null>(null);
-
+  const { shouldShowTabs, displayTabs } = useTab();
+  
   const onExpand = (expandedKeys) => {
     setExpandedKeys(expandedKeys);
   };
@@ -88,7 +90,7 @@ const DocuoAnchor: FC<TreeProps> = ({
 
       const currentActiveLink = getInternalCurrentAnchor(
         links,
-        headerHeight
+        headerHeight + ((!shouldShowTabs || displayTabs.length <= 1) ? 0 : subHeaderHeight)
       );
       if (currentActiveLink) {
         setCurrentActiveLink(currentActiveLink);

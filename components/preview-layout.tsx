@@ -623,7 +623,7 @@ const PreviewLayout = ({
                                     <div className="toc-scroller overflow-auto overscroll-none relative pr-6 max-h-[70vh]">
                                       <DocuoAnchor
                                         data={tocFormatData}
-                                        offsetTop={headerHeight}
+                                        offsetTop={headerHeight + ((!shouldShowTabs || displayTabs.length <= 1) ? 0 : subHeaderHeight)}
                                       />
                                     </div>
 
