@@ -26,6 +26,10 @@
       margin-right: 10px;
     }
   }
+  &.tab {
+    width: 100%;
+    margin-right: 8px;
+  }
   height: 36px;
   background: var(--docuo-dropdown-label-bg);
   border-radius: 6px;
