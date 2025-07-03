@@ -19,12 +19,15 @@ body {
 
 html > body {
   overflow: auto;
-  scroll-padding-top: 128px;
+  scroll-padding-top: var(--preview-header-height);
 }
 
 @media screen and (min-width: 1025px) {
   html > body {
-    scroll-padding-top: 68px;
+    scroll-padding-top: calc(var(--preview-header-height) + var(--preview-sub-header-height));
+    &:has(.hidden-tab) {
+      scroll-padding-top: var(--preview-header-height);
+    }
   }
   // PC端自定义滚动条样式
   body,
