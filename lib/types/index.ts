@@ -136,6 +136,7 @@ export interface NavigationInfo {
   group?: NavigationGroupInfo;
   category?: string[];
   platform?: string;
+  tab?: string;
 }
 export interface DocInstance {
   id: string;
@@ -145,6 +146,19 @@ export interface DocInstance {
   locale?: string;
   navigationInfo?: NavigationInfo;
   visible?: boolean;
+}
+
+export interface TabInfo {
+  tab: string;
+  tabLabel: string;
+  defaultLink: string;
+  instances: DocInstance[];
+}
+
+export interface DisplayTab {
+  tab: string;
+  tabLabel: string;
+  defaultLink: string;
 }
 
 export enum SidebarItemType {

@@ -35,10 +35,12 @@ class LibController {
     if (!this._docuoConfig) {
       let docuoConfig: DocuoConfig;
       try {
+        // 如果没有设置环境变量，默认使用 docuo.config.json
+        const configFileName = process.env.NEXT_PUBLIC_CONFIG_FILE || 'docuo.config.json';
         const docuoConfigPath = path.resolve(
           "./public",
           "..",
-          `${ENTITY_ROOT_DIRECTORY}/${process.env.NEXT_PUBLIC_CONFIG_FILE}`
+          `${ENTITY_ROOT_DIRECTORY}/${configFileName}`
         );
         console.log(
           "[LibController]getDocuoConfig docuoConfigPath ",

@@ -1,0 +1,97 @@
+.tabSwitch {
+  margin-top: 12px;
+  margin-bottom: 8px;
+}
+
+.tabContainer {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tabWrapper {
+  position: relative;
+}
+
+.tabItem {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 16px 12px 16px;
+  color: #6b7280;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s ease-in-out;
+  cursor: pointer;
+  position: relative;
+
+  &:hover {
+    color: #0055ff;
+    background-color: rgba(0, 85, 255, 0.04);
+  }
+
+  &.active {
+    color: #0055ff;
+    border-bottom-color: #0055ff;
+    font-weight: 600;
+  }
+}
+
+.tabLabel {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 120px;
+}
+
+// Dark mode support
+[data-theme="dark"] {
+  .tabContainer {
+    border-bottom-color: var(--docuo-color-border-dark, #374151);
+  }
+
+  .tabItem {
+    color: var(--docuo-color-text-secondary-dark, #9ca3af);
+
+    &:hover {
+      color: var(--docuo-color-primary-dark, #266eff);
+      background-color: var(--docuo-color-background-hover-dark, rgba(38, 110, 255, 0.08));
+    }
+
+    &.active {
+      color: var(--docuo-color-primary-dark, #266eff);
+      border-bottom-color: var(--docuo-color-primary-dark, #266eff);
+    }
+  }
+}
+
+// Mobile responsive
+@media (max-width: 768px) {
+  .tabSwitch {
+    margin-top: 8px;
+    margin-bottom: 4px;
+  }
+
+  .tabContainer {
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .tabItem {
+    padding: 6px 12px 8px 12px;
+    font-size: 13px;
+    min-width: fit-content;
+  }
+
+  .tabLabel {
+    max-width: 100px;
+  }
+}

@@ -32,6 +32,7 @@ class PlatformController {
       const { navigationInfo } = targetInstance;
       if (navigationInfo && navigationInfo.group) {
         const { id } = navigationInfo.group;
+        const currentTab = navigationInfo.tab; // 获取当前实例的tab
         result.currentPlatform = navigationInfo.platform;
         result.currentPlatformLabel = navigationInfo.platform;
         // Aggregate platform data
@@ -41,7 +42,9 @@ class PlatformController {
             if (
               instance.navigationInfo &&
               instance.navigationInfo.group &&
-              instance.navigationInfo.group.id === id
+              instance.navigationInfo.group.id === id &&
+              // 只有在同一个tab下的实例才能进行platform切换
+              instance.navigationInfo.tab === currentTab
             ) {
               const reg = /^https?:/i;
               let defaultLink = "";

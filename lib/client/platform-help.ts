@@ -10,7 +10,7 @@ class PlatformController {
       (PlatformController._instance = new PlatformController())
     );
   }
-  getDisplayPlatforms(currentGroup: string, currentLanguage: string) {
+  getDisplayPlatforms(currentGroup: string, currentLanguage: string, currentTab?: string) {
     // Compatible with all
     const result: {
       displayPlatforms: DisplayPlatform[];
@@ -25,7 +25,9 @@ class PlatformController {
           (currentGroup !== allGroupItem.group &&
             instance.navigationInfo &&
             instance.navigationInfo.group &&
-            instance.navigationInfo.group.id === currentGroup) ||
+            instance.navigationInfo.group.id === currentGroup &&
+            // 如果指定了currentTab，只显示同一tab下的platforms
+            (!currentTab || instance.navigationInfo.tab === currentTab)) ||
           currentGroup === allGroupItem.group
         ) {
           const platform = (instance.navigationInfo as NavigationInfo)

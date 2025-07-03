@@ -29,4 +29,13 @@ export const SetContext = React.createContext({
     key: string;
     initChild?: boolean;
   }) => {},
+  handleTabChanged: ({
+    key: tab,
+    defaultLink,
+    initChild,
+  }: {
+    key: string;
+    defaultLink: string;
+    initChild?: boolean;
+  }) => {},
 });

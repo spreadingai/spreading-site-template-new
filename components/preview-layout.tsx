@@ -17,6 +17,7 @@ import {
   DisplayLanguage,
   DisplayPlatform,
   DisplayGroup,
+  DisplayTab,
   CategoryMenuData,
 } from "@/lib/types";
 import Image from "next/image";
@@ -43,7 +44,9 @@ import { InstanceContext } from "@/components/context/instanceContext";
 import { PlatformContext } from "@/components/context/platformContext";
 import { VersionContext } from "@/components/context/versionContext";
 import { CategoryContext } from "@/components/context/categoryContext";
+import { TabContext } from "@/components/context/tabContext";
 import CategoryMenu from "./header/CategoryMenu";
+import TabSwitch from "./header/TabSwitch";
 import dynamic from "next/dynamic";
 // 动态导入
 const FloatingFrame = dynamic(() => import("@/components/FloatingFrame"), {
@@ -76,6 +79,10 @@ type Props = {
   currentCategory: string;
   currentProduct: string;
   displayCategorys: CategoryMenuData[];
+  currentTab: string;
+  currentTabLabel: string;
+  displayTabs: DisplayTab[];
+  shouldShowTabs: boolean;
   prev: PaginationData;
   next: PaginationData;
 };
@@ -120,6 +127,10 @@ const PreviewLayout = ({
   currentCategory,
   currentProduct,
   displayCategorys,
+  currentTab,
+  currentTabLabel,
+  displayTabs,
+  shouldShowTabs,
   prev,
   next,
 }: Props) => {
@@ -480,7 +491,15 @@ const PreviewLayout = ({
             displayCategorys,
           }}
         >
-          <InstanceContext.Provider
+          <TabContext.Provider
+            value={{
+              currentTab,
+              currentTabLabel,
+              displayTabs,
+              shouldShowTabs,
+            }}
+          >
+            <InstanceContext.Provider
             value={{
               instanceIDs: [instanceID],
               currentInstanceLabels: [currentInstanceLabel],
@@ -539,6 +558,7 @@ const PreviewLayout = ({
                                 menu={menuGroups}
                               /> */}
                               <CategoryMenu />
+                              <TabSwitch />
                               <InsVersionDropdown
                                 type="platform"
                                 menu={menuPlatforms}
@@ -652,6 +672,7 @@ const PreviewLayout = ({
                                 menu={menuGroups}
                               /> */}
                               <CategoryMenu />
+                              <TabSwitch />
                               <InsVersionDropdown
                                 type="platform"
                                 menu={menuPlatforms}
@@ -686,6 +707,7 @@ const PreviewLayout = ({
               </GroupContext.Provider>
             </VersionContext.Provider>
           </InstanceContext.Provider>
+          </TabContext.Provider>
         </CategoryContext.Provider>
       </LanguageContext.Provider>
     </ThemeContext.Provider>

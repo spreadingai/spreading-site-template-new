@@ -5,6 +5,7 @@ import LanguageControllerImpl from "@/lib/client/language-help";
 import VersionsControllerImpl from "@/lib/client/versions-help";
 import GroupControllerImpl from "@/lib/client/group-help";
 import PlatformControllerImpl from "@/lib/client/platform-help";
+import TabControllerImpl from "@/lib/client/tab-help";
 import ThemeContext, { Theme } from "@/components/header/Theme.context";
 import {
   LanguageContext,
@@ -33,6 +34,13 @@ import {
   defaultPlatform,
   defaultPlatformLabel,
 } from "@/components/context/platformContext";
+import {
+  TabContext,
+  defaultTab,
+  defaultTabLabel,
+  defaultDisplayTabs,
+  defaultShouldShowTabs,
+} from "@/components/context/tabContext";
 import { SetContext } from "@/components/context/setContext";
 import useColors from "@/components/hooks/useColors";
 import useColorMode from "@/components/hooks/useColorMode";
@@ -109,6 +117,13 @@ const Layout = ({ children, allUsedVersions, inputDocuoConfig }: Props) => {
     _displayPlatforms[0]?.platformLabel || defaultPlatformLabel
   );
 
+  // tabs
+  const _tabData = TabControllerImpl.getDisplayTabs(currentGroup, currentLanguage);
+  const [displayTabs, setDisplayTabs] = useState(_tabData.displayTabs);
+  const [shouldShowTabs, setShouldShowTabs] = useState(_tabData.shouldShowTabs);
+  const [currentTab, setCurrentTab] = useState(defaultTab);
+  const [currentTabLabel, setCurrentTabLabel] = useState(defaultTabLabel);
+
   // versions
   const _displayVersions = VersionsControllerImpl.getDisplayVersions(
     currentGroup,
@@ -174,6 +189,21 @@ const Layout = ({ children, allUsedVersions, inputDocuoConfig }: Props) => {
       setVersion(version);
     },
     [setVersion]
+  );
+
+  // tab
+  const handleTabChanged = useCallback(
+    ({ key: tab, defaultLink, initChild }) => {
+      // 如果是外部链接，直接打开新标签
+      if (defaultLink.startsWith('http')) {
+        window.open(defaultLink, '_blank');
+        return;
+      }
+
+      // 内部链接进行路由跳转
+      window.location.href = defaultLink;
+    },
+    []
   );
 
   // instance
@@ -244,7 +274,7 @@ const Layout = ({ children, allUsedVersions, inputDocuoConfig }: Props) => {
         initChild,
       } = params;
       const _displayPlatforms = addPlatformAllItem(
-        PlatformControllerImpl.getDisplayPlatforms(_currentGroup, language)
+        PlatformControllerImpl.getDisplayPlatforms(_currentGroup, language, currentTab)
           .displayPlatforms
       );
       const temp1 = !initChild
@@ -465,6 +495,26 @@ const Layout = ({ children, allUsedVersions, inputDocuoConfig }: Props) => {
     ]
   );
 
+  // 当tab改变时，更新platforms
+  useEffect(() => {
+    if (currentTab) {
+      const _displayPlatforms = addPlatformAllItem(
+        PlatformControllerImpl.getDisplayPlatforms(currentGroup, currentLanguage, currentTab)
+          .displayPlatforms
+      );
+      setDisplayPlatforms(_displayPlatforms);
+
+      // 如果当前platform不在新的platforms列表中，切换到第一个platform
+      const isCurrentPlatformValid = _displayPlatforms.find(
+        (platform) => platform.platform === currentPlatform
+      );
+      if (!isCurrentPlatformValid && _displayPlatforms.length > 0) {
+        setCurrentPlatform(_displayPlatforms[0].platform);
+        setCurrentPlatformLabel(_displayPlatforms[0].platformLabel);
+      }
+    }
+  }, [currentTab, currentGroup, currentLanguage, currentPlatform]);
+
   useEffect(() => {
     // language, group, platform, version
     const language = localStorage.getItem("search-language") as string;
@@ -521,7 +571,19 @@ const Layout = ({ children, allUsedVersions, inputDocuoConfig }: Props) => {
                 setDisplayPlatforms,
               }}
             >
-              <VersionContext.Provider
+              <TabContext.Provider
+                value={{
+                  currentTab,
+                  currentTabLabel,
+                  displayTabs,
+                  shouldShowTabs,
+                  setCurrentTab,
+                  setCurrentTabLabel,
+                  setDisplayTabs,
+                  setShouldShowTabs,
+                }}
+              >
+                <VersionContext.Provider
                 value={{
                   docVersion,
                   slugVersion,
@@ -537,6 +599,7 @@ const Layout = ({ children, allUsedVersions, inputDocuoConfig }: Props) => {
                     handleGroupChanged,
                     handlePlatformChanged,
                     handleVersionChanged,
+                    handleTabChanged,
                   }}
                 >
                   <div className="search-screen relative">
@@ -551,6 +614,7 @@ const Layout = ({ children, allUsedVersions, inputDocuoConfig }: Props) => {
                   </div>
                 </SetContext.Provider>
               </VersionContext.Provider>
+              </TabContext.Provider>
             </PlatformContext.Provider>
           </GroupContext.Provider>
         </InstanceContext.Provider>
