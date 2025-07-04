@@ -48,6 +48,7 @@ import { TabContext } from "@/components/context/tabContext";
 import CategoryMenu from "./header/CategoryMenu";
 import SubHeader from "./SubHeader";
 import dynamic from "next/dynamic";
+import TabDropdown from "./dropdown/TabDropdown";
 // 动态导入
 const FloatingFrame = dynamic(() => import("@/components/FloatingFrame"), {
   ssr: false,
@@ -677,6 +678,9 @@ const PreviewLayout = ({
                                 menu={menuGroups}
                               /> */}
                                 <CategoryMenu />
+                                {shouldShowTabs && displayTabs.length > 1 && (
+                                  <TabDropdown />
+                                )}
                                 <InsVersionDropdown
                                   type="platform"
                                   menu={menuPlatforms}

@@ -28,14 +28,10 @@ const TabSwitch: FC<TabSwitchProps> = ({ className }) => {
 
 
   const handleTabClick = (tab: string, defaultLink: string, event: React.MouseEvent) => {
-    // 对于外部链接，阻止默认行为并使用handleTabChanged
+    // 对于外部链接，让<a>标签自然处理跳转，不需要阻止默认行为
     if (defaultLink.startsWith('http')) {
-      event.preventDefault();
-      handleTabChanged({
-        key: tab,
-        defaultLink,
-        initChild: false,
-      });
+      // 外链由<a>标签的href和target="_blank"自然处理
+      return;
     }
     // 对于内部链接，让Link组件处理路由跳转
   };
