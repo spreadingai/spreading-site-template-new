@@ -8,7 +8,7 @@
     "docuodev": "pnpm dev",
     "build": "node ./lib/trans-short-link/init.mjs && next build && next-sitemap",
     "docuobuild": "pnpm build",
-    "deploy": "sh ./build.sh && pnpm build",
+    "deploy": "sh ./build.sh && npm build",
     "start": "next start",
     "lint": "next lint"
   },

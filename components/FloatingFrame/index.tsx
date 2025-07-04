@@ -11,6 +11,7 @@ import {
   FileTextOutlined,
   PhoneOutlined,
   MessageOutlined,
+  // @ts-ignore
 } from "@ant-design/icons";
 import { useSearchParams } from "next/navigation";
 
