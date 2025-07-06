@@ -52,9 +52,15 @@ import Export from "@/components/docuoOpenapi/theme/ApiExplorer/Export";
 import { DocFrontMatter } from "@/components/docuoOpenapi/types";
 import { DEFAULT_CURRENT_SLUG_VERSION } from "@/lib/constants";
 import { getMDXComponent } from "mdx-bundler/client";
-import { Mermaid } from "mdx-mermaid/lib/Mermaid";
 import { defaultLanguage } from "@/components/context/languageContext";
 import { PaginationData } from "@/components/articlePager";
+import dynamic from "next/dynamic";
+
+// 动态导入 Mermaid 组件，禁用 SSR
+const MermaidComponent = dynamic(
+  () => import("mdx-mermaid/lib/Mermaid").then((mod) => ({ default: mod.Mermaid })),
+  { ssr: false }
+);
 
 const MDX_GLOBAL_CONFIG = {
   MdxJsReact: {
@@ -89,8 +95,14 @@ const components = {
     ) : (
       <Link {...props} />
     ),
-  mermaid: (props) => <Mermaid config={{ theme: "default" }} {...props} />,
-  Mermaid: (props) => <Mermaid config={{ theme: "default" }} {...props} />,
+  mermaid: (props: any) => {
+    console.log('Mermaid props:', props);
+    return <MermaidComponent {...props} config={{ theme: "default" }} />;
+  },
+  Mermaid: (props: any) => {
+    console.log('Mermaid props:', props);
+    return <MermaidComponent {...props} config={{ theme: "default" }} />;
+  },
   MethodEndpoint,
   ParamsItem,
   MimeTabs,

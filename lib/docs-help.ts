@@ -126,7 +126,14 @@ class DocsController {
       remarkGfm,
       remarkMath,
       remarkImages,
-      [mdxMermaid, { mermaid: { theme: "default" } }],
+      [mdxMermaid, {
+        mermaid: {
+          theme: "default",
+          startOnLoad: false,
+          securityLevel: "loose"
+        },
+        output: "component" // 使用组件模式而不是 SVG 模式
+      }],
       [remarkToc, { exportRef: tocRef }],
       [remarkFrontmatter, { exportRef: frontmatterRef }],
       remarkConditions,
