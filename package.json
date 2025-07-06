@@ -5,12 +5,15 @@
   "scripts": {
     "clear": "sh ./clear.sh",
     "dev": "node ./lib/trans-short-link/init.mjs && next dev",
+    "dev:fast": "cross-env SKIP_EXTERNAL_DATA_FETCH=true node ./lib/trans-short-link/init.mjs && next dev",
     "docuodev": "pnpm dev",
     "build": "node ./lib/trans-short-link/init.mjs && next build && next-sitemap",
+    "build:analyze": "cross-env ANALYZE=true npm run build",
     "docuobuild": "pnpm build",
     "deploy": "sh ./build.sh && npm run build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "analyze": "node scripts/analyze-performance.js"
   },
   "dependencies": {
     "@ant-design/pro-chat": "^1.15.3",
@@ -93,6 +96,7 @@
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
     "autoprefixer": "^10.4.16",
+    "cross-env": "^7.0.3",
     "eslint": "^8.56.0",
     "eslint-config-next": "14.0.4",
     "postcss": "^8.4.32",

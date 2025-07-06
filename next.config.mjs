@@ -91,11 +91,24 @@ const nextConfig = {
   reactStrictMode: true, // Version 13.4 or later is true by default in the app router
   swcMinify: true, // Version 13 or later is true by default
   compress: true, // TODO:Why disable gzip
+  // 开发模式下的性能优化
+  ...(process.env.NODE_ENV === 'development' && {
+    onDemandEntries: {
+      // 页面在内存中保持的时间（毫秒）
+      maxInactiveAge: 25 * 1000,
+      // 同时保持在内存中的页面数
+      pagesBufferLength: 2,
+    },
+  }),
   eslint: {
     ignoreDuringBuilds: true,
   },
   experimental: {
     webpackBuildWorker: true,
+    // 开发模式下优化
+    ...(process.env.NODE_ENV === 'development' && {
+      optimizePackageImports: ['antd', '@ant-design/icons'],
+    }),
     // outputFileTracingExcludes: {
     //   "pages/**/*.tsx": [".next/cache/webpack/*"],
     // },
@@ -119,6 +132,24 @@ const nextConfig = {
   ],
   basePath: process.env.NEXT_PUBLIC_BASE_PATH || "",
   webpack(config) {
+    // 开发模式下的优化
+    if (process.env.NODE_ENV === 'development') {
+      // 优化缓存
+      config.cache = {
+        type: 'filesystem',
+        buildDependencies: {
+          config: [__filename],
+        },
+      };
+
+      // 减少不必要的优化
+      config.optimization = {
+        ...config.optimization,
+        removeAvailableModules: false,
+        removeEmptyChunks: false,
+      };
+    }
+
     // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find((rule) =>
       rule.test?.test?.(".svg")
