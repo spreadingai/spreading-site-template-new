@@ -344,12 +344,12 @@ function PageHead(props: Props) {
     (currentLanguage === defaultLanguage ? "Docs" : "技术文档");
 
   if (currentLanguage !== defaultLanguage) {
-    // 平台+开发语言+产品名称+SDK+文档标题 - 开发者中心 - ZEGO即构科技
-    // Android Java 实时音视频 SDK 概述 - 开发者中心 - ZEGO即构科技
+    // 平台+开发语言+产品名称+文档标题 - 开发者中心 - ZEGO即构科技
+    // Android Java 实时音视频 概述 - 开发者中心 - ZEGO即构科技
     title = `${currentPlatformLabel.replaceAll(
       /:\s*/g,
       " "
-    )} ${currentGroupLabel} SDK ${
+    )} ${currentGroupLabel} ${
       frontmatter.title ||
       curr.description ||
       frontmatterRef.fileName ||
