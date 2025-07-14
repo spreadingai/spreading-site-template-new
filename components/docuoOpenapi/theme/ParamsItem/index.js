@@ -70,19 +70,18 @@ function ParamsItem({
     </div>
   ));
 
-  const renderDefaultValue = guard(
-    schema && schema.items
-      ? schema.items.default
-      : schema
-      ? schema.default
-      : undefined,
-    (value) => (
-      <div>
-        {/* eslint-disable-next-line react/no-children-prop */}
-        <ReactMarkdown children={`**Default value:** \`${value}\``} />
-      </div>
-    )
-  );
+  const defaultValue = schema && schema.items
+    ? schema.items.default
+    : schema
+    ? schema.default
+    : undefined;
+
+  const renderDefaultValue = defaultValue !== undefined ? (
+    <div>
+      {/* eslint-disable-next-line react/no-children-prop */}
+      <ReactMarkdown children={`**Default value:** \`${defaultValue}\``} />
+    </div>
+  ) : null;
 
   const renderExample = guard(toString(example), (example) => (
     <div>

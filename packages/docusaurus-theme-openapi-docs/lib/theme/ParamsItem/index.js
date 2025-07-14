@@ -72,9 +72,9 @@ function ParamsItem({
 
   const renderDefaultValue = guard(
     schema && schema.items
-      ? schema.items.default
+      ? (schema.items.default !== undefined ? schema.items.default : undefined)
       : schema
-        ? schema.default
+        ? (schema.default !== undefined ? schema.default : undefined)
         : undefined,
     (value) => (
       <div>

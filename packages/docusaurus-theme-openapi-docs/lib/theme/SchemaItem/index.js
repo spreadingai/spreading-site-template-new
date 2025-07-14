@@ -80,7 +80,7 @@ function SchemaItem({
   ));
 
   const renderDefaultValue = guard(
-    typeof defaultValue === "boolean" ? defaultValue.toString() : defaultValue,
+    defaultValue !== undefined ? (typeof defaultValue === "boolean" ? defaultValue.toString() : defaultValue) : undefined,
     (value) => (
       <div className="">
         <ReactMarkdown children={`**Default value:** \`${value}\``} />

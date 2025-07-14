@@ -112,7 +112,7 @@ function getQualifierMessage(schema) {
         else if (schema.maximum && !schema.exclusiveMaximum) {
             maximum = `\`<= ${schema.maximum}\``;
         }
-        else if (schema.maximum && schema.exclusiveMaximum === true) {
+        else if (schema.maximum !== undefined && schema.exclusiveMaximum === true) {
             maximum = `\`< ${schema.maximum}\``;
         }
         if (minimum && !maximum) {

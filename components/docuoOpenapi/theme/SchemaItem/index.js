@@ -82,15 +82,12 @@ function SchemaItem({
     </div>
   ));
 
-  const renderDefaultValue = guard(
-    typeof defaultValue === "boolean" ? defaultValue.toString() : defaultValue,
-    (value) => (
-      <div className="">
-        {/* eslint-disable-next-line react/no-children-prop */}
-        <ReactMarkdown children={`**Default value:** \`${value}\``} />
-      </div>
-    )
-  );
+  const renderDefaultValue = defaultValue !== undefined ? (
+    <div className="">
+      {/* eslint-disable-next-line react/no-children-prop */}
+      <ReactMarkdown children={`**Default value:** \`${typeof defaultValue === "boolean" ? defaultValue.toString() : defaultValue}\``} />
+    </div>
+  ) : null;
 
   const schemaContent = (
     <div>
