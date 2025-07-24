@@ -12,7 +12,7 @@ const baseURL =
 console.log(process.env.NODE_ENV, baseURL);
 
 export const getChatIDMap = () => {
-  // const url = "https://storage.zego.im/sdk-doc/ai_search_mapping.json";
+  // const url = "https://site-media.zego.im/sdk-doc/ai_search_mapping.json";
   const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
   const url = `${basePath}/data/ai_search_mapping.json`;
 
