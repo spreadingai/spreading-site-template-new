@@ -49,6 +49,7 @@ import CategoryMenu from "./header/CategoryMenu";
 import SubHeader from "./SubHeader";
 import dynamic from "next/dynamic";
 import TabDropdown from "./dropdown/TabDropdown";
+import { useDynamicTOC } from "./hooks/useDynamicTOC";
 // 动态导入
 const FloatingFrame = dynamic(() => import("@/components/FloatingFrame"), {
   ssr: false,
@@ -308,10 +309,21 @@ const PreviewLayout = ({
     });
   };
 
+  // 使用动态TOC hook - 总是调用，确保Hook调用顺序一致
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { toc: dynamicToc } = useDynamicTOC('.article-content');
+
+  // 合并静态TOC和动态TOC
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const combinedToc = useMemo(() => {
+    // 如果动态TOC有内容，优先使用动态TOC，否则使用静态TOC
+    return dynamicToc.length > 0 ? dynamicToc : toc;
+  }, [dynamicToc, toc]);
+
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const tocFormatData = useMemo(() => {
-    return formatFormatterTocForAntdAnchor(toc, 0);
-  }, [toc]);
+    return formatFormatterTocForAntdAnchor(combinedToc, 0);
+  }, [combinedToc]);
 
   // Update bread crumb data
   const getBreadCrumbData = () => {
