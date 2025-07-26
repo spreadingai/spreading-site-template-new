@@ -3,7 +3,7 @@ import PreviewLayout from "@/components/preview-layout";
 // import { MDXRemote } from "next-mdx-remote";
 import { MDXProvider, useMDXComponents } from "@mdx-js/react";
 import {
-  CodeBlock,
+  Code,
   CodeGroup,
   Callout,
   Frame,
@@ -69,7 +69,7 @@ const MDX_GLOBAL_CONFIG = {
 };
 
 const components = {
-  CodeBlock,
+  Code,
   CodeGroup,
   Check: Callout.Check,
   Tip: Callout.Tip,
