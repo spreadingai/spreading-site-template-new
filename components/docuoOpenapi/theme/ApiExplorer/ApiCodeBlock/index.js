@@ -6,7 +6,7 @@
  * ========================================================================== */
 
 import React, { isValidElement } from "react";
-import { CodeBlock } from "@spreading/docuo-mdx-component";
+import { Code } from "@spreading/docuo-mdx-component";
 // import ElementContent from "@/components/docuoOpenapi/theme/ApiExplorer/ApiCodeBlock/Content/Element";
 // import StringContent from "@/components/docuoOpenapi/theme/ApiExplorer/ApiCodeBlock/Content/String";
 /**
@@ -33,8 +33,8 @@ export default function ApiCodeBlock({ children: rawChildren, ...props }) {
     children += "\n";
   }
   return (
-    <CodeBlock key={children} {...props}>
+    <Code code={children} lang={props.language || "text"} {...props}>
       {children}
-    </CodeBlock>
+    </Code>
   );
 }

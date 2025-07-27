@@ -8,7 +8,7 @@
 import React from "react";
 
 // import CodeBlock from "@docusaurus/theme-classic/lib/theme/CodeBlock";
-import { CodeBlock } from "@spreading/docuo-mdx-component";
+import { Code } from "@spreading/docuo-mdx-component";
 import SchemaTabs from "@/components/docuoOpenapi/theme/SchemaTabs";
 import TabItem from "@/components/docuoOpenapi/theme-classic/src/theme/TabItem";
 /* eslint-disable import/no-extraneous-dependencies*/
@@ -58,10 +58,12 @@ function ParamsItem({
           code({ node, inline, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || "");
             if (inline) return <code>{children}</code>;
-            return !inline && match ? (
-              <CodeBlock className={className}>{children}</CodeBlock>
+            const lang = match ? match[1] : "text";
+            const codeString = Array.isArray(children) ? children.join("") : children;
+            return !inline ? (
+              <Code code={codeString} lang={lang} className={className} />
             ) : (
-              <CodeBlock>{children}</CodeBlock>
+              <Code code={codeString} lang="text" />
             );
           },
         }}

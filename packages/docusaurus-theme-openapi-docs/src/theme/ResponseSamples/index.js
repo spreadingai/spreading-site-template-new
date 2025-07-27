@@ -7,14 +7,12 @@
 
 import React from "react";
 
-import CodeBlock from "@theme/CodeBlock";
+import { Code } from "@spreading/docuo-mdx-component";
 
 function ResponseSamples({ responseExample, language }) {
   return (
     <div className="openapi-code__response-samples-container">
-      <CodeBlock language={language ? language : "json"}>
-        {responseExample}
-      </CodeBlock>
+      <Code code={responseExample} lang={language ? language : "json"} />
     </div>
   );
 }

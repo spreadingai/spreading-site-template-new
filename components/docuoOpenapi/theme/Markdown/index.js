@@ -7,7 +7,7 @@
 
 import React from "react";
 
-import { CodeBlock } from "@spreading/docuo-mdx-component";
+import { Code } from "@spreading/docuo-mdx-component";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 
@@ -23,10 +23,12 @@ function Markdown({ children }) {
           code({ node, inline, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || "");
             if (inline) return <code>{children}</code>;
-            return !inline && match ? (
-              <CodeBlock className={className}>{children}</CodeBlock>
+            const lang = match ? match[1] : "text";
+            const codeString = Array.isArray(children) ? children.join("") : children;
+            return !inline ? (
+              <Code code={codeString} lang={lang} className={className} />
             ) : (
-              <CodeBlock>{children}</CodeBlock>
+              <Code code={codeString} lang="text" />
             );
           },
         }}
