@@ -6,6 +6,55 @@
   width: 65vw;
   height: 65vh;
   overflow: auto;
+
+  // 自定义滚动条样式
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  // 滚动条轨道
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+  }
+
+  // 滚动条滑块
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  // 滚动条角落
+  &::-webkit-scrollbar-corner {
+    background: rgba(255, 255, 255, 0.05);
+  }
+}
+
+// Light模式下的滚动条样式
+:global(html[data-theme="light"]) .openapi-explorer__expand-modal-content {
+  // 滚动条轨道
+  &::-webkit-scrollbar-track {
+    background: rgba(156, 163, 175, 0.1);
+  }
+
+  // 滚动条滑块
+  &::-webkit-scrollbar-thumb {
+    background: rgba(156, 163, 175, 0.4);
+
+    &:hover {
+      background: rgba(156, 163, 175, 0.6);
+    }
+  }
+
+  // 滚动条角落
+  &::-webkit-scrollbar-corner {
+    background: rgba(156, 163, 175, 0.1);
+  }
 }
 
 .openapi-explorer__expand-modal-overlay {

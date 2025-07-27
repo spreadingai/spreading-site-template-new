@@ -43,6 +43,34 @@
   justify-content: flex-start;
   padding: 0.25rem;
   padding-bottom: 0.6rem;
+  overflow-x: auto;
+
+  // 自定义滚动条样式
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  // 滚动条轨道
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+  }
+
+  // 滚动条滑块
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  // 滚动条角落
+  &::-webkit-scrollbar-corner {
+    background: rgba(255, 255, 255, 0.05);
+  }
 }
 
 .openapi-tabs__code-content {
@@ -206,6 +234,33 @@ body[class="ReactModal__Body--open"] {
           padding: 0px 0px 2px 0px;
           max-height: 300px;
           overflow-y: auto;
+
+          // 自定义滚动条样式
+          &::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+          }
+
+          // 滚动条轨道
+          &::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+          }
+
+          // 滚动条滑块
+          &::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+
+            &:hover {
+              background: rgba(255, 255, 255, 0.3);
+            }
+          }
+
+          // 滚动条角落
+          &::-webkit-scrollbar-corner {
+            background: rgba(255, 255, 255, 0.05);
+          }
         }
       }
       .openapi-tabs__code-item {
@@ -238,6 +293,51 @@ body[class="ReactModal__Body--open"] {
           }
         }
       }
+    }
+  }
+}
+
+// Light模式下的滚动条样式
+:global(html[data-theme="light"]) {
+  .tabpanel-wrapper {
+    // 滚动条轨道
+    &::-webkit-scrollbar-track {
+      background: rgba(156, 163, 175, 0.1);
+    }
+
+    // 滚动条滑块
+    &::-webkit-scrollbar-thumb {
+      background: rgba(156, 163, 175, 0.4);
+
+      &:hover {
+        background: rgba(156, 163, 175, 0.6);
+      }
+    }
+
+    // 滚动条角落
+    &::-webkit-scrollbar-corner {
+      background: rgba(156, 163, 175, 0.1);
+    }
+  }
+
+  .openapi-tabs__code-list-container {
+    // 滚动条轨道
+    &::-webkit-scrollbar-track {
+      background: rgba(156, 163, 175, 0.1);
+    }
+
+    // 滚动条滑块
+    &::-webkit-scrollbar-thumb {
+      background: rgba(156, 163, 175, 0.4);
+
+      &:hover {
+        background: rgba(156, 163, 175, 0.6);
+      }
+    }
+
+    // 滚动条角落
+    &::-webkit-scrollbar-corner {
+      background: rgba(156, 163, 175, 0.1);
     }
   }
 }
