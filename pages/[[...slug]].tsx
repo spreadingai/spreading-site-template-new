@@ -17,6 +17,7 @@ import {
   CardGroup,
   Step,
   Steps,
+  QRCode,
 } from "@spreading/docuo-mdx-component";
 import LibControllerImpl from "@/lib";
 import DocsControllerImpl from "@/lib/docs-help";
@@ -87,6 +88,7 @@ const components = {
   CardGroup,
   Step,
   Steps,
+  QRCode,
   a: (props) =>
     props.href && props.href.startsWith("http") ? (
       <a {...props} target="_blank" />
