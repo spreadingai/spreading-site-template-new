@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { parseHeadingsToTocs } from '../../plugins/utils';
 
 interface HeadingData {
@@ -16,10 +16,13 @@ interface TOCItem {
 
 /**
  * 动态扫描页面中的所有heading元素生成TOC
- * 这个hook会在页面内容变化时重新扫描heading元素
+ * 使用更精确的触发机制，避免频繁的DOM监听
  */
 export const useDynamicTOC = (containerSelector = '.article-content') => {
   const [toc, setToc] = useState<TOCItem[]>([]);
+  const [lastScanTime, setLastScanTime] = useState<number>(0);
+  const [lastTocHash, setLastTocHash] = useState<string>('');
+  const tocCacheRef = useRef<TOCItem[]>([]);
 
   const generateSlug = (text: string): string => {
     return text
@@ -94,78 +97,58 @@ export const useDynamicTOC = (containerSelector = '.article-content') => {
     return headings;
   }, [containerSelector]);
 
+  // 生成TOC内容的哈希值，用于比较内容是否真的发生了变化
+  const generateTocHash = useCallback((headings: HeadingData[]) => {
+    return headings.map(h => `${h.level}-${h.id}-${h.title}`).join('|');
+  }, []);
+
   const updateTOC = useCallback(() => {
-    const headings = scanHeadings();
-    if (headings.length > 0) {
-      const tocData = parseHeadingsToTocs(headings);
-      setToc(tocData);
-    } else {
-      setToc([]);
+    const now = Date.now();
+    // 防止过于频繁的更新（至少间隔1000ms）
+    if (now - lastScanTime < 1000) {
+      return;
     }
-  }, [scanHeadings]);
+
+    const headings = scanHeadings();
+    const newTocHash = generateTocHash(headings);
+
+    // 只有当TOC内容真的发生变化时才更新
+    if (newTocHash !== lastTocHash) {
+      let newTocData: TOCItem[] = [];
+      if (headings.length > 0) {
+        newTocData = parseHeadingsToTocs(headings);
+      }
+
+      // 使用深度比较，确保内容真的不同才更新state
+      const newTocString = JSON.stringify(newTocData);
+      const cachedTocString = JSON.stringify(tocCacheRef.current);
+
+      if (newTocString !== cachedTocString) {
+        tocCacheRef.current = newTocData;
+        setToc(newTocData);
+      }
+
+      setLastTocHash(newTocHash);
+      setLastScanTime(now);
+    }
+  }, [scanHeadings, lastScanTime, lastTocHash, generateTocHash]);
 
   useEffect(() => {
     // 初始扫描
     updateTOC();
 
-    // 创建MutationObserver来监听DOM变化
-    const observer = new MutationObserver((mutations) => {
-      let shouldUpdate = false;
-      
-      mutations.forEach((mutation) => {
-        // 检查是否有新增或删除的heading元素
-        if (mutation.type === 'childList') {
-          const addedNodes = Array.from(mutation.addedNodes);
-          const removedNodes = Array.from(mutation.removedNodes);
-          
-          const hasHeadingChanges = [...addedNodes, ...removedNodes].some((node) => {
-            if (node.nodeType === Node.ELEMENT_NODE) {
-              const element = node as Element;
-              // 检查是否是heading元素或包含heading元素
-              return element.matches('h1, h2, h3, h4, h5, h6') || 
-                     element.querySelector('h1, h2, h3, h4, h5, h6');
-            }
-            return false;
-          });
-          
-          if (hasHeadingChanges) {
-            shouldUpdate = true;
-          }
-        }
-        
-        // 检查heading元素的文本内容是否发生变化
-        if (mutation.type === 'characterData' || mutation.type === 'attributes') {
-          const target = mutation.target;
-          if (target.nodeType === Node.ELEMENT_NODE) {
-            const element = target as Element;
-            if (element.matches('h1, h2, h3, h4, h5, h6')) {
-              shouldUpdate = true;
-            }
-          }
-        }
-      });
-      
-      if (shouldUpdate) {
-        // 使用setTimeout来避免频繁更新
-        setTimeout(updateTOC, 100);
-      }
-    });
+    // 只监听自定义的TOC更新事件（由组件主动触发）
+    // 移除其他所有自动触发的事件监听
+    const handleTOCUpdate = () => {
+      setTimeout(updateTOC, 100);
+    };
 
-    // 开始观察
-    const container = document.querySelector(containerSelector);
-    if (container) {
-      observer.observe(container, {
-        childList: true,
-        subtree: true,
-        characterData: true,
-        attributes: true,
-        attributeFilter: ['id']
-      });
-    }
+    // 只监听自定义TOC更新事件
+    document.addEventListener('toc-update', handleTOCUpdate);
 
     // 清理函数
     return () => {
-      observer.disconnect();
+      document.removeEventListener('toc-update', handleTOCUpdate);
     };
   }, [containerSelector, updateTOC]);
 

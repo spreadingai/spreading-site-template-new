@@ -309,16 +309,14 @@ const PreviewLayout = ({
     });
   };
 
-  // 使用动态TOC hook - 总是调用，确保Hook调用顺序一致
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { toc: dynamicToc } = useDynamicTOC('.article-content');
+  // 暂时禁用动态TOC，只使用静态TOC来测试闪烁问题
+  // const { toc: dynamicToc } = useDynamicTOC('.article-content');
 
-  // 合并静态TOC和动态TOC
+  // 直接使用静态TOC
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const combinedToc = useMemo(() => {
-    // 如果动态TOC有内容，优先使用动态TOC，否则使用静态TOC
-    return dynamicToc.length > 0 ? dynamicToc : toc;
-  }, [dynamicToc, toc]);
+    return toc;
+  }, [toc]);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const tocFormatData = useMemo(() => {
