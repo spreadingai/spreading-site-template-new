@@ -32,6 +32,12 @@ import PagerControllerImpl from "@/lib/pager-help";
 import ShortLinkTransControllerImpl from "@/lib/trans-short-link";
 import CategoryTransControllerImpl from "@/lib/category-help";
 import CommonControllerImpl from "@/lib/optimize/common";
+import {
+  cacheGlobalData,
+  cacheLanguageData,
+  cacheSlugData,
+  cacheInstanceData
+} from "@/lib/cache";
 import Link from "next/link";
 import { SlugData, DocuoConfig, TocItem } from "@/lib/types";
 import Head from "next/head";
@@ -140,68 +146,100 @@ interface Props {
 }
 
 export const getStaticProps = async ({ params }: SlugData) => {
-  // TODO: Here some methods are executed multiple times
+  console.time(`[getStaticProps] Processing slug: ${params.slug.join("/")}`);
+
   const slug = params.slug;
   // Remove the effect of anchor points
   slug[slug.length - 1] = slug[slug.length - 1].replace(/#.*$/, "");
 
-  // console.log(`[getStaticProps] Validating slug: ${slug.join("/")}`);
-
-  // 验证slug是否有效
-  const allSlugs = CommonControllerImpl.readAllSlugsByFile();
+  // 验证slug是否有效 - 使用缓存优化
+  const allSlugs = cacheGlobalData.getAllSlugs(() => CommonControllerImpl.readAllSlugsByFile());
   const currentSlugPath = slug.join("/");
   const isValidSlug = allSlugs.some((slugData) => {
     const validSlugPath = slugData.params.slug.join("/");
     return validSlugPath === currentSlugPath;
   });
 
-  // console.log(`[getStaticProps] Slug validation result: ${isValidSlug}`);
-
   // 如果slug无效，返回404
   if (!isValidSlug) {
     console.warn(`[getStaticProps] Invalid slug detected: ${currentSlugPath}, redirecting to 404`);
+    console.timeEnd(`[getStaticProps] Processing slug: ${params.slug.join("/")}`);
     return {
       notFound: true,
     };
   }
 
-  // Reason: `undefined` cannot be serialized as JSON. Please use `null` or omit this value.
-  const docuoConfig = LibControllerImpl.getDocuoConfig();
+  // 获取全局配置数据 - 使用缓存优化
+  const docuoConfig = cacheGlobalData.getDocuoConfig(() => LibControllerImpl.getDocuoConfig());
   LibControllerImpl.addDefaultLink();
-  const instances = LibControllerImpl.getInstances();
-  const { instanceID, slugVersion, docVersion } =
-    CommonControllerImpl.getExtractInfoFromSlug(slug, instances);
-  const { currentLanguage } =
-    LanguageControllerImpl.getInfoByInstanceID(instanceID);
+  const instances = cacheGlobalData.getInstances(() => LibControllerImpl.getInstances());
+  // 提取基础信息 - 使用缓存优化
+  const { instanceID, slugVersion, docVersion } = cacheSlugData.getExtractInfo(slug, () =>
+    CommonControllerImpl.getExtractInfoFromSlug(slug, instances)
+  );
+
+  const { currentLanguage } = LanguageControllerImpl.getInfoByInstanceID(instanceID);
+
+  // 获取树形数据 - 已在TreeController中优化
   const folderTreeData = TreeControllerImpl.getFolderTreeDataBySlug(slug);
-  const displayVersions = VersionsControllerImpl.getDisplayVersions(slug);
-  const displayInstances =
-    LibControllerImpl.getDisplayInstances(currentLanguage);
-  const { displayLanguages, currentLanguageLabel } =
-    LanguageControllerImpl.getDisplayLanguages(slug);
-  const { displayGroups, currentGroup, currentGroupLabel } =
-    GroupControllerImpl.getDisplayGroups(slug, currentLanguage);
-  const { displayPlatforms, currentPlatform, currentPlatformLabel } =
-    PlatformControllerImpl.getDisplayPlatforms(slug, currentLanguage);
+
+  // 获取版本相关数据 - 使用缓存优化
+  const displayVersions = cacheSlugData.getDisplayVersions(slug, () =>
+    VersionsControllerImpl.getDisplayVersions(slug)
+  );
+
+  // 获取基于语言的数据 - 使用缓存优化
+  const displayInstances = cacheLanguageData.getDisplayInstances(currentLanguage, () =>
+    LibControllerImpl.getDisplayInstances(currentLanguage)
+  );
+
+  const { displayLanguages, currentLanguageLabel } = cacheLanguageData.getDisplayLanguages(slug, () =>
+    LanguageControllerImpl.getDisplayLanguages(slug)
+  );
+
+  const { displayGroups, currentGroup, currentGroupLabel } = cacheLanguageData.getDisplayGroups(slug, currentLanguage, () =>
+    GroupControllerImpl.getDisplayGroups(slug, currentLanguage)
+  );
+
+  const { displayPlatforms, currentPlatform, currentPlatformLabel } = cacheLanguageData.getDisplayPlatforms(slug, currentLanguage, () =>
+    PlatformControllerImpl.getDisplayPlatforms(slug, currentLanguage)
+  );
+  // 注入短链接数据
   ShortLinkTransControllerImpl.injectData({ locale: currentLanguage });
+
+  // 读取文档内容 - 这是最耗时的操作，暂时保持原样
   const postData = await DocsControllerImpl.readDoc(slug);
+
+  // 获取版本信息 - 已在CommonController中优化
   const versions = CommonControllerImpl.getUsedVersions(
     instanceID,
     LibControllerImpl.getTargetInstance(instanceID)
   );
+
+  // 查找当前实例 - 简单计算，不需要缓存
   const currentInstance = displayInstances.find((item) => {
-    // Matches multiple language instance id
     return item.instance.id === instanceID;
   });
-  const { prev, curr, next } = PagerControllerImpl.getPageTurningData(slug);
-  const { displayCategorys, currentCategory, currentProduct } =
-    CategoryTransControllerImpl.getDisplayCategorys(
-      currentLanguage,
-      instanceID,
-      displayGroups
-    );
-  const { displayTabs, currentTab, currentTabLabel, shouldShowTabs } =
-    TabControllerImpl.getDisplayTabs(slug, currentLanguage);
+
+  // 获取分页数据 - 使用缓存优化
+  const { prev, curr, next } = cacheSlugData.getPagerData(slug, () =>
+    PagerControllerImpl.getPageTurningData(slug)
+  );
+
+  // 获取分类数据 - 使用缓存优化
+  const { displayCategorys, currentCategory, currentProduct } = cacheLanguageData.getDisplayCategories(
+    currentLanguage,
+    instanceID,
+    displayGroups,
+    () => CategoryTransControllerImpl.getDisplayCategorys(currentLanguage, instanceID, displayGroups)
+  );
+
+  // 获取标签数据 - 使用缓存优化
+  const { displayTabs, currentTab, currentTabLabel, shouldShowTabs } = cacheLanguageData.getDisplayTabs(slug, currentLanguage, () =>
+    TabControllerImpl.getDisplayTabs(slug, currentLanguage)
+  );
+  console.timeEnd(`[getStaticProps] Processing slug: ${params.slug.join("/")}`);
+
   return {
     props: {
       ...postData,
@@ -235,9 +273,6 @@ export const getStaticProps = async ({ params }: SlugData) => {
       shouldShowTabs,
     },
   };
-  // return {
-  //   props: {},
-  // };
 };
 
 export function getStaticPaths() {
@@ -262,6 +297,13 @@ export default function DocPage(props: Props) {
     () => getMDXComponent(mdxSource.code, MDX_GLOBAL_CONFIG),
     [mdxSource.code]
   );
+
+  // 为MDX组件准备props，用于条件渲染
+  // 对于Android页面，platform应该是undefined，这样:::if{props.platform=undefined}会显示
+  const mdxProps = {
+    platform: undefined, // Android页面的默认内容
+  };
+
   return (
     <div className="prose" style={{ maxWidth: "unset" }}>
       <PageHead {...props}></PageHead>
@@ -271,7 +313,7 @@ export default function DocPage(props: Props) {
           {/* <MDXRemote {...mdxSource} components={components} /> */}
           {/* @ts-ignore */}
           <MDXProvider components={components}>
-            <Component />
+            <Component {...mdxProps} />
           </MDXProvider>
         </ApiItem>
       </article>

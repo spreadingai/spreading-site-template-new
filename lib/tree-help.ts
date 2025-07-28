@@ -2,6 +2,7 @@ import { FolderTreeData, SidebarItem, SidebarItemType } from "./types";
 import LibControllerImpl from "./index";
 import CommonControllerImpl from "./optimize/common";
 import SidebarsControllerImpl from "./sidebars-help";
+import { cacheInstanceData } from "./cache";
 
 class TreeController {
   static _instance: TreeController;
@@ -25,69 +26,62 @@ class TreeController {
       slugVersion,
       mdxFileID: currentMdxFileID,
     } = CommonControllerImpl.getExtractInfoFromSlug(slug, instances);
-    if (
-      process.env.NODE_ENV !== "development" &&
-      this._folderTreeDataMap[instanceID] &&
-      this._folderTreeDataMap[instanceID][docVersion]
-    ) {
-      // console.log(`[TreeController]getFolderTreeDataBySlug cache`);
-      return JSON.parse(
-        JSON.stringify(this._folderTreeDataMap[instanceID][docVersion])
-      ) as FolderTreeData[];
-    }
 
-    let tree: FolderTreeData[] = [];
-    const instance = LibControllerImpl.getTargetInstance(instanceID);
-    const versions = CommonControllerImpl.getUsedVersions(instanceID, instance);
-    if (slugVersion && slugVersion === versions[0]) {
-      tree = [];
-    } else {
-      const usedSidebarIds =
-        SidebarsControllerImpl.getUsedSidebarIds(instanceID);
-      const sidebars = SidebarsControllerImpl.getSidebars(
-        instanceID,
-        docVersion
-      );
-      const targetSidebarId =
-        SidebarsControllerImpl.getSidebarItemIDByMdxFileID(
-          sidebars,
-          currentMdxFileID
+    // 使用基于实例和版本的缓存优化
+    return cacheInstanceData.getFolderTreeData(instanceID, docVersion, () => {
+
+      let tree: FolderTreeData[] = [];
+      const instance = LibControllerImpl.getTargetInstance(instanceID);
+      const versions = CommonControllerImpl.getUsedVersions(instanceID, instance);
+      if (slugVersion && slugVersion === versions[0]) {
+        tree = [];
+      } else {
+        const usedSidebarIds =
+          SidebarsControllerImpl.getUsedSidebarIds(instanceID);
+        const sidebars = SidebarsControllerImpl.getSidebars(
+          instanceID,
+          docVersion
         );
-      // const temp = usedSidebarIds.length
-      //   ? usedSidebarIds
-      //   : Object.keys(sidebars);
-      const temp = targetSidebarId
-        ? [targetSidebarId]
-        : usedSidebarIds.length
-        ? usedSidebarIds
-        : Object.keys(sidebars);
-      temp.forEach((sidebarId, index) => {
-        const sidebarItems = sidebars[sidebarId];
-        const idPrefixKey = `${
-          slugVersion
-            ? routeBasePath
-              ? routeBasePath + "/"
-              : ""
-            : routeBasePath
-        }${slugVersion}`;
-        const prefixKey = `${idPrefixKey}${idPrefixKey ? "/" : ""}${sidebarId}`;
-        tree = tree.concat(
-          this.getChildrenFromChildren(
-            `${index}`,
-            sidebarItems as SidebarItem[],
-            prefixKey,
-            idPrefixKey,
-            instanceID,
-            docVersion,
+        const targetSidebarId =
+          SidebarsControllerImpl.getSidebarItemIDByMdxFileID(
+            sidebars,
+            currentMdxFileID
+          );
+        const temp = targetSidebarId
+          ? [targetSidebarId]
+          : usedSidebarIds.length
+          ? usedSidebarIds
+          : Object.keys(sidebars);
+        temp.forEach((sidebarId, index) => {
+          const sidebarItems = sidebars[sidebarId];
+          const idPrefixKey = `${
             slugVersion
-          )
-        );
-      });
-    }
-    this._folderTreeDataMap[instanceID] =
-      this._folderTreeDataMap[instanceID] || {};
-    this._folderTreeDataMap[instanceID][docVersion] = tree;
-    return JSON.parse(JSON.stringify(tree)) as FolderTreeData[];
+              ? routeBasePath
+                ? routeBasePath + "/"
+                : ""
+              : routeBasePath
+          }${slugVersion}`;
+          const prefixKey = `${idPrefixKey}${idPrefixKey ? "/" : ""}${sidebarId}`;
+          tree = tree.concat(
+            this.getChildrenFromChildren(
+              `${index}`,
+              sidebarItems as SidebarItem[],
+              prefixKey,
+              idPrefixKey,
+              instanceID,
+              docVersion,
+              slugVersion
+            )
+          );
+        });
+      }
+
+      // 保持向后兼容
+      this._folderTreeDataMap[instanceID] =
+        this._folderTreeDataMap[instanceID] || {};
+      this._folderTreeDataMap[instanceID][docVersion] = tree;
+      return tree;
+    });
   }
   getChildrenFromChildren(
     level: string,

@@ -26,7 +26,7 @@ import {
 import LibControllerImpl from "./index";
 import CommonControllerImpl from "./optimize/common";
 import ShortLinkTransControllerImpl from "./trans-short-link";
-import { convertDocID, ignoreNumberPrefix, removeMdxSuffix } from "./utils";
+import { convertDocID, ignoreNumberPrefix, removeMdxSuffix, normalizePath } from "./utils";
 import { DEFAULT_INSTANCE_ID, ENTITY_ROOT_DIRECTORY } from "./constants";
 import { InstanceType } from "./types";
 
@@ -159,7 +159,9 @@ class DocsController {
     //   parseFrontmatter: true,
     // });
 
-    const cwd = mdxFileUrl ? path.dirname(mdxFileUrl) : undefined;
+    // 设置正确的工作目录，确保能解析 /snippets/ 路径
+    // 使用 docs 目录作为基础目录，这样 /snippets/ 路径就能正确解析
+    const cwd = path.join(process.cwd(), ENTITY_ROOT_DIRECTORY);
     const globals = {
       "@mdx-js/react": {
         varName: "MdxJsReact",
@@ -229,6 +231,8 @@ class DocsController {
     if (!isExist) return "";
     // Get the relative path of the image and
     const publicPath = path.relative("docs", imagePath);
+    // 确保在Windows上也使用正斜杠作为URL分隔符
+    const normalizedPublicPath = normalizePath(publicPath);
     // Create the public directory (if it does not exist)
     fs.mkdirSync("public/docs", { recursive: true });
     // Create the same folder structure in the public directory
@@ -238,9 +242,7 @@ class DocsController {
     // Copy the image to the public directory
     const destPath = path.join("public/docs", publicPath);
     fs.copyFileSync(imagePath, destPath);
-    return `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/docs/${path.join(
-      publicPath
-    )}`;
+    return `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/docs/${normalizedPublicPath}`;
   }
   getActualMdxFilePath(rootUrl: string, mdxFileID: string) {
     const rootPath = path.resolve("./public", "..", rootUrl);
@@ -265,6 +267,8 @@ class DocsController {
           }
         } else {
           let relativePath = path.relative(rootPath, joinPath);
+          // 确保在Windows上也使用正斜杠进行比较
+          relativePath = normalizePath(relativePath);
           // Remove mdx|md suffix
           relativePath = removeMdxSuffix(relativePath);
           relativePath = ignoreNumberPrefix(relativePath);

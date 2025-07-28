@@ -90,6 +90,12 @@ class LanguageController {
           defaultLocaleInstance = JSON.parse(JSON.stringify(targetInstance));
         }
 
+        // 确保 targetInstance 不为空
+        if (!targetInstance) {
+          console.warn(`[LanguageController] targetInstance is null for suffix: ${suffix}, baseInstanceID: ${baseInstanceID}`);
+          return; // 跳过这个语言
+        }
+
         // Old logic: In the current version, the version display policy of different instances when switching languages
         // A 表示 instance zh_CN, version: [3.0.0, 2.0.0, 1.0.0]
         // B 表示 instance en, version: [4.0.0, 2.0.0, 1.0.0]

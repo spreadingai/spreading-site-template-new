@@ -2,7 +2,7 @@ import { visit } from "unist-util-visit";
 import Link from "next/link";
 import path from "path";
 import fs from "fs";
-import { ignoreNumberPrefix } from "@/lib/utils";
+import { ignoreNumberPrefix, normalizePath } from "@/lib/utils";
 
 // [xxx](/xxx) Absolute paths are not supported (does not contain expression)
 // [xxx](xxx) Support relative paths
@@ -73,6 +73,8 @@ export function rehypeLink(options: {
         targetHref
       );
       const publicPath = path.relative(options.rootUrl, imagePath);
+      // 确保在Windows上也使用正斜杠作为URL分隔符
+      const normalizedPublicPath = normalizePath(publicPath);
       // console.log(
       //   `[rehypeLink]updateLinkTag`,
       //   options.prefix,
@@ -80,7 +82,7 @@ export function rehypeLink(options: {
       //   options.filePath,
       //   imagePath,
       //   targetHref,
-      //   publicPath
+      //   normalizedPublicPath
       // );
       const convertDocID = (str: string) => {
         // Quick Start, Quick-Start
@@ -96,7 +98,7 @@ export function rehypeLink(options: {
         return result.join("/");
       };
       node.properties.href = `${options.prefix}/${convertDocID(
-        ignoreNumberPrefix(publicPath)
+        ignoreNumberPrefix(normalizedPublicPath)
       )}`;
     });
   };

@@ -1,6 +1,7 @@
 import fs from "fs";
 import path from "path";
 import { DocInstance, Plan, SlugData } from "../types";
+import { cacheGlobalData, cacheInstanceData } from "../cache";
 import {
   DEFAULT_CURRENT_DOC_VERSION,
   DEFAULT_CURRENT_SLUG_VERSION,
@@ -22,10 +23,8 @@ class CommonController {
     );
   }
   readAllSlugsByFile(): SlugData[] {
-    if (this._allSlugs) {
-      // console.log("[CommonController]readAllSlugsByFile: memory cache");
-      return this._allSlugs;
-    } else {
+    // 使用全局缓存优化
+    return cacheGlobalData.getAllSlugs(() => {
       let allSlugs: SlugData[] = [];
       const slugsFileUrl = `${ENTITY_ROOT_DIRECTORY}/${MIDDLEWARE_DIRECTORY}/all-slugs.json`;
       const slugsFilePath = path.resolve("./public", "..", slugsFileUrl);
@@ -42,9 +41,11 @@ class CommonController {
       } catch (error) {
         console.error("[CommonController]readAllSlugsByFile: error", error);
       }
+
+      // 保持向后兼容
       this._allSlugs = allSlugs;
-      return this._allSlugs;
-    }
+      return allSlugs;
+    });
   }
   writeAllSlugsByFile(allSlugs: SlugData[]): boolean {
     let result = false;
@@ -103,45 +104,42 @@ class CommonController {
     return slugVersion;
   }
   getUsedVersions(instanceID: string, instance: DocInstance) {
-    if (this._usedVersionsMap[instanceID]) {
-      // console.log(`[VersionsController]getUsedVersions cache`);
-      return JSON.parse(
-        JSON.stringify(this._usedVersionsMap[instanceID])
-      ) as string[];
-    }
-    // Use the external current version if the file is not present or the list is empty
-    // 直接使用实例配置中的path，支持任意路径结构
-    const versionsUrl = `${ENTITY_ROOT_DIRECTORY}/${instance.path}/versions.json`;
-    const versionsPath = path.resolve("./public", "..", versionsUrl);
-    let versions: string[] = [];
-    // Increased the version limit
-    if (Number(process.env.NEXT_PUBLIC_PLAN) !== Plan.Free) {
-      if (fs.existsSync(versionsPath)) {
-        versions = (
-          JSON.parse(fs.readFileSync(versionsPath, "utf8")) as string[]
-        ).filter((version) => version);
-      }
-      if (
-        process.env.NEXT_PUBLIC_VERSION_LIMIT &&
-        process.env.NEXT_PUBLIC_VERSION_LIMIT !== UNLIMITED_VERSION_NUMBER
-      ) {
-        try {
-          const limit = Number(process.env.NEXT_PUBLIC_VERSION_LIMIT);
-          if (!isNaN(limit) && limit) {
-            versions.splice(limit - 1);
+    // 使用基于实例的缓存优化
+    return cacheInstanceData.getUsedVersions(instanceID, () => {
+      // Use the external current version if the file is not present or the list is empty
+      // 直接使用实例配置中的path，支持任意路径结构
+      const versionsUrl = `${ENTITY_ROOT_DIRECTORY}/${instance.path}/versions.json`;
+      const versionsPath = path.resolve("./public", "..", versionsUrl);
+      let versions: string[] = [];
+      // Increased the version limit
+      if (Number(process.env.NEXT_PUBLIC_PLAN) !== Plan.Free) {
+        if (fs.existsSync(versionsPath)) {
+          versions = (
+            JSON.parse(fs.readFileSync(versionsPath, "utf8")) as string[]
+          ).filter((version) => version);
+        }
+        if (
+          process.env.NEXT_PUBLIC_VERSION_LIMIT &&
+          process.env.NEXT_PUBLIC_VERSION_LIMIT !== UNLIMITED_VERSION_NUMBER
+        ) {
+          try {
+            const limit = Number(process.env.NEXT_PUBLIC_VERSION_LIMIT);
+            if (!isNaN(limit) && limit) {
+              versions.splice(limit - 1);
+            }
+          } catch (error) {
+            console.log(
+              `[DocsController]getUsedVersions process.env.NEXT_PUBLIC_VERSION_LIMIT: `,
+              process.env.NEXT_PUBLIC_VERSION_LIMIT
+            );
           }
-        } catch (error) {
-          console.log(
-            `[DocsController]getUsedVersions process.env.NEXT_PUBLIC_VERSION_LIMIT: `,
-            process.env.NEXT_PUBLIC_VERSION_LIMIT
-          );
         }
       }
-    }
-    this._usedVersionsMap[instanceID] = versions;
-    return JSON.parse(
-      JSON.stringify(this._usedVersionsMap[instanceID])
-    ) as string[];
+
+      // 保持向后兼容
+      this._usedVersionsMap[instanceID] = versions;
+      return versions;
+    });
   }
   getAllUsedVersions(instances: DocInstance[]) {
     instances.forEach((instance) => {

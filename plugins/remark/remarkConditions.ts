@@ -16,7 +16,7 @@ const generateCommonEstreeData = (key, value) => {
   const operator_ = "==";
   const expression = `{"display": ${key}${
     typeof value === "number" ? operator_ : operator
-  }${typeof value !== "string" ? value : '"' + value + '"'} ? "null" : "none"}`;
+  }${typeof value !== "string" ? value : '"' + value + '"'} ? "block" : "none"}`;
 
   let rightObj: any = {
     type: "Literal",
@@ -84,8 +84,8 @@ const generateCommonEstreeData = (key, value) => {
                     },
                     consequent: {
                       type: "Literal",
-                      value: "null",
-                      raw: '"null"',
+                      value: "block",
+                      raw: '"block"',
                     },
                     alternate: {
                       type: "Literal",
@@ -150,7 +150,7 @@ const generateOrEstreeData = (key, value) => {
     }
   }
   str += "]";
-  const expression = `{ display: ${str}.${operator}(${key}) ? "null" : "none" }`;
+  const expression = `{ display: ${str}.${operator}(${key}) ? "block" : "none" }`;
   return {
     type: "mdxJsxAttributeValueExpression",
     value: expression,
@@ -208,8 +208,8 @@ const generateOrEstreeData = (key, value) => {
                     },
                     consequent: {
                       type: "Literal",
-                      value: "null",
-                      raw: '"null"',
+                      value: "block",
+                      raw: '"block"',
                     },
                     alternate: {
                       type: "Literal",

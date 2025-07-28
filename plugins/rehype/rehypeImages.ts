@@ -1,6 +1,7 @@
 import { visit } from "unist-util-visit";
 import path from "path";
 import fs from "fs";
+import { normalizePath } from "@/lib/utils";
 
 export function rehypeImages(options) {
   return function transformer(tree) {
@@ -48,7 +49,9 @@ export function rehypeImages(options) {
 
 function getFinalPath(originalPath, publicPath) {
   if (publicPath) {
-    return `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/docs/${path.join(publicPath)}`;
+    // 确保在Windows上也使用正斜杠作为URL分隔符
+    const normalizedPublicPath = normalizePath(publicPath);
+    return `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/docs/${normalizedPublicPath}`;
   }
   if (originalPath.startsWith("/")) {
     return `${process.env.NEXT_PUBLIC_BASE_PATH || ""}${originalPath}`;
@@ -73,6 +76,8 @@ function getPublicPath(relativePath, filePath) {
   if (!isExist) return "";
   // Get the path relative to the docs directory
   const publicPath = path.relative("docs", imagePath);
+  // 确保在Windows上也使用正斜杠作为URL分隔符
+  const normalizedPublicPath = normalizePath(publicPath);
   // Create the public directory (if it does not exist)
   fs.mkdirSync("public/docs", { recursive: true });
   // Create the same folder structure in the public directory
@@ -82,5 +87,5 @@ function getPublicPath(relativePath, filePath) {
   // Copy the image to the public directory
   const destPath = path.join("public/docs", publicPath);
   fs.copyFileSync(imagePath, destPath);
-  return publicPath;
+  return normalizedPublicPath;
 }
