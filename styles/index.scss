@@ -184,7 +184,7 @@ html > body {
 
   .article-breadcrumb {
     display: flex;
-    // align-items: center;
+    align-items: center;
 
     .drawer-switch {
       cursor: pointer;
@@ -192,15 +192,51 @@ html > body {
     }
 
     .breadcrumb-label {
-      color: var(--docuo-breadcrumb-color);
+      color: var(--docuo-breadcrumb-color) !important;
     }
 
     li:last-child .breadcrumb-label {
-      color: var(--docuo-color-primary-active);
+      color: var(--docuo-color-primary-active) !important;
     }
 
     .breadcrumb-icon {
       color: var(--docuo-breadcrumb-icon-color);
+    }
+
+    // 确保Antd Breadcrumb组件样式正确应用
+    .ant-breadcrumb {
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: center !important;
+
+      ol {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+
+      li {
+        display: flex !important;
+        align-items: center !important;
+      }
+
+      .ant-breadcrumb-link {
+        color: var(--docuo-breadcrumb-color) !important;
+        text-decoration: none;
+        cursor: default;
+      }
+
+      .ant-breadcrumb-separator {
+        color: var(--docuo-breadcrumb-icon-color) !important;
+      }
+
+      li:last-child {
+        .ant-breadcrumb-link {
+          color: var(--docuo-color-primary-active) !important;
+        }
+      }
     }
   }
 

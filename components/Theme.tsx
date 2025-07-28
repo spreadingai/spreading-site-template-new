@@ -13,9 +13,9 @@ const ThemeProvider: FC<PropsWithChildren> = ({ children }) => {
           fontSize: 14,
           fontFamily: "Inter-Medium",
           fontBold: "500",
-          itemColor: "rgba(81,88,105,0.8)",
-          lastItemColor: "#0055FF",
-          separatorColor: "#D0D0D0",
+          itemColor: "var(--docuo-breadcrumb-color)",
+          lastItemColor: "var(--docuo-color-primary-active)",
+          separatorColor: "var(--docuo-breadcrumb-icon-color)",
           separatorMargin: 4,
         },
         Anchor: {

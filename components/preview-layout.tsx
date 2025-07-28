@@ -344,12 +344,18 @@ const PreviewLayout = ({
     const len = result.length;
     return result.map((item, index, arr) => {
       return {
-        title: item.title,
-        className:
-          `breadcrumb-label` +
-          (index === len - 2
-            ? " doc-search-lvl0"
-            : ` doc-search-lvl${index + 1}`),
+        title: (
+          <span
+            className={
+              `breadcrumb-label` +
+              (index === len - 2
+                ? " doc-search-lvl0"
+                : ` doc-search-lvl${index + 1}`)
+            }
+          >
+            {item.title}
+          </span>
+        )
       };
     });
   };
@@ -597,7 +603,7 @@ const PreviewLayout = ({
                           <div className="preview-content-wrap">
                             <div className="preview-content">
                               <div className="article">
-                                <div className="article-breadcrumb flex justify-between	items-center">
+                                <div className="article-breadcrumb flex justify-between items-center">
                                   <Breadcrumb
                                     items={breadCrumbData}
                                     separator={
