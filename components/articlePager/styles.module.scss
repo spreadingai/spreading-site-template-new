@@ -36,7 +36,7 @@
     right: 6px;
   }
   .article-pager-title {
-    font-family: Inter, Inter;
+    font-family: var(--font-inter);
     font-weight: 500;
     font-size: 13px;
     color: var(--docuo-pager-title-color);
@@ -49,7 +49,7 @@
     }
   }
   .article-pager-description {
-    font-family: Inter, Inter;
+    font-family: var(--font-inter);
     font-weight: 500;
     font-size: 16px;
     color: var(--docuo-pager-desc-color);

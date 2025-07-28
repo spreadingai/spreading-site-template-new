@@ -2,6 +2,31 @@
   --preview-header-height: 68px;
   --preview-sub-header-height: 55px;
   --preview-sider-width: 312px;
+
+  // LexendDeca 字体族
+  --font-lexend-deca-light: "LexendDeca-Light";
+  --font-lexend-deca-regular: "LexendDeca-Regular";
+  --font-lexend-deca: "LexendDeca";
+  --font-lexend-deca-medium: "LexendDeca-Medium";
+  --font-lexend-deca-semibold: "LexendDeca-SemiBold";
+
+  // Inter 字体族
+  --font-inter-light: "Inter-Light";
+  --font-inter: "Inter";
+  --font-inter-regular: "Inter-Regular";
+  --font-inter-medium: "Inter-Medium";
+  --font-inter-semibold: "Inter-SemiBold";
+  --font-inter-bold: "Inter-Bold";
+
+  // RobotoMono 字体族
+  --font-roboto-mono-light: "RobotoMono-Light";
+  --font-roboto-mono: "RobotoMono";
+  --font-roboto-mono-regular: "RobotoMono-Regular";
+  --font-roboto-mono-medium: "RobotoMono-Medium";
+  --font-roboto-mono-bold: "RobotoMono-Bold";
+
+  // Menlo 字体族
+  --font-menlo: "Menlo";
 }
 
 html {
@@ -101,7 +126,7 @@ html > body {
   align-items: center;
   transform: translateY(8px);
   span {
-    font-family: Inter-SemiBold;
+    font-family: var(--font-inter-semibold);
     font-size: 14px;
     font-weight: bold;
     color: #aeb1b8;
@@ -214,7 +239,7 @@ html > body {
   .drop-expand {
     display: flex;
     align-items: center;
-    font-family: Inter-SemiBold;
+    font-family: var(--font-inter-semibold);
     font-weight: 600;
     color: #171717;
     cursor: pointer;
@@ -258,13 +283,13 @@ html > body {
   .article-anchor-right,
   .article-anchor-top {
     .ant-anchor-link-title:hover {
-      font-family: Inter-Regular, Inter;
+      font-family: var(--font-inter-regular), var(--font-inter);
       font-weight: 400;
       color: #171717;
     }
 
     .ant-anchor-link-active > .ant-anchor-link-title {
-      font-family: Inter-Regular, Inter;
+      font-family: var(--font-inter-regular), var(--font-inter);
       font-weight: 400;
       color: #171717;
     }
@@ -317,7 +342,7 @@ html > body {
         padding: 0 4px;
         height: 13px;
         line-height: 13px;
-        font-family: Inter-SemiBold;
+        font-family: var(--font-inter-semibold);
         font-size: 9px;
         border-radius: 4px 4px 4px 4px;
         color: var(--docuo-openapi-badge-primary-color);
@@ -441,7 +466,7 @@ html > body {
       align-items: center;
       cursor: pointer;
       font-size: 14px;
-      font-family: Inter-Medium;
+      font-family: var(--font-inter-medium);
       font-weight: 500;
       color: var(--docuo-anchor-top-btn-color);
       line-height: 24px;
@@ -527,7 +552,7 @@ html > body {
         padding: 0 4px;
         height: 13px;
         line-height: 13px;
-        font-family: Inter-SemiBold;
+        font-family: var(--font-inter-semibold);
         font-size: 9px;
         border-radius: 4px 4px 4px 4px;
         color: var(--docuo-openapi-badge-primary-color);
@@ -753,7 +778,7 @@ html > body {
         padding: 0 4px;
         height: 13px;
         line-height: 13px;
-        font-family: Inter-SemiBold;
+        font-family: var(--font-inter-semibold);
         font-size: 9px;
         border-radius: 4px 4px 4px 4px;
         color: var(--docuo-openapi-badge-primary-color);

@@ -26,7 +26,7 @@ h3 {
   &.openapi-markdown__details-summary-header-params,
   &.openapi-markdown__details-summary-header-body {
     height: 20px;
-    font-family: Inter-Medium;
+    font-family: var(--font-inter-medium);
     font-weight: 500;
     font-size: 12px;
     line-height: 20px;
@@ -38,7 +38,7 @@ h3 {
       background: rgba(81, 88, 105, 0.07);
       border-radius: 4px;
       margin-right: 5px;
-      font-family: RobotoMono-Regular;
+      font-family: var(--font-roboto-mono-regular);
       font-weight: 400;
       font-size: 12px;
       height: 19px;
@@ -55,7 +55,7 @@ h3 {
 
 .openapi-markdown__details {
   cursor: pointer;
-  font-family: Inter-Medium;
+  font-family: var(--font-inter-medium);
   font-weight: 500;
   color: var(--docuo-openapi-markdown-details-color);
   margin: unset !important;
@@ -134,7 +134,7 @@ details summary::-webkit-details-marker {
 }
 
 .openapi-security__details .openapi-security__summary-header {
-  font-family: Inter-Medium;
+  font-family: var(--font-inter-medium);
   font-weight: 500;
   font-size: 14px;
   color: #b6b6b6;
@@ -156,7 +156,7 @@ details summary::-webkit-details-marker {
     overflow: auto;
     padding: 14px 16px 18px 16px;
     & > span {
-      font-family: Inter-Regular;
+      font-family: var(--font-inter-regular);
       font-weight: 400;
       font-size: 14px;
       color: #909090;
@@ -173,7 +173,7 @@ details summary::-webkit-details-marker {
       }
       & > strong,
       & > code > strong:first-of-type {
-        font-family: RobotoMono;
+        font-family: var(--font-roboto-mono);
         font-weight: 400;
         font-size: 14px;
         color: #f0f0f0;
@@ -184,7 +184,7 @@ details summary::-webkit-details-marker {
       }
     }
     a {
-      font-family: Inter;
+      font-family: var(--font-inter);
       font-weight: 500;
       font-size: 14px;
       color: #266eff;

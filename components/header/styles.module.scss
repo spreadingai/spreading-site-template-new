@@ -40,7 +40,7 @@
     .logo-title {
       color: var(--docuo-color-primary);
       font-size: 20px;
-      font-family: Inter-Medium;
+      font-family: var(--font-inter-medium);
       font-weight: bolder;
       margin-left: 8px;
     }
@@ -53,7 +53,7 @@
     // gap: 0px 32px;
     .item {
       font-size: 14px;
-      font-family: Inter-Medium, Inter;
+      font-family: var(--font-inter-medium), var(--font-inter);
       font-weight: 500;
       color: var(--docuo-header-menu-link-color);
       line-height: 24px;
@@ -79,7 +79,7 @@
     }
     .items {
       font-size: 14px;
-      font-family: Inter-Medium;
+      font-family: var(--font-inter-medium);
       font-weight: 500;
       color: var(--docuo-header-menu-link-color);
       line-height: 24px;
@@ -140,7 +140,7 @@
   border-radius: 4px !important;
   padding: 6px 8px !important;
   font-size: 14px;
-  font-family: Inter-Medium;
+  font-family: var(--font-inter-medium);
   font-weight: 500 !important;
   color: var(--docuo-popup-color) !important;
   line-height: 28px;
@@ -173,7 +173,7 @@
     }
     .toc-font {
       font-size: 14px;
-      font-family: Inter-SemiBold, Inter;
+      font-family: var(--font-inter-semibold), var(--font-inter);
       font-weight: normal;
       color: #171717;
       line-height: 24px;

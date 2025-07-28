@@ -17,7 +17,7 @@
   &.has-prefix {
     .prefix-container {
       margin-right: 16px;
-      font-family: RobotoMono-Regular;
+      font-family: var(--font-roboto-mono-regular);
       font-weight: 400;
       font-size: 12px;
     }

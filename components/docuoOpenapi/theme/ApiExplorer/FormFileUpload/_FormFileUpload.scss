@@ -15,7 +15,7 @@
 }
 
 .openapi-explorer__file-name {
-  font-family: Inter-Medium;
+  font-family: var(--font-inter-medium);
   font-weight: 500;
   color: #b6b6b6;
   white-space: nowrap;
@@ -30,7 +30,7 @@ button.file-clear-btn {
   border-radius: 6px 6px 6px 6px;
   border: 1px solid rgba(5, 236, 7, 0.5);
   background: none;
-  font-family: Inter-Medium;
+  font-family: var(--font-inter-medium);
   font-weight: 500;
   font-size: 12px;
   color: #266eff;
@@ -73,7 +73,7 @@ button.file-clear-btn {
 }
 
 .openapi-explorer__dropzone-content {
-  font-family: Inter;
+  font-family: var(--font-inter);
   display: flex;
   align-items: center;
   justify-content: center;
