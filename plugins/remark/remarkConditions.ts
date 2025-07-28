@@ -232,16 +232,32 @@ const generateOrEstreeData = (key, value) => {
 
 export const remarkConditions = () => {
   return (tree) => {
-    visit(tree, function (node) {
+    // 检查是否在 CodeGroup 内部的函数
+    function isInsideCodeGroup(node, parent) {
+      if (!parent) return false;
+      if (parent.type === 'mdxJsxFlowElement' && parent.name === 'CodeGroup') {
+        return true;
+      }
+      return false;
+    }
+
+    // 遍历节点并处理条件渲染指令
+    visit(tree, function (node, index, parent) {
       if (node.children) {
-        for (let index = 0; index < node.children.length; ) {
-          const childrenNode = node.children[index];
+        for (let i = 0; i < node.children.length; ) {
+          const childrenNode = node.children[i];
+
           if (
             (childrenNode.type === "containerDirective" ||
               childrenNode.type === "leafDirective" ||
               childrenNode.type === "textDirective") &&
             childrenNode.name === "if"
           ) {
+            // 跳过 CodeGroup 内部的条件渲染
+            if (isInsideCodeGroup(childrenNode, node)) {
+              i++;
+              continue;
+            }
             const key = Object.keys(childrenNode.attributes)[0];
             let value =
               childrenNode.attributes[Object.keys(childrenNode.attributes)[0]];
@@ -253,7 +269,8 @@ export const remarkConditions = () => {
             }
             let newChildren = [];
             const oldChildren = childrenNode.children;
-            oldChildren.forEach((oldChildreNode, oldIndex) => {
+            oldChildren.forEach((oldChildreNode) => {
+
               const arr = [
                 {
                   name: "className",
@@ -273,11 +290,21 @@ export const remarkConditions = () => {
               ];
               if (
                 oldChildreNode.type &&
-                !oldChildreNode.name &&
-                node.name !== "CodeGroup"
+                !oldChildreNode.name
               ) {
+                // 对于原始节点（如代码块），用 div 包裹
                 const temp = {
-                  name: tagNameMap[oldChildreNode.type] || oldChildreNode.type,
+                  name: "div",
+                  type: "mdxJsxFlowElement",
+                  attributes: [...arr],
+                  children: [oldChildreNode],
+                  data: { _mdxExplicitJsx: true },
+                };
+                newChildren.push(temp);
+              } else if (oldChildreNode.name === "CodeGroup" || oldChildreNode.name === "Code") {
+                // 对于 CodeGroup 和 Code 组件，也用 div 包裹
+                const temp = {
+                  name: "div",
                   type: "mdxJsxFlowElement",
                   attributes: [...arr],
                   children: [oldChildreNode],
@@ -285,6 +312,7 @@ export const remarkConditions = () => {
                 };
                 newChildren.push(temp);
               } else {
+                // 对于其他组件，直接添加属性
                 if (!oldChildreNode.attributes) {
                   oldChildreNode.attributes = [];
                 }
@@ -296,11 +324,11 @@ export const remarkConditions = () => {
               }
             });
             if (newChildren.length) {
-              node.children.splice(index, 1, ...newChildren);
-              index += newChildren.length;
+              node.children.splice(i, 1, ...newChildren);
+              i += newChildren.length;
             }
           } else {
-            index++;
+            i++;
           }
         }
       }

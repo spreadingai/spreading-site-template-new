@@ -11,6 +11,13 @@ function addCodeBlocks(tree) {
       return;
     }
 
+    // 检查父元素是否有条件渲染属性，如果有则保留
+    let shouldPreserveParent = false;
+    if (parent && parent.type === "mdxJsxFlowElement" && parent.name === "div" &&
+        parent.attributes && parent.attributes.some(attr => attr.name === "style")) {
+      shouldPreserveParent = true;
+    }
+
     // 创建CodeHike的RawCode对象
     const rawCode = createRawCodeFromNode(code);
 
@@ -28,7 +35,13 @@ function addCodeBlocks(tree) {
       children: []
     };
 
-    parent.children[i] = codeComponent;
+    // 如果父元素有条件渲染属性，保留包装结构
+    if (shouldPreserveParent) {
+      // 将 Code 组件的属性合并到父 div 中，或者保持原有结构
+      parent.children[i] = codeComponent;
+    } else {
+      parent.children[i] = codeComponent;
+    }
   });
 }
 
