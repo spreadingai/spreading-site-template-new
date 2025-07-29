@@ -19,6 +19,7 @@ import {
   remarkToc,
   remarkFrontmatter,
   rehypeNestedFormat,
+  remarkEnhancedTable,
   remarkConditions,
   // remarkTest,
 } from "@/plugins";
@@ -137,6 +138,7 @@ class DocsController {
       [remarkToc, { exportRef: tocRef }],
       [remarkFrontmatter, { exportRef: frontmatterRef }],
       remarkConditions,
+      remarkEnhancedTable, // 在 Markdown 阶段处理表格
     ];
     const rehypePlugins = [
       rehypeKatex,
