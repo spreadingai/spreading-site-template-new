@@ -49,6 +49,7 @@ import CategoryMenu from "./header/CategoryMenu";
 import SubHeader from "./SubHeader";
 import dynamic from "next/dynamic";
 import TabDropdown from "./dropdown/TabDropdown";
+import FontInitializer from "./FontInitializer";
 // 动态导入
 const FloatingFrame = dynamic(() => import("@/components/FloatingFrame"), {
   ssr: false,
@@ -532,6 +533,7 @@ const PreviewLayout = ({
                       displayPlatforms,
                     }}
                   >
+                    <FontInitializer />
                     <div className="preview-screen relative">
                       {!!gaId && <GoogleAnalytics gaId={gaId} />}
                       <SearchMeta />
