@@ -294,7 +294,7 @@ const PreviewLayout = ({
     return data.map((item) => {
       const newItem = { ...item };
 
-      newItem.href = `#${newItem.id}`;
+      newItem.href = `#${newItem.id || ''}`;
       delete newItem.id;
       newItem.key = key++;
 
@@ -309,14 +309,16 @@ const PreviewLayout = ({
     });
   };
 
-  // 暂时禁用动态TOC，只使用静态TOC来测试闪烁问题
-  // const { toc: dynamicToc } = useDynamicTOC('.article-content');
+  // 使用动态TOC来支持组件生成的标题（如Steps组件）
+  const { toc: dynamicToc } = useDynamicTOC('.article-content');
 
-  // 直接使用静态TOC
+  // 合并静态TOC和动态TOC
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const combinedToc = useMemo(() => {
-    return toc;
-  }, [toc]);
+    // 如果动态TOC有内容，优先使用动态TOC（包含组件生成的标题）
+    // 否则使用静态TOC作为后备
+    return dynamicToc && dynamicToc.length > 0 ? dynamicToc : toc;
+  }, [dynamicToc, toc]);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const tocFormatData = useMemo(() => {

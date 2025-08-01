@@ -53,8 +53,49 @@ const AnchorNode: FC<AnchorNodeProps> = ({
   }, [isShowMobile]);
 
   const toggleNode: MouseEventHandler<HTMLAnchorElement> = (e) => {
-    // e.preventDefault();
-    // scrollTo?.(node.href);
+    e.preventDefault();
+
+    if (!node.href || !node.href.startsWith('#')) {
+      return;
+    }
+
+    const targetId = node.href.substring(1);
+    const targetElement = document.getElementById(targetId);
+
+    if (!targetElement) {
+      // 如果找不到目标元素，使用原来的滚动方式
+      scrollTo?.(node.href);
+      return;
+    }
+
+    // 检查目标元素是否在隐藏的Accordion或Tab中
+    const isInHiddenAccordion = targetElement.closest('.contentCollapsed');
+    const isInHiddenTab = targetElement.closest('.tabPaneHidden');
+
+    if (isInHiddenAccordion || isInHiddenTab) {
+      // 目标在隐藏组件中，让组件自己处理展开和滚动
+      // 只更新URL，不执行滚动（组件会监听URL变化并处理）
+    } else {
+      // 目标元素可见，直接跳转（无动画）
+      targetElement.scrollIntoView({
+        behavior: 'auto',
+        block: 'start'
+      });
+    }
+
+    // 更新浏览器地址栏，触发hashchange事件让组件处理
+    if (typeof window !== 'undefined') {
+      // 使用pushState更新URL，然后手动触发hashchange事件
+      window.history.pushState(null, '', node.href);
+
+      // 手动触发hashchange事件，让Accordion/Tabs组件处理
+      const hashChangeEvent = new HashChangeEvent('hashchange', {
+        oldURL: window.location.href,
+        newURL: window.location.href
+      });
+      window.dispatchEvent(hashChangeEvent);
+    }
+
     if (onClick) {
       onClick([node.key], { ...node, event: e });
     }

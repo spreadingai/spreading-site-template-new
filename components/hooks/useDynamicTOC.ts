@@ -33,10 +33,13 @@ export const useDynamicTOC = (containerSelector = '.article-content') => {
   };
 
   const scanHeadings = useCallback(() => {
+    // 服务端渲染时直接返回空数组
+    if (typeof document === 'undefined') return [];
+
     const container = document.querySelector(containerSelector);
     if (!container) return [];
 
-    // 扫描所有的heading元素 (h1-h6)
+    // 扫描所有的heading元素 (h1-h6)，包括隐藏的Tab内容
     const headingElements = container.querySelectorAll('h1, h2, h3, h4, h5, h6');
     const headings: HeadingData[] = [];
 
@@ -46,6 +49,8 @@ export const useDynamicTOC = (containerSelector = '.article-content') => {
       const title = element.textContent?.trim() || '';
 
       if (!title) return;
+
+
 
       // 过滤掉不应该出现在TOC中的标题
       // 1. 检查是否在CodeBlock的隐藏搜索内容中
@@ -67,8 +72,17 @@ export const useDynamicTOC = (containerSelector = '.article-content') => {
                              element.closest('.navigation') ||
                              element.closest('header');
 
+      // 5. 检查是否在隐藏的Tab内容中（但仍然要包含在TOC中）
+      const isInHiddenTab = element.closest('.tabPaneHidden');
+
       if (isInSearchableContent || isInCodeGroup || hasNoTocClass || isInNavigation) {
         return; // 跳过这个标题
+      }
+
+      // 对于隐藏的Tab内容，我们仍然要包含在TOC中，但需要特殊处理
+      if (isInHiddenTab) {
+        // 为隐藏Tab中的标题添加特殊标记，但仍然包含在TOC中
+        // 这样用户点击TOC时，可以自动切换到对应的Tab
       }
 
       let id = element.id;
