@@ -57,6 +57,30 @@
         line-height: 28px;
       }
     }
+    .mobile-button-item {
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 20px;
+      display: flex;
+      font-family: Inter-Medium;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      padding: 0 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      transition: all 0.3s;
+      margin: 8px 0;
+
+      color: var(--docuo-navbar-button-color);
+      background: var(--docuo-navbar-button-bg);
+
+      &:hover {
+        background: var(--docuo-navbar-button-bg-hover);
+        color: var(--docuo-navbar-button-color);
+        text-decoration: none;
+      }
+    }
     .mobile-items {
       font-size: 14px;
       font-family: Inter-Regular, Inter;

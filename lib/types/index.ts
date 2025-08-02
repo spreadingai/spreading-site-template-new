@@ -60,6 +60,7 @@ export enum InstanceType {
 }
 export enum NavBarItemType {
   Default = "default",
+  Button = "button",
   DocSidebar = "docSidebar",
   Dropdown = "dropdown",
   DocsVersionDropdown = "docsVersionDropdown",

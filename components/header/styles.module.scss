@@ -66,6 +66,32 @@
         color: var(--docuo-color-primary-hover);
       }
     }
+    .button-item {
+      font-size: 14px;
+      font-family: Inter-Medium, Inter;
+      font-weight: 500;
+      line-height: 20px;
+      margin-right: 18px;
+      padding: 0 12px;
+      border-radius: 8px;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      height: 30px;
+
+      color: var(--docuo-navbar-button-color);
+      background: var(--docuo-navbar-button-bg);
+
+      &:last-child {
+        margin-right: 0;
+      }
+      &:hover {
+        background: var(--docuo-navbar-button-bg-hover);
+        color: var(--docuo-navbar-button-color);
+        text-decoration: none;
+      }
+    }
     .items-container {
       display: flex;
       align-items: center;

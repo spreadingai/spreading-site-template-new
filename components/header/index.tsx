@@ -244,6 +244,18 @@ const Header = (props: Props) => {
                 // @ts-ignore
                 return <DropdownItem menu={menu} key={index} />;
               }
+              if (menu?.type === NavBarItemType.Button) {
+                return (
+                  <a
+                    key={index}
+                    className={styles["button-item"]}
+                    href={menu.href || menu.to || menu.defaultLink || "/"}
+                    target={menu.href ? "_blank" : "_self"}
+                  >
+                    {menu.label}
+                  </a>
+                );
+              }
               return (
                 <Link
                   key={index}

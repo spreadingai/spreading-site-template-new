@@ -66,14 +66,14 @@ html[data-theme="dark"] {
   width: 340px;
   align-items: center;
   background-color: var(--docsearch-searchbox-background);
-  border-radius: 6px !important;
+  border-radius: 8px !important;
   color: var(--docsearch-muted-color);
   cursor: pointer;
   display: flex;
   font-weight: 500;
-  height: 36px;
+  height: 30px;
   justify-content: space-between;
-  margin: 0 0 0 42px;
+  margin: 0 0 0 18px;
   padding: 0 11px;
   user-select: none;
   border: var(--docsearch-searchbox-border);

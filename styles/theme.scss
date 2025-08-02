@@ -12,6 +12,11 @@ html {
   --docuo-theme-btn-color-hover: rgba(0, 0, 0, 1);
   --docuo-theme-btn-border: 1px solid rgba(229, 231, 235, 0.6);
   --docuo-theme-btn-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.07);
+  --docuo-theme-btn-bg: transparent;
+  --docuo-theme-btn-bg-hover: rgba(0, 0, 0, 0.05);
+  --docuo-navbar-button-bg: #171717;
+  --docuo-navbar-button-bg-hover: #000000;
+  --docuo-navbar-button-color: #ffffff;
   --docuo-popup-color: #171717;
   --docuo-popup-bg: #fff;
   --docuo-popup-border: 1px solid rgba(229, 231, 235, 0.6);
@@ -114,6 +119,11 @@ html[data-theme="dark"] {
   --docuo-theme-btn-color-hover: rgba(255, 255, 255, 1);
   --docuo-theme-btn-border: 1px solid #333333;
   --docuo-theme-btn-shadow: 0px 1px 8px 0px rgba(255, 255, 255, 0.07);
+  --docuo-theme-btn-bg: transparent;
+  --docuo-theme-btn-bg-hover: rgba(255, 255, 255, 0.1);
+  --docuo-navbar-button-bg: #f0f0f0;
+  --docuo-navbar-button-bg-hover: #ffffff;
+  --docuo-navbar-button-color: #171717;
   --docuo-popup-color: rgba(231, 231, 231, 0.9);
   --docuo-popup-bg: #191919;
   --docuo-popup-border: 1px solid #333333;

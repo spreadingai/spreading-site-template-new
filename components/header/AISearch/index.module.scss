@@ -1,9 +1,15 @@
 .ai-btn {
-    margin-left: 10px;
+    margin-left: 18px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+
     img {
-        height: 42px;
+        height: 34px;
         width: auto;
+        object-fit: contain;
     }
 }
 @media screen and (max-width: 750px) {

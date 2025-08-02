@@ -91,10 +91,10 @@
         border: var(--docsearch-searchbox-border);
         border-right: none;
         background-color: var(--docsearch-searchbox-background);
-        border-radius: 6px 0 0 6px;
+        border-radius: 8px 0 0 8px;
         box-shadow: unset;
         outline: none;
-        height: 36px;
+        height: 30px;
         padding: 0 0 0 11px;
         & > input.ant-input {
             &::placeholder {
@@ -152,7 +152,7 @@
             }
         }
         &.group-select {
-            height: 36px;
+            height: 30px;
             min-width: 240px;
         }
         &.version-select {
