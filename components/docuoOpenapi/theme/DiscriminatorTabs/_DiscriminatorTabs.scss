@@ -7,7 +7,7 @@
 .openapi-tabs__discriminator-list-container {
   .openapi-tabs__discriminator-item {
     border: 1px solid var(--docuo-openapi-discriminator-item-border-color);
-    font-family: Inter-Medium;
+    font-family: var(--font-inter-medium);
     font-weight: 500;
     font-size: 12px;
     color: var(--docuo-openapi-discriminator-item-color);
@@ -82,12 +82,12 @@
   & > div {
     line-height: 23px;
     & > div {
-      font-family: Inter-Medium;
+      font-family: var(--font-inter-medium);
       font-weight: 500;
       font-size: 14px;
       color: var(--docuo-openapi-schema-list-item-color);
       & > strong {
-        font-family: Inter;
+        font-family: var(--font-inter);
         font-size: 14px;
         font-weight: 400;
         margin-right: 8px;

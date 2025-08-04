@@ -15,12 +15,12 @@
 
   &.isLevel0 {
     color: var(--docuo-color-primary);
-    font-family: Inter-SemiBold, Inter;
+    font-family: var(--font-inter-semibold), var(--font-inter);
     font-weight: 600;
   }
 
   &.active {
-    font-family: Inter-SemiBold, Inter;
+    font-family: var(--font-inter-semibold), var(--font-inter);
     font-weight: 600;
     color: var(--docuo-color-primary-active);
   }

@@ -1,6 +1,6 @@
 #request {
     height: 28px;
-    font-family: Inter-SemiBold;
+    font-family: var(--font-inter-semibold);
     font-size: 22px;
     line-height: 28px;
     margin: 31px 0 20px;
@@ -12,7 +12,7 @@
     padding: 0 0 16px 16px;
     margin-top: 16px;
     .body-description {
-        font-family: Inter;
+        font-family: var(--font-inter);
         font-weight: 500;
         font-size: 14px;
         color: var(--docuo-openapi-body-description-color);
@@ -76,7 +76,7 @@
 .request-schema-first-body-node-container {
     margin-left: 5px !important;
     div {
-        font-family: Inter;
+        font-family: var(--font-inter);
         font-weight: 500;
         font-size: 14px;
         line-height: 23px;

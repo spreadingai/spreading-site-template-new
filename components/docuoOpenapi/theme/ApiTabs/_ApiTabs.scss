@@ -20,7 +20,7 @@
   border: 1px solid var(--docuo-openapi-response-code-item-primary-border-color);
   padding: 0 16px;
   margin: 0 12px 0 0;
-  font-family: Inter-Medium;
+  font-family: var(--font-inter-medium);
   font-weight: 500;
   font-size: 14px;
   color: var(--docuo-openapi-response-code-item-primary-color);
@@ -58,7 +58,7 @@
   .openapi-tabs__response-header {
     margin-bottom: 0;
     margin-top: 0;
-    font-family: Inter-SemiBold;
+    font-family: var(--font-inter-semibold);
     font-size: 22px;
     line-height: 28px;
   }

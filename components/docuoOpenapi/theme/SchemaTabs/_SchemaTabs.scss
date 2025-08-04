@@ -19,7 +19,7 @@
   scroll-behavior: smooth;
   .openapi-tabs__schema-item {
     border: 1px solid var(--docuo-openapi-schema-item-border-color);
-    font-family: Inter-Medium;
+    font-family: var(--font-inter-medium);
     font-weight: 500;
     font-size: 12px;
     color: var(--docuo-openapi-schema-item-color);

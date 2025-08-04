@@ -1,7 +1,7 @@
 // Badge
 .theme-api-markdown {
     .badge {
-        font-family: Inter-SemiBold;
+        font-family: var(--font-inter-semibold);
         background-color: var(--docuo-openapi-badge-bg-primary-color);
         border-radius: 4px 4px 4px 4px;
         padding: 0 5px;
@@ -44,7 +44,7 @@
                     position: absolute;
                     left: 100px;
                     top: 3px;
-                    font-family: RobotoMono-Regular;
+                    font-family: var(--font-roboto-mono-regular);
                     font-size: 12px;
                     color: #00b2ff;
                 }

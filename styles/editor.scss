@@ -1,6 +1,6 @@
 .editor-wrapper,
 .editor-container {
-	font-family: Inter;
+	font-family: var(--font-inter);
 	font-size: 14px;
 	font-weight: 300;
 	color: var(--docuo-color-primary);
@@ -14,7 +14,7 @@
 
 	//标题
 	h1 {
-		font-family: Inter-Bold;
+		font-family: var(--font-inter-bold);
 		font-weight: bold;
 		color: var(--docuo-color-primary);
 	}
@@ -23,7 +23,7 @@
 	h4,
 	h5,
 	h6 {
-		font-family: Inter-SemiBold, Inter;
+		font-family: var(--font-inter-semibold), var(--font-inter);
 		font-weight: bold;
 		color: var(--docuo-color-primary);
 	}
@@ -42,28 +42,46 @@
 		margin-bottom: 20px;
 	}
 	h1 {
-		font-size: 36px;
-		line-height: 54px;
+		// font-size: 36px;
+		// line-height: 54px;
+		font-size: 32px;
+		line-height: 1;
+		margin: 26px 0 14px;
 	}
 	h2 {
-		font-size: 30px;
-		line-height: 36px;
+		// font-size: 30px;
+		// line-height: 36px;
+		font-size: 22px;
+		line-height: 1;
+		margin: 40px 0 16px;
 	}
 	h3 {
-		font-size: 26px;
-		line-height: 32px;
+		// font-size: 26px;
+		// line-height: 32px;
+		font-size: 18px;
+		line-height: 1;
+		margin: 24px 0 16px;
 	}
 	h4 {
-		font-size: 22px;
-		line-height: 28px;
+		// font-size: 22px;
+		// line-height: 28px;
+		font-size: 16px;
+		line-height: 1.5;
+		margin: 16px 0;
 	}
 	h5 {
-		font-size: 18px;
-		line-height: 28px;
+		// font-size: 18px;
+		// line-height: 28px;
+		font-size: 1em;
+		line-height: 1.1;
+		margin: 1.2em 0 0.6em;
 	}
 	h6 {
-		font-size: 16px;
-		line-height: 24px;
+		// font-size: 16px;
+		// line-height: 24px;
+		font-size: 0.85em;
+		line-height: 1.1;
+		margin: 1.2em 0 0.6em 0;
 	}
 
 	// 正文
@@ -151,7 +169,7 @@
 	// 加粗
 	b,
 	strong {
-		font-family: Inter-SemiBold, Inter;
+		font-family: var(--font-inter-semibold), var(--font-inter);
 		font-weight: bold;
 	}
 	// 下划线
@@ -160,7 +178,7 @@
 	}
 	//链接
 	a {
-		font-family: Inter-Medium;
+		font-family: var(--font-inter-medium);
 		color: var(--docuo-color-primary);
 		text-decoration: none;
 		border-bottom: 1px solid var(--docuo-color-primary-hover);
@@ -204,13 +222,10 @@
 		margin: 20px 0;
 		// table 正文颜色
 		color: var(--docuo-text-color);
+		border-radius: 4px;
 		p {
 			font-size: 14px;
 			color: var(--docuo-text-color);
-		}
-
-		tr {
-			border-bottom: var(--docuo-table-border);
 		}
 
 		th,
@@ -227,14 +242,16 @@
 		}
 
 		th {
-			font-family: Inter-SemiBold, Inter;
+			font-family: var(--font-inter-semibold), var(--font-inter);
 			font-weight: bold;
 			color: var(--docuo-color-primary);
 			background: var(--docuo-table-th-bg);
+			border: var(--docuo-table-border);
 		}
 
 		td {
 			font-weight: 400;
+			border: var(--docuo-table-border);
 		}
 	}
 
@@ -244,7 +261,7 @@
 		background: var(--docuo-inline-code-bg);
 		border: var(--docuo-inline-code-border);
 		border-radius: 4px;
-		font-family: ui-monospace, SFMono-Regular, Menlo;
+		font-family: ui-monospace, SFMono-Regular, var(--font-menlo);
 		font-weight: 500;
 		color: var(--docuo-color-primary);
 		line-height: 1.2;

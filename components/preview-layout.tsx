@@ -50,6 +50,7 @@ import SubHeader from "./SubHeader";
 import dynamic from "next/dynamic";
 import TabDropdown from "./dropdown/TabDropdown";
 import { useDynamicTOC } from "./hooks/useDynamicTOC";
+import FontInitializer from "./FontInitializer";
 // 动态导入
 const FloatingFrame = dynamic(() => import("@/components/FloatingFrame"), {
   ssr: false,
@@ -294,7 +295,7 @@ const PreviewLayout = ({
     return data.map((item) => {
       const newItem = { ...item };
 
-      newItem.href = `#${newItem.id || ''}`;
+      newItem.href = `#${newItem.id || ""}`;
       delete newItem.id;
       newItem.key = key++;
 
@@ -310,7 +311,8 @@ const PreviewLayout = ({
   };
 
   // 使用动态TOC来支持组件生成的标题（如Steps组件）
-  const { toc: dynamicToc } = useDynamicTOC('.article-content');
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { toc: dynamicToc } = useDynamicTOC(".article-content");
 
   // 合并静态TOC和动态TOC
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -357,7 +359,7 @@ const PreviewLayout = ({
           >
             {item.title}
           </span>
-        )
+        ),
       };
     });
   };
@@ -550,6 +552,7 @@ const PreviewLayout = ({
                       displayPlatforms,
                     }}
                   >
+                    <FontInitializer />
                     <div className="preview-screen relative">
                       {!!gaId && <GoogleAnalytics gaId={gaId} />}
                       <SearchMeta />
@@ -562,7 +565,13 @@ const PreviewLayout = ({
                       <main className="preview-main">
                         <SubHeader />
                         <div className="preview-sub-main">
-                          <div className={`preview-sider ${!shouldShowTabs || displayTabs.length <= 1 ? "hidden-tab" : ""}`}>
+                          <div
+                            className={`preview-sider ${
+                              !shouldShowTabs || displayTabs.length <= 1
+                                ? "hidden-tab"
+                                : ""
+                            }`}
+                          >
                             <div className={`preview-sider-tree-top`}>
                               {!displayGroups || !displayGroups.length ? (
                                 <>
@@ -613,22 +622,34 @@ const PreviewLayout = ({
                                     }
                                   />
                                   <div className={"middle__show  relative"}>
-                                <AnChorMobile tocFormatData={tocFormatData} />
+                                    <AnChorMobile
+                                      tocFormatData={tocFormatData}
+                                    />
                                   </div>
                                 </div>
                                 <div
                                   className="article-content"
                                   ref={(current) => {
                                     const titleElement =
-                                  current?.querySelector("h1[class*='title']");
-                                setTitleElement(titleElement as HTMLElement);
+                                      current?.querySelector(
+                                        "h1[class*='title']"
+                                      );
+                                    setTitleElement(
+                                      titleElement as HTMLElement
+                                    );
                                   }}
                                 >
                                   {children}
                                 </div>
                                 <ArticlePager prev={prev} next={next} />
                               </div>
-                              <div className={`article-anchor-right ${!shouldShowTabs || displayTabs.length <= 1 ? "hidden-tab" : ""}`}>
+                              <div
+                                className={`article-anchor-right ${
+                                  !shouldShowTabs || displayTabs.length <= 1
+                                    ? "hidden-tab"
+                                    : ""
+                                }`}
+                              >
                                 {toc?.length ? (
                                   <div className="pt-[28px]  pb-10 ml-8">
                                     <p
@@ -642,7 +663,13 @@ const PreviewLayout = ({
                                     <div className="toc-scroller overflow-auto overscroll-none relative pr-6 max-h-[70vh]">
                                       <DocuoAnchor
                                         data={tocFormatData}
-                                        offsetTop={headerHeight + ((!shouldShowTabs || displayTabs.length <= 1) ? 0 : subHeaderHeight)}
+                                        offsetTop={
+                                          headerHeight +
+                                          (!shouldShowTabs ||
+                                          displayTabs.length <= 1
+                                            ? 0
+                                            : subHeaderHeight)
+                                        }
                                       />
                                     </div>
 

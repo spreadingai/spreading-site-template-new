@@ -13,7 +13,7 @@
 
 .openapi-tabs__operation-item {
   border: 1px solid var(--docuo-openapi-schema-item-border-color);
-  font-family: Inter-Medium;
+  font-family: var(--font-inter-medium);
   font-weight: 500 !important;
   font-size: 12px !important;
   color: var(--docuo-openapi-schema-item-color) !important;
@@ -67,7 +67,7 @@
       border: 1px solid var(--docuo-openapi-select-selector-border-color) !important;
       padding: 0 12px;
       .ant-select-selection-item {
-        font-family: Inter-Medium;
+        font-family: var(--font-inter-medium);
         font-weight: 500;
         font-size: 14px;
         color: var(--docuo-openapi-select-selector-color);
@@ -111,7 +111,7 @@
   }
   .tabpanel-container {
     &:has(.openapi__method-endpoint) {
-      font-family: Inter-Regular;
+      font-family: var(--font-inter-regular);
       font-size: 16px;
       color: var(--docuo-openapi-callbacks-description-color);
     }
@@ -122,7 +122,7 @@
   border: 1px solid var(--docuo-openapi-select-selector-dropdown-border-color);
   box-shadow: none;
   .ant-select-item {
-    font-family: Inter-Medium;
+    font-family: var(--font-inter-medium);
     font-weight: 500;
     font-size: 14px;
     transition: all 0.3s;

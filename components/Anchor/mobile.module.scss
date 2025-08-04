@@ -8,7 +8,7 @@
 }
 .toc-font {
   font-size: 14px;
-  font-family: Inter-SemiBold, Inter;
+  font-family: var(--font-inter-semibold), var(--font-inter);
   font-weight: normal;
   color: var(--docuo-color-primary);
   line-height: 24px;
@@ -25,14 +25,14 @@
       background: rgba(81, 88, 105, 0.2);
       border-radius: 4px;
     }
-  
+
     /* 轨道样式 */
     &::-webkit-scrollbar-track {
       background-color: transparent;
     }
   }
   // dark mode
-  html[data-theme=dark] {
+  html[data-theme="dark"] {
     .mobile-toc-container {
       &::-webkit-scrollbar-thumb {
         background: rgba(255, 255, 255, 0.1);
