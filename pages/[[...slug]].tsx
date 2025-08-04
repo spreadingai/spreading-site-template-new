@@ -121,6 +121,91 @@ const components = {
   Export,
 };
 
+// 优化docuoConfig，只保留页面需要的配置
+function optimizeDocuoConfig(fullConfig: any, currentLanguage: string) {
+  if (!fullConfig) return fullConfig;
+
+  const navbarKey = currentLanguage === 'zh' ? 'navbar.zh' : 'navbar';
+  const footerKey = currentLanguage === 'zh' ? 'footer.zh' : 'footer';
+
+  // 构建优化后的配置，过滤掉undefined值
+  const optimizedConfig: any = {
+    title: fullConfig.title,
+    favicon: fullConfig.favicon,
+    themeConfig: {},
+    i18n: fullConfig.i18n,
+  };
+
+  // 只添加非undefined的themeConfig属性
+  if (fullConfig.themeConfig?.removeWatermark !== undefined) {
+    optimizedConfig.themeConfig.removeWatermark = fullConfig.themeConfig.removeWatermark;
+  }
+  if (fullConfig.themeConfig?.colors !== undefined) {
+    optimizedConfig.themeConfig.colors = fullConfig.themeConfig.colors;
+  }
+  if (fullConfig.themeConfig?.colorMode !== undefined) {
+    optimizedConfig.themeConfig.colorMode = fullConfig.themeConfig.colorMode;
+  }
+  if (fullConfig.themeConfig?.[navbarKey] || fullConfig.themeConfig?.navbar) {
+    optimizedConfig.themeConfig.navbar = fullConfig.themeConfig?.[navbarKey] || fullConfig.themeConfig?.navbar;
+  }
+  if (fullConfig.themeConfig?.[footerKey] || fullConfig.themeConfig?.footer) {
+    optimizedConfig.themeConfig.footer = fullConfig.themeConfig?.[footerKey] || fullConfig.themeConfig?.footer;
+  }
+  if (fullConfig.themeConfig?.showAskAI !== undefined) {
+    optimizedConfig.themeConfig.showAskAI = fullConfig.themeConfig.showAskAI;
+  }
+
+  // 只添加非undefined的search配置
+  if (fullConfig.search !== undefined) {
+    optimizedConfig.search = fullConfig.search;
+  }
+
+  return optimizedConfig;
+}
+
+// 优化displayInstances，只保留当前产品组的实例
+function optimizeDisplayInstances(instances: any[], currentLanguage: string, currentGroupId?: string) {
+  if (!instances || !Array.isArray(instances)) return instances;
+
+  // 去重：基于instance.id去重
+  const uniqueInstances = instances.filter((item, index, self) =>
+    index === self.findIndex(t => t.instance?.id === item.instance?.id)
+  );
+
+  // 只保留当前语言或无语言设置的实例
+  // 如果没有locale，默认为英语(en)
+  const languageFilteredInstances = uniqueInstances.filter(item => {
+    const instanceLocale = item.instance?.locale || 'en';
+    return instanceLocale === currentLanguage;
+  });
+
+  // 如果有currentGroupId，只保留同一个产品组的实例
+  const groupFilteredInstances = currentGroupId
+    ? languageFilteredInstances.filter(item => {
+        return item.instance?.navigationInfo?.group?.id === currentGroupId;
+      })
+    : languageFilteredInstances;
+
+  // 只保留必要的属性，减少数据传输
+  return groupFilteredInstances.map(item => ({
+    instance: {
+      id: item.instance.id,
+      label: item.instance.label,
+      // 保留navigationInfo，因为在tab-help.ts、group-help.ts、platform-help.ts中会用到
+      navigationInfo: item.instance.navigationInfo,
+      // 保留path和routeBasePath，因为在tab-help.ts中会用到
+      path: item.instance.path,
+      routeBasePath: item.instance.routeBasePath,
+      locale: item.instance.locale,
+      // 移除askAi等不必要的属性
+    },
+    defaultLink: item.defaultLink,
+  }));
+}
+
+
+
 interface Props {
   mdxSource: any;
   toc: TocItem[];
@@ -166,7 +251,7 @@ export const getStaticProps = async ({ params }: SlugData) => {
   }
 
   // Reason: `undefined` cannot be serialized as JSON. Please use `null` or omit this value.
-  const docuoConfig = LibControllerImpl.getDocuoConfig();
+  const fullDocuoConfig = LibControllerImpl.getDocuoConfig();
   LibControllerImpl.addDefaultLink();
   const instances = LibControllerImpl.getInstances();
   const { instanceID, slugVersion, docVersion } =
@@ -175,7 +260,7 @@ export const getStaticProps = async ({ params }: SlugData) => {
     LanguageControllerImpl.getInfoByInstanceID(instanceID);
   const folderTreeData = TreeControllerImpl.getFolderTreeDataBySlug(slug);
   const displayVersions = VersionsControllerImpl.getDisplayVersions(slug);
-  const displayInstances =
+  const fullDisplayInstances =
     LibControllerImpl.getDisplayInstances(currentLanguage);
   const { displayLanguages, currentLanguageLabel } =
     LanguageControllerImpl.getDisplayLanguages(slug);
@@ -189,7 +274,7 @@ export const getStaticProps = async ({ params }: SlugData) => {
     instanceID,
     LibControllerImpl.getTargetInstance(instanceID)
   );
-  const currentInstance = displayInstances.find((item) => {
+  const currentInstance = fullDisplayInstances.find((item) => {
     // Matches multiple language instance id
     return item.instance.id === instanceID;
   });
@@ -202,6 +287,12 @@ export const getStaticProps = async ({ params }: SlugData) => {
     );
   const { displayTabs, currentTab, currentTabLabel, shouldShowTabs } =
     TabControllerImpl.getDisplayTabs(slug, currentLanguage);
+
+  // 应用优化
+  const docuoConfig = optimizeDocuoConfig(fullDocuoConfig, currentLanguage);
+  // 只保留当前产品组的实例，大幅减少数据传输
+  const displayInstances = optimizeDisplayInstances(fullDisplayInstances, currentLanguage, currentGroup);
+
   return {
     props: {
       ...postData,
