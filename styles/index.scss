@@ -463,6 +463,11 @@ html > body {
       width: calc(100% - 312px);
       padding-left: 24px;
       padding-right: 32px;
+
+      // 当隐藏TOC时，文章内容扩展到全宽
+      &.no-toc {
+        width: 100%;
+      }
     }
 
     .article-breadcrumb {
@@ -479,6 +484,11 @@ html > body {
       width: 312px;
       max-height: calc(100vh - var(--preview-header-height) - var(--preview-sub-header-height));
       border: none;
+
+      // 当隐藏TOC时，完全隐藏右侧锚点区域
+      &.hidden-toc {
+        display: none;
+      }
       position: sticky;
       top: calc(var(--preview-header-height) + var(--preview-sub-header-height));
       flex: none;

@@ -116,6 +116,7 @@ const PreviewLayout = ({
   docVersion,
   slugVersion,
   versions,
+  mdxSource,
   toc,
   folderTreeData,
   docuoConfig,
@@ -313,6 +314,14 @@ const PreviewLayout = ({
     });
   };
 
+  // 检查frontmatter中是否禁用TOC
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const shouldShowToc = useMemo(() => {
+    const frontmatter = mdxSource?.frontmatter || {};
+    // 默认显示TOC，只有明确设置为false时才隐藏
+    return frontmatter.show_toc !== false;
+  }, [mdxSource]);
+
   // 使用动态TOC来支持组件生成的标题（如Steps组件）
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const { toc: dynamicToc } = useDynamicTOC(".article-content");
@@ -320,10 +329,14 @@ const PreviewLayout = ({
   // 合并静态TOC和动态TOC
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const combinedToc = useMemo(() => {
+    // 如果禁用了TOC，返回空数组
+    if (!shouldShowToc) {
+      return [];
+    }
     // 如果动态TOC有内容，优先使用动态TOC（包含组件生成的标题）
     // 否则使用静态TOC作为后备
     return dynamicToc && dynamicToc.length > 0 ? dynamicToc : toc;
-  }, [dynamicToc, toc]);
+  }, [dynamicToc, toc, shouldShowToc]);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const tocFormatData = useMemo(() => {
@@ -616,7 +629,7 @@ const PreviewLayout = ({
                           </div>
                           <div className="preview-content-wrap">
                             <div className="preview-content">
-                              <div className="article">
+                              <div className={`article ${!shouldShowToc ? "no-toc" : ""}`}>
                                 <div className="article-breadcrumb flex justify-between items-center">
                                   <Breadcrumb
                                     items={breadCrumbData}
@@ -646,14 +659,8 @@ const PreviewLayout = ({
                                 </div>
                                 <ArticlePager prev={prev} next={next} />
                               </div>
-                              <div
-                                className={`article-anchor-right ${
-                                  !shouldShowTabs || displayTabs.length <= 1
-                                    ? "hidden-tab"
-                                    : ""
-                                }`}
-                              >
-                                {toc?.length ? (
+                              <div className={`article-anchor-right ${!shouldShowTabs || displayTabs.length <= 1 ? "hidden-tab" : ""} ${!shouldShowToc ? "hidden-toc" : ""}`}>
+                                {shouldShowToc && toc?.length ? (
                                   <div className="pt-[28px]  pb-10 ml-8">
                                     <p
                                       className="mb-2.5 font-inter-bold font-semibold text-sm"
