@@ -116,18 +116,19 @@ export const useDynamicTOC = (containerSelector = '.article-content') => {
     return headings.map(h => `${h.level}-${h.id}-${h.title}`).join('|');
   }, []);
 
-  const updateTOC = useCallback(() => {
+  const updateTOC = useCallback((forceUpdate = false) => {
     const now = Date.now();
-    // 防止过于频繁的更新（至少间隔1000ms）
-    if (now - lastScanTime < 1000) {
+    // 防止过于频繁的更新，但对于强制更新（如页面切换）允许更短的间隔
+    const minInterval = forceUpdate ? 16 : 1000; // 16ms约等于一个动画帧
+    if (!forceUpdate && now - lastScanTime < minInterval) {
       return;
     }
 
     const headings = scanHeadings();
     const newTocHash = generateTocHash(headings);
 
-    // 只有当TOC内容真的发生变化时才更新
-    if (newTocHash !== lastTocHash) {
+    // 只有当TOC内容真的发生变化时才更新，或者是强制更新
+    if (forceUpdate || newTocHash !== lastTocHash) {
       let newTocData: TOCItem[] = [];
       if (headings.length > 0) {
         newTocData = parseHeadingsToTocs(headings);
@@ -137,7 +138,7 @@ export const useDynamicTOC = (containerSelector = '.article-content') => {
       const newTocString = JSON.stringify(newTocData);
       const cachedTocString = JSON.stringify(tocCacheRef.current);
 
-      if (newTocString !== cachedTocString) {
+      if (forceUpdate || newTocString !== cachedTocString) {
         tocCacheRef.current = newTocData;
         setToc(newTocData);
       }
@@ -157,12 +158,29 @@ export const useDynamicTOC = (containerSelector = '.article-content') => {
       setTimeout(updateTOC, 100);
     };
 
+    // 监听页面路由变化，当URL的pathname变化时重新扫描TOC
+    const handleRouteChange = () => {
+      // 使用双重requestAnimationFrame确保DOM完全更新后执行
+      // 第一个确保当前渲染周期完成，第二个确保下一个渲染周期开始
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          updateTOC(true);
+        });
+      });
+    };
+
     // 只监听自定义TOC更新事件
     document.addEventListener('toc-update', handleTOCUpdate);
+
+    // 监听popstate事件（浏览器前进后退）和自定义路由变化事件
+    window.addEventListener('popstate', handleRouteChange);
+    document.addEventListener('route-change', handleRouteChange);
 
     // 清理函数
     return () => {
       document.removeEventListener('toc-update', handleTOCUpdate);
+      window.removeEventListener('popstate', handleRouteChange);
+      document.removeEventListener('route-change', handleRouteChange);
     };
   }, [containerSelector, updateTOC]);
 
