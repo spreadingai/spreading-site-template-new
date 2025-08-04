@@ -222,13 +222,10 @@
 		margin: 20px 0;
 		// table 正文颜色
 		color: var(--docuo-text-color);
+		border-radius: 4px;
 		p {
 			font-size: 14px;
 			color: var(--docuo-text-color);
-		}
-
-		tr {
-			border-bottom: var(--docuo-table-border);
 		}
 
 		th,
@@ -249,10 +246,12 @@
 			font-weight: bold;
 			color: var(--docuo-color-primary);
 			background: var(--docuo-table-th-bg);
+			border: var(--docuo-table-border);
 		}
 
 		td {
 			font-weight: 400;
+			border: var(--docuo-table-border);
 		}
 	}
 
