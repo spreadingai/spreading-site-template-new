@@ -21,10 +21,10 @@ class GroupController {
     const instances = LibControllerImpl.getInstances();
     const { instanceID: targetInstanceID } =
       CommonControllerImpl.getExtractInfoFromSlug(slug, instances);
-    console.log(
-      "[GroupController]getDisplayGroups targetInstanceID",
-      targetInstanceID
-    );
+    // console.log(
+    //   "[GroupController]getDisplayGroups targetInstanceID",
+    //   targetInstanceID
+    // );
     const targetInstance = instances.find(
       (instance) => instance.id === targetInstanceID
     );

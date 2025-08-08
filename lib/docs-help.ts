@@ -49,7 +49,7 @@ class DocsController {
 
     // const html = Markdoc.renderers.html(content);
 
-    console.log(`[DocsController]readDoc `, slug);
+    // console.log(`[DocsController]readDoc `, slug);
     const instances = LibControllerImpl.getInstances();
     const { docVersion, mdxFileID, instanceID, slugVersion, routeBasePath } =
       CommonControllerImpl.getExtractInfoFromSlug(slug, instances);
@@ -206,7 +206,7 @@ class DocsController {
     }
     // console.timeEnd("count transShortLink");
 
-    console.log(`[DocsController]readDoc end`);
+    // console.log(`[DocsController]readDoc end`);
     delete mdxSource.matter.content;
     return {
       slug,

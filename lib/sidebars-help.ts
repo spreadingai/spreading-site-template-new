@@ -79,9 +79,23 @@ class SidebarsController {
       const sidebarsUrl = `${rootUrl}/sidebars.json`;
       const sidebarsPath = path.resolve("./public", "..", sidebarsUrl);
       if (fs.existsSync(sidebarsPath)) {
-        let sidebarsObj: Sidebars = JSON.parse(
-          fs.readFileSync(sidebarsPath, "utf8")
-        );
+
+        let sidebarsObj: Sidebars;
+        try {
+          sidebarsObj = JSON.parse(fs.readFileSync(sidebarsPath, "utf8"));
+        } catch (error) {
+          // 明确打印出问题文件路径与错误，便于快速定位
+          console.error(
+            `[SidebarsController] JSON.parse failed for sidebars.json`,
+            { sidebarsPath, error: (error as Error)?.message }
+          );
+          // 打印当前解析的 sidebars 文件路径
+          console.log(
+            `[SidebarsController] parsing sidebars.json at`,
+            sidebarsPath
+          );
+          throw error;
+        }
         if (Array.isArray(sidebarsObj)) {
           sidebarsObj = {
             mySidebar: JSON.parse(JSON.stringify(sidebarsObj)),

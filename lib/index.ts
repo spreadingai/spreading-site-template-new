@@ -42,14 +42,10 @@ class LibController {
           "..",
           `${ENTITY_ROOT_DIRECTORY}/${configFileName}`
         );
-        console.log(
-          "[LibController]getDocuoConfig docuoConfigPath ",
-          docuoConfigPath
-        );
         const readDocuoConfig = fs.readFileSync(docuoConfigPath, "utf8");
         docuoConfig = JSON.parse(readDocuoConfig);
       } catch (error) {
-        // console.log("[LibController]getDocuoConfig docuoConfigPath ", "docs/docuo.config.json");
+        console.log("[LibController]getDocuoConfig docuoConfigPath ", "docs/docuo.config.json");
         docuoConfig = JSON.parse(JSON.stringify(inputDocuoConfig));
       }
       const defaultInstance = {
