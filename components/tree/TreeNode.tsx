@@ -1,6 +1,7 @@
 import styles from "./TreeNode.module.scss";
 import classNames from "classnames";
 import { FC, useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import IconTreeArrow from "@/assets/icons/tree/sidebar_arrow_open.svg";
 import { SidebarItemType } from "@/lib/types";
 import SidebarTag from "./SidebarTag";
@@ -16,6 +17,8 @@ interface TreeNode {
     label: string;
     color: string;
   };
+  id?: string;
+  link?: string;
 }
 interface TreeNodeProps {
   node: TreeNode;
@@ -38,6 +41,7 @@ const TreeNode: FC<TreeNodeProps> = ({
   titleRender,
   onExpand,
 }) => {
+  const router = useRouter();
   const hasChildren = node.children && node.children.length > 0;
 
   const [isOpen, setIsOpen] = useState(
@@ -62,6 +66,24 @@ const TreeNode: FC<TreeNodeProps> = ({
 
     if (onSelect && !hasChildren) {
       onSelect([node.key], node);
+    }
+
+    // 叶子节点整行点击：触发导航
+    if (!hasChildren) {
+      if (node.type === SidebarItemType.Doc && node.id) {
+        router.push(node.id);
+        return;
+      }
+      if (node.type === SidebarItemType.Link && node.link) {
+        const href = node.link;
+        if (href.startsWith("http")) {
+          window.open(href, "_blank");
+        } else {
+          const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+          router.push(`${basePath}${href}`);
+        }
+        return;
+      }
     }
   };
   return (
