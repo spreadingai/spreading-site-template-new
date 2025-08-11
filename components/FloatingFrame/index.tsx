@@ -120,7 +120,7 @@ const FloatingFrame = ({ locale = "zh" }: FloatingFrameProps) => {
           <PhoneOutlined className={styles.contactIcon} />
           <div className={styles.contactInfo}>
             <div className={styles.contactTitle}>电话咨询</div>
-            <div className={styles.contactDesc}>400 1026 604</div>
+            <div className={styles.contactDesc}>400 1006 604</div>
           </div>
         </div>
 
