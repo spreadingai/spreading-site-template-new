@@ -21,6 +21,7 @@ import {
   rehypeNestedFormat,
   remarkEnhancedTable,
   remarkConditions,
+  remarkLastUpdated,
   // remarkTest,
 } from "@/plugins";
 
@@ -137,6 +138,7 @@ class DocsController {
       }],
       [remarkToc, { exportRef: tocRef }],
       [remarkFrontmatter, { exportRef: frontmatterRef }],
+      remarkLastUpdated, // 在 frontmatter 处理后添加 LastUpdated 组件
       remarkConditions,
       remarkEnhancedTable, // 在 Markdown 阶段处理表格
     ];

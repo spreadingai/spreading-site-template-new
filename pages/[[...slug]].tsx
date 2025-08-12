@@ -18,6 +18,7 @@ import {
   Step,
   Steps,
   QRCode,
+  LastUpdated,
 } from "@spreading/docuo-mdx-component";
 import LibControllerImpl from "@/lib";
 import DocsControllerImpl from "@/lib/docs-help";
@@ -89,6 +90,7 @@ const components = {
   Step,
   Steps,
   QRCode,
+  LastUpdated,
   a: (props) =>
     props.href && props.href.startsWith("http") ? (
       <a {...props} target="_blank" />

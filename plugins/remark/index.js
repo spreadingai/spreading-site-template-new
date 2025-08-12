@@ -3,3 +3,4 @@ export * from "./remarkFrontmatter.ts";
 export * from "./remarkConditions.ts";
 export * from "./remarkTest.ts";
 export * from "./remarkEnhancedTable.ts";
+export * from "./remarkLastUpdated.ts";
