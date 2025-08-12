@@ -98,13 +98,40 @@ class ShortLinkTransController {
     const articleInfo = DataUtil.getMenuByPath(params, menuData);
     return articleInfo;
   }
-  async fetchFunc(method, jsonUrl) {
-    const res = await fetch(`${jsonUrl}`, {
-      method,
-    });
-    const jsonRes = await res.json();
-    const text = JSON.stringify(jsonRes);
-    return text;
+  async fetchFunc(method, jsonUrl, maxRetries = 3) {
+    let lastError;
+
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      try {
+        const res = await fetch(`${jsonUrl}`, {
+          method,
+        });
+        const jsonRes = await res.json();
+        const text = JSON.stringify(jsonRes);
+        return text;
+      } catch (error) {
+        lastError = error;
+
+        // 如果不是404错误且还有重试次数，则继续重试
+        if (
+          !error.message.includes("Unexpected token") &&
+          attempt < maxRetries
+        ) {
+          console.log(`尝试 ${attempt}/${maxRetries} 失败，正在重试...`);
+          // 等待一段时间再重试（指数退避）
+          await new Promise((resolve) =>
+            setTimeout(resolve, Math.pow(2, attempt) * 1000)
+          );
+          continue;
+        }
+
+        // 如果是404错误或者已经达到最大重试次数，则抛出错误
+        throw error;
+      }
+    }
+
+    // 如果所有重试都失败了，抛出最后一个错误
+    throw lastError;
   }
   async getClientApiTreeData(url: string, refresh = false) {
     // url: https://doc-zh.zego.im/client-api/zim/zh/java_android/data.json
