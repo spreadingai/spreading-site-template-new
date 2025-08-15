@@ -24,17 +24,17 @@ import useSet from "@/components/hooks/useSet";
 import { defaultLanguage } from "../context/languageContext";
 import AISearch from "./AISearch";
 // import "@docsearch/css";
+import { eventEmitter } from "@/lib/client/event";
 
 interface Props {
   docuoConfig: DocuoConfig;
   tocFormatData?: AnchorNode[];
-  setDrawerOpen?: (value: boolean) => void;
   isSearchPage?: boolean;
 }
 
 const Header = (props: Props) => {
   const router = useRouter();
-  const { docuoConfig, tocFormatData, setDrawerOpen, isSearchPage } = props;
+  const { docuoConfig, tocFormatData, isSearchPage } = props;
   const { handleLanguageChanged } = useSet();
   const {
     currentLanguage,
@@ -282,7 +282,7 @@ const Header = (props: Props) => {
           <span
             style={{ padding: 4, marginRight: 14 }}
             className={`hamburger-btn w-10 h-10 cursor-pointer block rounded-md ${styles["sidebar-btn"]}`}
-            onClick={() => setDrawerOpen(true)}
+            onClick={() => eventEmitter.emit('drawer-trigger', true)}
           >
             <IconMenu className={styles["sidebar-icon"]} />
           </span>

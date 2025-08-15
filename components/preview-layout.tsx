@@ -1,7 +1,7 @@
 // TODO antd cause lambda very slow!!!!!!!!!!!!!! It will take more 7s!!!!!!!!
 
 import React, { useState, useEffect, useMemo } from "react";
-import { Breadcrumb, Drawer } from "antd";
+import { Drawer } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Header from "./header";
@@ -19,6 +19,7 @@ import {
   DisplayGroup,
   DisplayTab,
   CategoryMenuData,
+  TreeDataObject,
 } from "@/lib/types";
 import Image from "next/image";
 import IconOutlink from "@/assets/images/icon_outlink.png";
@@ -29,7 +30,6 @@ import DocuoAnchor from "./Anchor";
 import AnchorNode from "./Anchor/Anchor";
 import IconBackTop from "@/assets/icons/anchor/IconBackTop.svg";
 import IconBackTopDark from "@/assets/icons/anchor/IconBackTopDark.svg";
-import IconBreadcrumbArrow from "@/assets/icons/breadcrumb/arrow.svg";
 import AnChorMobile from "./Anchor/AnchorMobile";
 import InsVersionDropdown from "@/components/dropdown/InsVersionDropdown";
 import { GoogleAnalytics } from "@next/third-parties/google";
@@ -51,6 +51,12 @@ import dynamic from "next/dynamic";
 import TabDropdown from "./dropdown/TabDropdown";
 import { useDynamicTOC } from "./hooks/useDynamicTOC";
 import FontInitializer from "./FontInitializer";
+import { eventEmitter } from "@/lib/client/event";
+// 动态导入 ClientBreadcrumb，禁用 SSR
+const ClientBreadcrumb = dynamic(() => import("./header/ClientBreadcrumb"), {
+  ssr: false,
+});
+
 // 动态导入
 const FloatingFrame = dynamic(() => import("@/components/FloatingFrame"), {
   ssr: false,
@@ -69,7 +75,6 @@ type Props = {
   versions: string[];
   mdxSource: any;
   toc: TocItem[];
-  folderTreeData: TreeDataObject[];
   docuoConfig: DocuoConfig;
   displayVersions: DisplayVersion[];
   displayInstances: DisplayInstance[];
@@ -93,20 +98,6 @@ type Props = {
   next: PaginationData;
 };
 
-type TreeDataObject = {
-  key: string;
-  title: string;
-  type: SidebarItemType;
-  link?: string;
-  id?: string;
-  collapsed?: boolean;
-  children?: TreeDataObject[];
-  tag?: {
-    label: string;
-    color: string;
-  };
-};
-
 let WsConnecting = false;
 const PreviewLayout = ({
   children,
@@ -118,7 +109,6 @@ const PreviewLayout = ({
   versions,
   mdxSource,
   toc,
-  folderTreeData,
   docuoConfig,
   displayVersions,
   displayInstances,
@@ -168,10 +158,6 @@ const PreviewLayout = ({
   const [isExpand, setIsExpand] = useState(true);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [drawerOpen, setDrawerOpen] = useState(false);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [selectedKeys, setSelectedKeys] = useState([]);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const [expandedKeys, setExpandedKeys] = useState([]);
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [theme, setTheme] = useState<Theme>("light");
 
@@ -226,6 +212,10 @@ const PreviewLayout = ({
       }, 10);
     }
 
+    eventEmitter.on("drawer-trigger", (value) => {
+      setDrawerOpen(!!value);
+    });
+
     return () => {
       window.removeEventListener("beforeunload", beforeUnloadHandler);
     };
@@ -260,39 +250,10 @@ const PreviewLayout = ({
       document.body.scrollTo({ top: 0 });
 
       // 触发路由变化事件，让动态TOC重新扫描
-      document.dispatchEvent(new CustomEvent('route-change'));
+      document.dispatchEvent(new CustomEvent("route-change"));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.asPath]);
-
-  // All articles must have an id
-  const docID = slug.join("/");
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useEffect(() => {
-    const docID = slug.join("/");
-    const selectedKeys: string[] = [];
-    let expandedKeys = [];
-    const loop = (children: TreeDataObject[], parentKeys: string[]) => {
-      for (const element of children) {
-        if (element.id === docID) {
-          // Find the first
-          expandedKeys = parentKeys.concat(element.key);
-          return element.key;
-        }
-        if (element.children) {
-          const result = loop(element.children, parentKeys.concat(element.key));
-          if (result) return result;
-        }
-      }
-    };
-    const selectedKey = loop(folderTreeData, []);
-    selectedKeys.push(selectedKey);
-    setSelectedKeys(selectedKeys);
-    setExpandedKeys((oldVal) =>
-      Array.from(new Set(oldVal.concat(expandedKeys)))
-    );
-  }, [slug]);
 
   const formatFormatterTocForAntdAnchor = (data, k): AnchorNode[] => {
     let key = k;
@@ -342,58 +303,6 @@ const PreviewLayout = ({
   const tocFormatData = useMemo(() => {
     return formatFormatterTocForAntdAnchor(combinedToc, 0);
   }, [combinedToc]);
-
-  // Update bread crumb data
-  const getBreadCrumbData = () => {
-    let result: TreeDataObject[] = [];
-    const loop = (
-      children: TreeDataObject[],
-      parentNodes: TreeDataObject[]
-    ) => {
-      for (const element of children) {
-        if (element.id === docID) {
-          result = parentNodes.concat(element);
-          return;
-        }
-        if (element.children) {
-          loop(element.children, parentNodes.concat(element));
-        }
-      }
-    };
-    loop(folderTreeData, []);
-    const len = result.length;
-    return result.map((item, index, arr) => {
-      return {
-        title: (
-          <span
-            className={
-              `breadcrumb-label` +
-              (index === len - 2
-                ? " doc-search-lvl0"
-                : ` doc-search-lvl${index + 1}`)
-            }
-          >
-            {item.title}
-          </span>
-        ),
-      };
-    });
-  };
-  const breadCrumbData = getBreadCrumbData();
-
-  const fileSelectHandle = (selectedKeys, node) => {
-    if (node.type === SidebarItemType.Category) {
-      setExpandedKeys((oldVal) => {
-        if (oldVal.includes(node.key)) {
-          return oldVal.filter((key) => key !== node.key);
-        }
-        return [...oldVal, node.key];
-      });
-    }
-    if (node.type === SidebarItemType.Doc) {
-      setDrawerOpen(false);
-    }
-  };
 
   const scrollToTop = () => {
     document.body.scrollTo({ top: 0, behavior: "smooth" });
@@ -575,7 +484,6 @@ const PreviewLayout = ({
                       <Header
                         docuoConfig={docuoConfig}
                         tocFormatData={tocFormatData}
-                        setDrawerOpen={setDrawerOpen}
                       ></Header>
                       <PageBg />
                       <main className="preview-main">
@@ -619,24 +527,20 @@ const PreviewLayout = ({
                               )}
                             </div>
                             <DocuoTree
+                              slug={slug}
                               docuoConfig={docuoConfig}
-                              data={folderTreeData}
-                              selectedKeys={selectedKeys}
-                              onSelect={fileSelectHandle}
                               titleRender={titleRenderHandle}
-                              setDrawerOpen={setDrawerOpen}
                             />
                           </div>
                           <div className="preview-content-wrap">
                             <div className="preview-content">
-                              <div className={`article ${!shouldShowToc ? "no-toc" : ""}`}>
+                              <div
+                                className={`article ${
+                                  !shouldShowToc ? "no-toc" : ""
+                                }`}
+                              >
                                 <div className="article-breadcrumb flex justify-between items-center">
-                                  <Breadcrumb
-                                    items={breadCrumbData}
-                                    separator={
-                                      <IconBreadcrumbArrow className="breadcrumb-icon m-auto" />
-                                    }
-                                  />
+                                  <ClientBreadcrumb slug={slug} />
                                   <div className={"middle__show  relative"}>
                                     <AnChorMobile
                                       tocFormatData={tocFormatData}
@@ -659,7 +563,13 @@ const PreviewLayout = ({
                                 </div>
                                 <ArticlePager prev={prev} next={next} />
                               </div>
-                              <div className={`article-anchor-right ${!shouldShowTabs || displayTabs.length <= 1 ? "hidden-tab" : ""} ${!shouldShowToc ? "hidden-toc" : ""}`}>
+                              <div
+                                className={`article-anchor-right ${
+                                  !shouldShowTabs || displayTabs.length <= 1
+                                    ? "hidden-tab"
+                                    : ""
+                                } ${!shouldShowToc ? "hidden-toc" : ""}`}
+                              >
                                 {shouldShowToc && toc?.length ? (
                                   <div className="pt-[28px]  pb-10 ml-8">
                                     <p
@@ -748,12 +658,9 @@ const PreviewLayout = ({
                             )}
                           </div>
                           <DocuoTree
+                            slug={slug}
                             docuoConfig={docuoConfig}
-                            data={folderTreeData}
-                            selectedKeys={selectedKeys}
-                            onSelect={fileSelectHandle}
                             titleRender={titleRenderHandle}
-                            setDrawerOpen={setDrawerOpen}
                           />
                         </Drawer>
                       </main>

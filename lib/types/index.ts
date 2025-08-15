@@ -281,3 +281,17 @@ export interface CategoryMenuData {
   children?: CategoryMenuData[];
   visible?: boolean;
 }
+
+export interface TreeDataObject  {
+  key: string;
+  title: string;
+  type: SidebarItemType;
+  link?: string;
+  id?: string;
+  collapsed?: boolean;
+  children?: TreeDataObject[];
+  tag?: {
+    label: string;
+    color: string;
+  };
+};

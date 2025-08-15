@@ -16,7 +16,7 @@ class TreeController {
       (TreeController._instance = new TreeController())
     );
   }
-  getFolderTreeDataBySlug(slug: string[], customID?: string) {
+  getFolderTreeDataBySlug(slug: string[]) {
     const instances = LibControllerImpl.getInstances();
     const {
       instanceID,
