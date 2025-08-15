@@ -23,7 +23,7 @@ import usePlatform from "@/components/hooks/usePlatform";
 import useSet from "@/components/hooks/useSet";
 import { defaultLanguage } from "../context/languageContext";
 import AISearch from "./AISearch";
-// import "@docsearch/css";
+import "@docsearch/css";
 
 interface Props {
   docuoConfig: DocuoConfig;

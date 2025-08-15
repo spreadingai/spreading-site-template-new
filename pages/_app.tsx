@@ -5,7 +5,7 @@ import "@/styles/index.scss";
 import "@/styles/theme.scss";
 import "@/assets/fonts/fonts.scss";
 import "@/styles/editor.scss";
-import "@/styles/docsearch.scss";
+// import "@/styles/docsearch.scss";
 import "@/styles/tailwind.css";
 import "@/tailwind.config";
 import "@/styles/prism.token.scss";
@@ -19,7 +19,7 @@ import "@/styles/openapi/request.cover.scss";
 import "@/styles/openapi/badge.cover.scss";
 import "@/styles/openapi/schema.cover.scss";
 import "@/styles/remark.directive.scss";
-import "@/styles/docsearch.cover.scss";
+// import "@/styles/docsearch.cover.scss";
 import FontManager from "@/lib/font";
 import { useEffect } from "react";
 
