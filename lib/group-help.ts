@@ -43,14 +43,22 @@ class GroupController {
             if (navigationInfo && navigationInfo.group) {
               let defaultLink = "";
               if (!reg.test(instance.path)) {
-                // Finds the first slug corresponding to the instance
+                const jumpInstance = this.getJumpInstanceByPlatform(
+                  instance,
+                  currentLanguage,
+                  targetInstance.navigationInfo.platform
+                );
                 const targetSlug = allSlugs.find((item) => {
-                  return item.params.instanceID === instance.id;
+                  return item.params.instanceID === jumpInstance.id;
                 });
                 defaultLink = targetSlug
                   ? `/${targetSlug.params.slug.join("/")}`
-                  : // TODO: 先特殊处理
-                    this.getGroupDefaultLink(instance, currentLanguage);
+                  : // TODO: 先特殊处理线上 targetSlug 为空的时候，只有英文有这个问题，中文没有
+                    this.getGroupDefaultLink(
+                      instance,
+                      currentLanguage,
+                      targetInstance.navigationInfo.platform
+                    );
                 // : "";
               } else {
                 // Determine whether there is a platform that is not an external chain
@@ -98,7 +106,11 @@ class GroupController {
     }
     return result;
   }
-  getGroupDefaultLink(instance: DocInstance, currentLanguage: string) {
+  getGroupDefaultLink(
+    instance: DocInstance,
+    currentLanguage: string,
+    platform: string
+  ) {
     console.log("[GroupController]getGroupDefaultLink", instance.id);
     let defaultLink = "";
     if (
@@ -106,23 +118,60 @@ class GroupController {
       !instance.id.endsWith("_zh") &&
       (instance.locale === defaultLanguage || !instance.locale)
     ) {
+      const plaformSuffixMap = {
+        "Android: Java": "android",
+        "Flutter: Dart": "flutter",
+        "iOS: Objective-C": "ios",
+        "iOS: Swift": "ios",
+        "macOS: Objective-C": "macos",
+        "React Native: TS": "rn",
+        "React Native: JS": "rn",
+        "Unity3D: C#": "u3d",
+        "Web: TS": "web",
+        "Web: JS": "web",
+        "Windows: C++": "win",
+        Server: "server",
+      };
+      const platformSuffix = plaformSuffixMap[platform] || "android";
       if (instance.id.startsWith("zim_")) {
-        defaultLink = `/zim-android/introduction/overview`;
+        defaultLink = `/zim-${platformSuffix}/introduction/overview`;
       } else if (instance.id.startsWith("callkit_")) {
-        defaultLink = `/uikit/callkit-android/overview`;
+        defaultLink = `/uikit/callkit-${platformSuffix}/overview`;
       } else if (instance.id.startsWith("live_streaming_kit_")) {
-        defaultLink = `/uikit/live-streaming-kit-android/overview`;
+        defaultLink = `/uikit/live-streaming-kit-${platformSuffix}/overview`;
       } else if (instance.id.startsWith("live_audio_room_kit_")) {
-        defaultLink = `/uikit/live-audio-room-kit-android/overview`;
+        defaultLink = `/uikit/live-audio-room-kit-${platformSuffix}/overview`;
       } else if (instance.id.startsWith("in_app_chat_kit_")) {
-        defaultLink = `/uikit/in-app-chat-kit-android/overview`;
+        defaultLink = `/uikit/in-app-chat-kit-${platformSuffix}/overview`;
       } else if (instance.id.startsWith("video_conference_kit_")) {
-        defaultLink = `/uikit/video-conference-kit-android/overview`;
+        defaultLink = `/uikit/video-conference-kit-${platformSuffix}/overview`;
       } else if (instance.id.startsWith("aiagent_")) {
-        defaultLink = `/aiagent-android/introduction/overview`;
+        defaultLink = `/aiagent-${platformSuffix}/introduction/overview`;
       }
     }
     return defaultLink;
+  }
+  getJumpInstanceByPlatform(
+    currentInstance: DocInstance,
+    currentLanguage: string,
+    currentPlatform: string
+  ) {
+    let jumpInstance = currentInstance;
+    const instances = LibControllerImpl.getInstances();
+    instances.forEach((instance) => {
+      const { group, platform } = instance.navigationInfo || {};
+      const { group: currentGroup } = currentInstance.navigationInfo || {};
+      if (
+        instance.locale === currentLanguage &&
+        currentGroup &&
+        group &&
+        group.id === currentGroup.id &&
+        platform === currentPlatform
+      ) {
+        jumpInstance = instance;
+      }
+    });
+    return jumpInstance;
   }
 }
 
