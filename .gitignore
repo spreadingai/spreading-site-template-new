@@ -46,4 +46,4 @@ next-env.d.ts
 
 /analyze
 
-public/data/ai_search_mapping.json
+# public/data/ai_search_mapping.json
