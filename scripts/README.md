@@ -167,9 +167,15 @@ public/
 - 详细的错误信息
 
 ### 自动日志生成
-每次运行完成后，脚本会自动生成两个日志文件：
+每次运行完成后，脚本会自动生成两个日志文件，根据配置文件自动添加语言前缀：
 
-#### 1. 成功文件列表 (`logs/successful-files.txt`)
+#### 日志文件命名规则
+- **默认配置** (`docuo.config.json`): `successful-files.txt`, `failed-files.txt`
+- **英文配置** (`docuo.config.en.json`): `en-successful-files.txt`, `en-failed-files.txt`
+- **中文配置** (`docuo.config.zh.json`): `zh-successful-files.txt`, `zh-failed-files.txt`
+- **自定义配置**: 自动从文件名提取语言标识，如 `docuo.config.fr.json` → `fr-*.txt`
+
+#### 1. 成功文件列表 (`logs/[prefix-]successful-files.txt`)
 记录所有成功生成的MD文件，包含详细的处理信息：
 ```
 # 静态MD文件生成 - 成功文件列表
@@ -200,7 +206,7 @@ public/
 ...
 ```
 
-#### 2. 失败文件列表 (`logs/failed-files.txt`)
+#### 2. 失败文件列表 (`logs/[prefix-]failed-files.txt`)
 记录所有生成失败的slug和详细的错误分析：
 ```
 # 静态MD文件生成 - 失败文件列表

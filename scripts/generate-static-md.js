@@ -122,7 +122,16 @@ class StaticMDGenerator {
    * 读取docuo配置
    */
   getDocuoConfig() {
-    const configPath = path.join(this.ENTITY_ROOT_DIRECTORY, 'docuo.config.json');
+    // 优先使用环境变量指定的配置文件，否则使用默认的
+    const configFileName = process.env.NEXT_PUBLIC_CONFIG_FILE || 'docuo.config.zh.json';
+    const configPath = path.join(this.ENTITY_ROOT_DIRECTORY, configFileName);
+
+    console.log(`📄 使用配置文件: ${configFileName}`);
+
+    if (!fs.existsSync(configPath)) {
+      throw new Error(`配置文件不存在: ${configPath}`);
+    }
+
     return JSON.parse(fs.readFileSync(configPath, 'utf8'));
   }
 
@@ -1136,10 +1145,31 @@ class StaticMDGenerator {
   }
 
   /**
+   * 获取日志文件前缀
+   */
+  getLogFilePrefix() {
+    const configFileName = process.env.NEXT_PUBLIC_CONFIG_FILE || 'docuo.config.zh.json';
+
+    // 根据配置文件名确定前缀
+    if (configFileName.includes('.en.')) {
+      return 'en-';
+    } else if (configFileName.includes('.zh.')) {
+      return 'zh-';
+    } else if (configFileName === 'docuo.config.json') {
+      return ''; // 默认配置不加前缀
+    } else {
+      // 其他自定义配置文件，尝试从文件名提取语言标识
+      const match = configFileName.match(/\.([a-z]{2})\.json$/);
+      return match ? `${match[1]}-` : '';
+    }
+  }
+
+  /**
    * 生成成功文件列表日志
    */
   async generateSuccessfulFilesLog(endTime, duration) {
-    const logPath = path.join(this.logsDir, 'successful-files.txt');
+    const prefix = this.getLogFilePrefix();
+    const logPath = path.join(this.logsDir, `${prefix}successful-files.txt`);
 
     let content = '';
     content += '# 静态MD文件生成 - 成功文件列表\n';
@@ -1181,7 +1211,8 @@ class StaticMDGenerator {
    * 生成失败文件列表日志
    */
   async generateFailedFilesLog(endTime, duration) {
-    const logPath = path.join(this.logsDir, 'failed-files.txt');
+    const prefix = this.getLogFilePrefix();
+    const logPath = path.join(this.logsDir, `${prefix}failed-files.txt`);
 
     let content = '';
     content += '# 静态MD文件生成 - 失败文件列表\n';
