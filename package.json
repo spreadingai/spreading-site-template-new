@@ -13,7 +13,9 @@
     "deploy": "sh ./build.sh && npm run build",
     "start": "next start",
     "lint": "next lint",
-    "analyze": "node scripts/analyze-performance.js"
+    "analyze": "node scripts/analyze-performance.js",
+    "generate-static-md": "node scripts/generate-static-md.js",
+    "generate-static-md:clean": "node scripts/generate-static-md.js --clean"
   },
   "dependencies": {
     "@ant-design/pro-chat": "^1.15.3",
