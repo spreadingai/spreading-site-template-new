@@ -15,7 +15,7 @@ const fs = require('fs');
 const path = require('path');
 
 // 使用完整复制的短链接处理模块
-const { ShortLinkTransControllerImpl } = require('../lib-js/trans-short-link');
+const { ShortLinkTransControllerImpl } = require('./trans-short-link');
 
 console.log('📎 使用完整复制的lib-js/trans-short-link模块，将启用短链接转换功能');
 
@@ -27,7 +27,7 @@ class StaticMDGenerator {
     this.processedImports = new Set(); // 防止循环import
     this.ENTITY_ROOT_DIRECTORY = 'docs';
     this.SEQUENCE_PREFIX_REGEX = /^(\d+)-/;
-    this.logsDir = 'logs';
+    this.logsDir = path.join(__dirname, 'logs');
     this.successfulFiles = []; // 记录成功生成的文件
     this.failedFiles = []; // 记录失败的文件和错误信息
     this.startTime = null;

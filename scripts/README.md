@@ -301,6 +301,41 @@ public/
 - **分析成功率**: 通过`logs/successful-files.txt`统计成功生成的文件
 - **时间戳追踪**: 利用日志中的时间戳定位问题发生的时间点
 
+## 📁 目录结构
+
+```
+scripts/
+├── README.md                    # 本文档
+├── analyze-performance.js       # 性能分析脚本
+├── generate-static-md.js        # 主要的静态MD生成脚本
+├── logs/                        # 日志文件目录
+│   ├── zh-successful-files.txt  # 成功处理的文件日志
+│   ├── zh-failed-files.txt      # 失败文件日志
+│   ├── zh-short-link-processed-files.txt  # 短链接处理日志
+│   └── zh-short-link-failed-files.txt     # 短链接处理错误日志
+└── trans-short-link/            # 短链接处理模块
+    ├── index.js                 # 主要的短链接控制器
+    ├── init.js                  # 数据初始化控制器
+    ├── assets/                  # 静态资源和工具类
+    ├── components/              # 组件工具函数
+    └── utils/                   # 通用工具函数
+```
+
+### 短链接处理模块 (trans-short-link/)
+
+完整的JavaScript版本短链接处理模块，功能包括：
+- **API短链接解析** (@符号): 解析API文档链接
+- **文档短链接解析** (!符号): 解析文档内部链接
+- **实时数据获取**: 从外部API获取最新数据
+- **多语言支持**: 支持中文(zh)和英文(en)
+- **完整日志记录**: 详细的处理日志和错误追踪
+
+### 日志系统
+
+所有日志统一存放在 `scripts/logs/` 目录：
+- **静态MD生成日志**: `zh-successful-files.txt`, `zh-failed-files.txt`
+- **短链接处理日志**: `zh-short-link-processed-files.txt`, `zh-short-link-failed-files.txt`
+
 ## 📈 扩展和定制
 
 脚本设计为模块化，可以根据需要扩展：

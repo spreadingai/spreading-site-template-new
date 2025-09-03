@@ -1,0 +1,16 @@
+# ZIM Audio 发布日志
+
+- - -
+
+## 1.0.0 版本
+
+**发布日期：2024-04-17**
+
+ZIM Audio SDK 首次发布，支持完整的语音处理功能，包含语音采集、播放、噪声抑制（ANS）、自动增益控制（AGC）等，开发可以轻松实现高清语音消息的收发，无需关注音频处理的底层实现。若需使用，请同时搭配 ZIM SDK 接入。
+
+| <div style={{width:"130px"}}>功能项</div>  | 功能描述 | 相关接口 |
+|-------|-------|-------|
+| 语言采集 | 支持录制至多 120 秒的 M4A 和 MP3 格式音频，检查录制状态。 | <ul><li>[startRecord](https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMAudio#start-record)</li><li>[onRecorderStarted](https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMAudioEventHandler#on-recorder-started)</li><li>[onRecorderProgress](https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMAudioEventHandler#on-recorder-progress)</li><li>[onRecorderFailed](https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMAudioEventHandler#on-recorder-failed)</li><li>[completeRecord](https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMAudio#complete-record)</li><li>[cancelRecord](https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMAudio#cancel-record)</li><li>[onRecorderCompleted](https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMAudioEventHandler#on-recorder-completed)</li><li>[isRecording](https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMAudio#is-recording)</li><li>[cancelRecord](https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMAudio#cancel-record)</li><li>[onRecorderCancelled](https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMAudioEventHandler#on-recorder-cancelled)</li></ul> |
+| 语音播放 | 支持播放 M4A 和 MP3 格式音频，以及设置音频输出播放设备。 | <ul><li>[startPlay](https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMAudio#start-play)</li><li>[onPlayerStarted](https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMAudioEventHandler#on-player-started)</li><li>[onPlayerFailed](https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMAudioEventHandler#on-player-failed)</li><li>[onPlayerInterrupted](https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMAudioEventHandler#on-player-interrupted)</li><li>[onPlayerEnded](https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMAudioEventHandler#on-player-ended)</li><li>[setAudioRouteType](https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMAudio#set-audio-route-type)</li><li>[stopPlay](https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMAudio#stop-play)</li><li>[onPlayerStopped](https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMAudioEventHandler#on-player-stopped)</li></ul> |
+| 音量增益（AGC） | 支持自动调整麦克风音量，以适应远近拾音并保持音量稳定。<br />注意：如需使用本功能，请联系 ZEGO 技术支持开通，专业版和旗舰版用户可免费开通。| [enableAGC](https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMAudio#enable-agc) |
+| 噪声控制（ANS） | 支持识别声音中的背景噪声并进行消除，开启该功能后可以使人声更加清晰。<br />注意：如需使用本功能，请联系 ZEGO 技术支持开通，专业版和旗舰版用户可免费开通。  | [enableANS](https://doc-zh.zego.im/article/api?doc=zim_API~java_android~class~ZIMAudio#enable-ans) |
