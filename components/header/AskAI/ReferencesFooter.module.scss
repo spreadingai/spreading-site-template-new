@@ -1,0 +1,38 @@
+.referencesFooter {
+  border-top: 1px solid var(--docsearch-searchbox-border, #e1e5e9);
+  padding: 12px 16px;
+  background: var(--docuo-background-secondary, #f9f9f9);
+  
+  .header {
+    margin-bottom: 8px;
+    
+    .anticon {
+      color: var(--docuo-color-primary, #1677ff);
+    }
+    
+    span {
+      color: var(--docuo-color-primary, #333);
+      font-size: 12px;
+    }
+  }
+  
+  .referencesList {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .referenceItem {
+    .referenceLink {
+      color: var(--docuo-color-primary, #1677ff);
+      font-size: 12px;
+      line-height: 1.4;
+      text-decoration: none;
+      
+      &:hover {
+        text-decoration: underline;
+        color: var(--docuo-color-primary-hover, #4096ff);
+      }
+    }
+  }
+}
