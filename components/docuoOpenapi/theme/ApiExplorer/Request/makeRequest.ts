@@ -193,7 +193,9 @@ async function makeRequest(
   if (proxy) {
     // Ensure the proxy ends with a slash.
     let normalizedProxy = proxy.replace(/\/$/, "") + "/";
-    finalUrl = normalizedProxy + request.url.toString();
+    // Encode full target URL to avoid Next.js path normalization issues (e.g., https:// -> https:/)
+    const encodedTarget = encodeURIComponent(request.url.toString());
+    finalUrl = normalizedProxy + encodedTarget;
   }
 
   const hasCookie = !!myHeaders.get("Cookie");

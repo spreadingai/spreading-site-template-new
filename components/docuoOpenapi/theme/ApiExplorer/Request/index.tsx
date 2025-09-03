@@ -31,13 +31,21 @@ import {
 import { ParameterObject } from "@/components/docuoOpenapi/docuo-plugin-openapi-docs/src/openapi/types";
 import { ApiItem } from "@/components/docuoOpenapi/docuo-plugin-openapi-docs/src/types";
 import { FormProvider, useForm } from "react-hook-form";
+import { useContext } from "react";
+import { DocuoContext } from "@/components/docuoOpenapi/context/docuoContext";
 
 import makeRequest from "./makeRequest";
 
 function Request({ item }: { item: NonNullable<ApiItem> }) {
   const postman = new sdk.Request(item.postman);
   const { docData } = useDoc();
-  const { proxy, hide_send_button: hideSendButton } = docData.frontMatter;
+  let { proxy, hide_send_button: hideSendButton } = docData.frontMatter;
+  // Fallback to global proxy from docuo.config.json if page frontMatter doesn't specify proxy
+  try {
+    const { docuoData } = useContext(DocuoContext);
+    const globalProxy = docuoData?.docuoConfig?.themeConfig?.api?.proxy;
+    if (!proxy && globalProxy) proxy = globalProxy;
+  } catch {}
 
   const pathParams = useTypedSelector((state: any) => state.params.path);
   const queryParams = useTypedSelector((state: any) => state.params.query);

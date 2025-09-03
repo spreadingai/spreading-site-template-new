@@ -148,6 +148,10 @@ function optimizeDocuoConfig(fullConfig: any, currentLanguage: string) {
   if (fullConfig.themeConfig?.colorMode !== undefined) {
     optimizedConfig.themeConfig.colorMode = fullConfig.themeConfig.colorMode;
   }
+  // Keep api config (e.g., proxy) for OpenAPI request panel
+  if (fullConfig.themeConfig?.api !== undefined) {
+    optimizedConfig.themeConfig.api = fullConfig.themeConfig.api;
+  }
   if (fullConfig.themeConfig?.[navbarKey] || fullConfig.themeConfig?.navbar) {
     optimizedConfig.themeConfig.navbar = fullConfig.themeConfig?.[navbarKey] || fullConfig.themeConfig?.navbar;
   }
