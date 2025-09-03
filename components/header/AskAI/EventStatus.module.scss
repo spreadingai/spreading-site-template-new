@@ -1,0 +1,16 @@
+.eventStatus {
+  padding: 8px 12px;
+  background: var(--docuo-background-secondary, #f5f5f5);
+  border-radius: 6px;
+  margin-bottom: 8px;
+  border: 1px solid var(--docsearch-searchbox-border, #e1e5e9);
+  
+  .eventText {
+    color: var(--docuo-color-secondary, #666);
+    font-size: 12px;
+  }
+  
+  .anticon {
+    color: var(--docuo-color-primary, #1677ff);
+  }
+}
