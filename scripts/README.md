@@ -114,6 +114,59 @@ npm run generate-static-md
 npm run generate-static-md:clean
 ```
 
+#### 直接运行脚本
+```bash
+# 使用默认中文配置
+node scripts/generate-static-md.js
+
+# 清理输出目录后重新生成
+node scripts/generate-static-md.js --clean
+```
+
+### 配置文件选择
+
+脚本支持多种方式指定配置文件，优先级从高到低：
+
+#### 1. 命令行参数（优先级最高）
+```bash
+# 直接指定配置文件
+node scripts/generate-static-md.js --config docuo.config.en.json
+
+# 指定语言环境（自动选择对应配置文件）
+node scripts/generate-static-md.js --locale en
+node scripts/generate-static-md.js --locale zh
+```
+
+#### 2. 环境变量
+```bash
+# 使用CONFIG_FILE环境变量
+CONFIG_FILE=docuo.config.en.json node scripts/generate-static-md.js
+
+# 使用LOCALE环境变量
+LOCALE=en node scripts/generate-static-md.js
+
+# 使用NEXT_PUBLIC_CONFIG_FILE环境变量（兼容Next.js）
+NEXT_PUBLIC_CONFIG_FILE=docuo.config.en.json node scripts/generate-static-md.js
+```
+
+#### 3. 默认配置
+如果以上都未设置，默认使用 `docuo.config.zh.json`（中文配置）
+
+### 可用的配置文件
+- `docuo.config.zh.json` - 中文配置（179个实例）
+- `docuo.config.en.json` - 英文配置（107个实例）
+- `docuo.config.json` - 基础配置
+
+### 快速使用指南
+
+| 使用场景 | 推荐命令 | 说明 |
+|---------|---------|------|
+| 日常开发（中文） | `npm run generate-static-md` | 使用默认中文配置 |
+| 英文文档生成 | `npm run generate-static-md:en` | 使用英文配置 |
+| 清理后重新生成 | `npm run generate-static-md:clean` | 清理输出目录后生成 |
+| 指定配置文件 | `npm run generate-static-md:config-en` | 直接指定英文配置文件 |
+| 环境变量方式 | `npm run generate-static-md:test-en` | 使用LOCALE环境变量 |
+
 #### 测试功能
 ```bash
 node scripts/test-static-md.js

@@ -53,30 +53,8 @@ class StaticMDGenerator {
    * 获取当前语言设置
    */
   getCurrentLanguage() {
-    // 尝试从docuo配置文件中获取语言设置
-    try {
-      const configFiles = [
-        'docuo.config.zh.json',
-        'docuo.config.en.json',
-        'docuo.config.json'
-      ];
-
-      for (const configFile of configFiles) {
-        if (fs.existsSync(configFile)) {
-          if (configFile.includes('.zh.')) {
-            return 'zh';
-          } else if (configFile.includes('.en.')) {
-            return 'en';
-          }
-        }
-      }
-
-      // 默认返回中文
-      return 'zh';
-    } catch (error) {
-      console.warn(`   ⚠️  获取语言设置失败，使用默认中文: ${error.message}`);
-      return 'zh';
-    }
+    // 使用和detectLocale()相同的逻辑
+    return this.detectLocale();
   }
 
   /**
@@ -184,8 +162,11 @@ class StaticMDGenerator {
    * 读取docuo配置
    */
   getDocuoConfig() {
-    // 优先使用环境变量指定的配置文件，否则使用默认的
-    const configFileName = process.env.NEXT_PUBLIC_CONFIG_FILE || 'docuo.config.zh.json';
+    // 获取配置文件名的优先级：
+    // 1. 命令行参数 --config
+    // 2. 自动检测语言环境
+    // 3. 默认值 docuo.config.zh.json
+    const configFileName = this.getConfigFileName();
     const configPath = path.join(this.ENTITY_ROOT_DIRECTORY, configFileName);
 
     console.log(`📄 使用配置文件: ${configFileName}`);
@@ -195,6 +176,42 @@ class StaticMDGenerator {
     }
 
     return JSON.parse(fs.readFileSync(configPath, 'utf8'));
+  }
+
+  /**
+   * 获取配置文件名
+   */
+  getConfigFileName() {
+    // 1. 检查命令行参数 --config
+    const configArgIndex = process.argv.findIndex(arg => arg === '--config');
+    if (configArgIndex !== -1 && process.argv[configArgIndex + 1]) {
+      return process.argv[configArgIndex + 1];
+    }
+
+    // 2. 自动检测语言环境
+    const locale = this.detectLocale();
+    if (locale === 'en') {
+      return 'docuo.config.en.json';
+    } else if (locale === 'zh') {
+      return 'docuo.config.zh.json';
+    }
+
+    // 3. 默认值
+    return 'docuo.config.zh.json';
+  }
+
+  /**
+   * 检测语言环境
+   */
+  detectLocale() {
+    // 1. 检查命令行参数 --locale
+    const localeArgIndex = process.argv.findIndex(arg => arg === '--locale');
+    if (localeArgIndex !== -1 && process.argv[localeArgIndex + 1]) {
+      return process.argv[localeArgIndex + 1];
+    }
+
+    // 2. 默认中文
+    return 'zh';
   }
 
   /**
@@ -1329,7 +1346,7 @@ class StaticMDGenerator {
    * 获取日志文件前缀
    */
   getLogFilePrefix() {
-    const configFileName = process.env.NEXT_PUBLIC_CONFIG_FILE || 'docuo.config.zh.json';
+    const configFileName = this.getConfigFileName();
 
     // 根据配置文件名确定前缀
     if (configFileName.includes('.en.')) {
