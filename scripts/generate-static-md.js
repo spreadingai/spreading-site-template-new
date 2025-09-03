@@ -14,8 +14,10 @@
 const fs = require('fs');
 const path = require('path');
 
-// 由于TypeScript模块导入的复杂性，我们将直接实现核心逻辑
-// 而不是依赖现有的TypeScript模块
+// 使用完整复制的短链接处理模块
+const { ShortLinkTransControllerImpl } = require('../lib-js/trans-short-link');
+
+console.log('📎 使用完整复制的lib-js/trans-short-link模块，将启用短链接转换功能');
 
 class StaticMDGenerator {
   constructor() {
@@ -29,6 +31,52 @@ class StaticMDGenerator {
     this.successfulFiles = []; // 记录成功生成的文件
     this.failedFiles = []; // 记录失败的文件和错误信息
     this.startTime = null;
+
+    // 初始化短链接处理器的locale设置
+    this.initializeShortLinkProcessor();
+  }
+
+  /**
+   * 初始化短链接处理器
+   */
+  initializeShortLinkProcessor() {
+    // 从配置文件中获取当前语言设置
+    const currentLanguage = this.getCurrentLanguage();
+
+    // 调用ShortLinkTransControllerImpl.injectData设置locale
+    ShortLinkTransControllerImpl.injectData({ locale: currentLanguage });
+
+    console.log(`   🌐 短链接处理器已设置语言: ${currentLanguage}`);
+  }
+
+  /**
+   * 获取当前语言设置
+   */
+  getCurrentLanguage() {
+    // 尝试从docuo配置文件中获取语言设置
+    try {
+      const configFiles = [
+        'docuo.config.zh.json',
+        'docuo.config.en.json',
+        'docuo.config.json'
+      ];
+
+      for (const configFile of configFiles) {
+        if (fs.existsSync(configFile)) {
+          if (configFile.includes('.zh.')) {
+            return 'zh';
+          } else if (configFile.includes('.en.')) {
+            return 'en';
+          }
+        }
+      }
+
+      // 默认返回中文
+      return 'zh';
+    } catch (error) {
+      console.warn(`   ⚠️  获取语言设置失败，使用默认中文: ${error.message}`);
+      return 'zh';
+    }
   }
 
   /**
@@ -37,6 +85,9 @@ class StaticMDGenerator {
   async generateAll() {
     this.startTime = new Date();
     console.log('🚀 开始生成静态MD文件...\n');
+
+    // 开始短链接处理会话
+    ShortLinkTransControllerImpl.startShortLinkSession();
 
     try {
       // 获取所有slugs
@@ -57,11 +108,22 @@ class StaticMDGenerator {
       console.log(`📈 成功生成: ${this.generatedCount} 个文件`);
       console.log(`❌ 生成失败: ${this.errorCount} 个文件`);
 
-      // 生成日志文件
+      // 结束短链接处理会话并生成日志
+      ShortLinkTransControllerImpl.endShortLinkSession();
+
+      // 生成静态MD文件日志
       await this.generateLogFiles();
 
     } catch (error) {
       console.error('❌ 生成过程中发生错误:', error);
+
+      // 确保在错误情况下也结束短链接会话
+      try {
+        ShortLinkTransControllerImpl.endShortLinkSession();
+      } catch (shortLinkError) {
+        console.error('❌ 结束短链接会话失败:', shortLinkError);
+      }
+
       // 即使出错也尝试生成日志
       try {
         await this.generateLogFiles();
@@ -853,23 +915,56 @@ class StaticMDGenerator {
   }
 
   /**
-   * 处理内容：移除frontmatter、处理import、转换链接
+   * 处理内容：处理import、短链接处理、移除frontmatter、转换链接
    */
   async processContent(rawData, slug) {
     let content = rawData.content;
     const filePath = rawData.filePath;
     const rootUrl = rawData.rootUrl;
 
-    // 1. 移除frontmatter
-    content = this.removeFrontmatter(content);
-
-    // 2. 处理import语句
+    // 1. 处理import语句（保留frontmatter，因为短链接处理需要articleID）
     content = await this.processImports(content, filePath);
 
-    // 3. 转换相对链接
+    // 2. 提取frontmatter信息（在短链接处理之前）
+    const frontmatter = this.extractFrontmatter(content);
+
+    // 3. 处理短链接（需要frontmatter中的articleID）
+    content = await this.processShortLinks(content, frontmatter, slug, filePath);
+
+    // 4. 移除frontmatter（在短链接处理之后）
+    content = this.removeFrontmatter(content);
+
+    // 5. 转换相对链接
     content = this.transformRelativeLinks(content, filePath, rootUrl, slug);
 
     return content;
+  }
+
+  /**
+   * 提取frontmatter信息
+   */
+  extractFrontmatter(content) {
+    const frontmatterMatch = content.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/m);
+    if (!frontmatterMatch) {
+      return null;
+    }
+
+    const frontmatterText = frontmatterMatch[1];
+    const frontmatter = {};
+
+    // 提取articleID
+    const articleIDMatch = frontmatterText.match(/articleID:\s*(\d+)/);
+    if (articleIDMatch) {
+      frontmatter.articleID = articleIDMatch[1];
+    }
+
+    // 提取title
+    const titleMatch = frontmatterText.match(/title:\s*(.+)/);
+    if (titleMatch) {
+      frontmatter.title = titleMatch[1].replace(/["']/g, '').trim();
+    }
+
+    return frontmatter;
   }
 
   /**
@@ -878,6 +973,40 @@ class StaticMDGenerator {
   removeFrontmatter(content) {
     // 匹配文档开头的 --- 到 --- 之间的内容
     return content.replace(/^---\s*\n[\s\S]*?\n---\s*\n?/m, '');
+  }
+
+  /**
+   * 处理短链接转换
+   */
+  async processShortLinks(content, frontmatter, slug, filePath = '') {
+    // 如果没有articleID，跳过短链接处理
+    if (!frontmatter || !frontmatter.articleID) {
+      return content;
+    }
+
+    try {
+      console.log(`   📎 检测到短链接处理条件，articleID: ${frontmatter.articleID}`);
+
+      // 调用完整复制的ShortLinkTransControllerImpl.replaceApiShortLink方法
+      // 传递filePath和slug用于日志记录
+      const result = await ShortLinkTransControllerImpl.replaceApiShortLink(
+        frontmatter.articleID,
+        content,
+        null, // codeStr
+        filePath,
+        slug
+      );
+
+      if (result && result.content) {
+        return result.content;
+      }
+
+      return content;
+
+    } catch (error) {
+      console.warn(`   ⚠️  短链接处理失败: ${error.message}`);
+      return content;
+    }
   }
 
   /**
@@ -1039,7 +1168,7 @@ class StaticMDGenerator {
       const withoutPrefix = this.removeNumericPrefixes(cleanUrl);
 
       // 3. 解析为绝对路径
-      const absolutePath = this.resolveToAbsolutePath(withoutPrefix, filePath, rootUrl);
+      const absolutePath = this.resolveToAbsolutePath(withoutPrefix, filePath, rootUrl, slug);
 
       // 4. 标准化格式
       const normalizedPath = this.normalizePathFormat(absolutePath);
@@ -1063,7 +1192,9 @@ class StaticMDGenerator {
       url.startsWith('#') ||
       url.startsWith('mailto:') ||
       url.startsWith('tel:') ||
-      url.includes('://')
+      url.includes('://') ||
+      url.startsWith('@') ||  // 短链接，应该在短链接处理阶段处理
+      url.startsWith('!')     // 另一种短链接格式
     );
   }
 
@@ -1096,7 +1227,7 @@ class StaticMDGenerator {
   /**
    * 解析为绝对路径
    */
-  resolveToAbsolutePath(url, filePath, rootUrl) {
+  resolveToAbsolutePath(url, filePath, rootUrl, slug) {
     if (url.startsWith('/')) {
       return url;
     }
@@ -1104,9 +1235,59 @@ class StaticMDGenerator {
     // 相对路径解析
     const currentDir = path.dirname(filePath);
     const resolvedPath = path.resolve(currentDir, url);
-    const relativePath = path.relative(path.resolve(rootUrl), resolvedPath);
+    let relativePath = path.relative(path.resolve(rootUrl), resolvedPath);
 
-    return '/' + relativePath.replace(/\\/g, '/');
+    // 获取当前instance的routeBasePath
+    const routeBasePath = this.getRouteBasePathFromSlug(slug);
+
+    // 如果relativePath已经包含了routeBasePath，需要移除重复的部分
+    if (routeBasePath && relativePath.startsWith(routeBasePath + '/')) {
+      relativePath = relativePath.substring(routeBasePath.length + 1);
+    } else if (routeBasePath && relativePath === routeBasePath) {
+      relativePath = '';
+    }
+
+    // 拼接routeBasePath到最前面
+    let finalPath = '/' + relativePath.replace(/\\/g, '/');
+    if (routeBasePath) {
+      finalPath = '/' + routeBasePath + (relativePath ? '/' + relativePath.replace(/\\/g, '/') : '');
+    }
+
+    return finalPath;
+  }
+
+  /**
+   * 从slug中获取routeBasePath
+   */
+  getRouteBasePathFromSlug(slug) {
+    if (!slug || slug.length === 0) {
+      return '';
+    }
+
+    try {
+      // 获取docuo配置
+      const docuoConfig = this.getDocuoConfig();
+      const routeBasePath = slug[0] || '';
+
+      // 查找匹配的instance
+      const instance = docuoConfig.instances.find(inst => inst.routeBasePath === routeBasePath);
+
+      if (instance) {
+        return instance.routeBasePath;
+      }
+
+      // 如果没找到匹配的instance，可能是默认instance（routeBasePath为空）
+      const defaultInstance = docuoConfig.instances.find(inst => inst.routeBasePath === '');
+      if (defaultInstance && routeBasePath) {
+        // 如果第一个slug不是空的routeBasePath，说明这个slug本身就是routeBasePath
+        return routeBasePath;
+      }
+
+      return '';
+    } catch (error) {
+      console.warn(`获取routeBasePath失败: ${error.message}`);
+      return '';
+    }
   }
 
   /**
