@@ -114,6 +114,34 @@ export default function ApiItem(props: Props): JSX.Element {
           paramsArray.push(param as ParameterObject);
         }
       );
+
+      // 从 sessionStorage 恢复同名参数的已填值（跨页继承）
+      try {
+        const rawParams =
+          typeof window !== "undefined"
+            ? window.sessionStorage.getItem("openapi_params")
+            : typeof sessionStorage !== "undefined"
+            ? sessionStorage.getItem("openapi_params")
+            : undefined;
+        const map = (rawParams ? JSON.parse(rawParams) : {}) as Record<string, any>;
+        const applyValues = (
+          arr: ParameterObject[],
+          type: "path" | "query" | "header" | "cookie"
+        ) =>
+          arr.map((p: any) => {
+            const key = `${type}:${p.name}`;
+            const val = map[key];
+            return val !== undefined ? { ...p, value: val } : p;
+          });
+        // 仅在存在对应键时赋值
+        params.path = applyValues(params.path, "path") as any;
+        params.query = applyValues(params.query, "query") as any;
+        params.header = applyValues(params.header, "header") as any;
+        params.cookie = applyValues(params.cookie, "cookie") as any;
+      } catch (e) {
+        // 静默失败，避免影响渲染
+        console.debug("[openapi] rehydrate params failed", e);
+      }
       const auth = createAuth({
         security: api?.security,
         securitySchemes: api?.securitySchemes,
@@ -151,7 +179,7 @@ export default function ApiItem(props: Props): JSX.Element {
           params,
           auth,
         },
-        []
+        [persistanceMiddleware]
       );
     }
     return (

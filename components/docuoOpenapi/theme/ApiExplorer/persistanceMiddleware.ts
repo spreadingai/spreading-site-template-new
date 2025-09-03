@@ -10,6 +10,7 @@ import {
   setAuthData,
   setSelectedAuth,
 } from "@/components/docuoOpenapi/theme/ApiExplorer/Authorization/slice";
+import { setParam } from "@/components/docuoOpenapi/theme/ApiExplorer/ParamOptions/slice";
 import {
   AppDispatch,
   RootState,
@@ -44,6 +45,28 @@ export function createPersistanceMiddleware(options: ThemeConfig["api"]) {
             hashArray(Object.keys(state.auth.options)),
             state.auth.selected
           );
+        }
+      }
+
+      // 跨页持久化参数：当用户修改任意参数时，保存到 sessionStorage
+      if (action.type === setParam.type) {
+        try {
+          const raw = storage.getItem("openapi_params") ?? "{}";
+          const map = JSON.parse(raw || "{}") as Record<string, any>;
+          const p: any = action.payload;
+          const key = `${p.in}:${p.name}`;
+          if (
+            p.value === undefined ||
+            (Array.isArray(p.value) && p.value.length === 0)
+          ) {
+            delete map[key];
+          } else {
+            map[key] = p.value;
+          }
+          storage.setItem("openapi_params", JSON.stringify(map));
+        } catch (err) {
+          // 静默失败，避免影响交互
+          console.debug("[openapi] persist params failed", err);
         }
       }
 
