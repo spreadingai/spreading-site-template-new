@@ -118,7 +118,7 @@ class StaticMDGenerator {
   getAllSlugs() {
     try {
       // 优先从缓存文件读取
-      const slugsFilePath = path.join(this.ENTITY_ROOT_DIRECTORY, 'middleware', 'all-slugs.json');
+      const slugsFilePath = path.join(__dirname, 'middleware', 'all-slugs.json');
 
       if (fs.existsSync(slugsFilePath)) {
         const allSlugs = JSON.parse(fs.readFileSync(slugsFilePath, 'utf8'));
@@ -295,7 +295,7 @@ class StaticMDGenerator {
    * 保存allSlugs到缓存文件
    */
   saveAllSlugs(allSlugs) {
-    const middlewareDir = path.join(this.ENTITY_ROOT_DIRECTORY, 'middleware');
+    const middlewareDir = path.join(__dirname, 'middleware');
     const slugsFilePath = path.join(middlewareDir, 'all-slugs.json');
 
     if (!fs.existsSync(middlewareDir)) {
