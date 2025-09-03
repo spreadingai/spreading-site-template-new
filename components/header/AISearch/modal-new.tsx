@@ -10,6 +10,7 @@ import {
   XStream,
   BubbleProps,
 } from "@ant-design/x";
+import type { MessageInfo } from "@ant-design/x/es/use-x-chat";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 
 import {
@@ -46,7 +47,7 @@ import {
 import outStyles from "./modal.new.module.scss";
 // import { bundledLanguages, createHighlighter } from "shiki";
 import MarkdownIt from "markdown-it";
-import { MessageInfo } from "@ant-design/x/es/useXChat";
+
 import { v4 as uuidv4 } from "uuid";
 import { ThemeProvider } from "antd-style";
 import { Markdown } from "@ant-design/pro-editor";
@@ -203,7 +204,7 @@ const Independent = (props: Props) => {
   };
 
   // ==================== Runtime ====================
-  const [agent] = useXAgent<AgentMessage>({
+  const [agent] = useXAgent<AgentMessage, any, AgentAIMessage>({
     request: async (messageInfo, { onSuccess, onUpdate, onError }) => {
       const { message, messages } = messageInfo;
       const customID = Date.now().toString();
@@ -246,12 +247,12 @@ const Independent = (props: Props) => {
                 `read stream interface error code: ${code}, message: ${msg}`
               );
               console.log("request onSuccess");
-              onSuccess({
+              onSuccess([{
                 type: "ai",
                 content: aiSearchData.unableToReply,
                 customID,
                 requestStatus: RequestStatus.InterfaceError,
-              });
+              }]);
               customIDMap.current[customID] = {
                 id: customAnswerID,
                 answer: aiSearchData.unableToReply,
@@ -287,12 +288,12 @@ const Independent = (props: Props) => {
                 }
               } else {
                 console.log("request onSuccess");
-                onSuccess({
+                onSuccess([{
                   type: "ai",
                   content: lastChunkText.current,
                   customID,
                   requestStatus: RequestStatus.NormalEnd,
-                });
+                }]);
                 autoInsertHandle(customID);
                 updateFooterStyle();
                 updateATagAttr();
@@ -307,37 +308,37 @@ const Independent = (props: Props) => {
         console.log("startConverse error");
         console.log(error);
         if (lastChunkText.current) {
-          onSuccess({
+          onSuccess([{
             type: "ai",
             content: lastChunkText.current,
             customID,
             requestStatus: RequestStatus.AbnormalEnd,
-          });
+          }]);
           autoInsertHandle(customID);
           updateFooterStyle();
           updateATagAttr();
         } else {
           if (typeof error === "string" && error === "cancel") {
-            onSuccess({
+            onSuccess([{
               type: "ai",
               content: aiSearchData.unableToReply,
               customID,
               requestStatus: RequestStatus.CancelBeforeReceiving,
-            });
+            }]);
           } else if (error.toString().includes("AbortError")) {
-            onSuccess({
+            onSuccess([{
               type: "ai",
               content: aiSearchData.unableToReply,
               customID,
               requestStatus: RequestStatus.CancelOnReceive,
-            });
+            }]);
           } else {
-            onSuccess({
+            onSuccess([{
               type: "ai",
               content: aiSearchData.unableToReply,
               customID,
               requestStatus: RequestStatus.ServerError,
-            });
+            }]);
           }
         }
         customIDMap.current[customID] = {
