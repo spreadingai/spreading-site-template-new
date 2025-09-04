@@ -48,4 +48,9 @@ next-env.d.ts
 
 # public/data/ai_search_mapping.json
 
-logs
+scripts/logs
+scripts/middleware
+
+# Generated MD files (中文和英文)
+/public/*.md
+/public/**/*.md
