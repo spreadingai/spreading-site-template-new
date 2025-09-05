@@ -39,7 +39,7 @@ const DocuoAnchor: FC<TreeProps> = ({
   const activeLinkRef = useRef<string | null>(activeLink);
   const wrapperRef = useRef<HTMLElement | null>(null);
   const { shouldShowTabs, displayTabs } = useTab();
-  
+
   const onExpand = (expandedKeys) => {
     setExpandedKeys(expandedKeys);
   };
@@ -65,13 +65,39 @@ const DocuoAnchor: FC<TreeProps> = ({
       ): string => {
         const linkSections: Section[] = [];
         const container = getDefaultTarget();
+
+        const isElementVisibleForTOC = (element: HTMLElement): boolean => {
+          if (!element) return false;
+          // 过滤隐藏的 Tab 面板中的标题
+          const inHiddenTab = element.closest('.tabPaneHidden');
+          if (inHiddenTab) return false;
+          // display/visibility 基本判断
+          const style = window.getComputedStyle(element);
+          if (style.display === 'none' || style.visibility === 'hidden' || style.opacity === '0') {
+            return false;
+          }
+          // 继续检查父容器
+          let parent = element.parentElement;
+          while (parent) {
+            const ps = window.getComputedStyle(parent);
+            if (ps.display === 'none' || ps.visibility === 'hidden' || ps.opacity === '0') {
+              return false;
+            }
+            if (parent.classList.contains('tabPaneHidden') || parent.className.includes('tabPaneHidden')) {
+              return false;
+            }
+            parent = parent.parentElement;
+          }
+          return true;
+        };
+
         _links.forEach((link) => {
           const sharpLinkMatch = sharpMatcherRegex.exec(link?.toString());
           if (!sharpLinkMatch) {
             return;
           }
           const target = document.getElementById(sharpLinkMatch[1]);
-          if (target) {
+          if (target && isElementVisibleForTOC(target)) {
             const top = getOffsetTop(target, container);
             if (top < _offsetTop + _bounds) {
               linkSections.push({ link, top });
@@ -180,9 +206,10 @@ const DocuoAnchor: FC<TreeProps> = ({
       unregisterLink,
       scrollTo: handleScrollTo,
       activeLink,
+      setActiveLink: setCurrentActiveLink,
       // onClick,
     }),
-    [activeLink, handleScrollTo, registerLink, unregisterLink]
+    [activeLink, handleScrollTo, registerLink, unregisterLink, setCurrentActiveLink]
     //activeLink, onClick, handleScrollTo, anchorDirection
   );
 
@@ -193,6 +220,16 @@ const DocuoAnchor: FC<TreeProps> = ({
           <AnchorNode key={index} node={node} onClick={onSelect || onExpand} />
         ))}
       </div>
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `window.DocuoAnchorApi = ${JSON.stringify({})};`
+        }}
+      />
+      <script
+        dangerouslySetInnerHTML={{
+          __html: `window.DocuoAnchorApi = Object.assign(window.DocuoAnchorApi || {}, { setActiveLink: ${setCurrentActiveLink.toString()} });`
+        }}
+      />
     </AnchorContext.Provider>
   );
 };
