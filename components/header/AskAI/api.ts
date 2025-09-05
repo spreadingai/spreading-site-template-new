@@ -1,5 +1,32 @@
 import { generateUserFingerprint, generateSessionId } from './utils';
 
+/**
+ * AI API 配置常量
+ */
+const AI_API_CONFIG = {
+  // API 接口路径
+  ENDPOINT_PATH: '/v1/agents/zego_rag_agent/runs',
+  // 服务器地址
+  SERVERS: {
+    DEVELOPMENT: 'http://localhost:8000',
+    PRODUCTION: 'http://47.79.19.129:8000'
+  }
+} as const;
+
+/**
+ * 获取AI API的基础URL
+ * 根据 NODE_ENV 自动选择对应的服务器地址
+ * - development: 使用本地开发服务器
+ * - production: 使用生产环境服务器
+ */
+const getApiBaseUrl = (): string => {
+  if (process.env.NODE_ENV === 'production') {
+    return AI_API_CONFIG.SERVERS.PRODUCTION;
+  }
+  // return AI_API_CONFIG.SERVERS.DEVELOPMENT;
+  return AI_API_CONFIG.SERVERS.PRODUCTION;
+};
+
 export interface StreamEvent {
   event_name: string;
   tool_name?: string;
@@ -44,7 +71,10 @@ export const sendStreamRequest = async (
   };
 
   try {
-    const response = await fetch('http://localhost:8000/v1/agents/zego_rag_agent/runs', {
+    const apiBaseUrl = getApiBaseUrl();
+    const apiEndpoint = `${apiBaseUrl}${AI_API_CONFIG.ENDPOINT_PATH}`;
+
+    const response = await fetch(apiEndpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -68,37 +98,58 @@ export const sendStreamRequest = async (
       const { done, value } = await reader.read();
 
       if (done) {
+        // 处理剩余的buffer内容
+        if (buffer.length > 0) {
+          const finalLines = buffer.split('\n');
+          for (const line of finalLines) {
+            if (line.trim().startsWith('{') && line.trim().endsWith('}')) {
+              try {
+                const event: StreamEvent = JSON.parse(line.trim());
+                onEvent?.(event);
+                if (event.event_name === 'message' && typeof event.data === 'string') {
+                  onMessage?.(event.data);
+                }
+              } catch (parseError) {
+                // 解析失败，当作Markdown内容处理，保留换行符
+                onMessage?.(line + '\n');
+              }
+            } else {
+              // 非JSON格式，当作Markdown内容处理，保留换行符
+              onMessage?.(line + '\n');
+            }
+          }
+        }
         onComplete?.();
         break;
       }
 
       buffer += decoder.decode(value, { stream: true });
 
-      // 处理多行数据
+      // 按行分割，但保留所有行（包括空行）
       const lines = buffer.split('\n');
       buffer = lines.pop() || ''; // 保留最后一行（可能不完整）
 
       for (const line of lines) {
+        // 检查是否为JSON格式的事件（更精确的判断）
         const trimmedLine = line.trim();
-        if (trimmedLine) {
+        if (trimmedLine.startsWith('{') && trimmedLine.endsWith('}')) {
           try {
             // 尝试解析JSON事件
             const event: StreamEvent = JSON.parse(trimmedLine);
             onEvent?.(event);
 
-            // 如果是消息内容，也触发onMessage回调
+            // 如果是消息内容事件，直接传递event.data（增量内容）
             if (event.event_name === 'message' && typeof event.data === 'string') {
               onMessage?.(event.data);
             }
           } catch (parseError) {
-            // 如果不是JSON格式，可能是纯文本消息
-            if (trimmedLine.length > 0 && !trimmedLine.startsWith('{')) {
-              // 直接作为消息内容处理
-              onMessage?.(trimmedLine);
-            } else {
-              console.warn('Failed to parse event:', trimmedLine, parseError);
-            }
+            // JSON解析失败，当作普通Markdown文本处理，保留换行符
+            onMessage?.(line + '\n');
           }
+        } else {
+          // 非JSON格式的行，直接作为Markdown内容处理
+          // 保留原始格式，包括空行和缩进，添加换行符
+          onMessage?.(line + '\n');
         }
       }
     }
