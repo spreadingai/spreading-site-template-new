@@ -13,6 +13,9 @@ import dynamic from "next/dynamic";
 const AskAIModal = dynamic(() => import("../AskAI/modal"), {
   ssr: false,
 });
+// const NewAISearchModal = dynamic(() => import("../AISearch/modal-new"), {
+//   ssr: false,
+// });
 
 const AISearch = () => {
   const { theme } = React.useContext(ThemeContext);
@@ -53,7 +56,7 @@ const AISearch = () => {
         currentLanguage={currentLanguage}
         currentGroup={currentGroup}
         currentPlatform={currentPlatform}
-      />
+      /> 
       */}
     </div>
   );
