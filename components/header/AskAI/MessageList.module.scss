@@ -36,6 +36,78 @@
     }
   }
 
+  // 复制自 modal-new.tsx 的参考来源和操作按钮样式
+  .custom-chat-item-doc-agg {
+    display: block;
+    color: var(--docuo-color-primary);
+    background: var(--docsearch-searchbox-background);
+    border-radius: 8px;
+    padding: 12px;
+    margin-top: 12px;
+
+    a {
+      color: var(--docuo-color-primary);
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .custom-chat-item-operation {
+    display: flex;
+    align-items: center;
+    margin-inline-start: 12px;
+    margin-inline-end: 12px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+
+    .custom-chat-item-operation-btn {
+      opacity: 0.6;
+      cursor: pointer;
+      color: var(--docuo-text-color);
+      transition: all 0.3s;
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+
+      &:not(:last-child) {
+        margin-inline-end: 12px;
+      }
+
+      &:hover:not(.disabled) {
+        opacity: 1 !important;
+        color: var(--docuo-color-primary-active);
+      }
+
+      &.disabled {
+        opacity: 0.3 !important;
+        cursor: not-allowed !important;
+        color: var(--docuo-text-color-secondary, #999) !important;
+
+        &:hover {
+          opacity: 0.3 !important;
+          color: var(--docuo-text-color-secondary, #999) !important;
+        }
+      }
+    }
+  }
+
+  .custom-chat-item-doc-agg-title {
+    font-size: 11px;
+    color: var(--docsearch-searchbox-color);
+    margin-bottom: 10px;
+  }
+
+  .custom-chat-item-doc-agg-item {
+    line-height: 20px;
+    & + .custom-chat-item-doc-agg-item {
+      margin-top: 10px;
+    }
+  }
+
   // 自定义气泡底部样式
   .customBubbleFooter {
     border-top: 1px solid var(--docsearch-searchbox-border, #e1e5e9);
