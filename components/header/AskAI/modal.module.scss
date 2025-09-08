@@ -56,54 +56,143 @@
         display: flex;
         flex-direction: column;
     }
+    :global(.ant-sender-content) {
+        padding-block: 8px;
+    }
 }
 
-// 模态框内容容器
-.modalContent {
+// 对话容器样式 - 与 modal-new.tsx 完全一致
+.converse-wrap {
     height: 100%;
     display: flex;
     flex-direction: column;
-    background: var(--docuo-background-primary, #ffffff);
+    position: relative;
+}
 
-    // 消息列表组件 - 可滚动区域，占据主要空间
-    > :first-child {
-        flex: 1;
-        overflow: hidden;
-        display: flex;
-        flex-direction: column;
-    }
+.converse-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    overflow: hidden;
+}
 
-    // 引用链接组件 - 固定在底部上方
-    > :nth-child(2) {
-        flex-shrink: 0;
-    }
+// 输入区域样式 - 与 modal-new.tsx 完全一致
+.custom-input-area {
+    margin-top: 20px;
+    gap: 10px;
+    width: 100%;
+    display: flex;
+    align-items: flex-end;
+}
 
-    // 输入框组件 - 固定在最底部
-    > :last-child {
-        flex-shrink: 0;
+// 重置对话按钮样式 - 复制自 modal-new.tsx
+.custom-converse-reset {
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--docuo-text-color);
+    transition: all 0.3s;
+    height: 42px;
+    width: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    opacity: 0.6;
+    &:hover {
+        opacity: 1 !important;
+        background: var(--docuo-ai-search-operate-btn-bg-hover);
     }
 }
 
-// 响应式设计
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 750px) {
     .ask-ai-dialog {
-        width: 95% !important;
-        height: 90% !important;
-        min-height: 500px !important;
-    }
-}
-
-@media screen and (max-width: 480px) {
-    .ask-ai-dialog {
-        width: 100% !important;
-        height: 100% !important;
-        top: 0 !important;
-        margin: 0 !important;
-        max-width: none !important;
-        border-radius: 0 !important;
-
+        min-height: 480px !important;
         :global(.ant-modal-content) {
-            border-radius: 0 !important;
+            padding: 20px 16px;
+        }
+        :global(.ant-pro-chat-list-item) {
+            padding-left: 0px;
+            padding-right: 0px;
+        }
+        :global(.ant-select-single.ant-pro-chat-input-area-component textarea) {
+            padding-right: 40px;
+            max-height: 68px !important;
+            overflow-y: auto;
+        }
+        :global(.zcss-49fjj) {
+            max-height: 400px !important;
+        }
+        .welcomeTitle {
+            font-size: 22px;
+        }
+        :global(.ant-welcome-title) {
+            font-size: 22px;
+        }
+        .welcomeDescription {
+            font-size: 22px;
+        }
+        .welcomeWrap {
+            margin-bottom: 25px;
+        }
+    }
+}
+@media screen and (max-width: 576px) {
+    .ask-ai-dialog {
+        :global(.ant-modal-content) {
+            padding: 20px 16px;
+        }
+        .question-tips {
+            font-size: 10px;
+        }
+        .welcomeTitle {
+            font-size: 20px;
+        }
+        :global(.ant-welcome-title) {
+            font-size: 20px;
+        }
+        .welcomeDescription {
+            font-size: 20px;
+        }
+        :global(.ant-bubble-list) {
+            padding: 0 5px;
+        }
+        .user-avatar-wrap {
+            width: 36px;
+            height: 36px;
+        }
+        .welcomeWrap {
+            margin-bottom: 20px;
+        }
+    }
+}
+@media screen and (max-width: 500px) {
+    .ask-ai-dialog {
+        .welcomeIcon {
+            display: none;
+        }
+        :global(.ant-welcome-icon) {
+            display: none;
+        }
+        :global(.ant-bubble-list) {
+            padding: 0;
+        }
+        .user-avatar-wrap {
+            width: 30px;
+            height: 30px;
+        }
+    }
+}
+@media screen and (max-width: 375px) {
+    .ask-ai-dialog {
+        .welcomeTitle {
+            font-size: 17px;
+        }
+        :global(.ant-welcome-title) {
+            font-size: 17px;
+        }
+        .welcomeDescription {
+            font-size: 17px;
         }
     }
 }

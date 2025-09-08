@@ -21,7 +21,7 @@ const AskAI: React.FC<Props> = () => {
   const { currentGroup } = useGroup();
   const { currentPlatform } = usePlatform();
   const router = useRouter();
-  const theme = React.useContext(ThemeContext);
+  const { theme } = React.useContext(ThemeContext);
 
   const showModal = () => {
     setIsModalOpen(true);

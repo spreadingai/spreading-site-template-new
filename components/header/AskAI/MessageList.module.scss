@@ -1,66 +1,73 @@
+// 完全复制 modal-new.tsx 的样式结构，确保UI完全一致
 .messageList {
+  // 对应 modal-new.tsx 的 .converse-content
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   flex: 1;
-  overflow-y: auto;
-  padding: 16px;
-  background: var(--docuo-background-primary, #ffffff);
+  overflow: hidden;
+  width: 100%;
 
-  // 用户头像样式
-  .user-avatar-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: var(--docuo-background-secondary, #f5f5f5);
-    color: var(--docuo-color-primary, #1677ff);
-
-    svg {
-      width: 20px;
-      height: 20px;
+  // 全局样式覆盖 - 复制自 modal-new.tsx
+  :global(.ant-bubble-list) {
+    width: 100%;
+    flex: 1;
+    padding: 0 20px;
+  }
+  :global(.ant-bubble-start) {
+    &:not(:has(.placeholderContent)) {
+      padding-right: 52px;
     }
   }
-
-  // 自定义气泡内容样式
-  .customBubbleContent {
-    background: var(--docuo-background-primary, #ffffff);
-    border: 1px solid var(--docsearch-searchbox-border, #e1e5e9);
-    color: var(--docuo-color-primary, #333);
+  :global(.ant-bubble-end) {
+    &:not(:has(.placeholderContent)) {
+      padding-left: 52px;
+    }
+  }
+  :global(.ant-bubble-content-wrapper) {
+    color: var(--docuo-color-primary);
+    background: var(--docuo-m-drawer-btn-bg);
+    border: var(--docuo-m-drawer-btn-border);
     border-radius: 8px;
-
-    // 用户消息样式
-    &[data-role="user"] {
-      background: var(--docuo-color-primary, #1677ff);
-      color: #ffffff;
-      border-color: var(--docuo-color-primary, #1677ff);
-    }
+  }
+  :global(.ant-bubble-avatar + .ant-bubble-content) {
+    color: var(--docuo-color-primary);
+    background: var(--docuo-m-drawer-btn-bg);
+    border: var(--docuo-m-drawer-btn-border);
+    border-radius: 8px;
   }
 
-  // 复制自 modal-new.tsx 的参考来源和操作按钮样式
+  // 气泡内容样式 - 与 modal-new.tsx 完全一致
+  .customBubbleContent {
+    background: unset;
+  }
+  .customBubbleFooter {
+    width: 100%;
+  }
+
+  // 文档聚合样式 - 与 modal-new.tsx 完全一致
   .custom-chat-item-doc-agg {
-    display: block;
+    display: none;
     color: var(--docuo-color-primary);
     background: var(--docsearch-searchbox-background);
     border-radius: 8px;
     padding: 12px;
-    margin-top: 12px;
-
+    margin-inline-start: 16px;
+    margin-inline-end: 16px;
     a {
-      color: var(--docuo-color-primary);
+      color: var(--docuo-color-primary-active);
       &:hover {
         text-decoration: underline;
       }
     }
   }
-
   .custom-chat-item-operation {
-    display: flex;
+    display: none;
     align-items: center;
     margin-inline-start: 12px;
     margin-inline-end: 12px;
     margin-top: 12px;
     margin-bottom: 12px;
-
     .custom-chat-item-operation-btn {
       opacity: 0.6;
       cursor: pointer;
@@ -71,36 +78,22 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 4px;
-
-      &:not(:last-child) {
-        margin-inline-end: 12px;
+      &:hover {
+        opacity: 1 !important;
+        background: var(--docuo-ai-search-operate-btn-bg-hover);
+        border-radius: 6px;
       }
-
-      &:hover:not(.disabled) {
+      &:active {
         opacity: 1 !important;
         color: var(--docuo-color-primary-active);
       }
-
-      &.disabled {
-        opacity: 0.3 !important;
-        cursor: not-allowed !important;
-        color: var(--docuo-text-color-secondary, #999) !important;
-
-        &:hover {
-          opacity: 0.3 !important;
-          color: var(--docuo-text-color-secondary, #999) !important;
-        }
-      }
     }
   }
-
   .custom-chat-item-doc-agg-title {
     font-size: 11px;
     color: var(--docsearch-searchbox-color);
     margin-bottom: 10px;
   }
-
   .custom-chat-item-doc-agg-item {
     line-height: 20px;
     & + .custom-chat-item-doc-agg-item {
@@ -108,93 +101,164 @@
     }
   }
 
-  // 自定义气泡底部样式
-  .customBubbleFooter {
-    border-top: 1px solid var(--docsearch-searchbox-border, #e1e5e9);
-    padding-top: 8px;
-    margin-top: 8px;
+  // 用户头像样式 - 与 modal-new.tsx 完全一致
+  .user-avatar-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: var(--docuo-text-color);
+    width: 40px;
+    height: 40px;
   }
 
-  // 占位符相关样式（仿照 modal-new.tsx）
-  .placeholderNode {
-    width: 100%;
-    padding: 20px;
-    text-align: center;
+  // 查询状态样式 - 与 modal-new.tsx 完全一致
+  .queryLoading {
+    color: var(--docuo-color-primary-active);
   }
-
-  .placeholderContent {
-    border: none !important;
-    background: transparent !important;
-    padding: 0 !important;
-  }
-
-  .welcomeWrap {
-    margin-bottom: 24px;
-  }
-
-  .welcomeIcon {
-    width: 64px;
-    height: 64px;
-    margin-bottom: 16px;
-  }
-
-  .welcomeTitle {
-    font-size: 18px;
-    font-weight: 600;
+  .queryTips {
     color: var(--docuo-color-primary);
-    margin-bottom: 8px;
   }
 
+  // 占位符相关样式 - 与 modal-new.tsx 完全一致
+  .placeholderContent {
+    margin: 10% auto 0;
+  }
+  .placeholderNode {
+  }
+  .welcomeWrap {
+    margin-bottom: 30px;
+  }
+  .welcomeIcon {
+  }
+  :global(.ant-welcome-icon) {
+  }
+  .welcomeTitle {
+    font-weight: normal;
+    font-size: 28px;
+    color: var(--docuo-color-primary);
+  }
+  :global(.ant-welcome-title) {
+    font-weight: normal;
+    font-size: 28px;
+    color: var(--docuo-color-primary);
+  }
   .welcomeDescription {
-    font-size: 14px;
-    color: var(--docuo-text-color-secondary);
-    margin-bottom: 0;
+    font-size: 28px;
+    color: var(--docuo-color-primary);
   }
-
-  .question-tips {
-    font-size: 14px;
-    color: var(--docuo-text-color);
-    margin-bottom: 12px;
-  }
-
   .questionList {
-    width: 100%;
   }
-
   .questionItem {
-    flex: 1;
-    margin-bottom: 8px;
+    background: var(--docuo-background-primary);
+    border: var(--docsearch-searchbox-border);
   }
-
   .questionSubItem {
-    padding: 8px 12px;
-    border: 1px solid var(--docsearch-searchbox-border);
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.2s;
-    font-size: 13px;
-    color: var(--docuo-text-color);
-
+    color: var(--docuo-color-primary);
+    background: var(--docsearch-searchbox-background) !important;
+    padding-block: 8px;
     &:hover {
-      border-color: var(--docuo-color-primary);
-      background: var(--docuo-color-primary-bg);
+      background: var(--docsearch-searchbox-background-hover) !important;
     }
   }
-
-  // 覆盖Ant Design X默认样式
-  :global(.ant-bubble) {
-    margin-bottom: 16px;
+  .question-tips {
+    font-size: 12px;
+    color: var(--docsearch-searchbox-color);
+    margin-bottom: 5%;
   }
 
-  :global(.ant-bubble-content) {
-    font-size: 14px;
-    line-height: 1.6;
-  }
+}
 
-  // 占位符气泡样式
-  :global(.ant-bubble-start) {
-    &:has(.placeholderContent) {
+// 响应式样式 - 与 modal-new.tsx 完全一致
+@media screen and (max-width: 750px) {
+  .messageList {
+    .welcomeTitle {
+      font-size: 22px;
+    }
+    :global(.ant-welcome-title) {
+      font-size: 22px;
+    }
+    .welcomeDescription {
+      font-size: 22px;
+    }
+    .welcomeWrap {
+      margin-bottom: 25px;
+    }
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .messageList {
+    .welcomeTitle {
+      font-size: 20px;
+    }
+    :global(.ant-welcome-title) {
+      font-size: 20px;
+    }
+    .welcomeDescription {
+      font-size: 20px;
+    }
+    :global(.ant-bubble-list) {
+      padding: 0 5px;
+    }
+    .user-avatar-wrap {
+      width: 36px;
+      height: 36px;
+    }
+    :global(.ant-bubble-start) {
+      &:not(:has(.placeholderContent)) {
+        padding-right: 48px;
+      }
+    }
+    :global(.ant-bubble-end) {
+      &:not(:has(.placeholderContent)) {
+        padding-left: 48px;
+      }
+    }
+    .welcomeWrap {
+      margin-bottom: 20px;
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .messageList {
+    .welcomeIcon {
+      display: none;
+    }
+    :global(.ant-welcome-icon) {
+      display: none;
+    }
+    :global(.ant-bubble-list) {
       padding: 0;
+    }
+    .user-avatar-wrap {
+      width: 30px;
+      height: 30px;
+    }
+    :global(.ant-bubble-start) {
+      &:not(:has(.placeholderContent)) {
+        padding-right: 42px;
+      }
+    }
+    :global(.ant-bubble-end) {
+      &:not(:has(.placeholderContent)) {
+        padding-left: 42px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .messageList {
+    .welcomeTitle {
+      font-size: 17px;
+    }
+    :global(.ant-welcome-title) {
+      font-size: 17px;
+    }
+    .welcomeDescription {
+      font-size: 17px;
     }
   }
 }

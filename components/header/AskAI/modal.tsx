@@ -1,12 +1,13 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { Modal, message } from 'antd';
 import { ThemeProvider } from 'antd-style';
+import { ReloadOutlined } from '@ant-design/icons';
 import MessageList, { Message, Reference, scoreFetch, Question, ScoreType } from './MessageList';
 import MessageSender from './MessageSender';
 import { sendStreamRequest, parseProductName, parsePlatformName, StreamEvent } from './api';
 import { generateSessionId, generateUUID } from './utils';
 import { copywriting } from "@/components/constant/language";
-import styles from './modal.module.scss';
+import outStyles from './modal.module.scss';
 import { defaultLanguage } from '@/components/context/languageContext';
 
 interface Props {
@@ -33,9 +34,61 @@ const AskAIModal: React.FC<Props> = ({
   const [sessionId, setSessionId] = useState<string>('');
   const [streamingMessageId, setStreamingMessageId] = useState<string>('');
   const [messageApi, contextHolder] = message.useMessage();
+  const [screenType, setScreenType] = useState<0 | 1 | 2>(0); // 0: > 700, 1: 400 ~ 700, 2: < 400
+
+  // 更新底部样式 - 复制自 modal-new.tsx
+  const updateFooterStyle = useCallback(() => {
+    setTimeout(() => {
+      const docAggDoms = document.querySelectorAll(`.custom-chat-item-doc-agg`);
+      const operationDoms = document.querySelectorAll(
+        `.custom-chat-item-operation`
+      );
+      const docAggDom = docAggDoms[docAggDoms.length - 1];
+      const operationDom = operationDoms[operationDoms.length - 1];
+      console.log("updateFooterStyle", docAggDom, operationDom);
+      docAggDom && ((docAggDom as HTMLElement).style.display = "block");
+      operationDom && ((operationDom as HTMLElement).style.display = "flex");
+      if (docAggDom || operationDom) {
+        const scrollContainer = document.querySelector(".ant-bubble-list");
+        scrollContainer &&
+          scrollContainer.scrollTo({
+            top: scrollContainer.scrollHeight,
+            behavior: "smooth",
+          });
+      }
+    }, 300);
+  }, []);
+
+  // 更新链接属性 - 复制自 modal-new.tsx
+  const updateATagAttr = useCallback(() => {
+    setTimeout(() => {
+      const chatListItems = document.querySelectorAll(
+        ".ant-bubble-list .ant-bubble"
+      );
+      console.log("updateATagAttr chatListItems ", chatListItems);
+      chatListItems.forEach((chatListItem) => {
+        const aTags = chatListItem.querySelectorAll(
+          ".ant-bubble-content-wrapper article a"
+        );
+        console.log("updateATagAttr aTags ", aTags, chatListItem);
+        aTags.forEach((item) => {
+          item.setAttribute("target", "_blank");
+        });
+      });
+    }, 1000);
+  }, []);
 
   const currentMessageRef = useRef<Message | null>(null);
   const aiSearchData = copywriting[currentLanguage || defaultLanguage].aiSearch;
+
+  // 重置对话函数 - 复制自 modal-new.tsx
+  const resetConverse = useCallback(() => {
+    setMessages([]);
+    setIsLoading(false);
+    setStreamingMessageId('');
+    currentMessageRef.current = null;
+    // 可以在这里添加其他需要重置的状态
+  }, []);
 
   // 每次打开模态框时生成新的session ID
   useEffect(() => {
@@ -46,6 +99,27 @@ const AskAIModal: React.FC<Props> = ({
       setStreamingMessageId('');
     }
   }, [isModalOpen]);
+
+  useEffect(() => {
+    const sizeChangeHandle = () => {
+      console.log("sizeChangeHandle");
+      const clientWidth = document.documentElement.clientWidth;
+      if (!clientWidth || clientWidth > 700) {
+        setScreenType(0);
+      } else if (clientWidth > 400) {
+        setScreenType(1);
+      } else {
+        setScreenType(2);
+      }
+    };
+    sizeChangeHandle();
+    typeof window !== "undefined" &&
+      window.addEventListener("resize", sizeChangeHandle);
+    return () => {
+      typeof window !== "undefined" &&
+        window.removeEventListener("resize", sizeChangeHandle);
+    };
+  }, []);
 
   // 自动插入评分记录（仿照 modal-new.tsx 的 autoInsertHandle）
   const autoInsertHandle = useCallback((messageId: string, aiMessage: Message, userQuestion: string) => {
@@ -206,6 +280,10 @@ const AskAIModal: React.FC<Props> = ({
                 currentMessageRef.current,
                 (currentMessageRef.current as any).userQuestion
               );
+
+              // 消息完成后调用样式更新函数 - 与 modal-new.tsx 保持一致
+              updateFooterStyle();
+              updateATagAttr();
             }
           },
         }
@@ -227,7 +305,7 @@ const AskAIModal: React.FC<Props> = ({
         );
       }
     }
-  }, [isLoading, sessionId, currentGroup, currentPlatform, messageApi, autoInsertHandle]);
+  }, [isLoading, sessionId, currentGroup, currentPlatform, messageApi, autoInsertHandle, updateFooterStyle, updateATagAttr]);
 
   const cancelHandle = () => {
     onCloseHandle();
@@ -239,12 +317,10 @@ const AskAIModal: React.FC<Props> = ({
       open={isModalOpen}
       onCancel={cancelHandle}
       footer={null}
-      className={styles["ask-ai-dialog"]}
+      className={outStyles["ask-ai-dialog"]}
       keyboard={false}
       maskClosable={false}
-      rootClassName={styles[rootClassName]}
-      width="80%"
-      style={{ height: '80%', minHeight: '580px', maxWidth: '1000px' }}
+      rootClassName={outStyles[rootClassName]}
     >
       {contextHolder}
       <ThemeProvider
@@ -255,27 +331,46 @@ const AskAIModal: React.FC<Props> = ({
           },
         }}
       >
-        <div className={styles.modalContent}>
-          {/* 消息列表 */}
-          <MessageList
-            messages={messages}
-            currentTheme={currentTheme}
-            streamingMessageId={streamingMessageId}
-            isLoading={isLoading}
-            setMessages={setMessages}
-            onRequest={handleSendMessage}
-            sessionId={sessionId}
-            aiSearchData={aiSearchData}
-            currentGroup={currentGroup}
-            currentPlatform={currentPlatform}
-          />
+        <div className={outStyles["converse-wrap"]}>
+          <div className={outStyles["converse-content"]}>
+            {/* 消息列表 */}
+            <MessageList
+              messages={messages}
+              currentTheme={currentTheme}
+              streamingMessageId={streamingMessageId}
+              isLoading={isLoading}
+              setMessages={setMessages}
+              onRequest={handleSendMessage}
+              sessionId={sessionId}
+              aiSearchData={aiSearchData}
+              currentGroup={currentGroup}
+              currentPlatform={currentPlatform}
+            />
 
-          {/* 输入框 */}
-          <MessageSender
-            onSubmit={handleSendMessage}
-            loading={isLoading}
-            placeholder={aiSearchData?.inputPlaceholder}
-          />
+            {/* 输入框区域 - 与 modal-new.tsx 结构一致 */}
+            <div className={outStyles["custom-input-area"]}>
+              <MessageSender
+                onSubmit={handleSendMessage}
+                loading={isLoading}
+                placeholder={
+                  screenType === 0
+                    ? aiSearchData.inputPlaceholder
+                    : screenType === 1
+                    ? aiSearchData.inputPlaceholderM1
+                    : aiSearchData.inputPlaceholderM2
+                }
+              />
+              {/* 重置对话按钮 - 复制自 modal-new.tsx */}
+              {messages.length ? (
+                <div
+                  className={outStyles["custom-converse-reset"]}
+                  onClick={resetConverse}
+                >
+                  <ReloadOutlined />
+                </div>
+              ) : null}
+            </div>
+          </div>
         </div>
       </ThemeProvider>
     </Modal>

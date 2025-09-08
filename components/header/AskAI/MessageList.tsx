@@ -14,7 +14,7 @@ import { Markdown } from "@ant-design/pro-editor";
 import MarkdownIt from "markdown-it";
 import Robot from "@/assets/icons/ai-search/Robot.svg";
 import EventStatus from './EventStatus';
-import styles from './MessageList.module.scss';
+import outStyles from './MessageList.module.scss';
 import { fetchDefaultQuestions } from './api';
 
 const md = MarkdownIt({ html: true, breaks: true });
@@ -31,7 +31,8 @@ const renderMessageFooter = (
     copyHandle: (message: Message) => void;
     scoreHandle: (e: React.MouseEvent<HTMLElement, MouseEvent>, message: Message, score: ScoreType) => void;
   },
-  isLoading: boolean = false
+  isLoading: boolean = false,
+  aiSearchData: any
 ) => {
   const { regenerateHandle, copyHandle, scoreHandle } = handlers;
 
@@ -56,15 +57,15 @@ const renderMessageFooter = (
   return (
     <>
       {renderData.length ? (
-        <div className={`${styles["custom-chat-item-doc-agg"]} custom-chat-item-doc-agg`}>
-          <div className={styles["custom-chat-item-doc-agg-title"]}>
+        <div className={`${outStyles["custom-chat-item-doc-agg"]} custom-chat-item-doc-agg`}>
+          <div className={outStyles["custom-chat-item-doc-agg-title"]}>
             {aiSearchData.referenceSource}
           </div>
           {renderData.map((item, index) => {
             return (
               <div
                 key={item.docID}
-                className={styles["custom-chat-item-doc-agg-item"]}
+                className={outStyles["custom-chat-item-doc-agg-item"]}
               >
                 <a
                   key={"" + item.docID + index}
@@ -79,9 +80,9 @@ const renderMessageFooter = (
           })}
         </div>
       ) : null}
-      <div className={`${styles["custom-chat-item-operation"]} custom-chat-item-operation`}>
+      <div className={`${outStyles["custom-chat-item-operation"]} custom-chat-item-operation`}>
         <SyncOutlined
-          className={`${styles["custom-chat-item-operation-btn"]} ${isRegenerateDisabled ? styles["disabled"] : ""}`}
+          className={`${outStyles["custom-chat-item-operation-btn"]} ${isRegenerateDisabled ? outStyles["disabled"] : ""}`}
           onClick={(e) => regenerateHandle(e, message)}
           style={{
             opacity: isRegenerateDisabled ? 0.3 : 0.6,
@@ -89,15 +90,15 @@ const renderMessageFooter = (
           }}
         />
         <CopyOutlined
-          className={styles["custom-chat-item-operation-btn"]}
+          className={outStyles["custom-chat-item-operation-btn"]}
           onClick={() => copyHandle(message)}
         />
         <LikeOutlined
-          className={styles["custom-chat-item-operation-btn"]}
+          className={outStyles["custom-chat-item-operation-btn"]}
           onClick={(e) => scoreHandle(e, message, ScoreType.FIVE)}
         />
         <DislikeOutlined
-          className={styles["custom-chat-item-operation-btn"]}
+          className={outStyles["custom-chat-item-operation-btn"]}
           onClick={(e) => scoreHandle(e, message, ScoreType.ONE)}
         />
       </div>
@@ -285,6 +286,7 @@ const MessageList: React.FC<MessageListProps> = ({
         }
       }
     });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [messages, sessionId]);
 
   // 重新生成处理函数（完全仿照 modal-new.tsx）
@@ -322,7 +324,7 @@ const MessageList: React.FC<MessageListProps> = ({
     } catch (error) {
       console.error('Copy failed:', error);
     }
-  }, []);
+  }, [aiSearchData]);
 
   // 评分处理函数（完全仿照 modal-new.tsx 的实现）
   const scoreHandle = useCallback(
@@ -383,30 +385,30 @@ const MessageList: React.FC<MessageListProps> = ({
       // typing: { step: 5, interval: 10 },
       placement: 'start' as const,
       avatar: (
-        <div className={styles["user-avatar-wrap"]}>
+        <div className={outStyles["user-avatar-wrap"]}>
           {currentTheme === "light" ? <Robot /> : <Robot />}
         </div>
       ),
       loadingRender: () => (
         <Space>
-          <Spin size="small" className={styles.queryLoading} />
-          <span className={styles.queryTips}>{aiSearchData.beQuerying}</span>
+          <Spin size="small" className={outStyles.queryLoading} />
+          <span className={outStyles.queryTips}>{aiSearchData.beQuerying}</span>
         </Space>
       ),
       classNames: {
-        content: styles.customBubbleContent,
-        footer: styles.customBubbleFooter,
+        content: outStyles.customBubbleContent,
+        footer: outStyles.customBubbleFooter,
       },
     },
     user: {
       placement: 'end' as const,
       avatar: (
-        <div className={styles["user-avatar-wrap"]}>
+        <div className={outStyles["user-avatar-wrap"]}>
           <UserOutlined />
         </div>
       ),
       classNames: {
-        content: styles.customBubbleContent,
+        content: outStyles.customBubbleContent,
       },
     },
   };
@@ -424,17 +426,17 @@ const MessageList: React.FC<MessageListProps> = ({
   ];
 
   const placeholderNode = (
-    <Space direction="vertical" className={styles.placeholderNode}>
+    <Space direction="vertical" className={outStyles.placeholderNode}>
       <Welcome
         variant="borderless"
         icon="https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*s5sNRo5LjfQAAAAAAAAAAAAADgCCAQ/fmt.webp"
         title={aiSearchData?.defaultRemarks?.[0]}
         description={aiSearchData?.defaultRemarks?.[1]}
-        rootClassName={styles.welcomeWrap}
+        rootClassName={outStyles.welcomeWrap}
         classNames={{
-          icon: styles.welcomeIcon,
-          title: styles.welcomeTitle,
-          description: styles.welcomeDescription,
+          icon: outStyles.welcomeIcon,
+          title: outStyles.welcomeTitle,
+          description: outStyles.welcomeDescription,
         }}
       />
       {defaultQuestions.length ? (
@@ -442,10 +444,10 @@ const MessageList: React.FC<MessageListProps> = ({
           title={aiSearchData?.guessText}
           items={placeholderPromptsItems}
           classNames={{
-            title: styles["question-tips"],
-            list: styles.questionList,
-            item: styles.questionItem,
-            subItem: styles.questionSubItem,
+            title: outStyles["question-tips"],
+            list: outStyles.questionList,
+            item: outStyles.questionItem,
+            subItem: outStyles.questionSubItem,
           }}
           styles={{
             list: {
@@ -471,6 +473,7 @@ const MessageList: React.FC<MessageListProps> = ({
       key: message.id,
       content: message.content,
       role: message.role,
+      loading: !message.content,
     };
 
     // 为assistant消息添加事件状态header
@@ -481,6 +484,7 @@ const MessageList: React.FC<MessageListProps> = ({
           toolName={message.eventInfo.toolName}
           toolArgs={message.eventInfo.toolArgs}
           isLoading={message.eventInfo.isLoading || false}
+          aiSearchData={aiSearchData}
         />
       );
     }
@@ -504,7 +508,7 @@ const MessageList: React.FC<MessageListProps> = ({
           regenerateHandle,
           copyHandle,
           scoreHandle
-        }, isLoading);
+        }, isLoading, aiSearchData);
       }
     }
 
@@ -520,7 +524,7 @@ const MessageList: React.FC<MessageListProps> = ({
   });
 
   return (
-    <div className={styles.messageList}>
+    <div className={outStyles.messageList}>
       <Bubble.List
         items={
           bubbleItems.length > 0
@@ -530,7 +534,7 @@ const MessageList: React.FC<MessageListProps> = ({
                   content: placeholderNode,
                   variant: "borderless",
                   classNames: {
-                    content: styles.placeholderContent,
+                    content: outStyles.placeholderContent,
                   },
                 },
               ]
