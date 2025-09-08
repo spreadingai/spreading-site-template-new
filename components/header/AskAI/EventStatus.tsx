@@ -12,30 +12,32 @@ export interface EventStatusProps {
   toolName?: string;
   toolArgs?: any;
   isLoading: boolean;
+  aiSearchData: any;
 }
 
 const EventStatus: React.FC<EventStatusProps> = ({ 
   eventName, 
   toolName, 
   toolArgs, 
-  isLoading 
+  isLoading,
+  aiSearchData
 }) => {
   const getEventDisplay = () => {
     switch (toolName) {
       case 'list_datasets':
         return {
           icon: <DatabaseOutlined />,
-          text: '收集知识库列表',
+          text: aiSearchData.event.list_datasets,
         };
       case 'set_dataset_ids':
         return {
           icon: <DatabaseOutlined />,
-          text: '选择相关知识库',
+          text: aiSearchData.event.set_dataset_ids,
         };
       case 'search_knowledge_base':
         return {
           icon: <SearchOutlined />,
-          text: `搜索: ${toolArgs?.query || ''}`,
+          text: `${aiSearchData.event.search}: ${toolArgs?.query || ''}`,
         };
       default:
         return null;
