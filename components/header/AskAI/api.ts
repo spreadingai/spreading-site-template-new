@@ -198,3 +198,59 @@ export const parsePlatformName = (platform: string): string => {
 
   return platformMap[platform] || platform;
 };
+
+// 默认问题接口相关类型
+export interface DefaultQuestionsRequest {
+  group: string;
+  platform: string;
+  language?: string;
+}
+
+export interface DefaultQuestionsResponse {
+  questions: string[];
+  success: boolean;
+  message?: string;
+}
+
+// 获取默认问题的接口方法
+export const fetchDefaultQuestions = async (
+  params: DefaultQuestionsRequest
+): Promise<DefaultQuestionsResponse> => {
+  try {
+    // TODO: 替换为实际的接口地址
+    const response = await fetch('/api/default-questions', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(params),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    return {
+      questions: data.questions || [
+        "如何选择视频分辨率、帧率、码率？",
+        "媒体音量和通话音量有什么区别？",
+        "如何切换前后摄像头？"
+      ],
+      success: true,
+      message: data.message,
+    };
+  } catch (error) {
+    console.error('Failed to fetch default questions:', error);
+    return {
+      questions: [
+        "如何选择视频分辨率、帧率、码率？",
+        "媒体音量和通话音量有什么区别？",
+        "如何切换前后摄像头？"
+      ],
+      success: false,
+      message: error instanceof Error ? error.message : 'Unknown error',
+    };
+  }
+};

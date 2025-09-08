@@ -7,6 +7,7 @@ import { sendStreamRequest, parseProductName, parsePlatformName, StreamEvent } f
 import { generateSessionId, generateUUID } from './utils';
 import { copywriting } from "@/components/constant/language";
 import styles from './modal.module.scss';
+import { defaultLanguage } from '@/components/context/languageContext';
 
 interface Props {
   rootClassName?: string;
@@ -34,7 +35,7 @@ const AskAIModal: React.FC<Props> = ({
   const [messageApi, contextHolder] = message.useMessage();
 
   const currentMessageRef = useRef<Message | null>(null);
-  const aiSearchData = copywriting[currentLanguage]?.aiSearch || copywriting.zh?.aiSearch;
+  const aiSearchData = copywriting[currentLanguage || defaultLanguage].aiSearch;
 
   // 每次打开模态框时生成新的session ID
   useEffect(() => {
@@ -234,7 +235,7 @@ const AskAIModal: React.FC<Props> = ({
 
   return (
     <Modal
-      title={aiSearchData?.modalTitle || "AI 文档助手"}
+      title={aiSearchData?.modalTitle}
       open={isModalOpen}
       onCancel={cancelHandle}
       footer={null}
@@ -264,6 +265,7 @@ const AskAIModal: React.FC<Props> = ({
             setMessages={setMessages}
             onRequest={handleSendMessage}
             sessionId={sessionId}
+            aiSearchData={aiSearchData}
             currentGroup={currentGroup}
             currentPlatform={currentPlatform}
           />
@@ -272,7 +274,7 @@ const AskAIModal: React.FC<Props> = ({
           <MessageSender
             onSubmit={handleSendMessage}
             loading={isLoading}
-            placeholder={aiSearchData?.inputPlaceholder || "您可以询问关于本平台产品的任何问题"}
+            placeholder={aiSearchData?.inputPlaceholder}
           />
         </div>
       </ThemeProvider>
