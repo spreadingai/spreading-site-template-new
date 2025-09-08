@@ -115,6 +115,72 @@
     margin-top: 8px;
   }
 
+  // 占位符相关样式（仿照 modal-new.tsx）
+  .placeholderNode {
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .placeholderContent {
+    border: none !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+
+  .welcomeWrap {
+    margin-bottom: 24px;
+  }
+
+  .welcomeIcon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 16px;
+  }
+
+  .welcomeTitle {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--docuo-color-primary);
+    margin-bottom: 8px;
+  }
+
+  .welcomeDescription {
+    font-size: 14px;
+    color: var(--docuo-text-color-secondary);
+    margin-bottom: 0;
+  }
+
+  .question-tips {
+    font-size: 14px;
+    color: var(--docuo-text-color);
+    margin-bottom: 12px;
+  }
+
+  .questionList {
+    width: 100%;
+  }
+
+  .questionItem {
+    flex: 1;
+    margin-bottom: 8px;
+  }
+
+  .questionSubItem {
+    padding: 8px 12px;
+    border: 1px solid var(--docsearch-searchbox-border);
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 13px;
+    color: var(--docuo-text-color);
+
+    &:hover {
+      border-color: var(--docuo-color-primary);
+      background: var(--docuo-color-primary-bg);
+    }
+  }
+
   // 覆盖Ant Design X默认样式
   :global(.ant-bubble) {
     margin-bottom: 16px;
@@ -123,5 +189,12 @@
   :global(.ant-bubble-content) {
     font-size: 14px;
     line-height: 1.6;
+  }
+
+  // 占位符气泡样式
+  :global(.ant-bubble-start) {
+    &:has(.placeholderContent) {
+      padding: 0;
+    }
   }
 }

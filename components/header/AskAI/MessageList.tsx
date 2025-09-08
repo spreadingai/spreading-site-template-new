@@ -1,22 +1,21 @@
-import React, { useCallback, useRef, useEffect } from 'react';
-import { Bubble, BubbleProps } from '@ant-design/x';
+import React, { useCallback, useRef, useEffect, useState } from 'react';
+import { Bubble, BubbleProps, Welcome, Prompts } from '@ant-design/x';
 import {
   UserOutlined,
-  LinkOutlined,
   SyncOutlined,
   CopyOutlined,
   LikeOutlined,
-  DislikeOutlined
+  DislikeOutlined,
+  CommentOutlined
 } from '@ant-design/icons';
-import { Typography, Space, message } from 'antd';
+import { Typography, Space, Spin } from 'antd';
 import { Markdown } from "@ant-design/pro-editor";
 // @ts-ignore
 import MarkdownIt from "markdown-it";
 import Robot from "@/assets/icons/ai-search/Robot.svg";
 import EventStatus from './EventStatus';
 import styles from './MessageList.module.scss';
-
-const { Link, Text } = Typography;
+import { fetchDefaultQuestions } from './api';
 
 const md = MarkdownIt({ html: true, breaks: true });
 
@@ -59,7 +58,7 @@ const renderMessageFooter = (
       {renderData.length ? (
         <div className={`${styles["custom-chat-item-doc-agg"]} custom-chat-item-doc-agg`}>
           <div className={styles["custom-chat-item-doc-agg-title"]}>
-            参考来源
+            {aiSearchData.referenceSource}
           </div>
           {renderData.map((item, index) => {
             return (
@@ -199,6 +198,7 @@ export interface MessageListProps {
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
   onRequest: (content: string) => void; // 重新发送消息的函数
   sessionId?: string; // 会话ID，用于存储到 customIDMap
+  aiSearchData: any;
   // 添加评分需要的参数
   currentGroup?: string;
   currentPlatform?: string;
@@ -212,11 +212,26 @@ const MessageList: React.FC<MessageListProps> = ({
   setMessages,
   onRequest,
   sessionId,
-  currentGroup = 'default',
-  currentPlatform = 'default'
+  aiSearchData,
+  currentGroup,
+  currentPlatform
 }) => {
   // 仿照 modal-new.tsx 的 customIDMap 实现
   const customIDMap = useRef<Record<string, AnswerData>>({});
+
+  // 默认问题状态
+  const [defaultQuestions, setDefaultQuestions] = useState<string[]>([]);
+
+  // 组件挂载时获取默认问题
+  useEffect(() => {
+    fetchDefaultQuestions({
+      group: currentGroup,
+      platform: currentPlatform,
+    }).then((res)=>{
+      const { questions } = res;
+      setDefaultQuestions(questions);
+    });
+  }, [currentGroup, currentPlatform]);
 
   // 复制 modal-new.tsx 的 updateScoreStyle 函数
   const updateScoreStyle = useCallback(
@@ -300,7 +315,10 @@ const MessageList: React.FC<MessageListProps> = ({
     try {
       await navigator.clipboard.writeText(message.content);
       const { message: messageApi } = await import('antd');
-      messageApi.success("复制成功");
+      messageApi.open({
+        type: "success",
+        content: aiSearchData.copySuccess,
+      });
     } catch (error) {
       console.error('Copy failed:', error);
     }
@@ -369,6 +387,12 @@ const MessageList: React.FC<MessageListProps> = ({
           {currentTheme === "light" ? <Robot /> : <Robot />}
         </div>
       ),
+      loadingRender: () => (
+        <Space>
+          <Spin size="small" className={styles.queryLoading} />
+          <span className={styles.queryTips}>{aiSearchData.beQuerying}</span>
+        </Space>
+      ),
       classNames: {
         content: styles.customBubbleContent,
         footer: styles.customBubbleFooter,
@@ -386,6 +410,61 @@ const MessageList: React.FC<MessageListProps> = ({
       },
     },
   };
+
+  // 添加默认问题和占位符节点（仿照 modal-new.tsx）
+  const placeholderPromptsItems: any[] = [
+    {
+      key: "1",
+      children: defaultQuestions.map((question, index) => ({
+        key: `1-${index}`,
+        icon: <CommentOutlined />,
+        description: question,
+      })),
+    },
+  ];
+
+  const placeholderNode = (
+    <Space direction="vertical" className={styles.placeholderNode}>
+      <Welcome
+        variant="borderless"
+        icon="https://mdn.alipayobjects.com/huamei_iwk9zp/afts/img/A*s5sNRo5LjfQAAAAAAAAAAAAADgCCAQ/fmt.webp"
+        title={aiSearchData?.defaultRemarks?.[0]}
+        description={aiSearchData?.defaultRemarks?.[1]}
+        rootClassName={styles.welcomeWrap}
+        classNames={{
+          icon: styles.welcomeIcon,
+          title: styles.welcomeTitle,
+          description: styles.welcomeDescription,
+        }}
+      />
+      {defaultQuestions.length ? (
+        <Prompts
+          title={aiSearchData?.guessText}
+          items={placeholderPromptsItems}
+          classNames={{
+            title: styles["question-tips"],
+            list: styles.questionList,
+            item: styles.questionItem,
+            subItem: styles.questionSubItem,
+          }}
+          styles={{
+            list: {
+              width: "100%",
+            },
+            item: {
+              flex: 1,
+            },
+          }}
+          onItemClick={(info) => {
+            // 处理点击默认问题的逻辑
+            if (info.data?.description && typeof info.data.description === 'string') {
+              onRequest(info.data.description);
+            }
+          }}
+        />
+      ) : null}
+    </Space>
+  );
 
   const bubbleItems = messages.map((message) => {
     const item: any = {
@@ -443,7 +522,19 @@ const MessageList: React.FC<MessageListProps> = ({
   return (
     <div className={styles.messageList}>
       <Bubble.List
-        items={bubbleItems}
+        items={
+          bubbleItems.length > 0
+            ? bubbleItems
+            : [
+                {
+                  content: placeholderNode,
+                  variant: "borderless",
+                  classNames: {
+                    content: styles.placeholderContent,
+                  },
+                },
+              ]
+        }
         roles={roles}
       />
     </div>
