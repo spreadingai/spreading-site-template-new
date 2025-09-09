@@ -5,7 +5,9 @@ import { generateUserFingerprint, generateSessionId } from './utils';
  */
 const AI_API_CONFIG = {
   // API 接口路径
-  ENDPOINT_PATH: '/v1/agents/zego_rag_agent/runs',
+  CHAT_ENDPOINT: '/v1/agents/zego_rag_agent/runs',
+  WELCOME_PROMPTS_ENDPOINT: '/v1/prompts/welcome',
+  SCORE_FEEDBACK_ENDPOINT: '/v1/qa/vote',
   // 服务器地址
   SERVERS: {
     DEVELOPMENT: 'http://localhost:8000',
@@ -52,6 +54,52 @@ export interface StreamCallbacks {
 }
 
 /**
+ * 欢迎提示请求参数
+ */
+export interface WelcomePromptsRequest {
+  product: string;
+  platform: string;
+  language?: string;
+}
+
+/**
+ * 欢迎提示响应
+ */
+export interface WelcomePromptsResponse {
+  success: boolean;
+  data?: {
+    prompts: string[];
+  };
+  message?: string;
+}
+
+/**
+ * 评分类型枚举
+ */
+export enum ScoreType {
+  ZERO = 0,
+  ONE = 1,
+  TWO = 2,
+}
+
+/**
+ * 参考来源接口
+ */
+export interface Reference {
+  title: string;
+  url: string;
+  content?: string;
+}
+
+/**
+ * 问题数据接口
+ */
+export interface Question {
+  run_id: string; // 对应问题答案的唯一标识，必填
+  vote: ScoreType; // 评分，可选，枚举值 0：未评分、1：点赞、2：点踩，默认 0
+}
+
+/**
  * 发送流式请求到AI助手API
  */
 export const sendStreamRequest = async (
@@ -74,7 +122,7 @@ export const sendStreamRequest = async (
 
   try {
     const apiBaseUrl = getApiBaseUrl();
-    const apiEndpoint = `${apiBaseUrl}${AI_API_CONFIG.ENDPOINT_PATH}`;
+    const apiEndpoint = `${apiBaseUrl}${AI_API_CONFIG.CHAT_ENDPOINT}`;
 
     const response = await fetch(apiEndpoint, {
       method: 'POST',
@@ -222,31 +270,30 @@ export const parsePlatformName = (platform: string): string => {
   return platformMap[platform] || platform;
 };
 
-// 默认问题接口相关类型
-export interface DefaultQuestionsRequest {
-  group: string;
-  platform: string;
-  language?: string;
-}
 
-export interface DefaultQuestionsResponse {
-  questions: string[];
-  success: boolean;
-  message?: string;
-}
 
-// 获取默认问题的接口方法
-export const fetchDefaultQuestions = async (
-  params: DefaultQuestionsRequest
-): Promise<DefaultQuestionsResponse> => {
+/**
+ * 获取欢迎提示
+ * @param params 请求参数
+ * @returns Promise<WelcomePromptsResponse>
+ */
+export const fetchWelcomePrompts = async (params: WelcomePromptsRequest): Promise<WelcomePromptsResponse> => {
   try {
-    // TODO: 替换为实际的接口地址
-    const response = await fetch('/api/default-questions', {
-      method: 'POST',
+    const baseUrl = getApiBaseUrl();
+    const url = new URL(AI_API_CONFIG.WELCOME_PROMPTS_ENDPOINT, baseUrl);
+
+    // 添加查询参数
+    url.searchParams.append('product', params.product);
+    url.searchParams.append('platform', params.platform);
+    if (params.language) {
+      url.searchParams.append('language', params.language);
+    }
+
+    const response = await fetch(url.toString(), {
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(params),
     });
 
     if (!response.ok) {
@@ -255,25 +302,56 @@ export const fetchDefaultQuestions = async (
 
     const data = await response.json();
 
-    return {
-      questions: data.questions || [
-        "如何选择视频分辨率、帧率、码率？",
-        "媒体音量和通话音量有什么区别？",
-        "如何切换前后摄像头？"
-      ],
-      success: true,
-      message: data.message,
-    };
+    if (Array.isArray(data)) {
+      return {
+        success: true,
+        data: { prompts: data },
+      };
+    } else {
+      throw new Error('Failed to fetch welcome prompts');
+    }
   } catch (error) {
-    console.error('Failed to fetch default questions:', error);
-    return {
-      questions: [
-        "如何选择视频分辨率、帧率、码率？",
-        "媒体音量和通话音量有什么区别？",
-        "如何切换前后摄像头？"
-      ],
-      success: false,
-      message: error instanceof Error ? error.message : 'Unknown error',
-    };
+    console.error('Failed to fetch welcome prompts:', error);
+    throw error;
+  }
+};
+
+/**
+ * 发送评分反馈
+ * @param questions 问题数据数组
+ * @returns Promise<any>
+ */
+export const scoreFetch = async (
+  question: Question
+): Promise<any> => {
+  try {
+    const baseUrl = getApiBaseUrl();
+    const url = `${baseUrl}${AI_API_CONFIG.SCORE_FEEDBACK_ENDPOINT}`;
+    const reqData = { ...question };
+
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(reqData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (data && data.status === "success") {
+      return {
+        success: true,
+      };
+    } else {
+      throw new Error('Failed to send score feedback');
+    }
+  } catch (error) {
+    console.error('Score fetch error:', error);
+    throw error;
   }
 };
