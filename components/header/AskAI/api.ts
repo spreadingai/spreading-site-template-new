@@ -32,6 +32,8 @@ export interface StreamEvent {
   tool_name?: string;
   tool_args?: any;
   data?: any;
+  run_id?: string;
+  record_id?: string;
 }
 
 export interface RequestParams {
@@ -132,24 +134,45 @@ export const sendStreamRequest = async (
       for (const line of lines) {
         // 检查是否为JSON格式的事件（更精确的判断）
         const trimmedLine = line.trim();
-        if (trimmedLine.startsWith('{') && trimmedLine.endsWith('}')) {
-          try {
-            // 尝试解析JSON事件
-            const event: StreamEvent = JSON.parse(trimmedLine);
-            onEvent?.(event);
-
-            // 如果是消息内容事件，直接传递event.data（增量内容）
-            if (event.event_name === 'message' && typeof event.data === 'string') {
-              onMessage?.(event.data);
+        if (!trimmedLine) continue;
+        try {
+          // 解析后端JSON事件，并做一次规范化（event -> event_name）
+          const parsed: any = JSON.parse(trimmedLine);
+          const eventName = parsed.event || parsed.event_name || '';
+          const normalized: StreamEvent = {
+            event_name: eventName,
+            data: parsed.data,
+            run_id: parsed.run_id ? String(parsed.run_id) : undefined,
+            record_id: parsed.record_id ? String(parsed.record_id) : undefined,
+          };
+          // 兼容工具事件结构：扁平化 tool_name/tool_args，引用数组拍到顶层 data
+          const isToolEvent = eventName === 'ToolCallStarted' || eventName === 'ToolCallCompleted';
+          if (parsed.data && typeof parsed.data === 'object') {
+            normalized.tool_name = parsed.data.tool_name || parsed.data.name;
+            normalized.tool_args = parsed.data.tool_args || parsed.data.arguments;
+            if (isToolEvent && Array.isArray(parsed.data.data)) {
+              normalized.data = parsed.data.data;
             }
-          } catch (parseError) {
-            // JSON解析失败，当作普通Markdown文本处理，保留换行符
-            onMessage?.(line + '\n');
           }
-        } else {
-          // 非JSON格式的行，直接作为Markdown内容处理
+
+          // 分发事件
+          onEvent?.(normalized);
+
+          // 文本内容事件
+          if (
+            (normalized.event_name === 'RunResponseContent' || normalized.event_name === 'message') &&
+            typeof normalized.data === 'string'
+          ) {
+            onMessage?.(normalized.data);
+          }
+        } catch (parseError) {
           // 保留原始格式，包括空行和缩进，添加换行符
-          onMessage?.(line + '\n');
+          // onMessage?.(line + '\n');
+          if (trimmedLine.length > 0 && !trimmedLine.startsWith('{')) {
+            onMessage?.(trimmedLine);
+          } else {
+            console.warn('Failed to parse event:', trimmedLine, parseError);
+          }
         }
       }
     }
