@@ -11,13 +11,13 @@ import {
 import { Typography, Space, Spin } from 'antd';
 import { Markdown } from "@ant-design/pro-editor";
 // @ts-ignore
-import MarkdownIt from "markdown-it";
+// import MarkdownIt from "markdown-it";
 import Robot from "@/assets/icons/ai-search/Robot.svg";
 import EventStatus from './EventStatus';
 import outStyles from './MessageList.module.scss';
 import { fetchDefaultQuestions } from './api';
 
-const md = MarkdownIt({ html: true, breaks: true });
+// const md = MarkdownIt({ html: true, breaks: true });
 
 
 
@@ -31,13 +31,9 @@ const renderMessageFooter = (
     copyHandle: (message: Message) => void;
     scoreHandle: (e: React.MouseEvent<HTMLElement, MouseEvent>, message: Message, score: ScoreType) => void;
   },
-  isLoading: boolean = false,
   aiSearchData: any
 ) => {
   const { regenerateHandle, copyHandle, scoreHandle } = handlers;
-
-  // 检查按钮是否应该禁用
-  const isRegenerateDisabled = isLoading || !message.customID;
 
   // 处理参考来源数据 - 使用简单直接的方式
   const references = message.references || [];
@@ -82,12 +78,8 @@ const renderMessageFooter = (
       ) : null}
       <div className={`${outStyles["custom-chat-item-operation"]} custom-chat-item-operation`}>
         <SyncOutlined
-          className={`${outStyles["custom-chat-item-operation-btn"]} ${isRegenerateDisabled ? outStyles["disabled"] : ""}`}
+          className={`${outStyles["custom-chat-item-operation-btn"]}`}
           onClick={(e) => regenerateHandle(e, message)}
-          style={{
-            opacity: isRegenerateDisabled ? 0.3 : 0.6,
-            cursor: isRegenerateDisabled ? 'not-allowed' : 'pointer'
-          }}
         />
         <CopyOutlined
           className={outStyles["custom-chat-item-operation-btn"]}
@@ -368,17 +360,18 @@ const MessageList: React.FC<MessageListProps> = ({
 
   // Markdown渲染函数
   const renderMarkdown: BubbleProps["messageRender"] = (content) => {
-    return process.env.NODE_ENV === "development" ? (
-      <Typography>
-        <div
-          dangerouslySetInnerHTML={{
-            __html: md.render(content as string),
-          }}
-        />
-      </Typography>
-    ) : (
-      <Markdown>{content as string}</Markdown>
-    );
+    // return process.env.NODE_ENV !== "development" ? (
+    //   <Typography>
+    //     <div
+    //       dangerouslySetInnerHTML={{
+    //         __html: md.render(content as string),
+    //       }}
+    //     />
+    //   </Typography>
+    // ) : (
+    //   <Markdown>{content as string}</Markdown>
+    // );
+    return <Markdown>{content as string}</Markdown>;
   };
   const roles = {
     assistant: {
@@ -508,7 +501,7 @@ const MessageList: React.FC<MessageListProps> = ({
           regenerateHandle,
           copyHandle,
           scoreHandle
-        }, isLoading, aiSearchData);
+        }, aiSearchData);
       }
     }
 
