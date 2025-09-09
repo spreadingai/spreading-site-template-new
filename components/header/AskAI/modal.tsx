@@ -2,7 +2,8 @@ import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { Modal, message } from 'antd';
 import { ThemeProvider } from 'antd-style';
 import { ReloadOutlined } from '@ant-design/icons';
-import MessageList, { Message, Reference, scoreFetch, Question, ScoreType } from './MessageList';
+import MessageList, { Message } from './MessageList';
+import { scoreFetch, Question, ScoreType, Reference } from './api';
 import MessageSender from './MessageSender';
 import { sendStreamRequest, parseProductName, parsePlatformName, StreamEvent } from './api';
 import { generateSessionId, generateUUID } from './utils';
@@ -121,28 +122,6 @@ const AskAIModal: React.FC<Props> = ({
     };
   }, []);
 
-  // 自动插入评分记录（仿照 modal-new.tsx 的 autoInsertHandle）
-  const autoInsertHandle = useCallback((messageId: string, aiMessage: Message, userQuestion: string) => {
-    console.log('autoInsertHandle', messageId, sessionId, currentGroup, currentPlatform);
-
-    // 直接使用传入的参数，避免依赖异步更新的 messages 状态
-    if (!aiMessage.customID) return;
-
-    // 构建评分数据
-    const questionData: Question = {
-      answerID: messageId,
-      question: userQuestion,
-      score: ScoreType.ZERO, // 初始化为未评分状态
-      answer: aiMessage.content,
-    };
-
-    // 使用 MessageList 的 scoreFetch 函数
-    scoreFetch(currentGroup, currentPlatform, sessionId, [questionData])
-      .catch((error) => {
-        console.log("auto insert error", error);
-      });
-  }, [sessionId, currentGroup, currentPlatform]);
-
   const handleSendMessage = useCallback(async (content: string) => {
     if (isLoading) return;
 
@@ -169,8 +148,6 @@ const AskAIModal: React.FC<Props> = ({
     };
 
     currentMessageRef.current = aiMessage;
-    // 保存用户问题内容到 currentMessageRef，用于后续的 autoInsertHandle
-    (currentMessageRef.current as any).userQuestion = content;
     setStreamingMessageId(aiMessage.id); // 设置当前流式消息ID
     setMessages(prev => [...prev, aiMessage]);
 
@@ -288,14 +265,6 @@ const AskAIModal: React.FC<Props> = ({
                     : msg
                 )
               );
-
-              // 自动插入评分记录（仿照 modal-new.tsx）
-              autoInsertHandle(
-                currentMessageRef.current.id,
-                currentMessageRef.current,
-                (currentMessageRef.current as any).userQuestion
-              );
-
               // 消息完成后调用样式更新函数 - 与 modal-new.tsx 保持一致
               updateFooterStyle();
               updateATagAttr();
@@ -320,7 +289,7 @@ const AskAIModal: React.FC<Props> = ({
         );
       }
     }
-  }, [isLoading, sessionId, currentGroup, currentPlatform, messageApi, autoInsertHandle, updateFooterStyle, updateATagAttr]);
+  }, [isLoading, sessionId, currentGroup, currentPlatform, messageApi, updateFooterStyle, updateATagAttr]);
 
   const cancelHandle = () => {
     onCloseHandle();
@@ -356,10 +325,10 @@ const AskAIModal: React.FC<Props> = ({
               isLoading={isLoading}
               setMessages={setMessages}
               onRequest={handleSendMessage}
-              sessionId={sessionId}
               aiSearchData={aiSearchData}
               currentGroup={currentGroup}
               currentPlatform={currentPlatform}
+              currentLanguage={currentLanguage}
             />
 
             {/* 输入框区域 - 与 modal-new.tsx 结构一致 */}

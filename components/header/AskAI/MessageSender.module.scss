@@ -32,9 +32,9 @@
     opacity: 0.6;
     padding-left: 2px;
     &:hover {
-      background: var(--docuo-ai-search-operate-btn-bg-hover);
+      background: var(--docuo-ai-search-operate-btn-bg-hover)!important;
       opacity: 1;
-      color: var(--docuo-text-color);
+      color: var(--docuo-text-color)!important;
       border-radius: 4px;
     }
   }

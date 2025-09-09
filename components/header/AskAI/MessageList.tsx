@@ -15,7 +15,7 @@ import { Markdown } from "@ant-design/pro-editor";
 import Robot from "@/assets/icons/ai-search/Robot.svg";
 import EventStatus from './EventStatus';
 import outStyles from './MessageList.module.scss';
-import { fetchDefaultQuestions } from './api';
+import { fetchWelcomePrompts, WelcomePromptsRequest, scoreFetch, ScoreType, Reference, Question } from './api';
 
 // const md = MarkdownIt({ html: true, breaks: true });
 
@@ -87,21 +87,18 @@ const renderMessageFooter = (
         />
         <LikeOutlined
           className={outStyles["custom-chat-item-operation-btn"]}
-          onClick={(e) => scoreHandle(e, message, ScoreType.FIVE)}
+          onClick={(e) => scoreHandle(e, message, ScoreType.ONE)}
         />
         <DislikeOutlined
           className={outStyles["custom-chat-item-operation-btn"]}
-          onClick={(e) => scoreHandle(e, message, ScoreType.ONE)}
+          onClick={(e) => scoreHandle(e, message, ScoreType.TWO)}
         />
       </div>
     </>
   );
 };
 
-export interface Reference {
-  title: string;
-  url: string;
-}
+
 
 export interface Message {
   id: string;
@@ -119,68 +116,14 @@ export interface Message {
   customID?: string; // 用于关联 customIDMap 的唯一标识
 }
 
-// 复制 modal-new.tsx 的类型定义
-export enum ScoreType {
-  ZERO = "0",
-  ONE = "1",
-  TWO = "2",
-  THREE = "3",
-  FOUR = "4",
-  FIVE = "5",
-}
-
-export interface Question {
-  answerID: string; // 对应问题答案的唯一标识，必填
-  question: string; // 询问的问题，必填
-  formData?: any; // 文件类型下的传输内容，可选，预留
-  type?: string; // 输入内容类型，可选
-  score?: ScoreType; // 评分，可选，枚举值 0：未评分、1-5：好评等级，默认 0
-  answer?: string; // 回答，可选，预留
-}
-
 // 仿照 modal-new.tsx 的 AnswerData 结构
 export interface AnswerData {
   id: string;
-  answer: string;
   question: string; // 原始用户问题
-  session_id?: string;
-  references?: Reference[];
   score?: ScoreType; // 使用 ScoreType 枚举
 }
 
-// 复制 modal-new.tsx 的 scoreFetch 函数
-export const scoreFetch = (
-  product: string,
-  platform: string,
-  sessionID: string,
-  questions: Question[]
-) => {
-  // 这里需要根据实际的 API 端点调整
-  const baseURL = process.env.NODE_ENV === 'production'
-    ? 'http://47.79.19.129:8000'
-    : 'http://localhost:8000';
-  const url = `${baseURL}/api/v1/feedback/search`;
-  const reqData = { product, platform, sessionID, questions };
 
-  return fetch(url, {
-    method: "post",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(reqData),
-  })
-    .then((res) => {
-      if (res.ok) {
-        return Promise.resolve(res);
-      } else {
-        const { status, statusText } = res;
-        return Promise.reject(`status: ${status}, statusText: ${statusText}`);
-      }
-    })
-    .then((_res) => {
-      return _res.body;
-    });
-};
 
 export interface MessageListProps {
   messages: Message[];
@@ -190,11 +133,11 @@ export interface MessageListProps {
   // 仿照 modal-new.tsx，需要传入必要的状态管理函数
   setMessages: React.Dispatch<React.SetStateAction<Message[]>>;
   onRequest: (content: string) => void; // 重新发送消息的函数
-  sessionId?: string; // 会话ID，用于存储到 customIDMap
   aiSearchData: any;
   // 添加评分需要的参数
-  currentGroup?: string;
-  currentPlatform?: string;
+  currentGroup: string;
+  currentPlatform: string;
+  currentLanguage: string;
 }
 
 const MessageList: React.FC<MessageListProps> = ({
@@ -204,10 +147,10 @@ const MessageList: React.FC<MessageListProps> = ({
   isLoading = false,
   setMessages,
   onRequest,
-  sessionId,
   aiSearchData,
   currentGroup,
-  currentPlatform
+  currentPlatform,
+  currentLanguage
 }) => {
   // 仿照 modal-new.tsx 的 customIDMap 实现
   const customIDMap = useRef<Record<string, AnswerData>>({});
@@ -217,14 +160,23 @@ const MessageList: React.FC<MessageListProps> = ({
 
   // 组件挂载时获取默认问题
   useEffect(() => {
-    fetchDefaultQuestions({
-      group: currentGroup,
-      platform: currentPlatform,
-    }).then((res)=>{
-      const { questions } = res;
-      setDefaultQuestions(questions);
-    });
-  }, [currentGroup, currentPlatform]);
+    const fetchPrompts = async () => {
+      try {
+        const params: WelcomePromptsRequest = {
+          product: currentGroup,
+          platform: currentPlatform,
+          language: currentLanguage
+        };
+
+        const response = await fetchWelcomePrompts(params);
+        setDefaultQuestions(response.data.prompts);
+      } catch (error) {
+        console.error('Failed to fetch welcome prompts:', error);
+      }
+    };
+
+    fetchPrompts();
+  }, [currentGroup, currentLanguage, currentPlatform]);
 
   // 复制 modal-new.tsx 的 updateScoreStyle 函数
   const updateScoreStyle = useCallback(
@@ -269,17 +221,14 @@ const MessageList: React.FC<MessageListProps> = ({
           if (userMessage && userMessage.role === 'user') {
             customIDMap.current[message.customID] = {
               id: message.id,
-              answer: message.content,
               question: userMessage.content,
-              session_id: sessionId, // 添加 session_id
-              references: message.references || [],
             };
           }
         }
       }
     });
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [messages, sessionId]);
+  }, [messages]);
 
   // 重新生成处理函数（完全仿照 modal-new.tsx）
   const regenerateHandle = useCallback(
@@ -332,30 +281,26 @@ const MessageList: React.FC<MessageListProps> = ({
       // 1. 先更新本地样式
       updateScoreStyle(e);
 
-      const { id, answer } = answerData;
+      const { id } = answerData;
       const oldScore = answerData.score;
       const targetScore = answerData.score === score ? ScoreType.ZERO : score;
 
       const questionData: Question = {
-        answerID: id,
-        question: answerData.question,
-        score: targetScore || ScoreType.ZERO,
-        answer: answer,
+        run_id: id,
+        vote: targetScore || ScoreType.ZERO,
       };
 
       // 2. 更新本地数据
       answerData.score = score;
 
       // 3. 发送请求，失败了就回退
-      scoreFetch(currentGroup, currentPlatform, sessionId || '', [
-        questionData,
-      ]).catch((error) => {
+      scoreFetch(questionData).catch((error) => {
         console.log("scoreFetch error", error);
         // 回退本地数据
         answerData.score = oldScore;
       });
     },
-    [currentGroup, currentPlatform, sessionId, updateScoreStyle]
+    [updateScoreStyle]
   );
 
   // Markdown渲染函数
