@@ -184,26 +184,41 @@ const AskAIModal: React.FC<Props> = ({
         },
         {
           onEvent: (event: StreamEvent) => {
-            // 更新当前AI消息的事件信息
-            if (currentMessageRef.current) {
-              currentMessageRef.current.eventInfo = {
-                eventName: event.event_name,
-                toolName: event.tool_name,
-                toolArgs: event.tool_args,
-                isLoading: event.event_name !== 'ToolCallCompleted',
-              };
-
-              // 更新消息列表中的事件信息
-              setMessages(prev =>
-                prev.map(msg =>
-                  msg.id === currentMessageRef.current?.id
-                    ? { ...msg, eventInfo: currentMessageRef.current.eventInfo }
-                    : msg
-                )
-              );
+            // RunMeta：用 run_id 覆盖 AI 消息 id
+            if (event.event_name === 'RunMeta' && event.run_id && currentMessageRef.current) {
+              console.log('RunMeta>>>>>>>>>>>>>>>>>', event);
+              const oldId = currentMessageRef.current.id;
+              const newId = String(event.run_id);
+              if (oldId !== newId) {
+                currentMessageRef.current.id = newId;
+                setStreamingMessageId(newId);
+                setMessages(prev => prev.map(msg => (msg.id === oldId ? { ...msg, id: newId } : msg)));
+              }
             }
 
-            // 处理不同事件
+            // 仅在工具事件时更新事件头，避免被非工具事件覆盖导致闪烁
+            if (
+              event.event_name === 'ToolCallStarted' ||
+              event.event_name === 'ToolCallCompleted'
+            ) {
+              if (currentMessageRef.current) {
+                currentMessageRef.current.eventInfo = {
+                  eventName: event.event_name,
+                  toolName: event.tool_name,
+                  toolArgs: event.tool_args,
+                  isLoading: event.event_name === 'ToolCallStarted',
+                };
+                setMessages(prev =>
+                  prev.map(msg =>
+                    msg.id === currentMessageRef.current?.id
+                      ? { ...msg, eventInfo: currentMessageRef.current.eventInfo }
+                      : msg
+                  )
+                );
+              }
+            }
+
+            // 处理搜索完成事件，添加引用数据（api.ts 已拍平 data）
             if (event.event_name === 'ToolCallCompleted' && event.tool_name === 'search_knowledge_base') {
               // 处理搜索完成事件，将引用数据关联到当前AI消息
               if (event.data && Array.isArray(event.data) && currentMessageRef.current) {
