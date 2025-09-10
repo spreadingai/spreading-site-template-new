@@ -438,7 +438,7 @@ const MessageList: React.FC<MessageListProps> = ({
       key: message.id,
       content: message.content,
       role: message.role,
-      loading: !message.content || message.status === 'loading',
+      loading: (!message.content && !message.eventInfo) || (message.status === 'loading' && !message.eventInfo),
     };
 
     // 为assistant消息添加事件状态header
