@@ -43,6 +43,7 @@
   }
   .customBubbleFooter {
     width: 100%;
+    margin-top: 0;
   }
 
   // 文档聚合样式 - 与 modal-new.tsx 完全一致
@@ -259,6 +260,43 @@
     }
     .welcomeDescription {
       font-size: 17px;
+    }
+  }
+}
+
+// 骨架屏样式
+.skeletonContainer {
+  width: 100%;
+  margin-top: 16px;
+}
+
+.skeletonTitle {
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.skeletonQuestions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeletonQuestion {
+  display: flex;
+  justify-content: flex-start;
+
+  :global(.ant-skeleton-input) {
+    background: var(--docuo-background-secondary, #f5f5f5) !important;
+    border-radius: 16px !important;
+
+    &::after {
+      background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.6),
+        transparent
+      ) !important;
     }
   }
 }

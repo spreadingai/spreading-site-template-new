@@ -8,7 +8,7 @@ import {
   DislikeOutlined,
   CommentOutlined
 } from '@ant-design/icons';
-import { Typography, Space, Spin } from 'antd';
+import { Space, Spin, Skeleton } from 'antd';
 import { Markdown } from "@ant-design/pro-editor";
 // @ts-ignore
 // import MarkdownIt from "markdown-it";
@@ -37,7 +37,6 @@ const renderMessageFooter = (
 
   // 处理参考来源数据 - 使用简单直接的方式
   const references = message.references || [];
-  console.log('references:', references);
 
   // 去重处理
   const uniqueReferences = references.filter((ref, index, arr) =>
@@ -157,11 +156,14 @@ const MessageList: React.FC<MessageListProps> = ({
 
   // 默认问题状态
   const [defaultQuestions, setDefaultQuestions] = useState<string[]>([]);
+  const [isLoadingQuestions, setIsLoadingQuestions] = useState<boolean>(true);
 
   // 组件挂载时获取默认问题
   useEffect(() => {
     const fetchPrompts = async () => {
       try {
+        setIsLoadingQuestions(true);
+
         const params: WelcomePromptsRequest = {
           product: currentGroup,
           platform: currentPlatform,
@@ -172,6 +174,9 @@ const MessageList: React.FC<MessageListProps> = ({
         setDefaultQuestions(response.data.prompts);
       } catch (error) {
         console.error('Failed to fetch welcome prompts:', error);
+        setDefaultQuestions([]);
+      } finally {
+        setIsLoadingQuestions(false);
       }
     };
 
@@ -213,7 +218,7 @@ const MessageList: React.FC<MessageListProps> = ({
     messages.forEach(message => {
       if (message.role === 'assistant' && message.customID && message.content) {
         // 如果消息已完成且有内容，存储到 customIDMap
-        if (message.status === 'complete' && !customIDMap.current[message.customID]) {
+        if ((message.status === 'complete' || message.status === 'error') && !customIDMap.current[message.customID]) {
           // 找到对应的用户问题
           const messageIndex = messages.findIndex(msg => msg.id === message.id);
           const userMessage = messageIndex > 0 ? messages[messageIndex - 1] : null;
@@ -377,7 +382,29 @@ const MessageList: React.FC<MessageListProps> = ({
           description: outStyles.welcomeDescription,
         }}
       />
-      {defaultQuestions.length ? (
+      {isLoadingQuestions ? (
+        // 显示骨架屏
+        <div className={outStyles.skeletonContainer}>
+          <div className={outStyles.skeletonTitle}>
+            <Skeleton.Input active size="small" style={{ width: 100, height: 20 }} />
+          </div>
+          <div className={outStyles.skeletonQuestions}>
+            {Array.from({ length: 3 }, (_, index) => (
+              <div key={index} className={outStyles.skeletonQuestion}>
+                <Skeleton.Input
+                  active
+                  size="default"
+                  style={{
+                    width: `${Math.random() * 100 + 150}px`,
+                    height: 32,
+                    borderRadius: 16
+                  }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      ) : defaultQuestions.length ? (
         <Prompts
           title={aiSearchData?.guessText}
           items={placeholderPromptsItems}
@@ -411,7 +438,7 @@ const MessageList: React.FC<MessageListProps> = ({
       key: message.id,
       content: message.content,
       role: message.role,
-      loading: !message.content,
+      loading: !message.content || message.status === 'loading',
     };
 
     // 为assistant消息添加事件状态header
@@ -435,10 +462,10 @@ const MessageList: React.FC<MessageListProps> = ({
     // 为assistant消息添加footer（参考 modal-new.tsx 的判断逻辑）
     if (message.role === 'assistant') {
       // 判断是否显示 footer：
-      // 1. 如果有 status 字段，只有 success/complete 状态才显示
+      // 1. 如果有 status 字段，只有 success/complete/error 状态才显示
       // 2. 如果没有 status 字段，但消息有内容且不在加载中，则显示
       const shouldShowFooter = message.status
-        ? (message.status === 'success' || message.status === 'complete')
+        ? (message.status === 'success' || message.status === 'complete' || message.status === 'error')
         : (message.content && !message.eventInfo?.isLoading && streamingMessageId !== message.id);
 
       if (shouldShowFooter) {
