@@ -39,15 +39,15 @@ function setQueryParams(postman: sdk.Request, queryParams: Param[]) {
         qp.push(
           new sdk.QueryParam({
             key: `${param.name}[]`,
-            value: v,
+            value: String(v),
           })
         );
       });
       return;
     }
 
-    // Parameter allows empty value: "/hello?extended"
-    if (param.allowEmptyValue) {
+    // Parameter allows empty value: only meaningful for boolean flags
+    if (param.allowEmptyValue && param.schema?.type === "boolean") {
       if (param.value === "true") {
         qp.push(
           new sdk.QueryParam({
@@ -62,7 +62,7 @@ function setQueryParams(postman: sdk.Request, queryParams: Param[]) {
     qp.push(
       new sdk.QueryParam({
         key: param.name,
-        value: param.value,
+        value: String(param.value),
       })
     );
   });
