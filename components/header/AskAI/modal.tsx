@@ -3,7 +3,7 @@ import { Modal, message } from 'antd';
 import { ThemeProvider } from 'antd-style';
 import { ReloadOutlined } from '@ant-design/icons';
 import MessageList, { Message } from './MessageList';
-import { scoreFetch, Question, ScoreType, Reference } from './api';
+import { Reference } from './api';
 import MessageSender from './MessageSender';
 import { sendStreamRequest, parseProductName, parsePlatformName, StreamEvent } from './api';
 import { generateSessionId, generateUUID } from './utils';
@@ -237,7 +237,7 @@ const AskAIModal: React.FC<Props> = ({
           },
           onError: (error: Error) => {
             console.error('Stream request error:', error);
-            messageApi.error('请求失败，请稍后重试');
+            // messageApi.error('请求失败，请稍后重试');
             setIsLoading(false);
             setStreamingMessageId(''); // 清除流式消息ID
 
@@ -246,10 +246,13 @@ const AskAIModal: React.FC<Props> = ({
               setMessages(prev =>
                 prev.map(msg =>
                   msg.id === currentMessageRef.current?.id
-                    ? { ...msg, status: 'error' }
+                    ? { ...msg, status: 'error', content: msg.content || aiSearchData.unableToReply }
                     : msg
                 )
               );
+              // 消息完成后调用样式更新函数 - 与 modal-new.tsx 保持一致
+              updateFooterStyle();
+              updateATagAttr();
             }
           },
           onComplete: () => {
