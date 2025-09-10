@@ -25,8 +25,8 @@ const getApiBaseUrl = (): string => {
   if (process.env.NODE_ENV === 'production') {
     return AI_API_CONFIG.SERVERS.PRODUCTION;
   }
-  // return AI_API_CONFIG.SERVERS.DEVELOPMENT;
-  return AI_API_CONFIG.SERVERS.PRODUCTION;
+  return AI_API_CONFIG.SERVERS.DEVELOPMENT;
+  // return AI_API_CONFIG.SERVERS.PRODUCTION;
 };
 
 export interface StreamEvent {
