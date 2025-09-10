@@ -27,36 +27,45 @@ type Param = {
 function setQueryParams(postman: sdk.Request, queryParams: Param[]) {
   postman.url.query.clear();
 
-  const qp = queryParams
-    .map((param) => {
-      if (!param.value) {
-        return undefined;
-      }
+  const qp: sdk.QueryParam[] = [];
+  queryParams.forEach((param) => {
+    if (param.value === undefined || param.value === null) {
+      return;
+    }
 
-      if (Array.isArray(param.value)) {
-        return new sdk.QueryParam({
-          key: param.name,
-          value: param.value.join(","),
-        });
-      }
+    // 数组参数采用 bracket 风格：name[]=v1&name[]=v2
+    if (Array.isArray(param.value)) {
+      param.value.forEach((v) => {
+        qp.push(
+          new sdk.QueryParam({
+            key: `${param.name}[]`,
+            value: v,
+          })
+        );
+      });
+      return;
+    }
 
-      // Parameter allows empty value: "/hello?extended"
-      if (param.allowEmptyValue) {
-        if (param.value === "true") {
-          return new sdk.QueryParam({
+    // Parameter allows empty value: "/hello?extended"
+    if (param.allowEmptyValue) {
+      if (param.value === "true") {
+        qp.push(
+          new sdk.QueryParam({
             key: param.name,
             value: null,
-          });
-        }
-        return undefined;
+          })
+        );
       }
+      return;
+    }
 
-      return new sdk.QueryParam({
+    qp.push(
+      new sdk.QueryParam({
         key: param.name,
         value: param.value,
-      });
-    })
-    .filter((item): item is sdk.QueryParam => item !== undefined);
+      })
+    );
+  });
 
   if (qp.length > 0) {
     postman.addQueryParams(qp);
