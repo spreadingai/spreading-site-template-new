@@ -131,9 +131,28 @@ export default function ApiItem(props: Props): JSX.Element {
           arr.map((p: any) => {
             const key = `${type}:${p.name}`;
             const val = map[key];
-            return val !== undefined ? { ...p, value: val } : p;
+            if (val === undefined) return p;
+
+            const isArrayType = p?.schema?.type === "array";
+            try {
+              if (isArrayType) {
+                if (Array.isArray(val)) {
+                  return { ...p, value: val.map((v: any) => String(v)) };
+                } else {
+                  return { ...p, value: [String(val)] };
+                }
+              } else {
+                if (Array.isArray(val)) {
+                  return { ...p, value: String(val[0]) };
+                } else {
+                  return { ...p, value: String(val) };
+                }
+              }
+            } catch {
+              return p;
+            }
           });
-        // 仅在存在对应键时赋值
+        // 仅在存在对应键时赋值，并在类型不一致时进行安全转换
         params.path = applyValues(params.path, "path") as any;
         params.query = applyValues(params.query, "query") as any;
         params.header = applyValues(params.header, "header") as any;
