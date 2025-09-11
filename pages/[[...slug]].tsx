@@ -60,7 +60,8 @@ import dynamic from "next/dynamic";
 
 // 动态导入 Mermaid 组件，禁用 SSR
 const MermaidComponent = dynamic(
-  () => import("mdx-mermaid/lib/Mermaid").then((mod) => ({ default: mod.Mermaid })),
+  () =>
+    import("mdx-mermaid/lib/Mermaid").then((mod) => ({ default: mod.Mermaid })),
   { ssr: false }
 );
 
@@ -100,11 +101,9 @@ const components = {
       <Link {...props} />
     ),
   mermaid: (props: any) => {
-    console.log('Mermaid props:', props);
     return <MermaidComponent {...props} config={{ theme: "default" }} />;
   },
   Mermaid: (props: any) => {
-    console.log('Mermaid props:', props);
     return <MermaidComponent {...props} config={{ theme: "default" }} />;
   },
   MethodEndpoint,
@@ -127,8 +126,8 @@ const components = {
 function optimizeDocuoConfig(fullConfig: any, currentLanguage: string) {
   if (!fullConfig) return fullConfig;
 
-  const navbarKey = currentLanguage === 'zh' ? 'navbar.zh' : 'navbar';
-  const footerKey = currentLanguage === 'zh' ? 'footer.zh' : 'footer';
+  const navbarKey = currentLanguage === "zh" ? "navbar.zh" : "navbar";
+  const footerKey = currentLanguage === "zh" ? "footer.zh" : "footer";
 
   // 构建优化后的配置，过滤掉undefined值
   const optimizedConfig: any = {
@@ -140,7 +139,8 @@ function optimizeDocuoConfig(fullConfig: any, currentLanguage: string) {
 
   // 只添加非undefined的themeConfig属性
   if (fullConfig.themeConfig?.removeWatermark !== undefined) {
-    optimizedConfig.themeConfig.removeWatermark = fullConfig.themeConfig.removeWatermark;
+    optimizedConfig.themeConfig.removeWatermark =
+      fullConfig.themeConfig.removeWatermark;
   }
   if (fullConfig.themeConfig?.colors !== undefined) {
     optimizedConfig.themeConfig.colors = fullConfig.themeConfig.colors;
@@ -153,10 +153,12 @@ function optimizeDocuoConfig(fullConfig: any, currentLanguage: string) {
     optimizedConfig.themeConfig.api = fullConfig.themeConfig.api;
   }
   if (fullConfig.themeConfig?.[navbarKey] || fullConfig.themeConfig?.navbar) {
-    optimizedConfig.themeConfig.navbar = fullConfig.themeConfig?.[navbarKey] || fullConfig.themeConfig?.navbar;
+    optimizedConfig.themeConfig.navbar =
+      fullConfig.themeConfig?.[navbarKey] || fullConfig.themeConfig?.navbar;
   }
   if (fullConfig.themeConfig?.[footerKey] || fullConfig.themeConfig?.footer) {
-    optimizedConfig.themeConfig.footer = fullConfig.themeConfig?.[footerKey] || fullConfig.themeConfig?.footer;
+    optimizedConfig.themeConfig.footer =
+      fullConfig.themeConfig?.[footerKey] || fullConfig.themeConfig?.footer;
   }
   if (fullConfig.themeConfig?.showAskAI !== undefined) {
     optimizedConfig.themeConfig.showAskAI = fullConfig.themeConfig.showAskAI;
@@ -171,30 +173,35 @@ function optimizeDocuoConfig(fullConfig: any, currentLanguage: string) {
 }
 
 // 优化displayInstances，只保留当前产品组的实例
-function optimizeDisplayInstances(instances: any[], currentLanguage: string, currentGroupId?: string) {
+function optimizeDisplayInstances(
+  instances: any[],
+  currentLanguage: string,
+  currentGroupId?: string
+) {
   if (!instances || !Array.isArray(instances)) return instances;
 
   // 去重：基于instance.id去重
-  const uniqueInstances = instances.filter((item, index, self) =>
-    index === self.findIndex(t => t.instance?.id === item.instance?.id)
+  const uniqueInstances = instances.filter(
+    (item, index, self) =>
+      index === self.findIndex((t) => t.instance?.id === item.instance?.id)
   );
 
   // 只保留当前语言或无语言设置的实例
   // 如果没有locale，默认为英语(en)
-  const languageFilteredInstances = uniqueInstances.filter(item => {
-    const instanceLocale = item.instance?.locale || 'en';
+  const languageFilteredInstances = uniqueInstances.filter((item) => {
+    const instanceLocale = item.instance?.locale || "en";
     return instanceLocale === currentLanguage;
   });
 
   // 如果有currentGroupId，只保留同一个产品组的实例
   const groupFilteredInstances = currentGroupId
-    ? languageFilteredInstances.filter(item => {
+    ? languageFilteredInstances.filter((item) => {
         return item.instance?.navigationInfo?.group?.id === currentGroupId;
       })
     : languageFilteredInstances;
 
   // 只保留必要的属性，减少数据传输
-  return groupFilteredInstances.map(item => ({
+  return groupFilteredInstances.map((item) => ({
     instance: {
       id: item.instance.id,
       label: item.instance.label,
@@ -209,8 +216,6 @@ function optimizeDisplayInstances(instances: any[], currentLanguage: string, cur
     defaultLink: item.defaultLink,
   }));
 }
-
-
 
 interface Props {
   mdxSource: any;
@@ -250,7 +255,9 @@ export const getStaticProps = async ({ params }: SlugData) => {
 
   // 如果slug无效，返回404
   if (!isValidSlug) {
-    console.warn(`[getStaticProps] Invalid slug detected: ${currentSlugPath}, redirecting to 404`);
+    console.warn(
+      `[getStaticProps] Invalid slug detected: ${currentSlugPath}, redirecting to 404`
+    );
     return {
       notFound: true,
     };
@@ -297,7 +304,11 @@ export const getStaticProps = async ({ params }: SlugData) => {
   // 应用优化
   const docuoConfig = optimizeDocuoConfig(fullDocuoConfig, currentLanguage);
   // 只保留当前产品组的实例，大幅减少数据传输
-  const displayInstances = optimizeDisplayInstances(fullDisplayInstances, currentLanguage, currentGroup);
+  const displayInstances = optimizeDisplayInstances(
+    fullDisplayInstances,
+    currentLanguage,
+    currentGroup
+  );
 
   return {
     props: {
