@@ -196,6 +196,40 @@ class DocsController {
       mdxFileUrl
     );
 
+    // 合并“壳页 import 的 MDX”的 frontmatter（仅在本页缺失关键字段时）
+    try {
+      const needApi = !mdxSource.frontmatter?.api;
+      const needInfoPath = !mdxSource.frontmatter?.info_path;
+      if (needApi || needInfoPath) {
+        // 匹配单个形如：import X from '/{any}/{path}.mdx'
+        const importMatch = originContent.match(/\bimport\s+\w+\s+from\s+["']\/(.+?\.mdx)["']/);
+        if (importMatch && importMatch[1]) {
+          const importedRel = importMatch[1].replace(/^\/+/, "");
+          // 以站点 docs 根目录为基准：ENTITY_ROOT_DIRECTORY
+          const docsRoot = path.resolve(ENTITY_ROOT_DIRECTORY);
+          const importedAbs = path.join(docsRoot, importedRel);
+          if (fs.existsSync(importedAbs)) {
+            const importedContent = fs.readFileSync(importedAbs, "utf8");
+            const fmMatch = importedContent.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/m);
+            if (fmMatch && fmMatch[1]) {
+              const fmText = fmMatch[1];
+              const apiMatch = fmText.match(/^\s*api:\s*([^\n\r#]+)/m);
+              const infoMatch = fmText.match(/^\s*info_path:\s*([^\n\r#]+)/m);
+              const sanitize = (v?: string) => v?.trim().replace(/^("|')|("|')$/g, "");
+              if (needApi && apiMatch && apiMatch[1]) {
+                mdxSource.frontmatter.api = sanitize(apiMatch[1]);
+              }
+              if (needInfoPath && infoMatch && infoMatch[1]) {
+                mdxSource.frontmatter.info_path = sanitize(infoMatch[1]);
+              }
+            }
+          }
+        }
+      }
+    } catch (err) {
+      console.warn("[DocsController] merge imported frontmatter failed", err);
+    }
+
     // console.time("count transShortLink");
     if (mdxSource.frontmatter && mdxSource.frontmatter.articleID) {
       const result = await ShortLinkTransControllerImpl.replaceApiShortLink(
