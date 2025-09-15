@@ -191,8 +191,26 @@ async function makeRequest(
 
   let finalUrl = request.url.toString();
   if (proxy) {
+    const basePathRaw = process.env.NEXT_PUBLIC_BASE_PATH || "";
+    const isAbsolute = /^https?:\/\//i.test(proxy);
+
+    // Remove trailing slash from proxy for normalization
+    let normalizedProxy = proxy.replace(/\/$/, "");
+
+    if (!isAbsolute) {
+      // Only prefix basePath for relative proxy paths
+      let basePath = basePathRaw.trim();
+      if (basePath) {
+        if (!basePath.startsWith("/")) basePath = "/" + basePath;
+        if (basePath.endsWith("/")) basePath = basePath.slice(0, -1);
+      }
+      if (!normalizedProxy.startsWith("/")) normalizedProxy = "/" + normalizedProxy;
+      normalizedProxy = (basePath || "") + normalizedProxy;
+    }
+
     // Ensure the proxy ends with a slash.
-    let normalizedProxy = proxy.replace(/\/$/, "") + "/";
+    normalizedProxy += "/";
+
     // Encode full target URL to avoid Next.js path normalization issues (e.g., https:// -> https:/)
     const encodedTarget = encodeURIComponent(request.url.toString());
     finalUrl = normalizedProxy + encodedTarget;
