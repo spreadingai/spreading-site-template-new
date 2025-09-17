@@ -6,7 +6,7 @@
  * ========================================================================== */
 
 import React, { isValidElement } from "react";
-import { Code } from "@spreading/docuo-mdx-component";
+import { Code } from "@/components/mdx";
 // import ElementContent from "@/components/docuoOpenapi/theme/ApiExplorer/ApiCodeBlock/Content/Element";
 // import StringContent from "@/components/docuoOpenapi/theme/ApiExplorer/ApiCodeBlock/Content/String";
 /**
