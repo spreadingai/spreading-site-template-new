@@ -1,4 +1,5 @@
-import React, { useEffect, useLayoutEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
+import { useIsomorphicLayoutEffect } from "@/components/docuoOpenapi/theme-common/src/utils/reactUtils";
 import styles from "./index.module.scss";
 
 interface Props {
@@ -73,8 +74,8 @@ export const DocuoTabs = (props: Props) => {
     return () => clearTimeout(timer);
   }, [children]);
 
-  // 使用useLayoutEffect在DOM布局完成后触发TOC更新
-  useLayoutEffect(() => {
+  // 使用useIsomorphicLayoutEffect在DOM布局完成后触发TOC更新，避免SSR警告
+  useIsomorphicLayoutEffect(() => {
     // 在DOM布局完成后立即触发TOC更新
     if (typeof document !== 'undefined' && typeof window !== 'undefined') {
       document.dispatchEvent(new CustomEvent('toc-update'));
