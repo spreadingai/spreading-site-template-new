@@ -19,7 +19,7 @@ import {
   Steps,
   QRCode,
   LastUpdated,
-} from "@spreading/docuo-mdx-component";
+} from "@/components/mdx";
 
 import LibControllerImpl from "@/lib";
 import DocsControllerImpl from "@/lib/docs-help";
@@ -72,7 +72,7 @@ const MDX_GLOBAL_CONFIG = {
   },
 };
 
-const _ApiMethod = require("@/components/api/ApiMethod").default;
+const _ApiMethod = require("@/components/mdx/api/ApiMethod").default;
 
 const components = {
   Code,
@@ -125,19 +125,19 @@ const components = {
   Export,
   // Newly added basic API building blocks
   ApiMethod: _ApiMethod,
-  ApiProperty: require("@/components/api/ApiProperty").default,
-  ApiEnum: require("@/components/api/ApiEnum").default,
+  ApiProperty: require("@/components/mdx/api/ApiProperty").default,
+  ApiEnum: require("@/components/mdx/api/ApiEnum").default,
 
 
 
-  ApiClass: require("@/components/api/ApiClass").default,
-  ApiInterface: require("@/components/api/ApiInterface").default,
-  ApiTypeAlias: require("@/components/api/ApiTypeAlias").default,
-  ApiConst: require("@/components/api/ApiConst").default,
-  ApiErrorCode: require("@/components/api/ApiErrorCode").default,
-  ApiNamespace: require("@/components/api/ApiNamespace").default,
-  ApiMacroGuard: require("@/components/api/ApiMacroGuard").default,
-  ApiDelegate: require("@/components/api/ApiDelegate").default,
+  ApiClass: require("@/components/mdx/api/ApiClass").default,
+  ApiInterface: require("@/components/mdx/api/ApiInterface").default,
+  ApiTypeAlias: require("@/components/mdx/api/ApiTypeAlias").default,
+  ApiConst: require("@/components/mdx/api/ApiConst").default,
+  ApiErrorCode: require("@/components/mdx/api/ApiErrorCode").default,
+  ApiNamespace: require("@/components/mdx/api/ApiNamespace").default,
+  ApiMacroGuard: require("@/components/mdx/api/ApiMacroGuard").default,
+  ApiDelegate: require("@/components/mdx/api/ApiDelegate").default,
 };
 
 // 优化docuoConfig，只保留页面需要的配置

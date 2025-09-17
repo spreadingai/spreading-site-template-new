@@ -20,6 +20,7 @@ import "@/styles/openapi/badge.cover.scss";
 import "@/styles/openapi/schema.cover.scss";
 import "@/styles/remark.directive.scss";
 import "@/styles/docsearch.cover.scss";
+import "@/styles/mdx.scss";
 import FontManager from "@/lib/font";
 import { useEffect } from "react";
 

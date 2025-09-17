@@ -1,0 +1,63 @@
+.stepItem {
+  padding-bottom: 8px;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+
+  .line {
+    width: 1px;
+    height: calc(100% - 44px);
+    background-color: var(--docuo-step-line-color);
+    position: absolute;
+    top: 44px;
+  }
+
+  .stepNumberWrapper {
+    padding: 8px 0;
+    margin-left: -14px;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    .stepNumber {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      background-color: var(--docuo-step-number-bg);
+      font-size: 14px;
+      font-weight: 600;
+      line-height: 20px;
+      color: var(--docuo-step-number-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .stepIcon {
+      width: 28px;
+      height: 28px;
+      color: var(--docuo-step-icon-color);
+      fill: var(--docuo-step-icon-color);
+      user-select: none;
+      >svg, >img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+
+  .main {
+    width: 100%;
+    padding-left: 48px;
+    overflow: hidden;
+    .title {
+      margin: 8px 0 20px;
+      font-family: var(--font-inter-semibold);
+      font-weight: 600;
+      line-height: 28px;
+      color: var(--docuo-step-title-color);
+    }
+  
+  }
+
+}

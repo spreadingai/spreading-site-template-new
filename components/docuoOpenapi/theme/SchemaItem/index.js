@@ -8,7 +8,7 @@
 import React from "react";
 
 // import CodeBlock from "@theme/CodeBlock";
-import { Code } from "@spreading/docuo-mdx-component";
+import { Code } from "@/components/mdx";
 /* eslint-disable import/no-extraneous-dependencies*/
 import clsx from "clsx";
 import { createDescription } from "@/components/docuoOpenapi/markdown/createDescription";

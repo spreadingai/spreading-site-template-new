@@ -1,0 +1,10 @@
+.wrapper {
+  display: grid;
+  gap: 16px;
+  @media screen and (max-width: 767px) {
+    grid-template-columns: repeat(1, 1fr) !important;
+  }
+  >div {
+    margin: 0;
+  }
+}

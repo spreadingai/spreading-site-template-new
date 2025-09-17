@@ -1,0 +1,18 @@
+.lastUpdated {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 8px 0 16px;
+  font-size: 14px;
+  font-family: Inter-Medium, Inter;
+  color: var(--docuo-breadcrumb-color);
+}
+
+.calendarIcon {
+  flex-shrink: 0;
+  color: var(--docuo-breadcrumb-color);
+}
+
+.dateText {
+  color: var(--docuo-breadcrumb-color);
+}

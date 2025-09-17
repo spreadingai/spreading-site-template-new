@@ -7,7 +7,7 @@
 
 import React from "react";
 
-import { Code } from "@spreading/docuo-mdx-component";
+import { Code } from "@/components/mdx";
 
 function ResponseSamples({ responseExample, language }) {
   return (

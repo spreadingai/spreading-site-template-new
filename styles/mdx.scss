@@ -1,0 +1,47 @@
+html {
+  --docuo-callout-tips-bg: #f0f6fe;
+  --docuo-callout-tips-border-color: #e1eeff;
+  --docuo-callout-success-bg: #ecfff0;
+  --docuo-callout-success-border-color: #cefbd9;
+  --docuo-callout-warning-bg: #fff6e8;
+  --docuo-callout-warning-border-color: #ffedd5;
+  --docuo-callout-error-bg: #fcf3f2;
+  --docuo-callout-error-border-color: #ffe7e4;
+  --docuo-callout-tips-title-color: #171717;
+  --docuo-callout-text-color: #353c4e;
+  --docuo-accordion-border-color: #eaeaea;
+  --docuo-accordion-text-color: #171717;
+  --docuo-accordion-header-bg-color: #f9f9f9;
+  --docuo-step-title-color: #171B1A;
+  --docuo-step-number-color: #252928;
+  --docuo-step-number-bg: rgb(238, 242, 241);
+  --docuo-step-line-color: rgba(222, 226, 226, 0.7);
+  --docuo-step-icon-color: rgb(37, 41, 40);
+  --docuo-tab-border-color: rgb(222, 226, 226);
+  --docuo-qr-dark-color: #000000;
+  --docuo-qr-light-color: #ffffff;
+}
+
+html[data-theme="dark"] {
+  --docuo-callout-tips-bg: rgba(32, 108, 255, 0.15);
+  --docuo-callout-tips-border-color: rgba(17, 119, 255, 0.4);
+  --docuo-callout-success-bg: rgba(0, 197, 47, 0.08);
+  --docuo-callout-success-border-color: rgba(0, 197, 47, 0.2);
+  --docuo-callout-warning-bg: rgba(253, 152, 0, 0.08);
+  --docuo-callout-warning-border-color: rgba(253, 152, 0, 0.2);
+  --docuo-callout-error-bg: rgba(227, 77, 60, 0.08);
+  --docuo-callout-error-border-color: rgba(227, 77, 60, 0.2);
+  --docuo-callout-tips-title-color: #f0f0f0;
+  --docuo-callout-text-color: rgba(255, 255, 255, 0.85);
+  --docuo-accordion-border-color: rgb(37, 37, 37);
+  --docuo-accordion-text-color: rgb(182, 182, 182);
+  --docuo-accordion-header-bg-color: transparent;
+  --docuo-step-title-color: #dee2e2;
+  --docuo-step-number-color: #f0f0f0;
+  --docuo-step-number-bg: rgb(38, 41, 46);
+  --docuo-step-line-color: rgba(255, 255, 255, 0.1);
+  --docuo-step-icon-color: rgb(238, 242, 241);
+  --docuo-tab-border-color: rgba(222, 226, 226, 0.1);
+  --docuo-qr-dark-color: #ffffff;
+  --docuo-qr-light-color: #1a1a1a;
+}

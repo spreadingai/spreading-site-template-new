@@ -1,0 +1,102 @@
+.wrapper {
+  display: inline-block;
+  text-align: center;
+}
+
+.title {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: var(--docuo-text-color, #666);
+  font-weight: 500;
+}
+
+.qrContainer {
+  display: inline-block;
+  
+  // 确保二维码容器内的canvas或img元素正确显示
+  canvas, img {
+    display: block;
+    border-radius: 4px;
+  }
+}
+
+.contentPreview {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--docuo-text-color-secondary, #999);
+  word-break: break-all;
+  line-height: 1.4;
+}
+
+.placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed var(--docuo-border-color, #ddd);
+  color: var(--docuo-text-color-secondary, #999);
+  font-size: 14px;
+  border-radius: 4px;
+  background-color: var(--docuo-bg-secondary, #fafafa);
+  transition: all 0.2s ease;
+}
+
+.error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed var(--docuo-border-color, #ccc);
+  color: var(--docuo-text-color-secondary, #999);
+  font-size: 14px;
+  border-radius: 4px;
+  text-align: center;
+  padding: 8px;
+  box-sizing: border-box;
+  
+  &.errorState {
+    border-color: var(--docuo-color-danger, #ff4d4f);
+    color: var(--docuo-color-danger, #ff4d4f);
+    background-color: var(--docuo-bg-danger-light, #fff2f0);
+  }
+}
+
+// 暗色主题适配
+:global([data-theme="dark"]) {
+  .placeholder {
+    border-color: #3a3a3a;
+    color: #999;
+    background-color: #2c2c2c;
+  }
+  
+  .error {
+    border-color: #3a3a3a;
+    color: #999;
+    
+    &.errorState {
+      border-color: #ff7875;
+      color: #ff7875;
+      background-color: #2a1215;
+    }
+  }
+  
+  .title {
+    color: #b6b6b6;
+  }
+  
+  .contentPreview {
+    color: #8c8c8c;
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  .wrapper {
+    max-width: 100%;
+  }
+  
+  .qrContainer {
+    canvas, img {
+      max-width: 100%;
+      height: auto;
+    }
+  }
+}

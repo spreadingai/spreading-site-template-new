@@ -1,0 +1,101 @@
+.wrapper {
+  margin: 16px 0;
+  border-radius: 6px;
+  padding: 12px 14px;
+  background: #F0F6FE;
+  border: 1px solid #E1EEFF;
+  display: flex;
+
+  .callout_icon {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    user-select: none;
+    margin-top: 2px;
+    background: url("/assets/mdx/callout_tips.png");
+    background-size: 100% 100%;
+  }
+
+  .main {
+    margin-left: 8px;
+    .header {
+      font-family: var(--font-inter-semibold);
+      font-size: 14px;
+      font-weight: bold;
+      line-height: 22px;
+      display: flex;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+
+    .content {
+      font-family: var(--font-inter);
+      font-size: 14px;
+      line-height: 22px;
+      color: var(--docuo-callout-text-color);
+      *:first-child {
+        margin-top: 0;
+      }
+      *:last-child {
+        margin-bottom: 0;
+      }
+      p {
+        font-size: 14px;
+        color: var(--docuo-callout-text-color);
+      }
+    }
+  }
+
+  &.tips, &.note {
+    background: var(--docuo-callout-tips-bg);
+    border-color: var(--docuo-callout-tips-border-color);
+
+    .callout_icon {
+      background-image: url("/assets/mdx/callout_tips.png");
+    }
+
+    .header {
+      color: var(--docuo-callout-tips-title-color);
+    }
+  }
+
+  &.check {
+    background: var(--docuo-callout-success-bg);
+    border-color: var(--docuo-callout-success-border-color);
+
+    .callout_icon {
+      background-image: url("/assets/mdx/callout_success.png");
+    }
+
+    .header {
+      color: #1ABD00;
+    }
+  }
+
+  &.warning {
+    background: var(--docuo-callout-warning-bg);
+    border-color: var(--docuo-callout-warning-border-color);
+
+    .callout_icon {
+      background-image: url("/assets/mdx/callout_warning.png");
+    }
+
+    .header {
+      color: #FD9800;
+    }
+  }
+
+  &.failure {
+    background: var(--docuo-callout-error-bg);
+    border-color: var(--docuo-callout-error-border-color);
+
+    .callout_icon {
+      background-image: url("/assets/mdx/callout_error.png");
+    }
+
+    .header {
+      color: #EA3902;
+    }
+  }
+
+}

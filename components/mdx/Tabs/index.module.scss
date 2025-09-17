@@ -1,0 +1,273 @@
+.customTabs {
+    margin: 28px 0;
+}
+
+.title {
+    margin: 0 0 12px;
+}
+
+// 屏幕不可见但仍可被 TOC/可访问性工具识别
+.visuallyHidden {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+}
+
+.tabNav {
+    margin-bottom: 24px;
+    position: relative;
+    display: flex;
+    flex: none;
+    align-items: center;
+}
+
+.tabNavList {
+    position: relative;
+    display: flex;
+    transition: opacity 0.3s;
+    box-sizing: border-box;
+    overflow-x: auto;
+    scroll-behavior: smooth;
+    flex: 1;
+
+    // 隐藏滚动条
+    &::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+    }
+
+    // 兼容Firefox
+    scrollbar-width: none;
+}
+
+// 当有左箭头时，调整tabNavList的左padding
+.tabNav.hasLeftArrow .tabNavList {
+    padding-left: 42px;
+}
+
+// 当有右箭头时，调整tabNavList的右padding
+.tabNav.hasRightArrow .tabNavList {
+    padding-right: 42px;
+}
+
+.tab {
+    cursor: pointer;
+    font-family: var(--font-inter-medium);
+    color: var(--docuo-color-primary);
+    padding: 7px 0 11px;
+    text-shadow: none;
+    transition: all 0.3s;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+    & + .tab {
+        margin-left: 36px;
+    }
+
+    &:hover {
+        color: var(--docuo-color-primary-hover);
+
+        .tabBtn {
+            color: var(--docuo-color-primary-hover);
+        }
+    }
+
+    &.tabActive {
+        color: var(--docuo-color-primary-active);
+
+        .tabBtn {
+            font-family: var(--font-inter-medium);
+            color: var(--docuo-color-primary-active);
+            text-shadow: none;
+        }
+    }
+}
+
+.tabBtn {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 206px;
+
+    &:focus:not(:focus-visible) {
+        color: inherit;
+    }
+}
+
+// 每个Tab的分割线
+.tabBorder {
+    position: absolute;
+    right: -18px; // 向右延伸到间隙的一半
+    left: -18px;  // 向左延伸到间隙的一半
+    bottom: 0;
+    height: 1px;
+    background: var(--docuo-tab-border-color);
+}
+
+// 第一个Tab的分割线不向左延伸
+.tab:first-child .tabBorder {
+    left: 0;
+}
+
+// 最后一个Tab的分割线不向右延伸
+.tab:last-child .tabBorder {
+    right: 0;
+}
+
+// 选中Tab的高亮块
+.tabInkBar {
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: -1px; // 向下偏移1px，与分割线重叠
+    height: 3px; // 比分割线高1px (分割线1px + 高亮块额外2px)
+    background: var(--docuo-color-primary-active);
+    z-index: 1; // 确保高亮块在分割线上方
+}
+
+.tabContent {
+    position: relative;
+}
+
+.tabPane {
+    p {
+        font-size: 14px;
+        line-height: 25px;
+    }
+
+    & > p {
+        &:first-child {
+            margin-top: 0;
+        }
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    .customTabs {
+        margin: 0;
+    }
+
+    &.tabPaneHidden {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 0;
+        overflow: hidden;
+        opacity: 0;
+        pointer-events: none;
+        visibility: hidden;
+    }
+
+    &.tabPaneActive {
+        position: relative;
+        opacity: 1;
+        pointer-events: auto;
+        visibility: visible;
+    }
+}
+
+// 箭头按钮样式
+.tabArrow {
+    width: 40px;
+    height: 100%; // 覆盖整个Tab区域高度
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    position: absolute;
+    top: 0; // 从顶部开始
+    bottom: 0; // 到底部结束
+    z-index: 15;
+    transition: all 0.2s ease;
+    pointer-events: auto;
+    background: transparent;
+    border-radius: 0; // 移除圆角，让它完全覆盖
+
+    &::before {
+        content: "";
+        width: 16px;
+        height: 16px;
+        transition: all 0.2s ease;
+        pointer-events: none;
+    }
+
+    &.left {
+        left: 0;
+        background: linear-gradient(
+            to right,
+            var(--docuo-background-primary) 0%,
+            var(--docuo-background-primary) 70%,
+            transparent 100%
+        );
+
+        &::before {
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(81,88,105,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15,18 9,12 15,6"></polyline></svg>') no-repeat center;
+            background-size: contain;
+            transform: rotate(0deg);
+        }
+
+        &:hover::before {
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(81,88,105,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15,18 9,12 15,6"></polyline></svg>') no-repeat center;
+            background-size: contain;
+        }
+    }
+
+    &.right {
+        right: 0;
+        background: linear-gradient(
+            to left,
+            var(--docuo-background-primary) 0%,
+            var(--docuo-background-primary) 70%,
+            transparent 100%
+        );
+
+        &::before {
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(81,88,105,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15,18 9,12 15,6"></polyline></svg>') no-repeat center;
+            background-size: contain;
+            transform: rotate(180deg);
+        }
+
+        &:hover::before {
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(81,88,105,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15,18 9,12 15,6"></polyline></svg>') no-repeat center;
+            background-size: contain;
+        }
+    }
+}
+
+// 暗色主题下的箭头样式
+html[data-theme="dark"] {
+    .tabArrow {
+        &.left::before {
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15,18 9,12 15,6"></polyline></svg>') no-repeat center;
+            background-size: contain;
+        }
+
+        &.left:hover::before {
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15,18 9,12 15,6"></polyline></svg>') no-repeat center;
+            background-size: contain;
+        }
+
+        &.right::before {
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15,18 9,12 15,6"></polyline></svg>') no-repeat center;
+            background-size: contain;
+        }
+
+        &.right:hover::before {
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.9)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15,18 9,12 15,6"></polyline></svg>') no-repeat center;
+            background-size: contain;
+        }
+    }
+}
+
+

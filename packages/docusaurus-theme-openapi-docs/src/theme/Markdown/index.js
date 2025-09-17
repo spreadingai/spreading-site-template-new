@@ -7,7 +7,7 @@
 
 import React from "react";
 
-import { Code } from "@spreading/docuo-mdx-component";
+import { Code } from "@/components/mdx";
 import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 

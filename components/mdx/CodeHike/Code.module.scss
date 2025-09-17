@@ -1,0 +1,214 @@
+.wrapper {
+  margin: 16px 0;
+  position: relative;
+  background: #171717;
+  border-radius: 6px;
+  overflow: hidden;
+
+  &:hover .copyButton {
+    opacity: 1;
+  }
+}
+
+.filename {
+  width: 100%;
+  height: 50px;
+  background: #282828;
+  border-radius: 6px 6px 0 0;
+  padding: 0 14px;
+  display: flex;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 13px;
+  font-family: ui-monospace, SFMono-Regular, var(--font-menlo), Monaco, 'Cascadia Code', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro', 'Fira Code', 'Droid Sans Mono', 'Courier New', monospace;
+  font-weight: 500;
+  border-bottom: 1px solid #333;
+}
+
+.pre {
+  margin: 0;
+  padding: 16px;
+  background: #171717;
+  color: #e6e6e6;
+  font-family: ui-monospace, SFMono-Regular, var(--font-menlo), Monaco, 'Cascadia Code', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro', 'Fira Code', 'Droid Sans Mono', 'Courier New', monospace;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-x: auto;
+
+  // 自定义滚动条样式
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  // 滚动条轨道
+  &::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+  }
+
+  // 滚动条滑块
+  &::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+  }
+
+  // 滚动条角落
+  &::-webkit-scrollbar-corner {
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  code {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    font-family: inherit;
+    font-size: inherit;
+  }
+
+  // 只针对行号span移除边框，不影响注解
+  div > span:first-child {
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+  }
+
+  // Mark注解样式
+  .markLine {
+    display: flex !important;
+    width: 100% !important;
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+  }
+
+  .markLineBlue {
+    border-left: solid 2px rgb(14, 165, 233) !important;
+    background-color: rgba(14, 165, 233, 0.1) !important;
+  }
+
+  .markLineGold {
+    border-left: solid 2px rgb(255, 215, 0) !important;
+    background-color: rgba(255, 215, 0, 0.1) !important;
+  }
+
+  .markLinePink {
+    border-left: solid 2px rgb(255, 192, 203) !important;
+    background-color: rgba(255, 192, 203, 0.1) !important;
+  }
+
+  .markLineRed {
+    border-left: solid 2px rgb(239, 68, 68) !important;
+    background-color: rgba(239, 68, 68, 0.1) !important;
+  }
+
+  .markLineGreen {
+    border-left: solid 2px rgb(34, 197, 94) !important;
+    background-color: rgba(34, 197, 94, 0.1) !important;
+  }
+
+  .markLinePurple {
+    border-left: solid 2px rgb(168, 85, 247) !important;
+    background-color: rgba(168, 85, 247, 0.1) !important;
+  }
+
+  .markLineOrange {
+    border-left: solid 2px rgb(249, 115, 22) !important;
+    background-color: rgba(249, 115, 22, 0.1) !important;
+  }
+
+  .markLineYellow {
+    border-left: solid 2px rgb(234, 179, 8) !important;
+    background-color: rgba(234, 179, 8, 0.1) !important;
+  }
+
+  .markLineDefault {
+    border-left: solid 2px transparent !important;
+    background-color: transparent !important;
+  }
+
+  // Focus注解样式
+  .focusUnfocused {
+    opacity: 0.5 !important;
+  }
+
+  .focusFocused {
+    opacity: 1 !important;
+  }
+}
+
+// 当没有文件名时，调整圆角
+.wrapper:not(:has(.filename)) .pre {
+  border-radius: 6px;
+}
+
+.loading {
+  padding: 16px;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  background: #171717;
+  border-radius: 6px;
+  margin: 16px 0;
+}
+
+.error {
+  padding: 16px;
+  color: #ff6b6b;
+  text-align: center;
+  background: #171717;
+  border-radius: 6px;
+  margin: 16px 0;
+  border: 1px solid #ff6b6b;
+}
+
+// Light模式下的滚动条样式
+:global(html[data-theme="light"]) .pre {
+  // 滚动条轨道
+  &::-webkit-scrollbar-track {
+    background: rgba(156, 163, 175, 0.1); // 使用灰色，更柔和
+  }
+
+  // 滚动条滑块
+  &::-webkit-scrollbar-thumb {
+    background: rgba(156, 163, 175, 0.4); // 使用灰色
+
+    &:hover {
+      background: rgba(156, 163, 175, 0.6); // 悬停时稍深一些
+    }
+  }
+
+  // 滚动条角落
+  &::-webkit-scrollbar-corner {
+    background: rgba(156, 163, 175, 0.1); // 使用灰色
+  }
+}
+
+// 隐藏的搜索内容样式
+.searchableContent {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+
+  h4 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  code {
+    font-family: ui-monospace, SFMono-Regular, var(--font-menlo), Monaco, 'Cascadia Code', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro', 'Fira Code', 'Droid Sans Mono', 'Courier New', monospace;
+  }
+}

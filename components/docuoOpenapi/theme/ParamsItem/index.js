@@ -8,7 +8,7 @@
 import React from "react";
 
 // import CodeBlock from "@docusaurus/theme-classic/lib/theme/CodeBlock";
-import { Code } from "@spreading/docuo-mdx-component";
+import { Code } from "@/components/mdx";
 import SchemaTabs from "@/components/docuoOpenapi/theme/SchemaTabs";
 import TabItem from "@/components/docuoOpenapi/theme-classic/src/theme/TabItem";
 /* eslint-disable import/no-extraneous-dependencies*/

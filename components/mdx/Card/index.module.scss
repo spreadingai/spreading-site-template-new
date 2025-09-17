@@ -1,0 +1,50 @@
+.wrapper {
+  margin: 16px 0;
+  border-radius: 12px;
+  padding: 20px 24px;
+  background-color: var(--docuo-card-bg);
+  border: 1px solid var(--docuo-card-border-color);
+  box-shadow: var(--docuo-card-shadow);
+
+  &.link {
+    cursor: pointer;
+    &:hover {
+      border-color: var(--docuo-card-border-color-hover);
+    }
+  }
+
+  .iconWrap {
+    width: 24px;
+    height: 24px;
+    color: var(--docuo-card-icon-color);
+    fill: var(--docuo-card-icon-color);
+    user-select: none;
+    > svg,
+    > img {
+      width: 100%;
+      height: 100%;
+    }
+    & + .title {
+      margin-top: 16px;
+    }
+  }
+
+  .title {
+    font-family: var(--font-inter-semibold);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    color: var(--docuo-color-primary);
+  }
+
+  .content {
+    font-family: var(--font-inter);
+    font-size: 14px;
+    line-height: 22px;
+    color: var(--docuo-card-content-color);
+    p {
+      font-size: 14px;
+      color: var(--docuo-card-content-color);
+    }
+  }
+}

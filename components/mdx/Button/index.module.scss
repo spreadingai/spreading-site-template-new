@@ -1,0 +1,208 @@
+.customBtn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    line-height: 30px;
+    max-width: 100%;
+    padding: 0 16px;
+    border-radius: 2px;
+    font-size: 14px;
+    // 强制覆盖全局 a 的字体设置，保持与原按钮一致（非加粗）
+    font-family: var(--font-inter-light) !important;
+    font-weight: 300 !important;
+    background: #171717 !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-bottom: none !important; // 覆盖全局 a 的下边框
+    outline: none !important;
+    // 默认外边距较小，避免多按钮排列时产生大间距
+    margin: 8px 8px 8px 0;
+    transition: all 0.3s;
+    cursor: pointer;
+    gap: 8px;
+    position: relative;
+    vertical-align: middle; // 避免 inline-flex 的基线导致多行按钮出现额外行距
+    text-decoration: none; // 让<a>看起来像按钮
+    &:hover {
+        transition: all 0.3s;
+    }
+    &.darkGray {
+        background: #171717 !important;
+        color: #ffffff !important;
+        &:hover {
+            opacity: 0.8;
+            background: #171717 !important;
+            color: #ffffff !important;
+        }
+    }
+    &.navyBlue {
+        background: #587fff !important;
+        color: #ffffff !important;
+        &:hover {
+            background: #4269eb !important;
+            color: #ffffff !important;
+        }
+    }
+    &.orange {
+        background: #ff9d00 !important;
+        color: #ffffff !important;
+        &:hover {
+            background: #ff8000 !important;
+            color: #ffffff !important;
+        }
+    }
+    &.tangerine {
+        background: #ff4400 !important;
+        color: #ffffff !important;
+        &:hover {
+            background: #e53d00 !important;
+            color: #ffffff !important;
+        }
+    }
+    &.red {
+        background: #ff0014 !important;
+        color: #ffffff !important;
+        &:hover {
+            background: #e80012 !important;
+            color: #ffffff !important;
+        }
+    }
+    &.magenta {
+        background: #ff00ff !important;
+        color: #ffffff !important;
+        &:hover {
+            background: #e200e2 !important;
+            color: #ffffff !important;
+        }
+    }
+    &.purple {
+        background: #8163f6 !important;
+        color: #ffffff !important;
+        &:hover {
+            background: #6846e9 !important;
+            color: #ffffff !important;
+        }
+    }
+    &.lightBlue {
+        background: #00b5ff !important;
+        color: #ffffff !important;
+        &:hover {
+            background: #00a5e9 !important;
+            color: #ffffff !important;
+        }
+    }
+    &.turquoise {
+        background: #00cae4 !important;
+        color: #ffffff !important;
+        &:hover {
+            background: #00b7cf !important;
+            color: #ffffff !important;
+        }
+    }
+    &.green {
+        background: #00bd46 !important;
+        color: #ffffff !important;
+        &:hover {
+            background: #00a93f !important;
+            color: #ffffff !important;
+        }
+    }
+    &.lime {
+        background: #00a900 !important;
+        color: #ffffff !important;
+        &:hover {
+            background: #009b00 !important;
+            color: #ffffff !important;
+        }
+    }
+    &.gray {
+        background: #777381 !important;
+        color: #ffffff !important;
+        &:hover {
+            background: #696573 !important;
+            color: #ffffff !important;
+        }
+    }
+    &.white {
+        background: #ffffff !important;
+        color: #171717 !important;
+        border: 1px solid #b5b5b5 !important;
+        &:hover {
+            background: #ffffff !important;
+            color: #171717 !important;
+            border-color: #171717 !important;
+        }
+    }
+
+    // 圆形按钮样式
+    &.circular {
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        padding: 0;
+
+        .buttonText {
+            display: none; // 圆形按钮隐藏文本
+        }
+    }
+
+    // Icon 样式
+    .buttonIcon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 16px;
+        height: 16px;
+        color: inherit;
+        fill: currentColor;
+
+        > svg, > img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+    }
+
+    // 文本样式
+    .buttonText {
+        display: inline-block;
+        line-height: 1;
+    }
+
+    // 悬浮提示
+    .tooltip {
+        position: absolute;
+        bottom: calc(100% + 8px);
+        left: 50%;
+        transform: translateX(-50%);
+        background: #000000;
+        color: #ffffff;
+        font-size: 12px;
+        line-height: 18px;
+        padding: 6px 10px;
+        border-radius: 6px;
+        white-space: nowrap;
+        pointer-events: none;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity .15s ease, visibility .15s ease;
+        z-index: 10;
+        max-width: 240px;
+        text-align: center;
+    }
+    .tooltip::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        border-width: 6px;
+        border-style: solid;
+        border-color: #000000 transparent transparent transparent;
+    }
+    &:hover .tooltip {
+        opacity: 1;
+        visibility: visible;
+    }
+}
