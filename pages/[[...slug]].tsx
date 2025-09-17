@@ -20,6 +20,7 @@ import {
   QRCode,
   LastUpdated,
 } from "@spreading/docuo-mdx-component";
+
 import LibControllerImpl from "@/lib";
 import DocsControllerImpl from "@/lib/docs-help";
 import TreeControllerImpl from "@/lib/tree-help";
@@ -71,6 +72,8 @@ const MDX_GLOBAL_CONFIG = {
   },
 };
 
+const _ApiMethod = require("@/components/api/ApiMethod").default;
+
 const components = {
   Code,
   CodeGroup,
@@ -120,6 +123,21 @@ const components = {
   SecuritySchemes,
   ApiLogo,
   Export,
+  // Newly added basic API building blocks
+  ApiMethod: _ApiMethod,
+  ApiProperty: require("@/components/api/ApiProperty").default,
+  ApiEnum: require("@/components/api/ApiEnum").default,
+
+
+
+  ApiClass: require("@/components/api/ApiClass").default,
+  ApiInterface: require("@/components/api/ApiInterface").default,
+  ApiTypeAlias: require("@/components/api/ApiTypeAlias").default,
+  ApiConst: require("@/components/api/ApiConst").default,
+  ApiErrorCode: require("@/components/api/ApiErrorCode").default,
+  ApiNamespace: require("@/components/api/ApiNamespace").default,
+  ApiMacroGuard: require("@/components/api/ApiMacroGuard").default,
+  ApiDelegate: require("@/components/api/ApiDelegate").default,
 };
 
 // 优化docuoConfig，只保留页面需要的配置
