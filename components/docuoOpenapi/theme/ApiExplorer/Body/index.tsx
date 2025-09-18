@@ -21,6 +21,9 @@ import Markdown from "@/components/docuoOpenapi/theme/Markdown";
 import SchemaTabs from "@/components/docuoOpenapi/theme/SchemaTabs";
 import TabItem from "@/components/docuoOpenapi/theme-classic/src/theme/TabItem";
 import { RequestBodyObject } from "@/components/docuoOpenapi/docuo-plugin-openapi-docs/src/openapi/types";
+import useLanguage from "@/components/hooks/useLanguage";
+import { copywriting } from "@/components/constant/language";
+
 import format from "xml-formatter";
 
 import {
@@ -71,6 +74,9 @@ function Body({
 }: Props) {
   const contentType = useTypedSelector((state: any) => state.contentType.value);
   const dispatch = useTypedDispatch();
+
+  const { currentLanguage } = useLanguage();
+  const t = copywriting[currentLanguage]?.openapi || copywriting.en.openapi;
 
   // Lot's of possible content-types:
   // - application/json
@@ -313,8 +319,8 @@ function Body({
         <SchemaTabs className="openapi-tabs__schema" lazy>
           {/* @ts-ignore */}
           <TabItem
-            label="Example (from schema)"
-            value="Example (from schema)"
+            label={t.content.exampleFromSchema}
+            value="example-from-schema"
             default
           >
             <LiveApp action={dispatch} language={language} required={required}>
@@ -322,7 +328,7 @@ function Body({
             </LiveApp>
           </TabItem>
           {/* @ts-ignore */}
-          <TabItem label="Example" value="example">
+          <TabItem label={t.content.example} value="example">
             {/* eslint-disable-next-line react/no-children-prop */}
             {example.summary && <Markdown children={example.summary} />}
             {exampleBody && (
@@ -346,8 +352,8 @@ function Body({
         <SchemaTabs className="openapi-tabs__schema" lazy>
           {/* @ts-ignore */}
           <TabItem
-            label="Example (from schema)"
-            value="Example (from schema)"
+            label={t.content.exampleFromSchema}
+            value="example-from-schema"
             default
           >
             <LiveApp action={dispatch} language={language} required={required}>

@@ -14,6 +14,9 @@ import ParamMultiSelectFormItem from "@/components/docuoOpenapi/theme/ApiExplore
 import ParamSelectFormItem from "@/components/docuoOpenapi/theme/ApiExplorer/ParamOptions/ParamFormItems/ParamSelectFormItem";
 import ParamTextFormItem from "@/components/docuoOpenapi/theme/ApiExplorer/ParamOptions/ParamFormItems/ParamTextFormItem";
 import { useTypedSelector } from "@/components/docuoOpenapi/theme/ApiItem/hooks";
+import useLanguage from "@/components/hooks/useLanguage";
+import { copywriting } from "@/components/constant/language";
+
 
 import { Param } from "./slice";
 
@@ -52,6 +55,9 @@ function ParamOptionWrapper({ param }: ParamProps) {
 }
 
 function ParamOptions() {
+  const { currentLanguage } = useLanguage();
+  const t = copywriting[currentLanguage]?.openapi || copywriting.en.openapi;
+
   const [showOptional, setShowOptional] = useState(false);
 
   const pathParams = useTypedSelector((state: any) => state.params.path);
@@ -116,8 +122,8 @@ function ParamOptions() {
               </span>
             </span>
             {showOptional
-              ? "Hide optional parameters"
-              : "Show optional parameters"}
+              ? t.request.hideOptional
+              : t.request.showOptional}
           </button>
 
           <div

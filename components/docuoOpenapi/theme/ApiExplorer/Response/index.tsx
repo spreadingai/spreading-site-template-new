@@ -14,6 +14,9 @@ import {
   useTypedDispatch,
   useTypedSelector,
 } from "@/components/docuoOpenapi/theme/ApiItem/hooks";
+import useLanguage from "@/components/hooks/useLanguage";
+import { copywriting } from "@/components/constant/language";
+
 import SchemaTabs from "@/components/docuoOpenapi/theme/SchemaTabs";
 import TabItem from "@/components/docuoOpenapi/theme-classic/src/theme/TabItem";
 import clsx from "clsx";
@@ -49,6 +52,9 @@ function Response({ item }: { item: NonNullable<ApiItem> }) {
   const headers = useTypedSelector((state: any) => state.response.headers);
   const response = useTypedSelector((state: any) => state.response.value);
   const dispatch = useTypedDispatch();
+  const { currentLanguage } = useLanguage();
+  const t = copywriting[currentLanguage]?.openapi || copywriting.en.openapi;
+
   const responseStatusClass =
     code &&
     "openapi-response__dot " +
@@ -86,7 +92,7 @@ function Response({ item }: { item: NonNullable<ApiItem> }) {
             dispatch(clearHeaders());
           }}
         >
-          Clear
+          {t.request.clear}
         </span>
       </div>
       <div
@@ -115,14 +121,13 @@ function Response({ item }: { item: NonNullable<ApiItem> }) {
               >
                 {prettyResponse || (
                   <p className="openapi-explorer__response-placeholder-message">
-                    Click the &quot;Send&quot; button above and see the response
-                    here!
+                    {t.request.responsePlaceholder}
                   </p>
                 )}
               </ApiCodeBlock>
             </TabItem>
             {/* @ts-ignore */}
-            <TabItem label="Headers" value="headers">
+            <TabItem label={t.request.headers} value="headers">
               {/* @ts-ignore */}
               <ApiCodeBlock
                 className="openapi-explorer__code-block openapi-response__status-headers"
@@ -138,7 +143,7 @@ function Response({ item }: { item: NonNullable<ApiItem> }) {
           </div>
         ) : (
           <p className="openapi-explorer__response-placeholder-message">
-            Click the &quot;Send&quot; button above and see the response here!
+            {t.request.responsePlaceholder}
           </p>
         )}
       </div>

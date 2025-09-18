@@ -33,6 +33,9 @@ import { ApiItem } from "@/components/docuoOpenapi/docuo-plugin-openapi-docs/src
 import { FormProvider, useForm } from "react-hook-form";
 import { useContext } from "react";
 import { DocuoContext } from "@/components/docuoOpenapi/context/docuoContext";
+import useLanguage from "@/components/hooks/useLanguage";
+import { copywriting } from "@/components/constant/language";
+
 
 import makeRequest from "./makeRequest";
 
@@ -59,6 +62,9 @@ function Request({ item }: { item: NonNullable<ApiItem> }) {
   const server = useTypedSelector((state: any) => state.server.value);
   const serverOptions = useTypedSelector((state: any) => state.server.options);
   const auth = useTypedSelector((state: any) => state.auth);
+  const { currentLanguage } = useLanguage();
+  const t = copywriting[currentLanguage]?.openapi || copywriting.en.openapi;
+
   const dispatch = useTypedDispatch();
 
   const [expandAccept, setExpandAccept] = useState(true);
@@ -173,19 +179,19 @@ function Request({ item }: { item: NonNullable<ApiItem> }) {
                 className="openapi-explorer__expand-details-btn"
                 onClick={collapseAllDetails}
               >
-                Collapse all
+                {t.request.collapseAll}
               </span>
             ) : (
               <span
                 className="openapi-explorer__expand-details-btn"
                 onClick={expandAllDetails}
               >
-                Expand all
+                {t.request.expandAll}
               </span>
             )}
             {showRequestButton && item.method !== "event" && (
               <button className="openapi-explorer__request-btn" type="submit">
-                Send
+                {t.request.send}
               </button>
             )}
           </div>
@@ -258,7 +264,7 @@ function Request({ item }: { item: NonNullable<ApiItem> }) {
               >
                 Body
                 {requestBodyRequired && (
-                  <span className="openapi-schema__required">required</span>
+                  <span className="openapi-schema__required">{t.content.requiredTag}</span>
                 )}
               </summary>
               <>

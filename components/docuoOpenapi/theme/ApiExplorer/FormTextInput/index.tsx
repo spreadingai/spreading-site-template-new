@@ -11,6 +11,9 @@ import React, { ReactNode } from "react";
 import { ErrorMessage } from "@hookform/error-message";
 import clsx from "clsx";
 import { useFormContext } from "react-hook-form";
+import useLanguage from "@/components/hooks/useLanguage";
+import { copywriting } from "@/components/constant/language";
+
 
 export interface Props {
   prefix?: ReactNode;
@@ -38,6 +41,9 @@ function FormTextInput({
 
   const showErrorMessage = errors?.[paramName]?.message;
 
+  const { currentLanguage } = useLanguage();
+  const t = copywriting[currentLanguage]?.openapi || copywriting.en.openapi;
+
   return (
     <>
       <div
@@ -50,7 +56,7 @@ function FormTextInput({
         {paramName ? (
           <input
             {...register(paramName, {
-              required: isRequired ? "This field is required" : false,
+              required: isRequired ? t.request.fieldRequired : false,
             })}
             className={clsx("openapi-explorer__form-item-input")}
             type={password ? "password" : "text"}

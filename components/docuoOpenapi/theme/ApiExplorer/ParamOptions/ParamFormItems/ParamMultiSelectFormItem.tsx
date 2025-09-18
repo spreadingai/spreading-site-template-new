@@ -18,6 +18,9 @@ import {
   useTypedSelector,
 } from "@/components/docuoOpenapi/theme/ApiItem/hooks";
 import { Controller, useFormContext } from "react-hook-form";
+import useLanguage from "@/components/hooks/useLanguage";
+import { copywriting } from "@/components/constant/language";
+
 
 export interface ParamProps {
   param: Param;
@@ -34,6 +37,9 @@ export default function ParamMultiSelectFormItem({ param }: ParamProps) {
   const dispatch = useTypedDispatch();
 
   const options = param.schema?.items?.enum ?? [];
+  const { currentLanguage } = useLanguage();
+  const t = copywriting[currentLanguage]?.openapi || copywriting.en.openapi;
+
 
   const pathParams = useTypedSelector((state: any) => state.params.path);
   const queryParams = useTypedSelector((state: any) => state.params.query);
@@ -79,7 +85,7 @@ export default function ParamMultiSelectFormItem({ param }: ParamProps) {
     <>
       <Controller
         control={control}
-        rules={{ required: param.required ? "This field is required" : false }}
+        rules={{ required: param.required ? t.request.fieldRequired : false }}
         name="paramMultiSelect"
         render={({ field: { onChange, name } }) => (
           <FormMultiSelect

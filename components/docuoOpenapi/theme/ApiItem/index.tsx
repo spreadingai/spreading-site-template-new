@@ -6,7 +6,7 @@
  * ========================================================================== */
 
 import zlib from "zlib";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import clsx from "clsx";
 import {
   ServerObject,
@@ -22,6 +22,8 @@ import ApiExplorer from "@/components/docuoOpenapi/theme/ApiExplorer";
 import { createAuth } from "@/components/docuoOpenapi/theme/ApiExplorer/Authorization/slice";
 import useIsBrowser from "@/components/docuoOpenapi/core/lib/client/exports/useIsBrowser";
 import { createPersistanceMiddleware } from "@/components/docuoOpenapi/theme/ApiExplorer/persistanceMiddleware";
+import useLanguage from "@/components/hooks/useLanguage";
+import { copywriting } from "@/components/constant/language";
 import {
   DocuoContext,
   DocuoContextType,
@@ -62,6 +64,61 @@ export default function ApiItem(props: Props): JSX.Element {
   const [docData, setDocData] = useState<DocContextType>({
     frontMatter,
   });
+  const { currentLanguage } = useLanguage();
+  const t = copywriting[currentLanguage]?.openapi || copywriting.en.openapi;
+
+  useEffect(() => {
+    if (!isBrowser) return;
+
+    const translate = (root?: Document | Element | null) => {
+      try {
+        const scope: Document | Element = root && (root as any).querySelector
+          ? (root as Document | Element)
+          : document;
+        // required 标签本地化
+        scope
+          .querySelectorAll(
+            ".openapi-left-panel__container .openapi-schema__required"
+          )
+          .forEach((el) => {
+            const txt = (el.textContent || "").trim();
+            if (txt !== t.content.requiredTag) {
+              el.textContent = t.content.requiredTag;
+            }
+          });
+
+        // Schema 折叠标题本地化
+        scope
+          .querySelectorAll(
+            ".openapi-left-panel__container .openapi-markdown__details-summary-response strong"
+          )
+          .forEach((el) => {
+            const txt = (el.textContent || "").trim().toLowerCase();
+            if (txt === "schema") {
+              el.textContent = t.content.schemaTitle;
+            }
+          });
+      } catch {}
+    };
+
+    // 进入页面先翻译一次
+    translate();
+
+    // 监听左侧面板内容变化（路由切换/折叠展开导致的重渲染）
+    const container = document.querySelector(
+      ".openapi-left-panel__container"
+    );
+    if (!container) return;
+
+    const observer = new MutationObserver(() => translate(container));
+    observer.observe(container, {
+      childList: true,
+      subtree: true,
+      characterData: true,
+    });
+
+    return () => observer.disconnect();
+  }, [isBrowser, t]);
   let { info_path: infoPath } = frontMatter as DocFrontMatter;
   // Parse the instance and version
   infoPath = parseByInfoPath(infoPath, displayInstances, versions);
@@ -69,7 +126,7 @@ export default function ApiItem(props: Props): JSX.Element {
   // decompress and parse
   if (api) {
     api = JSON.parse(
-      zlib.inflateSync(Buffer.from(api as any, "base64")).toString()
+      zlib.inflateSync(Buffer.from(api as any, "base64") as any).toString()
     );
 
     // TODO: fix this

@@ -15,6 +15,9 @@ import {
 } from "@/components/docuoOpenapi/theme/ApiExplorer/ParamOptions/slice";
 import { useTypedDispatch } from "@/components/docuoOpenapi/theme/ApiItem/hooks";
 import { Controller, useFormContext } from "react-hook-form";
+import useLanguage from "@/components/hooks/useLanguage";
+import { copywriting } from "@/components/constant/language";
+
 
 export interface ParamProps {
   param: Param;
@@ -30,13 +33,16 @@ export default function ParamSelectFormItem({ param }: ParamProps) {
 
   const dispatch = useTypedDispatch();
 
+  const { currentLanguage } = useLanguage();
+  const t = copywriting[currentLanguage]?.openapi || copywriting.en.openapi;
+
   const options = param.schema?.enum ?? [];
 
   return (
     <>
       <Controller
         control={control}
-        rules={{ required: param.required ? "This field is required" : false }}
+        rules={{ required: param.required ? t.request.fieldRequired : false }}
         name="paramSelect"
         render={({ field: { onChange, name } }) => (
           <FormSelect

@@ -16,6 +16,9 @@ import {
   setParam,
 } from "@/components/docuoOpenapi/theme/ApiExplorer/ParamOptions/slice";
 import { useTypedDispatch } from "@/components/docuoOpenapi/theme/ApiItem/hooks";
+import useLanguage from "@/components/hooks/useLanguage";
+import { copywriting } from "@/components/constant/language";
+
 import { Controller, useFormContext } from "react-hook-form";
 
 export interface ParamProps {
@@ -61,6 +64,9 @@ export default function ParamArrayFormItem({ param }: ParamProps) {
     control,
     formState: { errors },
   } = useFormContext();
+  const { currentLanguage } = useLanguage();
+  const t = copywriting[currentLanguage]?.openapi || copywriting.en.openapi;
+
 
   const showErrorMessage = errors?.paramArray?.message;
 
@@ -111,7 +117,7 @@ export default function ParamArrayFormItem({ param }: ParamProps) {
     <>
       <Controller
         control={control}
-        rules={{ required: param.required ? "This field is required" : false }}
+        rules={{ required: param.required ? t.request.fieldRequired : false }}
         name="paramArray"
         render={({ field: { onChange, name } }) => (
           <>

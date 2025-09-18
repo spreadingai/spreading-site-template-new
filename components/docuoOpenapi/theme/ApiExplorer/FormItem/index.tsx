@@ -8,6 +8,9 @@
 import React from "react";
 
 import clsx from "clsx";
+import useLanguage from "@/components/hooks/useLanguage";
+import { copywriting } from "@/components/constant/language";
+
 
 export interface Props {
   hideLabel?: boolean;
@@ -26,6 +29,9 @@ function FormItem({
   children,
   className,
 }: Props) {
+  const { currentLanguage } = useLanguage();
+  const t = copywriting[currentLanguage]?.openapi || copywriting.en.openapi;
+
   return (
     <div className={clsx("openapi-explorer__form-item", className)}>
       <div className="openapi-explorer__form-item-label-container">
@@ -35,7 +41,9 @@ function FormItem({
         {type && (
           <span className="openapi-explorer__form-item-label-type">{type}</span>
         )}
-        {required && <span className="openapi-schema__required">required</span>}
+        {required && (
+          <span className="openapi-schema__required">{t.content.requiredTag}</span>
+        )}
       </div>
       <div>{children}</div>
     </div>

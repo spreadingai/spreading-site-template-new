@@ -11,6 +11,8 @@ import {
   // useScrollPositionBlocker,
   useTabs,
 } from "@/components/docuoOpenapi/theme-common/src/internal";
+import useLanguage from "@/components/hooks/useLanguage";
+import { copywriting } from "@/components/constant/language";
 import useIsBrowser from "@/components/docuoOpenapi/core/lib/client/exports/useIsBrowser";
 import clsx from "clsx";
 import flatten from "lodash/flatten";
@@ -163,10 +165,31 @@ function TabContent({ lazy, children, selectedValue }) {
 }
 function TabsComponent(props) {
   const tabs = useTabs(props);
+  const { currentLanguage } = useLanguage();
+  const t = copywriting[currentLanguage]?.openapi || copywriting.en.openapi;
+
+  const localizedTabs = React.useMemo(() => {
+    const mapLabel = (label) => {
+      if (!label) return label;
+      const text = String(label);
+      if (text === "Example (from schema)") return t.content.exampleFromSchema;
+      if (text === "Example") return t.content.example;
+      if (text === "Schema") return t.content.schemaTitle || text;
+      return label;
+    };
+    return {
+      ...tabs,
+      tabValues: (tabs.tabValues || []).map((tv) => ({
+        ...tv,
+        label: mapLabel(tv.label),
+      })),
+    };
+  }, [tabs, t]);
+
   return (
     <div className="openapi-tabs__schema-container">
-      <TabList {...props} {...tabs} />
-      <TabContent {...props} {...tabs} />
+      <TabList {...props} {...localizedTabs} />
+      <TabContent {...props} {...localizedTabs} />
     </div>
   );
 }

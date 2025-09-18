@@ -46,6 +46,31 @@ export const copywriting = {
       copySuccess: "Successful replication",
       beQuerying:"Checking, please wait a moment...",
     },
+
+    openapi: {
+      content: {
+        defaultValueLabel: "Default value",
+        requiredTag: "required",
+        example: "Example",
+        examples: "Examples",
+        possibleValuesLabel: "Possible values",
+        deprecatedTag: "deprecated",
+        description: "Description",
+        exampleFromSchema: "Example (from schema)",
+        schemaTitle: "Schema"
+      },
+      request: {
+        showOptional: "Show optional parameters",
+        hideOptional: "Hide optional parameters",
+        fieldRequired: "This field is required",
+        collapseAll: "Collapse all",
+        expandAll: "Expand all",
+        send: "Send",
+        responsePlaceholder: "Click the \"Send\" button above and see the response here!",
+        clear: "Clear",
+        headers: "Headers"
+      }
+    }
   },
   zh: {
     search: {
@@ -93,5 +118,29 @@ export const copywriting = {
       copySuccess: "复制成功",
       beQuerying: "正在查询，请稍等..."
     },
+    openapi: {
+      content: {
+        defaultValueLabel: "默认值",
+        requiredTag: "必填",
+        example: "示例",
+        examples: "示例",
+        possibleValuesLabel: "可选值",
+        deprecatedTag: "已废弃",
+        description: "描述",
+        exampleFromSchema: "按数据结构生成的示例",
+        schemaTitle: "数据结构"
+      },
+      request: {
+        showOptional: "显示可选参数",
+        hideOptional: "隐藏可选参数",
+        fieldRequired: "此字段为必填",
+        collapseAll: "折叠所有",
+        expandAll: "展开所有",
+        send: "发送",
+        responsePlaceholder: "点击上方 “发送” 按钮，在此处查看响应。",
+        clear: "清除",
+        headers: "响应头"
+      }
+    }
   },
 };
