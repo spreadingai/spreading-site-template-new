@@ -80,3 +80,71 @@ export const generateUUID = (): string => {
     return v.toString(16);
   });
 };
+
+
+/**
+ * 返回稳定的用户ID：
+ * - 优先从 localStorage 读取
+ * - 失败或无值则从 cookie 读取
+ * - 都没有则生成 UUID，写入 localStorage 与 cookie
+ * 说明：用户清理站点数据或使用隐私/无痕模式时，可能会变更，属不可避免情形。
+ */
+const USER_ID_STORAGE_KEY = 'docuo_user_id_v1';
+
+const safeGetLocalStorage = (key: string): string | null => {
+  try {
+    if (typeof window === 'undefined' || !window.localStorage) return null;
+    return window.localStorage.getItem(key);
+  } catch {
+    return null;
+  }
+};
+
+const safeSetLocalStorage = (key: string, value: string): void => {
+  try {
+    if (typeof window === 'undefined' || !window.localStorage) return;
+    window.localStorage.setItem(key, value);
+  } catch {
+    // ignore
+  }
+};
+
+const getCookie = (name: string): string | null => {
+  try {
+    if (typeof document === 'undefined') return null;
+    const match = document.cookie.match(new RegExp('(?:^|; )' + name.replace(/([.$?*|{}()\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)'));
+    return match ? decodeURIComponent(match[1]) : null;
+  } catch {
+    return null;
+  }
+};
+
+const setCookie = (name: string, value: string): void => {
+  try {
+    if (typeof document === 'undefined') return;
+    const expires = new Date();
+    // 设定较长有效期（约 400 天，受浏览器策略限制）
+    expires.setDate(expires.getDate() + 400);
+    document.cookie = `${encodeURIComponent(name)}=${encodeURIComponent(value)}; path=/; expires=${expires.toUTCString()}`;
+  } catch {
+    // ignore
+  }
+};
+
+export const getStableUserId = (): string => {
+  if (typeof window === 'undefined') return 'server-side-render';
+  // 1) localStorage
+  const l = safeGetLocalStorage(USER_ID_STORAGE_KEY);
+  if (l) return l;
+  // 2) cookie
+  const c = getCookie(USER_ID_STORAGE_KEY);
+  if (c) {
+    safeSetLocalStorage(USER_ID_STORAGE_KEY, c);
+    return c;
+  }
+  // 3) 生成并持久化
+  const newId = generateUUID();
+  safeSetLocalStorage(USER_ID_STORAGE_KEY, newId);
+  setCookie(USER_ID_STORAGE_KEY, newId);
+  return newId;
+};
