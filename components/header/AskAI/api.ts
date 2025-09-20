@@ -1,13 +1,15 @@
-import { generateUserFingerprint, generateSessionId } from './utils';
+import { getStableUserId, generateSessionId } from './utils';
 
 /**
  * AI API 配置常量
  */
 const AI_API_CONFIG = {
   // API 接口路径
-  CHAT_ENDPOINT: '/v1/agents/zego_rag_agent/runs',
-  WELCOME_PROMPTS_ENDPOINT: '/v1/prompts/welcome',
-  SCORE_FEEDBACK_ENDPOINT: '/v1/qa/vote',
+  CHAT_ENDPOINT: '/agents/zego-doc-agent-zh/runs',
+  WELCOME_PROMPTS_ENDPOINT: '/prompts/welcome',
+  QA_VOTE_ENDPOINT: '/qa/vote',
+  QA_ADD_ENDPOINT: '/qa/add',
+  QA_UPDATE_ENDPOINT: '/qa/update',
   // 服务器地址
   SERVERS: {
     DEVELOPMENT: 'http://localhost:8000',
@@ -98,6 +100,101 @@ export interface Question {
   run_id: string; // 对应问题答案的唯一标识，必填
   vote: ScoreType; // 评分，可选，枚举值 0：未评分、1：点赞、2：点踩，默认 0
 }
+/**
+ * 从 tool.result 中提取参考文献列表（前端整理）
+ * - 支持字符串/数组两种结果
+ * - 去重依据 metadata.document_name
+ */
+const extractReferencesFromToolResult = (rawResult: any): Reference[] => {
+  let documents: any[] = [];
+  try {
+    if (typeof rawResult === 'string') {
+      documents = JSON.parse(rawResult);
+    } else if (Array.isArray(rawResult)) {
+      documents = rawResult;
+    } else if (rawResult) {
+      documents = [rawResult];
+    }
+  } catch {
+    documents = [];
+  }
+
+  const seen = new Set<string>();
+  const refs: Reference[] = [];
+
+  for (const doc of documents) {
+    let document_name = '';
+    if (doc && typeof doc === 'object') {
+      const meta = (doc as any).metadata || {};
+      document_name = String(meta.document_name || (doc as any).document_name || '');
+    } else if (typeof doc === 'string') {
+      document_name = doc;
+    }
+
+    if (!document_name) continue;
+    if (seen.has(document_name)) continue;
+    seen.add(document_name);
+
+    const ref = parseReferenceFromGeneratedFilename(document_name);
+    if (ref) refs.push(ref);
+  }
+
+  return refs;
+};
+
+/**
+ * 反向解析由 get_filename_from_url 生成的文件名，提取 title 与 url
+ * 规则回顾：
+ *  title存在：{clean_title}---{netloc}{path}，其后整体做 / -> >，& -> ^^，= -> ^^^，末尾加 .md
+ *  title缺失：{netloc}{path}，其后同样替换并加 .md
+ */
+const parseReferenceFromGeneratedFilename = (filename: string): Reference | null => {
+  try {
+    let s = filename.trim();
+    if (s.toLowerCase().endsWith('.md')) s = s.slice(0, -3);
+
+    // 先还原替换：注意顺序，先 ^^^ -> =，再 ^^ -> &
+    const reverseReplacements = (text: string) => text.replace(/\^\^\^/g, '=').replace(/\^\^/g, '&');
+
+    // 拆分 title 与 netloc+path
+    let titlePart = '';
+    let locPathPart = '';
+    const idx = s.indexOf('---');
+    if (idx >= 0) {
+      titlePart = s.slice(0, idx);
+      locPathPart = s.slice(idx + 3);
+    } else {
+      locPathPart = s;
+    }
+
+    // 还原 netloc 与 path（'>' -> '/'）
+    locPathPart = reverseReplacements(locPathPart);
+    const gtIdx = locPathPart.indexOf('>');
+    let netloc = '';
+    let path = '';
+    if (gtIdx >= 0) {
+      netloc = locPathPart.slice(0, gtIdx);
+      path = locPathPart.slice(gtIdx + 1).replace(/>/g, '/');
+      if (path && !path.startsWith('/')) path = '/' + path;
+    } else {
+      netloc = locPathPart;
+      path = '';
+    }
+
+    const url = `https://${netloc}${path}`;
+    const title = titlePart
+      ? titlePart.replace(/-/g, ' ').replace(/\s+/g, ' ').trim()
+      : (path ? (path.split('/').pop() || '').replace(/-/g, ' ') : netloc);
+
+    if (!netloc) return null;
+    return { title: title || netloc, url };
+  } catch {
+    return null;
+  }
+};
+
+
+
 
 /**
  * 发送流式请求到AI助手API
@@ -108,17 +205,20 @@ export const sendStreamRequest = async (
 ): Promise<void> => {
   const { onEvent, onMessage, onError, onComplete } = callbacks;
 
-  // 生成用户ID和会话ID
-  const user_id = params.user_id || generateUserFingerprint();
+  // 生成用户ID和会话ID（user_id 保持稳定）
+  const user_id = params.user_id || getStableUserId();
   const session_id = params.session_id || generateSessionId();
 
-  const requestBody = {
-    message: params.message,
-    user_id,
-    session_id,
+  // 后端要求表单编码且需要 `stream=true`，否则会 422
+  const formData = new URLSearchParams();
+  formData.set('message', params.message);
+  formData.set('user_id', user_id);
+  formData.set('session_id', session_id);
+  formData.set('stream', 'true');
+  formData.set('dependencies', JSON.stringify({
     product: params.product,
     platform: params.platform,
-  };
+  }));
 
   try {
     const apiBaseUrl = getApiBaseUrl();
@@ -127,9 +227,9 @@ export const sendStreamRequest = async (
     const response = await fetch(apiEndpoint, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
       },
-      body: JSON.stringify(requestBody),
+      body: formData.toString(),
     });
 
     if (!response.ok) {
@@ -152,20 +252,48 @@ export const sendStreamRequest = async (
         if (buffer.length > 0) {
           const finalLines = buffer.split('\n');
           for (const line of finalLines) {
-            if (line.trim().startsWith('{') && line.trim().endsWith('}')) {
-              try {
-                const event: StreamEvent = JSON.parse(line.trim());
-                onEvent?.(event);
-                if (event.event_name === 'message' && typeof event.data === 'string') {
-                  onMessage?.(event.data);
-                }
-              } catch (parseError) {
-                // 解析失败，当作Markdown内容处理，保留换行符
-                onMessage?.(line + '\n');
-              }
+            const trimmedLine = line.trim();
+            if (!trimmedLine) continue;
+
+            // 仅解析 SSE 的 data: 行，忽略其他行（如 event: 行）
+            let jsonText = '';
+            if (trimmedLine.startsWith('data:')) {
+              jsonText = trimmedLine.slice(5).trim();
             } else {
-              // 非JSON格式，当作Markdown内容处理，保留换行符
-              onMessage?.(line + '\n');
+              continue;
+            }
+
+            try {
+              const parsed: any = JSON.parse(jsonText);
+              const eventName = parsed.event || parsed.event_name || '';
+              const normalized: StreamEvent = {
+                event_name: eventName,
+                data: parsed.content,
+                run_id: parsed.run_id ? String(parsed.run_id) : undefined,
+                record_id: parsed.record_id ? String(parsed.record_id) : undefined,
+              };
+
+              // 工具事件兼容（新协议使用 parsed.tool）
+              if (parsed.tool && typeof parsed.tool === 'object') {
+                normalized.tool_name = parsed.tool.tool_name || parsed.tool.name;
+                normalized.tool_args = parsed.tool.tool_args || parsed.tool.arguments;
+                if (eventName === 'ToolCallCompleted' && normalized.tool_name === 'search_knowledge_base') {
+                  normalized.data = extractReferencesFromToolResult(parsed.tool.result);
+                }
+              }
+
+              onEvent?.(normalized);
+
+              // 文本内容事件：RunContent（流式片段）或 RunCompleted（完整内容）
+              const contentMaybe = parsed.content ?? normalized.data;
+              if (
+                (eventName === 'RunContent' || eventName === 'RunCompleted') &&
+                typeof contentMaybe === 'string'
+              ) {
+                onMessage?.(contentMaybe);
+              }
+            } catch (e) {
+              console.warn('Failed to parse SSE data line:', trimmedLine, e);
             }
           }
         }
@@ -180,47 +308,49 @@ export const sendStreamRequest = async (
       buffer = lines.pop() || ''; // 保留最后一行（可能不完整）
 
       for (const line of lines) {
-        // 检查是否为JSON格式的事件（更精确的判断）
         const trimmedLine = line.trim();
         if (!trimmedLine) continue;
+
+        // 仅解析 SSE 的 data: 行，忽略其他行（如 event: 行）
+        let jsonText = '';
+        if (trimmedLine.startsWith('data:')) {
+          jsonText = trimmedLine.slice(5).trim();
+        } else {
+          continue;
+        }
+
         try {
           // 解析后端JSON事件，并做一次规范化（event -> event_name）
-          const parsed: any = JSON.parse(trimmedLine);
+          const parsed: any = JSON.parse(jsonText);
           const eventName = parsed.event || parsed.event_name || '';
           const normalized: StreamEvent = {
             event_name: eventName,
-            data: parsed.data,
+            data: parsed.content,
             run_id: parsed.run_id ? String(parsed.run_id) : undefined,
             record_id: parsed.record_id ? String(parsed.record_id) : undefined,
           };
-          // 兼容工具事件结构：扁平化 tool_name/tool_args，引用数组拍到顶层 data
-          const isToolEvent = eventName === 'ToolCallStarted' || eventName === 'ToolCallCompleted';
-          if (parsed.data && typeof parsed.data === 'object') {
-            normalized.tool_name = parsed.data.tool_name || parsed.data.name;
-            normalized.tool_args = parsed.data.tool_args || parsed.data.arguments;
-            if (isToolEvent && Array.isArray(parsed.data.data)) {
-              normalized.data = parsed.data.data;
+          // 工具事件兼容（新协议使用 parsed.tool）
+          if (parsed.tool && typeof parsed.tool === 'object') {
+            normalized.tool_name = parsed.tool.tool_name || parsed.tool.name;
+            normalized.tool_args = parsed.tool.tool_args || parsed.tool.arguments;
+            if (eventName === 'ToolCallCompleted' && normalized.tool_name === 'search_knowledge_base') {
+              normalized.data = extractReferencesFromToolResult(parsed.tool.result);
             }
           }
 
           // 分发事件
           onEvent?.(normalized);
 
-          // 文本内容事件
+          // 文本内容事件：RunContent（流式片段）或 RunCompleted（完整内容）
+          const contentMaybe = parsed.content ?? normalized.data;
           if (
-            (normalized.event_name === 'RunResponseContent' || normalized.event_name === 'message') &&
-            typeof normalized.data === 'string'
+            (normalized.event_name === 'RunContent') &&
+            typeof contentMaybe === 'string'
           ) {
-            onMessage?.(normalized.data);
+            onMessage?.(contentMaybe);
           }
         } catch (parseError) {
-          // 保留原始格式，包括空行和缩进，添加换行符
-          // onMessage?.(line + '\n');
-          if (trimmedLine.length > 0 && !trimmedLine.startsWith('{')) {
-            onMessage?.(trimmedLine);
-          } else {
-            console.warn('Failed to parse event:', trimmedLine, parseError);
-          }
+          console.warn('Failed to parse event:', trimmedLine, parseError);
         }
       }
     }
@@ -326,7 +456,7 @@ export const scoreFetch = async (
 ): Promise<any> => {
   try {
     const baseUrl = getApiBaseUrl();
-    const url = `${baseUrl}${AI_API_CONFIG.SCORE_FEEDBACK_ENDPOINT}`;
+    const url = `${baseUrl}${AI_API_CONFIG.QA_VOTE_ENDPOINT}`;
     const reqData = { ...question };
 
     const response = await fetch(url, {
@@ -353,5 +483,89 @@ export const scoreFetch = async (
   } catch (error) {
     console.error('Score fetch error:', error);
     throw error;
+  }
+};
+
+
+/**
+ * QA 记录：新增与更新
+ */
+export interface AddQaRequest {
+  run_id: string;
+  question: string;
+  userid?: string | null;
+  sessionid?: string | null;
+  answer?: string | null;
+  vote?: 0 | 1 | 2;
+  product?: string | null;
+  platform?: string | null;
+}
+
+export interface UpdateQaRequest {
+  run_id: string;
+  userid?: string | null;
+  sessionid?: string | null;
+  question?: string | null;
+  answer?: string | null;
+  vote?: 0 | 1 | 2 | null;
+  product?: string | null;
+  platform?: string | null;
+}
+
+export const addQaRecord = async (body: AddQaRequest): Promise<void> => {
+  try {
+    const baseUrl = getApiBaseUrl();
+    const url = `${baseUrl}${AI_API_CONFIG.QA_ADD_ENDPOINT}`;
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        run_id: body.run_id,
+        question: body.question,
+        userid: body.userid ?? undefined,
+        sessionid: body.sessionid ?? undefined,
+        answer: body.answer ?? undefined,
+        vote: body.vote ?? 0,
+        product: body.product ?? undefined,
+        platform: body.platform ?? undefined,
+      }),
+    });
+    if (!resp.ok) {
+      console.warn('[QA][add] http error', resp.status, await resp.text());
+    } else {
+      // 可按需解析返回值
+      // const data = await resp.json();
+    }
+  } catch (e) {
+    console.warn('[QA][add] request failed', e);
+  }
+};
+
+export const updateQaRecord = async (body: UpdateQaRequest): Promise<void> => {
+  try {
+    const baseUrl = getApiBaseUrl();
+    const url = `${baseUrl}${AI_API_CONFIG.QA_UPDATE_ENDPOINT}`;
+    const resp = await fetch(url, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        run_id: body.run_id,
+        userid: body.userid ?? undefined,
+        sessionid: body.sessionid ?? undefined,
+        question: body.question ?? undefined,
+        answer: body.answer ?? undefined,
+        vote: body.vote ?? undefined,
+        product: body.product ?? undefined,
+        platform: body.platform ?? undefined,
+      }),
+    });
+    if (!resp.ok) {
+      console.warn('[QA][update] http error', resp.status, await resp.text());
+    } else {
+      // 可按需解析返回值
+      // const data = await resp.json();
+    }
+  } catch (e) {
+    console.warn('[QA][update] request failed', e);
   }
 };

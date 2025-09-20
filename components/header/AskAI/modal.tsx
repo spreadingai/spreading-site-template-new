@@ -5,8 +5,8 @@ import { ReloadOutlined } from '@ant-design/icons';
 import MessageList, { Message } from './MessageList';
 import { Reference } from './api';
 import MessageSender from './MessageSender';
-import { sendStreamRequest, parseProductName, parsePlatformName, StreamEvent } from './api';
-import { generateSessionId, generateUUID } from './utils';
+import { sendStreamRequest, parseProductName, parsePlatformName, StreamEvent, addQaRecord, updateQaRecord } from './api';
+import { generateSessionId, generateUUID, getStableUserId } from './utils';
 import { copywriting } from "@/components/constant/language";
 import outStyles from './modal.module.scss';
 import { defaultLanguage } from '@/components/context/languageContext';
@@ -161,9 +161,8 @@ const AskAIModal: React.FC<Props> = ({
         },
         {
           onEvent: (event: StreamEvent) => {
-            // RunMeta：用 run_id 覆盖 AI 消息 id
-            if (event.event_name === 'RunMeta' && event.run_id && currentMessageRef.current) {
-              console.log('RunMeta>>>>>>>>>>>>>>>>>', event);
+            // RunStarted：用 run_id 覆盖 AI 消息 id，并记录QA基础信息
+            if (event.event_name === 'RunStarted' && event.run_id && currentMessageRef.current) {
               const oldId = currentMessageRef.current.id;
               const newId = String(event.run_id);
               if (oldId !== newId) {
@@ -171,6 +170,16 @@ const AskAIModal: React.FC<Props> = ({
                 setStreamingMessageId(newId);
                 setMessages(prev => prev.map(msg => (msg.id === oldId ? { ...msg, id: newId } : msg)));
               }
+              // 记录QA：立即新增一条记录
+              void addQaRecord({
+                run_id: newId,
+                question: content,
+                userid: getStableUserId(),
+                sessionid: sessionId,
+                vote: 0,
+                product: parseProductName(currentGroup),
+                platform: parsePlatformName(currentPlatform),
+              });
             }
 
             // 仅在工具事件时更新事件头，避免被非工具事件覆盖导致闪烁
@@ -268,6 +277,17 @@ const AskAIModal: React.FC<Props> = ({
                     : msg
                 )
               );
+
+              // 回答完成：更新 QA 记录的 answer
+              const runIdForUpdate = String(currentMessageRef.current.id || '');
+              const answerText = currentMessageRef.current.content || '';
+              if (runIdForUpdate) {
+                void updateQaRecord({
+                  run_id: runIdForUpdate,
+                  answer: answerText
+                });
+              }
+
               // 消息完成后调用样式更新函数 - 与 modal-new.tsx 保持一致
               updateFooterStyle();
               updateATagAttr();
