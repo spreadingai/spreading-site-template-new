@@ -341,7 +341,6 @@ export const sendStreamRequest = async (
               normalized.data = extractReferencesFromToolResult(parsed.tool.result);
             }
           }
-          console.log(">>>>>>>>>>>>>>>>>>>>FFF>>>>", normalized)
 
           // 分发事件
           onEvent?.(normalized);

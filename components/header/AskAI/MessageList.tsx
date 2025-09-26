@@ -438,7 +438,9 @@ const MessageList: React.FC<MessageListProps> = ({
       key: message.id,
       content: message.content,
       role: message.role,
-      loading: (!message.content && !message.eventInfo) || (message.status === 'loading' && !message.eventInfo),
+      // 修复：一旦有流式内容（content 非空），就不再展示“正在思考”加载占位
+      // 原逻辑会在无工具调用时始终保持 status=loading，导致内容被占位遮挡直到完成
+      loading: (!message.content && !message.eventInfo),
     };
 
     // 为assistant消息添加事件状态header
@@ -477,12 +479,14 @@ const MessageList: React.FC<MessageListProps> = ({
       }
     }
 
-    // 为正在流式输出的assistant消息启用typing效果
+    // 为正在流式输出的assistant消息禁用typing效果，因为我们已经有实时流式数据
+    // typing效果会与实际的流式内容更新产生冲突，导致显示延迟
     if (message.role === 'assistant' && streamingMessageId === message.id) {
-      item.typing = {
-        step: 5,
-        interval: 10,
-      };
+      // 不设置typing效果，让流式内容直接显示
+      // item.typing = {
+      //   step: 5,
+      //   interval: 10,
+      // };
     }
 
     return item;
