@@ -20,7 +20,7 @@ const AskAIModal = dynamic(() => import("../AskAI/modal"), {
 const AISearch = () => {
   const { theme } = React.useContext(ThemeContext);
   const { currentLanguage } = useLanguage();
-  const { currentGroup } = useGroup();
+  const { currentGroupLabel } = useGroup();
   const { currentPlatform } = usePlatform();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -44,7 +44,7 @@ const AISearch = () => {
         onCloseHandle={onCloseHandle}
         currentTheme={theme}
         currentLanguage={currentLanguage}
-        currentGroup={currentGroup}
+        currentGroup={currentGroupLabel}
         currentPlatform={currentPlatform}
       />
       {/* 保留原有的AISearch模态框作为备用，可以通过环境变量或配置切换 */}
@@ -56,7 +56,7 @@ const AISearch = () => {
         currentLanguage={currentLanguage}
         currentGroup={currentGroup}
         currentPlatform={currentPlatform}
-      /> 
+      />
       */}
     </div>
   );

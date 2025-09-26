@@ -34,8 +34,7 @@ export const copywriting = {
       defaultRemarks: ["Hello", "What can I do for you?"],
       modalTitle: "AI document assistant",
       referenceSource: "Reference source:",
-      inputPlaceholder:
-        "You can ask any questions about the product of this platform",
+      inputPlaceholder: "Welcome to ask any questions about ZEGOCLOUD products",
       inputPlaceholderM1: "You can ask any questions",
       inputPlaceholderM2: "Questions",
       backToBottomText: "Back to bottom",
@@ -112,7 +111,7 @@ export const copywriting = {
       defaultRemarks: ["您好", "请问有什么可以帮到您？"],
       modalTitle: "AI 文档助手",
       referenceSource: "参考来源：",
-      inputPlaceholder: "您可以询问关于本平台产品的任何问题",
+      inputPlaceholder: "欢迎询问任何有关 ZEGO 产品的问题",
       inputPlaceholderM1: "您可以询问任何问题",
       inputPlaceholderM2: "任何问题",
       backToBottomText: "返回底部",

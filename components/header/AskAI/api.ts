@@ -360,49 +360,6 @@ export const sendStreamRequest = async (
 };
 
 /**
- * 解析产品名称
- */
-export const parseProductName = (group: string): string => {
-  // 根据group映射到产品名称
-  const productMap: Record<string, string> = {
-    'real_time_voice_zh': '实时音视频',
-    'real_time_voice_en': 'Real-time Audio & Video',
-    'live_streaming_zh': '直播',
-    'live_streaming_en': 'Live Streaming',
-    'chat_zh': '即时通讯',
-    'chat_en': 'Chat',
-    // 添加更多映射
-  };
-
-  return productMap[group] || group;
-};
-
-/**
- * 解析平台名称
- */
-export const parsePlatformName = (platform: string): string => {
-  // 根据platform映射到标准格式
-  const platformMap: Record<string, string> = {
-    'android-java': 'Android(Java)',
-    'android-kotlin': 'Android(Kotlin)',
-    'ios-oc': 'iOS(Objective-C)',
-    'ios-swift': 'iOS(Swift)',
-    'web': 'Web',
-    'flutter': 'Flutter',
-    'react-native': 'React Native',
-    'unity': 'Unity',
-    'windows': 'Windows',
-    'macos': 'macOS',
-    'linux': 'Linux',
-    // 添加更多映射
-  };
-
-  return platformMap[platform] || platform;
-};
-
-
-
-/**
  * 获取欢迎提示
  * @param params 请求参数
  * @returns Promise<WelcomePromptsResponse>
