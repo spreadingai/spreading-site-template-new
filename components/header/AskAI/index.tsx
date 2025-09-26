@@ -18,7 +18,7 @@ interface Props {}
 const AskAI: React.FC<Props> = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { currentLanguage } = useLanguage();
-  const { currentGroup } = useGroup();
+  const { currentGroupLabel } = useGroup();
   const { currentPlatform } = usePlatform();
   const router = useRouter();
   const { theme } = React.useContext(ThemeContext);
@@ -41,7 +41,7 @@ const AskAI: React.FC<Props> = () => {
         onCloseHandle={onCloseHandle}
         currentTheme={theme}
         currentLanguage={currentLanguage}
-        currentGroup={currentGroup}
+        currentGroup={currentGroupLabel}
         currentPlatform={currentPlatform}
       />
     </div>

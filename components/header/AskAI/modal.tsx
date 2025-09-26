@@ -5,7 +5,7 @@ import { ReloadOutlined } from '@ant-design/icons';
 import MessageList, { Message } from './MessageList';
 import { Reference } from './api';
 import MessageSender from './MessageSender';
-import { sendStreamRequest, parseProductName, parsePlatformName, StreamEvent, addQaRecord, updateQaRecord } from './api';
+import { sendStreamRequest, StreamEvent, addQaRecord, updateQaRecord } from './api';
 import { generateSessionId, generateUUID, getStableUserId } from './utils';
 import { copywriting } from "@/components/constant/language";
 import outStyles from './modal.module.scss';
@@ -152,11 +152,12 @@ const AskAIModal: React.FC<Props> = ({
     setMessages(prev => [...prev, aiMessage]);
 
     try {
+      console.log(">>>>>>>>>>>>>>>>>>>>FFF", currentGroup, currentPlatform)
       await sendStreamRequest(
         {
           message: content,
-          product: parseProductName(currentGroup),
-          platform: parsePlatformName(currentPlatform),
+          product: currentGroup,
+          platform: currentPlatform,
           session_id: sessionId,
         },
         {
@@ -177,8 +178,8 @@ const AskAIModal: React.FC<Props> = ({
                 userid: getStableUserId(),
                 sessionid: sessionId,
                 vote: 0,
-                product: parseProductName(currentGroup),
-                platform: parsePlatformName(currentPlatform),
+                product: currentGroup,
+                platform: currentPlatform,
               });
             }
 
