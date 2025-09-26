@@ -152,7 +152,6 @@ const AskAIModal: React.FC<Props> = ({
     setMessages(prev => [...prev, aiMessage]);
 
     try {
-      console.log(">>>>>>>>>>>>>>>>>>>>FFF", currentGroup, currentPlatform)
       await sendStreamRequest(
         {
           message: content,

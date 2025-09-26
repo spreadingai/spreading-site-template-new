@@ -1,4 +1,4 @@
-import { getStableUserId, generateSessionId } from './utils';
+import { getStableUserId } from './utils';
 
 /**
  * AI API 配置常量
@@ -205,9 +205,12 @@ export const sendStreamRequest = async (
 ): Promise<void> => {
   const { onEvent, onMessage, onError, onComplete } = callbacks;
 
-  // 生成用户ID和会话ID（user_id 保持稳定）
+  // 使用稳定的 user_id；session_id 必须由外部在弹出对话框时生成并传入
   const user_id = params.user_id || getStableUserId();
-  const session_id = params.session_id || generateSessionId();
+  if (!params.session_id) {
+    throw new Error('[sendStreamRequest] session_id is required. It should be created when opening the AskAI modal and reused within the same dialog.');
+  }
+  const session_id = params.session_id;
 
   // 后端要求表单编码且需要 `stream=true`，否则会 422
   const formData = new URLSearchParams();
@@ -319,6 +322,7 @@ export const sendStreamRequest = async (
           continue;
         }
 
+
         try {
           // 解析后端JSON事件，并做一次规范化（event -> event_name）
           const parsed: any = JSON.parse(jsonText);
@@ -337,6 +341,7 @@ export const sendStreamRequest = async (
               normalized.data = extractReferencesFromToolResult(parsed.tool.result);
             }
           }
+          console.log(">>>>>>>>>>>>>>>>>>>>FFF>>>>", normalized)
 
           // 分发事件
           onEvent?.(normalized);
