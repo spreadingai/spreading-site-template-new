@@ -530,3 +530,33 @@ export const updateQaRecord = async (body: UpdateQaRequest): Promise<void> => {
     console.warn('[QA][update] request failed', e);
   }
 };
+
+
+// 取消运行：POST /agents/{agent_id}/runs/{run_id}/cancel
+const extractAgentIdFromChatEndpoint = (): string => {
+  try {
+    const m = AI_API_CONFIG.CHAT_ENDPOINT.match(/^\/agents\/([^/]+)\/runs/);
+    return m && m[1] ? m[1] : '';
+  } catch {
+    return '';
+  }
+};
+
+export const cancelRun = async (runId: string): Promise<void> => {
+  if (!runId) return;
+  const agentId = extractAgentIdFromChatEndpoint();
+  if (!agentId) {
+    console.warn('[cancelRun] agent id not found from CHAT_ENDPOINT');
+    return;
+  }
+  const baseUrl = getApiBaseUrl();
+  const url = `${baseUrl}/agents/${agentId}/runs/${runId}/cancel`;
+  try {
+    const resp = await fetch(url, { method: 'POST' });
+    if (!resp.ok) {
+      console.warn('[cancelRun] http error', resp.status, await resp.text());
+    }
+  } catch (e) {
+    console.warn('[cancelRun] request failed', e);
+  }
+};
