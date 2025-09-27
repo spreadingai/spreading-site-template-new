@@ -3,7 +3,7 @@ import { Modal, message } from 'antd';
 import { ThemeProvider } from 'antd-style';
 import { ReloadOutlined } from '@ant-design/icons';
 import MessageList, { Message } from './MessageList';
-import { Reference } from './api';
+import { Reference, cancelRun } from './api';
 import MessageSender from './MessageSender';
 import { sendStreamRequest, StreamEvent, addQaRecord, updateQaRecord } from './api';
 import { generateSessionId, generateUUID, getStableUserId } from './utils';
@@ -315,6 +315,9 @@ const AskAIModal: React.FC<Props> = ({
   }, [isLoading, sessionId, currentGroup, currentPlatform, messageApi, updateFooterStyle, updateATagAttr]);
 
   const cancelHandle = () => {
+    if (streamingMessageId) {
+      void cancelRun(streamingMessageId);
+    }
     onCloseHandle();
   };
 
@@ -366,6 +369,22 @@ const AskAIModal: React.FC<Props> = ({
                     ? aiSearchData.inputPlaceholderM1
                     : aiSearchData.inputPlaceholderM2
                 }
+                onCancel={() => {
+                  if (streamingMessageId) {
+                    cancelRun(streamingMessageId);
+                  }
+                  setIsLoading(false);
+                  setStreamingMessageId('');
+                  if (currentMessageRef.current) {
+                    setMessages(prev =>
+                      prev.map(msg =>
+                        msg.id === currentMessageRef.current?.id
+                          ? { ...msg, status: 'complete' }
+                          : msg
+                      )
+                    );
+                  }
+                }}
               />
               {/* 重置对话按钮 - 复制自 modal-new.tsx */}
               {messages.length ? (

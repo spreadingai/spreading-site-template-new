@@ -8,6 +8,7 @@ export interface MessageSenderProps {
   loading?: boolean;
   placeholder?: string;
   disabled?: boolean;
+  onCancel?: () => void;
 }
 
 const MessageSender: React.FC<MessageSenderProps> = ({
@@ -15,6 +16,7 @@ const MessageSender: React.FC<MessageSenderProps> = ({
   loading = false,
   placeholder,
   disabled = false,
+  onCancel,
 }) => {
   const [value, setValue] = React.useState('');
 
@@ -26,7 +28,11 @@ const MessageSender: React.FC<MessageSenderProps> = ({
   };
 
   const handleCancel = () => {
-    setValue('');
+    try {
+      onCancel?.();
+    } finally {
+      setValue('');
+    }
   };
 
   return (
