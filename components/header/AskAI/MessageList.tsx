@@ -120,6 +120,7 @@ export interface AnswerData {
   id: string;
   question: string; // 原始用户问题
   score?: ScoreType; // 使用 ScoreType 枚举
+  session_id?: string; // 记录当时的会话ID，保证评分与会话一致
 }
 
 
@@ -137,6 +138,7 @@ export interface MessageListProps {
   currentGroup: string;
   currentPlatform: string;
   currentLanguage: string;
+  sessionId: string;
 }
 
 const MessageList: React.FC<MessageListProps> = ({
@@ -149,7 +151,8 @@ const MessageList: React.FC<MessageListProps> = ({
   aiSearchData,
   currentGroup,
   currentPlatform,
-  currentLanguage
+  currentLanguage,
+  sessionId,
 }) => {
   // 仿照 modal-new.tsx 的 customIDMap 实现
   const customIDMap = useRef<Record<string, AnswerData>>({});
@@ -227,6 +230,7 @@ const MessageList: React.FC<MessageListProps> = ({
             customIDMap.current[message.customID] = {
               id: message.id,
               question: userMessage.content,
+              session_id: sessionId,// 记录当时的会话ID，保证评分与会话一致。防止界面刷新或其他情况导致props.sessionId变更。
             };
           }
         }
@@ -289,8 +293,10 @@ const MessageList: React.FC<MessageListProps> = ({
       const { id } = answerData;
       const oldScore = answerData.score;
       const targetScore = answerData.score === score ? ScoreType.ZERO : score;
+      const effectiveSessionId = answerData.session_id || sessionId;
 
       const questionData: Question = {
+        session_id: effectiveSessionId,
         run_id: id,
         vote: targetScore || ScoreType.ZERO,
       };
