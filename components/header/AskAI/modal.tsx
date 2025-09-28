@@ -336,6 +336,7 @@ const AskAIModal: React.FC<Props> = ({
               currentGroup={currentGroup}
               currentPlatform={currentPlatform}
               currentLanguage={currentLanguage}
+              sessionId={sessionId}
             />
 
             {/* 输入框区域 - 与 modal-new.tsx 结构一致 */}

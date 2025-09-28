@@ -38,6 +38,7 @@ export interface StreamEvent {
   record_id?: string;
 }
 
+
 export interface RequestParams {
   message: string;
   product: string;
@@ -95,6 +96,7 @@ export interface Reference {
  * 问题数据接口
  */
 export interface Question {
+  session_id: string; // 会话标识
   run_id: string; // 对应问题答案的唯一标识，必填
   vote: ScoreType; // 评分，可选，枚举值 0：未评分、1：点赞、2：点踩，默认 0
 }
@@ -416,7 +418,11 @@ export const scoreFetch = async (
   try {
     const baseUrl = getApiBaseUrl();
     const url = `${baseUrl}${AI_API_CONFIG.QA_VOTE_ENDPOINT}`;
-    const reqData = { ...question };
+    const { session_id, run_id, vote } = question;
+    if (!session_id) {
+      throw new Error('session_id is required for /qa/vote');
+    }
+    const reqData = { session_id, run_id, vote };
 
     const response = await fetch(url, {
       method: "POST",
