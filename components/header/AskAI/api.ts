@@ -8,8 +8,6 @@ const AI_API_CONFIG = {
   CHAT_ENDPOINT: '/agents/zego-doc-agent-zh/runs',
   WELCOME_PROMPTS_ENDPOINT: '/prompts/welcome',
   QA_VOTE_ENDPOINT: '/qa/vote',
-  QA_ADD_ENDPOINT: '/qa/add',
-  QA_UPDATE_ENDPOINT: '/qa/update',
   // 服务器地址
   SERVERS: {
     DEVELOPMENT: 'http://localhost:8000',
@@ -447,89 +445,6 @@ export const scoreFetch = async (
   }
 };
 
-
-/**
- * QA 记录：新增与更新
- */
-export interface AddQaRequest {
-  run_id: string;
-  question: string;
-  userid?: string | null;
-  sessionid?: string | null;
-  answer?: string | null;
-  vote?: 0 | 1 | 2;
-  product?: string | null;
-  platform?: string | null;
-}
-
-export interface UpdateQaRequest {
-  run_id: string;
-  userid?: string | null;
-  sessionid?: string | null;
-  question?: string | null;
-  answer?: string | null;
-  vote?: 0 | 1 | 2 | null;
-  product?: string | null;
-  platform?: string | null;
-}
-
-export const addQaRecord = async (body: AddQaRequest): Promise<void> => {
-  try {
-    const baseUrl = getApiBaseUrl();
-    const url = `${baseUrl}${AI_API_CONFIG.QA_ADD_ENDPOINT}`;
-    const resp = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        run_id: body.run_id,
-        question: body.question,
-        userid: body.userid ?? undefined,
-        sessionid: body.sessionid ?? undefined,
-        answer: body.answer ?? undefined,
-        vote: body.vote ?? 0,
-        product: body.product ?? undefined,
-        platform: body.platform ?? undefined,
-      }),
-    });
-    if (!resp.ok) {
-      console.warn('[QA][add] http error', resp.status, await resp.text());
-    } else {
-      // 可按需解析返回值
-      // const data = await resp.json();
-    }
-  } catch (e) {
-    console.warn('[QA][add] request failed', e);
-  }
-};
-
-export const updateQaRecord = async (body: UpdateQaRequest): Promise<void> => {
-  try {
-    const baseUrl = getApiBaseUrl();
-    const url = `${baseUrl}${AI_API_CONFIG.QA_UPDATE_ENDPOINT}`;
-    const resp = await fetch(url, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        run_id: body.run_id,
-        userid: body.userid ?? undefined,
-        sessionid: body.sessionid ?? undefined,
-        question: body.question ?? undefined,
-        answer: body.answer ?? undefined,
-        vote: body.vote ?? undefined,
-        product: body.product ?? undefined,
-        platform: body.platform ?? undefined,
-      }),
-    });
-    if (!resp.ok) {
-      console.warn('[QA][update] http error', resp.status, await resp.text());
-    } else {
-      // 可按需解析返回值
-      // const data = await resp.json();
-    }
-  } catch (e) {
-    console.warn('[QA][update] request failed', e);
-  }
-};
 
 
 // 取消运行：POST /agents/{agent_id}/runs/{run_id}/cancel
