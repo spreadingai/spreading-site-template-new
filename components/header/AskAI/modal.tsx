@@ -5,8 +5,8 @@ import { ReloadOutlined } from '@ant-design/icons';
 import MessageList, { Message } from './MessageList';
 import { Reference, cancelRun } from './api';
 import MessageSender from './MessageSender';
-import { sendStreamRequest, StreamEvent, addQaRecord, updateQaRecord } from './api';
-import { generateSessionId, generateUUID, getStableUserId } from './utils';
+import { sendStreamRequest, StreamEvent } from './api';
+import { generateSessionId, generateUUID } from './utils';
 import { copywriting } from "@/components/constant/language";
 import outStyles from './modal.module.scss';
 import { defaultLanguage } from '@/components/context/languageContext';
@@ -170,16 +170,6 @@ const AskAIModal: React.FC<Props> = ({
                 setStreamingMessageId(newId);
                 setMessages(prev => prev.map(msg => (msg.id === oldId ? { ...msg, id: newId } : msg)));
               }
-              // 记录QA：立即新增一条记录
-              void addQaRecord({
-                run_id: newId,
-                question: content,
-                userid: getStableUserId(),
-                sessionid: sessionId,
-                vote: 0,
-                product: currentGroup,
-                platform: currentPlatform,
-              });
             }
 
             // 仅在工具事件时更新事件头，避免被非工具事件覆盖导致闪烁
@@ -278,15 +268,6 @@ const AskAIModal: React.FC<Props> = ({
                 )
               );
 
-              // 回答完成：更新 QA 记录的 answer
-              const runIdForUpdate = String(currentMessageRef.current.id || '');
-              const answerText = currentMessageRef.current.content || '';
-              if (runIdForUpdate) {
-                void updateQaRecord({
-                  run_id: runIdForUpdate,
-                  answer: answerText
-                });
-              }
 
               // 消息完成后调用样式更新函数 - 与 modal-new.tsx 保持一致
               updateFooterStyle();
