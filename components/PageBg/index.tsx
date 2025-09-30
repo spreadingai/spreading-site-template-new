@@ -9,12 +9,14 @@ const PageBg = () => {
   return (
     <div className="only_pc__show absolute z-0 top-0 inset-x-0 flex justify-center overflow-hidden pointer-events-none">
       <div className="w-[108rem] flex-none flex justify-end">
-        <Image
+        {/* <Image
           src={theme === "dark" ? gradientFixedDark : gradientFixed}
           alt=""
           className="w-[71.75rem] flex-none max-w-none"
           decoding="async"
-        />
+        /> */}
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={theme === "dark" ? "/image/gradient_fixed@dark.png" : "/image/gradient_fixed.png"} alt="" className="w-[71.75rem] flex-none max-w-none" decoding="async" />
       </div>
     </div>
   );
