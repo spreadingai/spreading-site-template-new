@@ -157,6 +157,7 @@ const AskAIModal: React.FC<Props> = ({
           message: content,
           product: currentGroup,
           platform: currentPlatform,
+          language: currentLanguage,
           session_id: sessionId,
         },
         {
