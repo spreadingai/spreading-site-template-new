@@ -10,8 +10,8 @@ const AI_API_CONFIG = {
   QA_VOTE_ENDPOINT: '/qa/vote',
   // 服务器地址
   SERVERS: {
-    DEVELOPMENT: 'http://localhost:8000',
-    PRODUCTION: 'http://47.79.19.129:8000'
+    DEVELOPMENT: 'http://localhost:8765',
+    PRODUCTION: 'https://zego-doc-ai.spreading.cc:8000'
   }
 } as const;
 
@@ -43,6 +43,7 @@ export interface RequestParams {
   message: string;
   product: string;
   platform: string;
+  language?: string;
   user_id?: string;
   session_id?: string;
 }
@@ -221,6 +222,7 @@ export const sendStreamRequest = async (
   formData.set('dependencies', JSON.stringify({
     product: params.product,
     platform: params.platform,
+    language: params.language,
   }));
 
   try {
