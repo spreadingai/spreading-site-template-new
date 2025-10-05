@@ -178,12 +178,13 @@ const AskAIModal: React.FC<Props> = ({
               event.event_name === 'ToolCallStarted' ||
               event.event_name === 'ToolCallCompleted'
             ) {
+              // 工具调用开始或完成阶段：保持/开始转圈；有新内容时停止转圈
               if (currentMessageRef.current) {
                 currentMessageRef.current.eventInfo = {
                   eventName: event.event_name,
                   toolName: event.tool_name,
                   toolArgs: event.tool_args,
-                  isLoading: event.event_name === 'ToolCallStarted',
+                  isLoading: true,
                 };
                 setMessages(prev =>
                   prev.map(msg =>
@@ -222,14 +223,27 @@ const AskAIModal: React.FC<Props> = ({
             }
           },
           onMessage: (messageContent: string) => {
-            // 累积AI消息内容，而不是覆盖
+            // 累积AI消息内容，而不是覆盖；并在收到内容时停止转圈（仅改转圈，不改文案）
             if (currentMessageRef.current) {
               // 累积内容
               currentMessageRef.current.content += messageContent;
+
+              // 停止事件头部的转圈，但保留原有文案/图标
+              if (currentMessageRef.current.eventInfo?.isLoading) {
+                currentMessageRef.current.eventInfo = {
+                  ...currentMessageRef.current.eventInfo,
+                  isLoading: false,
+                };
+              }
+
               setMessages(prev =>
                 prev.map(msg =>
                   msg.id === currentMessageRef.current?.id
-                    ? { ...msg, content: currentMessageRef.current.content }
+                    ? {
+                        ...msg,
+                        content: currentMessageRef.current.content,
+                        eventInfo: currentMessageRef.current.eventInfo,
+                      }
                     : msg
                 )
               );
