@@ -31,7 +31,8 @@ const renderMessageFooter = (
     copyHandle: (message: Message) => void;
     scoreHandle: (e: React.MouseEvent<HTMLElement, MouseEvent>, message: Message, score: ScoreType) => void;
   },
-  aiSearchData: any
+  aiSearchData: any,
+  currentLanguage: string
 ) => {
   const { regenerateHandle, copyHandle, scoreHandle } = handlers;
 
@@ -45,7 +46,7 @@ const renderMessageFooter = (
 
   const renderData = uniqueReferences.map(ref => ({
     docLink: ref.url,
-    docName: ref.title,
+    docName: currentLanguage === 'en' ? ref.url : ref.title,
     docID: ref.url
   }));
 
@@ -481,7 +482,7 @@ const MessageList: React.FC<MessageListProps> = ({
           regenerateHandle,
           copyHandle,
           scoreHandle
-        }, aiSearchData);
+        }, aiSearchData, currentLanguage);
       }
     }
 
