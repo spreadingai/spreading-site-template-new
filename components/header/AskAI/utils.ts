@@ -29,12 +29,13 @@ export const generateUserFingerprint = (): string => {
   // WebGL指纹
   let webglFingerprint = '';
   try {
-    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    const gl = (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')) as WebGLRenderingContext | null;
     if (gl) {
-      const debugInfo = gl.getExtension('WEBGL_debug_renderer_info');
+      const debugInfo = gl.getExtension('WEBGL_debug_renderer_info') as any;
       if (debugInfo) {
-        webglFingerprint = gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL) +
-                          gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL);
+        webglFingerprint =
+          String(gl.getParameter(debugInfo.UNMASKED_VENDOR_WEBGL)) +
+          String(gl.getParameter(debugInfo.UNMASKED_RENDERER_WEBGL));
       }
     }
   } catch (e) {

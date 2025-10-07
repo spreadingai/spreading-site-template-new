@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { Modal, message } from 'antd';
 import { ThemeProvider } from 'antd-style';
+// @ts-ignore
 import { ReloadOutlined } from '@ant-design/icons';
 import MessageList, { Message } from './MessageList';
 import { Reference, cancelRun } from './api';

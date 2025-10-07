@@ -1,5 +1,6 @@
 import React from 'react';
 import { Space, Typography } from 'antd';
+// @ts-ignore
 import { LinkOutlined } from '@ant-design/icons';
 import styles from './ReferencesFooter.module.scss';
 
@@ -42,9 +43,9 @@ const ReferencesFooter: React.FC<ReferencesFooterProps> = ({ references }) => {
       <div className={styles.referencesList}>
         {uniqueReferences.map((ref, index) => (
           <div key={ref.url} className={styles.referenceItem}>
-            <Link 
-              href={ref.url} 
-              target="_blank" 
+            <Link
+              href={ref.url}
+              target="_blank"
               rel="noopener noreferrer"
               className={styles.referenceLink}
             >

@@ -7,7 +7,8 @@ import {
   LikeOutlined,
   DislikeOutlined,
   CommentOutlined
-} from '@ant-design/icons';
+  // @ts-ignore
+} from "@ant-design/icons";
 import { Space, Spin, Skeleton } from 'antd';
 import { Markdown } from "@ant-design/pro-editor";
 // @ts-ignore

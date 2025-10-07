@@ -1,5 +1,6 @@
 import React from 'react';
 import { Sender } from '@ant-design/x';
+// @ts-ignore
 import { SendOutlined } from '@ant-design/icons';
 import outStyles from './MessageSender.module.scss';
 

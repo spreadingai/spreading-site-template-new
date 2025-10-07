@@ -4,7 +4,8 @@ import {
   DatabaseOutlined,
   SearchOutlined,
   LoadingOutlined
-} from '@ant-design/icons';
+  // @ts-ignore
+} from "@ant-design/icons";
 import styles from './EventStatus.module.scss';
 
 export interface EventStatusProps {
