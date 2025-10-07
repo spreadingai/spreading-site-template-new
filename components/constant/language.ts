@@ -48,6 +48,7 @@ export const copywriting = {
         search: 'search',
         list_datasets: 'list datasets',
         set_dataset_ids: 'set dataset ids',
+        validate_error_codes: 'validating error codes',
       }
     },
 
@@ -125,6 +126,7 @@ export const copywriting = {
         search: '搜索',
         list_datasets: '收集知识库列表',
         set_dataset_ids: '选择相关知识库',
+        validate_error_codes: '正在校验错误码',
       }
     },
     openapi: {

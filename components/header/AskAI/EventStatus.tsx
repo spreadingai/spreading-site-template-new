@@ -1,9 +1,9 @@
 import React from 'react';
 import { Space, Spin } from 'antd';
-import { 
-  DatabaseOutlined, 
-  SearchOutlined, 
-  LoadingOutlined 
+import {
+  DatabaseOutlined,
+  SearchOutlined,
+  LoadingOutlined
 } from '@ant-design/icons';
 import styles from './EventStatus.module.scss';
 
@@ -15,10 +15,10 @@ export interface EventStatusProps {
   aiSearchData: any;
 }
 
-const EventStatus: React.FC<EventStatusProps> = ({ 
-  eventName, 
-  toolName, 
-  toolArgs, 
+const EventStatus: React.FC<EventStatusProps> = ({
+  eventName,
+  toolName,
+  toolArgs,
   isLoading,
   aiSearchData
 }) => {
@@ -39,13 +39,18 @@ const EventStatus: React.FC<EventStatusProps> = ({
           icon: <SearchOutlined />,
           text: `${aiSearchData.event.search}: ${toolArgs?.query || ''}`,
         };
+      case 'validate_error_codes':
+        return {
+          icon: <SearchOutlined />,
+          text: aiSearchData.event.validate_error_codes,
+        };
       default:
         return null;
     }
   };
 
   const eventDisplay = getEventDisplay();
-  
+
   if (!eventDisplay) {
     return null;
   }
@@ -56,9 +61,9 @@ const EventStatus: React.FC<EventStatusProps> = ({
         {eventDisplay.icon}
         <span className={styles.eventText}>{eventDisplay.text}</span>
         {isLoading && (
-          <Spin 
-            indicator={<LoadingOutlined style={{ fontSize: 14 }} spin />} 
-            size="small" 
+          <Spin
+            indicator={<LoadingOutlined style={{ fontSize: 14 }} spin />}
+            size="small"
           />
         )}
       </Space>
