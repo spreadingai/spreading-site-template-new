@@ -184,8 +184,9 @@ const MessageList: React.FC<MessageListProps> = ({
         setIsLoadingQuestions(false);
       }
     };
-
-    fetchPrompts();
+    if (currentGroup && currentPlatform) {
+      fetchPrompts();
+    }
   }, [currentGroup, currentLanguage, currentPlatform]);
 
   // 复制 modal-new.tsx 的 updateScoreStyle 函数

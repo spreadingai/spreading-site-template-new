@@ -3,7 +3,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import dynamic from "next/dynamic";
 const NewAISearchModal = dynamic(
-  () => import("@/components/header/AISearch/modal-new"),
+  // () => import("@/components/header/AISearch/modal-new"),
+  () => import("@/components/header/AskAI/modal"),
   {
     ssr: false,
   }

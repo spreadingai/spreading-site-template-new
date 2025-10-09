@@ -13,4 +13,8 @@
   .anticon {
     color: var(--docuo-color-primary, #1677ff);
   }
+
+  :global(.ant-space .ant-space-item) {
+    display: flex;
+  }
 }
