@@ -12,7 +12,7 @@
     height: 18px;
     user-select: none;
     margin-top: 2px;
-    background: url("/assets/mdx/callout_tips.png");
+    background: url("~/assets/images/mdx/callout_tips.png");
     background-size: 100% 100%;
   }
 
@@ -51,7 +51,7 @@
     border-color: var(--docuo-callout-tips-border-color);
 
     .callout_icon {
-      background-image: url("/assets/mdx/callout_tips.png");
+      background-image: url("~/assets/images/mdx/callout_tips.png");
     }
 
     .header {
