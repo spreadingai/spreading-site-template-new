@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
-import gradientFixed from "@/assets/images/gradient_fixed.png";
-import gradientFixedDark from "@/assets/images/gradient_fixed@dark.png";
+// import gradientFixed from "@/assets/images/gradient_fixed.png";
+// import gradientFixedDark from "@/assets/images/gradient_fixed@dark.png";
 import useTheme from "@/components/hooks/useTheme";
 
 const PageBg = () => {
@@ -16,7 +16,7 @@ const PageBg = () => {
           decoding="async"
         /> */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={theme === "dark" ? "/image/gradient_fixed@dark.png" : "/image/gradient_fixed.png"} alt="" className="w-[71.75rem] flex-none max-w-none" decoding="async" />
+        <img src={theme === "dark" ? `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/image/gradient_fixed@dark.png` : `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/image/gradient_fixed.png`} alt="" className="w-[71.75rem] flex-none max-w-none" decoding="async" />
       </div>
     </div>
   );
