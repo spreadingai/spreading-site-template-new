@@ -185,7 +185,9 @@
 		color: var(--docuo-color-primary);
 		text-decoration: none;
 		border-bottom: 1px solid var(--docuo-color-primary-hover);
+		transition: all 0.3s;
 		&:hover {
+			transition: all 0.3s;
 			color: var(--docuo-color-primary-hover);
 		}
 	}
@@ -299,6 +301,62 @@
 				font-size: 14px;
 				color: var(--docuo-openapi-schema-list-item-color);
 				line-height: 23px;
+			}
+			ul {
+				padding-inline-start: 20px;
+				> li::after {
+					content: "";
+					width: 6px;
+					height: 6px;
+					background: var(--docuo-ul-dot-color);
+					border-radius: 4px 4px 4px 4px;
+					position: absolute;
+					left: -18px;
+					top: 13px;
+					z-index: 1;
+				}
+				// 直接子元素才生效，否则会影响到 ul 嵌套 ol 的样式
+				> li {
+					position: relative;
+				}
+			}
+		}
+		ul.custom-description-ul {
+			padding-inline-start: 20px;
+			> li::after {
+				content: "";
+				width: 6px;
+				height: 6px;
+				background: var(--docuo-ul-dot-color);
+				border-radius: 4px 4px 4px 4px;
+				position: absolute;
+				left: -18px;
+				top: 13px;
+				z-index: 1;
+			}
+			// 直接子元素才生效，否则会影响到 ul 嵌套 ol 的样式
+			> li {
+				position: relative;
+			}
+		}
+		.openapi-schema__list-item {
+			ul:not([class]) {
+				padding-inline-start: 20px;
+				> li:not([class])::after {
+					content: "";
+					width: 6px;
+					height: 6px;
+					background: var(--docuo-ul-dot-color);
+					border-radius: 4px 4px 4px 4px;
+					position: absolute;
+					left: -18px;
+					top: 13px;
+					z-index: 1;
+				}
+				// 直接子元素才生效，否则会影响到 ul 嵌套 ol 的样式
+				> li:not([class]) {
+					position: relative;
+				}
 			}
 		}
 	}
