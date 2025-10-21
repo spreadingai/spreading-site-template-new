@@ -296,6 +296,8 @@
 			}
 			& > :first-child {
     			margin-bottom: 6px;
+			}
+			& > p:first-child {
 				font-family: var(--font-inter-semibold), var(--font-inter);
 			}
 			p {
