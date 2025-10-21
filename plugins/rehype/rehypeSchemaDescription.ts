@@ -1,4 +1,6 @@
 import { visit } from "unist-util-visit";
+// import MarkdownIt from "markdown-it";
+// const md = MarkdownIt({ html: true, breaks: true });
 
 /**
  * Rehype 插件：处理 schema-description div 元素中的列表和引用语法
@@ -181,41 +183,83 @@ function processListSyntax(text: string): any[] {
 
 const tempTrans = (parent, newChildren) => {
   if (parent.children.length > 1) {
-    // 说明整个都是引用语法，遍历 parent 所有的子元素，把子元素值中有"> "的子元素用 P 包裹一层，然后把值中的"> "移除掉，其他不处理
+    // 说明整个都是引用语法，需要按 "> " 换行符分组，每组创建一个 <p> 标签
     const newParentChildren: any[] = [];
+    let currentParagraphChildren: any[] = [];
+    let endsWithQuote = false; // 记录当前段落是否以 "> " 结尾
 
-    parent.children.forEach((child: any) => {
+    parent.children.forEach((child: any, index: number) => {
       if (child.type === "text" && child.value) {
-        // 检查该子元素的值中是否包含 "> " 前缀
+        // 检查文本中是否包含 "> " 换行符
         if (/(?<!\\)(?<! )> |>> /.test(child.value)) {
-          // 根据 "> " 的个数分割成多个段落，每个段落创建一个 <p> 标签
-          const paragraphs = child.value.split(/(?<!\\)(?<! )> |>> /).filter(p => p.trim());
-          paragraphs.forEach((paragraph) => {
-            const trimmedParagraph = paragraph.trim();
-            if (trimmedParagraph) {
-              newParentChildren.push({
-                type: "element",
-                tagName: "p",
-                properties: {
-                  className: ["custom-description-p"],
-                },
-                children: [
-                  {
-                    type: "text",
-                    value: trimmedParagraph,
+          // 按 "> " 分割文本
+          const parts = child.value.split(/(?<!\\)(?<! )> |>> /);
+
+          parts.forEach((part, partIndex) => {
+            if (partIndex > 0) {
+              // 不是第一部分，说明前面有 "> "，需要保存当前段落并开始新段落
+              if (currentParagraphChildren.length > 0) {
+                newParentChildren.push({
+                  type: "element",
+                  tagName: "p",
+                  properties: {
+                    className: ["custom-description-p"],
                   },
-                ],
+                  children: currentParagraphChildren,
+                });
+                currentParagraphChildren = [];
+              }
+            }
+
+            // 添加当前部分到段落
+            if (part) {
+              currentParagraphChildren.push({
+                type: "text",
+                value: part,
               });
             }
           });
+
+          // 检查是否以 "> " 结尾（最后一部分为空说明以 "> " 结尾）
+          endsWithQuote = parts[parts.length - 1] === "";
         } else {
-          newParentChildren.push(child);
+          // 文本中没有 "> "，添加到当前段落
+          currentParagraphChildren.push(child);
+          endsWithQuote = false;
         }
       } else {
-        // 非文本节点，保持原样
-        newParentChildren.push(child);
+        // 非文本节点（如 code 元素）
+        // 如果前面的文本以 "> " 结尾，需要先保存当前段落
+        if (endsWithQuote && currentParagraphChildren.length > 0) {
+          newParentChildren.push({
+            type: "element",
+            tagName: "p",
+            properties: {
+              className: ["custom-description-p"],
+            },
+            children: currentParagraphChildren,
+          });
+          currentParagraphChildren = [];
+          endsWithQuote = false;
+        }
+
+        // 添加元素节点到当前段落
+        currentParagraphChildren.push(child);
+      }
+
+      // 如果是最后一个子节点，保存当前段落
+      if (index === parent.children.length - 1 && currentParagraphChildren.length > 0) {
+        newParentChildren.push({
+          type: "element",
+          tagName: "p",
+          properties: {
+            className: ["custom-description-p"],
+          },
+          children: currentParagraphChildren,
+        });
       }
     });
+
     newChildren.push({
       type: "element",
       tagName: "blockquote",
