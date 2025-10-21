@@ -178,6 +178,57 @@ function processListSyntax(text: string): any[] {
 
   return children;
 }
+
+const tempTrans = (parent, newChildren) => {
+  if (parent.children.length > 1) {
+    // 说明整个都是引用语法，遍历 parent 所有的子元素，把子元素值中有"> "的子元素用 P 包裹一层，然后把值中的"> "移除掉，其他不处理
+    const newParentChildren: any[] = [];
+
+    parent.children.forEach((child: any) => {
+      if (child.type === "text" && child.value) {
+        // 检查该子元素的值中是否包含 "> " 前缀
+        if (/(?<!\\)(?<! )> |>> /.test(child.value)) {
+          // 根据 "> " 的个数分割成多个段落，每个段落创建一个 <p> 标签
+          const paragraphs = child.value.split(/(?<!\\)(?<! )> |>> /).filter(p => p.trim());
+          paragraphs.forEach((paragraph) => {
+            const trimmedParagraph = paragraph.trim();
+            if (trimmedParagraph) {
+              newParentChildren.push({
+                type: "element",
+                tagName: "p",
+                properties: {
+                  className: ["custom-description-p"],
+                },
+                children: [
+                  {
+                    type: "text",
+                    value: trimmedParagraph,
+                  },
+                ],
+              });
+            }
+          });
+        } else {
+          newParentChildren.push(child);
+        }
+      } else {
+        // 非文本节点，保持原样
+        newParentChildren.push(child);
+      }
+    });
+    newChildren.push({
+      type: "element",
+      tagName: "blockquote",
+      properties: {},
+      children: newParentChildren,
+    });
+    parent.children = newChildren;
+    return true;
+  } else {
+    return false;
+  }
+}
+
 export function rehypeSchemaDescription() {
   return function processSchemaDescription(tree) {
     visit(tree, (node, _index, parent) => {
@@ -199,6 +250,8 @@ export function rehypeSchemaDescription() {
 
       // 3. 检测是否包含引用语法
       if (hasQuoteSyntax(fullText)) {
+        const result = tempTrans(parent, newChildren);
+        if (result) return;
         // 有引用语法，需要先处理引用
         const quoteInfo = extractQuoteContent(fullText);
 
