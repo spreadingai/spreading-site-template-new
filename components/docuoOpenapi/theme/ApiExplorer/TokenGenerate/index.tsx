@@ -103,9 +103,7 @@ const TokenGenerate: React.FC<TokenGenerateProps> = ({
 
         // 更新 storage 中的 openapi_params
         paramNames.forEach((paramName) => {
-          if (paramName in openApiParams) {
             openApiParams[paramName] = value;
-          }
         });
 
         // 更新 Redux 中的参数值，触发 FormTextInput 的值更新
@@ -256,7 +254,7 @@ const TokenGenerate: React.FC<TokenGenerateProps> = ({
             name="ServerSecret"
             autoComplete="off"
             title="请输入ServerSecret"
-            type="password"
+            type="text"
             value={serverSecret}
             onChange={(e) => setServerSecret(e.target.value)}
             placeholder="请输入ServerSecret"
