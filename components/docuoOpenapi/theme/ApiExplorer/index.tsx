@@ -12,7 +12,7 @@ import CodeSnippets from "@/components/docuoOpenapi/theme/ApiExplorer/CodeSnippe
 import Request from "@/components/docuoOpenapi/theme/ApiExplorer/Request";
 import Response from "@/components/docuoOpenapi/theme/ApiExplorer/Response";
 import { ApiItem } from "@/components/docuoOpenapi/docuo-plugin-openapi-docs/src/types";
-
+import TokenGenerate from "@/components/docuoOpenapi/theme/ApiExplorer/TokenGenerate";
 import SecuritySchemes from "@/components/docuoOpenapi/theme/ApiExplorer/SecuritySchemes";
 
 function ApiExplorer({
@@ -33,6 +33,7 @@ function ApiExplorer({
           codeSamples={(item as any)["x-codeSamples"] ?? []}
         />
       )}
+      <TokenGenerate />
       <Request item={item} />
       <Response item={item} />
     </>
