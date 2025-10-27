@@ -74,6 +74,12 @@ export const copywriting = {
         responsePlaceholder: "Click the \"Send\" button above and see the response here!",
         clear: "Clear",
         headers: "Headers"
+      },
+      signature: {
+        generate: 'Generate',
+        signatureGenerator: 'ZEGO Signature Generator',
+        appIdPlaceholder: 'Please fill in the AppID. You can get from https://console.zegocloud.com/.',
+        serverSecretPlaceholder: 'Please fill in the ServerSecret. You can get from https://console.zegocloud.com/.',
       }
     }
   },
@@ -151,6 +157,12 @@ export const copywriting = {
         responsePlaceholder: "点击上方 “发送” 按钮，在此处查看响应。",
         clear: "清除",
         headers: "响应头"
+      },
+      signature: {
+        generate: '生成',
+        signatureGenerator: 'ZEGO 签名生成器',
+        appIdPlaceholder: '请填写 AppID 。您可以从 https://console.zego.im/ 中获取。',
+        serverSecretPlaceholder: '请填写 AppID 。您可以从 https://console.zego.im/ 中获取。',
       }
     }
   },

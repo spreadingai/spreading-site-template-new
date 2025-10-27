@@ -10,6 +10,8 @@ import {
   setParam,
 } from "@/components/docuoOpenapi/theme/ApiExplorer/ParamOptions/slice";
 import { useTypedDispatch } from "@/components/docuoOpenapi/theme/ApiItem/hooks";
+import useLanguage from "@/components/hooks/useLanguage";
+import { copywriting } from "@/components/constant/language";
 
 export interface SignatureData {
   appId: string;
@@ -34,6 +36,8 @@ const TokenGenerate: React.FC<TokenGenerateProps> = ({
   const [signatureNonce, setSignatureNonce] = useState("");
   const [timestamp, setTimestamp] = useState("");
   const [signature, setSignature] = useState("");
+  const { currentLanguage } = useLanguage();
+  const t = copywriting[currentLanguage]?.openapi || copywriting.en.openapi;
 
   const storage = useMemo(() => createStorage("sessionStorage"), []);
   const dispatch = useTypedDispatch();
@@ -221,11 +225,12 @@ const TokenGenerate: React.FC<TokenGenerateProps> = ({
   return (
     <div className={styles["token-generate-container"]}>
       <div className={styles["token-generate-header"]}>
+        <span>{ t.signature.signatureGenerator }</span>
         <button
             onClick={handleGenerate}
             className={styles["token-generate-generate-button"]}
         >
-            生成签名
+           { t.signature.generate }
         </button>
       </div>
 
@@ -235,11 +240,11 @@ const TokenGenerate: React.FC<TokenGenerateProps> = ({
           <input
             name="AppId"
             autoComplete="off"
-            title="请输入AppId"
+            title={t.signature.appIdPlaceholder}
             type="text"
             value={appId}
             onChange={(e) => setAppId(e.target.value)}
-            placeholder="请输入AppId"
+            placeholder={t.signature.appIdPlaceholder}
             className={styles["token-generate-field-input"]}
           />
         </div>
@@ -253,11 +258,11 @@ const TokenGenerate: React.FC<TokenGenerateProps> = ({
           <input
             name="ServerSecret"
             autoComplete="off"
-            title="请输入ServerSecret"
+            title={t.signature.serverSecretPlaceholder}
             type="text"
             value={serverSecret}
             onChange={(e) => setServerSecret(e.target.value)}
-            placeholder="请输入ServerSecret"
+            placeholder={t.signature.serverSecretPlaceholder}
             className={styles["token-generate-field-input"]}
           />
         </div>

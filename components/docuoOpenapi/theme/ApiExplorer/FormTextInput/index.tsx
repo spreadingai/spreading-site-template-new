@@ -6,7 +6,7 @@
  * ========================================================================== */
 
 // @ts-nocheck
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 
 import { ErrorMessage } from "@hookform/error-message";
 import clsx from "clsx";
@@ -37,12 +37,21 @@ function FormTextInput({
   const {
     register,
     formState: { errors },
+    setValue,
   } = useFormContext();
 
   const showErrorMessage = errors?.[paramName]?.message;
 
   const { currentLanguage } = useLanguage();
   const t = copywriting[currentLanguage]?.openapi || copywriting.en.openapi;
+
+  // 当 value prop 变化时，更新 React Hook Form 的字段值
+  // 这样可以确保外部更新（如 Redux 更新）能够正确清除表单验证错误
+  useEffect(() => {
+    if (paramName && value !== undefined && value !== null) {
+      setValue(paramName, value, { shouldValidate: true });
+    }
+  }, [value, paramName, setValue]);
 
   return (
     <>

@@ -12,20 +12,24 @@
 .token-generate-field {
     margin-bottom: 12px;
     border: 1px solid #333333;
-    padding: 10px 10px 0 12px;
+    padding: 0 10px 0 12px;
     border-radius: 6px;
     margin-inline: 12px;
+    display: flex;
+    align-items: center;
 }
 
 .token-generate-field-label {
     display: block;
     color: #f0f0f0;
     font-size: 12px;
+    margin-right: 12px;
 }
 
 .token-generate-field-input-group {
     display: flex;
     gap: 10px;
+    flex: 1;
 }
 
 .token-generate-field-input {
@@ -35,7 +39,7 @@
     background: #171717!important;
     outline: none;
     border: none;
-    padding: 11px 10px 11px 0;
+    padding: 11px 0 11px 0;
     height: 40px;
 }
 .token-generate-field-input::-webkit-input-placeholder {
@@ -51,12 +55,17 @@
 
 .token-generate-header {
     display: flex;
-    flex-direction: row-reverse;
+    flex-direction: row;
     align-items: center;
+    justify-content: space-between;
     margin-bottom: 16px;
     background-color: #282828;
     padding: 10px 12px 10px 16px;
     text-transform: uppercase;
+    font-size: 14px;
+    font-family: var(--font-inter-medium);
+    font-weight: 500;
+    color: #b6b6b6;
 }
 
 .token-generate-generate-button {
@@ -73,6 +82,7 @@
     color: #266eff;
     cursor: pointer;
     transition: all 0.3s;
+    text-transform: uppercase;
 }
 
 .token-generate-generate-button:hover {
