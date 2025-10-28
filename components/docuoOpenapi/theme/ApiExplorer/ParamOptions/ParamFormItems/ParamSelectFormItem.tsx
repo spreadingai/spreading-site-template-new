@@ -43,6 +43,11 @@ export default function ParamSelectFormItem({ param }: ParamProps) {
   // 用于追踪是否已自动选择唯一选项，避免重复触发
   const hasAutoSelectedRef = useRef(false);
 
+  // 当 options 变化时（如切换页面），重置自动选择标记
+  useEffect(() => {
+    hasAutoSelectedRef.current = false;
+  }, [options]);
+
   // 当只有一个选项时，自动选择该选项
   useEffect(() => {
     if (options.length === 1 && !hasAutoSelectedRef.current) {
