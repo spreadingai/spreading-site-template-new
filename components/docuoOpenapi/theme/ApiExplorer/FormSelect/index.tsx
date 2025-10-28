@@ -28,7 +28,7 @@ function FormSelect({ label, value, options, onChange }: Props) {
       <Select
         popupClassName="openapi-form-select-dropdown"
         suffixIcon={<span className="suffix-dropdown-icon"></span>}
-        defaultValue={value}
+        value={value}
         style={{ width: 120 }}
         onChange={onChange}
         options={options.map((option) => {
