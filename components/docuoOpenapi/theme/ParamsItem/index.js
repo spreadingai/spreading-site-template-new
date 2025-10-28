@@ -69,7 +69,7 @@ function ParamsItem({
           pre: "div",
           code({ node, inline, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || "");
-            if (inline) return <code>{children}</code>;
+            if (inline || !children.endsWith("\n")) return <code>{children}</code>;
             const lang = match ? match[1] : "text";
             const codeString = Array.isArray(children) ? children.join("") : children;
             return !inline ? (
