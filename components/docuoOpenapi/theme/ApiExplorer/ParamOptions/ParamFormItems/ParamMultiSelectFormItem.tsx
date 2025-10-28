@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  * ========================================================================== */
 
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 
 import { ErrorMessage } from "@hookform/error-message";
 import FormMultiSelect from "@/components/docuoOpenapi/theme/ApiExplorer/FormMultiSelect";
@@ -15,7 +15,6 @@ import {
 } from "@/components/docuoOpenapi/theme/ApiExplorer/ParamOptions/slice";
 import {
   useTypedDispatch,
-  useTypedSelector,
 } from "@/components/docuoOpenapi/theme/ApiItem/hooks";
 import { Controller, useFormContext } from "react-hook-form";
 import useLanguage from "@/components/hooks/useLanguage";
@@ -30,6 +29,7 @@ export default function ParamMultiSelectFormItem({ param }: ParamProps) {
   const {
     control,
     formState: { errors },
+    setValue,
   } = useFormContext();
 
   const showErrorMessage = errors?.paramMultiSelect;
@@ -40,46 +40,13 @@ export default function ParamMultiSelectFormItem({ param }: ParamProps) {
   const { currentLanguage } = useLanguage();
   const t = copywriting[currentLanguage]?.openapi || copywriting.en.openapi;
 
-
-  const pathParams = useTypedSelector((state: any) => state.params.path);
-  const queryParams = useTypedSelector((state: any) => state.params.query);
-  const cookieParams = useTypedSelector((state: any) => state.params.cookie);
-  const headerParams = useTypedSelector((state: any) => state.params.header);
-
-  const paramTypeToWatch = pathParams.length
-    ? pathParams
-    : queryParams.length
-    ? queryParams
-    : cookieParams.length
-    ? cookieParams
-    : headerParams;
-
-  // const handleChange = (e: any, onChange: any) => {
-  //   const values = Array.prototype.filter
-  //     .call(e.target.options, (o) => o.selected)
-  //     .map((o) => o.value);
-
-  //   const value = values.length > 0 ? values : undefined;
-  //   dispatch(
-  //     setParam({
-  //       ...param,
-  //       value,
-  //     })
-  //   );
-
-  //   onChange(paramTypeToWatch);
-  // };
-  const handleChange = (values: any, onChange: any) => {
-    const value = values.length > 0 ? values : undefined;
-    dispatch(
-      setParam({
-        ...param,
-        value,
-      })
-    );
-
-    onChange(paramTypeToWatch);
-  };
+  // 当 param.value 变化时，同步到 React Hook Form
+  // 这样可以确保外部更新（如 Redux 更新）能够正确清除表单验证错误
+  useEffect(() => {
+    if (param.value && Array.isArray(param.value) && param.value.length > 0) {
+      setValue("paramMultiSelect", param.value, { shouldValidate: true });
+    }
+  }, [param.value, setValue]);
 
   return (
     <>
@@ -87,12 +54,15 @@ export default function ParamMultiSelectFormItem({ param }: ParamProps) {
         control={control}
         rules={{ required: param.required ? t.request.fieldRequired : false }}
         name="paramMultiSelect"
-        render={({ field: { onChange, name } }) => (
+        render={({ field: { onChange } }) => (
           <FormMultiSelect
             options={options as string[]}
-            name={name}
-            // onChange={(e: any) => handleChange(e, onChange)}
-            onChange={(values) => handleChange(values, onChange)}
+            value={param.value as string[]}
+            // @ts-ignore
+            onChange={(values) => {
+              dispatch(setParam({ ...param, value: values }));
+              onChange(values);
+            }}
             // @ts-ignore
             showErrors={showErrorMessage}
           />

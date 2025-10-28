@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  * ========================================================================== */
 
-import React, { useState } from "react";
+import React from "react";
 
 import clsx from "clsx";
 import { Select } from "antd";
@@ -13,36 +13,14 @@ import { Select } from "antd";
 export interface Props {
   value?: string[];
   options: string[];
-  // onChange?: React.ChangeEventHandler<HTMLSelectElement>;
   onChange?: (value: string[]) => void;
   showErrors?: boolean;
 }
 
 function FormMultiSelect({ value, options, onChange, showErrors }: Props) {
-  const defaultValue = value || options;
-  const [selectValue, setSelectValue] = useState(defaultValue);
-
   if (options.length === 0) {
     return null;
   }
-
-  // let height;
-  // if (options.length < 6) {
-  //   const selectPadding = 12 * 2;
-  //   const rawHeight = options.length * 29;
-  //   const innerMargins = 4 * options.length - 1;
-  //   const outerMargins = 4 * 2;
-  //   const mysteryScroll = 1;
-  //   height =
-  //     rawHeight + innerMargins + outerMargins + selectPadding + mysteryScroll;
-  // }
-
-  const changeHandle = (value) => {
-    setSelectValue(value);
-    onChange(value);
-  };
-
-  console.log("####value", defaultValue);
 
   return (
     <Select
@@ -51,9 +29,8 @@ function FormMultiSelect({ value, options, onChange, showErrors }: Props) {
         error: showErrors,
       })}
       mode="multiple"
-      defaultValue={defaultValue}
-      value={selectValue}
-      onChange={changeHandle}
+      value={value || []}
+      onChange={onChange}
       options={options.map((option) => {
         return {
           value: option,
