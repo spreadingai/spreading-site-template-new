@@ -343,9 +343,9 @@
 			}
 		}
 		.openapi-schema__list-item {
-			ul:not([class]) {
+			ul:not([class]):not([style]):not([role]):not([id]):not([data^="data-"]):has(> li:not([class]):not([style]):not([role]):not([id]):not([data^="data-"])) {
 				padding-inline-start: 20px;
-				> li:not([class])::after {
+				> li:not([class]):not([style]):not([role]):not([id]):not([data^="data-"])::after {
 					content: "";
 					width: 6px;
 					height: 6px;
@@ -357,8 +357,31 @@
 					z-index: 1;
 				}
 				// 直接子元素才生效，否则会影响到 ul 嵌套 ol 的样式
-				> li:not([class]) {
+				> li:not([class]):not([style]):not([role]):not([id]):not([data^="data-"]) {
 					position: relative;
+				}
+			}
+		}
+		.openapi-left-panel__container {
+			ul:not(.openapi-markdown__details ul):not(.tabs-container ul):not(.openapi-tabs__container ul):not([class]):not([style]):not([role]):not([id]):not([data^="data-"]):has(> li:not([class]):not([style]):not([role]):not([id]):not([data^="data-"])) {
+				padding-inline-start: 20px;
+				> li:not([class]):not([style]):not([role]):not([id]):not([data^="data-"])::after {
+					content: "";
+					width: 6px;
+					height: 6px;
+					background: var(--docuo-ul-dot-color);
+					border-radius: 4px 4px 4px 4px;
+					position: absolute;
+					left: -18px;
+					top: 8px;
+					z-index: 1;
+				}
+				// 直接子元素才生效，否则会影响到 ul 嵌套 ol 的样式
+				> li:not([class]):not([style]):not([role]):not([id]):not([data^="data-"]) {
+					position: relative;
+					color: var(--docuo-text-color);
+					font-size: 16px;
+					margin: 14px 0;
 				}
 			}
 		}
