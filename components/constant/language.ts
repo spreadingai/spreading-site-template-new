@@ -78,8 +78,8 @@ export const copywriting = {
       signature: {
         generate: 'Generate',
         signatureGenerator: 'ZEGO Signature Generator',
-        appIdPlaceholder: 'Please fill in the AppID. You can get from https://console.zegocloud.com/.',
-        serverSecretPlaceholder: 'Please fill in the ServerSecret. You can get from https://console.zegocloud.com/.',
+        appIdPlaceholder: 'You can get from https://console.zegocloud.com/.',
+        serverSecretPlaceholder: 'You can get from https://console.zegocloud.com/.',
       }
     }
   },
@@ -161,8 +161,8 @@ export const copywriting = {
       signature: {
         generate: '生成',
         signatureGenerator: 'ZEGO 签名生成器',
-        appIdPlaceholder: '请填写 AppID 。您可以从 https://console.zego.im/ 中获取。',
-        serverSecretPlaceholder: '请填写 AppID 。您可以从 https://console.zego.im/ 中获取。',
+        appIdPlaceholder: '您可以从 https://console.zego.im/ 中获取。',
+        serverSecretPlaceholder: '您可以从 https://console.zego.im/ 中获取。',
       }
     }
   },
