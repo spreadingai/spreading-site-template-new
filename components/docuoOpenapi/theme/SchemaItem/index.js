@@ -63,6 +63,18 @@ function SchemaItem({
         children={createDescription(description)}
         components={{
           pre: "div",
+          a({ href, children, ...props }) {
+            const raw = href || "";
+            const isExternal = raw.startsWith("http") || raw.startsWith("mailto:") || raw.startsWith("tel:");
+            if (isExternal || raw.startsWith("/article/")) return <a {...props} href={href}>{children}</a>;
+            const clean = raw.split("#")[0].split("?")[0];
+            const last = clean.substring(clean.lastIndexOf("/") + 1);
+            const hasExt = /\.[^./]+$/.test(last);
+            const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+            const needBase = raw.startsWith("/") && basePath && !raw.startsWith(`${basePath}/`) && !hasExt;
+            const finalHref = needBase ? `${basePath}${raw}` : raw;
+            return <a {...props} href={finalHref}>{children}</a>;
+          },
           code({ node, inline, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || "");
             if (inline || !children.endsWith("\n")) return <code>{children}</code>;
@@ -91,6 +103,20 @@ function SchemaItem({
           // eslint-disable-next-line react/no-children-prop
           children={createDescription(localized)}
           rehypePlugins={[rehypeRaw]}
+          components={{
+            a({ href, children, ...props }) {
+              const raw = href || "";
+              const isExternal = raw.startsWith("http") || raw.startsWith("mailto:") || raw.startsWith("tel:");
+              if (isExternal || raw.startsWith("/article/")) return <a {...props} href={href}>{children}</a>;
+              const clean = raw.split("#")[0].split("?")[0];
+              const last = clean.substring(clean.lastIndexOf("/") + 1);
+              const hasExt = /\.[^./]+$/.test(last);
+              const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+              const needBase = raw.startsWith("/") && basePath && !raw.startsWith(`${basePath}/`) && !hasExt;
+              const finalHref = needBase ? `${basePath}${raw}` : raw;
+              return <a {...props} href={finalHref}>{children}</a>;
+            },
+          }}
         />
       </div>
     );
