@@ -95,14 +95,15 @@ const components = {
   Steps,
   QRCode,
   LastUpdated,
-  a: (props) =>
-    props.href && props.href.startsWith("http") ? (
-      <a {...props} target="_blank" />
-    ) : props.href && props.href.startsWith("/article/") ? (
-      <a {...props} />
-    ) : (
-      <Link {...props} />
-    ),
+  a: (props) => {
+    const href = props?.href || "";
+    if (href.startsWith("http")) return <a {...props} target="_blank" />;
+    if (href.startsWith("/article/")) return <a {...props} />;
+    // 绝对内部链接：使用原生 <a>，避免与 Link 重复加 basePath
+    if (href.startsWith("/")) return <a {...props} />;
+    // 相对路径：使用 Next Link，保留 SPA 导航与 basePath 处理
+    return <Link {...props} />;
+  },
   mermaid: (props: any) => {
     return <MermaidComponent {...props} config={{ theme: "default" }} />;
   },

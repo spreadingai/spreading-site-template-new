@@ -1,5 +1,10 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+构建内存溢出处理：
+```bash
+NODE_OPTIONS="--max-old-space-size=8192" npm run build
+```
+
 ## Getting Started
 
 First, run the development server:

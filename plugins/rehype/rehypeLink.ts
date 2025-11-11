@@ -64,7 +64,24 @@ export function rehypeLink(options: {
       }
       if (!options.rootUrl || !options.filePath) return;
       // while href does not start with 'http'
-      const href = node.properties.href;
+      const href = String(node.properties.href || "");
+
+      // 绝对路径：仅在无后缀时在构建期补 basePath，避免运行期再依赖 Link
+      const hasExt = (s: string) => {
+        const clean = s.split("#")[0].split("?")[0];
+        const last = clean.substring(clean.lastIndexOf("/") + 1);
+        return /\.[^./]+$/.test(last);
+      };
+      if (href.startsWith("/")) {
+        const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+        const alreadyPrefixed = basePath && href.startsWith(`${basePath}/`);
+        if (!hasExt(href) && basePath && !alreadyPrefixed) {
+          node.properties.href = `${basePath}${href}`;
+        }
+        return;
+      }
+
+      // 相对路径：按原有规则用 prefix 进行转换
       const parsedPath = path.parse(href);
       let targetHref = `${parsedPath.dir}/${parsedPath.name}`;
       targetHref += parsedPath.ext.replace(/^\.mdx?/gi, "");
