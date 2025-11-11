@@ -6,7 +6,7 @@ import ThemeContext from "../Theme.context";
 import useGroup from "@/components/hooks/useGroup";
 import usePlatform from "@/components/hooks/usePlatform";
 import iconAshAI from "@/assets/icons/ai-search/icon_ask_ai.png";
-import Image from "next/image";
+
 import dynamic from "next/dynamic";
 
 // 使用新的AskAI组件
@@ -36,7 +36,7 @@ const AISearch = () => {
   return (
     <div className={styles["ai-search-wrap"]}>
       <div onClick={showModal} className={styles["ai-btn"]}>
-        <Image src={iconAshAI} alt="" decoding="async" />
+        <img src={iconAshAI.src} alt="" decoding="async" loading="lazy" fetchPriority="low" width={iconAshAI.width} height={iconAshAI.height} />
       </div>
       {/* 使用新的AskAI模态框 */}
       <AskAIModal
