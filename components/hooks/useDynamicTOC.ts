@@ -155,7 +155,8 @@ export const useDynamicTOC = (containerSelector = '.article-content') => {
     // 只监听自定义的TOC更新事件（由组件主动触发）
     // 移除其他所有自动触发的事件监听
     const handleTOCUpdate = () => {
-      setTimeout(updateTOC, 100);
+      // Tabs/异步内容通常在首屏1s内生成，为避免被最小间隔节流丢弃，这里强制更新
+      setTimeout(() => updateTOC(true), 0);
     };
 
     // 监听页面路由变化，当URL的pathname变化时重新扫描TOC
