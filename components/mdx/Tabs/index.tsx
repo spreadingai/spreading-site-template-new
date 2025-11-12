@@ -120,8 +120,8 @@ export const DocuoTabs = (props: Props) => {
 
   // 监听 URL 变化和锚点跳转
   useEffect(() => {
-    // 检查初始 URL 的锚点（仅处理一次）
-    if (!initialHashHandledRef.current && window.location.hash) {
+    // 检查初始 URL 的锚点（仅处理一次，且需等待 items 就绪）
+    if (!initialHashHandledRef.current && typeof window !== 'undefined' && window.location.hash && items.length > 0) {
       initialHashHandledRef.current = true;
       handleAnchorNavigation(window.location.hash);
     }
@@ -256,33 +256,34 @@ export const DocuoTabs = (props: Props) => {
       return;
     }
 
-    // 如果当前Tab中没有找到可见元素，依次检查每个Tab
-    const findAndScrollToAnchor = (tabIndex: number) => {
-      if (tabIndex >= items.length) {
-        // 完全找不到目标，解除锁
-        navigatingRef.current = false;
-        return;
+    // 直接定位到目标元素所在的 Tab，一次性切换
+    const targetElement = currentElement || document.getElementById(targetId);
+    if (!targetElement) {
+      navigatingRef.current = false;
+      return;
+    }
+
+    const panes = Array.from(document.querySelectorAll(`.${styles.tabPane}`)) as HTMLElement[];
+    const paneIndex = panes.findIndex(p => p.contains(targetElement));
+
+    if (paneIndex !== -1) {
+      const targetKey = items[paneIndex]?.key;
+      if (targetKey && targetKey !== activeKey) {
+        setActiveKey(targetKey);
+        // 等待一帧，确保面板已可见后再滚动
+        setTimeout(() => {
+          const el = document.getElementById(targetId);
+          if (el) el.scrollIntoView({ behavior: 'auto' });
+          setTimeout(() => { navigatingRef.current = false; }, 50);
+        }, 50);
+      } else {
+        const el = document.getElementById(targetId);
+        if (el) el.scrollIntoView({ behavior: 'auto' });
+        setTimeout(() => { navigatingRef.current = false; }, 50);
       }
-
-      const item = items[tabIndex];
-      setActiveKey(item.key);
-
-      setTimeout(() => {
-        const targetElement = document.getElementById(targetId);
-        if (targetElement && isElementVisible(targetElement)) {
-          targetElement.scrollIntoView({ behavior: 'auto' });
-          // 导航完成，解除锁
-          setTimeout(() => { navigatingRef.current = false; }, 100);
-        } else {
-          // 如果在当前Tab中没找到可见元素，检查下一个Tab
-          findAndScrollToAnchor(tabIndex + 1);
-        }
-      }, 300);
-    };
-
-    // 从第一个Tab开始查找（如果当前不是第一个Tab）
-    const startIndex = activeKey === "0" ? 1 : 0;
-    findAndScrollToAnchor(startIndex);
+    } else {
+      navigatingRef.current = false;
+    }
   };
 
   const handleTabClick = (key: string) => {
