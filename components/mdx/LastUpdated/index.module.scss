@@ -6,6 +6,12 @@
   font-size: 14px;
   font-family: Inter-Medium, Inter;
   color: var(--docuo-breadcrumb-color);
+  &:not(:first-of-type) {
+    display: none;
+  }
+  &:not([data-last-updated-instance="true"]) {
+    display: none;
+  }
 }
 
 .calendarIcon {
