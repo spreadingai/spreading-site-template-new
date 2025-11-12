@@ -9,7 +9,7 @@ export default function Document() {
   const { baidu = {} } = analytics;
   const { tongjiID } = baidu;
   let baiduTongjiStr = tongjiID
-    ? `var _hmt = _hmt || [];(function() {var hm = document.createElement('script'); hm.src = 'https://hm.baidu.com/hm.js?${tongjiID}'; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(hm, s);})();`
+    ? `var _hmt = _hmt || [];(function() {var hm = document.createElement('script'); hm.src = 'https://hm.baidu.com/hm.js?${tongjiID}'; hm.async = true; hm.onerror = function() { console.warn('Baidu Analytics failed to load'); }; var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(hm, s);})();`
     : "";
 
   return (
@@ -23,7 +23,7 @@ export default function Document() {
         {baiduTongjiStr ? (
           <Script
             id="baidu-tongji"
-            strategy="afterInteractive"
+            strategy="lazyOnload"
             dangerouslySetInnerHTML={{
               __html: baiduTongjiStr,
             }}
