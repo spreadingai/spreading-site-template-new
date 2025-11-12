@@ -374,7 +374,7 @@ export function getStaticPaths() {
 
   return {
     paths,
-    fallback: true,
+    fallback: false, // 构建时预渲染所有页面，确保部署后立即可用
   };
 }
 
