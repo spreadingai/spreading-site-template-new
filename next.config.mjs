@@ -91,6 +91,7 @@ const nextConfig = {
   reactStrictMode: true, // Version 13.4 or later is true by default in the app router
   swcMinify: true, // Version 13 or later is true by default
   compress: true, // TODO:Why disable gzip
+  output: 'standalone', // Enable standalone output for optimized deployment
   // 开发模式下的性能优化
   ...(process.env.NODE_ENV === 'development' && {
     onDemandEntries: {

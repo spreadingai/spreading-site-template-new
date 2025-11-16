@@ -21,7 +21,9 @@
     "generate-static-md:zh-clean": "node scripts/generate-static-md.js --locale zh --clean",
     "generate-static-md:en-clean": "node scripts/generate-static-md.js --locale en --clean",
     "generate-static-md:config-zh": "node scripts/generate-static-md.js --config docuo.config.zh.json",
-    "generate-static-md:config-en": "node scripts/generate-static-md.js --config docuo.config.en.json"
+    "generate-static-md:config-en": "node scripts/generate-static-md.js --config docuo.config.en.json",
+    "build:zh": "sh ./scripts/build-standalone.sh zh",
+    "build:en": "sh ./scripts/build-standalone.sh en"
   },
   "dependencies": {
     "@ant-design/pro-chat": "^1.15.3",
