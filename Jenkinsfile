@@ -53,17 +53,15 @@ pipeline {
             echo "  - BASE_PATH: (空)"
           }
 
-          // 制品名称统一，不区分语言
-          env.ARTIFACT_NAME = "docuo-docs.zip"
+          // 制品名称根据语言区分
+          env.ARTIFACT_NAME = "docuo-docs-${env.LANG}.zip"
           env.ARTIFACT_ADDR = "https://artifact-master.zego.cloud/generic/${env.ARTIFACT_NAMESPACE}/public/${env.ARTIFACT_NAME}"
+          echo "制品名称：${env.ARTIFACT_NAME}"
 
-          if(env.GIT_TAG != null) {
-            env.ARTIFACT_VERSION = "${env.GIT_TAG}-${env.JOB_ID}_${env.CI_BUILD_NUMBER}".replaceAll("/", "-")
-            echo "基于TAG发布，版本号为：${env.ARTIFACT_VERSION}"
-          } else {
-            env.ARTIFACT_VERSION = "${env.JOB_ID}_${env.CI_BUILD_NUMBER}".replaceAll("/", "-")
-            echo "不基于TAG发布，版本号为：${env.ARTIFACT_VERSION}"
-          }
+          // 生成版本号：日期时间（精确到分钟）+ 构建号
+          def dateTime = new Date().format('yyyyMMdd-HHmm', TimeZone.getTimeZone('Asia/Shanghai'))
+          env.ARTIFACT_VERSION = "${dateTime}_${env.CI_BUILD_NUMBER}"
+          echo "制品版本号：${env.ARTIFACT_VERSION}"
         }
       }
     }
@@ -167,13 +165,22 @@ EOF
           script {
             echo "开始打包 Standalone 部署包（语言：${env.LANG}）..."
 
-            // 复制 .env 文件到 standalone 目录
-            sh 'cp .env .next/standalone/'
+            // 复制 .env 文件和 ecosystem.config.js 到 standalone 目录
+            sh '''
+              cp .env .next/standalone/
+              cp ecosystem.config.js .next/standalone/
+            '''
 
-            // 打包 standalone 目录为 zip 格式
+            // 创建 version.txt 文件
+            sh """
+              echo '${env.ARTIFACT_VERSION}' > .next/standalone/version.txt
+            """
+
+            // 重命名 standalone 目录为 docuo-docs-{lang}，然后打包
             sh """
               cd .next
-              zip -r -q ${env.ARTIFACT_NAME} standalone/
+              mv standalone docuo-docs-${env.LANG}
+              zip -r -q ${env.ARTIFACT_NAME} docuo-docs-${env.LANG}/
               mv ${env.ARTIFACT_NAME} ../
             """
 
@@ -183,6 +190,7 @@ EOF
             sh """
               echo "制品名称：${env.ARTIFACT_NAME}"
               echo "语言版本：${env.LANG}"
+              echo "制品版本号：${env.ARTIFACT_VERSION}"
               ls -lh ${env.ARTIFACT_NAME}
               du -sh ${env.ARTIFACT_NAME}
               echo "制品内容（前20项）："
@@ -222,9 +230,9 @@ EOF
 
     // site-template 内部使用的环境变量
     NEXT_PUBLIC_CUSTOM_DOMAIN = "${env.NEXT_PUBLIC_CUSTOM_DOMAIN ?: ''}"
-    NEXT_PUBLIC_INSTANCE_LIMIT = "${env.NEXT_PUBLIC_INSTANCE_LIMIT ?: ''}"
+    NEXT_PUBLIC_INSTANCE_LIMIT = '-1'
     NEXT_PUBLIC_VERSION_LIMIT = "${env.NEXT_PUBLIC_VERSION_LIMIT ?: ''}"
-    NEXT_PUBLIC_PLAN = "${env.NEXT_PUBLIC_PLAN ?: ''}"
+    NEXT_PUBLIC_PLAN = '1'
   }
 }
 
