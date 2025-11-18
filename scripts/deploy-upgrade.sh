@@ -7,6 +7,16 @@
 
 set -e
 
+# 初始化 nvm 环境（支持 crontab 和手动执行）
+export NVM_DIR="$HOME/.nvm"
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+    source "$NVM_DIR/nvm.sh"
+    # 切换到指定的 Node.js 版本
+    nvm use v20.12.1 > /dev/null 2>&1 || {
+        echo "警告: 无法切换到 Node.js v20.12.1，使用当前版本"
+    }
+fi
+
 # 配置
 WEBROOT="/data/webroot"
 RELEASES_DIR="${WEBROOT}/docuo_releases"

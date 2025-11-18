@@ -1,0 +1,54 @@
+#!/bin/bash
+
+# 自动部署配置文件
+# 复制此文件为 deploy-config.sh 并根据实际情况修改配置
+
+# ============================================
+# 必需配置
+# ============================================
+
+# 语言配置：zh（中文）或 en（英文）
+LANG=zh
+
+# 制品库基础 URL
+ARTIFACT_BASE_URL=https://artifact-master.zego.cloud/generic/better_dev/public
+
+# 部署根目录
+WEBROOT=/data/webroot
+
+# 部署脚本路径（docuo-deploy-upgrade.sh 的完整路径）
+DEPLOY_SCRIPT=/data/webroot/docuo-deploy-upgrade.sh
+
+# 文档访问地址
+# 中文：https://doc-zh.zego.im/
+# 英文：https://www.zegocloud.com/docs
+DOC_URL=https://doc-zh.zego.im/
+
+# ============================================
+# 可选配置
+# ============================================
+
+# 飞书机器人 Webhook 地址（用于部署通知）
+# 如果不需要飞书通知，可以留空或注释掉
+FEISHU_BOT_URL=
+
+# ============================================
+# 配置示例
+# ============================================
+
+# 中文服务器配置示例：
+# LANG=zh
+# ARTIFACT_BASE_URL=https://artifact-master.zego.cloud/generic/better_dev/public
+# WEBROOT=/data/webroot
+# DEPLOY_SCRIPT=/data/webroot/docuo-deploy-upgrade.sh
+# DOC_URL=https://doc-zh.zego.im/
+# FEISHU_BOT_URL=https://open.feishu.cn/open-apis/bot/v2/hook/xxxxxxxx
+
+# 英文服务器配置示例：
+# LANG=en
+# ARTIFACT_BASE_URL=https://artifact-master.zego.cloud/generic/better_dev/public
+# WEBROOT=/data/webroot
+# DEPLOY_SCRIPT=/data/webroot/docuo-deploy-upgrade.sh
+# DOC_URL=https://www.zegocloud.com/docs
+# FEISHU_BOT_URL=https://open.feishu.cn/open-apis/bot/v2/hook/xxxxxxxx
+
