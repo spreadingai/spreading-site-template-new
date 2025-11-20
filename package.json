@@ -7,7 +7,7 @@
     "dev": "node ./lib/trans-short-link/init.mjs && next dev",
     "dev:fast": "cross-env SKIP_EXTERNAL_DATA_FETCH=true node ./lib/trans-short-link/init.mjs && next dev",
     "docuodev": "pnpm dev",
-    "build": "node ./lib/trans-short-link/init.mjs && next build && next-sitemap",
+    "build": "node ./lib/trans-short-link/init.mjs && next build && next-sitemap && npm run generate-llms-txt",
     "build:analyze": "cross-env ANALYZE=true npm run build",
     "docuobuild": "pnpm build",
     "deploy": "sh ./build.sh && npm run build",
@@ -22,6 +22,7 @@
     "generate-static-md:en-clean": "node scripts/generate-static-md.js --locale en --clean",
     "generate-static-md:config-zh": "node scripts/generate-static-md.js --config docuo.config.zh.json",
     "generate-static-md:config-en": "node scripts/generate-static-md.js --config docuo.config.en.json",
+    "generate-llms-txt": "node scripts/generate-llms-txt.js",
     "build:zh": "sh ./scripts/build-standalone.sh zh",
     "build:en": "sh ./scripts/build-standalone.sh en"
   },
