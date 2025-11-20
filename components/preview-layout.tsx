@@ -242,7 +242,12 @@ const PreviewLayout = ({
         if (href.startsWith("http")) {
           location.href = href;
         } else {
-          router.push({ pathname: href });
+          // next 会自行处理 basePath，所以这里不能携带
+          if (href && href.startsWith(process.env.NEXT_PUBLIC_BASE_PATH)) {
+            router.push({ pathname: href.split(process.env.NEXT_PUBLIC_BASE_PATH)[1] });
+          } else {
+            router.push({ pathname: href });
+          }
         }
       }
     };
