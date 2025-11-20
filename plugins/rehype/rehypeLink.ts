@@ -54,6 +54,7 @@ export function rehypeLink(options: {
       }
       if (
         node.properties.href.startsWith(":") ||
+        node.properties.href.startsWith("mailto:") ||
         node.properties.href.startsWith("#") ||
         node.properties.href.startsWith("@") ||
         node.properties.href.startsWith("!") ||
@@ -64,41 +65,15 @@ export function rehypeLink(options: {
       }
       if (!options.rootUrl || !options.filePath) return;
       // while href does not start with 'http'
-      const href = String(node.properties.href || "");
-
-      // 绝对路径：仅在无后缀时在构建期补 basePath，避免运行期再依赖 Link
-      const hasExt = (s: string) => {
-        const clean = s.split("#")[0].split("?")[0];
-        const last = clean.substring(clean.lastIndexOf("/") + 1);
-        return /\.[^./]+$/.test(last);
-      };
-      if (href.startsWith("/")) {
-        const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-        const alreadyPrefixed = basePath && href.startsWith(`${basePath}/`);
-        if (!hasExt(href) && basePath && !alreadyPrefixed) {
-          node.properties.href = `${basePath}${href}`;
-        }
-        return;
-      }
-
-      // 相对路径：按原有规则用 prefix 进行转换
+      const href = node.properties.href;
       const parsedPath = path.parse(href);
       let targetHref = `${parsedPath.dir}/${parsedPath.name}`;
       targetHref += parsedPath.ext.replace(/^\.mdx?/gi, "");
-      const imagePath = path.resolve(
+      const hrefPath = path.resolve(
         path.dirname(options.filePath),
         targetHref
       );
-      const publicPath = path.relative(options.rootUrl, imagePath);
-      // console.log(
-      //   `[rehypeLink]updateLinkTag`,
-      //   options.prefix,
-      //   options.rootUrl,
-      //   options.filePath,
-      //   imagePath,
-      //   targetHref,
-      //   publicPath
-      // );
+      const publicPath = path.relative(options.rootUrl, hrefPath);
       const convertDocID = (str: string) => {
         // Quick Start, Quick-Start
         // Quick start, Quick-start
@@ -112,6 +87,8 @@ export function rehypeLink(options: {
         });
         return result.join("/");
       };
+      // md 语法链接会被转成能被 @mdx-js/react 的 MDXProvider 处理的 a 标签
+      // a => Next Link 会自动加上在 next.config 中配置的顶层 basePath（Next 自带的组件都会自动处理，不用自行添加）
       node.properties.href = `${options.prefix}/${convertDocID(
         ignoreNumberPrefix(publicPath)
       )}`;

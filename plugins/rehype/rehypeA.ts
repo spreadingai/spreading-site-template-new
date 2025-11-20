@@ -31,57 +31,32 @@ export function rehypeA(options: {
   return function updateATag(tree, file) {
     visit(tree, (node, i, parent) => {
       if (!node.attributes) return;
-      const tagName = (node as any)?.name;
-      if (!['a', 'Button'].includes(tagName)) return;
-
       const target = node.attributes.find(
         (item) =>
           item.name === "href" && item.type === "mdxJsxAttribute" && item.value
       );
-      if (!target || typeof target.value !== "string") return;
-
-      const href = String(target.value);
       if (
-        href.startsWith("http") ||
-        href.startsWith(":") ||
-        href.startsWith("#") ||
-        href.startsWith("@") ||
-        href.startsWith("!") ||
-        href.startsWith("docuo-link@") ||
-        href.startsWith("docuo-link!") ||
-        href.startsWith("/article/")
-      ) {
+        !target ||
+        typeof target.value !== "string" ||
+        target.value.startsWith("http") ||
+        target.value.startsWith(":") ||
+        target.value.startsWith("mailto:") ||
+        target.value.startsWith("#") ||
+        target.value.startsWith("@") ||
+        target.value.startsWith("!") ||
+        target.value.startsWith("docuo-link@") ||
+        target.value.startsWith("docuo-link!") ||
+        target.value.startsWith("/article/")
+      )
         return;
-      }
-
       if (!options.rootUrl || !options.filePath) return;
-
-      // 绝对路径：仅在无后缀时补 basePath
-      const hasExt = (s: string) => {
-        const clean = s.split("#")[0].split("?")[0];
-        const last = clean.substring(clean.lastIndexOf("/") + 1);
-        return /\.[^./]+$/.test(last);
-      };
-      if (href.startsWith("/")) {
-        // 构建期：对 a/Button 的“/ 开头且无后缀”的链接补上 basePath，避免运行期再依赖 Link
-        const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-        const alreadyPrefixed = basePath && href.startsWith(`${basePath}/`);
-        if (!hasExt(href) && basePath && !alreadyPrefixed) {
-          target.value = `${basePath}${href}`;
-        }
-        return;
-      }
-
-      // 相对路径：沿用原有 prefix 转换
+      // while href does not start with 'http'
+      const href = target.value;
       const parsedPath = path.parse(href);
-      let targetHref = `${parsedPath.dir}/${parsedPath.name}`;
-      targetHref += parsedPath.ext.replace(/^\.mdx?/gi, "");
-      const imagePath = path.resolve(
-        path.dirname(options.filePath),
-        targetHref
-      );
-      const publicPath = path.relative(options.rootUrl, imagePath);
       const convertDocID = (str: string) => {
+        // Quick Start, Quick-Start
+        // Quick start, Quick-start
+        // Quick start/Overview
         const result = [];
         const temp = str.split("/");
         temp.forEach((path) => {
@@ -91,9 +66,20 @@ export function rehypeA(options: {
         });
         return result.join("/");
       };
-      target.value = `${
-        options.prefix.startsWith("/") ? options.prefix : "/" + options.prefix
-      }/${convertDocID(ignoreNumberPrefix(publicPath))}`;
+      if (parsedPath.root !== "/" ) {
+        let targetHref = `${parsedPath.dir}/${parsedPath.name}`;
+        targetHref += parsedPath.ext.replace(/^\.mdx?/gi, "");
+        const hrefPath = path.resolve(
+          path.dirname(options.filePath),
+          targetHref
+        );
+        const publicPath = path.relative(options.rootUrl, hrefPath);
+        target.value = `${process.env.NEXT_PUBLIC_BASE_PATH || ""}${
+          options.prefix.startsWith("/") ? options.prefix : "/" + options.prefix
+        }/${convertDocID(ignoreNumberPrefix(publicPath))}`;
+      } else {
+        target.value = `${process.env.NEXT_PUBLIC_BASE_PATH || ""}${convertDocID(ignoreNumberPrefix(href))}`;
+      }
     });
   };
 }
