@@ -128,6 +128,7 @@ const components = {
   ApiMethod: _ApiMethod,
   ApiProperty: require("@/components/mdx/api/ApiProperty").default,
   ApiEnum: require("@/components/mdx/api/ApiEnum").default,
+  ParamField: require("@/components/mdx/api/ParamField").default,
 
 
 
