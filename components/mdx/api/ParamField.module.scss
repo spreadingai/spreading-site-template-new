@@ -1,0 +1,148 @@
+.hiddenHeading {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.wrapper {
+  position: relative;
+  margin: 16px 0;
+  border-radius: 12px;
+  border: 1px solid var(--docuo-card-border-color);
+  box-shadow: var(--docuo-card-shadow);
+  overflow: hidden;
+  background-color: var(--docuo-card-bg);
+}
+
+.head {
+  background-color: var(--docuo-table-th-bg);
+  padding: 8px 8px;
+  display: flex;
+  align-items: center;
+}
+
+.headContent {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.prefixesTags {
+  padding: 0 0 0 4px;
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.prefixTag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: #e6f2ff;
+  color: #0052cc;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.nameDisplay {
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  font-weight: 600;
+  flex-grow: 1;
+  min-width: 100px;
+  color: var(--docuo-text-color);
+}
+
+.suffixesTags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.suffixTag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  background-color: #ffe6e6;
+  color: #ff6b6b;
+  border: none;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.prototype {
+  padding: 12px 12px 12px 16px;
+  border-bottom: 1px solid var(--docuo-card-border-color);
+  background-color: var(--docuo-card-bg);
+  font-family: "SFMono-Regular,Consolas,Liberation Mono,Menlo,Monaco,monospace";
+  font-size: 14px;
+  overflow-x: auto;
+
+  code {
+    color: var(--docuo-color-primary);
+    background-color: transparent;
+    padding: 0;
+    border: none;
+
+    a {
+      color: var(--docuo-color-primary);
+      text-decoration: none;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+}
+
+.body {
+  padding: 12px 16px;
+  background-color: var(--docuo-card-bg);
+}
+
+.desc {
+  margin: 0 0 8px 0;
+  color: var(--docuo-text-color);
+  line-height: 1.6;
+
+  p {
+    margin: 0;
+  }
+}
+
+.parentFile {
+  margin: 8px 0;
+  color: var(--docuo-language-btn-color);
+  font-size: 13px;
+
+  em {
+    font-style: italic;
+  }
+}
+
+.children {
+  margin-top: 8px;
+  color: var(--docuo-text-color);
+
+  > *:first-child {
+    margin-top: 0;
+  }
+
+  > *:last-child {
+    margin-bottom: 0;
+  }
+}
+
