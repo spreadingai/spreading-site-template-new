@@ -4,8 +4,8 @@
     top: var(--preview-header-height);
     display: flex;
     flex-direction: column;
-    padding-left: 2rem;
-    padding-right: calc(32px + 15px);
+    padding-left: 16px;
+    padding-right: 16px;
     padding-top: 12px;
     z-index: 100;
     background: var(--docuo-header-bg);

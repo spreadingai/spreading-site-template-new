@@ -6,6 +6,9 @@
     .anchor-mobile-container {
         display: none !important;
     }
+    .page-context-menu {
+        display: none !important;
+    }
 }
 @media screen and (min-width: 1281px) {
     .preview-screen:has(.theme-api-markdown) {
@@ -19,12 +22,12 @@
         }
     }
     .openapi-left-panel__container {
-        width: 60.28%;
-        padding: 0 32px 0 24px;
+        width: 65.17%;
+        padding: 0 30px;
     }
     .openapi-right-panel__container {
-        width: 39.72%;
-        padding: 0 1px 0 24px;
+        width: 34.83%;
+        padding: 0 1px 0 16px;
     }
 }
 @media screen and (max-width: 1280px) {
