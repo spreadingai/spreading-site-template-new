@@ -46,7 +46,7 @@ import useColors from "@/components/hooks/useColors";
 import useColorMode from "@/components/hooks/useColorMode";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import Header from "@/components/header";
-import PageBg from "@/components/PageBg";
+// import PageBg from "@/components/PageBg";
 import SearchMeta from "@/components/meta/SearchMeta";
 import {
   DisplayGroup,
@@ -118,7 +118,10 @@ const Layout = ({ children, allUsedVersions, inputDocuoConfig }: Props) => {
   );
 
   // tabs
-  const _tabData = TabControllerImpl.getDisplayTabs(currentGroup, currentLanguage);
+  const _tabData = TabControllerImpl.getDisplayTabs(
+    currentGroup,
+    currentLanguage
+  );
   const [displayTabs, setDisplayTabs] = useState(_tabData.displayTabs);
   const [shouldShowTabs, setShouldShowTabs] = useState(_tabData.shouldShowTabs);
   const [currentTab, setCurrentTab] = useState(defaultTab);
@@ -195,8 +198,8 @@ const Layout = ({ children, allUsedVersions, inputDocuoConfig }: Props) => {
   const handleTabChanged = useCallback(
     ({ key: tab, defaultLink, initChild }) => {
       // 如果是外部链接，直接打开新标签
-      if (defaultLink.startsWith('http')) {
-        window.open(defaultLink, '_blank');
+      if (defaultLink.startsWith("http")) {
+        window.open(defaultLink, "_blank");
         return;
       }
 
@@ -274,8 +277,11 @@ const Layout = ({ children, allUsedVersions, inputDocuoConfig }: Props) => {
         initChild,
       } = params;
       const _displayPlatforms = addPlatformAllItem(
-        PlatformControllerImpl.getDisplayPlatforms(_currentGroup, language, currentTab)
-          .displayPlatforms
+        PlatformControllerImpl.getDisplayPlatforms(
+          _currentGroup,
+          language,
+          currentTab
+        ).displayPlatforms
       );
       const temp1 = !initChild
         ? _displayPlatforms.find(
@@ -499,8 +505,11 @@ const Layout = ({ children, allUsedVersions, inputDocuoConfig }: Props) => {
   useEffect(() => {
     if (currentTab) {
       const _displayPlatforms = addPlatformAllItem(
-        PlatformControllerImpl.getDisplayPlatforms(currentGroup, currentLanguage, currentTab)
-          .displayPlatforms
+        PlatformControllerImpl.getDisplayPlatforms(
+          currentGroup,
+          currentLanguage,
+          currentTab
+        ).displayPlatforms
       );
       setDisplayPlatforms(_displayPlatforms);
 
@@ -584,36 +593,36 @@ const Layout = ({ children, allUsedVersions, inputDocuoConfig }: Props) => {
                 }}
               >
                 <VersionContext.Provider
-                value={{
-                  docVersion,
-                  slugVersion,
-                  displayVersions,
-                  setSlugVersion,
-                  setDocVersion,
-                  setDisplayVersions,
-                }}
-              >
-                <SetContext.Provider
                   value={{
-                    handleLanguageChanged,
-                    handleGroupChanged,
-                    handlePlatformChanged,
-                    handleVersionChanged,
-                    handleTabChanged,
+                    docVersion,
+                    slugVersion,
+                    displayVersions,
+                    setSlugVersion,
+                    setDocVersion,
+                    setDisplayVersions,
                   }}
                 >
-                  <div className="search-screen relative">
-                    {!!gaId && <GoogleAnalytics gaId={gaId} />}
-                    <SearchMeta />
-                    <Header
-                      docuoConfig={docuoConfig}
-                      isSearchPage={true}
-                    ></Header>
-                    <PageBg />
-                    <main className="search-main">{children}</main>
-                  </div>
-                </SetContext.Provider>
-              </VersionContext.Provider>
+                  <SetContext.Provider
+                    value={{
+                      handleLanguageChanged,
+                      handleGroupChanged,
+                      handlePlatformChanged,
+                      handleVersionChanged,
+                      handleTabChanged,
+                    }}
+                  >
+                    <div className="search-screen relative">
+                      {!!gaId && <GoogleAnalytics gaId={gaId} />}
+                      <SearchMeta />
+                      <Header
+                        docuoConfig={docuoConfig}
+                        isSearchPage={true}
+                      ></Header>
+                      {/* <PageBg /> */}
+                      <main className="search-main">{children}</main>
+                    </div>
+                  </SetContext.Provider>
+                </VersionContext.Provider>
               </TabContext.Provider>
             </PlatformContext.Provider>
           </GroupContext.Provider>
