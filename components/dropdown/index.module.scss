@@ -10,7 +10,7 @@
   }
   &.group {
     width: 100%;
-    margin-right: 8px;
+    margin-right: 16px;
   }
   &.platform {
     & + &.version,
@@ -19,7 +19,7 @@
       margin-right: 0;
     }
     width: 100%;
-    margin-right: 8px;
+    margin-right: 16px;
     &:has(~ &.version),
     &:has(~ &.platform) {
       width: 160px;
@@ -28,7 +28,7 @@
   }
   &.tab {
     width: 100%;
-    margin-right: 8px;
+    margin-right: 16px;
   }
   height: 36px;
   background: var(--docuo-dropdown-label-bg);

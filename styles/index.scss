@@ -1,7 +1,8 @@
 :root {
   --preview-header-height: 68px;
   --preview-sub-header-height: 55px;
-  --preview-sider-width: 312px;
+  --preview-sider-width: 272px;
+  --preview-anchor-width: 252px;
 
   // LexendDeca 字体族
   --font-lexend-deca-light: "LexendDeca-Light";
@@ -176,14 +177,14 @@ html > body {
   }
 }
 .preview-sider-tree-top {
-  padding-left: 2rem;
+  padding-left: 16px;
   flex-wrap: wrap;
   display: flex;
   margin-top: 16px;
 }
 .preview-sider-tree-content {
-  padding-right: 1.5rem;
-  padding-left: 2rem;
+  padding-right: 8px;
+  padding-left: 16px;
   padding-bottom: 2.5rem;
   overflow: auto;
   margin-top: 28px;
@@ -199,8 +200,12 @@ html > body {
 }
 
 .preview-content-wrap {
-  width: calc(100% - var(--preview-sider-width) - 15px);
+  width: calc(100% - var(--preview-sider-width));
   // overflow-x: auto; // 会导致 toc sticky 失效
+
+  .article {
+    position: relative;
+  }
 
   .preview-content {
     display: flex;
@@ -365,7 +370,6 @@ html > body {
 
   .preview-sider {
     width: var(--preview-sider-width);
-    padding-right: 8px;
     .custom-node-title {
       display: flex;
       align-items: center;
@@ -460,9 +464,9 @@ html > body {
     // }
 
     .article {
-      width: calc(100% - 312px);
-      padding-left: 24px;
-      padding-right: 32px;
+      width: calc(100% - var(--preview-anchor-width));
+      padding-left: 30px;
+      padding-right: 30px;
 
       // 当隐藏TOC时，文章内容扩展到全宽
       &.no-toc {
@@ -481,7 +485,9 @@ html > body {
     .article-anchor-right {
       display: flex;
       flex-direction: column;
-      width: 312px;
+      width: var(--preview-anchor-width);
+      padding-left: 12px;
+      padding-right: 16px;
       max-height: calc(100vh - var(--preview-header-height) - var(--preview-sub-header-height));
       border: none;
 
@@ -677,8 +683,8 @@ html > body {
   .preview-content-wrap {
     .article {
       width: 100%;
-      padding-left: 24px;
-      padding-right: 32px;
+      padding-left: 30px;
+      padding-right: 30px;
     }
 
     .article-breadcrumb {

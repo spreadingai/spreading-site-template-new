@@ -680,7 +680,7 @@ const PreviewLayout = ({
                                 } ${!shouldShowToc ? "hidden-toc" : ""}`}
                               >
                                 {shouldShowToc && toc?.length ? (
-                                  <div className="pt-[28px]  pb-10 ml-8">
+                                  <div className="pt-[28px] pb-10">
                                     <p
                                       className="mb-2.5 font-inter-bold font-semibold text-sm"
                                       onClick={() => setIsExpand(!isExpand)}

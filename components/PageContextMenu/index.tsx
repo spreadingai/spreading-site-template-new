@@ -147,7 +147,7 @@ const PageContextMenu = () => {
   };
 
   return (
-    <div className={styles.PageContextMenu}>
+    <div className={`${styles.PageContextMenu} page-context-menu`} >
       <Space.Compact>
         <Button
           onClick={handleButtonClick}
