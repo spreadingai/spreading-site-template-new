@@ -81,7 +81,16 @@ export const copywriting = {
         appIdPlaceholder: 'You can get from https://console.zegocloud.com/.',
         serverSecretPlaceholder: 'You can get from https://console.zegocloud.com/.',
       }
-    }
+    },
+    pageContextMenu: {
+      copyPageContent: "Copy page",
+      copyPageContentDesc: "Copy page as markdown for LLMs",
+      viewMarkdown: "View in Markdown",
+      viewMarkdownDesc: "View this page in plain text form",
+      llms: "LLMs.txt",
+      llmsDesc: "Provide information to let LLMs access all API docs",
+      copyied: "Copied",
+    },
   },
   zh: {
     search: {
@@ -164,6 +173,15 @@ export const copywriting = {
         appIdPlaceholder: '您可以从 https://console.zego.im/ 中获取。',
         serverSecretPlaceholder: '您可以从 https://console.zego.im/ 中获取。',
       }
-    }
+    },
+    pageContextMenu: {
+      copyPageContent: "复制页面",
+      copyPageContentDesc: "复制为 Markdown 格式，以供大模型使用",
+      viewMarkdown: "以 Markdown 格式查看",
+      viewMarkdownDesc: "以纯文本格式查看此页面",
+      llms: "LLMs.txt",
+      llmsDesc: "提供信息让大模型访问站点的所有 API 文档",
+      copyied: "已复制",
+    },
   },
 };

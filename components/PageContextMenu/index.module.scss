@@ -1,0 +1,126 @@
+.PageContextMenu {
+    position: absolute;
+    :global {
+        .ant-btn-compact-item {
+            font-family: PingFang SC;
+            background-color: var(--docuo-page-context-btn-bg) !important;
+            color: var(--docuo-color-primary);
+            &:hover {
+                background-color: var(--docuo-page-context-btn-bg-hover) !important;
+            }
+        }
+        .ant-dropdown-trigger,
+        .ant-dropdown-open {
+            .ant-btn-icon {
+                display: flex;
+                transition: transform 0.3s;
+            }
+        }
+        .ant-dropdown-trigger {
+            .ant-btn-icon {
+                transform: rotate(90deg);
+            }
+        }
+        .ant-dropdown-open {
+            .ant-btn-icon {
+                transform: rotate(-90deg);
+            }
+        }
+        .ant-dropdown-trigger {
+            outline: none !important;
+            border-color: var(--docuo-page-context-menu-border);
+            &:active,
+            &:hover {
+                color: var(--docuo-color-primary) !important;
+                border-color: var(--docuo-page-context-menu-border) !important;
+            }
+        }
+        .ant-btn-compact-first-item {
+            border-color: var(--docuo-page-context-menu-border);
+            outline: none !important;
+            &:active,
+            &:hover {
+                color: var(--docuo-color-primary) !important;
+                border-color: var(--docuo-page-context-menu-border) !important;
+            }
+        }
+    }
+}
+.PageContextItem {
+    display: flex;
+    flex-direction: column;
+}
+.PageContextItemTitle {
+    font-family: PingFang SC;
+    font-weight: 500;
+    color: var(--docuo-color-primary);
+    display: flex;
+    align-items: center;
+}
+.PageContextItemDesc {
+    font-family: PingFang SC;
+    font-weight: 400;
+    color: var(--docuo-page-context-menu-item-desc);
+}
+.PageContextDropdownMenu {
+    :global {
+        .ant-dropdown-menu {
+            display: flex;
+            flex-direction: column;
+            border: 1px solid var(--docuo-page-context-menu-border);
+            box-shadow: unset;
+            background-color: var(--docuo-page-context-menu-bg);
+            .ant-dropdown-menu-item {
+                &:hover {
+                    background-color: var(--docuo-page-context-menu-item-bg-hover);
+                }
+            }
+        }
+    }
+}
+
+@media screen and (min-width: 1281px) {
+    .PageContextMenu {
+        right: 32px;
+        top: 32px;
+        :global {
+            .ant-btn-compact-first-item {
+                padding-left: 8px;
+                padding-right: 10px;
+                gap: 2px;
+            }
+        }
+    }
+    .PageContextItemTitle {
+        line-height: 20px;
+        font-size: 14px;
+    }
+    .PageContextItemDesc {
+        line-height: 17px;
+        font-size: 12px;
+        margin-top: 2px;
+    }
+    .PageContextDropdownMenu {
+        :global {
+            .ant-dropdown-menu {
+                padding: 10px;
+                gap: 8px;
+                .ant-dropdown-menu-item {
+                    padding: 4px 8px;
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1280px) {
+    .PageContextMenu {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .PageContextMenu {
+        display: none;
+    }
+}

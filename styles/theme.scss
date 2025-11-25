@@ -101,8 +101,16 @@ html {
   --docuo-popup-category-tabs-item-bg-active: linear-gradient(107deg, #e8efff 0%, #ffffff 100%);
   --docuo-popup-category-tabs-bg: #f7f7f8;
 
-  //Ai search
+  // Ai search
   --docuo-ai-search-operate-btn-bg-hover: rgba(0, 0, 0, 0.06);
+
+  // PageContextMenu
+  --docuo-page-context-menu-border: #e5e7eb;
+  --docuo-page-context-menu-bg: #fff;
+  --docuo-page-context-btn-bg: #fff;
+  --docuo-page-context-btn-bg-hover: rgba(229, 231, 235, 0.4);
+  --docuo-page-context-menu-item-desc: rgba(23, 23, 23, 0.6);
+  --docuo-page-context-menu-item-bg-hover: #f5f5f7;
 }
 
 html[data-theme="dark"] {
@@ -208,6 +216,14 @@ html[data-theme="dark"] {
   --docuo-popup-category-tabs-item-bg-active: #252525;
   --docuo-popup-category-tabs-bg: transparent;
 
-  //Ai search
+  // Ai search
   --docuo-ai-search-operate-btn-bg-hover: rgba(255, 255, 255, 0.12);
+
+  // PageContextMenu
+  --docuo-page-context-menu-border: #333333;
+  --docuo-page-context-menu-bg: #191919;
+  --docuo-page-context-btn-bg: #191919;
+  --docuo-page-context-btn-bg-hover: #252525;
+  --docuo-page-context-menu-item-desc: #868686;
+  --docuo-page-context-menu-item-bg-hover: #252525;
 }

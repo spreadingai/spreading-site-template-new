@@ -5,7 +5,7 @@ import { Breadcrumb, Drawer } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import Header from "./header";
-import PageBg from "./PageBg";
+// import PageBg from "./PageBg";
 import Footer from "./footer";
 
 import {
@@ -51,6 +51,7 @@ import dynamic from "next/dynamic";
 import TabDropdown from "./dropdown/TabDropdown";
 import { useDynamicTOC } from "./hooks/useDynamicTOC";
 import FontInitializer from "./FontInitializer";
+import PageContextMenu from "./PageContextMenu";
 // 动态导入
 const FloatingFrame = dynamic(() => import("@/components/FloatingFrame"), {
   ssr: false,
@@ -244,7 +245,9 @@ const PreviewLayout = ({
         } else {
           // next 会自行处理 basePath，所以这里不能携带
           if (href && href.startsWith(process.env.NEXT_PUBLIC_BASE_PATH)) {
-            router.push({ pathname: href.split(process.env.NEXT_PUBLIC_BASE_PATH)[1] });
+            router.push({
+              pathname: href.split(process.env.NEXT_PUBLIC_BASE_PATH)[1],
+            });
           } else {
             router.push({ pathname: href });
           }
@@ -265,7 +268,7 @@ const PreviewLayout = ({
       document.body.scrollTo({ top: 0 });
 
       // 触发路由变化事件，让动态TOC重新扫描
-      document.dispatchEvent(new CustomEvent('route-change'));
+      document.dispatchEvent(new CustomEvent("route-change"));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.asPath]);
@@ -582,7 +585,7 @@ const PreviewLayout = ({
                         tocFormatData={tocFormatData}
                         setDrawerOpen={setDrawerOpen}
                       ></Header>
-                      <PageBg />
+                      {/* <PageBg /> */}
                       <main className="preview-main">
                         <SubHeader />
                         <div className="preview-sub-main">
@@ -634,7 +637,12 @@ const PreviewLayout = ({
                           </div>
                           <div className="preview-content-wrap">
                             <div className="preview-content">
-                              <div className={`article ${!shouldShowToc ? "no-toc" : ""}`}>
+                              <div
+                                className={`article ${
+                                  !shouldShowToc ? "no-toc" : ""
+                                }`}
+                              >
+                                <PageContextMenu />
                                 <div className="article-breadcrumb flex justify-between items-center">
                                   <Breadcrumb
                                     items={breadCrumbData}
@@ -664,7 +672,13 @@ const PreviewLayout = ({
                                 </div>
                                 <ArticlePager prev={prev} next={next} />
                               </div>
-                              <div className={`article-anchor-right ${!shouldShowTabs || displayTabs.length <= 1 ? "hidden-tab" : ""} ${!shouldShowToc ? "hidden-toc" : ""}`}>
+                              <div
+                                className={`article-anchor-right ${
+                                  !shouldShowTabs || displayTabs.length <= 1
+                                    ? "hidden-tab"
+                                    : ""
+                                } ${!shouldShowToc ? "hidden-toc" : ""}`}
+                              >
                                 {shouldShowToc && toc?.length ? (
                                   <div className="pt-[28px]  pb-10 ml-8">
                                     <p
