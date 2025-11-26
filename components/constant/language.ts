@@ -91,6 +91,10 @@ export const copywriting = {
       llmsDesc: "Provide information to let LLMs access all API docs",
       copyied: "Copied",
     },
+    articlePager: {
+      previous: "Previous",
+      next: "Next",
+    }
   },
   zh: {
     search: {
@@ -183,5 +187,9 @@ export const copywriting = {
       llmsDesc: "提供信息让大模型访问站点的所有 API 文档",
       copyied: "已复制",
     },
+    articlePager: {
+      previous: "上一篇",
+      next: "下一篇",
+    }
   },
 };

@@ -4,6 +4,8 @@ import classNames from "classnames";
 import IconNext from "@/assets/icons/icon_arrow_right.svg";
 import IconLeft from "@/assets/icons/icon_arrow_left.svg";
 import Link from "next/link";
+import { copywriting } from "@/components/constant/language";
+import useLanguage from "@/components/hooks/useLanguage";
 
 export interface PaginationData {
   description?: string;
@@ -14,6 +16,9 @@ interface ArticlePagerProps {
   next?: PaginationData;
 }
 const ArticlePager: FC<ArticlePagerProps> = ({ prev, next }) => {
+  const { currentLanguage } = useLanguage();
+  const articlePager = copywriting[currentLanguage].articlePager;
+
   return (
     <div className={styles["article-pager-container"]}>
       {prev.href ? (
@@ -25,7 +30,7 @@ const ArticlePager: FC<ArticlePagerProps> = ({ prev, next }) => {
           )}
         >
           <IconLeft className={styles[`article-pager-icon-prev`]} />
-          <p className={styles["article-pager-title"]}>Previous</p>
+          <p className={styles["article-pager-title"]}>{articlePager.previous}</p>
           <p className={styles["article-pager-description"]}>
             {prev.description}
           </p>
@@ -48,7 +53,7 @@ const ArticlePager: FC<ArticlePagerProps> = ({ prev, next }) => {
               styles["article-pager-title-next"]
             )}
           >
-            Next
+            {articlePager.next}
           </p>
           <p
             className={classNames(
