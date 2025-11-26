@@ -86,7 +86,7 @@
 
 	// 正文
 	p {
-		font-size: 16px;
+		font-size: 14px;
 		color: var(--docuo-text-color);
 		margin: 16px 0;
 	}
@@ -94,21 +94,21 @@
 	hr {
 		height: 0;
 		border-top: 1px solid var(--docuo-hr-color);
-		margin: 32px 0;
+		margin: 16px 0 20px 0;
 	}
 
 	// 兼容 openapi 样式
 	&:not(:has(.theme-api-markdown)) {
 		ul,
 		ol {
-			margin: 20px 0 26px;
+			margin: 16px 0 20px;
 			padding-inline-start: 20px;
 			& > li {
-				font-size: 16px;
+				font-size: 14px;
 				line-height: 24px;
 				font-weight: 400;
 				color: var(--docuo-text-color);
-				margin: 14px 0;
+				margin: 8px 0;
 			}
 		}
 		li {
@@ -182,13 +182,13 @@
 	//链接
 	a {
 		font-family: var(--font-inter-medium);
-		color: var(--docuo-color-primary);
+		color: var(--docuo-color-primary-hover);
 		text-decoration: none;
-		border-bottom: 1px solid var(--docuo-color-primary-hover);
 		transition: all 0.3s;
 		&:hover {
 			transition: all 0.3s;
 			color: var(--docuo-color-primary-hover);
+			border-bottom: 1px solid var(--docuo-color-primary-hover);
 		}
 	}
 
@@ -203,7 +203,7 @@
 		position: relative;
 		p {
 			margin: 0;
-			font-size: 16px;
+			font-size: 14px;
 			color: var(--docuo-text-color);
 			line-height: 24px;
 		}
@@ -221,7 +221,7 @@
 
 	// 表格
 	table {
-		display: block;
+		// display: block;
 		text-align: left;
 		width: 100%;
 		overflow: auto;
@@ -238,7 +238,11 @@
 		td {
 			font-size: 14px;
 			line-height: 22px;
-			padding: 14px 12px;
+			padding: 12px;
+			& > ul {
+				margin-top: 0 !important;
+				margin-bottom: 0 !important;
+			}
 			ul > li {
 				font-size: 14px;
 			}
@@ -380,8 +384,8 @@
 				> li:not([class]):not([style]):not([role]):not([id]):not([data^="data-"]) {
 					position: relative;
 					color: var(--docuo-text-color);
-					font-size: 16px;
-					margin: 14px 0;
+					font-size: 14px;
+					margin: 8px 0;
 				}
 			}
 		}
