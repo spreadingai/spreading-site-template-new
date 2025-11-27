@@ -48,7 +48,7 @@
 // Dark mode support
 [data-theme="dark"] {
   .tabContainer {
-    border-bottom-color: var(--docuo-color-border-dark, #374151);
+    border-bottom-color: var(--docuo-hr-color);
   }
 
   .tabItem {

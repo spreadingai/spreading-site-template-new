@@ -34,7 +34,8 @@ const AnchorNode: FC<AnchorNodeProps> = ({
   level = 0,
   onClick,
 }) => {
-  const { unregisterLink, registerLink, activeLink, scrollTo } = useContext(AnchorContext);
+  const { unregisterLink, registerLink, activeLink, scrollTo } =
+    useContext(AnchorContext);
 
   const hasChildren = node.children && node.children.length > 0;
 
@@ -55,7 +56,7 @@ const AnchorNode: FC<AnchorNodeProps> = ({
   const toggleNode: MouseEventHandler<HTMLAnchorElement> = (e) => {
     e.preventDefault();
 
-    if (!node.href || !node.href.startsWith('#')) {
+    if (!node.href || !node.href.startsWith("#")) {
       return;
     }
 
@@ -69,8 +70,8 @@ const AnchorNode: FC<AnchorNodeProps> = ({
     }
 
     // 检查目标元素是否在隐藏的Accordion或Tab中
-    const isInHiddenAccordion = targetElement.closest('.contentCollapsed');
-    const isInHiddenTab = targetElement.closest('.tabPaneHidden');
+    const isInHiddenAccordion = targetElement.closest(".contentCollapsed");
+    const isInHiddenTab = targetElement.closest(".tabPaneHidden");
 
     if (isInHiddenAccordion || isInHiddenTab) {
       // 目标在隐藏组件中，让组件自己处理展开和滚动
@@ -78,20 +79,20 @@ const AnchorNode: FC<AnchorNodeProps> = ({
     } else {
       // 目标元素可见，直接跳转（无动画）
       targetElement.scrollIntoView({
-        behavior: 'auto',
-        block: 'start'
+        behavior: "auto",
+        block: "start",
       });
     }
 
     // 更新浏览器地址栏，触发hashchange事件让组件处理
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       // 使用pushState更新URL，然后手动触发hashchange事件
-      window.history.pushState(null, '', node.href);
+      window.history.pushState(null, "", node.href);
 
       // 手动触发hashchange事件，让Accordion/Tabs组件处理
-      const hashChangeEvent = new HashChangeEvent('hashchange', {
+      const hashChangeEvent = new HashChangeEvent("hashchange", {
         oldURL: window.location.href,
-        newURL: window.location.href
+        newURL: window.location.href,
       });
       window.dispatchEvent(hashChangeEvent);
     }
@@ -107,7 +108,8 @@ const AnchorNode: FC<AnchorNodeProps> = ({
         className={`flex items-center font-inter-regular`}
         style={
           isMobile
-            ? { fontSize: 16, lineHeight: "28px", marginBottom: 10 }
+            ? // ? { fontSize: 16, lineHeight: "28px", marginBottom: 10 }
+              { fontSize: 13, lineHeight: "22px" }
             : { fontSize: 13, lineHeight: "22px" }
         }
       >
@@ -124,8 +126,7 @@ const AnchorNode: FC<AnchorNodeProps> = ({
               "font-inter-regular",
               {
                 "pl-[13px]": level !== 0,
-                "font-inter-bold font-semibold":
-                  activeLink === node.href,
+                "font-inter-bold font-semibold": activeLink === node.href,
               }
             )}
             onClick={toggleNode}

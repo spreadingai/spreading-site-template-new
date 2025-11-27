@@ -70,7 +70,7 @@ const PageContextMenu = () => {
       window.open(mdUrl);
     } else if (key === "3") {
       window.open(
-        `${location.origin}${process.env.NEXT_PUBLIC_BASE_PATH}/llms.txt`
+        `${location.origin}${process.env.NEXT_PUBLIC_BASE_PATH || ""}/llms.txt`
       );
     }
   };
@@ -113,7 +113,12 @@ const PageContextMenu = () => {
         <span className={styles.PageContextItem}>
           <span className={styles.PageContextItemTitle}>
             <span>{pageContextMenuCopywriting.llms}</span>
-            <Image width={20} height={20} src={IconBacktotop} alt="" />
+            <Image
+              width={20}
+              height={20}
+              src={theme === ThemeEmum.Dark ? IconBacktotopDark : IconBacktotop}
+              alt=""
+            />
           </span>
           <span className={styles.PageContextItemDesc}>
             {pageContextMenuCopywriting.llmsDesc}
@@ -147,7 +152,7 @@ const PageContextMenu = () => {
   };
 
   return (
-    <div className={`${styles.PageContextMenu} page-context-menu`} >
+    <div className={`${styles.PageContextMenu} page-context-menu`}>
       <Space.Compact>
         <Button
           onClick={handleButtonClick}
@@ -170,7 +175,7 @@ const PageContextMenu = () => {
           rootClassName={styles.PageContextDropdownMenu}
           menu={menuProps}
           placement="bottomRight"
-          trigger={["click"]}
+          trigger={["hover"]}
         >
           <Button icon={<IconTreeArrow />} />
         </Dropdown>

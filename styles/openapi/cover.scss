@@ -22,11 +22,13 @@
         }
     }
     .openapi-left-panel__container {
-        width: 65.17%;
+        // width: 67.98%;
+        flex: 1;
         padding: 0 30px;
     }
     .openapi-right-panel__container {
-        width: 34.83%;
+        // width: 32.02%;
+        width: 379px;
         padding: 0 1px 0 16px;
     }
 }
