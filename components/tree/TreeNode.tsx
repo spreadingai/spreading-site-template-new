@@ -89,7 +89,7 @@ const TreeNode: FC<TreeNodeProps> = ({
   return (
     <div
       className={classNames("tree-node-wrapper", {
-        "mb-7": level == 0,
+        [styles.level0]: level == 0,
         relative: showLines,
       })}
     >
@@ -120,7 +120,14 @@ const TreeNode: FC<TreeNodeProps> = ({
             {node.tag && (
               <SidebarTag
                 label={node.tag.label}
-                color={node.tag.color as "Check" | "Tip" | "Note" | "Warning" | "Error"}
+                color={
+                  node.tag.color as
+                    | "Check"
+                    | "Tip"
+                    | "Note"
+                    | "Warning"
+                    | "Error"
+                }
                 className={styles.sidebarTag}
               />
             )}

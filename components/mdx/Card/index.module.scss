@@ -1,5 +1,5 @@
 .wrapper {
-  margin: 12px 20px 8px;
+  // margin: 12px 20px 8px;
   border-radius: 12px;
   padding: 20px 24px;
   background-color: var(--docuo-card-bg);
@@ -45,6 +45,9 @@
     p {
       font-size: 14px;
       color: var(--docuo-card-content-color);
+    }
+    & > *:last-child {
+      margin-bottom: 0;
     }
   }
 }

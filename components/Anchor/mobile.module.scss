@@ -42,7 +42,7 @@
 }
 @media screen and (max-width: 1280px) {
   .toc-btn {
-    width: 277px;
+    width: var(--preview-anchor-width);
     cursor: pointer;
   }
 
@@ -51,7 +51,7 @@
     z-index: 101;
     top: 48px;
     right: 0;
-    min-width: 331px;
+    min-width: var(--preview-anchor-width);
     background: var(--docuo-popup-bg);
     padding: 20px;
     padding-top: 16px;

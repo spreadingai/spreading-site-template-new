@@ -1,7 +1,8 @@
 :root {
   --preview-header-height: 68px;
   --preview-sub-header-height: 55px;
-  --preview-sider-width: 272px;
+  // --preview-sider-width: 272px;
+  --preview-sider-width: 256px;
   --preview-anchor-width: 252px;
 
   // LexendDeca 字体族
@@ -177,14 +178,14 @@ html > body {
   }
 }
 .preview-sider-tree-top {
-  padding-left: 16px;
+  // padding-left: 16px;
   flex-wrap: wrap;
   display: flex;
   margin-top: 16px;
 }
 .preview-sider-tree-content {
   padding-right: 8px;
-  padding-left: 16px;
+  // padding-left: 16px;
   padding-bottom: 2.5rem;
   overflow: auto;
   margin-top: 28px;
@@ -567,6 +568,15 @@ html > body {
         }
       }
     }
+  }
+}
+
+@media screen and (max-width: 1439px) {
+  .preview-sider-tree-top {
+    padding-left: 16px;
+  }
+  .preview-sider-tree-content {
+    padding-left: 16px;
   }
 }
 
