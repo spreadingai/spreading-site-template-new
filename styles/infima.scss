@@ -1097,18 +1097,18 @@
   //   border-bottom: 2px solid var(--ifm-table-border-color);
   // }
 
-  table thead {
-    background-color: var(--ifm-table-stripe-background);
-  }
+  // table thead {
+  //   background-color: var(--ifm-table-stripe-background);
+  // }
 
-  table tr {
-    background-color: var(--ifm-table-background);
-    border-top: var(--ifm-table-border-width) solid var(--ifm-table-border-color);
-  }
+  // table tr {
+  //   background-color: var(--ifm-table-background);
+  //   border-top: var(--ifm-table-border-width) solid var(--ifm-table-border-color);
+  // }
 
-  table tr:nth-child(2n) {
-    background-color: var(--ifm-table-stripe-background);
-  }
+  // table tr:nth-child(2n) {
+  //   background-color: var(--ifm-table-stripe-background);
+  // }
 
   table th,
   table td {
