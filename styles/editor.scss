@@ -268,6 +268,101 @@
 		}
 	}
 
+	// 表格圆角
+	table {
+		// 圆角边框设置
+		border-radius: 4px;
+		// 使用 separate 而不是 collapse，这样圆角才能生效
+		border-collapse: separate;
+		border-spacing: 0;
+		// 给整个表格添加外边框
+		border: var(--docuo-table-border);
+		th {
+			border: unset;
+		}
+		td {
+			border: unset;
+		}
+		th,
+		td {
+			// 单元格只保留右边框和下边框，避免边框重叠
+			border-right: var(--docuo-table-border);
+			border-bottom: var(--docuo-table-border);
+		}
+		// 移除最右侧列的右边框
+		tr > th:last-child,
+		tr > td:last-child {
+			border-right: none;
+		}
+
+		// 移除最后一行的下边框
+		tbody tr:last-child td,
+		thead:last-child tr:last-child th {
+			border-bottom: none;
+		}
+
+		// 如果没有 tbody，thead 的最后一行也要移除下边框
+		thead:only-child tr:last-child th {
+			border-bottom: none;
+		}
+
+		// 左上角圆角 - 第一行第一个单元格
+		thead tr:first-child th:first-child,
+		tbody:first-child tr:first-child td:first-child {
+			border-top-left-radius: 7px;
+		}
+
+		// 右上角圆角 - 第一行最后一个单元格
+		thead tr:first-child th:last-child,
+		tbody:first-child tr:first-child td:last-child {
+			border-top-right-radius: 7px;
+		}
+
+		// 左下角圆角 - 最后一行第一个单元格
+		tbody tr:last-child td:first-child,
+		thead:last-child tr:last-child th:first-child {
+			border-bottom-left-radius: 7px;
+		}
+
+		// 右下角圆角 - 最后一行最后一个单元格
+		tbody tr:last-child td:last-child,
+		thead:last-child tr:last-child th:last-child {
+			border-bottom-right-radius: 7px;
+		}
+
+		// 如果只有 thead 没有 tbody
+		thead:only-child {
+			tr:first-child th:first-child {
+				border-top-left-radius: 7px;
+			}
+			tr:first-child th:last-child {
+				border-top-right-radius: 7px;
+			}
+			tr:last-child th:first-child {
+				border-bottom-left-radius: 7px;
+			}
+			tr:last-child th:last-child {
+				border-bottom-right-radius: 7px;
+			}
+		}
+
+		// 如果只有 tbody 没有 thead
+		tbody:only-child {
+			tr:first-child td:first-child {
+				border-top-left-radius: 7px;
+			}
+			tr:first-child td:last-child {
+				border-top-right-radius: 7px;
+			}
+			tr:last-child td:first-child {
+				border-bottom-left-radius: 7px;
+			}
+			tr:last-child td:last-child {
+				border-bottom-right-radius: 7px;
+			}
+		}
+	}
+
 	// inline code
 	code:not([class*="language-"]) {
 		padding: 2px 6px;
