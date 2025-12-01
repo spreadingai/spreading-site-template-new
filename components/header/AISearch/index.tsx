@@ -36,7 +36,16 @@ const AISearch = () => {
   return (
     <div className={styles["ai-search-wrap"]}>
       <div onClick={showModal} className={styles["ai-btn"]}>
-        <img src={iconAshAI.src} alt="" decoding="async" loading="lazy" fetchPriority="low" width={iconAshAI.width} height={iconAshAI.height} />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={iconAshAI.src}
+          alt=""
+          decoding="async"
+          loading="lazy"
+          // fetchPriority="low"
+          width={iconAshAI.width}
+          height={iconAshAI.height}
+        />
       </div>
       {/* 使用新的AskAI模态框 */}
       <AskAIModal
