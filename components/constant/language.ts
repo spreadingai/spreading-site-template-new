@@ -89,6 +89,8 @@ export const copywriting = {
       viewMarkdownDesc: "View this page in plain text form",
       llms: "LLMs.txt",
       llmsDesc: "Provide information to let LLMs access all API docs",
+      connectToCursor: "Connect to Cursor",
+      connectToCursorDesc: "Install MCP Server on Cursor",
       copyied: "Copied",
     },
     articlePager: {
@@ -185,6 +187,8 @@ export const copywriting = {
       viewMarkdownDesc: "以纯文本格式查看此页面",
       llms: "LLMs.txt",
       llmsDesc: "提供信息让大模型访问站点的所有 API 文档",
+      connectToCursor: "连接到 Cursor",
+      connectToCursorDesc: "在 Cursor 中安装 MCP 服务",
       copyied: "已复制",
     },
     articlePager: {

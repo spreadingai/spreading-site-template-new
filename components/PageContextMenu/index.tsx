@@ -72,6 +72,11 @@ const PageContextMenu = () => {
       window.open(
         `${location.origin}${process.env.NEXT_PUBLIC_BASE_PATH || ""}/llms.txt`
       );
+    } else if (key === "4") {
+      // Connect to Cursor - MCP install deeplink
+      window.open(
+        "cursor://anysphere.cursor-deeplink/mcp/install?name=ZEGO&config=eyJuYW1lIjoiWkVHTyIsInVybCI6Imh0dHBzOi8vZG9jLWFpLnplZ28uaW0vbWNwLyJ9"
+      );
     }
   };
 
@@ -126,6 +131,25 @@ const PageContextMenu = () => {
         </span>
       ),
       key: "3",
+    },
+    {
+      label: (
+        <span className={styles.PageContextItem}>
+          <span className={styles.PageContextItemTitle}>
+            <span>{pageContextMenuCopywriting.connectToCursor}</span>
+            <Image
+              width={20}
+              height={20}
+              src={theme === ThemeEmum.Dark ? IconBacktotopDark : IconBacktotop}
+              alt=""
+            />
+          </span>
+          <span className={styles.PageContextItemDesc}>
+            {pageContextMenuCopywriting.connectToCursorDesc}
+          </span>
+        </span>
+      ),
+      key: "4",
     },
   ];
 
