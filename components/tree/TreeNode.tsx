@@ -79,7 +79,9 @@ const TreeNode: FC<TreeNodeProps> = ({
         if (href.startsWith("http")) {
           window.open(href, "_blank");
         } else {
-          const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+          // const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
+          // 这里是以 "/" 开头的绝对 slug 路径，nextjs 已经自动加上 basePath
+          const basePath = "";
           router.push(`${basePath}${href}`);
         }
         return;

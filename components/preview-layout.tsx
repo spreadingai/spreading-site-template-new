@@ -421,12 +421,6 @@ const PreviewLayout = ({
         return href;
       }
 
-      // 如果是站内链接（以 / 开头），添加 BASE_PATH
-      if (href.startsWith("/")) {
-        const basePath = process.env.NEXT_PUBLIC_BASE_PATH || "";
-        return `${basePath}${href}`;
-      }
-
       // 其他情况直接返回
       return href;
     };
@@ -439,19 +433,25 @@ const PreviewLayout = ({
     return (
       <div className="custom-node-title">
         {nodeData.id ? (
-          <Link className="title" href={nodeData.id}>
+          <Link className="title tag-link" href={nodeData.id}>
             {nodeData.title}
           </Link>
         ) : nodeData.type === SidebarItemType.Link ? (
-          <a
-            className="title"
-            href={processLinkHref(nodeData.link || "")}
-            target={isExternalLink(nodeData.link || "") ? "_blank" : "_self"}
-          >
-            {nodeData.title}
-          </a>
+          nodeData?.link.startsWith("/") ? (
+            <Link className="title tag-link" href={nodeData.link.slice(1)}>
+              {nodeData.title}
+            </Link>
+          ) : (
+            <a
+              className="title tag-a"
+              href={processLinkHref(nodeData.link || "")}
+              target={isExternalLink(nodeData.link || "") ? "_blank" : "_self"}
+            >
+              {nodeData.title}
+            </a>
+          )
         ) : (
-          <span className="title">{nodeData.title}</span>
+          <span className="title tag-span">{nodeData.title}</span>
         )}
         <span className="right-content">
           {nodeData.type === SidebarItemType.Link ? (
