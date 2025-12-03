@@ -37,7 +37,7 @@ const TabSwitch: FC<TabSwitchProps> = ({ className }) => {
   };
 
   return (
-    <div className={`${styles.tabSwitch} ${className || ''}`}>
+    <div className={`${className || ''}`}>
       <div className={styles.tabContainer}>
         {displayTabs.map((tabInfo, index) => {
           const isActive = currentTab === tabInfo.tab;

@@ -187,6 +187,16 @@
   }
 }
 
+@media screen and (min-width: 1440px) and (max-width: 1472px) {
+  .header-container {
+    .container {
+      max-width: 1472px;
+      width: 1472px;
+      padding: 0 16px;
+    }
+  }
+}
+
 @media screen and (max-width: 1024px) {
   .header-container {
     background: #fff;
