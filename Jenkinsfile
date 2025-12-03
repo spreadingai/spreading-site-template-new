@@ -21,61 +21,81 @@ pipeline {
           // 构建认证头（如果提供了 GITHUB_TOKEN）
           def authHeader = env.GITHUB_TOKEN ? "-H \"Authorization: Bearer ${env.GITHUB_TOKEN}\"" : ""
 
-          def siteTemplateHash = sh(
-            script: """
-              RESPONSE=\$(curl -s -m 10 \
-                -H "Accept: application/vnd.github+json" \
-                -H "X-GitHub-Api-Version: 2022-11-28" \
-                ${authHeader} \
-                https://api.github.com/repos/spreadingai/spreading-site-template-new/branches/coding)
+          // 重试 3 次获取 site-template commit hash
+          def siteTemplateHash = ''
+          retry(3) {
+            try {
+              siteTemplateHash = sh(
+                script: """
+                  RESPONSE=\$(curl -s -m 10 \
+                    -H "Accept: application/vnd.github+json" \
+                    -H "X-GitHub-Api-Version: 2022-11-28" \
+                    ${authHeader} \
+                    https://api.github.com/repos/spreadingai/spreading-site-template-new/branches/coding)
 
-              # 使用 python 解析 JSON 获取 commit.sha
-              HASH=\$(echo "\$RESPONSE" | python3 -c "import sys, json; data=json.load(sys.stdin); print(data.get('commit', {}).get('sha', ''))" 2>/dev/null)
+                  # 使用 python 解析 JSON 获取 commit.sha
+                  HASH=\$(echo "\$RESPONSE" | python3 -c "import sys, json; data=json.load(sys.stdin); print(data.get('commit', {}).get('sha', ''))" 2>/dev/null)
 
-              # 检查是否成功获取 hash
-              if [ -z "\$HASH" ]; then
-                # 检查是否是 API 错误响应
-                ERROR_MSG=\$(echo "\$RESPONSE" | python3 -c "import sys, json; print(json.load(sys.stdin).get('message', ''))" 2>/dev/null)
-                if [ -n "\$ERROR_MSG" ]; then
-                  echo "API 错误: \$ERROR_MSG" >&2
-                else
-                  echo "解析失败，响应内容（前500字符）: \${RESPONSE:0:500}" >&2
-                fi
-                exit 1
-              fi
+                  # 检查是否成功获取 hash
+                  if [ -z "\$HASH" ]; then
+                    # 检查是否是 API 错误响应
+                    ERROR_MSG=\$(echo "\$RESPONSE" | python3 -c "import sys, json; print(json.load(sys.stdin).get('message', ''))" 2>/dev/null)
+                    if [ -n "\$ERROR_MSG" ]; then
+                      echo "API 错误: \$ERROR_MSG" >&2
+                    else
+                      echo "解析失败，响应内容（前500字符）: \${RESPONSE:0:500}" >&2
+                    fi
+                    exit 1
+                  fi
 
-              echo "\$HASH"
-            """,
-            returnStdout: true
-          ).trim()
+                  echo "\$HASH"
+                """,
+                returnStdout: true
+              ).trim()
+            } catch (Exception e) {
+              echo "获取 site-template commit hash 失败，准备重试..."
+              sleep(time: 5, unit: 'SECONDS')
+              throw e
+            }
+          }
 
-          def docsAllHash = sh(
-            script: """
-              RESPONSE=\$(curl -s -m 10 \
-                -H "Accept: application/vnd.github+json" \
-                -H "X-GitHub-Api-Version: 2022-11-28" \
-                ${authHeader} \
-                https://api.github.com/repos/ZEGOCLOUD/docs_all/branches/main)
+          // 重试 3 次获取 docs_all commit hash
+          def docsAllHash = ''
+          retry(3) {
+            try {
+              docsAllHash = sh(
+                script: """
+                  RESPONSE=\$(curl -s -m 10 \
+                    -H "Accept: application/vnd.github+json" \
+                    -H "X-GitHub-Api-Version: 2022-11-28" \
+                    ${authHeader} \
+                    https://api.github.com/repos/ZEGOCLOUD/docs_all/branches/main)
 
-              # 使用 python 解析 JSON 获取 commit.sha
-              HASH=\$(echo "\$RESPONSE" | python3 -c "import sys, json; data=json.load(sys.stdin); print(data.get('commit', {}).get('sha', ''))" 2>/dev/null)
+                  # 使用 python 解析 JSON 获取 commit.sha
+                  HASH=\$(echo "\$RESPONSE" | python3 -c "import sys, json; data=json.load(sys.stdin); print(data.get('commit', {}).get('sha', ''))" 2>/dev/null)
 
-              # 检查是否成功获取 hash
-              if [ -z "\$HASH" ]; then
-                # 检查是否是 API 错误响应
-                ERROR_MSG=\$(echo "\$RESPONSE" | python3 -c "import sys, json; print(json.load(sys.stdin).get('message', ''))" 2>/dev/null)
-                if [ -n "\$ERROR_MSG" ]; then
-                  echo "API 错误: \$ERROR_MSG" >&2
-                else
-                  echo "解析失败，响应内容（前500字符）: \${RESPONSE:0:500}" >&2
-                fi
-                exit 1
-              fi
+                  # 检查是否成功获取 hash
+                  if [ -z "\$HASH" ]; then
+                    # 检查是否是 API 错误响应
+                    ERROR_MSG=\$(echo "\$RESPONSE" | python3 -c "import sys, json; print(json.load(sys.stdin).get('message', ''))" 2>/dev/null)
+                    if [ -n "\$ERROR_MSG" ]; then
+                      echo "API 错误: \$ERROR_MSG" >&2
+                    else
+                      echo "解析失败，响应内容（前500字符）: \${RESPONSE:0:500}" >&2
+                    fi
+                    exit 1
+                  fi
 
-              echo "\$HASH"
-            """,
-            returnStdout: true
-          ).trim()
+                  echo "\$HASH"
+                """,
+                returnStdout: true
+              ).trim()
+            } catch (Exception e) {
+              echo "获取 docs_all commit hash 失败，准备重试..."
+              sleep(time: 5, unit: 'SECONDS')
+              throw e
+            }
+          }
 
           echo "spreading-site-template-new (coding): ${siteTemplateHash}"
           echo "docs_all (main): ${docsAllHash}"
