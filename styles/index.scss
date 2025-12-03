@@ -352,6 +352,13 @@ html > body {
   }
 }
 
+@media screen and (min-width: 1440px) and (max-width: 1464px) {
+  .preview-main {
+    padding-left: 16px;
+    max-width: 1464px;
+  }
+}
+
 @media screen and (min-width: 1281px) {
   .middle__show {
     display: none;
