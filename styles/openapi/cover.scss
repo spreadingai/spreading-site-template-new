@@ -23,7 +23,8 @@
     }
     .openapi-left-panel__container {
         // width: 67.98%;
-        flex: 1;
+        // flex: 1;
+        width: calc(100% - 379px);
         padding: 0 30px;
     }
     .openapi-right-panel__container {
