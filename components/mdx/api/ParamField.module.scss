@@ -1,9 +1,18 @@
+// 隐藏的锚点元素，用于定位跳转
+// 注意：全局 body 已设置 scroll-padding-top: 128px，无需再设置 scroll-margin-top
+.anchorTarget {
+  display: block;
+  visibility: hidden;
+  height: 0;
+}
+
 .hiddenHeading {
   position: absolute;
   width: 1px;
   height: 1px;
   padding: 0;
-  margin: -1px;
+  // 使用 !important 覆盖浏览器默认的 h4 margin
+  margin: 0 !important;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
