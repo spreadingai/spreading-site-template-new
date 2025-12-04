@@ -124,19 +124,12 @@ export default function ParamField(props: ParamFieldProps) {
         {name}
       </HeadingTag>
 
+      {/* Additional anchor targets for parent context (e.g., name-ParentClass, name-ParentClass-interface) */}
+      {additionalAnchors.map((anchorId) => (
+        <span key={anchorId} id={anchorId} className={styles.anchorTarget} />
+      ))}
+
       <div ref={wrapperRef} className={styles.wrapper}>
-        {/* Additional anchor links for parent context (e.g., name-ParentClass, name-ParentClass-interface) */}
-        {additionalAnchors.map((anchorId) => (
-          <a
-            key={anchorId}
-            id={anchorId}
-            style={{
-              position: "absolute",
-              top: "-80px",
-              visibility: "hidden",
-            }}
-          />
-        ))}
 
         {/* Head section */}
         <div className={styles.head}>
