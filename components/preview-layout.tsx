@@ -330,9 +330,18 @@ const PreviewLayout = ({
     return frontmatter.show_toc !== false;
   }, [mdxSource]);
 
-  // 使用动态TOC来支持组件生成的标题（如Steps组件）
+  // 检查frontmatter中是否使用静态TOC（跳过动态计算）
   // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { toc: dynamicToc } = useDynamicTOC(".article-content");
+  const useStaticToc = useMemo(() => {
+    const frontmatter = mdxSource?.frontmatter || {};
+    // 当设置 static_toc: true 时，跳过动态TOC计算，直接使用静态TOC
+    return frontmatter.static_toc === true;
+  }, [mdxSource]);
+
+  // 使用动态TOC来支持组件生成的标题（如Steps组件）
+  // 当 static_toc: true 时禁用动态扫描以提升大页面性能
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const { toc: dynamicToc } = useDynamicTOC(".article-content", useStaticToc);
 
   // 合并静态TOC和动态TOC
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -341,10 +350,14 @@ const PreviewLayout = ({
     if (!shouldShowToc) {
       return [];
     }
+    // 如果使用静态TOC，直接返回静态TOC
+    if (useStaticToc) {
+      return toc;
+    }
     // 如果动态TOC有内容，优先使用动态TOC（包含组件生成的标题）
     // 否则使用静态TOC作为后备
     return dynamicToc && dynamicToc.length > 0 ? dynamicToc : toc;
-  }, [dynamicToc, toc, shouldShowToc]);
+  }, [dynamicToc, toc, shouldShowToc, useStaticToc]);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const tocFormatData = useMemo(() => {

@@ -17,8 +17,10 @@ interface TOCItem {
 /**
  * 动态扫描页面中的所有heading元素生成TOC
  * 使用更精确的触发机制，避免频繁的DOM监听
+ * @param containerSelector - 扫描标题的容器选择器
+ * @param disabled - 是否禁用动态扫描（用于 static_toc 模式提升大页面性能）
  */
-export const useDynamicTOC = (containerSelector = '.article-content') => {
+export const useDynamicTOC = (containerSelector = '.article-content', disabled = false) => {
   const [toc, setToc] = useState<TOCItem[]>([]);
   const [lastScanTime, setLastScanTime] = useState<number>(0);
   const [lastTocHash, setLastTocHash] = useState<string>('');
@@ -149,6 +151,11 @@ export const useDynamicTOC = (containerSelector = '.article-content') => {
   }, [scanHeadings, lastScanTime, lastTocHash, generateTocHash]);
 
   useEffect(() => {
+    // 如果禁用动态扫描，跳过所有操作
+    if (disabled) {
+      return;
+    }
+
     // 初始扫描
     updateTOC();
 
@@ -183,7 +190,7 @@ export const useDynamicTOC = (containerSelector = '.article-content') => {
       window.removeEventListener('popstate', handleRouteChange);
       document.removeEventListener('route-change', handleRouteChange);
     };
-  }, [containerSelector, updateTOC]);
+  }, [containerSelector, updateTOC, disabled]);
 
   return {
     toc,
