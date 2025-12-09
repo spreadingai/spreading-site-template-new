@@ -19,6 +19,7 @@ export interface ParamFieldProps {
   parent_file?: string;
   parent_name?: string;
   parent_type?: "class" | "interface" | "protocol" | "enum";
+  anchor_suffix?: string;
   titleSize?: 1 | 2 | 3 | 4 | 5 | 6;
   children?: React.ReactNode;
 }
@@ -99,20 +100,24 @@ export default function ParamField(props: ParamFieldProps) {
     parent_file,
     parent_name,
     parent_type,
+    anchor_suffix = "",
     titleSize = 4,
     children,
   } = props;
 
   const wrapperRef = useRef<HTMLDivElement>(null);
 
+  // 锚点基础名称：如果有 anchor_suffix，则拼接到 name 后面
+  const anchorBaseName = anchor_suffix ? `${name}${anchor_suffix}` : name;
+
   // Generate primary anchor ID using generateSlug() to match TOC behavior
-  const primaryAnchorId = generateSlug(name);
+  const primaryAnchorId = generateSlug(anchorBaseName);
 
   // Generate additional anchors for parent context (only for non-enum types)
   const additionalAnchors: string[] = [];
   if (parent_type && parent_type !== "enum" && parent_name) {
-    additionalAnchors.push(generateSlug(`${name}-${parent_name}`));
-    additionalAnchors.push(generateSlug(`${name}-${parent_name}-${parent_type}`));
+    additionalAnchors.push(generateSlug(`${anchorBaseName}-${parent_name}`));
+    additionalAnchors.push(generateSlug(`${anchorBaseName}-${parent_name}-${parent_type}`));
   }
 
   const HeadingTag = headingTags[titleSize] as keyof JSX.IntrinsicElements;
