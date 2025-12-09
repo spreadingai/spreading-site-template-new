@@ -440,7 +440,6 @@ module.exports = LLMSTxtGenerator;
 // 如果直接运行此脚本
 if (require.main === module) {
   const generator = new LLMSTxtGenerator();
-  const content = generator.generate();
-  console.log(content);
+  generator.generate();
 }
 
