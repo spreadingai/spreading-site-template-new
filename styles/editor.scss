@@ -239,6 +239,7 @@
 
 		th,
 		td {
+			word-break: break-word;
 			font-size: 14px;
 			line-height: 22px;
 			padding: 12px;
@@ -292,7 +293,8 @@
 		// 移除最右侧列的右边框
 		tr > th:last-child,
 		tr > td:last-child {
-			border-right: none;
+			// 临时解决
+			// border-right: none;
 		}
 
 		// 移除最后一行的下边框
