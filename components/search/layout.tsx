@@ -1,4 +1,3 @@
-// Warning: Not compatible with previous versions of navigationInfo
 import React, { useCallback, useEffect, useState } from "react";
 import LibControllerImpl from "@/lib/client";
 import LanguageControllerImpl from "@/lib/client/language-help";

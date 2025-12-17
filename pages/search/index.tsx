@@ -1,4 +1,3 @@
-// Warning: Not compatible with previous versions of navigationInfo
 import React, {
   useCallback,
   useEffect,

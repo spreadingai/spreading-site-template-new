@@ -1,5 +1,5 @@
 import LibControllerImpl from "./index";
-import { DisplayGroup, NavigationGroupInfo } from "../types";
+import { DisplayGroup, InstanceGroup } from "../types";
 
 class GroupController {
   static _instance: GroupController;
@@ -15,30 +15,25 @@ class GroupController {
     } = { displayGroups: [] };
 
     const instances = LibControllerImpl.getInstances();
-    // Aggregate group data
-    instances.forEach((instance) => {
-      // The new version uses locale judgment, and we're going to replace the suffix judgment later
-      if (instance.locale === currentLanguage) {
-        // const reg = /^https?:/i;
-        const navigationInfo = instance.navigationInfo;
-        if (navigationInfo && navigationInfo.group) {
-          const group = navigationInfo?.group as NavigationGroupInfo;
-          const index = result.displayGroups.find(
-            (item) => item.group === group.id
-          );
-          !index &&
-            result.displayGroups.push({
-              group: group?.id,
-              groupLabel: group?.name,
-              tag: group?.tag,
-            });
-        } else {
-          // if (reg.test(instance.path)) {
-          //   result.displayGroups.push({
-          //     group: instance.id,
-          //     groupLabel: instance.label,
-          //   });
-          // }
+    const instanceGroups = LibControllerImpl.getInstanceGroups();
+
+    // Aggregate group data - 遍历 instanceGroups 而不是 instances
+    instanceGroups.forEach((group: InstanceGroup) => {
+      // 检查该 group 是否有当前语言的实例
+      const groupInstances = group.instances || [];
+      const hasLocaleInstance = groupInstances.some((groupInst) => {
+        const inst = instances.find((i) => i.id === groupInst.id);
+        return inst && inst.locale === currentLanguage;
+      });
+
+      if (hasLocaleInstance) {
+        const exists = result.displayGroups.find((item) => item.group === group.id);
+        if (!exists) {
+          result.displayGroups.push({
+            group: group.id,
+            groupLabel: group.name,
+            tag: group.tag || null,
+          });
         }
       }
     });

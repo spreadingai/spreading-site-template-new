@@ -2,7 +2,7 @@
 
 /**
  * 静态MD文件生成脚本
- * 
+ *
  * 功能：
  * 1. 使用现有的allSlugs数据生成静态MD文件
  * 2. 移除frontmatter
@@ -169,8 +169,6 @@ class StaticMDGenerator {
     const configFileName = this.getConfigFileName();
     const configPath = path.join(this.ENTITY_ROOT_DIRECTORY, configFileName);
 
-    console.log(`📄 使用配置文件: ${configFileName}`);
-
     if (!fs.existsSync(configPath)) {
       throw new Error(`配置文件不存在: ${configPath}`);
     }
@@ -321,11 +319,11 @@ class StaticMDGenerator {
    */
   removeMarkdownFiles(dir) {
     const files = fs.readdirSync(dir);
-    
+
     for (const file of files) {
       const filePath = path.join(dir, file);
       const stat = fs.statSync(filePath);
-      
+
       if (stat.isDirectory()) {
         this.removeMarkdownFiles(filePath);
         // 如果目录为空，删除目录
@@ -348,7 +346,6 @@ class StaticMDGenerator {
     const slugPath = slug.join('/');
 
     try {
-      console.log(`📝 处理: ${slugPath}`);
 
       // 获取原始MDX内容
       const rawContent = await this.getRawMDXContent(slug);
@@ -376,7 +373,6 @@ class StaticMDGenerator {
       fs.writeFileSync(outputPath, processedContent, 'utf8');
 
       const relativePath = path.relative(process.cwd(), outputPath);
-      console.log(`   ✅ 生成: ${relativePath}`);
 
       // 记录成功文件
       this.successfulFiles.push({

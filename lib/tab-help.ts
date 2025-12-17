@@ -1,7 +1,6 @@
 import LibControllerImpl from "./index";
-import { DisplayTab, DocInstance, NavigationInfo } from "./types";
+import { DisplayTab } from "./types";
 import CommonControllerImpl from "./optimize/common";
-import { defaultLanguage } from "@/components/context/languageContext";
 
 class TabController {
   static _instance: TabController;
@@ -39,30 +38,31 @@ class TabController {
       (instance) => instance.id === targetInstanceID
     );
 
-    if (targetInstance && targetInstance.navigationInfo) {
-      const { navigationInfo } = targetInstance;
-      if (navigationInfo && navigationInfo.group) {
-        const groupId = navigationInfo.group.id;
+    // 使用 instanceGroups 获取导航信息
+    const targetNavInfo = LibControllerImpl.getNavigationInfoByInstanceId(targetInstanceID);
 
-        // 设置当前tab
-        if (navigationInfo.tab) {
-          result.currentTab = navigationInfo.tab;
-          result.currentTabLabel = navigationInfo.tab;
-        }
+    if (targetInstance && targetNavInfo.group) {
+      const groupId = targetNavInfo.group.id;
 
-        // 收集同group下的所有tab
-        const tabMap = new Map<string, DisplayTab>();
-        const allSlugs = CommonControllerImpl.readAllSlugsByFile();
+      // 设置当前tab
+      if (targetNavInfo.tab) {
+        result.currentTab = targetNavInfo.tab;
+        result.currentTabLabel = targetNavInfo.tab;
+      }
 
-        instances.forEach((instance) => {
-          if (
-            instance.locale === currentLanguage &&
-            instance.navigationInfo &&
-            instance.navigationInfo.group &&
-            instance.navigationInfo.group.id === groupId &&
-            instance.navigationInfo.tab
-          ) {
-            const tab = instance.navigationInfo.tab;
+      // 收集同group下的所有tab
+      const tabMap = new Map<string, DisplayTab>();
+      const allSlugs = CommonControllerImpl.readAllSlugsByFile();
+
+      // 获取该 group 的所有实例
+      const group = LibControllerImpl.getInstanceGroupById(groupId);
+      if (group && group.instances) {
+        group.instances.forEach((groupInst) => {
+          const instance = instances.find((i) => i.id === groupInst.id);
+          if (!instance) return;
+
+          if (instance.locale === currentLanguage && groupInst.tab) {
+            const tab = groupInst.tab;
 
             if (!tabMap.has(tab)) {
               let defaultLink = "";
@@ -91,11 +91,11 @@ class TabController {
             }
           }
         });
-
-        result.displayTabs = Array.from(tabMap.values());
-        // 只有当同group下有超过1个tab时才显示tab切换
-        result.shouldShowTabs = result.displayTabs.length > 1;
       }
+
+      result.displayTabs = Array.from(tabMap.values());
+      // 只有当同group下有超过1个tab时才显示tab切换
+      result.shouldShowTabs = result.displayTabs.length > 1;
     }
 
     return result;
@@ -112,33 +112,35 @@ class TabController {
     const instances = LibControllerImpl.getInstances();
     const allSlugs = CommonControllerImpl.readAllSlugsByFile();
 
-    const targetInstance = instances.find(
-      (instance) =>
-        instance.locale === currentLanguage &&
-        instance.navigationInfo &&
-        instance.navigationInfo.group &&
-        instance.navigationInfo.group.id === groupId &&
-        instance.navigationInfo.tab === tab
-    );
+    // 获取该 group
+    const group = LibControllerImpl.getInstanceGroupById(groupId);
+    if (!group || !group.instances) return "/";
 
-    if (targetInstance) {
-      const reg = /^https?:/i;
-      if (reg.test(targetInstance.path)) {
-        return targetInstance.path;
+    // 找到匹配的实例
+    const targetGroupInst = group.instances.find((groupInst) => {
+      const instance = instances.find((i) => i.id === groupInst.id);
+      return instance && instance.locale === currentLanguage && groupInst.tab === tab;
+    });
+
+    if (!targetGroupInst) return "/";
+
+    const targetInstance = instances.find((i) => i.id === targetGroupInst.id);
+    if (!targetInstance) return "/";
+
+    const reg = /^https?:/i;
+    if (reg.test(targetInstance.path)) {
+      return targetInstance.path;
+    } else {
+      const instanceSlugs = allSlugs.filter(
+        (slugData) => slugData.params.instanceID === targetInstance.id
+      );
+      if (instanceSlugs.length > 0) {
+        const firstSlug = instanceSlugs[0];
+        return `/${firstSlug.params.slug.join("/")}`;
       } else {
-        const instanceSlugs = allSlugs.filter(
-          (slugData) => slugData.params.instanceID === targetInstance.id
-        );
-        if (instanceSlugs.length > 0) {
-          const firstSlug = instanceSlugs[0];
-          return `/${firstSlug.params.slug.join("/")}`;
-        } else {
-          return `/${targetInstance.routeBasePath}`;
-        }
+        return `/${targetInstance.routeBasePath}`;
       }
     }
-
-    return "/";
   }
 }
 

@@ -1,7 +1,7 @@
 import LibControllerImpl from "./index";
 import CommonControllerImpl from "./optimize/common";
 import LanguageControllerImpl from "./language-help";
-import { DisplayPlatform, NavigationInfo } from "./types";
+import { DisplayPlatform } from "./types";
 
 class PlatformController {
   static _instance: PlatformController;
@@ -28,24 +28,28 @@ class PlatformController {
     const targetInstance = instances.find(
       (instance) => instance.id === targetInstanceID
     );
-    if (targetInstance && targetInstance.navigationInfo) {
-      const { navigationInfo } = targetInstance;
-      if (navigationInfo && navigationInfo.group) {
-        const { id } = navigationInfo.group;
-        const currentTab = navigationInfo.tab; // 获取当前实例的tab
-        result.currentPlatform = navigationInfo.platform;
-        result.currentPlatformLabel = navigationInfo.platform;
+
+    // 使用 instanceGroups 获取导航信息
+    const targetNavInfo = LibControllerImpl.getNavigationInfoByInstanceId(targetInstanceID);
+
+    if (targetInstance && targetNavInfo.group) {
+      const groupId = targetNavInfo.group.id;
+      const currentTab = targetNavInfo.tab; // 获取当前实例的tab
+      result.currentPlatform = targetNavInfo.platform || "";
+      result.currentPlatformLabel = targetNavInfo.platform || "";
+
+      // 获取该 group 的所有实例
+      const group = LibControllerImpl.getInstanceGroupById(groupId);
+      if (group && group.instances) {
         // Aggregate platform data
-        instances.forEach((instance) => {
-          // The new version uses locale judgment, and we're going to replace the suffix judgment later
+        group.instances.forEach((groupInst) => {
+          const instance = instances.find((i) => i.id === groupInst.id);
+          if (!instance) return;
+
+          // The new version uses locale judgment
           if (instance.locale === currentLanguage) {
-            if (
-              instance.navigationInfo &&
-              instance.navigationInfo.group &&
-              instance.navigationInfo.group.id === id &&
-              // 只有在同一个tab下的实例才能进行platform切换
-              instance.navigationInfo.tab === currentTab
-            ) {
+            // 只有在同一个tab下的实例才能进行platform切换
+            if (groupInst.tab === currentTab && groupInst.platform) {
               const reg = /^https?:/i;
               let defaultLink = "";
               if (reg.test(instance.path)) {
@@ -58,11 +62,9 @@ class PlatformController {
                   instance
                 );
               }
-              const platform = (instance.navigationInfo as NavigationInfo)
-                .platform as string;
               result.displayPlatforms.push({
-                platform,
-                platformLabel: platform,
+                platform: groupInst.platform,
+                platformLabel: groupInst.platform,
                 defaultLink,
               });
             }

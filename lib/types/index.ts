@@ -128,24 +128,39 @@ export interface Colors {
   backgroundLight: string;
   backgroundDark: string;
 }
-export interface NavigationGroupInfo {
+// InstanceGroup 相关类型定义
+export interface InstanceGroupItem {
+  id: string;
+  platform?: string;
+  tab?: string;
+}
+
+export interface InstanceGroup {
   id: string;
   name: string;
   tag?: string;
+  category?: string[];
+  instances?: InstanceGroupItem[];
 }
-export interface NavigationInfo {
-  group?: NavigationGroupInfo;
+
+// 从 InstanceGroup 查询后得到的导航信息
+export interface ResolvedNavigationInfo {
+  group?: {
+    id: string;
+    name: string;
+    tag?: string;
+  };
   category?: string[];
   platform?: string;
   tab?: string;
 }
+
 export interface DocInstance {
   id: string;
   label: string;
   path: string;
   routeBasePath: string;
   locale?: string;
-  navigationInfo?: NavigationInfo;
   visible?: boolean;
 }
 
