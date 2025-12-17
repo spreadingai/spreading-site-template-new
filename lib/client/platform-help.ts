@@ -1,5 +1,5 @@
 import LibControllerImpl from "./index";
-import { DisplayPlatform, NavigationInfo } from "../types";
+import { DisplayPlatform } from "../types";
 import { allGroupItem } from "@/components/context/groupContext";
 
 class PlatformController {
@@ -21,22 +21,24 @@ class PlatformController {
     instances.forEach((instance) => {
       // The new version uses locale judgment, and we're going to replace the suffix judgment later
       if (instance.locale === currentLanguage) {
+        const navInfo = LibControllerImpl.getNavigationInfoByInstanceId(instance.id);
+        const groupId = navInfo.group?.id;
+        const platform = navInfo.platform;
+        const tab = navInfo.tab;
+
         if (
           (currentGroup !== allGroupItem.group &&
-            instance.navigationInfo &&
-            instance.navigationInfo.group &&
-            instance.navigationInfo.group.id === currentGroup &&
+            groupId === currentGroup &&
             // 如果指定了currentTab，只显示同一tab下的platforms
-            (!currentTab || instance.navigationInfo.tab === currentTab)) ||
+            (!currentTab || tab === currentTab)) ||
           currentGroup === allGroupItem.group
         ) {
-          const platform = (instance.navigationInfo as NavigationInfo)
-            .platform as string;
           // Filter duplicate elements
           const isExist = result.displayPlatforms.find(
             (item) => item.platform === platform
           );
           !isExist &&
+            platform &&
             result.displayPlatforms.push({
               platform,
               platformLabel: platform,

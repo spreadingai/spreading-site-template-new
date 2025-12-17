@@ -66,18 +66,24 @@ class VersionsController {
     currentPlatform: string
   ) {
     const instances = LibControllerImpl.getInstances();
-    const targetInstances = instances.filter(
-      (instance) =>
-        instance.locale === currentLanguage &&
-        ((instance.navigationInfo &&
-          instance.navigationInfo.group &&
-          instance.navigationInfo.group.id === currentGroup &&
-          (instance.navigationInfo.platform === currentPlatform ||
-            currentPlatform === allPlatformItem.platform)) ||
-          (currentGroup === allGroupItem.group &&
-            (currentPlatform === allPlatformItem.platform ||
-              instance.navigationInfo.platform === currentPlatform)))
-    );
+    const targetInstances = instances.filter((instance) => {
+      if (instance.locale !== currentLanguage) return false;
+
+      const navInfo = LibControllerImpl.getNavigationInfoByInstanceId(instance.id);
+      const groupId = navInfo.group?.id;
+      const platform = navInfo.platform;
+
+      // 匹配 group 和 platform
+      if (currentGroup !== allGroupItem.group) {
+        // 指定了 group
+        if (groupId !== currentGroup) return false;
+        // 检查 platform
+        return platform === currentPlatform || currentPlatform === allPlatformItem.platform;
+      } else {
+        // 全部 group
+        return currentPlatform === allPlatformItem.platform || platform === currentPlatform;
+      }
+    });
     return targetInstances.map((instance) => instance.id);
   }
   docVersionToSlugVersion(versions: string[], docVersion: string) {

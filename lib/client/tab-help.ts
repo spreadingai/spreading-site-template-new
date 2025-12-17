@@ -1,5 +1,5 @@
 import LibControllerImpl from "./index";
-import { DisplayTab, NavigationInfo } from "../types";
+import { DisplayTab } from "../types";
 
 class TabController {
   static _instance: TabController;
@@ -20,30 +20,28 @@ class TabController {
     const result: {
       displayTabs: DisplayTab[];
       shouldShowTabs: boolean;
-    } = { 
-      displayTabs: [], 
-      shouldShowTabs: false 
+    } = {
+      displayTabs: [],
+      shouldShowTabs: false
     };
 
     const instances = LibControllerImpl.getInstances();
-    
+
     // 收集同group下的所有tab
     const tabMap = new Map<string, DisplayTab>();
 
     instances.forEach((instance) => {
-      if (
-        instance.locale === currentLanguage &&
-        instance.navigationInfo &&
-        instance.navigationInfo.group &&
-        instance.navigationInfo.group.id === currentGroup &&
-        instance.navigationInfo.tab
-      ) {
-        const tab = instance.navigationInfo.tab;
-        
+      if (instance.locale !== currentLanguage) return;
+
+      const navInfo = LibControllerImpl.getNavigationInfoByInstanceId(instance.id);
+      const groupId = navInfo.group?.id;
+      const tab = navInfo.tab;
+
+      if (groupId === currentGroup && tab) {
         if (!tabMap.has(tab)) {
           let defaultLink = "";
           const reg = /^https?:/i;
-          
+
           if (reg.test(instance.path)) {
             defaultLink = instance.path;
           } else {

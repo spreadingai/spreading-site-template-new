@@ -3,6 +3,8 @@ import {
   InstanceType,
   DocInstance,
   DisplayInstance,
+  InstanceGroup,
+  ResolvedNavigationInfo,
 } from "../types";
 
 class LibController {
@@ -63,6 +65,55 @@ class LibController {
       (item) => item.instance.id === instanceID
     );
     return target;
+  }
+
+  // ========== instanceGroups 相关方法 ==========
+
+  /**
+   * 获取所有 instanceGroups
+   */
+  getInstanceGroups(): InstanceGroup[] {
+    const config = this.getClientDocuoConfig();
+    return (config?.themeConfig as any)?.instanceGroups || [];
+  }
+
+  /**
+   * 根据 instanceId 查找所属的 InstanceGroup
+   */
+  getInstanceGroupByInstanceId(instanceId: string): InstanceGroup | undefined {
+    const instanceGroups = this.getInstanceGroups();
+    return instanceGroups.find((group) =>
+      group.instances?.some((inst) => inst.id === instanceId)
+    );
+  }
+
+  /**
+   * 根据 instanceId 获取完整的导航信息（从 instanceGroups 解析）
+   */
+  getNavigationInfoByInstanceId(instanceId: string): ResolvedNavigationInfo {
+    const group = this.getInstanceGroupByInstanceId(instanceId);
+    if (!group) {
+      return {};
+    }
+    const instanceInGroup = group.instances?.find((i) => i.id === instanceId);
+    return {
+      group: {
+        id: group.id,
+        name: group.name,
+        tag: group.tag,
+      },
+      category: group.category,
+      platform: instanceInGroup?.platform,
+      tab: instanceInGroup?.tab,
+    };
+  }
+
+  /**
+   * 根据 groupId 获取 InstanceGroup
+   */
+  getInstanceGroupById(groupId: string): InstanceGroup | undefined {
+    const instanceGroups = this.getInstanceGroups();
+    return instanceGroups.find((group) => group.id === groupId);
   }
 }
 

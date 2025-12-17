@@ -1,5 +1,5 @@
 import LibControllerImpl from "./index";
-import { DisplayGroup, DocInstance, NavigationGroupInfo } from "./types";
+import { DisplayGroup, DocInstance } from "./types";
 import CommonControllerImpl from "./optimize/common";
 import { defaultLanguage } from "@/components/context/languageContext";
 
@@ -21,91 +21,91 @@ class GroupController {
     const instances = LibControllerImpl.getInstances();
     const { instanceID: targetInstanceID } =
       CommonControllerImpl.getExtractInfoFromSlug(slug, instances);
-    // console.log(
-    //   "[GroupController]getDisplayGroups targetInstanceID",
-    //   targetInstanceID
-    // );
+
     const targetInstance = instances.find(
       (instance) => instance.id === targetInstanceID
     );
-    if (targetInstance && targetInstance.navigationInfo) {
-      const { navigationInfo } = targetInstance;
-      if (navigationInfo && navigationInfo.group) {
-        result.currentGroup = navigationInfo.group.id;
-        result.currentGroupLabel = navigationInfo.group.name;
-        const allSlugs = CommonControllerImpl.readAllSlugsByFile();
-        // Aggregate group data
-        instances.forEach((instance) => {
-          // The new version uses locale judgment, and we're going to replace the suffix judgment later
-          if (instance.locale === currentLanguage) {
-            const reg = /^https?:/i;
-            const navigationInfo = instance.navigationInfo;
-            if (navigationInfo && navigationInfo.group) {
-              let defaultLink = "";
-              if (!reg.test(instance.path)) {
-                const jumpInstance = this.getJumpInstanceByPlatform(
-                  instance,
-                  currentLanguage,
-                  targetInstance.navigationInfo.platform
-                );
-                const targetSlug = allSlugs.find((item) => {
-                  return item.params.instanceID === jumpInstance.id;
-                });
-                defaultLink = targetSlug
-                  ? `/${targetSlug.params.slug.join("/")}`
-                  : // TODO: 先特殊处理线上 targetSlug 为空的时候，只有英文有这个问题，中文没有
-                    this.getGroupDefaultLink(
-                      instance,
-                      currentLanguage,
-                      targetInstance.navigationInfo.platform
-                    );
-                // : "";
-              } else {
-                // Determine whether there is a platform that is not an external chain
-                const temp = instances.find(
-                  (instance) =>
-                    instance.locale === currentLanguage &&
-                    !reg.test(instance.path) &&
-                    instance.navigationInfo &&
-                    instance.navigationInfo.group.id === navigationInfo.group.id
-                );
-                if (!temp) {
-                  defaultLink = instance.path;
-                } else {
-                  const targetSlug = allSlugs.find((item) => {
-                    return item.params.instanceID === temp.id;
-                  });
-                  defaultLink = targetSlug
-                    ? `/${targetSlug.params.slug.join("/")}`
-                    : "";
-                }
-              }
-              const group = navigationInfo?.group as NavigationGroupInfo;
-              const index = result.displayGroups.find(
-                (item) => item.group === group.id
-              );
-              !index &&
-                result.displayGroups.push({
-                  group: group?.id,
-                  groupLabel: group?.name,
-                  tag: group?.tag,
-                  defaultLink,
-                });
-            } else {
-              // if (reg.test(instance.path)) {
-              //   result.displayGroups.push({
-              //     group: instance.id,
-              //     groupLabel: instance.label,
-              //     defaultLink: instance.path,
-              //   });
-              // }
+
+    // 使用 instanceGroups 获取导航信息
+    const targetNavInfo = LibControllerImpl.getNavigationInfoByInstanceId(targetInstanceID);
+
+    if (targetInstance && targetNavInfo.group) {
+      result.currentGroup = targetNavInfo.group.id;
+      result.currentGroupLabel = targetNavInfo.group.name;
+      const allSlugs = CommonControllerImpl.readAllSlugsByFile();
+
+      // Aggregate group data - 遍历 instanceGroups 而不是 instances
+      const instanceGroups = LibControllerImpl.getInstanceGroups();
+
+      instanceGroups.forEach((group) => {
+        // 检查该 group 是否有当前语言的实例
+        const groupInstances = group.instances || [];
+        const hasLocaleInstance = groupInstances.some((groupInst) => {
+          const inst = instances.find((i) => i.id === groupInst.id);
+          return inst && inst.locale === currentLanguage;
+        });
+
+        if (!hasLocaleInstance) return;
+
+        // 找到该 group 下当前语言的第一个非外链实例
+        let defaultLink = "";
+        const reg = /^https?:/i;
+
+        // 优先找同 platform 的实例
+        const samePlatformInst = groupInstances.find((groupInst) => {
+          const inst = instances.find((i) => i.id === groupInst.id);
+          return (
+            inst &&
+            inst.locale === currentLanguage &&
+            !reg.test(inst.path) &&
+            groupInst.platform === targetNavInfo.platform
+          );
+        });
+
+        const jumpGroupInst = samePlatformInst || groupInstances.find((groupInst) => {
+          const inst = instances.find((i) => i.id === groupInst.id);
+          return inst && inst.locale === currentLanguage && !reg.test(inst.path);
+        });
+
+        if (jumpGroupInst) {
+          const jumpInstance = instances.find((i) => i.id === jumpGroupInst.id);
+          if (jumpInstance) {
+            const targetSlug = allSlugs.find((item) => {
+              return item.params.instanceID === jumpInstance.id;
+            });
+            defaultLink = targetSlug
+              ? `/${targetSlug.params.slug.join("/")}`
+              : this.getGroupDefaultLink(jumpInstance, currentLanguage, targetNavInfo.platform);
+          }
+        } else {
+          // 如果没有非外链实例，使用外链
+          const externalInst = groupInstances.find((groupInst) => {
+            const inst = instances.find((i) => i.id === groupInst.id);
+            return inst && inst.locale === currentLanguage && reg.test(inst.path);
+          });
+          if (externalInst) {
+            const inst = instances.find((i) => i.id === externalInst.id);
+            if (inst) {
+              defaultLink = inst.path;
             }
           }
-        });
-      }
+        }
+
+        // 添加到 displayGroups（去重）
+        const exists = result.displayGroups.find((item) => item.group === group.id);
+        if (!exists) {
+          result.displayGroups.push({
+            group: group.id,
+            groupLabel: group.name,
+            tag: group.tag || null, // undefined 不能被 JSON 序列化，转为 null
+            defaultLink,
+          });
+        }
+      });
     }
     return result;
   }
+
   getGroupDefaultLink(
     instance: DocInstance,
     currentLanguage: string,
@@ -151,6 +151,7 @@ class GroupController {
     }
     return defaultLink;
   }
+
   getJumpInstanceByPlatform(
     currentInstance: DocInstance,
     currentLanguage: string,
@@ -158,15 +159,16 @@ class GroupController {
   ) {
     let jumpInstance = currentInstance;
     const instances = LibControllerImpl.getInstances();
+    const currentNavInfo = LibControllerImpl.getNavigationInfoByInstanceId(currentInstance.id);
+
     instances.forEach((instance) => {
-      const { group, platform } = instance.navigationInfo || {};
-      const { group: currentGroup } = currentInstance.navigationInfo || {};
+      const navInfo = LibControllerImpl.getNavigationInfoByInstanceId(instance.id);
       if (
         instance.locale === currentLanguage &&
-        currentGroup &&
-        group &&
-        group.id === currentGroup.id &&
-        platform === currentPlatform
+        currentNavInfo.group &&
+        navInfo.group &&
+        navInfo.group.id === currentNavInfo.group.id &&
+        navInfo.platform === currentPlatform
       ) {
         jumpInstance = instance;
       }

@@ -196,7 +196,8 @@ function optimizeDocuoConfig(fullConfig: any, currentLanguage: string) {
 function optimizeDisplayInstances(
   instances: any[],
   currentLanguage: string,
-  currentGroupId?: string
+  currentGroupId?: string,
+  instanceGroups?: any[]
 ) {
   if (!instances || !Array.isArray(instances)) return instances;
 
@@ -214,9 +215,13 @@ function optimizeDisplayInstances(
   });
 
   // 如果有currentGroupId，只保留同一个产品组的实例
-  const groupFilteredInstances = currentGroupId
+  // 使用 instanceGroups 来判断
+  const groupFilteredInstances = currentGroupId && instanceGroups
     ? languageFilteredInstances.filter((item) => {
-        return item.instance?.navigationInfo?.group?.id === currentGroupId;
+        const group = instanceGroups.find((g: any) =>
+          g.instances?.some((inst: any) => inst.id === item.instance?.id)
+        );
+        return group?.id === currentGroupId;
       })
     : languageFilteredInstances;
 
@@ -225,8 +230,6 @@ function optimizeDisplayInstances(
     instance: {
       id: item.instance.id,
       label: item.instance.label,
-      // 保留navigationInfo，因为在tab-help.ts、group-help.ts、platform-help.ts中会用到
-      navigationInfo: item.instance.navigationInfo,
       // 保留path和routeBasePath，因为在tab-help.ts中会用到
       path: item.instance.path,
       routeBasePath: item.instance.routeBasePath,
@@ -324,10 +327,12 @@ export const getStaticProps = async ({ params }: SlugData) => {
   // 应用优化
   const docuoConfig = optimizeDocuoConfig(fullDocuoConfig, currentLanguage);
   // 只保留当前产品组的实例，大幅减少数据传输
+  const instanceGroups = (fullDocuoConfig.themeConfig as any)?.instanceGroups || [];
   const displayInstances = optimizeDisplayInstances(
     fullDisplayInstances,
     currentLanguage,
-    currentGroup
+    currentGroup,
+    instanceGroups
   );
 
   return {

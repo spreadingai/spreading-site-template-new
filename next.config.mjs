@@ -132,6 +132,11 @@ const nextConfig = {
   ],
   basePath: process.env.NEXT_PUBLIC_BASE_PATH || "",
   webpack(config) {
+    // // 自己部署可以禁用 TraceEntryPointsPlugin - 它会导致构建非常慢
+    // // 参考: https://github.com/vercel/next.js/discussions/80655
+    // config.plugins = config.plugins.filter((plugin) => {
+    //   return plugin.constructor.name !== 'TraceEntryPointsPlugin';
+    // });
     // 开发模式下的优化
     if (process.env.NODE_ENV === 'development') {
       // 优化缓存

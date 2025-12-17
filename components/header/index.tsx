@@ -101,10 +101,9 @@ const Header = (props: Props) => {
           searchParameters={{
             facetFilters: [
               `version:${docVersion}`,
-              // `instance:${instanceIDs[0]}`, // The previous versions of navigationInfo
-              `group:${currentGroup}`, // The later versions of navigationInfo
+              `group:${currentGroup}`,
               `language:${currentLanguage}`,
-              `platform:${currentPlatform}`, // The later versions of navigationInfo
+              `platform:${currentPlatform}`,
             ],
           }}
           maxResultsPerGroup={20}
