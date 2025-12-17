@@ -120,6 +120,19 @@ export default function ParamField(props: ParamFieldProps) {
     additionalAnchors.push(generateSlug(`${anchorBaseName}-${parent_name}-${parent_type}`));
   }
 
+  // For OC-style method names with colons (e.g., "createEngineWithProfile:eventHandler:"),
+  // add the first segment as an additional anchor
+  if (name.includes(':')) {
+    const firstSegment = name.split(':')[0];
+    if (firstSegment && firstSegment !== name) {
+      const colonAnchorId = generateSlug(firstSegment);
+      // Avoid duplicate anchors
+      if (colonAnchorId !== primaryAnchorId && !additionalAnchors.includes(colonAnchorId)) {
+        additionalAnchors.push(colonAnchorId);
+      }
+    }
+  }
+
   const HeadingTag = headingTags[titleSize] as keyof JSX.IntrinsicElements;
 
   return (
