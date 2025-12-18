@@ -121,7 +121,7 @@ export default function ParamField(props: ParamFieldProps) {
   }
 
   // For OC-style method names with colons (e.g., "createEngineWithProfile:eventHandler:"),
-  // add the first segment as an additional anchor
+  // add the first segment as an additional anchor, along with parent_name and parent_type variants
   if (name.includes(':')) {
     const firstSegment = name.split(':')[0];
     if (firstSegment && firstSegment !== name) {
@@ -129,6 +129,17 @@ export default function ParamField(props: ParamFieldProps) {
       // Avoid duplicate anchors
       if (colonAnchorId !== primaryAnchorId && !additionalAnchors.includes(colonAnchorId)) {
         additionalAnchors.push(colonAnchorId);
+      }
+      // Also add firstSegment-parent_name and firstSegment-parent_name-parent_type
+      if (parent_type && parent_type !== 'enum' && parent_name) {
+        const colonWithParentAnchorId = generateSlug(`${firstSegment}-${parent_name}`);
+        if (!additionalAnchors.includes(colonWithParentAnchorId)) {
+          additionalAnchors.push(colonWithParentAnchorId);
+        }
+        const colonWithParentTypeAnchorId = generateSlug(`${firstSegment}-${parent_name}-${parent_type}`);
+        if (!additionalAnchors.includes(colonWithParentTypeAnchorId)) {
+          additionalAnchors.push(colonWithParentTypeAnchorId);
+        }
       }
     }
   }
