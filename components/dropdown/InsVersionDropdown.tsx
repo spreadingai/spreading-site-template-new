@@ -46,9 +46,16 @@ const InsVersionDropdown = ({ type, menu }: InsVersionDropdownProps) => {
     }
   };
 
+  if ((type === "instance" || type === "version") && menu.items.length <= 1)
+    return null;
   if (
-    (type === "instance" || type === "version" || type === "platform") &&
-    menu.items.length <= 1
+    type === "platform" &&
+    (!menu.items.length ||
+      (menu.items.length === 1 &&
+        ["server", "服务端 api"].includes(
+          // @ts-ignore
+          menu.items[0].platform.toLowerCase()
+        )))
   )
     return null;
 
