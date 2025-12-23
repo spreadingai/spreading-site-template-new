@@ -22,6 +22,8 @@ import "@/styles/remark.directive.scss";
 import "@/styles/docsearch.cover.scss";
 import "@/styles/mdx.scss";
 import FontManager from "@/lib/font";
+import "@/assets/fonts/iconfont.css";
+
 import { useEffect } from "react";
 
 export default function MyApp({ Component, pageProps }: AppProps) {

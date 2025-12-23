@@ -4,6 +4,7 @@ import React, { useMemo } from "react";
 import IconArrowRight from "@/assets/icons/iconArrowRight.svg";
 import Link from "next/link";
 import { NavbarLink } from "../header/@types";
+import { platformList } from "../context/platformContext";
 
 interface InsVersionDropdownProps {
   type: "instance" | "version" | "group" | "platform";
@@ -17,14 +18,22 @@ const InsVersionDropdown = ({ type, menu }: InsVersionDropdownProps) => {
     return menu.items.map((item, index) => {
       return {
         key: index,
-        label:
-          item.href || /^https?:/i.test(item.defaultLink) ? (
-            <a href={item.href || item.defaultLink || "/"} target="_blank">
-              {item.label}
-            </a>
-          ) : (
-            <Link href={item.to || item.defaultLink || "/"}>{item.label}</Link>
-          ),
+        label: (
+          <div className="flex items-center">
+            <span
+              className={`mr-[6px] zgfont ${platformList[item.key] || ""}`}
+            ></span>
+            {item.href || /^https?:/i.test(item.defaultLink) ? (
+              <a href={item.href || item.defaultLink || "/"} target="_blank">
+                {item.label}
+              </a>
+            ) : (
+              <Link href={item.to || item.defaultLink || "/"}>
+                {item.label}
+              </Link>
+            )}
+          </div>
+        ),
         className: `${styles["popup-list-item"]} ${
           menu.key === item.key ? styles.active : ""
         }`,

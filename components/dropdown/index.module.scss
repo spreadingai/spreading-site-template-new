@@ -74,6 +74,9 @@
   border-radius: 6px !important;
   border: var(--docuo-popup-border);
   background: var(--docuo-popup-bg) !important;
+  :global(.ant-dropdown-menu-title-content a:hover) {
+    color: inherit;
+  }
   // 滚动条
   &::-webkit-scrollbar {
     width: 6px;
