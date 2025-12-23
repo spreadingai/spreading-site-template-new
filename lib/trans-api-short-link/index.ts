@@ -291,5 +291,90 @@ export class ApiShortLinkTransController {
   getInstanceIds(): string[] {
     return Array.from(this.instanceDataMap.keys());
   }
+
+  /**
+   * 检查指定 instance 是否已加载数据
+   */
+  hasInstanceData(instanceId: string): boolean {
+    return this.instanceDataMap.has(instanceId);
+  }
+
+  /**
+   * 运行时替换短链接（处理编译后的 MDX 代码）
+   * 不修改源文件，仅处理内存中的内容
+   * @param instanceId 当前页面所属的 instance ID
+   * @param content MDX 原始内容
+   * @param codeStr 编译后的 MDX 代码字符串
+   * @returns 处理后的内容
+   */
+  replaceShortLinksAtRuntime(
+    instanceId: string,
+    content: string,
+    codeStr?: string
+  ): { content: string; codeStr?: string } {
+    const data = this.instanceDataMap.get(instanceId);
+    if (!data) {
+      return { content, codeStr };
+    }
+
+    // ===== 处理 content（MDX 原始内容）=====
+    // 匹配 markdown 格式: [text](@shortLink) 或 [text](docuo-link@shortLink)
+    const mdShortLinkRegex = /(\[.*?\])\((docuo-link)?@([^)]+)\)/g;
+    content = content.replace(mdShortLinkRegex, (match, linkText, _prefix, shortLink) => {
+      const fullUrl = this.resolveShortLink(shortLink, data);
+      if (fullUrl) {
+        return `${linkText}(${fullUrl})`;
+      }
+      return match; // 未匹配到则保持原样，让 trans-short-link 处理
+    });
+
+    // 匹配 HTML a 标签: <a href="@shortLink"> 或 <a href="docuo-link@shortLink">
+    const aHrefRegex = /(<a[^>]*href=")(docuo-link)?@([^"]+)"/gi;
+    content = content.replace(aHrefRegex, (match, prefix, _docuoLink, shortLink) => {
+      const fullUrl = this.resolveShortLink(shortLink, data);
+      if (fullUrl) {
+        return `${prefix}${fullUrl}"`;
+      }
+      return match;
+    });
+
+    // ===== 处理 codeStr（编译后的 MDX 代码）=====
+    if (codeStr) {
+      // 格式1: href:"@shortLink" 或 href:"docuo-link@shortLink"
+      // 例如: ...("a",{href:"@createEngine",children:"xxx"})...
+      const codeHrefRegex = /(href:")(docuo-link)?@([^"]+)"/gi;
+      codeStr = codeStr.replace(codeHrefRegex, ($, $1, _$2, $3) => {
+        const fullUrl = this.resolveShortLink($3, data);
+        if (fullUrl) {
+          return `${$1}${fullUrl}"`;
+        }
+        return $;
+      });
+
+      // 格式2: 条件表达式中的短链接
+      // 例如: href:t.a?"docuo-link@aaa":"docuo-link@bbb"
+      const codeConditionalRegex = /(["'])docuo-link@([^"']+)\1/gi;
+      codeStr = codeStr.replace(codeConditionalRegex, ($, quote, shortLink) => {
+        const fullUrl = this.resolveShortLink(shortLink, data);
+        if (fullUrl) {
+          return `${quote}${fullUrl}${quote}`;
+        }
+        return $;
+      });
+
+      // 格式3: 通用匹配 - 处理其他可能的格式
+      // 例如: ..."@shortLink"... 在字符串中
+      const codeGeneralRegex = /(")(docuo-link)?@([a-zA-Z0-9_-]+)"/gi;
+      codeStr = codeStr.replace(codeGeneralRegex, ($, quote, _docuoLink, shortLink) => {
+        const fullUrl = this.resolveShortLink(shortLink, data);
+        if (fullUrl) {
+          return `${quote}${fullUrl}"`;
+        }
+        return $;
+      });
+    }
+
+    return { content, codeStr };
+  }
 }
 
