@@ -29,9 +29,32 @@ import {
 import LibControllerImpl from "./index";
 import CommonControllerImpl from "./optimize/common";
 import ShortLinkTransControllerImpl from "./trans-short-link";
+import { ApiShortLinkTransController } from "./trans-api-short-link";
 import { convertDocID, ignoreNumberPrefix, removeMdxSuffix } from "./utils";
 import { DEFAULT_INSTANCE_ID, ENTITY_ROOT_DIRECTORY } from "./constants";
 import { InstanceType } from "./types";
+
+// API 短链接控制器单例（懒加载）
+let apiShortLinkController: ApiShortLinkTransController | null = null;
+let apiShortLinkControllerInitPromise: Promise<void> | null = null;
+
+/**
+ * 获取 API 短链接控制器（懒加载单例）
+ */
+async function getApiShortLinkController(): Promise<ApiShortLinkTransController> {
+  if (!apiShortLinkController) {
+    apiShortLinkController = new ApiShortLinkTransController(ENTITY_ROOT_DIRECTORY);
+
+    // 确保只初始化一次
+    if (!apiShortLinkControllerInitPromise) {
+      const configFileName = process.env.NEXT_PUBLIC_CONFIG_FILE || 'docuo.config.json';
+      const configPath = path.resolve(ENTITY_ROOT_DIRECTORY, configFileName);
+      apiShortLinkControllerInitPromise = apiShortLinkController.init(configPath);
+    }
+    await apiShortLinkControllerInitPromise;
+  }
+  return apiShortLinkController;
+}
 
 // import Markdoc from "@markdoc/markdoc";
 
@@ -44,13 +67,6 @@ class DocsController {
     );
   }
   async readDoc(slug: string[]) {
-    // const source = "# Markdoc";
-
-    // const ast = Markdoc.parse(source);
-    // const content = Markdoc.transform(ast /* config */);
-
-    // const html = Markdoc.renderers.html(content);
-
     // console.log(`[DocsController]readDoc `, slug);
     const instances = LibControllerImpl.getInstances();
     const { docVersion, mdxFileID, instanceID, slugVersion, routeBasePath } =
@@ -119,9 +135,8 @@ class DocsController {
     const linkObj = {
       rootUrl: `${rootUrl}`,
       filePath: mdxFileUrl,
-      prefix: `${
-        slugVersion ? (routeBasePath ? routeBasePath + "/" : "") : routeBasePath
-      }${slugVersion}`,
+      prefix: `${slugVersion ? (routeBasePath ? routeBasePath + "/" : "") : routeBasePath
+        }${slugVersion}`,
     };
     const remarkPlugins = [
       // remarkTest,
@@ -232,8 +247,31 @@ class DocsController {
       console.warn("[DocsController] merge imported frontmatter failed", err);
     }
 
-    // console.time("count transShortLink");
-    if (mdxSource.frontmatter && mdxSource.frontmatter.articleID) {
+    // trans-api-short-link: 根据 instance.clientApiPath 触发
+    // 运行时解析 @ 短链接（API 文档链接），支持 import 后的内容
+    // 注意：必须在 trans-short-link 之前执行，否则 @ 短链接会被后者处理
+    const clientApiPath = (instance as any)?.clientApiPath;
+    if (clientApiPath) {
+      try {
+        const controller = await getApiShortLinkController();
+        const hasData = controller.hasInstanceData(instanceID);
+        if (hasData) {
+          const result = controller.replaceShortLinksAtRuntime(
+            instanceID,
+            mdxSource.matter.content,
+            mdxSource.code
+          );
+          mdxSource.matter.content = result.content;
+          mdxSource.code = result.codeStr;
+        }
+      } catch (err) {
+        console.warn("[DocsController] trans-api-short-link failed", err);
+      }
+    }
+
+    // trans-short-link: 根据 frontmatter.articleID 触发
+    // 处理 @ 短链接（远程 API）和 ! 短链接（文档间链接）
+    else if (mdxSource.frontmatter && mdxSource.frontmatter.articleID) {
       const result = await ShortLinkTransControllerImpl.replaceApiShortLink(
         mdxSource.frontmatter.articleID,
         mdxSource.matter.content,
@@ -242,7 +280,6 @@ class DocsController {
       mdxSource.matter.content = result.content;
       mdxSource.code = result.codeStr;
     }
-    // console.timeEnd("count transShortLink");
 
     // console.log(`[DocsController]readDoc end`);
     delete mdxSource.matter.content;

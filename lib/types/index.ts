@@ -162,6 +162,7 @@ export interface DocInstance {
   routeBasePath: string;
   locale?: string;
   visible?: boolean;
+  clientApiPath?: string; // API 文档路径，用于 trans-api-short-link 运行时解析
 }
 
 export interface TabInfo {
