@@ -61,7 +61,7 @@ const InsVersionDropdown = ({ type, menu }: InsVersionDropdownProps) => {
     type === "platform" &&
     (!menu.items.length ||
       (menu.items.length === 1 &&
-        ["server", "服务端 api"].includes(
+        ["server", "服务端 api", "服务端"].includes(
           // @ts-ignore
           menu.items[0].platform.toLowerCase()
         )))
