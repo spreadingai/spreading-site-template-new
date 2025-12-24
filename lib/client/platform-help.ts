@@ -1,6 +1,7 @@
 import LibControllerImpl from "./index";
 import { DisplayPlatform } from "../types";
 import { allGroupItem } from "@/components/context/groupContext";
+import { normalizeInstanceTabConfig } from "../tab-model";
 
 class PlatformController {
   static _instance: PlatformController;
@@ -24,13 +25,15 @@ class PlatformController {
         const navInfo = LibControllerImpl.getNavigationInfoByInstanceId(instance.id);
         const groupId = navInfo.group?.id;
         const platform = navInfo.platform;
-        const tab = navInfo.tab;
+        const group = LibControllerImpl.getInstanceGroupByInstanceId(instance.id);
+        const groupInst = group?.instances?.find((i) => i.id === instance.id);
+        const tabs = normalizeInstanceTabConfig(groupInst?.tab).map((t) => t.title);
 
         if (
           (currentGroup !== allGroupItem.group &&
             groupId === currentGroup &&
             // 如果指定了currentTab，只显示同一tab下的platforms
-            (!currentTab || tab === currentTab)) ||
+            (!currentTab || tabs.includes(currentTab))) ||
           currentGroup === allGroupItem.group
         ) {
           // Filter duplicate elements

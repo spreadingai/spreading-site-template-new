@@ -69,7 +69,18 @@ class SlugController {
         ? usedSidebarIds
         : Object.keys(sidebars);
       for (const sidebarId of temp) {
-        const sidebarItemList = sidebars[sidebarId] as SidebarItem[];
+        const sidebarItemList = sidebars[sidebarId] as SidebarItem[] | undefined;
+        // 容错：usedSidebarIds 可能包含 instanceGroups.tab 引用的 sidebarId，但该版本/该实例的 sidebars.json 未必存在该 key
+        if (!Array.isArray(sidebarItemList)) {
+          // dev 下打印告警，避免构建/开发因配置差异直接崩溃
+          if (process.env.NODE_ENV === "development") {
+            console.warn(
+              `[SlugController] sidebarId not found or invalid, skip.`,
+              { instanceID, sidebarId }
+            );
+          }
+          continue;
+        }
         slugs = slugs.concat(
           this.traverseChildren(
             instanceID,
