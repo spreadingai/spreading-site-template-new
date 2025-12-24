@@ -1,5 +1,6 @@
 import LibControllerImpl from "./index";
 import { DisplayTab } from "../types";
+import { normalizeInstanceTabConfig } from "../tab-model";
 
 class TabController {
   static _instance: TabController;
@@ -27,7 +28,7 @@ class TabController {
 
     const instances = LibControllerImpl.getInstances();
 
-    // 收集同group下的所有tab
+    // 收集同 group 下的所有 tab（按标题去重）
     const tabMap = new Map<string, DisplayTab>();
 
     instances.forEach((instance) => {
@@ -35,27 +36,29 @@ class TabController {
 
       const navInfo = LibControllerImpl.getNavigationInfoByInstanceId(instance.id);
       const groupId = navInfo.group?.id;
-      const tab = navInfo.tab;
+      const group = LibControllerImpl.getInstanceGroupByInstanceId(instance.id);
+      const groupInst = group?.instances?.find((i) => i.id === instance.id);
+      const targets = normalizeInstanceTabConfig(groupInst?.tab);
 
-      if (groupId === currentGroup && tab) {
-        if (!tabMap.has(tab)) {
-          let defaultLink = "";
-          const reg = /^https?:/i;
+      if (groupId !== currentGroup) return;
+      targets.forEach((t) => {
+        const title = t.title;
+        if (!title) return;
+        if (tabMap.has(title)) return;
 
-          if (reg.test(instance.path)) {
-            defaultLink = instance.path;
-          } else {
-            // 对于本地路径，使用routeBasePath
-            defaultLink = `/${instance.routeBasePath}`;
-          }
-
-          tabMap.set(tab, {
-            tab,
-            tabLabel: tab,
-            defaultLink,
-          });
+        let defaultLink = "/";
+        if (t.kind === "external") {
+          defaultLink = t.href;
+        } else {
+          defaultLink = `/${instance.routeBasePath || ""}`;
         }
-      }
+
+        tabMap.set(title, {
+          tab: title,
+          tabLabel: title,
+          defaultLink,
+        });
+      });
     });
 
     result.displayTabs = Array.from(tabMap.values());
