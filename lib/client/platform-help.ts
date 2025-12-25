@@ -1,7 +1,7 @@
 import LibControllerImpl from "./index";
 import { DisplayPlatform } from "../types";
 import { allGroupItem } from "@/components/context/groupContext";
-import { normalizeInstanceTabConfig } from "../tab-model";
+import { normalizeInstanceTabConfig } from "../tab-model-core";
 
 class PlatformController {
   static _instance: PlatformController;
