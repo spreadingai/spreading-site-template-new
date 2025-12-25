@@ -1,6 +1,6 @@
 import LibControllerImpl from "./index";
 import { DisplayTab } from "../types";
-import { normalizeInstanceTabConfig } from "../tab-model";
+import { normalizeInstanceTabConfig } from "../tab-model-core";
 
 class TabController {
   static _instance: TabController;

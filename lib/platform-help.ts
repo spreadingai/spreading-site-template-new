@@ -48,12 +48,12 @@ class PlatformController {
     const tabDefsByTitle = buildGroupTabDefinitions({ group, currentLanguage });
     let currentTabTitle = "";
     if (currentSidebarId) {
-      for (const [title, def] of tabDefsByTitle.entries()) {
+      tabDefsByTitle.forEach((def, title) => {
+        if (currentTabTitle) return;
         if (def.kind === "sidebar" && def.sidebarId === currentSidebarId) {
           currentTabTitle = title;
-          break;
         }
-      }
+      });
     }
     if (!currentTabTitle) {
       // 兜底：取当前实例配置的第一个 tab 标题
@@ -78,10 +78,10 @@ class PlatformController {
         const targets = normalizeInstanceTabConfig(groupInst.tab);
         const belongs = targets.some((t) => {
           if (t.title !== currentTabTitle) return false;
-          if (t.kind !== currentTabDef.kind) return false;
-          return currentTabDef.kind === "external"
-            ? t.href === (currentTabDef as any).href
-            : t.sidebarId === (currentTabDef as any).sidebarId;
+          if (currentTabDef.kind === "external") {
+            return t.kind === "external" && t.href === currentTabDef.href;
+          }
+          return t.kind === "sidebar" && t.sidebarId === currentTabDef.sidebarId;
         });
         if (!belongs) return;
       }
@@ -91,12 +91,12 @@ class PlatformController {
 
       if (currentTabDef?.kind === "external") {
         // 外链 tab：平台项点击只打开新标签页，不改变当前值（现有 InsVersionDropdown 行为）
-        defaultLink = (currentTabDef as any).href;
+        defaultLink = currentTabDef.href;
       } else if (currentTabDef?.kind === "sidebar") {
         // sidebar tab：切平台跳转到该 sidebarId 的第一条可用 slug，尽量保持当前 slugVersion
         defaultLink = resolveFirstSlugLinkForSidebar({
           instanceId: instance.id,
-          sidebarId: (currentTabDef as any).sidebarId,
+          sidebarId: currentTabDef.sidebarId,
           preferredSlugVersion: currentSlugVersion,
         });
       } else if (reg.test(instance.path)) {
