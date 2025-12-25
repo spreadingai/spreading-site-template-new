@@ -132,7 +132,12 @@ export interface Colors {
 export interface InstanceGroupItem {
   id: string;
   platform?: string;
-  tab?: string;
+  /**
+   * Tab 配置支持：
+   * - string：等价于 { mySidebar: string }
+   * - object：key 为 sidebarId 或 https:// 外链，value 为 Tab 标题
+   */
+  tab?: string | Record<string, string>;
 }
 
 export interface InstanceGroup {
@@ -152,7 +157,7 @@ export interface ResolvedNavigationInfo {
   };
   category?: string[];
   platform?: string;
-  tab?: string;
+  tab?: string | Record<string, string>;
 }
 
 export interface DocInstance {
@@ -162,6 +167,7 @@ export interface DocInstance {
   routeBasePath: string;
   locale?: string;
   visible?: boolean;
+  clientApiPath?: string; // API 文档路径，用于 trans-api-short-link 运行时解析
 }
 
 export interface TabInfo {

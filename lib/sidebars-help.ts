@@ -17,6 +17,7 @@ import {
   IGNORE_FOLDER_NAME,
   ENTITY_ROOT_DIRECTORY,
 } from "./constants";
+import { normalizeInstanceTabConfig } from "./tab-model";
 
 class SidebarsController {
   static _instance: SidebarsController;
@@ -149,6 +150,24 @@ class SidebarsController {
       }
     };
     loop(navbar.items || [], usedSidebarIds);
+
+    // 新增：把 instanceGroups.instances.tab 引用到的 sidebarId 也算作 usedSidebarIds
+    // 否则 all-slugs.json 可能缺失对应 sidebar 的 slug，导致 tab/platform 默认跳转失败。
+    try {
+      const group = LibControllerImpl.getInstanceGroupByInstanceId(instanceID);
+      const groupInst = group?.instances?.find((i) => i.id === instanceID);
+      if (groupInst?.tab) {
+        const targets = normalizeInstanceTabConfig(groupInst.tab);
+        targets.forEach((t) => {
+          if (t.kind === "sidebar" && t.sidebarId) {
+            usedSidebarIds.push(t.sidebarId);
+          }
+        });
+      }
+    } catch (e) {
+      console.error("[SidebarsController]getUsedSidebarIds: parse instanceGroups tab failed", e);
+    }
+
     // Remove duplicate elements
     this._usedSidebarIdsMap[instanceID] = usedSidebarIds.reduce(
       (prev, curr) => {
