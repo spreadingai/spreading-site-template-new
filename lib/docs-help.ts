@@ -137,6 +137,9 @@ class DocsController {
       filePath: mdxFileUrl,
       prefix: `${slugVersion ? (routeBasePath ? routeBasePath + "/" : "") : routeBasePath
         }${slugVersion}`,
+      // 从 docuo.config.*.json 读取：对这些前缀开头的 href，保留原始大小写，不做 docId 转换
+      passthroughPrefixes:
+        LibControllerImpl.getDocuoConfig()?.passthroughPrefixes || [],
     };
     const remarkPlugins = [
       // remarkTest,

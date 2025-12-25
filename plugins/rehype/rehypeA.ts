@@ -27,6 +27,7 @@ export function rehypeA(options: {
   prefix: string;
   rootUrl: string;
   filePath: string;
+  passthroughPrefixes?: string[];
 }) {
   return function updateATag(tree, file) {
     visit(tree, (node, i, parent) => {
@@ -49,9 +50,16 @@ export function rehypeA(options: {
         target.value.startsWith("/article/")
       )
         return;
+      const hrefRaw = target.value;
+      const passthroughPrefixes = options.passthroughPrefixes || [];
+      const isPassthrough = passthroughPrefixes.some((base) => {
+        return hrefRaw === base || hrefRaw.startsWith(`${base}/`);
+      });
+      // 对于由 Nginx/外部系统接管的路径，保留大小写与原始 href，不做 docId 转换
+      if (isPassthrough) return;
       if (!options.rootUrl || !options.filePath) return;
       // while href does not start with 'http'
-      const href = target.value;
+      const href = hrefRaw;
       const parsedPath = path.parse(href);
       const convertDocID = (str: string) => {
         // Quick Start, Quick-Start

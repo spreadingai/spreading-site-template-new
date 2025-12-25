@@ -21,6 +21,7 @@ export function rehypeLink(options: {
   prefix: string;
   rootUrl: string;
   filePath: string;
+  passthroughPrefixes?: string[];
 }) {
   return function updateLinkTag(tree, file) {
     visit(tree, "element", (node, i, parent) => {
@@ -30,6 +31,13 @@ export function rehypeLink(options: {
         node.properties.href.startsWith("/article/")
       )
         return;
+      const hrefRaw = String(node.properties.href || "");
+      const passthroughPrefixes = options.passthroughPrefixes || [];
+      const isPassthrough = passthroughPrefixes.some((base) => {
+        return hrefRaw === base || hrefRaw.startsWith(`${base}/`);
+      });
+      // 对于由 Nginx/外部系统接管的路径，保留大小写与原始 href，不做 docId 转换
+      if (isPassthrough) return;
       // support [leaveAllRoom\|\_blank](@leaveAllRoom)
       if (node.children && node.children[0]) {
         const temp1 = node.children[0];
@@ -65,7 +73,7 @@ export function rehypeLink(options: {
       }
       if (!options.rootUrl || !options.filePath) return;
       // while href does not start with 'http'
-      const href = node.properties.href;
+      const href = hrefRaw;
       const parsedPath = path.parse(href);
       let targetHref = `${parsedPath.dir}/${parsedPath.name}`;
       targetHref += parsedPath.ext.replace(/^\.mdx?/gi, "");
