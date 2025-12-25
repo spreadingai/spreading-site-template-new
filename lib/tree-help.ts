@@ -5,7 +5,9 @@ import SidebarsControllerImpl from "./sidebars-help";
 
 class TreeController {
   static _instance: TreeController;
-  _folderTreeDataMap: Record<string, Record<string, any[]>> = {};
+  // 生产环境开启缓存：按 instanceID + docVersion + sidebarCacheKey 缓存，避免不同 Tab/sidebar 串台
+  _folderTreeDataMap: Record<string, Record<string, Record<string, any[]>>> =
+    {};
   _idMap: Record<
     string,
     Record<string, Record<string, { mdxFileID: string; originID: string }>>
@@ -25,17 +27,9 @@ class TreeController {
       slugVersion,
       mdxFileID: currentMdxFileID,
     } = CommonControllerImpl.getExtractInfoFromSlug(slug, instances);
-    if (
-      process.env.NODE_ENV !== "development" &&
-      this._folderTreeDataMap[instanceID] &&
-      this._folderTreeDataMap[instanceID][docVersion]
-    ) {
-      // console.log(`[TreeController]getFolderTreeDataBySlug cache`);
-      return JSON.parse(
-        JSON.stringify(this._folderTreeDataMap[instanceID][docVersion])
-      ) as FolderTreeData[];
-    }
 
+    // 缓存 key：默认用 "__ALL__"（当无法从当前 mdx 反推 sidebarId 时，tree 会是合并树）
+    let sidebarCacheKey = "__ALL__";
     let tree: FolderTreeData[] = [];
     const instance = LibControllerImpl.getTargetInstance(instanceID);
     const versions = CommonControllerImpl.getUsedVersions(instanceID, instance);
@@ -53,6 +47,21 @@ class TreeController {
           sidebars,
           currentMdxFileID
         );
+      sidebarCacheKey = targetSidebarId || "__ALL__";
+
+      if (
+        process.env.NODE_ENV !== "development" &&
+        this._folderTreeDataMap[instanceID] &&
+        this._folderTreeDataMap[instanceID][docVersion] &&
+        this._folderTreeDataMap[instanceID][docVersion][sidebarCacheKey]
+      ) {
+        // console.log(`[TreeController]getFolderTreeDataBySlug cache`, { instanceID, docVersion, sidebarCacheKey });
+        return JSON.parse(
+          JSON.stringify(
+            this._folderTreeDataMap[instanceID][docVersion][sidebarCacheKey]
+          )
+        ) as FolderTreeData[];
+      }
       // const temp = usedSidebarIds.length
       //   ? usedSidebarIds
       //   : Object.keys(sidebars);
@@ -86,7 +95,13 @@ class TreeController {
     }
     this._folderTreeDataMap[instanceID] =
       this._folderTreeDataMap[instanceID] || {};
-    this._folderTreeDataMap[instanceID][docVersion] = tree;
+    this._folderTreeDataMap[instanceID][docVersion] =
+      this._folderTreeDataMap[instanceID][docVersion] || {};
+
+    if (process.env.NODE_ENV !== "development") {
+      // 生产环境：按 sidebarCacheKey 缓存，避免不同 Tab/sidebar 串台
+      this._folderTreeDataMap[instanceID][docVersion][sidebarCacheKey] = tree;
+    }
     return JSON.parse(JSON.stringify(tree)) as FolderTreeData[];
   }
   getChildrenFromChildren(
