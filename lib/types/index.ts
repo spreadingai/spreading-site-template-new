@@ -2,6 +2,11 @@ export interface DocuoConfig {
   title: string;
   description?: string;
   favicon: string;
+  /**
+   * 对这些前缀开头的 href，不做 docId 转换/小写化，保持 MDX 里写的原始大小写。
+   * 常用于由 Nginx/外部系统接管的路径（例如 /unique-api、/client-api）。
+   */
+  passthroughPrefixes?: string[];
   logo:
     | string
     | {

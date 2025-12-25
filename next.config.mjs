@@ -84,6 +84,41 @@ function getRedirectsFromConfig() {
   }
 }
 
+// 从 docuo.config.*.json 读取 passthroughPrefixes（用于把部分路径 rewrite 到统一兜底页，绕过 docs 的 404 校验）
+function getPassthroughPrefixesFromConfig() {
+  try {
+    const configPath = path.resolve(
+      process.env.NEXT_PUBLIC_CONFIG_FILE
+        ? `./docs/${process.env.NEXT_PUBLIC_CONFIG_FILE}`
+        : "./docs/docuo.config.json"
+    );
+    const configContent = fs.readFileSync(configPath, "utf8");
+    const config = JSON.parse(configContent);
+    const prefixes = Array.isArray(config.passthroughPrefixes)
+      ? config.passthroughPrefixes
+      : [];
+
+    const normalized = prefixes
+      .filter((p) => typeof p === "string" && p.trim())
+      .map((p) => {
+        let s = p.trim();
+        if (!s.startsWith("/")) s = `/${s}`;
+        s = s.replace(/\/+$/g, "");
+        return s;
+      })
+      // 去重
+      .filter((p, idx, arr) => arr.indexOf(p) === idx);
+
+    return normalized;
+  } catch (error) {
+    console.warn(
+      "Failed to load passthroughPrefixes from docuo.config.json:",
+      error.message
+    );
+    return [];
+  }
+}
+
 const nextConfig = {
   // Configure `pageExtensions` to include MDX files
   pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
@@ -186,7 +221,14 @@ const nextConfig = {
     return config;
   },
   rewrites() {
+    const passthroughPrefixes = getPassthroughPrefixesFromConfig();
+    const passthroughRewrites = passthroughPrefixes.map((prefix) => ({
+      source: `${prefix}/:path*`,
+      destination: `/__passthrough__${prefix}/:path*`,
+    }));
+
     return [
+      ...passthroughRewrites,
       {
         source: "/",
         destination: "/home",
