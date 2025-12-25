@@ -446,12 +446,12 @@ const PreviewLayout = ({
     return (
       <div className="custom-node-title">
         {nodeData.id ? (
-          <Link className="title tag-link" href={nodeData.id}>
+          <Link className="title tag-link" href={nodeData.id} onClick={(e) => e.stopPropagation()}>
             {nodeData.title}
           </Link>
         ) : nodeData.type === SidebarItemType.Link ? (
           nodeData?.link.startsWith("/") ? (
-            <Link className="title tag-link" href={nodeData.link.slice(1)}>
+            <Link className="title tag-link" href={nodeData.link.slice(1)} onClick={(e) => e.stopPropagation()}>
               {nodeData.title}
             </Link>
           ) : (
@@ -459,6 +459,7 @@ const PreviewLayout = ({
               className="title tag-a"
               href={processLinkHref(nodeData.link || "")}
               target={isExternalLink(nodeData.link || "") ? "_blank" : "_self"}
+              onClick={(e) => e.stopPropagation()}
             >
               {nodeData.title}
             </a>
