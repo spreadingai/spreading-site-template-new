@@ -382,18 +382,11 @@ const PreviewLayout = ({
       }
     };
     loop(folderTreeData, []);
-    const len = result.length;
-    return result.map((item, index, arr) => {
+    // 面包屑从 lvl1 开始，lvl0 由专门的隐藏元素生成
+    return result.map((item, index) => {
       return {
         title: (
-          <span
-            className={
-              `breadcrumb-label` +
-              (index === len - 2
-                ? " doc-search-lvl0"
-                : ` doc-search-lvl${index + 1}`)
-            }
-          >
+          <span className={`breadcrumb-label doc-search-lvl${index + 1}`}>
             {item.title}
           </span>
         ),
@@ -401,6 +394,38 @@ const PreviewLayout = ({
     });
   };
   const breadCrumbData = getBreadCrumbData();
+
+  // 生成 doc-search-lvl0 的值
+  // 格式: TabLabel > 面包屑路径（不含当前页标题）
+  const getDocSearchLvl0 = () => {
+    // 获取 tab 标签，无配置时根据语言返回默认值
+    const defaultTabName = currentLanguage === "en" ? "Document" : "文档";
+    const tabLabel = currentTabLabel || defaultTabName;
+
+    // 获取面包屑路径（不含当前页）
+    let breadcrumbItems: TreeDataObject[] = [];
+    const loop = (
+      children: TreeDataObject[],
+      parentNodes: TreeDataObject[]
+    ) => {
+      for (const element of children) {
+        if (element.id === docID) {
+          // 只保留父节点，不包含当前页
+          breadcrumbItems = parentNodes;
+          return;
+        }
+        if (element.children) {
+          loop(element.children, parentNodes.concat(element));
+        }
+      }
+    };
+    loop(folderTreeData, []);
+
+    // 组装 lvl0: TabLabel > 路径1 > 路径2 > ...
+    const pathParts = breadcrumbItems.map((item) => item.title);
+    return [tabLabel, ...pathParts].join(" > ");
+  };
+  const docSearchLvl0 = getDocSearchLvl0();
 
   const fileSelectHandle = (selectedKeys, node) => {
     if (node.type === SidebarItemType.Category) {
@@ -658,6 +683,13 @@ const PreviewLayout = ({
                               >
                                 <PageContextMenu />
                                 <div className="article-breadcrumb flex justify-between items-center">
+                                  {/* 隐藏的 doc-search-lvl0 元素，供 Algolia DocSearch 爬虫提取 */}
+                                  <span
+                                    className="doc-search-lvl0"
+                                    style={{ display: "none" }}
+                                  >
+                                    {docSearchLvl0}
+                                  </span>
                                   <Breadcrumb
                                     items={breadCrumbData}
                                     separator={
