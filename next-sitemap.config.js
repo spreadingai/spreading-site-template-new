@@ -35,6 +35,7 @@ module.exports = {
   siteUrl: siteUrl,
   exclude: finalExclude,
   generateIndexSitemap: false,
+  sitemapSize: 50000, // 默认5000，增大以容纳所有页面
   generateRobotsTxt: true, // (optional)
   transform: async (config, path) => {
     // 解码URL中的%2F为正常的斜杠
