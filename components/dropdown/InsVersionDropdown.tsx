@@ -24,11 +24,18 @@ const InsVersionDropdown = ({ type, menu }: InsVersionDropdownProps) => {
               className={`mr-[6px] zgfont ${platformList[item.key] || ""}`}
             ></span>
             {item.href || /^https?:/i.test(item.defaultLink) ? (
-              <a href={item.href || item.defaultLink || "/"} target="_blank">
+              <a
+                href={item.href || item.defaultLink || "/"}
+                target="_blank"
+                className="flex-1"
+              >
                 {item.label}
               </a>
             ) : (
-              <Link href={item.to || item.defaultLink || "/"}>
+              <Link
+                href={item.to || item.defaultLink || "/"}
+                className="flex-1"
+              >
                 {item.label}
               </Link>
             )}
