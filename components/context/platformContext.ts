@@ -60,6 +60,7 @@ export const platformList = {
   "uni-app: JS": "doc-icon_language_uniapp",
   "uni-app: TS": "doc-icon_language_uniapp",
   "uni-app x: UTS": "doc-icon_language_uniapp",
+  "uni-app (x): UTS": "doc-icon_language_uniapp",
   "React Native: JS": "doc-icon_language_reactnative",
   "React Native: TS": "doc-icon_language_reactnative",
   "Cocos Creator: TS": "doc-icon_language_cocoscreator",
