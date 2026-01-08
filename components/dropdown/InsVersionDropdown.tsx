@@ -4,6 +4,7 @@ import React, { useMemo } from "react";
 import IconArrowRight from "@/assets/icons/iconArrowRight.svg";
 import Link from "next/link";
 import { NavbarLink } from "../header/@types";
+import { platformList } from "@/components/context/platformContext";
 
 interface InsVersionDropdownProps {
   type: "instance" | "version" | "group" | "platform";
