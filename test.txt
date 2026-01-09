@@ -1,0 +1,2281 @@
+{
+  clientApi: [
+    {
+      type: "doc",
+      label: "功能总览",
+      id: "client-sdk/api-reference/function-list",
+    },
+    {
+      type: "category",
+      label: "常用类",
+      collapsed: false,
+      items: [
+        {
+          type: "link",
+          label: "ZegoExpressEngine",
+          href: "/real-time-video-ios-oc/client-sdk/api-reference/class#zegoexpressengine",
+        },
+        {
+          type: "link",
+          label: "ZegoEventHandler",
+          href: "/real-time-video-ios-oc/client-sdk/api-reference/protocol#zegoeventhandler",
+        },
+        {
+          type: "link",
+          label: "ZegoRealTimeSequentialDataManager",
+          href: "/real-time-video-ios-oc/client-sdk/api-reference/class#zegorealtimesequentialdatamanager",
+        },
+        {
+          type: "link",
+          label: "ZegoMediaPlayer",
+          href: "/real-time-video-ios-oc/client-sdk/api-reference/class#zegomediaplayer",
+        },
+        {
+          type: "link",
+          label: "ZegoAudioEffectPlayer",
+          href: "/real-time-video-ios-oc/client-sdk/api-reference/class#zegoaudioeffectplayer",
+        },
+        {
+          type: "link",
+          label: "ZegoRangeAudio",
+          href: "/real-time-video-ios-oc/client-sdk/api-reference/class#zegorangeaudio",
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "全部分类",
+      collapsed: false,
+      items: [
+        {
+          type: "doc",
+          label: "Class",
+          id: "client-sdk/api-reference/class",
+        },
+        {
+          type: "doc",
+          label: "Protocol",
+          id: "client-sdk/api-reference/protocol",
+        },
+        {
+          type: "doc",
+          label: "Enum",
+          id: "client-sdk/api-reference/enum",
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "因文件过大拆分仅用作搜索的文件",
+      visible: false,
+      items: [
+        {
+          type: "category",
+          label: "class",
+          items: [
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoaccurateseekconfig",
+              label: "zegoaccurateseekconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoaivoicechanger",
+              label: "zegoaivoicechanger",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoaivoicechangereventhandler",
+              label: "zegoaivoicechangereventhandler",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoaivoicechangerspeakerinfo",
+              label: "zegoaivoicechangerspeakerinfo",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoaudioconfig",
+              label: "zegoaudioconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoaudioeffectplayconfig",
+              label: "zegoaudioeffectplayconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoaudioeffectplayer",
+              label: "zegoaudioeffectplayer",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoaudioframeparam",
+              label: "zegoaudioframeparam",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoaudiomixingdata",
+              label: "zegoaudiomixingdata",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoaudiosourcemixconfig",
+              label: "zegoaudiosourcemixconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoaudiovadclient",
+              label: "zegoaudiovadclient",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoautomixertask",
+              label: "zegoautomixertask",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegobackgroundconfig",
+              label: "zegobackgroundconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegobarragemessageinfo",
+              label: "zegobarragemessageinfo",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegobeautifyoption",
+              label: "zegobeautifyoption",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoblurinfo",
+              label: "zegoblurinfo",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegobroadcastmessageinfo",
+              label: "zegobroadcastmessageinfo",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegocanvas",
+              label: "zegocanvas",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegocdnconfig",
+              label: "zegocdnconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegocolorenhancementparams",
+              label: "zegocolorenhancementparams",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegocopyrightedmusic",
+              label: "zegocopyrightedmusic",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegocopyrightedmusicconfig",
+              label: "zegocopyrightedmusicconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegocopyrightedmusiceventhandler",
+              label: "zegocopyrightedmusiceventhandler",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegocopyrightedmusicgetlyricconfig",
+              label: "zegocopyrightedmusicgetlyricconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegocopyrightedmusicgetsharedconfig",
+              label: "zegocopyrightedmusicgetsharedconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegocopyrightedmusicgetsharedconfigv2",
+              label: "zegocopyrightedmusicgetsharedconfigv2",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegocopyrightedmusicquerycacheconfig",
+              label: "zegocopyrightedmusicquerycacheconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegocopyrightedmusicquerycacheconfigv2",
+              label: "zegocopyrightedmusicquerycacheconfigv2",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegocopyrightedmusicrequestconfig",
+              label: "zegocopyrightedmusicrequestconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegocopyrightedmusicrequestconfigv2",
+              label: "zegocopyrightedmusicrequestconfigv2",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegocrossappinfo",
+              label: "zegocrossappinfo",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegocustomaudioconfig",
+              label: "zegocustomaudioconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegocustomaudioprocessconfig",
+              label: "zegocustomaudioprocessconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegocustomplayerresourceconfig",
+              label: "zegocustomplayerresourceconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegocustomvideocaptureconfig",
+              label: "zegocustomvideocaptureconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegocustomvideoprocessconfig",
+              label: "zegocustomvideoprocessconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegocustomvideorenderconfig",
+              label: "zegocustomvideorenderconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegodatarecordconfig",
+              label: "zegodatarecordconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegodatarecordprogress",
+              label: "zegodatarecordprogress",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegodeviceinfo",
+              label: "zegodeviceinfo",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegodummycaptureimageparams",
+              label: "zegodummycaptureimageparams",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegodumpdataconfig",
+              label: "zegodumpdataconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoeffectsbeautyparam",
+              label: "zegoeffectsbeautyparam",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoengineconfig",
+              label: "zegoengineconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoengineprofile",
+              label: "zegoengineprofile",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoexplowlightenhancementparams",
+              label: "zegoexplowlightenhancementparams",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoexpressdefines",
+              label: "zegoexpressdefines",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoexpressengine",
+              label: "zegoexpressengine",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegofacedetectioninfo",
+              label: "zegofacedetectioninfo",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegofacepositioninfo",
+              label: "zegofacepositioninfo",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegofontstyle",
+              label: "zegofontstyle",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoitemparam",
+              label: "zegoitemparam",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegolabelinfo",
+              label: "zegolabelinfo",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegolayerborderconfig",
+              label: "zegolayerborderconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegologconfig",
+              label: "zegologconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegomediadatapublisher",
+              label: "zegomediadatapublisher",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegomediadatapublisherconfig",
+              label: "zegomediadatapublisherconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegomediadatapublishereventhandler",
+              label: "zegomediadatapublishereventhandler",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegomediaplayer",
+              label: "zegomediaplayer",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegomediaplayerblockdatahandler",
+              label: "zegomediaplayerblockdatahandler",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegomediaplayermediainfo",
+              label: "zegomediaplayermediainfo",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegomediaplayerresource",
+              label: "zegomediaplayerresource",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegomediaplayerstatisticsinfo",
+              label: "zegomediaplayerstatisticsinfo",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegomediasideinfo",
+              label: "zegomediasideinfo",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegomixeraudioconfig",
+              label: "zegomixeraudioconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegomixerimageinfo",
+              label: "zegomixerimageinfo",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegomixerinput",
+              label: "zegomixerinput",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegomixeroutput",
+              label: "zegomixeroutput",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegomixeroutputroominfo",
+              label: "zegomixeroutputroominfo",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegomixeroutputvideoconfig",
+              label: "zegomixeroutputvideoconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegomixertask",
+              label: "zegomixertask",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegomixervideoconfig",
+              label: "zegomixervideoconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegomixerwhiteboard",
+              label: "zegomixerwhiteboard",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegonetworkprobeconfig",
+              label: "zegonetworkprobeconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegonetworkprobehttpresult",
+              label: "zegonetworkprobehttpresult",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegonetworkproberesult",
+              label: "zegonetworkproberesult",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegonetworkprobetcpresult",
+              label: "zegonetworkprobetcpresult",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegonetworkprobetracerouteresult",
+              label: "zegonetworkprobetracerouteresult",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegonetworkprobeudpresult",
+              label: "zegonetworkprobeudpresult",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegonetworkresourcecache",
+              label: "zegonetworkresourcecache",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegonetworkspeedtestconfig",
+              label: "zegonetworkspeedtestconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegonetworkspeedtestquality",
+              label: "zegonetworkspeedtestquality",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegonetworktimeinfo",
+              label: "zegonetworktimeinfo",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoobjectsegmentationconfig",
+              label: "zegoobjectsegmentationconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoperformancestatus",
+              label: "zegoperformancestatus",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegopicturecapturer",
+              label: "zegopicturecapturer",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoplayerconfig",
+              label: "zegoplayerconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoplaystreamquality",
+              label: "zegoplaystreamquality",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoposition",
+              label: "zegoposition",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegopositionorientation",
+              label: "zegopositionorientation",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoproxyinfo",
+              label: "zegoproxyinfo",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegopublishdualstreamconfig",
+              label: "zegopublishdualstreamconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegopublisherconfig",
+              label: "zegopublisherconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegopublishertakesnapshotconfig",
+              label: "zegopublishertakesnapshotconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegopublishstreamquality",
+              label: "zegopublishstreamquality",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegorangeaudio",
+              label: "zegorangeaudio",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegorangescene",
+              label: "zegorangescene",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegorangesceneeventhandler",
+              label: "zegorangesceneeventhandler",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegorangesceneitem",
+              label: "zegorangesceneitem",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegorangesceneitemeventhandler",
+              label: "zegorangesceneitemeventhandler",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegorangescenestream",
+              label: "zegorangescenestream",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegorangescenestreameventhandler",
+              label: "zegorangescenestreameventhandler",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegorangesceneteam",
+              label: "zegorangesceneteam",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegorangesceneteameventhandler",
+              label: "zegorangesceneteameventhandler",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegorealtimesequentialdataeventhandler",
+              label: "zegorealtimesequentialdataeventhandler",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegorealtimesequentialdatamanager",
+              label: "zegorealtimesequentialdatamanager",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoreceiverangeparam",
+              label: "zegoreceiverangeparam",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoreplaykitext",
+              label: "zegoreplaykitext",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoreplaykitexthandler",
+              label: "zegoreplaykitexthandler",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoreverbadvancedparam",
+              label: "zegoreverbadvancedparam",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoreverbechoparam",
+              label: "zegoreverbechoparam",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoreverbparam",
+              label: "zegoreverbparam",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoroirect",
+              label: "zegoroirect",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoroomconfig",
+              label: "zegoroomconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoroomextrainfo",
+              label: "zegoroomextrainfo",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoroomrecvtransparentmessage",
+              label: "zegoroomrecvtransparentmessage",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoroomsendtransparentmessage",
+              label: "zegoroomsendtransparentmessage",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoroomstreamlist",
+              label: "zegoroomstreamlist",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegortcstatsinfo",
+              label: "zegortcstatsinfo",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegosceneconfig",
+              label: "zegosceneconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegosceneparam",
+              label: "zegosceneparam",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegosceneplayerconfig",
+              label: "zegosceneplayerconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoscenepublisherconfig",
+              label: "zegoscenepublisherconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoscenestreamconfig",
+              label: "zegoscenestreamconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoscreencaptureaudioconfig",
+              label: "zegoscreencaptureaudioconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoscreencaptureconfig",
+              label: "zegoscreencaptureconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoscreencapturesource",
+              label: "zegoscreencapturesource",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoscreencapturesourceeventhandler",
+              label: "zegoscreencapturesourceeventhandler",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoscreencapturesourceinfo",
+              label: "zegoscreencapturesourceinfo",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoseiconfig",
+              label: "zegoseiconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegosoundlevelconfig",
+              label: "zegosoundlevelconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegosoundlevelinfo",
+              label: "zegosoundlevelinfo",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegostream",
+              label: "zegostream",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegostreamrelaycdninfo",
+              label: "zegostreamrelaycdninfo",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoswitchplayingstreamconfig",
+              label: "zegoswitchplayingstreamconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegoteamparam",
+              label: "zegoteamparam",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegotestnetworkconnectivityresult",
+              label: "zegotestnetworkconnectivityresult",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegotrafficcontrolinfo",
+              label: "zegotrafficcontrolinfo",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegouser",
+              label: "zegouser",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegovideoconfig",
+              label: "zegovideoconfig",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegovideodenoiseparams",
+              label: "zegovideodenoiseparams",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegovideoencodedframeparam",
+              label: "zegovideoencodedframeparam",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegovideoframeparam",
+              label: "zegovideoframeparam",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegovocalrangeparam",
+              label: "zegovocalrangeparam",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegovoicechangerparam",
+              label: "zegovoicechangerparam",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/class/zegowatermark",
+              label: "zegowatermark",
+            },
+          ],
+        },
+        {
+          type: "category",
+          label: "enum",
+          items: [
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoaecmode",
+              label: "zegoaecmode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoaivoicechangerevent",
+              label: "zegoaivoicechangerevent",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoalphalayouttype",
+              label: "zegoalphalayouttype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoansmode",
+              label: "zegoansmode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoaudiocapturestereomode",
+              label: "zegoaudiocapturestereomode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoaudiochannel",
+              label: "zegoaudiochannel",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoaudiocodecid",
+              label: "zegoaudiocodecid",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoaudioconfigpreset",
+              label: "zegoaudioconfigpreset",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoaudiodatacallbackbitmask",
+              label: "zegoaudiodatacallbackbitmask",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoaudiodevicemode",
+              label: "zegoaudiodevicemode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoaudiodevicetype",
+              label: "zegoaudiodevicetype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoaudioeffectplaystate",
+              label: "zegoaudioeffectplaystate",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoaudiomixmode",
+              label: "zegoaudiomixmode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoaudioroute",
+              label: "zegoaudioroute",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoaudiosamplerate",
+              label: "zegoaudiosamplerate",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoaudiosourcetype",
+              label: "zegoaudiosourcetype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoaudiovadstablestatemonitortype",
+              label: "zegoaudiovadstablestatemonitortype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoaudiovadtype",
+              label: "zegoaudiovadtype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegobackgroundblurlevel",
+              label: "zegobackgroundblurlevel",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegobackgroundprocesstype",
+              label: "zegobackgroundprocesstype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegobeautifyfeature",
+              label: "zegobeautifyfeature",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegobroadcastmode",
+              label: "zegobroadcastmode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegocameraexposuremode",
+              label: "zegocameraexposuremode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegocamerafocusmode",
+              label: "zegocamerafocusmode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegocapabilitynegotiationtype",
+              label: "zegocapabilitynegotiationtype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegocapturepipelinescalemode",
+              label: "zegocapturepipelinescalemode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegocdnprotocol",
+              label: "zegocdnprotocol",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegocopyrightedmusicbillingmode",
+              label: "zegocopyrightedmusicbillingmode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegocopyrightedmusicresourcequalitytype",
+              label: "zegocopyrightedmusicresourcequalitytype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegocopyrightedmusicresourcetype",
+              label: "zegocopyrightedmusicresourcetype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegocopyrightedmusictype",
+              label: "zegocopyrightedmusictype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegocopyrightedmusicvendorid",
+              label: "zegocopyrightedmusicvendorid",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegocreateitemmode",
+              label: "zegocreateitemmode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegocustomaudioprocesstype",
+              label: "zegocustomaudioprocesstype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegodatarecordstate",
+              label: "zegodatarecordstate",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegodatarecordtype",
+              label: "zegodatarecordtype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegodeviceexceptiontype",
+              label: "zegodeviceexceptiontype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegodevicestate",
+              label: "zegodevicestate",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegodevicetype",
+              label: "zegodevicetype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegodummycaptureimagemode",
+              label: "zegodummycaptureimagemode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegodumpdatatype",
+              label: "zegodumpdatatype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoelectroniceffectsmode",
+              label: "zegoelectroniceffectsmode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoencodeprofile",
+              label: "zegoencodeprofile",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoenginestate",
+              label: "zegoenginestate",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoexplowlightenhancementtype",
+              label: "zegoexplowlightenhancementtype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoexpnotifydevicestatemode",
+              label: "zegoexpnotifydevicestatemode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegofeaturetype",
+              label: "zegofeaturetype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegofonttype",
+              label: "zegofonttype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegogeofenceareacode",
+              label: "zegogeofenceareacode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegogeofencetype",
+              label: "zegogeofencetype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegohttpdnstype",
+              label: "zegohttpdnstype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegolanguage",
+              label: "zegolanguage",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoliveaudioeffectmode",
+              label: "zegoliveaudioeffectmode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegolowlightenhancementmode",
+              label: "zegolowlightenhancementmode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegomediadatapublishermode",
+              label: "zegomediadatapublishermode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegomediaplayeraudiochannel",
+              label: "zegomediaplayeraudiochannel",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegomediaplayeraudiotrackmode",
+              label: "zegomediaplayeraudiotrackmode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegomediaplayerfirstframeevent",
+              label: "zegomediaplayerfirstframeevent",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegomediaplayernetworkevent",
+              label: "zegomediaplayernetworkevent",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegomediaplayerstate",
+              label: "zegomediaplayerstate",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegomediastreamtype",
+              label: "zegomediastreamtype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegomixerinputcontenttype",
+              label: "zegomixerinputcontenttype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegomiximagecheckmode",
+              label: "zegomiximagecheckmode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegomixrendermode",
+              label: "zegomixrendermode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegomultimedialoadtype",
+              label: "zegomultimedialoadtype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegonetworkmode",
+              label: "zegonetworkmode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegonetworkspeedtesttype",
+              label: "zegonetworkspeedtesttype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoobjectsegmentationstate",
+              label: "zegoobjectsegmentationstate",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoobjectsegmentationtype",
+              label: "zegoobjectsegmentationtype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoorientationmode",
+              label: "zegoorientationmode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoplayermediaevent",
+              label: "zegoplayermediaevent",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoplayerstate",
+              label: "zegoplayerstate",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoprocesseddatausagetype",
+              label: "zegoprocesseddatausagetype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegopublishchannel",
+              label: "zegopublishchannel",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegopublisherstate",
+              label: "zegopublisherstate",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegopublishertakesnapshotposition",
+              label: "zegopublishertakesnapshotposition",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegorangeaudiolistenmode",
+              label: "zegorangeaudiolistenmode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegorangeaudiomicrophonestate",
+              label: "zegorangeaudiomicrophonestate",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegorangeaudiomode",
+              label: "zegorangeaudiomode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegorangeaudiospeakmode",
+              label: "zegorangeaudiospeakmode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoremotedevicestate",
+              label: "zegoremotedevicestate",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoreplaykitextreason",
+              label: "zegoreplaykitextreason",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoresourcetype",
+              label: "zegoresourcetype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoreverbpreset",
+              label: "zegoreverbpreset",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoroomcapabilitynegotiationtypesbitmask",
+              label: "zegoroomcapabilitynegotiationtypesbitmask",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoroommode",
+              label: "zegoroommode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoroomstate",
+              label: "zegoroomstate",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoroomstatechangedreason",
+              label: "zegoroomstatechangedreason",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoroomstreamlisttype",
+              label: "zegoroomstreamlisttype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoroomtransparentmessagemode",
+              label: "zegoroomtransparentmessagemode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoroomtransparentmessagetype",
+              label: "zegoroomtransparentmessagetype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoscenario",
+              label: "zegoscenario",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoscenestate",
+              label: "zegoscenestate",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoscreencaptureaudiodevicemode",
+              label: "zegoscreencaptureaudiodevicemode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoscreencaptureexceptiontype",
+              label: "zegoscreencaptureexceptiontype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoscreencaptureorientation",
+              label: "zegoscreencaptureorientation",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoscreencapturesourceexceptiontype",
+              label: "zegoscreencapturesourceexceptiontype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoscreencapturesourcetype",
+              label: "zegoscreencapturesourcetype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoscreencapturewindowstate",
+              label: "zegoscreencapturewindowstate",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoseitype",
+              label: "zegoseitype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegostreamalignmentmode",
+              label: "zegostreamalignmentmode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegostreamalignmentvolumecontrolmode",
+              label: "zegostreamalignmentvolumecontrolmode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegostreamcensorshipmode",
+              label: "zegostreamcensorshipmode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegostreamevent",
+              label: "zegostreamevent",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegostreamqualitylevel",
+              label: "zegostreamqualitylevel",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegostreamrelaycdnstate",
+              label: "zegostreamrelaycdnstate",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegostreamrelaycdnupdatereason",
+              label: "zegostreamrelaycdnupdatereason",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegostreamresourcemode",
+              label: "zegostreamresourcemode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegostreamresourceswitchmode",
+              label: "zegostreamresourceswitchmode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegostreamresourcetype",
+              label: "zegostreamresourcetype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegostreamstate",
+              label: "zegostreamstate",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegosuperresolutionstate",
+              label: "zegosuperresolutionstate",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoswitchplayingstreamtype",
+              label: "zegoswitchplayingstreamtype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoteamstate",
+              label: "zegoteamstate",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegotrafficcontrolfocusonmode",
+              label: "zegotrafficcontrolfocusonmode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegotrafficcontrolminvideobitratemode",
+              label: "zegotrafficcontrolminvideobitratemode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegotrafficcontrolproperty",
+              label: "zegotrafficcontrolproperty",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoupdatetype",
+              label: "zegoupdatetype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegovideobuffertype",
+              label: "zegovideobuffertype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegovideocodecbackend",
+              label: "zegovideocodecbackend",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegovideocodecid",
+              label: "zegovideocodecid",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegovideoconfigpreference",
+              label: "zegovideoconfigpreference",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegovideoconfigpreset",
+              label: "zegovideoconfigpreset",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegovideodenoisemode",
+              label: "zegovideodenoisemode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegovideodenoisestrength",
+              label: "zegovideodenoisestrength",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegovideoencodedframeformat",
+              label: "zegovideoencodedframeformat",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegovideoflipmode",
+              label: "zegovideoflipmode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegovideoframeformat",
+              label: "zegovideoframeformat",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegovideoframeformatseries",
+              label: "zegovideoframeformatseries",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegovideomirrormode",
+              label: "zegovideomirrormode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegovideoratecontrolmode",
+              label: "zegovideoratecontrolmode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegovideosourcetype",
+              label: "zegovideosourcetype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegovideostreamtype",
+              label: "zegovideostreamtype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoviewmode",
+              label: "zegoviewmode",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegoviewupdatetype",
+              label: "zegoviewupdatetype",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegovoicechangerpreset",
+              label: "zegovoicechangerpreset",
+            },
+            {
+              type: "doc",
+              id: "client-sdk/api/enum/zegovolumetype",
+              label: "zegovolumetype",
+            },
+          ],
+        },
+      ],
+    },
+  ],
+  mySidebar: [
+    {
+      type: "category",
+      label: "产品简介",
+      collapsed: false,
+      items: [
+        {
+          type: "doc",
+          label: "实时音视频",
+          id: "introduction/entry",
+          visible: false,
+        },
+        {
+          type: "doc",
+          label: "概述",
+          id: "introduction/overview",
+          articleID: 5413,
+        },
+        {
+          type: "doc",
+          label: "产品功能",
+          id: "introduction/product-feature-list",
+          articleID: 16648,
+        },
+        {
+          type: "category",
+          label: "计费说明",
+          collapsed: true,
+          items: [
+            {
+              type: "doc",
+              label: "实时音视频价格说明",
+              id: "introduction/pricing/rtc",
+              articleID: 11425,
+            },
+            {
+              type: "doc",
+              label: "服务端混流价格说明",
+              id: "introduction/pricing/server-side-stream-mixing",
+              articleID: 6637,
+            },
+            {
+              type: "doc",
+              label: "CDN 直播价格说明",
+              id: "introduction/pricing/cdn-live-streaming",
+              articleID: 14089,
+            },
+          ],
+        },
+        {
+          type: "doc",
+          label: "性能数据",
+          id: "introduction/performance-report",
+          articleID: 12355,
+        },
+        {
+          type: "doc",
+          label: "实时音视频 SDK 与实时语音 SDK 差异",
+          id: "introduction/difference-between-audio-and-video-sdk",
+          articleID: 15773,
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "客户端 SDK",
+      collapsed: false,
+      items: [
+        {
+          type: "doc",
+          label: "下载 SDK",
+          id: "client-sdk/download-sdk",
+          articleID: 2968,
+        },
+        {
+          type: "doc",
+          label: "体验 App",
+          id: "client-sdk/download-demo",
+          articleID: 14390,
+        },
+        {
+          type: "doc",
+          label: "发布日志",
+          id: "client-sdk/release-notes",
+          articleID: 12540,
+        },
+        {
+          type: "category",
+          label: "升级指南",
+          collapsed: true,
+          items: [
+            {
+              type: "doc",
+              label: "2.20.0 及以上版本升级指南",
+              id: "client-sdk/upgrade-guide/upgrade-to-v2-20",
+              articleID: 17552,
+            },
+            {
+              type: "doc",
+              label: "3.0.0 及以上版本升级指南",
+              id: "client-sdk/upgrade-guide/upgrade-to-v3",
+              articleID: 16403,
+            },
+          ],
+        },
+        {
+          type: "doc",
+          label: "常见错误码",
+          id: "client-sdk/error-code",
+          articleID: 4377,
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "快速开始",
+      collapsed: false,
+      items: [
+        {
+          type: "doc",
+          label: "跑通示例源码",
+          id: "quick-start/run-example-code",
+          articleID: 3126,
+        },
+        {
+          type: "doc",
+          label: "集成 SDK",
+          id: "quick-start/integrating-sdk",
+          articleID: 196,
+        },
+        {
+          type: "doc",
+          label: "实现视频通话",
+          id: "quick-start/implementing-video-call",
+          articleID: 7628,
+        },
+        {
+          type: "doc",
+          label: "场景化音视频配置",
+          id: "quick-start/scenario-based-audio-video-configuration",
+          articleID: 16316,
+        },
+        {
+          type: "link",
+          label: "连接至 ZEGO 文档 MCP 服务",
+          href: "/faq/connect-to-zego-mcp-server",
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "通信能力",
+      collapsed: true,
+      items: [
+        {
+          type: "doc",
+          label: "使用 Token 鉴权",
+          id: "communication/using-token-authentication",
+          articleID: 10359,
+          tag: {
+            label: "基础",
+            color: "Check",
+          },
+        },
+        {
+          type: "doc",
+          label: "通话前检测",
+          id: "communication/pre-call-detection",
+          articleID: 12053,
+          tag: {
+            label: "基础",
+            color: "Check",
+          },
+        },
+        {
+          type: "doc",
+          label: "通话质量监测",
+          id: "communication/monitor-stream-quality",
+          articleID: 1079,
+          tag: {
+            label: "基础",
+            color: "Check",
+          },
+        },
+        {
+          type: "doc",
+          label: "网络测速",
+          id: "communication/testing-network",
+          articleID: 6643,
+          tag: {
+            label: "基础",
+            color: "Check",
+          },
+        },
+        {
+          type: "doc",
+          label: "多源采集",
+          id: "communication/multi-source-capture",
+          articleID: 16799,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+        {
+          type: "doc",
+          label: "同时推多路流",
+          id: "communication/publish-multi-streams",
+          articleID: 3639,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+        {
+          type: "doc",
+          label: "媒体补充增强信息（SEI）",
+          id: "communication/sei",
+          articleID: 6063,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+        {
+          type: "doc",
+          label: "流量控制",
+          id: "communication/traffic-control",
+          articleID: 5141,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+        {
+          type: "doc",
+          label: "云代理",
+          id: "communication/cloud-proxy",
+          articleID: 16872,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+        {
+          type: "doc",
+          label: "本地代理",
+          id: "communication/local-proxy",
+          articleID: 16872,
+          visible: false,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+        {
+          type: "doc",
+          label: "地理围栏",
+          id: "communication/geofencing",
+          articleID: 17567,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+        {
+          type: "doc",
+          label: "音视频流加密",
+          id: "communication/encrypt-streams",
+          articleID: 10364,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+        {
+          type: "doc",
+          label: "游戏语音",
+          id: "communication/range-audio",
+          articleID: 11666,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+        {
+          type: "doc",
+          label: "万人范围音视频",
+          id: "communication/mass-scale-range-audio-video",
+          articleID: 16469,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+        {
+          type: "doc",
+          label: "多人状态实时同步",
+          id: "communication/sync-users-status",
+          articleID: 16461,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "房间能力",
+      collapsed: true,
+      items: [
+        {
+          type: "doc",
+          label: "房间连接状态说明",
+          id: "room/room-connection-status",
+          articleID: 12884,
+          tag: {
+            label: "基础",
+            color: "Check",
+          },
+        },
+        {
+          type: "doc",
+          label: "实时消息与信令",
+          id: "room/messaging-and-signaling",
+          articleID: 1045,
+          tag: {
+            label: "基础",
+            color: "Check",
+          },
+        },
+        {
+          type: "doc",
+          label: "登录多房间",
+          id: "room/multi-room-login",
+          articleID: 4798,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "音频能力",
+      collapsed: true,
+      items: [
+        {
+          type: "doc",
+          label: "音量变化与音频频谱",
+          id: "audio/sound-level-spectrum",
+          articleID: 4300,
+          tag: {
+            label: "基础",
+            color: "Check",
+          },
+        },
+        {
+          type: "doc",
+          label: "耳返与声道设置",
+          id: "audio/headphone-monitor",
+          articleID: 4309,
+          tag: {
+            label: "基础",
+            color: "Check",
+          },
+        },
+        {
+          type: "doc",
+          label: "音频 3A 处理",
+          id: "audio/audio-3a-processing",
+          articleID: 10405,
+          tag: {
+            label: "基础",
+            color: "Check",
+          },
+        },
+        {
+          type: "doc",
+          label: "变声/混响/立体声",
+          id: "audio/audio-effects",
+          articleID: 4303,
+          tag: {
+            label: "基础",
+            color: "Check",
+          },
+        },
+        {
+          type: "doc",
+          label: "场景化 AI 降噪",
+          id: "audio/scenario-based-ai-noise-reduction",
+          articleID: 14527,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+        {
+          type: "doc",
+          label: "自定义音频采集与渲染",
+          id: "audio/custom-audio-capture-and-rendering",
+          articleID: 4293,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+        {
+          type: "doc",
+          label: "自定义音频处理",
+          id: "audio/custom-audio-processing",
+          articleID: 4813,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+        {
+          type: "doc",
+          label: "原始音频数据获取",
+          id: "audio/get-audio-raw-data",
+          articleID: 4306,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+        {
+          type: "doc",
+          label: "AI 变声",
+          id: "audio/ai-voice-changer",
+          articleID: 18299,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "视频能力",
+      collapsed: true,
+      items: [
+        {
+          type: "doc",
+          label: "常用视频配置",
+          id: "video/common-video-configuration",
+          articleID: 10365,
+          tag: {
+            label: "基础",
+            color: "Check",
+          },
+        },
+        {
+          type: "doc",
+          label: "视频采集旋转",
+          id: "video/video-capture-rotation",
+          articleID: 15974,
+          tag: {
+            label: "基础",
+            color: "Check",
+          },
+        },
+        {
+          type: "doc",
+          label: "屏幕共享",
+          id: "video/screen-sharing",
+          articleID: 10460,
+          tag: {
+            label: "基础",
+            color: "Check",
+          },
+        },
+        {
+          type: "doc",
+          label: "水印和截图",
+          id: "video/watermark-and-screenshot",
+          articleID: 1226,
+          tag: {
+            label: "基础",
+            color: "Check",
+          },
+        },
+        {
+          type: "doc",
+          label: "设置视频编码方式",
+          id: "video/set-video-encoding",
+          articleID: 4431,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+        {
+          type: "doc",
+          label: "自定义视频采集",
+          id: "video/custom-video-capture",
+          articleID: 3676,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+        {
+          type: "doc",
+          label: "自定义视频渲染",
+          id: "video/custom-video-rendering",
+          articleID: 3673,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+        {
+          type: "doc",
+          label: "自定义视频前处理",
+          id: "video/custom-video-preprocessing",
+          articleID: 7655,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+        {
+          type: "doc",
+          label: "超分辨率",
+          id: "video/super-resolution",
+          articleID: 16401,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+        {
+          type: "doc",
+          label: "主体分割",
+          id: "video/object-segmentation",
+          articleID: 16478,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+        {
+          type: "doc",
+          label: "H.265",
+          id: "video/h265",
+          articleID: 12657,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+        {
+          type: "doc",
+          label: "视频大小流和分层编码",
+          id: "video/small-large-video-stream-and-layered-encoding",
+          articleID: 17941,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+        {
+          type: "doc",
+          label: "推流视频增强",
+          id: "video/publish-video-enhancement",
+          articleID: 18875,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "直播能力",
+      collapsed: true,
+      items: [
+        {
+          type: "doc",
+          label: "混流",
+          id: "live-streaming/stream-mixing",
+          articleID: 1057,
+          tag: {
+            label: "基础",
+            color: "Check",
+          },
+        },
+        {
+          type: "doc",
+          label: "使用 CDN 直播",
+          id: "live-streaming/using-cdn-for-live-streaming",
+          articleID: 3641,
+          tag: {
+            label: "基础",
+            color: "Check",
+          },
+        },
+        {
+          type: "doc",
+          label: "CDN 推流鉴权",
+          id: "live-streaming/cdn-stream-publishing-authentication",
+          articleID: 15814,
+          tag: {
+            label: "基础",
+            color: "Check",
+          },
+        },
+        {
+          type: "doc",
+          label: "通过 URL 拉流",
+          id: "live-streaming/playing-stream-by-url",
+          articleID: 3640,
+          tag: {
+            label: "基础",
+            color: "Check",
+          },
+        },
+        {
+          type: "doc",
+          label: "超低延迟直播",
+          id: "live-streaming/low-latency-live-streaming",
+          articleID: 6776,
+          tag: {
+            label: "特色",
+            color: "Error",
+          },
+        },
+        {
+          type: "doc",
+          label: "单流转码",
+          id: "live-streaming/single-stream-transcoding",
+          articleID: 17412,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+        {
+          type: "doc",
+          label: "OBS 使用 WHIP 协议推流",
+          id: "live-streaming/obs-push-with-whip",
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "其他能力",
+      collapsed: true,
+      items: [
+        {
+          type: "doc",
+          label: "媒体播放器",
+          id: "other/media-player",
+          articleID: 1152,
+          tag: {
+            label: "基础",
+            color: "Check",
+          },
+        },
+        {
+          type: "doc",
+          label: "音效文件播放器",
+          id: "other/audio-effect-player",
+          articleID: 5669,
+          tag: {
+            label: "基础",
+            color: "Check",
+          },
+        },
+        {
+          type: "doc",
+          label: "音视频录制",
+          id: "other/local-media-recording",
+          articleID: 4699,
+          tag: {
+            label: "基础",
+            color: "Check",
+          },
+        },
+        {
+          type: "doc",
+          label: "将白板推送到第三方平台",
+          id: "other/push-the-whiteboard",
+          articleID: 17386,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+        {
+          type: "doc",
+          label: "播放透明礼物特效",
+          id: "other/play-transparent-gift-effects",
+          articleID: 17410,
+          tag: {
+            label: "进阶",
+            color: "Warning",
+          },
+        },
+      ],
+    },
+    {
+      type: "category",
+      label: "最佳实践",
+      collapsed: true,
+      items: [
+        {
+          type: "category",
+          label: "主体分割与 Alpha 数据传输的的结合应用",
+          collapsed: true,
+          items: [
+            {
+              type: "doc",
+              label: "体验 App",
+              id: "best-practice/object-segmentation/demo-app",
+              articleID: 17824,
+            },
+            {
+              type: "doc",
+              label: "实现流程",
+              id: "best-practice/object-segmentation/implementation",
+              articleID: 17831,
+            },
+          ],
+        },
+        {
+          type: "doc",
+          label: "多人视频通话",
+          id: "best-practice/multiplayer-video-call",
+          articleID: 10329,
+        },
+        {
+          type: "doc",
+          label: "和 AI 美颜的搭配使用",
+          id: "best-practice/integration-with-zego-effects-sdk",
+          articleID: 11256,
+        },
+        {
+          type: "doc",
+          label: "调试与配置",
+          id: "best-practice/debug-and-config",
+          articleID: 10404,
+        },
+        {
+          type: "doc",
+          label: "限制说明",
+          id: "best-practice/restrictions",
+          articleID: 7580,
+        },
+        {
+          type: "doc",
+          label: "从 CDN 拉流切换到连麦场景",
+          id: "best-practice/switch-cdn-to-rtc",
+          articleID: 19536,
+        },
+        {
+          type: "doc",
+          label: "秀场直播秒开方案",
+          id: "best-practice/instant-startup-solution",
+          articleID: 19542,
+        },
+      ],
+    },
+    {
+      type: "doc",
+      label: "常见问题",
+      id: "faq",
+    },
+  ]
+}

@@ -69,7 +69,7 @@ class PageController {
       CommonControllerImpl.getExtractInfoFromSlug(slug, instances);
     const sidebars = SidebarsControllerImpl.getSidebars(instanceID, docVersion);
     const temp = mdxFileID.split("/");
-    const arr = Object.values(sidebars)[0] as SidebarItem[];
+    const allSidebarArrays = Object.values(sidebars) as SidebarItem[][];
     const loop = (list: SidebarItem[], level) => {
       if (targetLabel) return false;
       for (let index = 0, len = list.length; index < len; index++) {
@@ -85,7 +85,12 @@ class PageController {
         }
       }
     };
-    loop(arr, 1);
+    // 遍历所有 sidebar 数组
+    for (const arr of allSidebarArrays) {
+      loop(arr, 1);
+      // 如果已经找到了，就不需要继续遍历其他 sidebar
+      if (targetLabel) break;
+    }
     return targetLabel;
   }
 }
