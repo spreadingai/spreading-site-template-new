@@ -273,6 +273,27 @@ const PreviewLayout = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [router.asPath]);
 
+  // 防止浏览器 Ctrl+F 搜索到隐藏的条件渲染内容
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const hiddenElements = document.querySelectorAll('.choose-one');
+
+      hiddenElements.forEach((element) => {
+        const style = window.getComputedStyle(element);
+
+        // 如果元素是隐藏的（display: none）
+        if (style.display === 'none') {
+          // 清空元素的内容（这样 Ctrl+F 就搜不到了）
+          element.innerHTML = '';
+          element.textContent = '';
+        }
+      });
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [router.asPath]);
+
   // All articles must have an id
   const docID = slug.join("/");
 
