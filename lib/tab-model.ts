@@ -34,8 +34,9 @@ export function resolveFirstSlugLinkForSidebar(params: {
   instanceId: string;
   sidebarId: string;
   preferredSlugVersion: string;
+  mdxFileID?: string; // 如果有传入 mdxFileID，则会优先返回同 mdxFileID 的 slug
 }): string {
-  const { instanceId, sidebarId, preferredSlugVersion } = params;
+  const { instanceId, sidebarId, preferredSlugVersion, mdxFileID } = params;
   const allSlugs = CommonControllerImpl.readAllSlugsByFile();
   const instances = LibControllerImpl.getInstances();
   const instance = instances.find((i) => i.id === instanceId);
@@ -49,11 +50,24 @@ export function resolveFirstSlugLinkForSidebar(params: {
   }
 
   const preferredPrefix = getPreferredSlugPrefix(instance, preferredSlugVersion);
+
+  // 优先查找相同 mdxFileID 的 slug
+  let sameMdxFileIdSlug;
+  if (mdxFileID) {
+    sameMdxFileIdSlug = candidates.find((c) => {
+      const extracted = CommonControllerImpl.getExtractInfoFromSlug(
+        c.params.slug,
+        instances
+      );
+      return extracted.mdxFileID === mdxFileID;
+    });
+  }
+
   const preferred = candidates.find((c) =>
     isSlugPrefixMatch(c.params.slug, preferredPrefix)
   );
 
-  const chosen = preferred || candidates[0];
+  const chosen = sameMdxFileIdSlug || preferred || candidates[0];
   return `/${chosen.params.slug.join("/")}`;
 }
 

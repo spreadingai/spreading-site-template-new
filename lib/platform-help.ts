@@ -98,6 +98,7 @@ class PlatformController {
           instanceId: instance.id,
           sidebarId: currentTabDef.sidebarId,
           preferredSlugVersion: currentSlugVersion,
+          mdxFileID,
         });
       } else if (reg.test(instance.path)) {
         defaultLink = instance.path;
