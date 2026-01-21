@@ -141,8 +141,9 @@ export class ApiShortLinkTransController {
    * 解析方法类短链接
    */
   private parseMethodShortLink(raw: string): ParsedShortLink {
-    // 处理重载后缀：__1 → -1
-    const normalizedRaw = raw.replace(/__(\d+)$/, '-$1');
+    // 处理重载后缀：__1 → 1, __2 → 2, __3 → 3
+    // 例如：logoutRoom__3 → logoutRoom3 → 锚点：logoutroom3
+    const normalizedRaw = raw.replace(/__/g, '');
     return {
       type: 'method',
       raw,
