@@ -75,10 +75,21 @@ export class ApiShortLinkTransController {
   }
 
   /**
+   * 将路径转换为标准 ID 格式（全小写，空格转连字符）
+   */
+  private normalizePathToId(pathStr: string): string {
+    return pathStr
+      .toLowerCase()
+      .replace(/\s+/g, '-');
+  }
+
+  /**
    * 构建 URL 映射
    */
   private buildUrlMap(instance: InstanceWithClientApi): UrlMap {
-    const baseUrl = `/${instance.routeBasePath}/${instance.clientApiPath}`.replace(/\/+/g, '/');
+    // 将 clientApiPath 转换为标准 ID 格式
+    const normalizedClientApiPath = this.normalizePathToId(instance.clientApiPath);
+    const baseUrl = `/${instance.routeBasePath}/${normalizedClientApiPath}`.replace(/\/+/g, '/');
     const urlMap: UrlMap = {
       class: `${baseUrl}/class`,
       interface: `${baseUrl}/interface`,
