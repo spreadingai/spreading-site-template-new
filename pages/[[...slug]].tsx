@@ -61,8 +61,7 @@ import dynamic from "next/dynamic";
 
 // 动态导入 Mermaid 组件，禁用 SSR
 const MermaidComponent = dynamic(
-  () =>
-    import("mdx-mermaid/lib/Mermaid").then((mod) => ({ default: mod.Mermaid })),
+  () => import("@/components/mdx/Mermaid"),
   { ssr: false }
 );
 
@@ -104,12 +103,8 @@ const components = {
     ) : (
       <Link {...props} />
     ),
-  mermaid: (props: any) => {
-    return <MermaidComponent {...props} config={{ theme: "default" }} />;
-  },
-  Mermaid: (props: any) => {
-    return <MermaidComponent {...props} config={{ theme: "default" }} />;
-  },
+  mermaid: MermaidComponent,
+  Mermaid: MermaidComponent,
   MethodEndpoint,
   ParamsItem,
   MimeTabs,
