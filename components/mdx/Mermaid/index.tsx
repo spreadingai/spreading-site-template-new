@@ -9,51 +9,62 @@ interface MermaidProps {
   height?: number;
 }
 
+// 全局主题管理
+let currentTheme: 'default' | 'dark' = 'default';
+let themeObserver: MutationObserver | null = null;
+const themeListeners = new Set<() => void>();
+
+// 初始化全局主题监听（只创建一次）
+const initThemeObserver = () => {
+  if (typeof window === 'undefined' || themeObserver) return;
+
+  currentTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default';
+
+  themeObserver = new MutationObserver(() => {
+    const newTheme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default';
+    if (newTheme !== currentTheme) {
+      currentTheme = newTheme;
+      // 通知所有监听器
+      themeListeners.forEach(listener => listener());
+    }
+  });
+
+  themeObserver.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme']
+  });
+};
+
 const Mermaid: React.FC<MermaidProps> = ({ chart, children, config = {}, height = 512 }) => {
   const elementRef = useRef<HTMLDivElement>(null);
   const [svgContent, setSvgContent] = useState<string>('');
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [scale, setScale] = useState(1);
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [isDragging, setIsDragging] = useState(false);
-  const [dragStart, setDragStart] = useState({ x: 0, y: 0 });
-  const [theme, setTheme] = useState<'default' | 'dark'>('default');
-  const modalContentRef = useRef<HTMLDivElement>(null);
+  const [displayScale, setDisplayScale] = useState(1); // 只用于显示百分比
 
-  // 监听主题变化
-  useEffect(() => {
-    const getTheme = () => {
-      const dataTheme = document.documentElement.getAttribute('data-theme');
-      return dataTheme === 'dark' ? 'dark' : 'default';
-    };
-    setTheme(getTheme());
-
-    const observer = new MutationObserver(() => {
-      setTheme(getTheme());
-    });
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['data-theme']
-    });
-    return () => observer.disconnect();
-  }, []);
+  // 使用 ref 存储实际的缩放和位置值，避免频繁重新渲染
+  const scaleRef = useRef(1);
+  const positionRef = useRef({ x: 0, y: 0 });
+  const isDraggingRef = useRef(false);
+  const dragStartRef = useRef({ x: 0, y: 0 });
+  const svgContainerRef = useRef<HTMLDivElement>(null);
+  const rafIdRef = useRef<number | null>(null);
 
   // 渲染 mermaid 图表
-  useEffect(() => {
+  const renderChart = useCallback(() => {
     const chartContent = chart || children;
     if (!chartContent) {
       console.warn('Mermaid: No chart content provided');
       return;
     }
 
+    // 使用当前主题重新初始化
     mermaid.initialize({
       startOnLoad: false,
-      theme,
+      theme: currentTheme,
       securityLevel: 'loose',
-      ...config
     });
 
-    const id = `mermaid-${Math.random().toString(36).substr(2, 9)}`;
+    const id = `mermaid-${Math.random().toString(36).substring(2, 11)}`;
 
     mermaid.render(id, chartContent).then(({ svg }) => {
       setSvgContent(svg);
@@ -65,13 +76,47 @@ const Mermaid: React.FC<MermaidProps> = ({ chart, children, config = {}, height 
         </div>
       `);
     });
-  }, [chart, children, config, theme]);
+  }, [chart, children]);
+
+  // 初始渲染
+  useEffect(() => {
+    initThemeObserver();
+    renderChart();
+  }, [renderChart]);
+
+  // 监听主题变化
+  useEffect(() => {
+    const handleThemeChange = () => {
+      renderChart();
+    };
+
+    themeListeners.add(handleThemeChange);
+    return () => {
+      themeListeners.delete(handleThemeChange);
+    };
+  }, [renderChart]);
+
+  // 直接更新 DOM transform，避免触发重新渲染
+  const updateTransform = useCallback(() => {
+    if (svgContainerRef.current) {
+      svgContainerRef.current.style.transform =
+        `translate(${positionRef.current.x}px, ${positionRef.current.y}px) scale(${scaleRef.current})`;
+    }
+  }, []);
 
   const openModal = useCallback(() => {
     setIsModalOpen(true);
-    setScale(1);
-    setPosition({ x: 0, y: 0 });
+    scaleRef.current = 1;
+    positionRef.current = { x: 0, y: 0 };
+    setDisplayScale(1);
     document.body.style.overflow = 'hidden';
+    // 下一帧初始化 transform
+    requestAnimationFrame(() => {
+      if (svgContainerRef.current) {
+        svgContainerRef.current.style.transform = 'translate(0px, 0px) scale(1)';
+        svgContainerRef.current.style.cursor = 'grab';
+      }
+    });
   }, []);
 
   const closeModal = useCallback(() => {
@@ -82,34 +127,67 @@ const Mermaid: React.FC<MermaidProps> = ({ chart, children, config = {}, height 
   const handleWheel = useCallback((e: React.WheelEvent) => {
     e.preventDefault();
     const delta = e.deltaY > 0 ? -0.1 : 0.1;
-    setScale(prev => Math.min(Math.max(0.1, prev + delta), 5));
-  }, []);
+    scaleRef.current = Math.min(Math.max(0.1, scaleRef.current + delta), 5);
+    updateTransform();
+
+    // 使用 RAF 节流更新显示的缩放值
+    if (rafIdRef.current) {
+      cancelAnimationFrame(rafIdRef.current);
+    }
+    rafIdRef.current = requestAnimationFrame(() => {
+      setDisplayScale(scaleRef.current);
+    });
+  }, [updateTransform]);
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     if (e.button !== 0) return;
-    setIsDragging(true);
-    setDragStart({ x: e.clientX - position.x, y: e.clientY - position.y });
-  }, [position]);
-
-  const handleMouseMove = useCallback((e: React.MouseEvent) => {
-    if (!isDragging) return;
-    setPosition({ x: e.clientX - dragStart.x, y: e.clientY - dragStart.y });
-  }, [isDragging, dragStart]);
-
-  const handleMouseUp = useCallback(() => {
-    setIsDragging(false);
+    isDraggingRef.current = true;
+    dragStartRef.current = {
+      x: e.clientX - positionRef.current.x,
+      y: e.clientY - positionRef.current.y
+    };
+    if (svgContainerRef.current) {
+      svgContainerRef.current.style.cursor = 'grabbing';
+    }
   }, []);
 
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (e.key === 'Escape') closeModal();
-  }, [closeModal]);
+  const handleMouseMove = useCallback((e: React.MouseEvent) => {
+    if (!isDraggingRef.current) return;
+    positionRef.current = {
+      x: e.clientX - dragStartRef.current.x,
+      y: e.clientY - dragStartRef.current.y
+    };
+    updateTransform();
+  }, [updateTransform]);
+
+  const handleMouseUp = useCallback(() => {
+    isDraggingRef.current = false;
+    if (svgContainerRef.current) {
+      svgContainerRef.current.style.cursor = 'grab';
+    }
+  }, []);
 
   useEffect(() => {
     if (isModalOpen) {
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.key === 'Escape') {
+          setIsModalOpen(false);
+          document.body.style.overflow = '';
+        }
+      };
       window.addEventListener('keydown', handleKeyDown);
       return () => window.removeEventListener('keydown', handleKeyDown);
     }
-  }, [isModalOpen, handleKeyDown]);
+  }, [isModalOpen]);
+
+  // 清理 RAF
+  useEffect(() => {
+    return () => {
+      if (rafIdRef.current) {
+        cancelAnimationFrame(rafIdRef.current);
+      }
+    };
+  }, []);
 
   return (
     <>
@@ -124,12 +202,11 @@ const Mermaid: React.FC<MermaidProps> = ({ chart, children, config = {}, height 
       {isModalOpen && (
         <div className={styles.modalOverlay} onClick={closeModal}>
           <div className={styles.modalHeader}>
-            <span className={styles.zoomInfo}>缩放: {Math.round(scale * 100)}%</span>
+            <span className={styles.zoomInfo}>缩放: {Math.round(displayScale * 100)}%</span>
             <button className={styles.closeButton} onClick={closeModal}>✕</button>
           </div>
           <div
             className={styles.modalContent}
-            ref={modalContentRef}
             onClick={(e) => e.stopPropagation()}
             onWheel={handleWheel}
             onMouseDown={handleMouseDown}
@@ -138,11 +215,8 @@ const Mermaid: React.FC<MermaidProps> = ({ chart, children, config = {}, height 
             onMouseLeave={handleMouseUp}
           >
             <div
+              ref={svgContainerRef}
               className={styles.svgContainer}
-              style={{
-                transform: `translate(${position.x}px, ${position.y}px) scale(${scale})`,
-                cursor: isDragging ? 'grabbing' : 'grab',
-              }}
               dangerouslySetInnerHTML={{ __html: svgContent }}
             />
           </div>
