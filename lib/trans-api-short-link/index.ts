@@ -329,60 +329,57 @@ export class ApiShortLinkTransController {
       return { content, codeStr };
     }
 
+    // basePath 用于原生 HTML a 标签，因为它们不会被 Next.js Link 组件处理
+    // Markdown 链接会被 MDXProvider 转换为 Link 组件，Link 会自动添加 basePath
+    const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
+
     // ===== 处理 content（MDX 原始内容）=====
-    // 匹配 markdown 格式: [text](@shortLink) 或 [text](docuo-link@shortLink)
+    // Markdown 链接 [text](@shortLink) - 不加 basePath（Link 自动处理）
     const mdShortLinkRegex = /(\[.*?\])\((docuo-link)?@([^)]+)\)/g;
     content = content.replace(mdShortLinkRegex, (match, linkText, _prefix, shortLink) => {
       const fullUrl = this.resolveShortLink(shortLink, data);
-      if (fullUrl) {
-        return `${linkText}(${fullUrl})`;
-      }
-      return match; // 未匹配到则保持原样，让 trans-short-link 处理
+      return fullUrl ? `${linkText}(${fullUrl})` : match;
     });
 
-    // 匹配 HTML a 标签: <a href="@shortLink"> 或 <a href="docuo-link@shortLink">
+    // HTML a 标签 <a href="@shortLink"> - 需要加 basePath
     const aHrefRegex = /(<a[^>]*href=")(docuo-link)?@([^"]+)"/gi;
     content = content.replace(aHrefRegex, (match, prefix, _docuoLink, shortLink) => {
       const fullUrl = this.resolveShortLink(shortLink, data);
-      if (fullUrl) {
-        return `${prefix}${fullUrl}"`;
-      }
-      return match;
+      return fullUrl ? `${prefix}${basePath}${fullUrl}"` : match;
     });
 
     // ===== 处理 codeStr（编译后的 MDX 代码）=====
+    // MDX 编译后有两种 a 标签格式：
+    // 1. HTML a 标签 → ("a",{href:"..."}) - 字符串 "a"，原生标签，需要加 basePath
+    // 2. Markdown 链接 → (a,{href:"..."}) - 变量 a，会被 MDXProvider 转成 Link，自动加 basePath
     if (codeStr) {
-      // 格式1: href:"@shortLink" 或 href:"docuo-link@shortLink"
-      // 例如: ...("a",{href:"@createEngine",children:"xxx"})...
+      // 主要格式: href:"@shortLink"
       const codeHrefRegex = /(href:")(docuo-link)?@([^"]+)"/gi;
-      codeStr = codeStr.replace(codeHrefRegex, ($, $1, _$2, $3) => {
+      codeStr = codeStr.replace(codeHrefRegex, ($, $1, _$2, $3, offset) => {
         const fullUrl = this.resolveShortLink($3, data);
         if (fullUrl) {
-          return `${$1}${fullUrl}"`;
+          // 通过向前查找判断是原生 a 标签还是 MDXProvider 组件
+          // ("a",{ → 原生标签，需要加 basePath
+          // (a,{ 或 (xxx.a,{ → MDXProvider 组件，不需要加 basePath
+          const before = codeStr.substring(Math.max(0, offset - 100), offset);
+          const isNativeA = /\("a",\{[^)]*$/.test(before);
+          return isNativeA ? `${$1}${basePath}${fullUrl}"` : `${$1}${fullUrl}"`;
         }
         return $;
       });
 
-      // 格式2: 条件表达式中的短链接
-      // 例如: href:t.a?"docuo-link@aaa":"docuo-link@bbb"
+      // 条件表达式中的短链接: href:t.a?"docuo-link@aaa":"docuo-link@bbb"
       const codeConditionalRegex = /(["'])docuo-link@([^"']+)\1/gi;
       codeStr = codeStr.replace(codeConditionalRegex, ($, quote, shortLink) => {
         const fullUrl = this.resolveShortLink(shortLink, data);
-        if (fullUrl) {
-          return `${quote}${fullUrl}${quote}`;
-        }
-        return $;
+        return fullUrl ? `${quote}${fullUrl}${quote}` : $;
       });
 
-      // 格式3: 通用匹配 - 处理其他可能的格式
-      // 例如: ..."@shortLink"... 在字符串中
+      // 兜底: 其他可能的格式
       const codeGeneralRegex = /(")(docuo-link)?@([a-zA-Z0-9_-]+)"/gi;
       codeStr = codeStr.replace(codeGeneralRegex, ($, quote, _docuoLink, shortLink) => {
         const fullUrl = this.resolveShortLink(shortLink, data);
-        if (fullUrl) {
-          return `${quote}${fullUrl}"`;
-        }
-        return $;
+        return fullUrl ? `${quote}${fullUrl}"` : $;
       });
     }
 
