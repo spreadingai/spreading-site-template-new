@@ -18,6 +18,7 @@ export const Accordion = (props: Props) => {
   const { title, defaultOpen, children, style, className } = props;
   const defaultKey = title;
   const accordionRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
   const [activeKey, setActiveKey] = useState<string | string[] | undefined>(
     defaultOpen === "true" ? defaultKey : undefined
   );
@@ -135,7 +136,45 @@ export const Accordion = (props: Props) => {
     };
   }, [defaultKey]);
 
+  // 初始化 hidden="until-found" 并监听 beforematch 事件
+  useEffect(() => {
+    const contentElement = contentRef.current;
+    if (!contentElement) return;
+
+    // 只在初始渲染时设置 hidden="until-found"（如果是折叠状态）
+    const isInitiallyCollapsed = defaultOpen !== "true";
+    if (isInitiallyCollapsed) {
+      contentElement.setAttribute('hidden', 'until-found');
+    }
+
+    // 监听 beforematch 事件（浏览器 Ctrl+F 搜索到隐藏内容时触发）
+    const handleBeforeMatch = () => {
+      // 浏览器会自动移除 hidden 属性，我们只需要同步 React 状态
+      setActiveKey(defaultKey);
+    };
+
+    contentElement.addEventListener('beforematch', handleBeforeMatch);
+
+    return () => {
+      contentElement.removeEventListener('beforematch', handleBeforeMatch);
+    };
+  }, []); // 空依赖数组，只在挂载时执行一次
+
   const isExpanded = activeKey === defaultKey;
+
+  // 当展开状态改变时，移除 hidden 属性（如果存在）
+  useEffect(() => {
+    const contentElement = contentRef.current;
+    if (!contentElement) return;
+
+    if (isExpanded) {
+      // 展开时移除 hidden 属性
+      contentElement.removeAttribute('hidden');
+    } else {
+      // 折叠时添加 hidden="until-found" 属性
+      contentElement.setAttribute('hidden', 'until-found');
+    }
+  }, [isExpanded]);
 
   return (
     <div ref={accordionRef} className={`${styles.customAccordion} customAccordion ${className || ""}`} style={style || null}>
@@ -152,7 +191,10 @@ export const Accordion = (props: Props) => {
           </div>
           <span className={styles.headerText}>{title}</span>
         </div>
-        <div className={`${styles.accordionContent} ${isExpanded ? styles.contentExpanded : styles.contentCollapsed}`}>
+        <div
+          ref={contentRef}
+          className={`${styles.accordionContent} ${isExpanded ? styles.contentExpanded : styles.contentCollapsed}`}
+        >
           <div className={styles.contentBox}>
             {children}
           </div>
