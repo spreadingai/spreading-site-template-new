@@ -30,7 +30,7 @@ export const lineNumbers: AnnotationHandler = {
             color: "rgba(255, 255, 255, 0.4)",
             fontSize: "14px",
             lineHeight: "1.5",
-            fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, 'Cascadia Code', 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro', 'Fira Code', 'Droid Sans Mono', 'Courier New', monospace",
+            fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, 'Segoe UI Mono', 'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro', 'Fira Code', 'Droid Sans Mono', 'Courier New', monospace",
             userSelect: "none",
             flexShrink: 0,
             border: "none",
