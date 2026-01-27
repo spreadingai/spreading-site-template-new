@@ -265,7 +265,10 @@ const PreviewLayout = ({
   // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     if (router.isReady) {
-      document.body.scrollTo({ top: 0 });
+      // 如果带锚点 #，不用先滚动到顶部
+      if (!router.asPath.match(/#[^#]*$/)) {
+        document.body.scrollTo({ top: 0 });
+      }
 
       // 触发路由变化事件，让动态TOC重新扫描
       document.dispatchEvent(new CustomEvent("route-change"));
