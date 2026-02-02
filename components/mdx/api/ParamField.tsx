@@ -154,6 +154,12 @@ export default function ParamField(props: ParamFieldProps) {
     // Hidden heading for TOC - use primary anchor ID
     : primaryAnchorId;
 
+  // 如果 tocAnchorId 不是 primaryAnchorId，且 additionalAnchors 不包含 primaryAnchorId，则追加
+  const finalAdditionalAnchors = [...additionalAnchors];
+  if (tocAnchorId !== primaryAnchorId && !additionalAnchors.includes(primaryAnchorId)) {
+    finalAdditionalAnchors.push(primaryAnchorId);
+  }
+
   return (
     <>
       <HeadingTag id={tocAnchorId} className={styles.hiddenHeading}>
@@ -161,7 +167,7 @@ export default function ParamField(props: ParamFieldProps) {
       </HeadingTag>
 
       {/* Additional anchor targets for parent context (e.g., name-ParentClass, name-ParentClass-interface) */}
-      {additionalAnchors.map((anchorId) => (
+      {finalAdditionalAnchors.map((anchorId) => (
         <span key={anchorId} id={anchorId} className={styles.anchorTarget} />
       ))}
 
