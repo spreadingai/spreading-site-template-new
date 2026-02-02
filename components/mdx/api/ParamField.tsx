@@ -146,10 +146,17 @@ export default function ParamField(props: ParamFieldProps) {
 
   const HeadingTag = headingTags[titleSize] as keyof JSX.IntrinsicElements;
 
+  // Hidden heading for TOC - use the longest anchor ID from additionalAnchors
+  const tocAnchorId = additionalAnchors.length > 0
+    ? additionalAnchors.reduce((longest, current) =>
+        current.length > longest.length ? current : longest
+      )
+    // Hidden heading for TOC - use primary anchor ID
+    : primaryAnchorId;
+
   return (
     <>
-      {/* Hidden heading for TOC - use primary anchor ID */}
-      <HeadingTag id={primaryAnchorId} className={styles.hiddenHeading}>
+      <HeadingTag id={tocAnchorId} className={styles.hiddenHeading}>
         {name}
       </HeadingTag>
 
