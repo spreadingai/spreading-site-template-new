@@ -66,6 +66,7 @@
     position: relative;
     display: flex;
     align-items: center;
+    flex-shrink: 0; // 不收缩，保持内容宽度
 
     & + .tab {
         margin-left: 36px;
@@ -91,10 +92,7 @@
 }
 
 .tabBtn {
-    overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: 206px;
 
     &:focus:not(:focus-visible) {
         color: inherit;
