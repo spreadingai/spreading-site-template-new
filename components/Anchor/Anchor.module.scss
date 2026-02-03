@@ -1,11 +1,14 @@
 .anchorText {
   color: var(--docuo-anchor-color);
+  transition: all 0.3s;
   &:hover, &.active {
     color: var(--docuo-color-primary-hover);
   }
   &.gt0Level {
+    transition: all 0.3s;
+    border-left-width: 1px;
+    border-inline-start-color: transparent;
     &:hover, &.active {
-      border-left-width: 1px;
       border-inline-start-color: var(--docuo-color-primary-hover);
       transform: translateX(-1px);
     }
