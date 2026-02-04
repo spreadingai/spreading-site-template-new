@@ -1,6 +1,6 @@
 // TODO antd cause lambda very slow!!!!!!!!!!!!!! It will take more 7s!!!!!!!!
 
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useRef, useCallback } from "react";
 import { Breadcrumb, Drawer } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -108,6 +108,30 @@ type TreeDataObject = {
   };
 };
 
+// 优化的内容包装组件，使用 React.memo 避免不必要的重新渲染
+const ArticleContentWrapper = React.memo<{
+  children: React.ReactNode;
+  onTitleElementFound: (element: HTMLElement | null) => void;
+}>(({ children, onTitleElementFound }) => {
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  // 使用 useEffect 查找 title 元素，避免在每次渲染时执行
+  useEffect(() => {
+    if (contentRef.current) {
+      const titleElement = contentRef.current.querySelector("h1[class*='title']");
+      onTitleElementFound(titleElement as HTMLElement);
+    }
+  }, [onTitleElementFound]);
+
+  return (
+    <div className="article-content" ref={contentRef}>
+      {children}
+    </div>
+  );
+});
+
+ArticleContentWrapper.displayName = 'ArticleContentWrapper';
+
 let WsConnecting = false;
 const PreviewLayout = ({
   children,
@@ -165,6 +189,13 @@ const PreviewLayout = ({
   const router = useRouter();
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [titleElement, setTitleElement] = useState<HTMLElement | null>(null);
+
+  // 创建稳定的回调函数，用于 ArticleContentWrapper
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const handleTitleElementFound = useCallback((element: HTMLElement | null) => {
+    setTitleElement(element);
+  }, []);
+
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [isExpand, setIsExpand] = useState(true);
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -726,20 +757,11 @@ const PreviewLayout = ({
                                     />
                                   </div>
                                 </div>
-                                <div
-                                  className="article-content"
-                                  ref={(current) => {
-                                    const titleElement =
-                                      current?.querySelector(
-                                        "h1[class*='title']"
-                                      );
-                                    setTitleElement(
-                                      titleElement as HTMLElement
-                                    );
-                                  }}
+                                <ArticleContentWrapper
+                                  onTitleElementFound={handleTitleElementFound}
                                 >
                                   {children}
-                                </div>
+                                </ArticleContentWrapper>
                                 <ArticlePager prev={prev} next={next} />
                               </div>
                               <div
