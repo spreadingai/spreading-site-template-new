@@ -61,6 +61,7 @@ class CommonController {
           encoding: "utf-8",
         }
       );
+      this._allSlugs = allSlugs;
       result = true;
     } catch (error) {
       console.error("[CommonController]writeAllSlugsByFile: error", error);

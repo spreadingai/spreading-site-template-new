@@ -21,6 +21,27 @@ import {
   UNLIMITED_INSTANCE_NUMBER,
 } from "./constants";
 
+function getAllowedInstanceIdsFromEnv(): string[] {
+  return (process.env.NEXT_PUBLIC_INSTANCE_IDS || "")
+    .split(",")
+    .map((id) => id.trim())
+    .filter(Boolean);
+}
+
+function filterInstanceGroupsByAllowedIds(
+  instanceGroups: InstanceGroup[] = [],
+  allowedIds: Set<string>
+): InstanceGroup[] {
+  return instanceGroups
+    .map((group) => ({
+      ...group,
+      instances: (group.instances || []).filter((instance) =>
+        allowedIds.has(instance.id)
+      ),
+    }))
+    .filter((group) => (group.instances?.length || 0) > 0);
+}
+
 class LibController {
   static _instance: LibController;
   _docuoConfig: DocuoConfig;
@@ -102,6 +123,29 @@ class LibController {
               );
             }
           }
+        }
+        // 按指定实例 ID 过滤（由 CLI --instance 选项传入）
+        const allowedIds = getAllowedInstanceIdsFromEnv();
+        if (allowedIds.length > 0) {
+          const allowedIdSet = new Set(allowedIds);
+
+          docuoConfig.instances = docuoConfig.instances.filter(
+            (instance) => allowedIdSet.has(instance.id)
+          );
+
+          const themeConfig = docuoConfig.themeConfig as
+            | { instanceGroups?: InstanceGroup[] }
+            | undefined;
+          if (themeConfig?.instanceGroups) {
+            themeConfig.instanceGroups = filterInstanceGroupsByAllowedIds(
+              themeConfig.instanceGroups,
+              allowedIdSet
+            );
+          }
+
+          console.log(
+            `[LibController]getDocuoConfig 仅加载指定实例: ${allowedIds.join(", ")}`
+          );
         }
       }
       this._docuoConfig = docuoConfig;

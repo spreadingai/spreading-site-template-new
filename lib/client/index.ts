@@ -7,6 +7,27 @@ import {
   ResolvedNavigationInfo,
 } from "../types";
 
+function getAllowedInstanceIdsFromEnv(): string[] {
+  return (process.env.NEXT_PUBLIC_INSTANCE_IDS || "")
+    .split(",")
+    .map((id) => id.trim())
+    .filter(Boolean);
+}
+
+function filterInstanceGroupsByAllowedIds(
+  instanceGroups: InstanceGroup[] = [],
+  allowedIds: Set<string>
+): InstanceGroup[] {
+  return instanceGroups
+    .map((group) => ({
+      ...group,
+      instances: (group.instances || []).filter((instance) =>
+        allowedIds.has(instance.id)
+      ),
+    }))
+    .filter((group) => (group.instances?.length || 0) > 0);
+}
+
 class LibController {
   static _instance: LibController;
   _docuoConfig: DocuoConfig;
@@ -17,7 +38,31 @@ class LibController {
     );
   }
   setClientDocuoConfig(inputDocuoConfig) {
-    this._docuoConfig = inputDocuoConfig;
+    const allowedIds = getAllowedInstanceIdsFromEnv();
+
+    if (!allowedIds.length) {
+      this._docuoConfig = inputDocuoConfig;
+      return;
+    }
+
+    const allowedIdSet = new Set(allowedIds);
+    const themeConfig = inputDocuoConfig?.themeConfig;
+
+    this._docuoConfig = {
+      ...inputDocuoConfig,
+      instances: (inputDocuoConfig?.instances || []).filter((instance) =>
+        allowedIdSet.has(instance.id)
+      ),
+      themeConfig: themeConfig
+        ? {
+            ...themeConfig,
+            instanceGroups: filterInstanceGroupsByAllowedIds(
+              (themeConfig as any).instanceGroups || [],
+              allowedIdSet
+            ),
+          }
+        : themeConfig,
+    };
   }
   getClientDocuoConfig() {
     return this._docuoConfig;
