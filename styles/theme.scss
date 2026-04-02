@@ -8,14 +8,14 @@ html {
   --docuo-header-border: 1px solid rgba(229, 231, 235, 0.8);
   --docuo-header-menu-link-color: #171717;
   --docuo-header-menu-divider-color: rgba(229, 231, 235, 0.8);
-  --docuo-theme-btn-color: rgba(0, 0, 0, 0.7);
-  --docuo-theme-btn-color-hover: rgba(0, 0, 0, 1);
+  --docuo-theme-btn-color: rgba(0, 0, 0, 0.6);
+  --docuo-theme-btn-color-hover: rgba(0, 0, 0, 0.8);
   --docuo-theme-btn-border: 1px solid rgba(229, 231, 235, 0.6);
   --docuo-theme-btn-shadow: 0px 3px 8px 0px rgba(0, 0, 0, 0.07);
   --docuo-theme-btn-bg: transparent;
   --docuo-theme-btn-bg-hover: rgba(0, 0, 0, 0.05);
-  --docuo-navbar-button-bg: #171717;
-  --docuo-navbar-button-bg-hover: #000000;
+  --docuo-navbar-button-bg: rgb(0, 85, 255);
+  --docuo-navbar-button-bg-hover: rgb(0, 85, 255);
   --docuo-navbar-button-color: #ffffff;
   --docuo-popup-color: #171717;
   --docuo-popup-bg: #fff;
@@ -37,12 +37,25 @@ html {
   --docuo-sidebar-color: rgba(81, 88, 105, 0.9);
   --docuo-sidebar-border-color: rgba(229, 231, 235, 0.8);
 
-  --docuo-footer-bg: rgba(229, 231, 235, 0.25);
+  --docuo-footer-bg: #f9faff;
   --docuo-footer-caption-color: rgba(81, 88, 105, 0.7);
   --docuo-footer-link-color: rgba(53, 60, 78, 0.7);
-  --docuo-footer-link-color-hover: #0055ff;
+  --docuo-footer-link-color-hover: var(--docuo-color-primary-hover);
   --docuo-footer-copyright-color: rgba(53, 60, 78, 0.4);
   --docuo-footer-copyright-border: 1px solid #e5e7eb;
+  --docuo-footer-qrcode-icon1: url("~/assets/images/contact_us_code01.png");
+  --docuo-footer-qrcode-icon2: url("~/assets/images/contact_us_code02.png");
+  --docuo-footer-qrcode-icon3: url("~/assets/images/contact_us_code03.png");
+  --docuo-footer-copyright-icon: url("~/assets/images/logo-beian.png");
+  --docuo-footer-medal-icon1: url("~/assets/images/img_medal1.png");
+  --docuo-footer-medal-icon2: url("~/assets/images/img_medal2.png");
+  --docuo-footer-medal-icon3: url("~/assets/images/img_medal3.png");
+  --docuo-footer-medal-icon4: url("~/assets/images/img_medal4.png");
+  --docuo-footer-contact-icon1: url("~/assets/images/number@2x.png");
+  --docuo-footer-contact-icon2: url("~/assets/images/location@2x.png");
+  --docuo-footer-popover-bg: #0d0d0d;
+  --docuo-footer-popover-color: #fff;
+  --docuo-footer-popover-color-active: #266eff;
 
   --docuo-breadcrumb-color: rgba(81, 88, 105, 0.8);
   --docuo-breadcrumb-icon-color: rgba(81, 88, 105, 0.5);
@@ -58,6 +71,7 @@ html {
   --docuo-m-drawer-mask-bg: rgba(0, 0, 0, 0.45);
   --docuo-m-drawer-close-color: rgba(81, 88, 105, 0.8);
   --docuo-m-toc-btn-icon-color: #8f939d;
+  --docuo-sidebar-mobile-arrow-open: url("~/assets/images/header/sidebar_arrow_open.png");
 
   // text color
   --docuo-text-color: #353c4e;
@@ -129,9 +143,9 @@ html[data-theme="dark"] {
   --docuo-theme-btn-shadow: 0px 1px 8px 0px rgba(255, 255, 255, 0.07);
   --docuo-theme-btn-bg: transparent;
   --docuo-theme-btn-bg-hover: rgba(255, 255, 255, 0.1);
-  --docuo-navbar-button-bg: #f0f0f0;
+  --docuo-navbar-button-bg: #ffffff;
   --docuo-navbar-button-bg-hover: #ffffff;
-  --docuo-navbar-button-color: #171717;
+  --docuo-navbar-button-color: #0055ff;
   --docuo-popup-color: rgba(231, 231, 231, 0.9);
   --docuo-popup-bg: #191919;
   --docuo-popup-border: 1px solid #333333;
@@ -152,12 +166,25 @@ html[data-theme="dark"] {
   --docuo-sidebar-color: rgba(144, 144, 144, 0.9);
   --docuo-sidebar-border-color: #252525;
 
-  --docuo-footer-bg: #161616;
+  --docuo-footer-bg: #0d0d0d;
   --docuo-footer-caption-color: rgba(182, 182, 182, 0.7);
   --docuo-footer-link-color: rgba(182, 182, 182, 0.7);
-  --docuo-footer-link-color-hover: #f0f0f0;
+  --docuo-footer-link-color-hover: var(--docuo-color-primary-hover);
   --docuo-footer-copyright-color: rgba(182, 182, 182, 0.6);
   --docuo-footer-copyright-border: 1px solid #3c3c3c;
+  --docuo-footer-qrcode-icon1: url("~/assets/images/contact_us_code01_dark.png");
+  --docuo-footer-qrcode-icon2: url("~/assets/images/contact_us_code02_dark.png");
+  --docuo-footer-qrcode-icon3: url("~/assets/images/contact_us_code03_dark.png");
+  --docuo-footer-copyright-icon: url("~/assets/images/logo-beian.png");
+  --docuo-footer-medal-icon1: url("~/assets/images/img_medal1.png");
+  --docuo-footer-medal-icon2: url("~/assets/images/img_medal2.png");
+  --docuo-footer-medal-icon3: url("~/assets/images/img_medal3.png");
+  --docuo-footer-medal-icon4: url("~/assets/images/img_medal4.png");
+  --docuo-footer-contact-icon1: url("~/assets/images/number_dark@2x.png");
+  --docuo-footer-contact-icon2: url("~/assets/images/location_dark@2x.png");
+  --docuo-footer-popover-bg: #fff;
+  --docuo-footer-popover-color: #171717;
+  --docuo-footer-popover-color-active: #0055ff;
 
   --docuo-breadcrumb-color: #909090;
   --docuo-breadcrumb-icon-color: #909090;
@@ -173,6 +200,7 @@ html[data-theme="dark"] {
   --docuo-m-drawer-mask-bg: rgba(255, 255, 255, 0.25);
   --docuo-m-drawer-close-color: #909090;
   --docuo-m-toc-btn-icon-color: rgba(144, 144, 144, 0.64);
+  --docuo-sidebar-mobile-arrow-open: url("~/assets/images/header/sidebar_arrow_open_dark.png");
 
   // text color
   --docuo-text-color: #b6b6b6;

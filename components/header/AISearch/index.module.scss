@@ -5,15 +5,22 @@
     align-items: center;
     justify-content: center;
     transition: all 0.3s;
+    &:hover {
+        opacity: 0.8;
+    }
 
     img {
-        height: 34px;
-        width: auto;
-        object-fit: contain;
+        width: 106px;
+        height: 43px;
+        position: relative;
+        top: 1px;
     }
 }
-@media screen and (max-width: 750px) {
-    .ai-search-wrap {
-        // display: none;
+@media screen and (max-width: 1024px) {
+    .ai-btn {
+        img {
+            width: 93px;
+            height: auto;
+        }
     }
 }
