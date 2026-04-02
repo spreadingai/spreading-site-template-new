@@ -115,15 +115,7 @@ const Mobile: FC<Props> = ({
             }
             return (
               <React.Fragment key={index}>
-                {menu.type === "button" ? (
-                  <a
-                    className={styles["mobile-button-item"]}
-                    href={menu.href || menu.to || menu.defaultLink || "/"}
-                    target={menu.href ? "_blank" : "_self"}
-                  >
-                    {menu.label}
-                  </a>
-                ) : menu.href ? (
+                {menu.href ? (
                   <a
                     className={styles["mobile-item"]}
                     href={menu.href}
