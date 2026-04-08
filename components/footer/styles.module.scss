@@ -2,6 +2,16 @@
   min-height: 120px;
   background: var(--docuo-footer-bg);
   padding: 0 16px;
+ 
+  &.en {
+    background: var(--docuo-footer-bg2);
+    .footer-wrapper .right .group .group-items .group-item {
+      color: var(--docuo-footer-link-color2);
+    }
+    .copyright {
+      color: var(--docuo-footer-copyright-color2);
+    }
+  }
   &.zh {
     .footer-wrapper {
       .left {
@@ -71,7 +81,7 @@
         font-size: 14px;
         font-family: var(--font-inter-regular), var(--font-inter);
         font-weight: 400;
-        color: var(--docuo-footer-caption-color);
+        color: var(--docuo-footer-primary-color);
         line-height: 24px;
       }
       .social {
@@ -104,7 +114,7 @@
         font-family: var(--font-inter-semibold);
         font-weight: 600;
         font-size: 16px;
-        color: var(--docuo-color-primary);
+        color: var(--docuo-footer-link-title);
       }
       .contact-us-tips-mobile {
         display: none;
@@ -144,7 +154,7 @@
           font-family: var(--font-inter-medium);
           font-weight: 500;
           font-size: 12px;
-          color: var(--docuo-color-primary);
+          color: var(--docuo-footer-link-title);
           line-height: 18px;
         }
       }
@@ -153,12 +163,12 @@
         font-family: var(--font-inter-regular), var(--font-inter);
         font-weight: 400;
         font-size: 14px;
-        color: var(--docuo-footer-caption-color);
+        color: var(--docuo-footer-primary-color);
         line-height: 20px;
         span {
           font-weight: 600;
           font-size: 16px;
-          color: var(--docuo-color-primary);
+          color: var(--docuo-footer-link-title);
         }
       }
       .medal-con {
@@ -209,7 +219,7 @@
           font-size: 16px;
           font-family: var(--font-inter-semibold), var(--font-inter);
           font-weight: normal;
-          color: var(--docuo-color-primary);
+          color: var(--docuo-footer-link-title);
           line-height: 24px;
         }
         .group-items {
@@ -291,7 +301,7 @@
       line-height: 18px;
       font-family: var(--font-inter-regular), var(--font-inter);
       font-weight: 400;
-      color: var(--docuo-footer-copyright-color);
+      color: var(--docuo-footer-copyright-color2);
       font-size: 12px;
     }
   }
@@ -320,7 +330,7 @@
     font-size: 12px;
     font-family: var(--font-inter-regular), var(--font-inter);
     font-weight: 400;
-    color: var(--docuo-footer-copyright-color);
+    color: var(--docuo-footer-service-link);
     line-height: 14px;
     text-decoration: none;
     white-space: nowrap;
@@ -333,7 +343,7 @@
 
   &:has(.copyright-details) {
     .policy-link {
-      color: var(--docuo-color-primary);
+      color: var(--docuo-footer-link-title);
       &:hover {
         color: var(--docuo-footer-link-color-hover);
       }
@@ -387,6 +397,11 @@
 @media screen and (max-width: 1024px) {
   .footer-container {
     padding: 0;
+    &.en {
+      .copyright {
+        color: var(--docuo-footer-copyright-color2-mobile);
+      }
+    }   
     &.zh {
       .container {
         padding-left: 0;
@@ -403,7 +418,7 @@
             font-family: var(--font-inter-regular), var(--font-inter);
             font-weight: 400;
             font-size: 12px;
-            color: var(--docuo-footer-copyright-color);
+             color: var(--docuo-footer-primary-color-mobile);
             line-height: 20px;
           }
           .phone-number {
@@ -504,11 +519,13 @@
       span {
         line-height: 15px;
         font-size: 10px;
+        color: var(--docuo-footer-copyright-color2-mobile);
       }
     }
     .copyright {
       font-size: 10px;
       line-height: 12px;
+      color: var(--docuo-footer-copyright-color-mobile);
     }
     .copyright-content {
       flex-direction: column;
@@ -522,6 +539,14 @@
     .policy-link {
       font-size: 10px;
       line-height: 15px;
+      color: var(--docuo-footer-service-link-mobile);
+    }
+    &.en {
+       &:has(.copyright-details) {
+        .policy-link {
+          color: var(--docuo-footer-copyright-color2-mobile);
+        }
+      }
     }
     &:has(.copyright-details) {
       .policy-link {

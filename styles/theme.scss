@@ -38,11 +38,16 @@ html {
   --docuo-sidebar-border-color: rgba(229, 231, 235, 0.8);
 
   --docuo-footer-bg: #f9faff;
+  --docuo-footer-bg2: #F9F9FA;
   --docuo-footer-caption-color: rgba(81, 88, 105, 0.7);
-  --docuo-footer-link-color: rgba(53, 60, 78, 0.7);
+  --docuo-footer-link-color: #848996;
+  --docuo-footer-link-color2: #707581;
   --docuo-footer-link-color-hover: var(--docuo-color-primary-hover);
-  --docuo-footer-copyright-color: rgba(53, 60, 78, 0.4);
-  --docuo-footer-copyright-border: 1px solid #e5e7eb;
+  --docuo-footer-copyright-color: #A9ADB5;
+  --docuo-footer-copyright-color2: #9CA2B1;
+  --docuo-footer-copyright-color-mobile: #A9ADB5;
+  --docuo-footer-copyright-color2-mobile: #9CA2B1;
+  --docuo-footer-copyright-border: 1px solid #E4E7EB;
   --docuo-footer-qrcode-icon1: url("~/assets/images/contact_us_code01.png");
   --docuo-footer-qrcode-icon2: url("~/assets/images/contact_us_code02.png");
   --docuo-footer-qrcode-icon3: url("~/assets/images/contact_us_code03.png");
@@ -56,6 +61,11 @@ html {
   --docuo-footer-popover-bg: #0d0d0d;
   --docuo-footer-popover-color: #fff;
   --docuo-footer-popover-color-active: #266eff;
+  --docuo-footer-link-title: #171717;
+  --docuo-footer-primary-color: #848996;
+  --docuo-footer-primary-color-mobile: #848996;
+  --docuo-footer-service-link: #A9ADB5;
+  --docuo-footer-service-link-mobile: #A9ADB5;
 
   --docuo-breadcrumb-color: rgba(81, 88, 105, 0.8);
   --docuo-breadcrumb-icon-color: rgba(81, 88, 105, 0.5);
@@ -167,11 +177,16 @@ html[data-theme="dark"] {
   --docuo-sidebar-border-color: #252525;
 
   --docuo-footer-bg: #0d0d0d;
+  --docuo-footer-bg2: #010101;
   --docuo-footer-caption-color: rgba(182, 182, 182, 0.7);
-  --docuo-footer-link-color: rgba(182, 182, 182, 0.7);
+  --docuo-footer-link-color: #848996;
+  --docuo-footer-link-color2: #FFFFFF;
   --docuo-footer-link-color-hover: var(--docuo-color-primary-hover);
-  --docuo-footer-copyright-color: rgba(182, 182, 182, 0.6);
-  --docuo-footer-copyright-border: 1px solid #3c3c3c;
+  --docuo-footer-copyright-color: #CCCCCC;
+  --docuo-footer-copyright-color2: #9CA2B1;
+  --docuo-footer-copyright-color-mobile: #969799;
+  --docuo-footer-copyright-color2-mobile: #575A62;
+  --docuo-footer-copyright-border: 1px solid #222A3A;
   --docuo-footer-qrcode-icon1: url("~/assets/images/contact_us_code01_dark.png");
   --docuo-footer-qrcode-icon2: url("~/assets/images/contact_us_code02_dark.png");
   --docuo-footer-qrcode-icon3: url("~/assets/images/contact_us_code03_dark.png");
@@ -185,6 +200,11 @@ html[data-theme="dark"] {
   --docuo-footer-popover-bg: #fff;
   --docuo-footer-popover-color: #171717;
   --docuo-footer-popover-color-active: #0055ff;
+  --docuo-footer-link-title: #fff;
+  --docuo-footer-primary-color: #848996;
+  --docuo-footer-primary-color-mobile: #969799;
+  --docuo-footer-service-link: #848996;
+  --docuo-footer-service-link-mobile: rgba(255,255,255,0.7);
 
   --docuo-breadcrumb-color: #909090;
   --docuo-breadcrumb-icon-color: #909090;

@@ -57,7 +57,7 @@ const Footer: FC<footerProps> = ({ docuoConfig }) => {
 
   return (
     <footer
-      className={`${styles["footer-container"]} ${currentLanguage === "zh" ? styles["zh"] : ""} w-full flex  justify-center`}
+      className={`${styles["footer-container"]} ${currentLanguage === "zh" ? styles["zh"] : styles["en"]} w-full flex  justify-center`}
     >
       <div className={styles["container"]}>
         <div className={styles["footer-wrapper"]}>
