@@ -259,42 +259,42 @@ const Header = (props: Props) => {
           </div>
         ) : (
           <div className={styles["menus"]} ref={menusRef}>
-            {(items || []).map((menu, index) => {
-              if (!menu) return null;
-              if (
-                menu?.type === NavBarItemType.Dropdown ||
-                Array.isArray(menu.items)
-              ) {
-                // @ts-ignore
-                return <DropdownItem menu={menu} key={index} />;
-              }
-              if (menu?.type === NavBarItemType.Button) {
+              {(items || []).map((menu, index) => {
+                if (!menu) return null;
+                if (
+                  menu?.type === NavBarItemType.Dropdown ||
+                  Array.isArray(menu.items)
+                ) {
+                  // @ts-ignore
+                  return <DropdownItem menu={menu} key={index} />;
+                }
+                if (menu?.type === NavBarItemType.Button) {
+                  return (
+                    <a
+                      key={index}
+                      className={styles["button-item"]}
+                      href={menu.href || menu.to || menu.defaultLink || "/"}
+                      target={menu.href ? "_blank" : "_self"}
+                    >
+                      {menu.label}
+                    </a>
+                  );
+                }
                 return (
-                  <a
+                  <Link
                     key={index}
-                    className={styles["button-item"]}
+                    className={styles["item"]}
                     href={menu.href || menu.to || menu.defaultLink || "/"}
                     target={menu.href ? "_blank" : "_self"}
                   >
                     {menu.label}
-                  </a>
+                  </Link>
                 );
-              }
-              return (
-                <Link
-                  key={index}
-                  className={styles["item"]}
-                  href={menu.href || menu.to || menu.defaultLink || "/"}
-                  target={menu.href ? "_blank" : "_self"}
-                >
-                  {menu.label}
-                </Link>
-              );
-            })}
-            <div className={styles["menus__btn-list"]}>
-              {renderLanguageSwitch()}
-              {renderThemeSwitch()}
-            </div>
+              })}
+              <div className={styles["menus__btn-list"]}>
+                {renderLanguageSwitch()}
+                {renderThemeSwitch()}
+              </div>
           </div>
         )}
       </div>
