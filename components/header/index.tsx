@@ -166,6 +166,16 @@ const Header = (props: Props) => {
     ) : null;
   };
 
+  const devCenterNav = useMemo(() => {
+    return currentLanguage === "zh"
+      ? [
+          { label: "SDK 中心", href: "https://doc-zh.zego.im/sdk-download/2968" },
+          { label: "API 中心", href: "https://doc-zh.zego.im/api-center" },
+          { label: "常见问题", href: "https://doc-zh.zego.im/faq/overview" },
+        ]
+      : [];
+  }, [currentLanguage]);
+
   const renderLanguageSwitch = () => {
     return !!displayLanguages?.length ? (
       !isSearchPage ? (
@@ -185,7 +195,9 @@ const Header = (props: Props) => {
         scrollLength === 0 ? styles["header-bg-opacity"] : styles["header-bg"]
       } ${isSearchPage ? styles["search-page"] : ""}`}
     >
-      <div className={`container-wrap ${styles.container}`}>
+      <div
+        className={`container-wrap ${styles.container} ${currentLanguage === "zh" ? styles.zh : ""}`}
+      >
         <div className="flex items-center">
           {logo ? (
             <div className="flex items-center">
@@ -212,6 +224,17 @@ const Header = (props: Props) => {
               </a>
             </div>
           ) : null}
+          <div className={styles["old-dev-center"]}>
+            <ul className={styles["old-dev-center-nav"]}>
+              {devCenterNav.map((item, index) => (
+                <li key={index} className={styles["old-dev-center-nav-item"]}>
+                  <Link href={item.href || "/"}>{item.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+        <div className={styles["fixed-menus"]}>
           {!isSearchPage ? DocSearchComponent : null}
           {!isSearchPage && themeConfig.showAskAI !== false ? (
             <AISearch />
@@ -221,7 +244,9 @@ const Header = (props: Props) => {
           <div className={styles["menus"]}>
             <Mobile
               // @ts-ignore
-              menus={(items || []).map((item) => {
+              menus={([...(navbar.title ? [
+                { label: navbar.title, href: navbar.iconRedirectUrl },
+              ] : []), ...devCenterNav, ...items] || []).map((item) => {
                 if (item.label) {
                   return item;
                 }
@@ -234,42 +259,42 @@ const Header = (props: Props) => {
           </div>
         ) : (
           <div className={styles["menus"]} ref={menusRef}>
-            {(items || []).map((menu, index) => {
-              if (!menu) return null;
-              if (
-                menu?.type === NavBarItemType.Dropdown ||
-                Array.isArray(menu.items)
-              ) {
-                // @ts-ignore
-                return <DropdownItem menu={menu} key={index} />;
-              }
-              if (menu?.type === NavBarItemType.Button) {
+              {(items || []).map((menu, index) => {
+                if (!menu) return null;
+                if (
+                  menu?.type === NavBarItemType.Dropdown ||
+                  Array.isArray(menu.items)
+                ) {
+                  // @ts-ignore
+                  return <DropdownItem menu={menu} key={index} />;
+                }
+                if (menu?.type === NavBarItemType.Button) {
+                  return (
+                    <a
+                      key={index}
+                      className={styles["button-item"]}
+                      href={menu.href || menu.to || menu.defaultLink || "/"}
+                      target={menu.href ? "_blank" : "_self"}
+                    >
+                      {menu.label}
+                    </a>
+                  );
+                }
                 return (
-                  <a
+                  <Link
                     key={index}
-                    className={styles["button-item"]}
+                    className={styles["item"]}
                     href={menu.href || menu.to || menu.defaultLink || "/"}
                     target={menu.href ? "_blank" : "_self"}
                   >
                     {menu.label}
-                  </a>
+                  </Link>
                 );
-              }
-              return (
-                <Link
-                  key={index}
-                  className={styles["item"]}
-                  href={menu.href || menu.to || menu.defaultLink || "/"}
-                  target={menu.href ? "_blank" : "_self"}
-                >
-                  {menu.label}
-                </Link>
-              );
-            })}
-            <div className={styles["menus__btn-list"]}>
-              {renderLanguageSwitch()}
-              {renderThemeSwitch()}
-            </div>
+              })}
+              <div className={styles["menus__btn-list"]}>
+                {renderLanguageSwitch()}
+                {renderThemeSwitch()}
+              </div>
           </div>
         )}
       </div>

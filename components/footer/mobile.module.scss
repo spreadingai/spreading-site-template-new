@@ -1,27 +1,96 @@
 .mobile-footer-container {
   width: 100%;
   .mobile-items-title {
-    height: 44px;
+    height: 48px;
     display: flex;
     align-items: center;
     font-size: 16px;
     font-family: var(--font-inter-semibold);
     font-weight: normal;
-    color: var(--docuo-color-primary);
-    line-height: 24px;
+    color: var(--docuo-footer-link-title);
   }
   .mobile-item {
     width: 100%;
-    height: 44px;
+    height: 48px;
     display: flex;
     align-items: center;
     font-size: 14px;
     font-family: var(--font-inter);
     font-weight: 400;
     color: var(--docuo-footer-link-color);
-    line-height: 16px;
   }
   .dropdown-icon {
     color: var(--docuo-m-toc-btn-icon-color) !important;
+  }
+}
+
+.mobile-footer-container-zh {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 17px;
+  .contact-ui-icon-con {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    .contact-ui-icon {
+      width: 40px;
+      height: 40px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      &:first-of-type {
+        background-image: var(--docuo-footer-contact-icon1);
+      }
+      &:last-of-type {
+        background-image: var(--docuo-footer-contact-icon2);
+      }
+    }
+  }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    .logo-container {
+      width: 100px;
+    }
+  }
+  .bottom {
+    display: flex;
+    align-items: center;
+    gap: 10px 36px;
+    flex-wrap: wrap;
+
+    .item-title {
+      line-height: 20px;
+      font-family: var(--font-inter-medium);
+      font-weight: 500;
+      font-size: 14px;
+      color: var(--docuo-footer-link-title);
+    }
+  }
+}
+
+.contact-us-address-wrap,
+.contact-us-phone-wrap {
+  background-color: var(--docuo-footer-popover-bg) !important;
+  border-radius: 10px !important;
+  padding: 8px 14px !important;
+  box-shadow: unset !important;
+  .contact-us-address,
+  .contact-us-phone {
+    display: flex;
+    flex-direction: column;
+    font-family: var(--font-inter-medium);
+    font-weight: 500;
+    font-size: 14px;
+    color: var(--docuo-footer-popover-color);
+  }
+}
+.contact-us-phone-wrap {
+  .contact-us-phone {
+    color: var(--docuo-footer-popover-color-active);
   }
 }

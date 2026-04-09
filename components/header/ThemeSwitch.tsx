@@ -7,6 +7,7 @@ import IconLight from "@/assets/icons/header/icon_light.svg";
 import IconDark from "@/assets/icons/header/icon_dark.svg";
 import IconSystem from "@/assets/icons/header/icon_system.svg";
 import ThemeContext, { Theme } from "@/components/header/Theme.context";
+import useLanguage from "@/components/hooks/useLanguage";
 
 const THEME_KEY = "theme";
 
@@ -14,26 +15,22 @@ interface ThemeSwitchProps {
   className?: string;
 }
 
-const ModeList = [
-  {
-    name: "Light",
-    value: "light",
-    icon: <IconLight />,
-  },
-  {
-    name: "Dark",
-    value: "dark",
-    icon: <IconDark />,
-  },
-  {
-    name: "System",
-    value: "system",
-    icon: <IconSystem />,
-  },
-];
+const ModeList = {
+  en: [
+    { name: "Light", value: "light", icon: <IconLight /> },
+    { name: "Dark", value: "dark", icon: <IconDark /> },
+    { name: "System", value: "system", icon: <IconSystem /> },
+  ],
+  zh: [
+    { name: "浅色模式", value: "light", icon: <IconLight /> },
+    { name: "深色模式", value: "dark", icon: <IconDark /> },
+    { name: "跟随系统", value: "system", icon: <IconSystem /> },
+  ],
+};
 const ThemeSwitch = (props: ThemeSwitchProps) => {
   const { className = "" } = props;
   const { theme, setTheme } = useContext(ThemeContext);
+  const { currentLanguage } = useLanguage();
   const isMobile = useMediaQuery(`(max-width: 1024px)`);
 
   const handleThemeChanged: MenuProps["onClick"] = ({ key: theme }) => {
@@ -41,7 +38,8 @@ const ThemeSwitch = (props: ThemeSwitchProps) => {
     localStorage.setItem(THEME_KEY, theme);
   };
 
-  const items = ModeList.map((item) => ({
+  const modes = ModeList[currentLanguage] || ModeList.en;
+  const items = modes.map((item) => ({
     key: item.value,
     icon: isMobile ? null : item.icon,
     label: <span>{item.name}</span>,

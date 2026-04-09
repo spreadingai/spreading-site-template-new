@@ -3,7 +3,7 @@ export const copywriting = {
     search: {
       translations: {
         button: {
-          buttonText: "Search the product documentation",
+          buttonText: "Quick search...",
         },
         modal: {
           startScreen: {
@@ -102,7 +102,7 @@ export const copywriting = {
     search: {
       translations: {
         button: {
-          buttonText: "搜索本产品文档内容",
+          buttonText: "本文档内搜索",
         },
         modal: {
           startScreen: {

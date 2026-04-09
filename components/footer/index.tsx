@@ -4,6 +4,7 @@ import Link from "next/link";
 import type { footerProps } from "./@types";
 import { useMediaQuery } from "usehooks-ts";
 import FooterMobile from "./mobile";
+import FooterMobileZH from "./mobile-zh";
 import classNames from "classnames";
 import { getSocial } from "./utils";
 import ThemeContext from "@/components/header/Theme.context";
@@ -25,30 +26,15 @@ const Footer: FC<footerProps> = ({ docuoConfig }) => {
     {},
     defaultFooter,
     docuoConfig.themeConfig["footer"] || {},
-    docuoConfig.themeConfig[`footer.${currentLanguage}`] || {}
+    docuoConfig.themeConfig[`footer.${currentLanguage}`] || {},
   );
-  const itemWidth = 200;
   const links = footer?.links || [];
   const socials = footer?.socials || [];
   const policies = (footer?.policies || []).slice(0, 6); // 最多显示6个
-  const len = links.slice(0, 4).length;
-  const [width, setWidth] = React.useState(0);
-  const [towRowWidth, setTowRowWidth] = React.useState(0);
   const [isMobile, setIsMobile] = React.useState(false);
   const rightRef = useRef<HTMLDivElement>(null);
-  const isShowTwoCol = useMediaQuery(`(max-width: ${width}px)`);
-  const isWrap = useMediaQuery(`(max-width: ${towRowWidth}px)`);
   const isShowMobile = useMediaQuery(`(max-width: 1024px)`);
-  const isSMWrap = useMediaQuery(`(max-width: ${3 * 200 + 64}px)`);
   const { theme } = React.useContext(ThemeContext);
-
-  useEffect(() => {
-    const towColWidth = 40 * 2 + 320 + 40 + len * itemWidth;
-    const rowWidth = 40 * 2 + 320 + 40 + 2 * itemWidth;
-
-    setWidth(towColWidth);
-    setTowRowWidth(rowWidth);
-  }, [len]);
 
   useEffect(() => {
     setIsMobile(isShowMobile);
@@ -71,12 +57,12 @@ const Footer: FC<footerProps> = ({ docuoConfig }) => {
 
   return (
     <footer
-      className={`${styles["footer-container"]} w-full flex  justify-center`}
+      className={`${styles["footer-container"]} ${currentLanguage === "zh" ? styles["zh"] : styles["en"]} w-full flex  justify-center`}
     >
       <div className={styles["container"]}>
         <div className={styles["footer-wrapper"]}>
           <div className={styles["left"]}>
-            {logo && (
+            {currentLanguage !== "zh" && logo && (
               <div className={styles["logo-container"]}>
                 <a
                   href={
@@ -104,10 +90,40 @@ const Footer: FC<footerProps> = ({ docuoConfig }) => {
                 </a>
               </div>
             )}
-
-            {footer.caption && (
-              <div className={styles["description"]}>{footer.caption}</div>
-            )}
+            <div className={styles["details-info"]}>
+              {currentLanguage === "zh" && (
+                <>
+                  <div className={styles["contact-us-tips"]}>
+                    关注或联系我们
+                  </div>
+                  <div className={styles["contact-us-tips-mobile"]}>
+                    关注公众号视频号，联系技术专家，了解更多咨询
+                  </div>
+                </>
+              )}
+              {currentLanguage === "zh" && (
+                <div className={styles["phone-number"]}>
+                  电话:
+                  <span> 400-1006-604 转 1</span>
+                </div>
+              )}
+              {footer.caption && (
+                <div className={styles["description"]}>{footer.caption}</div>
+              )}
+              {currentLanguage === "zh" && (
+                <div className={styles["contact-us-qrcode-con"]}>
+                  <div className={styles["qrcode-item"]}>
+                    <span className={styles["qrcode-text"]}>技术专家</span>
+                  </div>
+                  <div className={styles["qrcode-item"]}>
+                    <span className={styles["qrcode-text"]}>公众号</span>
+                  </div>
+                  <div className={styles["qrcode-item"]}>
+                    <span className={styles["qrcode-text"]}>视频号</span>
+                  </div>
+                </div>
+              )}
+            </div>
             {socials.length > 0 && (
               <div className={styles["social"]}>
                 {socials.map((social, index) => {
@@ -121,19 +137,27 @@ const Footer: FC<footerProps> = ({ docuoConfig }) => {
                 })}
               </div>
             )}
+            {currentLanguage !== "zh" && (
+              <div className={styles["medal-con"]}>
+                <span className={styles["medal-item"]} onClick={() => window.open("https://www.g2.com/products/zegocloud-zegocloud/reviews")}></span>
+                <span className={styles["medal-item"]} onClick={() => window.open("https://www.g2.com/products/zegocloud-zegocloud/reviews")}></span>
+                <span className={styles["medal-item"]} onClick={() => window.open("https://www.g2.com/products/zegocloud-zegocloud/reviews")}></span>
+                <span className={styles["medal-item"]} onClick={() => window.open("https://www.g2.com/products/zegocloud-zegocloud/reviews")}></span>
+              </div>
+            )}
           </div>
 
           <div
-            className={classNames(styles["right"], {
-              [styles["two-row"]]: isWrap,
-              [styles["two-col"]]: isShowTwoCol,
-              [styles["sm-wrap"]]: isSMWrap,
-            })}
+            className={classNames(styles["right"])}
             style={{ display: links?.length === 0 ? "none" : undefined }}
             ref={rightRef}
           >
             {isMobile ? (
-              <FooterMobile items={links} />
+              currentLanguage !== "zh" ? (
+                <FooterMobile items={links} />
+              ) : (
+                <FooterMobileZH logo={logo} logoUrl={footer.logoUrl} />
+              )
             ) : (
               links.map((group, index, arr) => {
                 return (
@@ -169,6 +193,34 @@ const Footer: FC<footerProps> = ({ docuoConfig }) => {
         </div>
         {footer["copyright"] && (
           <div className={styles["copyright-container"]}>
+            {currentLanguage === "zh" && logo && (
+              <div className={styles["logo-container"]}>
+                <a
+                  href={
+                    footer.logoUrl ||
+                    `${
+                      process.env.NEXT_PUBLIC_CUSTOM_DOMAIN ||
+                      process.env.NEXT_PUBLIC_SITE_URL ||
+                      ""
+                    }${process.env.NEXT_PUBLIC_BASE_PATH || ""}`
+                  }
+                  target="_blank"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    className={styles.logo}
+                    src={
+                      (logo as string).includes("http")
+                        ? `${logo}`
+                        : `${
+                            process.env.NEXT_PUBLIC_BASE_PATH || ""
+                          }/${logo.replace(/^\//, "")}`
+                    }
+                    alt={"logo"}
+                  />
+                </a>
+              </div>
+            )}
             <div className={styles["copyright-content"]}>
               <div className={styles["copyright"]}>
                 {typeof footer["copyright"] === "string" ? (
@@ -180,6 +232,12 @@ const Footer: FC<footerProps> = ({ docuoConfig }) => {
                     rel="noopener noreferrer"
                   >
                     {footer["copyright"].label}
+                    {currentLanguage === "zh" && (
+                      <span className={styles["copyright-icon-con"]}>
+                        <i className={styles["copyright-icon"]}></i>
+                        <span>粤公网安备44030502006452号</span>
+                      </span>
+                    )}
                   </a>
                 ) : (
                   <Link href={footer["copyright"].to || "/"}>
@@ -213,6 +271,12 @@ const Footer: FC<footerProps> = ({ docuoConfig }) => {
                 </div>
               )}
             </div>
+            {currentLanguage !== "zh" && (
+              <div className={styles["copyright-details"]}>
+                <span>Guangdong PSB Filing No. 44030502006028</span>
+                <span>粤ICP备15113647号</span>
+              </div>
+            )}
           </div>
         )}
       </div>
