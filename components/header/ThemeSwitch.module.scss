@@ -17,6 +17,9 @@
       transition: all 0.3s;
       color: var(--docuo-theme-btn-color-hover);
     }
+    svg {
+      transition: all 0.3s;
+    }
   }
   &:global(.mobile) {
     .toggleButton {
@@ -29,6 +32,18 @@
   & + .colorModeToggle,
   & + .languageToggle {
     margin-left: 18px;
+  }
+}
+.colorModeToggle {
+  .toggleButton {
+    svg {
+      opacity: 0.5;
+    }
+    &:hover {
+      svg {
+        opacity: 0.7;
+      }
+    }
   }
 }
 .modesWrapper,

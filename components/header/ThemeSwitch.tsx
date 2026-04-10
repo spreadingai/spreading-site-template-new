@@ -4,7 +4,11 @@ import { Dropdown } from "antd";
 import type { MenuProps } from "antd";
 import { useMediaQuery } from "usehooks-ts";
 import IconLight from "@/assets/icons/header/icon_light.svg";
+import IconLight1 from "@/assets/icons/header/icon_light1.svg";
+import IconLight2 from "@/assets/icons/header/icon_light2.svg";
 import IconDark from "@/assets/icons/header/icon_dark.svg";
+import IconDark1 from "@/assets/icons/header/icon_dark1.svg";
+import IconDark2 from "@/assets/icons/header/icon_dark2.svg";
 import IconSystem from "@/assets/icons/header/icon_system.svg";
 import ThemeContext, { Theme } from "@/components/header/Theme.context";
 import useLanguage from "@/components/hooks/useLanguage";
@@ -43,14 +47,18 @@ const ThemeSwitch = (props: ThemeSwitchProps) => {
     key: item.value,
     icon: isMobile ? null : item.icon,
     label: <span>{item.name}</span>,
-    className: `${styles.modeItem} ${item.value === theme ? styles.active : ""}`
+    className: `${styles.modeItem} ${item.value === theme ? styles.active : ""}`,
   }));
 
   return (
     <div className={`${styles.colorModeToggle} ${className}`}>
       <Dropdown
         trigger={["click"]}
-        menu={{ items, className: styles.modesWrapper, onClick: handleThemeChanged }}
+        menu={{
+          items,
+          className: styles.modesWrapper,
+          onClick: handleThemeChanged,
+        }}
         placement="bottomLeft"
       >
         <button className={styles.toggleButton}>
@@ -60,6 +68,6 @@ const ThemeSwitch = (props: ThemeSwitchProps) => {
       </Dropdown>
     </div>
   );
-}
+};
 
 export default ThemeSwitch;
