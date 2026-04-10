@@ -1,14 +1,9 @@
-import React, { useEffect, useRef, useState } from "react";
-// import AISearchModal from "@/components/header/AISearch/modal";
-import { useRouter } from "next/router";
+import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-const NewAISearchModal = dynamic(
-  // () => import("@/components/header/AISearch/modal-new"),
-  () => import("@/components/header/AskAI/modal"),
-  {
-    ssr: false,
-  }
-);
+
+const AskAIModal = dynamic(() => import("@/components/header/AskAI/modal"), {
+  ssr: false,
+});
 
 const whiteList = [
   "http://localhost:5666",
@@ -21,18 +16,12 @@ const whiteList = [
 interface Props {}
 
 const AISearchPage = (props: Props) => {
-  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(true);
   const [iframeData, setIframeData] = useState<{
     language: string;
     product: string;
     platform: string;
   }>({ language: "zh", product: "", platform: "" });
-  // const iframeData = useRef<{
-  //   language: string;
-  //   product: string;
-  //   platform: string;
-  // }>({ language: "zh", product: "", platform: "" });
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -40,7 +29,6 @@ const AISearchPage = (props: Props) => {
 
   const onCloseHandle = () => {
     setIsModalOpen(false);
-    // const language = iframeData.current.language;
     const language = iframeData.language;
     const targetDomain =
       process.env.NODE_ENV === "development"
@@ -48,36 +36,26 @@ const AISearchPage = (props: Props) => {
           ? whiteList[0]
           : whiteList[1]
         : language === "zh"
-        ? whiteList[2]
-        : whiteList[3];
+          ? whiteList[2]
+          : whiteList[3];
     window.parent.postMessage(
       {
         origin: "docuo children",
         close: true,
       },
-      targetDomain
+      targetDomain,
     );
     window.parent.postMessage(
       {
         origin: "docuo children",
         close: true,
       },
-      whiteList[4]
+      whiteList[4],
     );
   };
 
-  // useEffect(() => {
-  //   if (
-  //     !window.top ||
-  //     window.self === window.top ||
-  //     !whiteList.includes(window.top.origin)
-  //   ) {
-  //     router.push({ pathname: "/" });
-  //   }
-  // }, []);
-
   useEffect(() => {
-    const receiveMessage = (event) => {
+    const receiveMessage = (event: MessageEvent) => {
       if (!whiteList.includes(event.origin)) return;
 
       if (!event.data || event.data.origin !== "zego parent") {
@@ -88,11 +66,9 @@ const AISearchPage = (props: Props) => {
         origin: "docuo children",
       });
 
-      // Parse data
       console.log("[AISearchPage] receive message from zego", event.data);
       if (event.data.open) {
         showModal();
-        // iframeData.current = { ...event.data };
         setIframeData({
           ...event.data,
         });
@@ -104,27 +80,12 @@ const AISearchPage = (props: Props) => {
     };
   }, []);
 
-  // useEffect(() => {
-  //   // test
-  //   setTimeout(() => {
-  //     showModal();
-  //     setIframeData({
-  //       language: "zh",
-  //       product: "real_time_voice_zh",
-  //       platform: "Android: Java",
-  //     });
-  //   }, 3000);
-  // }, []);
-
   return (
-    <NewAISearchModal
+    <AskAIModal
       rootClassName="ai-search-page"
       isModalOpen={isModalOpen}
       onCloseHandle={onCloseHandle}
       currentTheme="light"
-      // currentLanguage={iframeData.current.language}
-      // currentGroup={iframeData.current.product}
-      // currentPlatform={iframeData.current.platform}
       currentLanguage={iframeData.language}
       currentGroup={iframeData.product}
       currentPlatform={iframeData.platform}
