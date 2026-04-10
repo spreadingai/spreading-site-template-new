@@ -22,7 +22,7 @@ import useVersion from "@/components/hooks/useVersion";
 import usePlatform from "@/components/hooks/usePlatform";
 import useSet from "@/components/hooks/useSet";
 import { defaultLanguage } from "../context/languageContext";
-import AISearch from "./AISearch";
+import AskAI from "./AskAI";
 // import "@docsearch/css";
 
 interface Props {
@@ -236,9 +236,7 @@ const Header = (props: Props) => {
         </div>
         <div className={styles["fixed-menus"]}>
           {!isSearchPage ? DocSearchComponent : null}
-          {!isSearchPage && themeConfig.showAskAI !== false ? (
-            <AISearch />
-          ) : null}
+          {!isSearchPage && themeConfig.showAskAI !== false ? <AskAI /> : null}
         </div>
         {isMobile ? (
           <div className={styles["menus"]}>
