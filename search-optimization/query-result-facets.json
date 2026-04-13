@@ -1,0 +1,1118 @@
+{
+  "results": [
+    {
+      "hits": [
+        {
+          "url": "https://doc-zh.zego.im/zim-win/client-sdks/zim-release-notes#110-%E7%89%88%E6%9C%AC",
+          "content": null,
+          "type": "lvl2",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK > 发布日志",
+            "lvl1": "ZIM 发布日志",
+            "lvl2": "1.1.0 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "99-https://doc-zh.zego.im/zim-win/client-sdks/zim-release-notes",
+          "_snippetResult": {
+            "hierarchy": {
+              "lvl1": {
+                "value": "ZIM 发布日志",
+                "matchLevel": "none"
+              },
+              "lvl2": {
+                "value": "1.1.0 版本",
+                "matchLevel": "none"
+              }
+            }
+          },
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 __ais-highlight__SDK__/ais-highlight__ > 发布日志",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["sdk"]
+              },
+              "lvl1": {
+                "value": "ZIM 发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "1.1.0 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/zim-macos/client-sdks/zim-upgrade-guide#dismissgroup",
+          "content": "//老接口\nopen func dismissGroup(_ groupID: String, callback: @escaping ZIMGroupDismissedCallback) //新接口\nopen func dismissGroup(by groupID: String, callback: @escaping ZIMGroupDismissedCallback)\r\n//老接口\nopen func dismissGroup(_ groupID: String, callback: @escaping ZIMGroupDismissedCallback) //新接口\nopen func dismissGroup(by groupID: String, callback: @escaping ZIMGroupDismissedCallback)",
+          "type": "content",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK > 升级指南",
+            "lvl1": "ZIM 升级指南",
+            "lvl2": "2.5.0 升级指南",
+            "lvl3": "dismissGroup",
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "99-https://doc-zh.zego.im/zim-macos/client-sdks/zim-upgrade-guide",
+          "_snippetResult": {
+            "content": {
+              "value": "//老接口\nopen func dismissGroup(_ groupID: String, callback: @escaping ZIMGroupDismissedCallback) //新接口\nopen func dismissGroup(by groupID: String, callback: @escaping ZIMGroupDismissedCallback)\r\n//老接口\nopen func dismissGroup(_ groupID: String, callback: @escaping ZIMGroupDismissedCallback) //新接口\nopen func dismissGroup(by groupID: String, callback: @escaping ZIMGroupDismissedCallback)",
+              "matchLevel": "none"
+            },
+            "hierarchy": {
+              "lvl1": {
+                "value": "ZIM 升级指南",
+                "matchLevel": "none"
+              },
+              "lvl2": {
+                "value": "2.5.0 升级指南",
+                "matchLevel": "none"
+              },
+              "lvl3": {
+                "value": "dismissGroup",
+                "matchLevel": "none"
+              }
+            }
+          },
+          "_highlightResult": {
+            "content": {
+              "value": "//老接口\nopen func dismissGroup(_ groupID: String, callback: @escaping ZIMGroupDismissedCallback) //新接口\nopen func dismissGroup(by groupID: String, callback: @escaping ZIMGroupDismissedCallback)\r\n//老接口\nopen func dismissGroup(_ groupID: String, callback: @escaping ZIMGroupDismissedCallback) //新接口\nopen func dismissGroup(by groupID: String, callback: @escaping ZIMGroupDismissedCallback)",
+              "matchLevel": "none",
+              "matchedWords": []
+            },
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 __ais-highlight__SDK__/ais-highlight__ > 升级指南",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["sdk"]
+              },
+              "lvl1": {
+                "value": "ZIM 升级指南",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "2.5.0 升级指南",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl3": {
+                "value": "dismissGroup",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/zim-ios/client-sdks/zim-upgrade-guide#dismissgroup",
+          "content": "//老接口\nopen func dismissGroup(_ groupID: String, callback: @escaping ZIMGroupDismissedCallback) //新接口\nopen func dismissGroup(by groupID: String, callback: @escaping ZIMGroupDismissedCallback)\r\n//老接口\nopen func dismissGroup(_ groupID: String, callback: @escaping ZIMGroupDismissedCallback) //新接口\nopen func dismissGroup(by groupID: String, callback: @escaping ZIMGroupDismissedCallback)",
+          "type": "content",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK > 升级指南",
+            "lvl1": "ZIM 升级指南",
+            "lvl2": "2.5.0 升级指南",
+            "lvl3": "dismissGroup",
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "99-https://doc-zh.zego.im/zim-ios/client-sdks/zim-upgrade-guide",
+          "_snippetResult": {
+            "content": {
+              "value": "//老接口\nopen func dismissGroup(_ groupID: String, callback: @escaping ZIMGroupDismissedCallback) //新接口\nopen func dismissGroup(by groupID: String, callback: @escaping ZIMGroupDismissedCallback)\r\n//老接口\nopen func dismissGroup(_ groupID: String, callback: @escaping ZIMGroupDismissedCallback) //新接口\nopen func dismissGroup(by groupID: String, callback: @escaping ZIMGroupDismissedCallback)",
+              "matchLevel": "none"
+            },
+            "hierarchy": {
+              "lvl1": {
+                "value": "ZIM 升级指南",
+                "matchLevel": "none"
+              },
+              "lvl2": {
+                "value": "2.5.0 升级指南",
+                "matchLevel": "none"
+              },
+              "lvl3": {
+                "value": "dismissGroup",
+                "matchLevel": "none"
+              }
+            }
+          },
+          "_highlightResult": {
+            "content": {
+              "value": "//老接口\nopen func dismissGroup(_ groupID: String, callback: @escaping ZIMGroupDismissedCallback) //新接口\nopen func dismissGroup(by groupID: String, callback: @escaping ZIMGroupDismissedCallback)\r\n//老接口\nopen func dismissGroup(_ groupID: String, callback: @escaping ZIMGroupDismissedCallback) //新接口\nopen func dismissGroup(by groupID: String, callback: @escaping ZIMGroupDismissedCallback)",
+              "matchLevel": "none",
+              "matchedWords": []
+            },
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 __ais-highlight__SDK__/ais-highlight__ > 升级指南",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["sdk"]
+              },
+              "lvl1": {
+                "value": "ZIM 升级指南",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "2.5.0 升级指南",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl3": {
+                "value": "dismissGroup",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/zim-ios/client-sdks/zim-release-notes#110-%E7%89%88%E6%9C%AC",
+          "content": null,
+          "type": "lvl2",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK > 发布日志",
+            "lvl1": "ZIM 发布日志",
+            "lvl2": "1.1.0 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "99-https://doc-zh.zego.im/zim-ios/client-sdks/zim-release-notes",
+          "_snippetResult": {
+            "hierarchy": {
+              "lvl1": {
+                "value": "ZIM 发布日志",
+                "matchLevel": "none"
+              },
+              "lvl2": {
+                "value": "1.1.0 版本",
+                "matchLevel": "none"
+              }
+            }
+          },
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 __ais-highlight__SDK__/ais-highlight__ > 发布日志",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["sdk"]
+              },
+              "lvl1": {
+                "value": "ZIM 发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "1.1.0 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/zim-flutter/client-sdks/zim-upgrade-guide#3-%E6%B7%BB%E5%8A%A0-zim-%E5%AE%9E%E4%BE%8B%E5%8F%82%E6%95%B0",
+          "content": null,
+          "type": "lvl4",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK > 升级指南",
+            "lvl1": "ZIM 升级指南",
+            "lvl2": "2.3.0 升级指南",
+            "lvl3": null,
+            "lvl4": "2.3.0版本用法",
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "99-https://doc-zh.zego.im/zim-flutter/client-sdks/zim-upgrade-guide",
+          "_snippetResult": {
+            "hierarchy": {
+              "lvl1": {
+                "value": "ZIM 升级指南",
+                "matchLevel": "none"
+              },
+              "lvl2": {
+                "value": "2.3.0 升级指南",
+                "matchLevel": "none"
+              },
+              "lvl4": {
+                "value": "2.3.0版本用法",
+                "matchLevel": "none"
+              }
+            }
+          },
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 __ais-highlight__SDK__/ais-highlight__ > 升级指南",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["sdk"]
+              },
+              "lvl1": {
+                "value": "ZIM 升级指南",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "2.3.0 升级指南",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl4": {
+                "value": "2.3.0版本用法",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/zim-android/client-sdks/zim-release-notes#121-%E7%89%88%E6%9C%AC",
+          "content": null,
+          "type": "lvl2",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK > 发布日志",
+            "lvl1": "ZIM 发布日志",
+            "lvl2": "1.2.1 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "99-https://doc-zh.zego.im/zim-android/client-sdks/zim-release-notes",
+          "_snippetResult": {
+            "hierarchy": {
+              "lvl1": {
+                "value": "ZIM 发布日志",
+                "matchLevel": "none"
+              },
+              "lvl2": {
+                "value": "1.2.1 版本",
+                "matchLevel": "none"
+              }
+            }
+          },
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 __ais-highlight__SDK__/ais-highlight__ > 发布日志",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["sdk"]
+              },
+              "lvl1": {
+                "value": "ZIM 发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "1.2.1 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-voice-windows/client-sdk/release-notes#2150-%E7%89%88%E6%9C%AC-",
+          "content": null,
+          "type": "lvl2",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "2.15.0 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "99-https://doc-zh.zego.im/real-time-voice-windows/client-sdk/release-notes",
+          "_snippetResult": {
+            "hierarchy": {
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none"
+              },
+              "lvl2": {
+                "value": "2.15.0 版本",
+                "matchLevel": "none"
+              }
+            }
+          },
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 __ais-highlight__SDK__/ais-highlight__",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["sdk"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "2.15.0 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-voice-web/client-sdk/release-notes#290-%E7%89%88%E6%9C%AC-",
+          "content": null,
+          "type": "lvl2",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "2.9.0 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "99-https://doc-zh.zego.im/real-time-voice-web/client-sdk/release-notes",
+          "_snippetResult": {
+            "hierarchy": {
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none"
+              },
+              "lvl2": {
+                "value": "2.9.0 版本",
+                "matchLevel": "none"
+              }
+            }
+          },
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 __ais-highlight__SDK__/ais-highlight__",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["sdk"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "2.9.0 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-voice-macos/client-sdk/release-notes#2160-%E7%89%88%E6%9C%AC-",
+          "content": null,
+          "type": "lvl2",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "2.16.0 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "99-https://doc-zh.zego.im/real-time-voice-macos/client-sdk/release-notes",
+          "_snippetResult": {
+            "hierarchy": {
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none"
+              },
+              "lvl2": {
+                "value": "2.16.0 版本",
+                "matchLevel": "none"
+              }
+            }
+          },
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 __ais-highlight__SDK__/ais-highlight__",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["sdk"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "2.16.0 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-voice-macos-cpp/client-sdk/release-notes#2161-%E7%89%88%E6%9C%AC-",
+          "content": null,
+          "type": "lvl2",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "2.16.1 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "99-https://doc-zh.zego.im/real-time-voice-macos-cpp/client-sdk/release-notes",
+          "_snippetResult": {
+            "hierarchy": {
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none"
+              },
+              "lvl2": {
+                "value": "2.16.1 版本",
+                "matchLevel": "none"
+              }
+            }
+          },
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 __ais-highlight__SDK__/ais-highlight__",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["sdk"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "2.16.1 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-voice-linux/client-sdk/release-notes#2150-%E7%89%88%E6%9C%AC-",
+          "content": null,
+          "type": "lvl2",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "2.15.0 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "99-https://doc-zh.zego.im/real-time-voice-linux/client-sdk/release-notes",
+          "_snippetResult": {
+            "hierarchy": {
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none"
+              },
+              "lvl2": {
+                "value": "2.15.0 版本",
+                "matchLevel": "none"
+              }
+            }
+          },
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 __ais-highlight__SDK__/ais-highlight__",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["sdk"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "2.15.0 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-voice-ios/client-sdk/release-notes#2170-%E7%89%88%E6%9C%AC-",
+          "content": null,
+          "type": "lvl2",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "2.17.0 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "99-https://doc-zh.zego.im/real-time-voice-ios/client-sdk/release-notes",
+          "_snippetResult": {
+            "hierarchy": {
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none"
+              },
+              "lvl2": {
+                "value": "2.17.0 版本",
+                "matchLevel": "none"
+              }
+            }
+          },
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 __ais-highlight__SDK__/ais-highlight__",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["sdk"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "2.17.0 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-voice-android/client-sdk/release-notes#2171-%E7%89%88%E6%9C%AC-",
+          "content": null,
+          "type": "lvl2",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "2.17.1 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "99-https://doc-zh.zego.im/real-time-voice-android/client-sdk/release-notes",
+          "_snippetResult": {
+            "hierarchy": {
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none"
+              },
+              "lvl2": {
+                "value": "2.17.1 版本",
+                "matchLevel": "none"
+              }
+            }
+          },
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 __ais-highlight__SDK__/ais-highlight__",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["sdk"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "2.17.1 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-windows-cpp/client-sdk/release-notes#2160-%E7%89%88%E6%9C%AC-",
+          "content": null,
+          "type": "lvl2",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "2.16.0 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "99-https://doc-zh.zego.im/real-time-video-windows-cpp/client-sdk/release-notes",
+          "_snippetResult": {
+            "hierarchy": {
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none"
+              },
+              "lvl2": {
+                "value": "2.16.0 版本",
+                "matchLevel": "none"
+              }
+            }
+          },
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 __ais-highlight__SDK__/ais-highlight__",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["sdk"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "2.16.0 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-web/client-sdk/release-notes#290-%E7%89%88%E6%9C%AC-",
+          "content": null,
+          "type": "lvl2",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "2.9.0 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "99-https://doc-zh.zego.im/real-time-video-web/client-sdk/release-notes",
+          "_snippetResult": {
+            "hierarchy": {
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none"
+              },
+              "lvl2": {
+                "value": "2.9.0 版本",
+                "matchLevel": "none"
+              }
+            }
+          },
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 __ais-highlight__SDK__/ais-highlight__",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["sdk"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "2.9.0 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-macos-oc/client-sdk/release-notes#2162-%E7%89%88%E6%9C%AC-",
+          "content": null,
+          "type": "lvl2",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "2.16.2 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "99-https://doc-zh.zego.im/real-time-video-macos-oc/client-sdk/release-notes",
+          "_snippetResult": {
+            "hierarchy": {
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none"
+              },
+              "lvl2": {
+                "value": "2.16.2 版本",
+                "matchLevel": "none"
+              }
+            }
+          },
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 __ais-highlight__SDK__/ais-highlight__",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["sdk"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "2.16.2 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-macos-cpp/client-sdk/release-notes#2161-%E7%89%88%E6%9C%AC-",
+          "content": null,
+          "type": "lvl2",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "2.16.1 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "99-https://doc-zh.zego.im/real-time-video-macos-cpp/client-sdk/release-notes",
+          "_snippetResult": {
+            "hierarchy": {
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none"
+              },
+              "lvl2": {
+                "value": "2.16.1 版本",
+                "matchLevel": "none"
+              }
+            }
+          },
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 __ais-highlight__SDK__/ais-highlight__",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["sdk"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "2.16.1 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-linux-cpp/client-sdk/release-notes#2140-%E7%89%88%E6%9C%AC-",
+          "content": null,
+          "type": "lvl2",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "2.14.0 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "99-https://doc-zh.zego.im/real-time-video-linux-cpp/client-sdk/release-notes",
+          "_snippetResult": {
+            "hierarchy": {
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none"
+              },
+              "lvl2": {
+                "value": "2.14.0 版本",
+                "matchLevel": "none"
+              }
+            }
+          },
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 __ais-highlight__SDK__/ais-highlight__",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["sdk"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "2.14.0 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes#2201-%E7%89%88%E6%9C%AC-",
+          "content": null,
+          "type": "lvl2",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "2.20.1 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "99-https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes",
+          "_snippetResult": {
+            "hierarchy": {
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none"
+              },
+              "lvl2": {
+                "value": "2.20.1 版本",
+                "matchLevel": "none"
+              }
+            }
+          },
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 __ais-highlight__SDK__/ais-highlight__",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["sdk"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "2.20.1 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-flutter/client-sdk/release-notes#2172-%E7%89%88%E6%9C%AC-",
+          "content": null,
+          "type": "lvl2",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "2.17.2 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "99-https://doc-zh.zego.im/real-time-video-flutter/client-sdk/release-notes",
+          "_snippetResult": {
+            "hierarchy": {
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none"
+              },
+              "lvl2": {
+                "value": "2.17.2 版本",
+                "matchLevel": "none"
+              }
+            }
+          },
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 __ais-highlight__SDK__/ais-highlight__",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["sdk"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "2.17.2 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        }
+      ],
+      "nbHits": 17801,
+      "page": 0,
+      "nbPages": 50,
+      "hitsPerPage": 20,
+      "facets": {
+        "group": {
+          "real_time_video_zh": 7043,
+          "real_time_voice_zh": 5039,
+          "live_streaming_zh": 4625,
+          "zim_zh": 4263,
+          "faq-zh": 595,
+          "solution_ktv_zh": 495,
+          "ai_effects_zh": 352,
+          "super_board_zh": 339,
+          "aiagent_zh": 275,
+          "solution_live_streaming_zh": 118,
+          "policies_and_agreements_zh": 116,
+          "callkit_zh": 106,
+          "solution_small_class_zh": 99,
+          "solution_voice_call_zh": 91,
+          "ai-voice-changer-zh": 84,
+          "local-recording": 81,
+          "solution_large_class_zh": 77,
+          "solution_video_call_zh": 73,
+          "real-time-translation-zh": 62,
+          "solution_audio_room_zh": 58,
+          "live_streaming_kit_zh": 45,
+          "imkit_zh": 35,
+          "solution_online_fitness_zh": 35,
+          "glossary_zh": 25,
+          "solution_interactive_podcast_zh": 24,
+          "analytics_dashboard_zh": 21,
+          "aigc_digital_human_zh": 20,
+          "live_audio_room_kit_zh": 17,
+          "solution_online_music_lessons_zh": 12,
+          "console-zh": 11,
+          "solution_online_painting_lessons_zh": 11,
+          "cloud_realtime_asr_zh": 10,
+          "solution_large_class_ai_zh": 10,
+          "solution_online_programming_lessons_zh": 8,
+          "cloud_recording_zh": 7,
+          "solution_telemedicine_zh": 7,
+          "solution_meeting_zh": 6,
+          "shumei-moderation-zh": 2,
+          "cloud_player_zh": 1
+        },
+        "doctype": {
+          "技术文档": 22701,
+          "API": 1597
+        },
+        "version": {
+          "next": 24300
+        },
+        "language": {
+          "zh": 24300
+        },
+        "platform": {
+          "Android: Java": 3294,
+          "iOS: Objective-C": 2948,
+          "macOS: Objective-C": 1909,
+          "Windows: C++": 1840,
+          "Flutter: Dart": 1808,
+          "macOS: C++": 1325,
+          "Linux: C++": 1273,
+          "Web: JS": 1231,
+          "Unity3D: C#": 983,
+          "React Native: JS": 746,
+          "Electron: JS": 710,
+          "uni-app: JS": 698,
+          "HarmonyOS: ArkTS": 605,
+          "Unreal Engine: C++": 472,
+          "uni-app (x): UTS": 409,
+          "React Native: TS": 405,
+          "小程序: JS": 390,
+          "iOS: Swift": 354,
+          "Web: TS": 323,
+          "小程序: TS": 301,
+          "macOS: Swift": 228,
+          "Android: Kotlin": 216,
+          "Cocos Creator: TS": 189,
+          "Server": 174,
+          "Windows: C#": 99,
+          "macOS: C": 49,
+          "Windows: C": 47,
+          "Linux: Java": 43,
+          "文档": 28,
+          "新版本": 7,
+          "旧版本": 4,
+          "服务端 API": 1
+        }
+      },
+      "exhaustiveFacetsCount": false,
+      "exhaustiveNbHits": true,
+      "exhaustiveTypo": true,
+      "exhaustive": {
+        "facetsCount": false,
+        "nbHits": true,
+        "typo": true
+      },
+      "query": "sdk",
+      "params": "analytics=true&attributesToRetrieve=%5B%22hierarchy.lvl0%22%2C%22hierarchy.lvl1%22%2C%22hierarchy.lvl2%22%2C%22hierarchy.lvl3%22%2C%22hierarchy.lvl4%22%2C%22hierarchy.lvl5%22%2C%22hierarchy.lvl6%22%2C%22content%22%2C%22type%22%2C%22url%22%5D&attributesToSnippet=%5B%22hierarchy.lvl1%3A30%22%2C%22hierarchy.lvl2%3A30%22%2C%22hierarchy.lvl3%3A30%22%2C%22hierarchy.lvl4%3A30%22%2C%22hierarchy.lvl5%3A30%22%2C%22hierarchy.lvl6%3A30%22%2C%22content%3A100%22%5D&clickAnalytics=true&facetFilters=%5B%22version%3Anext%22%2C%22%22%2C%22language%3Azh%22%2C%22%22%2C%22%22%5D&facets=%5B%22doctype%22%2C%22group%22%2C%22language%22%2C%22platform%22%2C%22version%22%5D&highlightPostTag=__%2Fais-highlight__&highlightPreTag=__ais-highlight__&page=0&query=sdk&snippetEllipsisText=%E2%80%A6",
+      "index": "zh-zego",
+      "queryID": "9f8a38bbd2295770a795f5a7e433521b",
+      "renderingContent": {},
+      "processingTimeMS": 34,
+      "processingTimingsMS": {
+        "_request": {
+          "roundTrip": 34
+        },
+        "fetch": {
+          "faceting": 1,
+          "query": 4,
+          "scanning": 19,
+          "total": 28
+        },
+        "getIdx": {
+          "load": {
+            "gens": 4,
+            "total": 4
+          },
+          "total": 5
+        },
+        "total": 34
+      },
+      "serverTimeMS": 35
+    }
+  ]
+}

@@ -26,6 +26,7 @@ import AskAI from "./AskAI";
 import DocSearchHit from "./DocSearchHit";
 import DocSearchFooter from "./DocSearchFooter";
 import DocSearchAboveContent from "./DocSearchAboveContent";
+import { filterDocSearchItems } from "./recentQueries";
 import DocSearchBelowContent from "./DocSearchBelowContent";
 import {
   useDocSearchAboveResults,
@@ -102,6 +103,9 @@ const Header = (props: Props) => {
 
   const DocSearchComponent = useMemo(() => {
     if (!algolia || searchHidden) return null;
+    const HitWithIndex = ({ hit }: { hit: any }) => {
+      return <DocSearchHit hit={hit} indexName={algolia.indexName} />;
+    };
     return (
       <>
         <DocSearch
@@ -117,6 +121,7 @@ const Header = (props: Props) => {
                   `language:${currentLanguage}`,
                   `platform:${currentPlatform}`,
                 ],
+                hitsPerPage: 20,
                 // 控制 _snippetResult.content.value 的截断长度（单位：词数）
                 // 默认约 10 词，调大可展示更多正文上下文
                 attributesToSnippet: ["content:30"],
@@ -127,22 +132,8 @@ const Header = (props: Props) => {
             ? copywriting[currentLanguage].search
             : copywriting.en.search)}
           maxResultsPerGroup={20}
-          hitComponent={DocSearchHit}
-          transformItems={(items) =>
-            items.filter((item: any) => {
-              const hl = item._highlightResult;
-              const sn = item._snippetResult;
-              if (item.type === "content") {
-                // 过滤掉 content 命中级别为 none 或 content 字段为空的记录
-                const matchLevel =
-                  sn?.content?.matchLevel ?? hl?.content?.matchLevel;
-                const hasContent = !!(item.content || sn?.content?.value);
-                return matchLevel !== "none" && hasContent;
-              }
-              // 过滤掉 lvlX 自身未命中的记录（matchLevel 为 none）
-              return hl?.hierarchy?.[item.type]?.matchLevel !== "none";
-            })
-          }
+          hitComponent={HitWithIndex}
+          transformItems={filterDocSearchItems}
           resultsFooterComponent={({ state }) => (
             <DocSearchFooter state={state} />
           )}
@@ -344,11 +335,14 @@ const Header = (props: Props) => {
       )}
 
       {/* DocSearch 结果列表上方注入区域（Portal）
-          无搜索词 → 内容 A（如快捷入口、推荐分类）
-          有搜索词 → 内容 B（如筛选 tab） */}
+          无搜索词 → 展示最近搜索词
+          有搜索词 → 暂无额外内容 */}
       {aboveResultsNode &&
         createPortal(
-          <DocSearchAboveContent hasQuery={searchHasQuery} />,
+          <DocSearchAboveContent
+            hasQuery={searchHasQuery}
+            indexName={algolia?.indexName ?? ""}
+          />,
           aboveResultsNode,
         )}
 

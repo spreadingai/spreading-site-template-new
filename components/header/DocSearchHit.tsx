@@ -1,4 +1,5 @@
 import React from "react";
+import { addRecentQuery } from "./recentQueries";
 
 /**
  * DocSearchHit — 自定义搜索结果渲染组件
@@ -83,9 +84,24 @@ import React from "react";
  *   效果：面包屑中凡是命中查询词的层级标题也会高亮显示，未命中的层级展示纯文本。
  */
 
-const HIERARCHY_LEVELS = ['lvl0', 'lvl1', 'lvl2', 'lvl3', 'lvl4', 'lvl5', 'lvl6'] as const;
+const HIERARCHY_LEVELS = [
+  "lvl0",
+  "lvl1",
+  "lvl2",
+  "lvl3",
+  "lvl4",
+  "lvl5",
+  "lvl6",
+] as const;
 
-const DocSearchHit = ({ hit }: { hit: any; children?: React.ReactNode }) => {
+const DocSearchHit = ({
+  hit,
+  indexName,
+}: {
+  hit: any;
+  indexName: string;
+  children?: React.ReactNode;
+}) => {
   const { hierarchy, type, content, url } = hit;
 
   const highlightResult = hit._highlightResult;
@@ -93,11 +109,12 @@ const DocSearchHit = ({ hit }: { hit: any; children?: React.ReactNode }) => {
 
   // Title: 优先使用带 <mark> 高亮标签的值
   // content 类型用 snippetResult（截断片段），lvlX 类型用 highlightResult（完整标题）
-  let titleHtml = '';
-  if (type === 'content') {
-    titleHtml = snippetResult?.content?.value || content || '';
+  let titleHtml = "";
+  if (type === "content") {
+    titleHtml = snippetResult?.content?.value || content || "";
   } else {
-    titleHtml = highlightResult?.hierarchy?.[type]?.value || hierarchy[type] || '';
+    titleHtml =
+      highlightResult?.hierarchy?.[type]?.value || hierarchy[type] || "";
   }
 
   // transformItems 已过滤掉无效记录，此处作为兜底：空 title 不渲染
@@ -105,19 +122,42 @@ const DocSearchHit = ({ hit }: { hit: any; children?: React.ReactNode }) => {
 
   // Path: lvl0 > lvl1 > ... 到当前 type 的上一层（不含自身）
   // 优先用 _highlightResult 的值，命中的层级会带 <mark> 高亮
-  const stopIdx = type === 'content' ? HIERARCHY_LEVELS.length : HIERARCHY_LEVELS.indexOf(type);
-  const pathHtml = HIERARCHY_LEVELS
-    .slice(0, stopIdx)
+  const stopIdx =
+    type === "content"
+      ? HIERARCHY_LEVELS.length
+      : HIERARCHY_LEVELS.indexOf(type);
+  const pathHtml = HIERARCHY_LEVELS.slice(0, stopIdx)
     .map((lvl) => highlightResult?.hierarchy?.[lvl]?.value || hierarchy[lvl])
     .filter(Boolean)
-    .join(' > ');
+    .join(" > ");
+
+  const handleClick = () => {
+    const input = document.querySelector<HTMLInputElement>(".DocSearch-Input");
+    const query = input?.value?.trim();
+    if (query) {
+      addRecentQuery(query, indexName);
+    }
+  };
 
   return (
-    <a href={url}>
+    <a
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={handleClick}
+    >
       <div className="DocSearch-Hit-Container">
         <div className="DocSearch-Hit-content-wrapper">
-          <span className="DocSearch-Hit-title" dangerouslySetInnerHTML={{ __html: titleHtml }} />
-          {pathHtml && <span className="DocSearch-Hit-path" dangerouslySetInnerHTML={{ __html: pathHtml }} />}
+          <span
+            className="DocSearch-Hit-title"
+            dangerouslySetInnerHTML={{ __html: titleHtml }}
+          />
+          {pathHtml && (
+            <span
+              className="DocSearch-Hit-path"
+              dangerouslySetInnerHTML={{ __html: pathHtml }}
+            />
+          )}
         </div>
       </div>
     </a>

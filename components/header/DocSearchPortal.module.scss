@@ -36,3 +36,44 @@
   padding: 4px 12px;
   color: #999;
 }
+
+// 最近搜索词区域
+.recentQueriesWrapper {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+}
+
+.recentQueriesTitle {
+  font-size: 12px;
+  color: var(--docsearch-muted-color, #999);
+  flex-shrink: 0;
+  margin-right: 4px;
+}
+
+.queryLabel {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  font-size: 13px;
+  color: var(--docsearch-hit-color, #333);
+  background: var(--docsearch-hit-background, #fff);
+  border: 1px solid var(--docsearch-muted-color, #ddd);
+  border-radius: 100px;
+  cursor: pointer;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+  white-space: nowrap;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:hover {
+    background: var(--docsearch-highlight-color, #0055ff);
+    border-color: var(--docsearch-highlight-color, #0055ff);
+    color: #fff;
+  }
+}

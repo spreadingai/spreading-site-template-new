@@ -24,4 +24,19 @@
             display: none;
         }
     }
+
+    // 隐藏 DocSearch 内置最近搜索 / 收藏搜索列表
+    // 由 DocSearchAboveContent 中的自定义 query labels 替代
+    #docsearch-recentSearches-list,
+    #docsearch-favoriteSearches-list {
+        display: none;
+    }
+    // 同时隐藏对应的分组标题（"Recent" / "Favorites" 文字）
+    // DocSearch 将 sourceId 作为 list 的 aria-labelledby 前缀，section header 相邻
+    [aria-labelledby="docsearch-recentSearches-label"],
+    [aria-labelledby="docsearch-favoriteSearches-label"],
+    #docsearch-recentSearches-label,
+    #docsearch-favoriteSearches-label {
+        display: none;
+    }
 }
