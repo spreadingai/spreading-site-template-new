@@ -1,213 +1,27 @@
-#search-page {
-    .ais-PoweredBy {
-        .ais-PoweredBy-link {
-            path:first-of-type {
-                fill: var(--docsearch-searchbox-color);
-            }
+/* DocSearch Header 弹窗：自定义平铺布局 */
+.DocSearch-Modal {
+    .DocSearch-Dropdown {
+        display: flex;
+        flex-direction: column;
+        overflow-y: unset;
+        position: relative;
+        // 实际以底部内容为准
+        padding-bottom: 41px;
+        .DocSearch-Dropdown-Container {
+            overflow-y: overlay;
         }
     }
-    .DocSearch-Hits {
-        width: 100%;
-        &:last-of-type {
-            margin-bottom: 0;
-        }
-        .DocSearch-Hit {
-            padding-top: 20px;
-            padding-bottom: 20px;
-            a {
-                background: none;
-            }
-            .DocSearch-Hit-Container {
-                height: unset;
-            }
-        }
+    // 隐藏组标题（lvl0 分组头）
+    .DocSearch-Hit-source {
+        display: none;
     }
-    .DocSearch-Hit-title {
-        color: var(--docuo-color-primary);
-        text-wrap: wrap;
-        margin-bottom: 6px;
-        font-size: 14px;
-        line-height: normal;
-        font-weight: normal;
-    }
-    .DocSearch-Hit-path {
-        color: var(--docuo-breadcrumb-color);
-        line-height: normal;
-        font-size: 12px;
-    }
-    .DocSearch-Hit-icon {
-        color: var(--docuo-breadcrumb-color);
-    }
-    .ais-Hits-item {
-        padding: 0;
-        box-shadow: none;
-        border-bottom: var(--docsearch-searchbox-border);
-        background: var(--docuo-background-primary);
-    }
-    .ais-Pagination-link {
-        color: var(--docuo-color-primary);
-        border: var(--docsearch-searchbox-border);
-        box-shadow: none;
-        background: none;
-    }
-    .ais-Pagination-item--selected .ais-Pagination-link {
-        color: var(--docuo-color-primary-active);
-    }
-    .ais-Pagination-item--disabled .ais-Pagination-link {
-        cursor: not-allowed;
-        color: var(--docsearch-searchbox-color);
-    }
-    .ant-tabs {
-        & > .ant-tabs-nav {
-            margin-bottom: 0;
-        }
-        .ant-tabs-content-holder {
-            display: none !important;
-        }
-    }
-    .ant-input-wrapper {
-        &:active,
-        &:focus,
-        &:hover {
-            .ant-input-affix-wrapper,
-            .ant-input-group-addon {
-                color: unset;
-                background: var(--docsearch-searchbox-background-hover);
-                border: var(--docsearch-searchbox-border-hover);
-            }
-            .ant-input-affix-wrapper {
-                border-right: none;
-            }
-            .ant-input-group-addon {
-                border-left: none;
-                .ant-input-search-button {
-                    background: var(--docsearch-searchbox-background-hover);
-                }
-            }
-        }
-    }
-    .ant-input-affix-wrapper {
-        color: var(--docuo-color-primary);
-        border: var(--docsearch-searchbox-border);
-        border-right: none;
-        background-color: var(--docsearch-searchbox-background);
-        border-radius: 8px 0 0 8px;
-        box-shadow: unset;
-        outline: none;
-        height: 30px;
-        padding: 0 0 0 11px;
-        & > input.ant-input {
-            &::placeholder {
-                color: var(--docsearch-searchbox-color);
-            }
-        }
-    }
-    .ant-input-search .ant-input-group-addon {
-        background: var(--docuo-dropdown-label-bg);
-        border-radius: 0 6px 6px 0;
-        border: var(--docuo-dropdown-label-border);
-        border-left: none;
-        inset-inline-start: 0;
-        .ant-input-search-button {
-            height: 28px;
-            border: none;
-            background: var(--docuo-dropdown-label-bg);
-            margin-inline-end: 0;
-            &:hover {
-                color: rgba(0, 0, 0, 0.45);
-            }
-            .ant-btn-icon {
-                opacity: 0;
-                cursor: initial;
-                &.ant-btn-loading-icon {
-                    opacity: 1;
-                }
-            }
-        }
-    }
-    .ant-select {
-        &.group-select,
-        &.version-select {
-            font-family: var(--font-inter-medium);
-            font-weight: 500;
-            color: var(--docuo-color-primary);
-            .ant-select-selector {
-                box-shadow: unset;
-                outline: none;
-                background: var(--docuo-dropdown-label-bg);
-                border-radius: 6px;
-                border: var(--docuo-dropdown-label-border);
-                .ant-select-selection-item {
-                    color: var(--docuo-color-primary);
-                }
-            }
-            .ant-select-arrow {
-                transition: transform 0.3s;
-                color: var(--docuo-dropdown-icon-color);
-            }
-            &.ant-select-open {
-                .ant-select-arrow {
-                    transform: rotate(-180deg);
-                }
-            }
-        }
-        &.group-select {
-            height: 30px;
-            min-width: 240px;
-        }
-        &.version-select {
-            height: 30px;
-            min-width: 100px;
-            margin-bottom: 20px;
-        }
-    }
-    .doc-type-tab {
-        &.ant-tabs {
-            .ant-tabs-tab {
-                color: var(--docuo-color-primary);
-                padding: 14px 0;
-                & + .ant-tabs-tab {
-                    margin-left: 20px;
-                }
-                &.ant-tabs-tab-active .ant-tabs-tab-btn {
-                    color: var(--docuo-color-primary-active);
-                }
-                &:hover {
-                    color: var(--docuo-color-primary-active);
-                }
-            }
-            &.ant-tabs-top > .ant-tabs-nav::before {
-                border-bottom: var(--docsearch-searchbox-border);
-            }
-        }
-    }
-    .search-loading {
-        color: var(--docuo-color-primary-active);
-    }
-}
-.ant-select-dropdown {
-    &.group-select-popup,
-    &.version-select-popup {
-        padding: 8px;
-        box-shadow: 0px 1px 12px 0px rgba(0, 0, 0, 0.05);
-        border-radius: 6px;
-        border: var(--docuo-popup-border);
-        background: var(--docuo-popup-bg);
-        .ant-select-item {
-            height: 40px;
-            padding: 6px 8px;
-            font-size: 14px;
-            font-family: var(--font-inter-medium);
-            font-weight: 500;
-            color: var(--docuo-popup-color);
-            border-radius: 4px;
-        }
-        .ant-select-item-option-selected:not(.ant-select-item-option-disabled) {
-            color: var(--docuo-color-primary-active);
-            background: none;
-        }
-        .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
-            background: var(--docuo-popup-bg-hover);
+
+    // 移除子级缩进，实现平铺效果
+    .DocSearch-Hit--Child {
+        padding-left: 0 !important;
+
+        .DocSearch-Hit-Tree {
+            display: none;
         }
     }
 }

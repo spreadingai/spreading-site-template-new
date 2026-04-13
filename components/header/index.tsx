@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo } from "react";
+import { createPortal } from "react-dom";
 import { useRouter } from "next/router";
 import styles from "./styles.module.scss";
 import Link from "next/link";
@@ -21,9 +22,16 @@ import useGroup from "@/components/hooks/useGroup";
 import useVersion from "@/components/hooks/useVersion";
 import usePlatform from "@/components/hooks/usePlatform";
 import useSet from "@/components/hooks/useSet";
-import { defaultLanguage } from "../context/languageContext";
 import AskAI from "./AskAI";
-// import "@docsearch/css";
+import DocSearchHit from "./DocSearchHit";
+import DocSearchFooter from "./DocSearchFooter";
+import DocSearchAboveContent from "./DocSearchAboveContent";
+import DocSearchBelowContent from "./DocSearchBelowContent";
+import {
+  useDocSearchAboveResults,
+  useDocSearchBelowResults,
+} from "./useDocSearchAboveResults";
+import "@docsearch/css";
 
 interface Props {
   docuoConfig: DocuoConfig;
@@ -50,7 +58,7 @@ const Header = (props: Props) => {
   const navbar = Object.assign(
     {},
     themeConfig.navbar,
-    themeConfig[`navbar.${currentLanguage}`]
+    themeConfig[`navbar.${currentLanguage}`],
   );
   const { items } = navbar;
   const { algolia } = search || {};
@@ -62,6 +70,9 @@ const Header = (props: Props) => {
   const logoRef = React.useRef<HTMLAnchorElement>(null);
   const [scrollLength, setScrollLength] = React.useState(0);
   const { theme } = React.useContext(ThemeContext);
+  const { portalNode: aboveResultsNode, hasQuery: searchHasQuery } =
+    useDocSearchAboveResults();
+  const { portalNode: belowResultsNode } = useDocSearchBelowResults();
 
   useEffect(() => {
     setIsMobile(matches);
@@ -77,7 +88,7 @@ const Header = (props: Props) => {
     }
     const handleScroll = () => {
       setScrollLength(
-        () => document.documentElement.scrollTop || document.body.scrollTop
+        () => document.documentElement.scrollTop || document.body.scrollTop,
       );
     };
     window.addEventListener("scroll", handleScroll, true);
@@ -94,34 +105,47 @@ const Header = (props: Props) => {
     return (
       <>
         <DocSearch
-          {...algolia}
+          appId={algolia.appId}
+          apiKey={algolia.apiKey}
+          indices={[
+            {
+              name: algolia.indexName,
+              searchParameters: {
+                facetFilters: [
+                  `version:${docVersion}`,
+                  `group:${currentGroup}`,
+                  `language:${currentLanguage}`,
+                  `platform:${currentPlatform}`,
+                ],
+                // 控制 _snippetResult.content.value 的截断长度（单位：词数）
+                // 默认约 10 词，调大可展示更多正文上下文
+                attributesToSnippet: ["content:30"],
+              },
+            },
+          ]}
           {...(copywriting[currentLanguage]
             ? copywriting[currentLanguage].search
             : copywriting.en.search)}
-          searchParameters={{
-            facetFilters: [
-              `version:${docVersion}`,
-              `group:${currentGroup}`,
-              `language:${currentLanguage}`,
-              `platform:${currentPlatform}`,
-            ],
-          }}
           maxResultsPerGroup={20}
-          resultsFooterComponent={(props: any) => {
-            const { state } = props;
-            const { query, context } = state;
-            const { nbHits } = context;
-            return (
-              <Link href={`/search?k=${query}`}>
-                {currentLanguage === defaultLanguage
-                  ? `See all ${nbHits} results`
-                  : `查看全部 ${nbHits} 条结果`}
-              </Link>
-            );
-          }}
-          getMissingResultsUrl={({ query }) => {
-            return `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/search`;
-          }}
+          hitComponent={DocSearchHit}
+          transformItems={(items) =>
+            items.filter((item: any) => {
+              const hl = item._highlightResult;
+              const sn = item._snippetResult;
+              if (item.type === "content") {
+                // 过滤掉 content 命中级别为 none 或 content 字段为空的记录
+                const matchLevel =
+                  sn?.content?.matchLevel ?? hl?.content?.matchLevel;
+                const hasContent = !!(item.content || sn?.content?.value);
+                return matchLevel !== "none" && hasContent;
+              }
+              // 过滤掉 lvlX 自身未命中的记录（matchLevel 为 none）
+              return hl?.hierarchy?.[item.type]?.matchLevel !== "none";
+            })
+          }
+          resultsFooterComponent={({ state }) => (
+            <DocSearchFooter state={state} />
+          )}
         />
       </>
     );
@@ -169,7 +193,10 @@ const Header = (props: Props) => {
   const devCenterNav = useMemo(() => {
     return currentLanguage === "zh"
       ? [
-          { label: "SDK 中心", href: "https://doc-zh.zego.im/sdk-download/2968" },
+          {
+            label: "SDK 中心",
+            href: "https://doc-zh.zego.im/sdk-download/2968",
+          },
           { label: "API 中心", href: "https://doc-zh.zego.im/api-center" },
           { label: "常见问题", href: "https://doc-zh.zego.im/faq/overview" },
         ]
@@ -242,9 +269,13 @@ const Header = (props: Props) => {
           <div className={styles["menus"]}>
             <Mobile
               // @ts-ignore
-              menus={([...(navbar.title ? [
-                { label: navbar.title, href: navbar.iconRedirectUrl },
-              ] : []), ...devCenterNav, ...items] || []).map((item) => {
+              menus={[
+                ...(navbar.title
+                  ? [{ label: navbar.title, href: navbar.iconRedirectUrl }]
+                  : []),
+                ...devCenterNav,
+                ...items,
+              ].map((item) => {
                 if (item.label) {
                   return item;
                 }
@@ -257,42 +288,42 @@ const Header = (props: Props) => {
           </div>
         ) : (
           <div className={styles["menus"]} ref={menusRef}>
-              {(items || []).map((menu, index) => {
-                if (!menu) return null;
-                if (
-                  menu?.type === NavBarItemType.Dropdown ||
-                  Array.isArray(menu.items)
-                ) {
-                  // @ts-ignore
-                  return <DropdownItem menu={menu} key={index} />;
-                }
-                if (menu?.type === NavBarItemType.Button) {
-                  return (
-                    <a
-                      key={index}
-                      className={styles["button-item"]}
-                      href={menu.href || menu.to || menu.defaultLink || "/"}
-                      target={menu.href ? "_blank" : "_self"}
-                    >
-                      {menu.label}
-                    </a>
-                  );
-                }
+            {(items || []).map((menu, index) => {
+              if (!menu) return null;
+              if (
+                menu?.type === NavBarItemType.Dropdown ||
+                Array.isArray(menu.items)
+              ) {
+                // @ts-ignore
+                return <DropdownItem menu={menu} key={index} />;
+              }
+              if (menu?.type === NavBarItemType.Button) {
                 return (
-                  <Link
+                  <a
                     key={index}
-                    className={styles["item"]}
+                    className={styles["button-item"]}
                     href={menu.href || menu.to || menu.defaultLink || "/"}
                     target={menu.href ? "_blank" : "_self"}
                   >
                     {menu.label}
-                  </Link>
+                  </a>
                 );
-              })}
-              <div className={styles["menus__btn-list"]}>
-                {renderLanguageSwitch()}
-                {renderThemeSwitch()}
-              </div>
+              }
+              return (
+                <Link
+                  key={index}
+                  className={styles["item"]}
+                  href={menu.href || menu.to || menu.defaultLink || "/"}
+                  target={menu.href ? "_blank" : "_self"}
+                >
+                  {menu.label}
+                </Link>
+              );
+            })}
+            <div className={styles["menus__btn-list"]}>
+              {renderLanguageSwitch()}
+              {renderThemeSwitch()}
+            </div>
           </div>
         )}
       </div>
@@ -311,6 +342,20 @@ const Header = (props: Props) => {
           <AnChorMobile tocFormatData={tocFormatData} />
         </div>
       )}
+
+      {/* DocSearch 结果列表上方注入区域（Portal）
+          无搜索词 → 内容 A（如快捷入口、推荐分类）
+          有搜索词 → 内容 B（如筛选 tab） */}
+      {aboveResultsNode &&
+        createPortal(
+          <DocSearchAboveContent hasQuery={searchHasQuery} />,
+          aboveResultsNode,
+        )}
+
+      {/* DocSearch 结果列表下方注入区域（Portal）
+          弹框打开即显示，与搜索词 / 结果无关 */}
+      {belowResultsNode &&
+        createPortal(<DocSearchBelowContent />, belowResultsNode)}
     </header>
   );
 };
