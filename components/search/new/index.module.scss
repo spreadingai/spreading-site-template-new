@@ -1,0 +1,165 @@
+// Minimal styles for new search page. Polish later.
+
+.pageRoot {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.criteria {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+// SearchBox --------------------------------------------------------
+.searchBox {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 44px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  padding: 0 12px;
+  background: #fff;
+
+  &:focus-within { border-color: #1677ff; }
+}
+.searchBoxIcon { display: flex; color: #888; margin-right: 8px; }
+.searchBoxInput {
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-size: 14px;
+  height: 100%;
+  &::-webkit-search-cancel-button { display: none; }
+}
+.searchBoxLoading { color: #888; font-size: 14px; }
+.searchBoxClear {
+  border: 0; background: transparent; color: #888; cursor: pointer;
+  padding: 0 6px; font-size: 14px;
+  &:hover { color: #333; }
+}
+
+// DocTypeTabs -----------------------------------------------------
+.docTypeTabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  border-bottom: 1px solid #eee;
+}
+.docTypeTab {
+  border: 0; background: transparent; cursor: pointer;
+  padding: 8px 14px; font-size: 14px; color: #555;
+  border-bottom: 2px solid transparent;
+  &:hover { color: #1677ff; }
+}
+.docTypeTabActive { color: #1677ff; border-bottom-color: #1677ff; font-weight: 500; }
+.docTypeTabCount { margin-left: 4px; color: inherit; opacity: 0.7; font-size: 12px; }
+
+// FacetLabelList --------------------------------------------------
+.facetRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 4px 0;
+}
+.facetRowTitle {
+  flex: 0 0 auto;
+  font-size: 13px;
+  color: #888;
+  padding-top: 6px;
+  min-width: 60px;
+}
+.facetRowList {
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.facetLabel {
+  border: 1px solid #e5e5e5; background: #fff; color: #444;
+  padding: 4px 10px; border-radius: 14px; font-size: 12px; cursor: pointer;
+  &:hover { border-color: #1677ff; color: #1677ff; }
+}
+.facetLabelActive { background: #1677ff; color: #fff; border-color: #1677ff; &:hover { color: #fff; } }
+.facetLabelCount { margin-left: 4px; opacity: 0.75; }
+.facetRowToggle {
+  flex: 0 0 auto;
+  border: 0; background: transparent; color: #1677ff;
+  cursor: pointer; font-size: 12px; padding: 6px 8px;
+}
+
+// Hits ------------------------------------------------------------
+.body { display: flex; flex-direction: column; gap: 16px; }
+.hitsList { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
+.hitsListItem { display: block; }
+.hitsEmpty, .hitsLoading {
+  padding: 40px 16px; text-align: center; color: #888; font-size: 14px;
+}
+.hitsEmpty p { margin: 4px 0; }
+.emptyFeedbackLink { color: #1677ff; text-decoration: none; &:hover { text-decoration: underline; } }
+
+// AI Suggestion ---------------------------------------------------
+.aiSuggestion {
+  margin-top: 12px; padding: 16px; border: 1px solid #e5e5e5; border-radius: 8px; background: #fff;
+}
+.aiSuggestionHeader {
+  margin: 0 0 12px; font-size: 14px; color: #333;
+}
+.aiSuggestionLink {
+  color: #1677ff; cursor: pointer; &:hover { text-decoration: underline; }
+}
+.aiSuggestionGrid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+}
+.aiSuggestionItem {
+  padding: 10px 12px; border: 1px solid #eee; border-radius: 6px; background: #fafafa;
+  font-size: 13px; color: #333; text-align: left; cursor: pointer;
+  &:hover { border-color: #1677ff; color: #1677ff; background: #f0f7ff; }
+}
+
+// Feedback bar ----------------------------------------------------
+.feedbackBar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; border: 1px solid #eee; border-radius: 8px; background: #fafafa;
+}
+.feedbackText { font-size: 14px; color: #555; }
+.feedbackBtn {
+  display: inline-block; padding: 6px 16px; border-radius: 4px;
+  background: #1677ff; color: #fff; font-size: 13px; text-decoration: none;
+  &:hover { background: #0958d9; }
+}
+.hitItem {
+  display: block; padding: 14px 16px; border: 1px solid #eee; border-radius: 8px;
+  text-decoration: none; color: #222; background: #fff;
+  &:hover { border-color: #1677ff; box-shadow: 0 1px 8px rgba(22,119,255,0.08); }
+}
+.hitTitle { font-size: 15px; font-weight: 500; line-height: 1.5; margin-bottom: 6px; color: #111; }
+.hitTitle :global(mark) { background: transparent; color: #1677ff; font-weight: 600; }
+.hitSnippet { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 8px; }
+.hitSnippet :global(mark) { background: transparent; color: #1677ff; font-weight: 600; }
+.hitTags { display: flex; flex-wrap: wrap; gap: 6px; }
+.hitTag {
+  font-size: 11px; padding: 2px 8px; border-radius: 10px;
+  background: #f5f5f5; color: #666; border: 1px solid #eee;
+}
+
+// Pagination ------------------------------------------------------
+.pagination {
+  display: flex; align-items: center; justify-content: center;
+  gap: 4px; padding: 12px 0;
+}
+.pageBtn {
+  min-width: 32px; height: 32px; padding: 0 10px;
+  border: 1px solid #e5e5e5; background: #fff; color: #444;
+  border-radius: 4px; cursor: pointer; font-size: 13px;
+  &:hover:not(:disabled) { border-color: #1677ff; color: #1677ff; }
+  &:disabled { opacity: 0.4; cursor: not-allowed; }
+}
+.pageBtnActive { background: #1677ff; color: #fff; border-color: #1677ff; &:hover { color: #fff; } }
+.pageEllipsis { color: #888; padding: 0 4px; }

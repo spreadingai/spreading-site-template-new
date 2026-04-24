@@ -141,6 +141,8 @@ export interface MessageListProps {
   currentPlatform: string;
   currentLanguage: string;
   sessionId: string;
+  // 外部传入默认问题（如搜索页），传入时跳过 API 获取
+  defaultQuestions?: string[];
 }
 
 const MessageList: React.FC<MessageListProps> = ({
@@ -155,16 +157,25 @@ const MessageList: React.FC<MessageListProps> = ({
   currentPlatform,
   currentLanguage,
   sessionId,
+  defaultQuestions: externalDefaultQuestions,
 }) => {
   // 仿照 modal-new.tsx 的 customIDMap 实现
   const customIDMap = useRef<Record<string, AnswerData>>({});
 
   // 默认问题状态
-  const [defaultQuestions, setDefaultQuestions] = useState<string[]>([]);
+  const [fetchedQuestions, setFetchedQuestions] = useState<string[]>([]);
   const [isLoadingQuestions, setIsLoadingQuestions] = useState<boolean>(true);
 
-  // 组件挂载时获取默认问题
+  // 优先使用外部传入的问题，否则使用 API 获取的
+  const defaultQuestions = externalDefaultQuestions ?? fetchedQuestions;
+
+  // 组件挂载时获取默认问题（外部传入时跳过）
   useEffect(() => {
+    if (externalDefaultQuestions) {
+      setIsLoadingQuestions(false);
+      return;
+    }
+
     const fetchPrompts = async () => {
       try {
         setIsLoadingQuestions(true);
@@ -176,10 +187,10 @@ const MessageList: React.FC<MessageListProps> = ({
         };
 
         const response = await fetchWelcomePrompts(params);
-        setDefaultQuestions(response.data.prompts);
+        setFetchedQuestions(response.data.prompts);
       } catch (error) {
         console.error('Failed to fetch welcome prompts:', error);
-        setDefaultQuestions([]);
+        setFetchedQuestions([]);
       } finally {
         setIsLoadingQuestions(false);
       }
@@ -187,7 +198,7 @@ const MessageList: React.FC<MessageListProps> = ({
     if (currentGroup && currentPlatform) {
       fetchPrompts();
     }
-  }, [currentGroup, currentLanguage, currentPlatform]);
+  }, [currentGroup, currentLanguage, currentPlatform, externalDefaultQuestions]);
 
   // 复制 modal-new.tsx 的 updateScoreStyle 函数
   const updateScoreStyle = useCallback(

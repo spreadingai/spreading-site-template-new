@@ -20,6 +20,8 @@ interface Props {
   currentPlatform: string;
   isModalOpen: boolean;
   onCloseHandle: () => void;
+  initialMessage?: string;
+  defaultQuestions?: string[];
 }
 
 const AskAIModal: React.FC<Props> = ({
@@ -30,6 +32,8 @@ const AskAIModal: React.FC<Props> = ({
   currentPlatform,
   isModalOpen,
   onCloseHandle,
+  initialMessage,
+  defaultQuestions,
 }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -92,6 +96,9 @@ const AskAIModal: React.FC<Props> = ({
     // 可以在这里添加其他需要重置的状态
   }, []);
 
+  // 保持 handleSendMessage 的最新引用，用于 initialMessage 延迟发送
+  const handleSendMessageRef = useRef<typeof handleSendMessage>();
+
   // 每次打开模态框时生成新的session ID
   useEffect(() => {
     if (isModalOpen) {
@@ -99,8 +106,16 @@ const AskAIModal: React.FC<Props> = ({
       setMessages([]);
       setIsLoading(false);
       setStreamingMessageId('');
+
+      // 如果传入了 initialMessage，延迟发送以确保 sessionId 已更新
+      if (initialMessage) {
+        const timer = setTimeout(() => {
+          handleSendMessageRef.current?.(initialMessage);
+        }, 100);
+        return () => clearTimeout(timer);
+      }
     }
-  }, [isModalOpen]);
+  }, [isModalOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const sizeChangeHandle = () => {
@@ -311,6 +326,9 @@ const AskAIModal: React.FC<Props> = ({
     }
   }, [isLoading, sessionId, currentGroup, currentPlatform, messageApi, updateFooterStyle, updateATagAttr]);
 
+  // 同步 ref，供 initialMessage 延迟发送使用
+  handleSendMessageRef.current = handleSendMessage;
+
   const cancelHandle = () => {
     if (streamingMessageId) {
       void cancelRun(streamingMessageId);
@@ -353,6 +371,7 @@ const AskAIModal: React.FC<Props> = ({
               currentPlatform={currentPlatform}
               currentLanguage={currentLanguage}
               sessionId={sessionId}
+              defaultQuestions={defaultQuestions}
             />
 
             {/* 输入框区域 - 与 modal-new.tsx 结构一致 */}

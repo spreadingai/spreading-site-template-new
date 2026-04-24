@@ -10,7 +10,8 @@ const AI_API_CONFIG = {
   QA_VOTE_ENDPOINT: '/qa/vote',
   // 服务器地址
   SERVERS: {
-    DEVELOPMENT: 'http://localhost:8765',
+    // DEVELOPMENT: 'http://localhost:8765',
+    DEVELOPMENT: 'https://zego-doc-ai.spreading.cc:8000',
     PRODUCTION: 'https://zego-doc-ai.spreading.cc:8000'
   }
 } as const;
