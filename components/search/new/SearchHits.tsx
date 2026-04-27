@@ -1,16 +1,24 @@
 import React from "react";
-import { useInstantSearch, useSearchBox } from "react-instantsearch";
+import { useInstantSearch } from "react-instantsearch";
 import SearchHitItem, { AlgoliaHit } from "./SearchHitItem";
 import styles from "./index.module.scss";
+
+type GroupMap = Map<string, string>;
 
 interface Props {
   items: AlgoliaHit[];
   totalCount: number;
+  language?: string;
+  groupMap?: GroupMap;
 }
 
-const SearchHits: React.FC<Props> = ({ items, totalCount }) => {
+const SearchHits: React.FC<Props> = ({
+  items,
+  totalCount,
+  language = "zh",
+  groupMap,
+}) => {
   const { status } = useInstantSearch();
-  const { query } = useSearchBox();
 
   const loading = status === "loading" || status === "stalled";
 
@@ -36,7 +44,7 @@ const SearchHits: React.FC<Props> = ({ items, totalCount }) => {
           >
             提交反馈
           </a>{" "}
-          进行反馈
+          进行
         </p>
       </div>
     );
@@ -46,7 +54,7 @@ const SearchHits: React.FC<Props> = ({ items, totalCount }) => {
     <ul className={styles.hitsList}>
       {items.map((hit) => (
         <li key={hit.objectID} className={styles.hitsListItem}>
-          <SearchHitItem hit={hit} />
+          <SearchHitItem hit={hit} language={language} groupMap={groupMap} />
         </li>
       ))}
     </ul>

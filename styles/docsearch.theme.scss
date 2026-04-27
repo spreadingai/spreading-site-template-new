@@ -1,0 +1,152 @@
+// Search page theme variables (light / dark)
+// Only color-related variables that differ between themes.
+// Layout, sizing, spacing stay in index.module.scss directly.
+// Prefix: --docsearch-custom
+
+html {
+  // Algolia SearchBox
+  --docsearch-custom-algolia-searchbox-clear-color: #626978;
+  --docsearch-custom-algolia-searchbox-border-bg: linear-gradient(91deg, rgba(97, 167, 255, 1), rgba(148, 127, 255, 1));
+  --docsearch-custom-algolia-searchbox-background:
+    radial-gradient(128.92% 221.85% at 18.75% 233.93%, #cfafff 0%, rgba(207, 175, 255, 0) 100%),
+    radial-gradient(47.51% 80.52% at 50% 112.5%, #8ee1ff 0%, rgba(142, 225, 255, 0) 100%), #fff;
+  --docsearch-custom-algolia-searchbox-active-background: #fff;
+  --docsearch-custom-algolia-searchbox-placeholder-color: rgba(53, 60, 78, 0.6);
+  --docsearch-custom-algolia-searchbox-ai-btn-image: url("~/assets/images/search/btn_search@2x.png");
+
+  // DocTypeTabs
+  --docsearch-custom-tabs-border-bottom-color: #ebeff2;
+  --docsearch-custom-tab-color: #171717;
+  --docsearch-custom-tab-hover-color: #0055ff;
+  --docsearch-custom-tab-active-color: #0055ff;
+  --docsearch-custom-tab-active-border-bottom-color: #0055ff;
+
+  // FacetLabelList
+  --docsearch-custom-facet-title-color: #858999;
+  --docsearch-custom-facet-label-bg: transparent;
+  --docsearch-custom-facet-label-color: #28292e;
+  --docsearch-custom-facet-label-hover-color: #0055ff;
+  --docsearch-custom-facet-label-active-bg: #eaf0ff;
+  --docsearch-custom-facet-label-active-color: #0055ff;
+  --docsearch-custom-facet-toggle-color: #858999;
+  --docsearch-custom-facet-toggle-border-color: #f3f3f3;
+
+  // Hits - empty state
+  --docsearch-custom-hits-empty-color: #28292e;
+  --docsearch-custom-feedback-link-color: #0055ff;
+  --docsearch-custom-hits-empty-pic: url("~/assets/images/search/search_pic@2x.png");
+
+  // Hit item card
+  --docsearch-custom-hit-item-color: #46474d;
+  --docsearch-custom-hit-title-color: #28292e;
+  --docsearch-custom-hit-highlight-color: #0055ff;
+  --docsearch-custom-hit-snippet-color: #46474d;
+  --docsearch-custom-hit-tag-bg: #f3f5fa;
+  --docsearch-custom-hit-tag-color: #46474d;
+
+  // AI Suggestion
+  --docsearch-custom-ai-border-color: #edf4f9;
+  --docsearch-custom-ai-bg:
+    radial-gradient(128.92% 221.85% at 18.75% 233.93%, rgba(188, 175, 255, 0.4) 0%, rgba(188, 175, 255, 0) 100%),
+    #f8fbff;
+  --docsearch-custom-ai-header-color: #171717;
+  --docsearch-custom-ai-link-color: #0055ff;
+  --docsearch-custom-ai-item-bg: #ffffff;
+  --docsearch-custom-ai-item-color: #171717;
+  --docsearch-custom-ai-item-hover-color: #0055ff;
+  --docsearch-custom-ai-item-icon: url("~/assets/images/search/ai_suggestion_icon@2x.png");
+
+  // Feedback bar
+  --docsearch-custom-feedback-bg: #f2f6ff;
+  --docsearch-custom-feedback-text-color: #28292e;
+  --docsearch-custom-feedback-btn-bg: #fff;
+  --docsearch-custom-feedback-btn-border: #e5ebf7;
+  --docsearch-custom-feedback-btn-color: #28292e;
+
+  // Pagination
+  --docsearch-custom-pagination-link-color: rgb(70, 71, 77);
+  --docsearch-custom-pagination-link-disabled-color: rgb(70, 71, 77, 0.3);
+  --docsearch-custom-pagination-selected-link-color: #0055ff;
+  --docsearch-custom-pagination-link-border-color: #e6e8eb;
+  --docsearch-custom-pagination-link-bg: none;
+}
+
+html[data-theme="dark"] {
+  // Algolia SearchBox
+  --docsearch-custom-algolia-searchbox-clear-color: #626978;
+  --docsearch-custom-algolia-searchbox-border-bg: linear-gradient(91deg, rgba(97, 167, 255, 1), rgba(148, 127, 255, 1));
+  --docsearch-custom-algolia-searchbox-background: linear-gradient(
+      90deg,
+      rgba(65, 127, 215, 1),
+      rgba(113, 134, 209, 1),
+      rgba(143, 160, 211, 1),
+      rgba(149, 135, 220, 1),
+      rgba(118, 80, 189, 1)
+    )
+    1 1;
+  --docsearch-custom-algolia-searchbox-active-background: #000000;
+  --docsearch-custom-algolia-searchbox-placeholder-color: #757575;
+  --docsearch-custom-algolia-searchbox-ai-btn-image: url("~/assets/images/search/btn_search_dark@2x.png");
+
+  // DocTypeTabs
+  --docsearch-custom-tabs-border-bottom-color: #252525;
+  --docsearch-custom-tab-color: rgba(240, 240, 240, 0.6);
+  --docsearch-custom-tab-hover-color: #f0f0f0;
+  --docsearch-custom-tab-active-color: #f0f0f0;
+  --docsearch-custom-tab-active-border-bottom-color: #f0f0f0;
+
+  // FacetLabelList
+  --docsearch-custom-facet-title-color: rgba(134, 134, 134, 0.7);
+  --docsearch-custom-facet-label-bg: transparent;
+  --docsearch-custom-facet-label-color: #868686;
+  --docsearch-custom-facet-label-hover-color: #f0f0f0;
+  --docsearch-custom-facet-label-active-bg: rgba(255, 255, 255, 0.1);
+  --docsearch-custom-facet-label-active-color: #f0f0f0;
+  --docsearch-custom-facet-toggle-color: #858999;
+  --docsearch-custom-facet-toggle-border-color: #252525;
+
+  // Hits - empty state
+  --docsearch-custom-hits-empty-color: #b6b6b6;
+  --docsearch-custom-feedback-link-color: #266eff;
+  --docsearch-custom-hits-empty-pic: url("~/assets/images/search/search_pic_dark@2x.png");
+
+  // Hit item card
+  --docsearch-custom-hit-item-color: #b6b6b6;
+  --docsearch-custom-hit-title-color: #f0f0f0;
+  --docsearch-custom-hit-highlight-color: #256fff;
+  --docsearch-custom-hit-snippet-color: #b6b6b6;
+  --docsearch-custom-hit-tag-bg: rgba(255, 255, 255, 0.1);
+  --docsearch-custom-hit-tag-color: rgba(240, 240, 240, 0.7);
+
+  // AI Suggestion
+  --docsearch-custom-ai-border-color: linear-gradient(
+      338deg,
+      rgba(88, 85, 237, 1),
+      rgba(255, 255, 255, 0.25),
+      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.25),
+      rgba(88, 85, 237, 1)
+    )
+    1 1;
+  --docsearch-custom-ai-bg: #000000;
+  --docsearch-custom-ai-header-color: rgba(144, 144, 144, 0.8);
+  --docsearch-custom-ai-link-color: #266eff;
+  --docsearch-custom-ai-item-bg: linear-gradient(37deg, #292929 0%, #0f0e0e 100%);
+  --docsearch-custom-ai-item-color: #f0f0f0;
+  --docsearch-custom-ai-item-hover-color: #266eff;
+  --docsearch-custom-ai-item-icon: url("~/assets/images/search/ai_suggestion_icon_dark@2x.png");
+
+  // Feedback bar
+  --docsearch-custom-feedback-bg: rgba(242, 246, 255, 0.08);
+  --docsearch-custom-feedback-text-color: #f0f0f0;
+  --docsearch-custom-feedback-btn-bg: rgba(242, 246, 255, 0.2);
+  --docsearch-custom-feedback-btn-border: rgba(63, 63, 63, 0.5);
+  --docsearch-custom-feedback-btn-color: #f0f0f0;
+
+  // Pagination
+  --docsearch-custom-pagination-link-color: rgb(240, 240, 240);
+  --docsearch-custom-pagination-link-disabled-color: rgb(240, 240, 240, 0.3);
+  --docsearch-custom-pagination-selected-link-color: #266eff;
+  --docsearch-custom-pagination-link-border-color: #333;
+  --docsearch-custom-pagination-link-bg: rgba(242, 246, 255, 0.1);
+}

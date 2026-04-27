@@ -16,8 +16,9 @@ export const getStaticProps = () => {
   };
 };
 
-// 注意：不 retrieve 完整 content 字段（可能上万字），只用 _snippetResult.content 片段即可
 // facets 不在此处声明，由 useRefinementList hook 自动管理（disjunctive faceting）
+
+// 注意：不 retrieve 完整 content 字段（可能上万字），只用 _snippetResult.content 片段即可
 const ATTRIBUTES_TO_RETRIEVE = [
   "hierarchy.lvl0",
   "hierarchy.lvl1",
@@ -41,6 +42,16 @@ const ATTRIBUTES_TO_SNIPPET = [
   "hierarchy.lvl6:30",
   "content:160",
 ];
+// 限制 Algolia 只在可见字段中搜索，替代客户端 filterHits，使 facet counts 准确
+const RESTRICT_SEARCHABLE_ATTRIBUTES = [
+  "content",
+  "hierarchy.lvl1",
+  "hierarchy.lvl2",
+  "hierarchy.lvl3",
+  "hierarchy.lvl4",
+  "hierarchy.lvl5",
+  "hierarchy.lvl6",
+];
 
 const ALGOLIA_CONFIG = {
   en: {
@@ -55,15 +66,18 @@ const ALGOLIA_CONFIG = {
   },
 } as const;
 
-export default function SearchPage() {
+export default function SearchPage({
+  inputDocuoConfig,
+}: {
+  inputDocuoConfig: any;
+}) {
   const { currentLanguage } = useLanguage();
   const { appId, apiKey, indexName } =
     ALGOLIA_CONFIG[currentLanguage === "zh" ? "zh" : "en"];
   const searchClient = useMemo(
     () => algoliasearch(appId, apiKey),
-    [appId, apiKey]
+    [appId, apiKey],
   );
-  const facetFilters = useMemo(() => [], []);
   const placeholder =
     copywriting[currentLanguage]?.search?.placeholder || "Search";
 
@@ -77,8 +91,8 @@ export default function SearchPage() {
         future={{ preserveSharedStateOnUnmount: true }}
       >
         <Configure
-          hitsPerPage={500}
-          facetFilters={facetFilters}
+          hitsPerPage={30}
+          restrictSearchableAttributes={RESTRICT_SEARCHABLE_ATTRIBUTES}
           attributesToRetrieve={ATTRIBUTES_TO_RETRIEVE}
           attributesToSnippet={ATTRIBUTES_TO_SNIPPET}
           snippetEllipsisText="…"
@@ -87,7 +101,10 @@ export default function SearchPage() {
           clickAnalytics={false}
           analytics={false}
         />
-        <SearchPageClient placeholder={placeholder} />
+        <SearchPageClient
+          placeholder={placeholder}
+          instanceGroups={inputDocuoConfig?.themeConfig?.instanceGroups || []}
+        />
       </InstantSearch>
     </div>
   );
@@ -96,4 +113,3 @@ export default function SearchPage() {
 SearchPage.getLayout = function getLayout(page, pageProps) {
   return <SearchLayout {...pageProps}>{page}</SearchLayout>;
 };
-

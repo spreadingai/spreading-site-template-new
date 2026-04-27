@@ -1,165 +1,671 @@
-// Minimal styles for new search page. Polish later.
+// Search page styles.
+// Color values use CSS variables from styles/docsearch.theme.scss (light / dark).
+// Layout sizing is inside media queries; non-sizing properties stay outside.
+
+// ==================================================================
+// Base styles (non-sizing: colors, display, cursor, overflow, etc.)
+// ==================================================================
 
 .pageRoot {
-  max-width: 1200px;
   margin: 0 auto;
-  padding: 24px 16px 48px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
 }
 
 .criteria {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+}
+.criteriaHasQuery {
+  // has query input
+}
+.criteriaEmpty {
+  // no query input
 }
 
-// SearchBox --------------------------------------------------------
-.searchBox {
-  position: relative;
-  display: flex;
-  align-items: center;
-  height: 44px;
-  border: 1px solid #d9d9d9;
-  border-radius: 6px;
-  padding: 0 12px;
-  background: #fff;
+// SearchBox (react-instantsearch built-in) ------------------------------------
+// ais-SearchBox DOM 结构:
+//   .ais-SearchBox-form
+//     .ais-SearchBox-input
+//     .ais-SearchBox-submit
+//       .ais-SearchBox-submitIcon
+//     .ais-SearchBox-reset
+//       .ais-SearchBox-resetIcon
+//     .ais-SearchBox-loadingIndicator
+//       .ais-SearchBox-loadingIcon
 
-  &:focus-within { border-color: #1677ff; }
+.criteria {
+  &.criteriaHasQuery {
+    :global {
+      .ais-SearchBox-form {
+        .ais-SearchBox-input {
+          background: var(--docsearch-custom-algolia-searchbox-active-background);
+        }
+      }
+    }
+  }
+  :global {
+    .ais-SearchBox-form {
+      // non-sizing base — 渐变边框容器
+      background: var(--docsearch-custom-algolia-searchbox-border-bg);
+      &::before {
+        display: none;
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-image: var(--docsearch-custom-algolia-searchbox-ai-btn-image);
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        cursor: pointer;
+      }
+    }
+    .ais-SearchBox-input {
+      // non-sizing base — 纯色背景覆盖中间
+      border: none;
+      background: var(--docsearch-custom-algolia-searchbox-background);
+      box-shadow: none;
+      font-family: PingFang SC;
+      font-weight: 400;
+      color: var(--docuo-color-primary);
+      &::placeholder {
+        font-family: PingFang SC;
+        font-weight: inherit;
+        font-size: inherit;
+        color: var(--docsearch-custom-algolia-searchbox-placeh-color);
+      }
+    }
+    .ais-SearchBox-submit {
+      // non-sizing base
+    }
+    .ais-SearchBox-submitIcon {
+      // non-sizing base
+    }
+    .ais-SearchBox-reset {
+      // non-sizing base
+      fill: var(--docsearch-custom-algolia-searchbox-clear-color);
+      transition: all 0.3s;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+    .ais-SearchBox-resetIcon {
+      // non-sizing base
+    }
+    .ais-SearchBox-loadingIndicator {
+      // non-sizing base
+      fill: var(--docsearch-custom-algolia-searchbox-clear-color);
+    }
+    .ais-SearchBox-loadingIcon {
+      // non-sizing base
+    }
+  }
 }
-.searchBoxIcon { display: flex; color: #888; margin-right: 8px; }
-.searchBoxInput {
-  flex: 1;
-  border: 0;
-  outline: 0;
-  background: transparent;
-  font-size: 14px;
-  height: 100%;
-  &::-webkit-search-cancel-button { display: none; }
-}
-.searchBoxLoading { color: #888; font-size: 14px; }
-.searchBoxClear {
-  border: 0; background: transparent; color: #888; cursor: pointer;
-  padding: 0 6px; font-size: 14px;
-  &:hover { color: #333; }
+.body {
+  :global {
+    .ais-Pagination {
+      display: flex;
+      justify-content: center;
+
+      .ais-Pagination-list {
+        // non-sizing base
+      }
+      .ais-Pagination-item {
+        // non-sizing base
+        .ais-Pagination-link {
+          color: var(--docsearch-custom-pagination-link-color);
+          box-shadow: none;
+          background: var(--docsearch-custom-pagination-link-bg);
+          border: 1px solid var(--docsearch-custom-pagination-link-border-color);
+          transition: all 0.3s;
+        }
+        &.ais-Pagination-item--disabled {
+          .ais-Pagination-link {
+            color: var(--docsearch-custom-pagination-link-disabled-color);
+          }
+        }
+        &:not(.ais-Pagination-item--disabled):hover {
+          .ais-Pagination-link {
+            color: var(--docsearch-custom-pagination-selected-link-color);
+          }
+        }
+        &:not(.ais-Pagination-item--selected):not(.ais-Pagination-item--disabled) .ais-Pagination-link:hover {
+          border: 1px solid var(--docsearch-custom-pagination-link-border-color);
+          background: var(--docsearch-custom-pagination-link-bg);
+        }
+      }
+      .ais-Pagination-item--selected {
+        // non-sizing base
+        .ais-Pagination-link {
+          box-shadow: none;
+          background: var(--docsearch-custom-pagination-link-bg);
+          color: var(--docsearch-custom-pagination-selected-link-color);
+        }
+      }
+      .ais-Pagination-item--disabled {
+        // non-sizing base
+      }
+
+      .ais-Pagination-link {
+        // non-sizing base
+      }
+      .ais-Pagination-item--selected .ais-Pagination-link {
+        // non-sizing base
+      }
+      .ais-Pagination-item--disabled .ais-Pagination-link {
+        // non-sizing base
+      }
+    }
+  }
 }
 
 // DocTypeTabs -----------------------------------------------------
 .docTypeTabs {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid var(--docsearch-custom-tabs-border-bottom-color);
 }
 .docTypeTab {
-  border: 0; background: transparent; cursor: pointer;
-  padding: 8px 14px; font-size: 14px; color: #555;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  color: var(--docsearch-custom-tab-color);
   border-bottom: 2px solid transparent;
-  &:hover { color: #1677ff; }
+  font-family: PingFang SC;
+  transition: all 0.3s;
+  &:hover {
+    color: var(--docsearch-custom-tab-hover-color);
+  }
 }
-.docTypeTabActive { color: #1677ff; border-bottom-color: #1677ff; font-weight: 500; }
-.docTypeTabCount { margin-left: 4px; color: inherit; opacity: 0.7; font-size: 12px; }
+.docTypeTabActive {
+  color: var(--docsearch-custom-tab-active-color);
+  border-bottom-color: var(--docsearch-custom-tab-active-border-bottom-color);
+}
+.docTypeTabCount {
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  opacity: 0.7;
+}
 
 // FacetLabelList --------------------------------------------------
 .facetRow {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
-  padding: 4px 0;
 }
 .facetRowTitle {
+  font-family: PingFang SC;
+  font-weight: 400;
   flex: 0 0 auto;
-  font-size: 13px;
-  color: #888;
-  padding-top: 6px;
-  min-width: 60px;
+  color: var(--docsearch-custom-facet-title-color);
 }
 .facetRowList {
   flex: 1 1 auto;
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
 }
 .facetLabel {
-  border: 1px solid #e5e5e5; background: #fff; color: #444;
-  padding: 4px 10px; border-radius: 14px; font-size: 12px; cursor: pointer;
-  &:hover { border-color: #1677ff; color: #1677ff; }
+  font-family: PingFang SC;
+  font-weight: 400;
+  background: var(--docsearch-custom-facet-label-bg);
+  color: var(--docsearch-custom-facet-label-color);
+  cursor: pointer;
+  transition: all 0.3s;
+  &:hover {
+    color: var(--docsearch-custom-facet-label-hover-color);
+  }
 }
-.facetLabelActive { background: #1677ff; color: #fff; border-color: #1677ff; &:hover { color: #fff; } }
-.facetLabelCount { margin-left: 4px; opacity: 0.75; }
+.facetLabelActive {
+  background: var(--docsearch-custom-facet-label-active-bg);
+  color: var(--docsearch-custom-facet-label-active-color);
+  &:hover {
+    color: var(--docsearch-custom-facet-label-active-color);
+  }
+}
+.facetLabelCount {
+  opacity: 0.7;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+}
 .facetRowToggle {
+  font-family: PingFang SC;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
   flex: 0 0 auto;
-  border: 0; background: transparent; color: #1677ff;
-  cursor: pointer; font-size: 12px; padding: 6px 8px;
+  border: 0;
+  background: transparent;
+  color: var(--docsearch-custom-facet-toggle-color);
+  cursor: pointer;
+  border: 1px solid var(--docsearch-custom-facet-toggle-border-color);
+  transition: all 0.3s;
+  &:hover {
+    opacity: 0.8;
+  }
+  svg {
+    transition: all 0.3s;
+    position: relative;
+    top: -1px;
+    transform: rotate(90deg);
+  }
+}
+.facetRowToggleExpanded {
+  // expanded state
+  svg {
+    transform: rotate(-90deg);
+  }
+}
+.facetRowToggleCollapsed {
+  // collapsed state
 }
 
 // Hits ------------------------------------------------------------
-.body { display: flex; flex-direction: column; gap: 16px; }
-.hitsList { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 12px; }
-.hitsListItem { display: block; }
-.hitsEmpty, .hitsLoading {
-  padding: 40px 16px; text-align: center; color: #888; font-size: 14px;
+.body {
+  display: flex;
+  flex-direction: column;
 }
-.hitsEmpty p { margin: 4px 0; }
-.emptyFeedbackLink { color: #1677ff; text-decoration: none; &:hover { text-decoration: underline; } }
+.hitsList {
+  list-style: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+.hitsListItem {
+  display: block;
+}
+.hitsEmpty,
+.hitsLoading {
+  font-family: PingFang SC;
+  font-weight: 500;
+  text-align: center;
+  color: var(--docsearch-custom-hits-empty-color);
+}
+.hitsEmpty {
+  position: relative;
+  &::before {
+    content: "";
+    background-image: var(--docsearch-custom-hits-empty-pic);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+.hitsLoading {
+  position: relative;
+  &::before {
+    content: "";
+    background-image: var(--docsearch-custom-hits-empty-pic);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+.emptyFeedbackLink {
+  color: var(--docsearch-custom-feedback-link-color);
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
 
 // AI Suggestion ---------------------------------------------------
 .aiSuggestion {
-  margin-top: 12px; padding: 16px; border: 1px solid #e5e5e5; border-radius: 8px; background: #fff;
+  border: 1px solid var(--docsearch-custom-ai-border-color);
+  background: var(--docsearch-custom-ai-bg);
 }
 .aiSuggestionHeader {
-  margin: 0 0 12px; font-size: 14px; color: #333;
+  color: var(--docsearch-custom-ai-header-color);
+  font-family: PingFang SC;
+  font-weight: 500;
 }
 .aiSuggestionLink {
-  color: #1677ff; cursor: pointer; &:hover { text-decoration: underline; }
+  color: var(--docsearch-custom-ai-link-color);
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 .aiSuggestionGrid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  display: grid;
 }
 .aiSuggestionItem {
-  padding: 10px 12px; border: 1px solid #eee; border-radius: 6px; background: #fafafa;
-  font-size: 13px; color: #333; text-align: left; cursor: pointer;
-  &:hover { border-color: #1677ff; color: #1677ff; background: #f0f7ff; }
+  font-family: PingFang SC;
+  font-weight: 400;
+  background: var(--docsearch-custom-ai-item-bg);
+  color: var(--docsearch-custom-ai-item-color);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  &:hover {
+    color: var(--docsearch-custom-ai-item-hover-color);
+  }
+  &::before {
+    position: absolute;
+    content: "";
+    top: 50%;
+    transform: translateY(-50%);
+    background-image: var(--docsearch-custom-ai-item-icon);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
 }
 
 // Feedback bar ----------------------------------------------------
 .feedbackBar {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 16px; border: 1px solid #eee; border-radius: 8px; background: #fafafa;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--docsearch-custom-feedback-bg);
 }
-.feedbackText { font-size: 14px; color: #555; }
+.feedbackText {
+  color: var(--docsearch-custom-feedback-text-color);
+  font-family: PingFang SC;
+  font-weight: 500;
+}
 .feedbackBtn {
-  display: inline-block; padding: 6px 16px; border-radius: 4px;
-  background: #1677ff; color: #fff; font-size: 13px; text-decoration: none;
-  &:hover { background: #0958d9; }
-}
-.hitItem {
-  display: block; padding: 14px 16px; border: 1px solid #eee; border-radius: 8px;
-  text-decoration: none; color: #222; background: #fff;
-  &:hover { border-color: #1677ff; box-shadow: 0 1px 8px rgba(22,119,255,0.08); }
-}
-.hitTitle { font-size: 15px; font-weight: 500; line-height: 1.5; margin-bottom: 6px; color: #111; }
-.hitTitle :global(mark) { background: transparent; color: #1677ff; font-weight: 600; }
-.hitSnippet { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 8px; }
-.hitSnippet :global(mark) { background: transparent; color: #1677ff; font-weight: 600; }
-.hitTags { display: flex; flex-wrap: wrap; gap: 6px; }
-.hitTag {
-  font-size: 11px; padding: 2px 8px; border-radius: 10px;
-  background: #f5f5f5; color: #666; border: 1px solid #eee;
+  display: inline-block;
+  background: var(--docsearch-custom-feedback-btn-bg);
+  color: var(--docsearch-custom-feedback-btn-color);
+  text-decoration: none;
+  border: 1px solid var(--docsearch-custom-feedback-btn-border);
+  display: flex;
+  transition: all 0.3s;
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
-// Pagination ------------------------------------------------------
-.pagination {
-  display: flex; align-items: center; justify-content: center;
-  gap: 4px; padding: 12px 0;
+// Hit item card ---------------------------------------------------
+.hitItem {
+  display: flex;
+  flex-direction: column;
+  color: var(--docsearch-custom-hit-item-color);
 }
-.pageBtn {
-  min-width: 32px; height: 32px; padding: 0 10px;
-  border: 1px solid #e5e5e5; background: #fff; color: #444;
-  border-radius: 4px; cursor: pointer; font-size: 13px;
-  &:hover:not(:disabled) { border-color: #1677ff; color: #1677ff; }
-  &:disabled { opacity: 0.4; cursor: not-allowed; }
+.hitTitle {
+  font-weight: 500;
+  color: var(--docsearch-custom-hit-title-color);
 }
-.pageBtnActive { background: #1677ff; color: #fff; border-color: #1677ff; &:hover { color: #fff; } }
-.pageEllipsis { color: #888; padding: 0 4px; }
+.hitTitle :global(mark) {
+  background: transparent;
+  color: var(--docsearch-custom-hit-highlight-color);
+  font-weight: 600;
+}
+.hitSnippet {
+  color: var(--docsearch-custom-hit-snippet-color);
+}
+.hitSnippet :global(mark) {
+  background: transparent;
+  color: var(--docsearch-custom-hit-highlight-color);
+  font-weight: 600;
+}
+.hitTags {
+  display: flex;
+  flex-wrap: wrap;
+}
+.hitTag {
+  color: var(--docsearch-custom-hit-tag-color);
+  background: var(--docsearch-custom-hit-tag-bg);
+}
+
+// ==================================================================
+// >= 1025px (desktop)
+// ==================================================================
+@media (min-width: 1025px) {
+  .pageRoot {
+    max-width: 1200px;
+    padding: 34px 16px 76px;
+    gap: 20px;
+  }
+
+  .criteria {
+    // SearchBox (react-instantsearch built-in)
+    :global {
+      .ais-SearchBox-form {
+        // sizing
+        height: 50px;
+        line-height: 50px;
+        padding: 1px;
+        border-radius: 8px;
+        &::after {
+          width: 48px;
+          height: 42px;
+          right: 6px;
+        }
+      }
+      .ais-SearchBox-input {
+        // sizing
+        border-radius: 7px;
+        padding-left: 16px;
+        padding-right: 104px;
+        font-size: 14px;
+      }
+      .ais-SearchBox-submit {
+        // sizing
+      }
+      .ais-SearchBox-submitIcon {
+        // sizing
+      }
+      .ais-SearchBox-reset {
+        // sizing
+        right: 65px;
+        width: 30px;
+        height: 30px;
+      }
+      .ais-SearchBox-resetIcon {
+        // sizing
+      }
+      .ais-SearchBox-loadingIndicator {
+        // sizing
+        right: 70px;
+      }
+      .ais-SearchBox-loadingIcon {
+        // sizing
+      }
+    }
+  }
+
+  // DocTypeTabs
+  .docTypeTabs {
+    gap: 28px;
+    margin-top: 16px;
+  }
+  .docTypeTab {
+    padding: 8px 14px;
+    font-size: 14px;
+  }
+  .docTypeTabActive {
+    font-weight: 500;
+  }
+  .docTypeTabCount {
+    margin-left: 4px;
+  }
+
+  // FacetLabelList
+  .facetRow {
+    gap: 14px;
+    margin-top: 24px;
+  }
+  .facetRowTitle {
+    font-size: 14px;
+    padding-top: 4px;
+    width: 105px;
+  }
+  .facetRowList {
+    gap: 6px;
+  }
+  .facetLabel {
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  .facetLabelCount {
+    margin-left: 4px;
+  }
+  .facetRowToggle {
+    font-size: 14px;
+    padding: 3px 10px 2px;
+    border-radius: 4px;
+    gap: 6px;
+  }
+
+  // Hits
+  .body {
+    gap: 30px;
+  }
+  .hitsList {
+    padding: 0;
+    gap: 40px;
+    margin-bottom: 30px;
+  }
+  .hitsEmpty,
+  .hitsLoading {
+    font-size: 14px;
+  }
+  .hitsEmpty {
+    padding: 286px 0 40px;
+    &::before {
+      width: 150px;
+      height: 150px;
+      top: 100px;
+    }
+    p {
+      & + p {
+        margin-top: 8px;
+      }
+    }
+  }
+  .hitsLoading {
+    padding: 286px 0 40px;
+    &::before {
+      width: 150px;
+      height: 150px;
+      top: 100px;
+    }
+  }
+
+  // AI Suggestion
+  .aiSuggestion {
+    margin-top: 12px;
+    padding: 16px;
+    border-radius: 8px;
+  }
+  .aiSuggestionHeader {
+    margin: 0 0 12px;
+    font-size: 14px;
+  }
+  .aiSuggestionLink {
+    margin: 0 4px;
+  }
+  .aiSuggestionGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .aiSuggestionItem {
+    border-radius: 8px;
+    font-size: 14px;
+    padding: 10px 10px 10px 40px;
+    &::before {
+      width: 20px;
+      height: 20px;
+      left: 10px;
+    }
+  }
+
+  // Feedback bar
+  .feedbackBar {
+    padding: 20px 20px 20px 30px;
+    border-radius: 4px;
+    margin-bottom: 10px;
+  }
+  .feedbackText {
+    font-size: 18px;
+  }
+  .feedbackBtn {
+    padding: 9px 24px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    gap: 8px;
+  }
+
+  // Hit item card
+  .hitItem {
+  }
+  .hitTitle {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 7px;
+  }
+  .hitSnippet {
+    font-size: 14px;
+    line-height: 21px;
+    margin-bottom: 12px;
+  }
+  .hitTags {
+    gap: 10px;
+  }
+  .hitTag {
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+
+  // Pagination (react-instantsearch built-in)
+  .body {
+    :global {
+      .ais-Pagination {
+        .ais-Pagination-list {
+          // sizing
+        }
+        .ais-Pagination-item {
+          // sizing
+        }
+        .ais-Pagination-item--selected {
+          // sizing
+        }
+        .ais-Pagination-item--disabled {
+          // sizing
+        }
+        .ais-Pagination-link {
+          width: 42px;
+          // sizing
+        }
+        .ais-Pagination-item--selected .ais-Pagination-link {
+          // sizing
+        }
+        .ais-Pagination-item--disabled .ais-Pagination-link {
+          // sizing
+        }
+      }
+    }
+  }
+}
+
+// ==================================================================
+// < 1025px (mobile)
+// ==================================================================
+@media (max-width: 1024px) {
+  // TODO: 待补充具体样式
+}
+
+// ==================================================================
+// < 750px (mobile)
+// ==================================================================
+@media (max-width: 749px) {
+  // TODO: 待补充具体样式
+}

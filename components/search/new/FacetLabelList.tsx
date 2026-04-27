@@ -1,19 +1,31 @@
 import React, { useState } from "react";
 import { useMenu } from "react-instantsearch";
+import {
+  getGroupLabel,
+  getPlatformLabel,
+  getAllLabel,
+  getFacetTitle,
+  getExpandLabel,
+} from "./facetMapping";
+import IconArrowRight from "@/assets/icons/iconArrowRight.svg";
+
+type GroupMap = Map<string, string>;
 import styles from "./index.module.scss";
 
 interface Props {
   attribute: string;
   title?: string;
-  allLabel?: string;
   collapsedCount?: number;
+  language?: string;
+  groupMap?: GroupMap;
 }
 
 const FacetLabelList: React.FC<Props> = ({
   attribute,
   title,
-  allLabel = "All",
   collapsedCount = 8,
+  language = "zh",
+  groupMap,
 }) => {
   const { items, refine } = useMenu({
     attribute,
@@ -28,9 +40,20 @@ const FacetLabelList: React.FC<Props> = ({
   const needsToggle = items.length > collapsedCount;
   const visibleItems = expanded ? items : items.slice(0, collapsedCount);
 
+  const getLabel = (label: string) => {
+    if (attribute === "group" && groupMap)
+      return getGroupLabel(groupMap, label);
+    if (attribute === "platform") return getPlatformLabel(label, language);
+    return label;
+  };
+
   return (
     <div className={styles.facetRow}>
-      {title && <span className={styles.facetRowTitle}>{title}</span>}
+      {title && (
+        <span className={styles.facetRowTitle}>
+          {getFacetTitle(title, language)}
+        </span>
+      )}
       <div className={styles.facetRowList}>
         <button
           type="button"
@@ -39,7 +62,7 @@ const FacetLabelList: React.FC<Props> = ({
           }`}
           onClick={() => refine(undefined as any)}
         >
-          {allLabel}
+          {getAllLabel(language)}
         </button>
         {visibleItems.map((item) => (
           <button
@@ -50,7 +73,7 @@ const FacetLabelList: React.FC<Props> = ({
             }`}
             onClick={() => refine(item.value)}
           >
-            {item.label}
+            {getLabel(item.label)}
             <span className={styles.facetLabelCount}>({item.count})</span>
           </button>
         ))}
@@ -58,10 +81,15 @@ const FacetLabelList: React.FC<Props> = ({
       {needsToggle && (
         <button
           type="button"
-          className={styles.facetRowToggle}
+          className={`${styles.facetRowToggle} ${
+            expanded
+              ? styles.facetRowToggleExpanded
+              : styles.facetRowToggleCollapsed
+          }`}
           onClick={() => setExpanded((v) => !v)}
         >
-          {expanded ? "收起" : "展开"}
+          {getExpandLabel(language)}
+          <IconArrowRight />
         </button>
       )}
     </div>

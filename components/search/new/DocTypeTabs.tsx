@@ -1,12 +1,13 @@
 import React from "react";
 import { useMenu } from "react-instantsearch";
+import { getDocTypeLabel, getAllLabel } from "./facetMapping";
 import styles from "./index.module.scss";
 
 interface Props {
-  allLabel?: string;
+  language?: string;
 }
 
-const DocTypeTabs: React.FC<Props> = ({ allLabel = "All" }) => {
+const DocTypeTabs: React.FC<Props> = ({ language = "zh" }) => {
   const { items, refine } = useMenu({
     attribute: "doctype",
     limit: 50,
@@ -29,7 +30,7 @@ const DocTypeTabs: React.FC<Props> = ({ allLabel = "All" }) => {
         }`}
         onClick={() => refine(undefined as any)}
       >
-        {allLabel}
+        {getAllLabel(language)}
         <span className={styles.docTypeTabCount}>({total})</span>
       </button>
       {items.map((item) => (
@@ -43,7 +44,7 @@ const DocTypeTabs: React.FC<Props> = ({ allLabel = "All" }) => {
           }`}
           onClick={() => refine(item.value)}
         >
-          {item.label}
+          {getDocTypeLabel(item.label, language)}
           <span className={styles.docTypeTabCount}>({item.count})</span>
         </button>
       ))}

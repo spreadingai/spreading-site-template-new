@@ -1,5 +1,12 @@
 import React from "react";
+import {
+  getDocTypeLabel,
+  getGroupLabel,
+  getPlatformLabel,
+} from "./facetMapping";
 import styles from "./index.module.scss";
+
+type GroupMap = Map<string, string>;
 
 export type HitType =
   | "lvl0"
@@ -94,9 +101,7 @@ function truncateAroundFirstMark(html: string): string {
   return result;
 }
 
-// content 第二行：优先用 snippet（截断的命中片段），snippet 没命中时回退 highlight（完整高亮）。
-// 原因：snippet 视觉更友好（只展示命中词附近的上下文），但 Algolia 对某些长 content 可能
-// 返回 snippet.matchLevel=none（命中词位置或 snippet 长度限制），此时改用 highlight 并自行截取。
+// content：优先用 snippet（截断的命中片段），snippet 没命中时回退 highlight（完整高亮）。
 function buildSnippetHtml(hit: AlgoliaHit): string {
   const snippet = hit._snippetResult?.content;
   if (snippet?.value && snippet.matchLevel && snippet.matchLevel !== "none") {
@@ -113,13 +118,29 @@ function buildSnippetHtml(hit: AlgoliaHit): string {
   return snippet?.value || "";
 }
 
-const SearchHitItem: React.FC<{ hit: AlgoliaHit }> = ({ hit }) => {
+const SearchHitItem: React.FC<{
+  hit: AlgoliaHit;
+  language?: string;
+  groupMap?: GroupMap;
+}> = ({ hit, language = "zh", groupMap }) => {
   const titleHtml = buildTitlePath(hit);
   const snippetHtml = buildSnippetHtml(hit);
   const tags = [
-    { key: "doctype", value: hit.doctype },
-    { key: "group", value: hit.group },
-    { key: "platform", value: hit.platform },
+    {
+      key: "doctype",
+      value: hit.doctype ? getDocTypeLabel(hit.doctype, language) : undefined,
+    },
+    {
+      key: "group",
+      value:
+        hit.group && groupMap ? getGroupLabel(groupMap, hit.group) : hit.group,
+    },
+    {
+      key: "platform",
+      value: hit.platform
+        ? getPlatformLabel(hit.platform, language)
+        : undefined,
+    },
   ].filter((t) => !!t.value);
   // TODO(debug): 临时展示 Algolia 原始响应中的位置，联调完成后移除
   const rawPosition = (hit as any).__position;
@@ -136,7 +157,8 @@ const SearchHitItem: React.FC<{ hit: AlgoliaHit }> = ({ hit }) => {
         dangerouslySetInnerHTML={{
           __html:
             rawPosition != null
-              ? `<span style="color:#999;margin-right:6px;font-weight:normal">#${rawPosition}</span>${titleHtml}`
+              ? // <span style="color:#999;margin-right:6px;font-weight:normal">#${rawPosition}</span>
+                `${titleHtml}`
               : titleHtml,
         }}
       />
