@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import "instantsearch.css/themes/satellite.css";
 import {
   Pagination,
@@ -11,9 +11,10 @@ import dynamic from "next/dynamic";
 import DocTypeTabs from "./DocTypeTabs";
 import FacetLabelList from "./FacetLabelList";
 import SearchHits from "./SearchHits";
-import AISuggestion, { getSuggestions } from "./AISuggestion";
+import AISuggestion from "./AISuggestion";
+import FeedbackBar from "./FeedbackBar";
 import type { AlgoliaHit } from "./SearchHitItem";
-import { buildGroupMap } from "./facetMapping";
+import { buildGroupMap, getSuggestions, getPlaceholder } from "./facetMapping";
 import useLanguage from "@/components/hooks/useLanguage";
 import ThemeContext from "@/components/header/Theme.context";
 import type { InstanceGroup } from "@/lib/types";
@@ -24,12 +25,10 @@ const AskAIModal = dynamic(() => import("@/components/header/AskAI/modal"), {
 });
 
 interface Props {
-  placeholder?: string;
   instanceGroups?: InstanceGroup[];
 }
 
 const SearchPageClient: React.FC<Props> = ({
-  placeholder,
   instanceGroups = [],
 }) => {
   const { query } = useSearchBox();
@@ -40,6 +39,18 @@ const SearchPageClient: React.FC<Props> = ({
   // AI 弹框状态
   const [aiModalOpen, setAiModalOpen] = useState(false);
   const [aiInitialMessage, setAiInitialMessage] = useState<string>();
+  const [paginationPadding, setPaginationPadding] = useState(3);
+  const bodyRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const check = () => {
+      const w = window.innerWidth;
+      setPaginationPadding(w <= 375 ? 1 : w <= 750 ? 2 : 3);
+    };
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   const handleOpenAI = (message?: string) => {
     setAiInitialMessage(message);
@@ -49,6 +60,13 @@ const SearchPageClient: React.FC<Props> = ({
   // Algolia 服务端分页：useHits 只返回当前页数据
   const { items } = useHits<AlgoliaHit>();
   const { results, indexUiState, setIndexUiState } = useInstantSearch();
+
+  // 切换页码后滚动到列表顶部
+  useEffect(() => {
+    if (indexUiState.page && indexUiState.page > 0) {
+      bodyRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  }, [indexUiState.page]);
 
   // 查询或筛选变化时重置到第 1 页
   const stateKey = useMemo(
@@ -74,7 +92,7 @@ const SearchPageClient: React.FC<Props> = ({
       <div
         className={`${styles.criteria} ${hasQuery ? styles.criteriaHasQuery : styles.criteriaEmpty}`}
       >
-        <ISSearchBox placeholder={placeholder} />
+        <ISSearchBox placeholder={getPlaceholder(currentLanguage)} />
         {hasQuery && (
           <>
             <DocTypeTabs language={currentLanguage} />
@@ -93,9 +111,13 @@ const SearchPageClient: React.FC<Props> = ({
         )}
       </div>
       {hasQuery && (
-        <div className={styles.body}>
+        <div className={styles.body} ref={bodyRef}>
           {totalCount > 0 && (
-            <AISuggestion query={query} onOpenAI={handleOpenAI} />
+            <AISuggestion
+              query={query}
+              onOpenAI={handleOpenAI}
+              language={currentLanguage}
+            />
           )}
           <SearchHits
             items={items}
@@ -103,24 +125,10 @@ const SearchPageClient: React.FC<Props> = ({
             language={currentLanguage}
             groupMap={groupMap}
           />
-          {totalCount > 0 && (
-            <div className={styles.feedbackBar}>
-              <span className={styles.feedbackText}>
-                没有找到您查询的内容？
-              </span>
-              <a
-                className={styles.feedbackBtn}
-                href="#"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                提交反馈
-              </a>
-            </div>
-          )}
+          {totalCount > 0 && <FeedbackBar language={currentLanguage} />}
           {/* Algolia 分页最多支持 1000 条结果（paginationLimitedTo 默认值），
               超出部分无法翻页访问，但 facet counts 显示的是真实总数，两者可能不一致 */}
-          {totalCount > 0 && <Pagination />}
+          {totalCount > 0 && <Pagination padding={paginationPadding} />}
         </div>
       )}
       <AskAIModal
@@ -131,7 +139,7 @@ const SearchPageClient: React.FC<Props> = ({
         currentGroup=""
         currentPlatform=""
         initialMessage={aiInitialMessage}
-        defaultQuestions={hasQuery ? getSuggestions(query) : undefined}
+        defaultQuestions={hasQuery ? getSuggestions(query, currentLanguage) : undefined}
       />
     </div>
   );

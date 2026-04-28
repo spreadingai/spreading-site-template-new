@@ -20,34 +20,36 @@ const DocTypeTabs: React.FC<Props> = ({ language = "zh" }) => {
   if (!items.length) return null;
 
   return (
-    <div className={styles.docTypeTabs} role="tablist">
-      <button
-        type="button"
-        role="tab"
-        aria-selected={!activeItem}
-        className={`${styles.docTypeTab} ${
-          !activeItem ? styles.docTypeTabActive : ""
-        }`}
-        onClick={() => refine(undefined as any)}
-      >
-        {getAllLabel(language)}
-        <span className={styles.docTypeTabCount}>({total})</span>
-      </button>
-      {items.map((item) => (
+    <div className={styles.docTypeTabsWrapper}>
+      <div className={styles.docTypeTabs} role="tablist">
         <button
-          key={item.value}
           type="button"
           role="tab"
-          aria-selected={item.isRefined}
+          aria-selected={!activeItem}
           className={`${styles.docTypeTab} ${
-            item.isRefined ? styles.docTypeTabActive : ""
+            !activeItem ? styles.docTypeTabActive : ""
           }`}
-          onClick={() => refine(item.value)}
+          onClick={() => refine(undefined as any)}
         >
-          {getDocTypeLabel(item.label, language)}
-          <span className={styles.docTypeTabCount}>({item.count})</span>
+          {getAllLabel(language)}
+          <span className={styles.docTypeTabCount}>({total})</span>
         </button>
-      ))}
+        {items.map((item) => (
+          <button
+            key={item.value}
+            type="button"
+            role="tab"
+            aria-selected={item.isRefined}
+            className={`${styles.docTypeTab} ${
+              item.isRefined ? styles.docTypeTabActive : ""
+            }`}
+            onClick={() => refine(item.value)}
+          >
+            {getDocTypeLabel(item.label, language)}
+            <span className={styles.docTypeTabCount}>({item.count})</span>
+          </button>
+        ))}
+      </div>
     </div>
   );
 };

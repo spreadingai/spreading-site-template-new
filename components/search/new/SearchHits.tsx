@@ -1,6 +1,8 @@
 import React from "react";
 import { useInstantSearch } from "react-instantsearch";
 import SearchHitItem, { AlgoliaHit } from "./SearchHitItem";
+import HitsLoading from "./HitsLoading";
+import HitsEmpty from "./HitsEmpty";
 import styles from "./index.module.scss";
 
 type GroupMap = Map<string, string>;
@@ -23,31 +25,11 @@ const SearchHits: React.FC<Props> = ({
   const loading = status === "loading" || status === "stalled";
 
   if (loading && totalCount === 0) {
-    return (
-      <div className={styles.hitsLoading}>
-        <span>搜索中…</span>
-      </div>
-    );
+    return <HitsLoading language={language} />;
   }
 
   if (!loading && totalCount === 0) {
-    return (
-      <div className={styles.hitsEmpty}>
-        <p>未能检索到相关内容，建议您尝试其他关键词</p>
-        <p>
-          您可{" "}
-          <a
-            className={styles.emptyFeedbackLink}
-            href="#"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            提交反馈
-          </a>{" "}
-          进行
-        </p>
-      </div>
-    );
+    return <HitsEmpty language={language} />;
   }
 
   return (

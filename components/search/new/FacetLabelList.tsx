@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useMenu } from "react-instantsearch";
 import {
   getGroupLabel,
@@ -15,7 +15,6 @@ import styles from "./index.module.scss";
 interface Props {
   attribute: string;
   title?: string;
-  collapsedCount?: number;
   language?: string;
   groupMap?: GroupMap;
 }
@@ -23,7 +22,6 @@ interface Props {
 const FacetLabelList: React.FC<Props> = ({
   attribute,
   title,
-  collapsedCount = 8,
   language = "zh",
   groupMap,
 }) => {
@@ -33,12 +31,24 @@ const FacetLabelList: React.FC<Props> = ({
     sortBy: ["count:desc", "name:asc"],
   });
   const [expanded, setExpanded] = useState(false);
+  const listRef = useRef<HTMLDivElement>(null);
+  const [hasOverflow, setHasOverflow] = useState(false);
+
+  // Detect if items overflow 1 row
+  useEffect(() => {
+    const list = listRef.current;
+    if (!list || list.children.length < 2) return;
+    const firstTop = list.children[0].offsetTop;
+    const overflow = Array.from(list.children).some(
+      (child) => child.offsetTop > firstTop
+    );
+    setHasOverflow(overflow);
+  }, [items]);
 
   if (!items.length) return null;
 
   const activeItem = items.find((i) => i.isRefined);
-  const needsToggle = items.length > collapsedCount;
-  const visibleItems = expanded ? items : items.slice(0, collapsedCount);
+  const needsToggle = hasOverflow || expanded;
 
   const getLabel = (label: string) => {
     if (attribute === "group" && groupMap)
@@ -54,7 +64,12 @@ const FacetLabelList: React.FC<Props> = ({
           {getFacetTitle(title, language)}
         </span>
       )}
-      <div className={styles.facetRowList}>
+      <div
+        ref={listRef}
+        className={`${styles.facetRowList} ${
+          !expanded && hasOverflow ? styles.facetRowListCollapsed : ""
+        }`}
+      >
         <button
           type="button"
           className={`${styles.facetLabel} ${
@@ -64,7 +79,7 @@ const FacetLabelList: React.FC<Props> = ({
         >
           {getAllLabel(language)}
         </button>
-        {visibleItems.map((item) => (
+        {items.map((item) => (
           <button
             key={item.value}
             type="button"
@@ -74,7 +89,7 @@ const FacetLabelList: React.FC<Props> = ({
             onClick={() => refine(item.value)}
           >
             {getLabel(item.label)}
-            <span className={styles.facetLabelCount}>({item.count})</span>
+            {/* <span className={styles.facetLabelCount}>({item.count})</span> */}
           </button>
         ))}
       </div>

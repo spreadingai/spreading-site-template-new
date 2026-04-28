@@ -6,7 +6,7 @@ import "@/styles/theme.scss";
 import "@/styles/docsearch.theme.scss";
 import "@/assets/fonts/fonts.scss";
 import "@/styles/editor.scss";
-// import "@/styles/docsearch.scss";
+import "@/styles/docsearch.scss";
 import "@/styles/tailwind.css";
 import "@/tailwind.config";
 import "@/styles/prism.token.scss";

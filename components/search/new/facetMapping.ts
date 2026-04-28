@@ -129,3 +129,130 @@ const EXPAND_LABEL_MAP: Record<string, string> = {
 export function getExpandLabel(language: string): string {
   return EXPAND_LABEL_MAP[language === "zh" ? "zh" : "en"];
 }
+
+// ---------------------------------------------------------------------------
+// FeedbackBar 文案映射
+// ---------------------------------------------------------------------------
+
+const FEEDBACK_TEXT_MAP: Record<string, { text: string; btn: string }> = {
+  zh: { text: "没有找到您查询的内容？", btn: "提交反馈" },
+  en: { text: "Can't find what you're looking for?", btn: "Submit Feedback" },
+};
+
+export function getFeedbackText(language: string): {
+  text: string;
+  btn: string;
+} {
+  return FEEDBACK_TEXT_MAP[language === "zh" ? "zh" : "en"];
+}
+
+// ---------------------------------------------------------------------------
+// HitsLoading 文案映射
+// ---------------------------------------------------------------------------
+
+const LOADING_TEXT_MAP: Record<string, string> = {
+  zh: "搜索中…",
+  en: "Searching…",
+};
+
+export function getLoadingText(language: string): string {
+  return LOADING_TEXT_MAP[language === "zh" ? "zh" : "en"];
+}
+
+// ---------------------------------------------------------------------------
+// HitsEmpty 文案映射
+// ---------------------------------------------------------------------------
+
+const EMPTY_TEXT_MAP: Record<
+  string,
+  {
+    main: string;
+    feedback: string;
+    suffix: string;
+  }
+> = {
+  zh: {
+    main: "未能检索到相关内容，建议您尝试其他关键词",
+    feedback: "提交反馈",
+    suffix: "进行",
+  },
+  en: {
+    main: "No results found. Please try other keywords.",
+    feedback: "Submit Feedback",
+    suffix: "",
+  },
+};
+
+export function getEmptyText(language: string): {
+  main: string;
+  feedback: string;
+  suffix: string;
+} {
+  return EMPTY_TEXT_MAP[language === "zh" ? "zh" : "en"];
+}
+
+// ---------------------------------------------------------------------------
+// AISuggestion 文案映射
+// ---------------------------------------------------------------------------
+
+const AI_SUGGESTION_MAP: Record<
+  string,
+  {
+    prefix: string;
+    link: string;
+    suffix: string;
+  }
+> = {
+  zh: {
+    prefix: "搜索支持 ",
+    link: "询问 AI 文档助手",
+    suffix: " 啦！猜您想问：",
+  },
+  en: {
+    prefix: "Search is now powered by ",
+    link: "Ask AI Document Assistant",
+    suffix: "! You might want to ask:",
+  },
+};
+
+export function getAISuggestionText(language: string): {
+  prefix: string;
+  link: string;
+  suffix: string;
+} {
+  return AI_SUGGESTION_MAP[language === "zh" ? "zh" : "en"];
+}
+
+const AI_SUGGESTION_TEMPLATES: Record<string, string[]> = {
+  zh: [
+    "{query}是什么",
+    "{query} SDK 的集成文档",
+    "怎么下载{query} SDK",
+    "{query} 支持哪些平台",
+  ],
+  en: [
+    "What is {query}",
+    "{query} SDK integration guide",
+    "How to download {query} SDK",
+    "Which platforms does {query} support",
+  ],
+};
+
+export function getSuggestions(query: string, language: string): string[] {
+  if (!query.trim()) return [];
+  const templates = AI_SUGGESTION_TEMPLATES[language === "zh" ? "zh" : "en"];
+  return templates.map((t) => t.replace(/\{query\}/g, query));
+}
+
+// ---------------------------------------------------------------------------
+// SearchBox placeholder 映射
+// ---------------------------------------------------------------------------
+
+const PLACEHOLDER_MAP: Record<string, string> = {
+  zh: "你可以输入文档关键词、开发问题、错误码",
+  en: "Enter keywords, issues, and error codes",
+};
+
+export function getPlaceholder(language: string): string {
+  return PLACEHOLDER_MAP[language === "zh" ? "zh" : "en"];
+}

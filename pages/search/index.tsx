@@ -5,7 +5,6 @@ import SearchLayout from "@/components/search/new/layout";
 import SearchPageClient from "@/components/search/new/SearchPageClient";
 import useLanguage from "@/components/hooks/useLanguage";
 import LibControllerImpl from "@/lib/index";
-import { copywriting } from "@/components/constant/language";
 
 export const getStaticProps = () => {
   const inputDocuoConfig = LibControllerImpl.getDocuoConfig();
@@ -42,7 +41,7 @@ const ATTRIBUTES_TO_SNIPPET = [
   "hierarchy.lvl6:30",
   "content:160",
 ];
-// 限制 Algolia 只在可见字段中搜索，替代客户端 filterHits，使 facet counts 准确
+// 限制 Algolia 只在可见字段中搜索
 const RESTRICT_SEARCHABLE_ATTRIBUTES = [
   "content",
   "hierarchy.lvl1",
@@ -78,8 +77,6 @@ export default function SearchPage({
     () => algoliasearch(appId, apiKey),
     [appId, apiKey],
   );
-  const placeholder =
-    copywriting[currentLanguage]?.search?.placeholder || "Search";
 
   return (
     <div id="search-page">
@@ -102,7 +99,6 @@ export default function SearchPage({
           analytics={false}
         />
         <SearchPageClient
-          placeholder={placeholder}
           instanceGroups={inputDocuoConfig?.themeConfig?.instanceGroups || []}
         />
       </InstantSearch>
