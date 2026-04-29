@@ -14,9 +14,7 @@ import ThemeSwitch from "./ThemeSwitch";
 import ThemeContext from "@/components/header/Theme.context";
 import LanguageSwitch from "./LanguageSwitch";
 import useLanguage from "@/components/hooks/useLanguage";
-import useInstance from "@/components/hooks/useInstance";
 import useGroup from "@/components/hooks/useGroup";
-import useVersion from "@/components/hooks/useVersion";
 import usePlatform from "@/components/hooks/usePlatform";
 import useSet from "@/components/hooks/useSet";
 import AskAI from "./AskAI";
@@ -30,19 +28,11 @@ interface Props {
 }
 
 const Header = (props: Props) => {
-  const router = useRouter();
   const { docuoConfig, tocFormatData, setDrawerOpen, isSearchPage } = props;
   const { handleLanguageChanged } = useSet();
-  const {
-    currentLanguage,
-    currentLanguageLabel,
-    displayLanguages,
-    setCurrentLanguage,
-  } = useLanguage();
-  const { instanceIDs } = useInstance();
-  const { currentGroup, currentGroupLabel } = useGroup();
-  const { docVersion } = useVersion();
-  const { currentPlatform, currentPlatformLabel } = usePlatform();
+  const { currentLanguage, displayLanguages } = useLanguage();
+  const { currentGroup } = useGroup();
+  const { currentPlatform } = usePlatform();
   const { themeConfig, search } = docuoConfig;
   const navbar = Object.assign(
     {},
@@ -95,7 +85,12 @@ const Header = (props: Props) => {
         currentPlatform={currentPlatform}
       />
     );
-  }, [searchHidden, themeConfig?.instanceGroups, currentGroup, currentPlatform]);
+  }, [
+    searchHidden,
+    themeConfig?.instanceGroups,
+    currentGroup,
+    currentPlatform,
+  ]);
 
   const isShowThemeBtn =
     docuoConfig?.themeConfig?.colorMode?.disableSwitch === false;
@@ -281,7 +276,6 @@ const Header = (props: Props) => {
           <AnChorMobile tocFormatData={tocFormatData} />
         </div>
       )}
-
     </header>
   );
 };
