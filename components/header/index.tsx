@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo } from "react";
-import { createPortal } from "react-dom";
 import { useRouter } from "next/router";
 import styles from "./styles.module.scss";
 import Link from "next/link";
@@ -10,12 +9,10 @@ import IconMenu from "@/assets/icons/iconMenu.svg";
 import AnChorMobile from "../Anchor/AnchorMobile";
 
 import { DocuoConfig, NavBarItemType } from "@/lib/types";
-import { DocSearch } from "@docsearch/react";
 import AnchorNode from "../Anchor/Anchor";
 import ThemeSwitch from "./ThemeSwitch";
 import ThemeContext from "@/components/header/Theme.context";
 import LanguageSwitch from "./LanguageSwitch";
-import { copywriting } from "@/components/constant/language";
 import useLanguage from "@/components/hooks/useLanguage";
 import useInstance from "@/components/hooks/useInstance";
 import useGroup from "@/components/hooks/useGroup";
@@ -23,16 +20,7 @@ import useVersion from "@/components/hooks/useVersion";
 import usePlatform from "@/components/hooks/usePlatform";
 import useSet from "@/components/hooks/useSet";
 import AskAI from "./AskAI";
-import DocSearchHit from "./DocSearchHit";
-import DocSearchFooter from "./DocSearchFooter";
-import DocSearchAboveContent from "./DocSearchAboveContent";
-import { filterDocSearchItems } from "./recentQueries";
-import DocSearchBelowContent from "./DocSearchBelowContent";
-import {
-  useDocSearchAboveResults,
-  useDocSearchBelowResults,
-} from "./useDocSearchAboveResults";
-import "@docsearch/css";
+import SearchDropdown from "@/components/search/new/SearchDropdown";
 
 interface Props {
   docuoConfig: DocuoConfig;
@@ -71,9 +59,6 @@ const Header = (props: Props) => {
   const logoRef = React.useRef<HTMLAnchorElement>(null);
   const [scrollLength, setScrollLength] = React.useState(0);
   const { theme } = React.useContext(ThemeContext);
-  const { portalNode: aboveResultsNode, hasQuery: searchHasQuery } =
-    useDocSearchAboveResults();
-  const { portalNode: belowResultsNode } = useDocSearchBelowResults();
 
   useEffect(() => {
     setIsMobile(matches);
@@ -101,53 +86,16 @@ const Header = (props: Props) => {
     // return window.removeEventListener("scroll", handleScroll, true);
   }, []);
 
-  const DocSearchComponent = useMemo(() => {
-    if (!algolia || searchHidden) return null;
-    const HitWithIndex = ({ hit }: { hit: any }) => {
-      return <DocSearchHit hit={hit} indexName={algolia.indexName} />;
-    };
+  const searchDropdownComponent = useMemo(() => {
+    if (searchHidden) return null;
     return (
-      <>
-        <DocSearch
-          appId={algolia.appId}
-          apiKey={algolia.apiKey}
-          indices={[
-            {
-              name: algolia.indexName,
-              searchParameters: {
-                facetFilters: [
-                  `version:${docVersion}`,
-                  `group:${currentGroup}`,
-                  `language:${currentLanguage}`,
-                  `platform:${currentPlatform}`,
-                ],
-                hitsPerPage: 20,
-                // 控制 _snippetResult.content.value 的截断长度（单位：词数）
-                // 默认约 10 词，调大可展示更多正文上下文
-                attributesToSnippet: ["content:30"],
-              },
-            },
-          ]}
-          {...(copywriting[currentLanguage]
-            ? copywriting[currentLanguage].search
-            : copywriting.en.search)}
-          maxResultsPerGroup={20}
-          hitComponent={HitWithIndex}
-          transformItems={filterDocSearchItems}
-          resultsFooterComponent={({ state }) => (
-            <DocSearchFooter state={state} />
-          )}
-        />
-      </>
+      <SearchDropdown
+        instanceGroups={themeConfig?.instanceGroups || []}
+        currentGroup={currentGroup}
+        currentPlatform={currentPlatform}
+      />
     );
-  }, [
-    algolia,
-    searchHidden,
-    currentLanguage,
-    docVersion,
-    currentGroup,
-    currentPlatform,
-  ]);
+  }, [searchHidden, themeConfig?.instanceGroups, currentGroup, currentPlatform]);
 
   const isShowThemeBtn =
     docuoConfig?.themeConfig?.colorMode?.disableSwitch === false;
@@ -253,7 +201,7 @@ const Header = (props: Props) => {
           </div>
         </div>
         <div className={styles["fixed-menus"]}>
-          {!isSearchPage ? DocSearchComponent : null}
+          {!isSearchPage ? searchDropdownComponent : null}
           {!isSearchPage && themeConfig.showAskAI !== false ? <AskAI /> : null}
         </div>
         {isMobile ? (
@@ -334,22 +282,6 @@ const Header = (props: Props) => {
         </div>
       )}
 
-      {/* DocSearch 结果列表上方注入区域（Portal）
-          无搜索词 → 展示最近搜索词
-          有搜索词 → 暂无额外内容 */}
-      {aboveResultsNode &&
-        createPortal(
-          <DocSearchAboveContent
-            hasQuery={searchHasQuery}
-            indexName={algolia?.indexName ?? ""}
-          />,
-          aboveResultsNode,
-        )}
-
-      {/* DocSearch 结果列表下方注入区域（Portal）
-          弹框打开即显示，与搜索词 / 结果无关 */}
-      {belowResultsNode &&
-        createPortal(<DocSearchBelowContent />, belowResultsNode)}
     </header>
   );
 };

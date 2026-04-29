@@ -7,11 +7,14 @@ import styles from "./index.module.scss";
 
 type GroupMap = Map<string, string>;
 
+type Variant = "default" | "dropdown";
+
 interface Props {
   items: AlgoliaHit[];
   totalCount: number;
   language?: string;
   groupMap?: GroupMap;
+  variant?: Variant;
 }
 
 const SearchHits: React.FC<Props> = ({
@@ -19,6 +22,7 @@ const SearchHits: React.FC<Props> = ({
   totalCount,
   language = "zh",
   groupMap,
+  variant = "default",
 }) => {
   const { status } = useInstantSearch();
 
@@ -28,15 +32,22 @@ const SearchHits: React.FC<Props> = ({
     return <HitsLoading language={language} />;
   }
 
-  if (!loading && totalCount === 0) {
+  if (variant === "default" && !loading && totalCount === 0) {
     return <HitsEmpty language={language} />;
   }
 
   return (
-    <ul className={styles.hitsList}>
+    <ul
+      className={`${styles.hitsList} ${variant === "dropdown" ? styles.hitsListDropdown : ""}`}
+    >
       {items.map((hit) => (
         <li key={hit.objectID} className={styles.hitsListItem}>
-          <SearchHitItem hit={hit} language={language} groupMap={groupMap} />
+          <SearchHitItem
+            hit={hit}
+            language={language}
+            groupMap={groupMap}
+            variant={variant}
+          />
         </li>
       ))}
     </ul>

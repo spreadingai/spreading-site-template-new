@@ -49,36 +49,81 @@ export interface AlgoliaHit {
 
 const LVL_KEYS = ["lvl1", "lvl2", "lvl3", "lvl4", "lvl5", "lvl6"] as const;
 
-function buildTitlePath(hit: AlgoliaHit): string {
+type Variant = "default" | "dropdown";
+
+function hasContentHighlight(hit: AlgoliaHit): boolean {
+  const snippet = hit._snippetResult?.content;
+  if (snippet?.matchLevel && snippet.matchLevel !== "none") return true;
+  const highlight = hit._highlightResult?.content;
+  if (highlight?.matchLevel && highlight.matchLevel !== "none") return true;
+  return false;
+}
+
+function buildTitleParts(
+  hit: AlgoliaHit,
+  variant: Variant = "default",
+): string[] {
   const highlight = hit._highlightResult?.hierarchy || {};
   const raw = hit.hierarchy || {};
-  const parts: string[] = [];
-  for (const key of LVL_KEYS) {
+
+  // content 有高亮时保留所有层级，否则去掉尾部不高亮的层级
+  const shouldTruncate = !hasContentHighlight(hit);
+
+  // 找到最后一个高亮命中的层级索引
+  let lastHighlightedIdx = -1;
+  for (let i = LVL_KEYS.length - 1; i >= 0; i--) {
+    const h = highlight[LVL_KEYS[i]];
+    if (h?.value && h.matchLevel && h.matchLevel !== "none") {
+      lastHighlightedIdx = i;
+      break;
+    }
+  }
+
+  const endIdx = shouldTruncate ? lastHighlightedIdx : LVL_KEYS.length - 1;
+
+  const hierarchyParts: string[] = [];
+  for (let i = 0; i <= endIdx; i++) {
+    const key = LVL_KEYS[i];
     const h = highlight[key];
     const r = raw[key];
     if (h?.value) {
-      parts.push(h.value);
+      hierarchyParts.push(h.value);
     } else if (r) {
-      parts.push(r);
+      hierarchyParts.push(r);
     }
   }
-  return parts.join(" › ");
+
+  const parts: string[] = [];
+  // dropdown 场景：先拼 lvl0（取第一段后面的所有，用 › 拼接）
+  if (variant === "dropdown" && raw.lvl0) {
+    const lvl0Parts = raw.lvl0.replace(/&gt;/g, ">").split(">");
+    const restParts = lvl0Parts.slice(1).map((s) => s.trim()).filter(Boolean);
+    if (restParts.length > 0) parts.push(restParts.join(" › "));
+  }
+  parts.push(...hierarchyParts);
+  return parts;
 }
 
 // 围绕首个 <mark> 截取上下文，避免把 <mark>...</mark> 对切成两半。
-// 长度参考 Configure.attributesToSnippet 的 content:160 配置，视觉上接近 snippet。
-const HIGHLIGHT_CONTEXT_BEFORE = 80;
-const HIGHLIGHT_CONTEXT_AFTER = 120;
 const MARK_OPEN = "<mark>";
 const MARK_CLOSE = "</mark>";
 
-function truncateAroundFirstMark(html: string): string {
+const HIGHLIGHT_CONTEXT: Record<Variant, { before: number; after: number }> = {
+  default: { before: 80, after: 120 }, // 对应 content:160
+  dropdown: { before: 15, after: 20 }, // 对应 content:30
+};
+
+function truncateAroundFirstMark(
+  html: string,
+  variant: Variant = "default",
+): string {
+  const { before: ctxBefore, after: ctxAfter } = HIGHLIGHT_CONTEXT[variant];
   const firstOpen = html.indexOf(MARK_OPEN);
   if (firstOpen === -1) return html;
   const firstCloseAfter =
     html.indexOf(MARK_CLOSE, firstOpen) + MARK_CLOSE.length;
 
-  let start = Math.max(0, firstOpen - HIGHLIGHT_CONTEXT_BEFORE);
+  let start = Math.max(0, firstOpen - ctxBefore);
   // 如果 start 正好落在某个 <mark>...</mark> 对内部，往前退到该 <mark> 之前
   const openBeforeStart = html.lastIndexOf(MARK_OPEN, start);
   const closeBeforeStart = html.lastIndexOf(MARK_CLOSE, start);
@@ -86,7 +131,7 @@ function truncateAroundFirstMark(html: string): string {
     start = openBeforeStart;
   }
 
-  let end = Math.min(html.length, firstCloseAfter + HIGHLIGHT_CONTEXT_AFTER);
+  let end = Math.min(html.length, firstCloseAfter + ctxAfter);
   // 如果 end 落在某个 <mark>...</mark> 对内部，延伸到后面最近的 </mark> 之后
   const openBeforeEnd = html.lastIndexOf(MARK_OPEN, end);
   const closeBeforeEnd = html.lastIndexOf(MARK_CLOSE, end);
@@ -102,7 +147,10 @@ function truncateAroundFirstMark(html: string): string {
 }
 
 // content：优先用 snippet（截断的命中片段），snippet 没命中时回退 highlight（完整高亮）。
-function buildSnippetHtml(hit: AlgoliaHit): string {
+function buildSnippetHtml(
+  hit: AlgoliaHit,
+  variant: Variant = "default",
+): string {
   const snippet = hit._snippetResult?.content;
   if (snippet?.value && snippet.matchLevel && snippet.matchLevel !== "none") {
     return snippet.value;
@@ -113,7 +161,8 @@ function buildSnippetHtml(hit: AlgoliaHit): string {
     highlight.matchLevel &&
     highlight.matchLevel !== "none"
   ) {
-    return truncateAroundFirstMark(highlight.value);
+    console.log("truncateAroundFirstMark", highlight.value);
+    return truncateAroundFirstMark(highlight.value, variant);
   }
   return snippet?.value || "";
 }
@@ -122,9 +171,31 @@ const SearchHitItem: React.FC<{
   hit: AlgoliaHit;
   language?: string;
   groupMap?: GroupMap;
-}> = ({ hit, language = "zh", groupMap }) => {
-  const titleHtml = buildTitlePath(hit);
-  const snippetHtml = buildSnippetHtml(hit);
+  variant?: Variant;
+}> = ({ hit, language = "zh", groupMap, variant = "default" }) => {
+  const titleParts = buildTitleParts(hit, variant);
+  let snippetHtml = buildSnippetHtml(hit, variant);
+
+  // dropdown 场景：snippet 为空时，从 titleParts 中拆分保证两者都有内容
+  if (variant === "dropdown" && !snippetHtml && titleParts.length > 0) {
+    // titleParts 中去掉 lvl0 后的层级数量（即 hierarchy 部分）
+    const hasLvl0 = variant === "dropdown" && hit.hierarchy?.lvl0;
+    const hierarchyCount = hasLvl0 ? titleParts.length - 1 : titleParts.length;
+
+    if (hierarchyCount <= 1) {
+      // 只有一级：title 展示 lvl0，snippet 用这一级
+      snippetHtml = titleParts[titleParts.length - 1];
+      if (hasLvl0) {
+        // titleParts[0] 就是 lvl0，title 只保留它
+        titleParts.splice(1);
+      }
+    } else {
+      // 多级：snippet 用最后一级，title 去掉最后一级
+      snippetHtml = titleParts.pop()!;
+    }
+  }
+
+  const titleHtml = titleParts.join(" › ");
   const tags = [
     {
       key: "doctype",
@@ -147,7 +218,7 @@ const SearchHitItem: React.FC<{
 
   return (
     <a
-      className={styles.hitItem}
+      className={`${styles.hitItem} ${variant === "dropdown" ? styles.hitItemDropdown : ""}`}
       href={hit.url || "#"}
       target="_blank"
       rel="noreferrer"
@@ -168,7 +239,7 @@ const SearchHitItem: React.FC<{
           dangerouslySetInnerHTML={{ __html: snippetHtml }}
         />
       )}
-      {tags.length > 0 && (
+      {variant === "default" && tags.length > 0 && (
         <div className={styles.hitTags}>
           {tags.map((t) => (
             <span key={t.key} className={styles.hitTag} data-tag={t.key}>

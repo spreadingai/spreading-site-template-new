@@ -28,9 +28,7 @@ interface Props {
   instanceGroups?: InstanceGroup[];
 }
 
-const SearchPageClient: React.FC<Props> = ({
-  instanceGroups = [],
-}) => {
+const SearchPageClient: React.FC<Props> = ({ instanceGroups = [] }) => {
   const { query } = useSearchBox();
   const hasQuery = !!query && query.trim().length > 0;
   const { currentLanguage } = useLanguage();
@@ -90,7 +88,7 @@ const SearchPageClient: React.FC<Props> = ({
   return (
     <div className={styles.pageRoot}>
       <div
-        className={`${styles.criteria} ${hasQuery ? styles.criteriaHasQuery : styles.criteriaEmpty}`}
+        className={`${styles.criteria} ${hasQuery ? styles.criteriaHasQuery : ""}`}
       >
         <ISSearchBox placeholder={getPlaceholder(currentLanguage)} />
         {hasQuery && (
@@ -139,7 +137,9 @@ const SearchPageClient: React.FC<Props> = ({
         currentGroup=""
         currentPlatform=""
         initialMessage={aiInitialMessage}
-        defaultQuestions={hasQuery ? getSuggestions(query, currentLanguage) : undefined}
+        defaultQuestions={
+          hasQuery ? getSuggestions(query, currentLanguage) : undefined
+        }
       />
     </div>
   );

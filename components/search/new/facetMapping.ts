@@ -151,8 +151,8 @@ export function getFeedbackText(language: string): {
 // ---------------------------------------------------------------------------
 
 const LOADING_TEXT_MAP: Record<string, string> = {
-  zh: "搜索中…",
-  en: "Searching…",
+  zh: "加载中",
+  en: "Loading",
 };
 
 export function getLoadingText(language: string): string {
@@ -238,9 +238,25 @@ const AI_SUGGESTION_TEMPLATES: Record<string, string[]> = {
   ],
 };
 
+const AI_SUGGESTION_DEFAULT: Record<string, string[]> = {
+  zh: [
+    "如何快速集成 SDK",
+    "常见错误码及解决方案",
+    "如何实现音视频通话",
+    "SDK 支持哪些平台",
+  ],
+  en: [
+    "How to quickly integrate SDK",
+    "Common error codes and solutions",
+    "How to implement audio/video calls",
+    "Which platforms does SDK support",
+  ],
+};
+
 export function getSuggestions(query: string, language: string): string[] {
-  if (!query.trim()) return [];
-  const templates = AI_SUGGESTION_TEMPLATES[language === "zh" ? "zh" : "en"];
+  const lang = language === "zh" ? "zh" : "en";
+  if (!query.trim()) return AI_SUGGESTION_DEFAULT[lang];
+  const templates = AI_SUGGESTION_TEMPLATES[lang];
   return templates.map((t) => t.replace(/\{query\}/g, query));
 }
 
@@ -255,4 +271,17 @@ const PLACEHOLDER_MAP: Record<string, string> = {
 
 export function getPlaceholder(language: string): string {
   return PLACEHOLDER_MAP[language === "zh" ? "zh" : "en"];
+}
+
+// ---------------------------------------------------------------------------
+// SearchHistory 映射
+// ---------------------------------------------------------------------------
+
+const SEARCH_HISTORY_TEXT: Record<string, { title: string; clear: string }> = {
+  zh: { title: "搜索历史", clear: "清空" },
+  en: { title: "Search History", clear: "Clear" },
+};
+
+export function getSearchHistoryText(language: string) {
+  return SEARCH_HISTORY_TEXT[language === "zh" ? "zh" : "en"];
 }

@@ -48,7 +48,7 @@
 
   .mobile-toc-container {
     position: absolute;
-    z-index: 101;
+    z-index: 99;
     top: 48px;
     right: 0;
     min-width: var(--preview-anchor-width);
@@ -67,7 +67,7 @@
   .mobile-toc-mask {
     margin-top: 54px; // TODO: header height
     position: fixed;
-    z-index: 100;
+    z-index: 99;
     width: 100vw;
     height: calc(100vh - 50px);
     inset: 0;
