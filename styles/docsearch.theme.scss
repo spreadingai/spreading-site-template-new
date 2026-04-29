@@ -7,12 +7,21 @@ html {
   // Algolia SearchBox
   --docsearch-custom-algolia-searchbox-clear-color: #626978;
   --docsearch-custom-algolia-searchbox-border-bg: linear-gradient(91deg, rgba(97, 167, 255, 1), rgba(148, 127, 255, 1));
-  --docsearch-custom-algolia-searchbox-background:
-    radial-gradient(128.92% 221.85% at 18.75% 233.93%, #cfafff 0%, rgba(207, 175, 255, 0) 100%),
-    radial-gradient(47.51% 80.52% at 50% 112.5%, #8ee1ff 0%, rgba(142, 225, 255, 0) 100%), #fff;
+  --docsearch-custom-algolia-searchbox-background: #fff;
   --docsearch-custom-algolia-searchbox-active-background: #fff;
   --docsearch-custom-algolia-searchbox-placeholder-color: rgba(53, 60, 78, 0.6);
   --docsearch-custom-algolia-searchbox-ai-btn-image: url("~/assets/images/search/btn_search@2x.png");
+
+  // Algolia SearchBox Panel
+  --docsearch-custom-search-dropdown-panel-bg: #fff;
+  --docsearch-custom-search-dropdown-panel-mask-bg: url("~/assets/images/search/header_search_bg@2x.png");
+
+  // Panel history
+  --docsearch-custom-search-history-title-color: rgba(53, 60, 78, 0.6);
+  --docsearch-custom-search-history-clear-color: rgba(0, 85, 255, 0.8);
+  --docsearch-custom-search-history-clear-hover-color: #0055ff;
+  --docsearch-custom-search-history-item-color: #171717;
+  --docsearch-custom-search-history-item-bg-color: #f1f3fa;
 
   // DocTypeTabs
   --docsearch-custom-tabs-border-bottom-color: #ebeff2;
@@ -44,6 +53,11 @@ html {
   --docsearch-custom-hit-tag-bg: #f3f5fa;
   --docsearch-custom-hit-tag-color: #46474d;
 
+  // Hit item card Panel
+  --docsearch-custom-panel-hit-item-hover-bg-color: rgba(240, 246, 254, 0.8);
+  --docsearch-custom-panel-hit-title-color: #46474d;
+  --docsearch-custom-panel-hit-snippet-color: #171717;
+
   // AI Suggestion
   --docsearch-custom-ai-border-color: #edf4f9;
   --docsearch-custom-ai-bg:
@@ -55,6 +69,14 @@ html {
   --docsearch-custom-ai-item-color: #171717;
   --docsearch-custom-ai-item-hover-color: #0055ff;
   --docsearch-custom-ai-item-icon: url("~/assets/images/search/ai_suggestion_icon@2x.png");
+
+  // AI Suggestion Panel
+  --docsearch-custom-panel-ai-border-color: #ebeff2;
+  --docsearch-custom-panel-ai-header-color: rgba(53, 60, 78, 0.6);
+  --docsearch-custom-panel-ai-item-bg:
+    radial-gradient(128.92% 221.85% at 18.75% 233.93%, rgba(188, 175, 255, 0.4) 0%, rgba(188, 175, 255, 0) 100%),
+    #f8fbff;
+  --docsearch-custom-panel-ai-item-border: #edf4f9;
 
   // Feedback bar
   --docsearch-custom-feedback-bg: #f2f6ff;
@@ -74,19 +96,26 @@ html {
 html[data-theme="dark"] {
   // Algolia SearchBox
   --docsearch-custom-algolia-searchbox-clear-color: #626978;
-  --docsearch-custom-algolia-searchbox-border-bg: linear-gradient(91deg, rgba(97, 167, 255, 1), rgba(148, 127, 255, 1));
-  --docsearch-custom-algolia-searchbox-background: linear-gradient(
-      90deg,
-      rgba(65, 127, 215, 1),
-      rgba(113, 134, 209, 1),
-      rgba(143, 160, 211, 1),
-      rgba(149, 135, 220, 1),
-      rgba(118, 80, 189, 1)
-    )
-    1 1;
-  --docsearch-custom-algolia-searchbox-active-background: #000000;
+  --docsearch-custom-algolia-searchbox-border-bg: linear-gradient(
+    91deg,
+    rgba(97, 167, 255, 0.5),
+    rgba(148, 127, 255, 0.5)
+  );
+  --docsearch-custom-algolia-searchbox-background: #000;
+  --docsearch-custom-algolia-searchbox-active-background: #000;
   --docsearch-custom-algolia-searchbox-placeholder-color: #757575;
   --docsearch-custom-algolia-searchbox-ai-btn-image: url("~/assets/images/search/btn_search_dark@2x.png");
+
+  // Algolia SearchBox Panel
+  --docsearch-custom-search-dropdown-panel-bg: #000;
+  --docsearch-custom-search-dropdown-panel-mask-bg: url("~/assets/images/search/header_search_bg_dark@2x.png");
+
+  // Panel history
+  --docsearch-custom-search-history-title-color: rgba(144, 144, 144, 0.6);
+  --docsearch-custom-search-history-clear-color: rgba(240, 240, 240, 0.8);
+  --docsearch-custom-search-history-clear-hover-color: #256fff;
+  --docsearch-custom-search-history-item-color: rgba(240, 240, 240, 0.8);
+  --docsearch-custom-search-history-item-bg-color: rgba(255, 255, 255, 0.1);
 
   // DocTypeTabs
   --docsearch-custom-tabs-border-bottom-color: #252525;
@@ -118,6 +147,11 @@ html[data-theme="dark"] {
   --docsearch-custom-hit-tag-bg: rgba(255, 255, 255, 0.1);
   --docsearch-custom-hit-tag-color: rgba(240, 240, 240, 0.7);
 
+  // Hit item card Panel
+  --docsearch-custom-panel-hit-item-hover-bg-color: #161616;
+  --docsearch-custom-panel-hit-title-color: #868686;
+  --docsearch-custom-panel-hit-snippet-color: #f0f0f0;
+
   // AI Suggestion
   --docsearch-custom-ai-border-color: linear-gradient(
       338deg,
@@ -135,6 +169,12 @@ html[data-theme="dark"] {
   --docsearch-custom-ai-item-color: #f0f0f0;
   --docsearch-custom-ai-item-hover-color: #266eff;
   --docsearch-custom-ai-item-icon: url("~/assets/images/search/ai_suggestion_icon_dark@2x.png");
+
+  // AI Suggestion Panel
+  --docsearch-custom-panel-ai-border-color: #252525;
+  --docsearch-custom-panel-ai-header-color: rgba(144, 144, 144, 0.6);
+  --docsearch-custom-panel-ai-item-bg: linear-gradient(37deg, #292929 0%, #0f0e0e 100%);
+  --docsearch-custom-panel-ai-item-border: rgba(63, 63, 63, 0.3);
 
   // Feedback bar
   --docsearch-custom-feedback-bg: rgba(242, 246, 255, 0.08);

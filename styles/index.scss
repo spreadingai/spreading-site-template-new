@@ -107,6 +107,7 @@ html > body {
 
 #__next {
   height: 100%;
+  background: var(--docuo-background-primary);
 }
 
 .preview-screen,
@@ -815,7 +816,7 @@ html > body {
   }
 
   .search-main {
-    margin-top: calc(var(--preview-header-height) - 40px);
+    margin-top: calc(var(--preview-header-height) - 60px);
   }
 
   .preview-header {

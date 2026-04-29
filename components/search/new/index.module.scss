@@ -2,6 +2,65 @@
 // Color values use CSS variables from styles/docsearch.theme.scss (light / dark).
 // Layout sizing is inside media queries; non-sizing properties stay outside.
 
+// ---------------------------------------------------------------------------
+// 已配置主题变量（CSS 变量）
+// ---------------------------------------------------------------------------
+// --docsearch-custom-algolia-searchbox-active-background          搜索框激活态背景
+// --docsearch-custom-algolia-searchbox-border-bg                  搜索框边框/背景
+// --docsearch-custom-algolia-searchbox-ai-btn-image               AI 按钮图标
+// --docsearch-custom-algolia-searchbox-background                 搜索框默认背景
+// --docuo-color-primary                                           主文字颜色
+// --docsearch-custom-algolia-searchbox-placeholder-color          占位符颜色
+// --docsearch-custom-algolia-searchbox-clear-color                清除/加载图标颜色
+// --docsearch-custom-pagination-link-color                        分页链接颜色
+// --docsearch-custom-pagination-link-bg                           分页链接背景
+// --docsearch-custom-pagination-link-border-color                 分页链接边框
+// --docsearch-custom-pagination-link-disabled-color               分页禁用颜色
+// --docsearch-custom-pagination-selected-link-color               分页选中颜色
+// --docsearch-custom-tabs-border-bottom-color                     Tabs 下边框颜色
+// --docsearch-custom-tab-color                                    Tab 默认颜色
+// --docsearch-custom-tab-hover-color                              Tab 悬停颜色
+// --docsearch-custom-tab-active-color                             Tab 激活颜色
+// --docsearch-custom-tab-active-border-bottom-color               Tab 激活下边框
+// --docsearch-custom-facet-title-color                            Facet 标题颜色
+// --docsearch-custom-facet-label-bg                               Facet 标签背景
+// --docsearch-custom-facet-label-color                            Facet 标签颜色
+// --docsearch-custom-facet-label-hover-color                      Facet 标签悬停颜色
+// --docsearch-custom-facet-label-active-bg                        Facet 激活标签背景
+// --docsearch-custom-facet-label-active-color                     Facet 激活标签颜色
+// --docsearch-custom-facet-toggle-color                           Facet 展开/收起颜色
+// --docsearch-custom-facet-toggle-border-color                    Facet 展开按钮边框
+// --docsearch-custom-hits-empty-color                             空结果文字颜色
+// --docsearch-custom-hits-empty-pic                               空结果图片
+// --docuo-color-primary-active                                    加载中文字颜色
+// --docsearch-custom-feedback-link-color                          反馈链接颜色
+// --docsearch-custom-feedback-bg                                  反馈条背景
+// --docsearch-custom-feedback-text-color                          反馈条文字颜色
+// --docsearch-custom-feedback-btn-bg                              反馈按钮背景
+// --docsearch-custom-feedback-btn-color                           反馈按钮文字颜色
+// --docsearch-custom-feedback-btn-border                          反馈按钮边框
+// --docsearch-custom-ai-border-color                              AI 区块边框
+// --docsearch-custom-ai-bg                                        AI 区块背景
+// --docsearch-custom-ai-header-color                              AI 标题颜色
+// --docsearch-custom-ai-link-color                                AI 链接颜色
+// --docsearch-custom-ai-item-bg                                   AI 推荐项背景
+// --docsearch-custom-ai-item-color                                AI 推荐项颜色
+// --docsearch-custom-ai-item-hover-color                          AI 推荐项悬停颜色
+// --docsearch-custom-ai-item-icon                                 AI 推荐项图标
+// --docsearch-custom-hit-item-color                               Hit 卡片颜色
+// --docsearch-custom-hit-title-color                              Hit 标题颜色
+// --docsearch-custom-hit-highlight-color                          高亮文字颜色
+// --docsearch-custom-hit-snippet-color                            Hit 摘要颜色
+// --docsearch-custom-hit-tag-color                                Hit 标签颜色
+// --docsearch-custom-hit-tag-bg                                   Hit 标签背景
+// --docsearch-custom-panel-hit-item-hover-bg-color                 下拉列表项悬停背景
+// --docsearch-custom-panel-hit-snippet-color                       下拉摘要颜色
+// --docsearch-custom-panel-hit-title-color                         下拉标题颜色
+// --docsearch-custom-panel-ai-border-color                         下拉AI区块上边框
+// --docsearch-custom-panel-ai-header-color                         下拉AI标题颜色
+// --docsearch-custom-panel-ai-item-bg                              下拉AI推荐项背景
+// --docsearch-custom-panel-ai-item-border                          下拉AI推荐项边框
+
 // ==================================================================
 // Base styles (non-sizing: colors, display, cursor, overflow, etc.)
 // ==================================================================
@@ -73,6 +132,9 @@
         font-weight: inherit;
         font-size: inherit;
         color: var(--docsearch-custom-algolia-searchbox-placeholder-color);
+      }
+      &:focus {
+        background: var(--docsearch-custom-algolia-searchbox-active-background);
       }
     }
     .ais-SearchBox-submit {
@@ -174,44 +236,6 @@
   flex-wrap: wrap;
   flex: 1;
 }
-// ViewMore modifier — only applied when showViewMore is true
-.docTypeTabsWrapperWithMore {
-  overflow: hidden;
-  flex: none;
-  .docTypeTabs {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
-  }
-  .docTypeTab {
-    flex: none;
-  }
-}
-.docTypeTabsViewMore {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  font-family: PingFang SC;
-  font-weight: 400;
-  font-size: 13px;
-  color: var(--docsearch-custom-facet-toggle-color);
-  text-decoration: none;
-  white-space: nowrap;
-  transition: all 0.3s;
-  svg {
-    width: 14px;
-    height: 14px;
-    position: relative;
-    top: -1px;
-  }
-  &:hover {
-    color: var(--docsearch-custom-tab-hover-color);
-  }
-}
 .docTypeTab {
   border: 0;
   background: transparent;
@@ -254,7 +278,6 @@
   flex-wrap: wrap;
 }
 .facetRowListCollapsed {
-  max-height: 28px;
   overflow: hidden;
 }
 .facetLabel {
@@ -461,6 +484,82 @@
   background: var(--docsearch-custom-hit-tag-bg);
 }
 
+// 适配 Dropdown
+.docTypeTabsWrapperWithMore {
+  overflow: hidden;
+  flex: none;
+  .docTypeTabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .docTypeTab {
+    flex: none;
+  }
+}
+.docTypeTabsDropdown {
+  .docTypeTabsViewMore {
+    position: absolute;
+    right: 0;
+    display: flex;
+    align-items: center;
+    font-family: PingFang SC;
+    font-weight: 400;
+    color: var(--docsearch-custom-facet-toggle-color);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.3s;
+    svg {
+      position: relative;
+      top: -1px;
+    }
+    &:hover {
+      color: var(--docsearch-custom-tab-hover-color);
+    }
+  }
+}
+.hitsListDropdown {
+  &.hitsList {
+    margin-bottom: 0;
+  }
+  .hitsListItem {
+    transition: all 0.3s;
+    background: transparent;
+    &:hover {
+      background: var(--docsearch-custom-panel-hit-item-hover-bg-color);
+    }
+  }
+}
+.hitItemDropdown {
+  .hitSnippet {
+    order: -1;
+    font-weight: 500;
+    color: var(--docsearch-custom-panel-hit-snippet-color);
+    font-family: PingFang SC-Medium;
+  }
+  .hitTitle {
+    color: var(--docsearch-custom-panel-hit-title-color);
+  }
+  .hitTags {
+    display: none;
+  }
+}
+.aiSuggestionDropdown {
+  border: none;
+  border-top: 1px solid var(--docsearch-custom-panel-ai-border-color);
+  background: transparent;
+  .aiSuggestionGrid {
+    grid-template-columns: 1fr;
+  }
+  .aiSuggestionHeader {
+    color: var(--docsearch-custom-panel-ai-header-color);
+  }
+  .aiSuggestionItem {
+    background: var(--docsearch-custom-panel-ai-item-bg);
+    border: 1px solid var(--docsearch-custom-panel-ai-item-border);
+  }
+}
+
 // ==================================================================
 // >= 1025px (desktop)
 // ==================================================================
@@ -522,13 +621,6 @@
   .docTypeTabsWrapper {
     margin-top: 16px;
   }
-  .docTypeTabsWrapperWithMore {
-    height: 40px;
-    padding-right: 80px;
-    .docTypeTabs {
-      padding-bottom: 20px;
-    }
-  }
   .docTypeTabs {
     gap: 28px;
   }
@@ -551,6 +643,9 @@
     font-size: 14px;
     padding-top: 4px;
     width: 105px;
+  }
+  .facetRowListCollapsed {
+    max-height: 28px;
   }
   .facetRowList {
     gap: 6px;
@@ -697,11 +792,19 @@
   }
 
   // 适配 Dropdown
+  .docTypeTabsWrapperWithMore {
+    height: 40px;
+    padding-right: 80px;
+    .docTypeTabs {
+      padding-bottom: 20px;
+    }
+  }
   .docTypeTabsDropdown {
     padding: 0 80px 0 20px;
     margin-top: 12px;
     .docTypeTabsViewMore {
       right: 16px;
+      top: 6px;
       font-size: 13px;
       gap: 2px;
       svg {
@@ -720,60 +823,37 @@
   .hitsListDropdown {
     &.hitsList {
       gap: 14px;
-      margin-bottom: 0;
       padding: 16px 10px;
     }
     .hitsListItem {
-      transition: all 0.3s;
       border-radius: 6px;
-      background: transparent;
       padding: 6px 10px;
-      &:hover {
-        background: rgba(240, 246, 254, 0.8);
-      }
     }
   }
   .hitItemDropdown {
     .hitSnippet {
-      order: -1;
-      font-weight: 500;
-      color: #171717;
       line-height: 24px;
       margin-bottom: 1px;
-      font-family: PingFang SC-Medium;
     }
     .hitTitle {
       margin-bottom: 0;
       font-size: 13px;
-      color: #46474d;
       line-height: 24px;
-    }
-    .hitTags {
-      display: none;
     }
   }
   .aiSuggestionDropdown {
-    border: none;
-    border-top: 1px solid #ebeff2;
-    background: transparent;
     padding: 16px 16px 22px 16px;
-    border-radius: unset;
     margin-top: 0;
+    border-radius: unset;
     .aiSuggestionGrid {
-      grid-template-columns: 1fr;
       gap: 8px;
     }
     .aiSuggestionHeader {
       font-size: 13px;
-      color: rgba(53, 60, 78, 0.6);
     }
     .aiSuggestionItem {
       padding: 8px 10px 9px 40px;
-      background:
-        radial-gradient(128.92% 221.85% at 18.75% 233.93%, rgba(188, 175, 255, 0.4) 0%, rgba(188, 175, 255, 0) 100%),
-        #f8fbff;
       border-radius: 8px;
-      border: 1px solid #edf4f9;
     }
   }
 }
@@ -841,13 +921,6 @@
   .docTypeTabsWrapper {
     margin-top: 16px;
   }
-  .docTypeTabsWrapperWithMore {
-    height: 40px;
-    padding-right: 80px;
-    .docTypeTabs {
-      padding-bottom: 20px;
-    }
-  }
   .docTypeTabs {
     gap: 28px;
   }
@@ -870,6 +943,9 @@
     font-size: 14px;
     padding-top: 4px;
     width: 105px;
+  }
+  .facetRowListCollapsed {
+    max-height: 28px;
   }
   .facetRowList {
     gap: 6px;
@@ -1013,6 +1089,72 @@
           // sizing
         }
       }
+    }
+  }
+
+  // 适配 Dropdown
+  .docTypeTabsWrapperWithMore {
+    height: 40px;
+    padding-right: 80px;
+    .docTypeTabs {
+      padding-bottom: 20px;
+    }
+  }
+  .docTypeTabsDropdown {
+    padding: 0 80px 0 20px;
+    margin-top: 12px;
+    .docTypeTabsViewMore {
+      right: 16px;
+      top: 6px;
+      font-size: 13px;
+      gap: 2px;
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+    .docTypeTab {
+      gap: 24px;
+    }
+    .docTypeTab {
+      font-size: 13px;
+      padding: 6px 0 12px;
+    }
+  }
+  .hitsListDropdown {
+    &.hitsList {
+      gap: 14px;
+      padding: 16px 10px;
+    }
+    .hitsListItem {
+      border-radius: 6px;
+      padding: 6px 10px;
+    }
+  }
+  .hitItemDropdown {
+    .hitSnippet {
+      line-height: 24px;
+      margin-bottom: 1px;
+    }
+    .hitTitle {
+      margin-bottom: 0;
+      font-size: 13px;
+      line-height: 24px;
+    }
+  }
+  .aiSuggestionDropdown {
+    padding: 16px 16px 22px 16px;
+    margin-top: 0;
+    border-radius: unset;
+    .aiSuggestionGrid {
+      gap: 8px;
+    }
+    .aiSuggestionHeader {
+      font-size: 13px;
+    }
+    .aiSuggestionItem {
+      padding: 8px 10px 9px 40px;
+      border-radius: 8px;
     }
   }
 }
@@ -1188,4 +1330,6 @@
       }
     }
   }
+
+  // 适配 Dropdown
 }

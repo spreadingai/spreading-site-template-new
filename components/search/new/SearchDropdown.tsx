@@ -122,7 +122,7 @@ const DropdownContent: React.FC<DropdownContentProps> = ({
   }, [query, hasQuery, totalCount]);
 
   return (
-    <div className={styles.panel}>
+    <div className={styles.searchDropdownPanel}>
       {!hasQuery && (
         <SearchHistory language={language} onSelect={(q) => refine(q)} />
       )}
@@ -166,9 +166,8 @@ const SearchBoxWrap: React.FC<{
   isOpen: boolean;
 }> = ({ placeholder, queryHook, onFocus, indexName, extraParams, isOpen }) => {
   const { query } = useSearchBox();
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key !== "Enter" || !query.trim()) return;
-    e.preventDefault();
+
+  const buildSearchUrl = () => {
     const prefix = indexName || "";
     const params = new URLSearchParams();
     if (query) params.set(`${prefix}[query]`, query);
@@ -177,7 +176,17 @@ const SearchBoxWrap: React.FC<{
     if (extraParams?.platform)
       params.set(`${prefix}[menu][platform]`, extraParams.platform);
     const qs = params.toString();
-    window.open(`/search${qs ? `?${qs}` : ""}`, "_blank");
+    return `/search${qs ? `?${qs}` : ""}`;
+  };
+
+  // const handleKeyDown = (e: React.KeyboardEvent) => {
+  //   if (e.key !== "Enter" || !query.trim()) return;
+  //   e.preventDefault();
+  //   window.open(buildSearchUrl(), "_blank");
+  // };
+
+  const handleAfterClick = () => {
+    window.open(buildSearchUrl(), "_blank");
   };
 
   return (
@@ -185,12 +194,17 @@ const SearchBoxWrap: React.FC<{
       className={`${styles.searchBoxWrap} ${
         isOpen ? styles.searchBoxWrapExpand : ""
       }`}
-      onKeyDown={handleKeyDown}
+      // onKeyDown={handleKeyDown}
     >
       <ISSearchBox
         placeholder={placeholder}
         queryHook={queryHook}
         onFocus={onFocus}
+      />
+      <button
+        type="button"
+        className={styles.searchBoxAfterBtn}
+        onClick={handleAfterClick}
       />
     </div>
   );
@@ -258,7 +272,7 @@ const SearchDropdown: React.FC<Props> = ({
   }, []);
 
   return (
-    <div className={styles.container} ref={containerRef}>
+    <div className={styles.searchDropdowncontainer} ref={containerRef}>
       <InstantSearch
         key={lang}
         searchClient={searchClient}
@@ -278,14 +292,16 @@ const SearchDropdown: React.FC<Props> = ({
           facetFilters={facetFilters}
         />
         <SearchBoxWrap
-          placeholder={getPlaceholder(currentLanguage)}
+          placeholder={getPlaceholder(currentLanguage, "dropdown")}
           queryHook={queryHook}
           onFocus={() => setIsOpen(true)}
           indexName={indexName}
           extraParams={{ group: currentGroup, platform: currentPlatform }}
           isOpen={isOpen}
         />
-        {isOpen && (
+        <div
+          className={`${styles.dropdownPanel} ${isOpen ? styles.dropdownPanelVisible : ""}`}
+        >
           <DropdownContent
             language={currentLanguage}
             groupMap={groupMap}
@@ -293,7 +309,7 @@ const SearchDropdown: React.FC<Props> = ({
             currentGroup={currentGroup}
             currentPlatform={currentPlatform}
           />
-        )}
+        </div>
       </InstantSearch>
     </div>
   );

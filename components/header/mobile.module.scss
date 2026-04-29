@@ -3,7 +3,7 @@
   .mobile-menus {
     margin-top: 54px; // TODO: header height
     position: fixed;
-    z-index: 100;
+    z-index: 101;
   }
   &.search-page .mobile-menus {
     margin-top: 74px; // TODO: header height
@@ -54,7 +54,7 @@
 
       position: relative;
       &::after {
-        content: '';
+        content: "";
         position: absolute;
         right: 0;
         top: 50%;

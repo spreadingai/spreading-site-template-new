@@ -2,19 +2,66 @@
 // A dropdown search panel that sits below the Header search input.
 
 // ---------------------------------------------------------------------------
-// 公共样式
+// 已配置主题变量（CSS 变量）
+// ---------------------------------------------------------------------------
+// --docsearch-custom-algolia-searchbox-active-background          搜索框激活态背景
+// --docsearch-custom-algolia-searchbox-ai-btn-image               AI 按钮图标
+// --docsearch-custom-algolia-searchbox-border-bg                  搜索框边框/背景
+// --docsearch-custom-ai-item-icon                                 AI 图标
+// --docsearch-custom-algolia-searchbox-background                 搜索框默认背景
+// --docuo-color-primary                                           主文字颜色
+// --docsearch-custom-algolia-searchbox-placeholder-color          占位符颜色
+// --docsearch-custom-algolia-searchbox-clear-color                清除按钮颜色
+// --docsearch-custom-search-dropdown-panel-bg                     面板背景
+// --docsearch-custom-search-dropdown-panel-mask-bg                面板遮罩背景
+// --docsearch-custom-search-history-title-color                   历史标题颜色
+// --docsearch-custom-search-history-clear-color                   清空按钮颜色
+// --docsearch-custom-search-history-clear-hover-color             清空按钮悬停颜色
+// --docsearch-custom-search-history-item-bg-color                 历史标签背景
+// --docsearch-custom-search-history-item-color                    历史标签文字颜色
+
+// ---------------------------------------------------------------------------
+// 公共样式（非尺寸相关）
 // ---------------------------------------------------------------------------
 
+.searchDropdowncontainer {
+  position: relative;
+  .searchBoxWrap {
+    z-index: 1000;
+    position: relative;
+    transition: width 0.3s ease-in-out;
+    transition-delay: 0;
+    overflow: hidden;
+  }
+  .searchBoxWrapExpand {
+    transition: width 0.3s ease-in-out;
+    transition-delay: 0;
+  }
+  .searchBoxAfterBtn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    z-index: 1;
+  }
+}
+
 // Dropdown panel
-.panel {
+.searchDropdownPanel {
   position: absolute;
-  width: 100%;
   top: 100%;
   left: 0;
   right: 0;
   display: flex;
   flex-direction: column;
   z-index: 999;
+  background: var(--docsearch-custom-search-dropdown-panel-bg);
+  box-shadow:
+    0px 4px 16px 2px rgba(8, 55, 84, 0.06),
+    0px 0px 10px 0px rgba(0, 0, 0, 0.05);
   &::before {
     position: absolute;
     z-index: -1;
@@ -23,24 +70,12 @@
     right: 0;
     top: 0;
     width: 100%;
-    height: 346px;
     background-position: top;
     background-repeat: no-repeat;
     background-size: cover;
-    background-image: url("~/assets/images/search/header_search_bg@2x.png");
+    background-image: var(--docsearch-custom-search-dropdown-panel-mask-bg);
   }
 }
-
-// SearchBox (react-instantsearch built-in) ------------------------------------
-// ais-SearchBox DOM 结构:
-//   .ais-SearchBox-form
-//     .ais-SearchBox-input
-//     .ais-SearchBox-submit
-//       .ais-SearchBox-submitIcon
-//     .ais-SearchBox-reset
-//       .ais-SearchBox-resetIcon
-//     .ais-SearchBox-loadingIndicator
-//       .ais-SearchBox-loadingIcon
 
 // Scrollable area (wraps SearchHits)
 .scrollable {
@@ -49,21 +84,39 @@
   min-height: 0;
 }
 
+// Dropdown panel visibility
+.dropdownPanel {
+  visibility: hidden;
+  .searchDropdownPanel {
+    opacity: 0;
+    transition: none;
+  }
+}
+.dropdownPanelVisible {
+  visibility: visible;
+  .searchDropdownPanel {
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+    transition-delay: 0.3s;
+  }
+}
+
 // SearchBox inside Header — override the page-level styles
-.container {
-  position: relative;
+.searchDropdowncontainer {
   .searchBoxWrapExpand {
     :global {
       .ais-SearchBox-form {
         .ais-SearchBox-input {
           background: var(--docsearch-custom-algolia-searchbox-active-background);
         }
+        &::after {
+          background-image: var(--docsearch-custom-algolia-searchbox-ai-btn-image);
+        }
       }
     }
   }
   :global {
     .ais-SearchBox-form {
-      // non-sizing base — 渐变边框容器
       background: var(--docsearch-custom-algolia-searchbox-border-bg);
       &::before {
         display: none;
@@ -73,7 +126,7 @@
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        background-image: var(--docsearch-custom-algolia-searchbox-ai-btn-image);
+        background-image: var(--docsearch-custom-ai-item-icon);
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
@@ -81,29 +134,25 @@
       }
     }
     .ais-SearchBox-input {
-      // non-sizing base — 纯色背景覆盖中间
       border: none;
       background: var(--docsearch-custom-algolia-searchbox-background);
       box-shadow: none;
-      font-family: PingFang SC;
+      font-family: var(--font-inter);
       font-weight: 400;
       color: var(--docuo-color-primary);
       cursor: pointer;
       &::placeholder {
-        font-family: PingFang SC;
+        font-family: var(--font-inter);
         font-weight: inherit;
         font-size: inherit;
         color: var(--docsearch-custom-algolia-searchbox-placeholder-color);
       }
     }
     .ais-SearchBox-submit {
-      // non-sizing base
     }
     .ais-SearchBox-submitIcon {
-      // non-sizing base
     }
     .ais-SearchBox-reset {
-      // non-sizing base
       fill: var(--docsearch-custom-algolia-searchbox-clear-color);
       transition: all 0.3s;
       &:hover {
@@ -111,127 +160,148 @@
       }
     }
     .ais-SearchBox-resetIcon {
-      // non-sizing base
     }
     .ais-SearchBox-loadingIndicator {
-      // non-sizing base
       display: none;
     }
     .ais-SearchBox-loadingIcon {
-      // non-sizing base
     }
   }
+}
+
+// Search History ---------------------------------------------------
+.searchHistory {
+}
+.searchHistoryHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.searchHistoryTitle {
+  font-family: var(--font-inter);
+  font-weight: 500;
+  color: var(--docsearch-custom-search-history-title-color);
+}
+.searchHistoryClear {
+  font-family: var(--font-inter);
+  font-weight: 500;
+  color: var(--docsearch-custom-search-history-clear-color);
+  transition: all 0.3s;
+  background: none;
+  border: none;
+  cursor: pointer;
+  &:hover {
+    color: var(--docsearch-custom-search-history-clear-hover-color);
+  }
+}
+.searchHistoryList {
+  display: flex;
+  flex-wrap: wrap;
+}
+.searchHistoryItem {
+  background: var(--docsearch-custom-search-history-item-bg-color);
+  color: var(--docsearch-custom-search-history-item-color);
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border: none;
 }
 
 // ---------------------------------------------------------------------------
 // >= 1025px  Desktop
 // ---------------------------------------------------------------------------
 @media (min-width: 1025px) {
-  .panel {
+  .searchDropdownPanel {
     width: 580px;
     left: -10px;
     top: -15px;
     padding-top: 53px;
     max-height: 590px;
-    background: #ffffff;
-    box-shadow:
-      0px 4px 16px 2px rgba(8, 55, 84, 0.06),
-      0px 0px 10px 0px rgba(0, 0, 0, 0.05);
     border-radius: 0px 0px 8px 8px;
+    &::before {
+      max-height: 346px;
+      height: 100%;
+    }
   }
-  .container {
+  .searchDropdowncontainer {
     .searchBoxWrap {
-      z-index: 1000;
-      position: relative;
+      width: 274px;
+    }
+    .searchBoxWrapExpand {
       width: 560px;
+      :global {
+        .ais-SearchBox-form {
+          &::after {
+            width: 34px;
+            height: 30px;
+            right: 6px;
+          }
+        }
+      }
+    }
+    .searchBoxAfterBtn {
+      width: 34px;
+      height: 30px;
+      right: 6px;
     }
     :global {
       .ais-SearchBox-form {
-        // sizing
         height: 38px;
         line-height: 38px;
         padding: 1px;
         border-radius: 8px;
         &::after {
-          width: 34px;
-          height: 30px;
-          right: 6px;
+          width: 17px;
+          height: 17px;
+          right: 14px;
         }
       }
       .ais-SearchBox-input {
-        // sizing
         border-radius: 7px;
         padding-left: 14px;
         padding-right: 68px;
         font-size: 14px;
       }
       .ais-SearchBox-submit {
-        // sizing
       }
       .ais-SearchBox-submitIcon {
-        // sizing
       }
       .ais-SearchBox-reset {
-        // sizing
         right: 50px;
         width: 18px;
         height: 18px;
       }
       .ais-SearchBox-resetIcon {
-        // sizing
       }
       .ais-SearchBox-loadingIndicator {
-        // sizing
       }
       .ais-SearchBox-loadingIcon {
-        // sizing
       }
     }
   }
-  // Search History ---------------------------------------------------
   .searchHistory {
     padding: 16px 16px 16px;
   }
   .searchHistoryHeader {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
     margin-bottom: 12px;
   }
   .searchHistoryTitle {
-    font-family: PingFang SC;
-    font-weight: 500;
     font-size: 13px;
-    color: rgba(53, 60, 78, 0.6);
     line-height: 18px;
   }
   .searchHistoryClear {
-    font-family: PingFang SC;
-    font-weight: 500;
     font-size: 12px;
-    color: rgba(0, 85, 255, 0.8);
     line-height: 18px;
-    transition: all 0.3s;
-    &:hover {
-      opacity: 0.9;
-    }
   }
   .searchHistoryList {
-    display: flex;
-    flex-wrap: wrap;
     gap: 12px;
   }
   .searchHistoryItem {
     font-size: 13px;
     padding: 5px 10px;
     border-radius: 4px;
-    background: #f1f3fa;
-    color: #171717;
-    cursor: pointer;
     max-width: 160px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
   }
 }
 
@@ -239,6 +309,9 @@
 // <= 1024px  Tablet
 // ---------------------------------------------------------------------------
 @media (max-width: 1024px) {
+  .searchDropdowncontainer {
+    display: none;
+  }
 }
 
 // ---------------------------------------------------------------------------

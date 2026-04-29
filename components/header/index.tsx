@@ -159,7 +159,7 @@ const Header = (props: Props) => {
       <div
         className={`container-wrap ${styles.container} ${currentLanguage === "zh" ? styles.zh : ""}`}
       >
-        <div className="flex items-center">
+        <div className="flex items-center fixed">
           {logo ? (
             <div className="flex items-center">
               <a
@@ -216,7 +216,7 @@ const Header = (props: Props) => {
               })}
               renderThemeSwitch={renderThemeSwitch}
               renderLanguageSwitch={renderLanguageSwitch}
-              isShowSearchIcon={!!algolia && !searchHidden && !isSearchPage}
+              isShowSearchIcon={!!algolia && !searchHidden}
               isSearchPage={isSearchPage}
             />
           </div>

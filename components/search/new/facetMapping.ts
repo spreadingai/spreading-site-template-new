@@ -264,13 +264,23 @@ export function getSuggestions(query: string, language: string): string[] {
 // SearchBox placeholder 映射
 // ---------------------------------------------------------------------------
 
-const PLACEHOLDER_MAP: Record<string, string> = {
-  zh: "你可以输入文档关键词、开发问题、错误码",
-  en: "Enter keywords, issues, and error codes",
+const PLACEHOLDER_MAP: Record<string, Record<string, string>> = {
+  zh: {
+    default: "你可以输入文档关键词、开发问题、错误码",
+    dropdown: "请输入文档关键词",
+  },
+  en: {
+    default: "Enter keywords, issues, and error codes",
+    dropdown: "Enter keywords",
+  },
 };
 
-export function getPlaceholder(language: string): string {
-  return PLACEHOLDER_MAP[language === "zh" ? "zh" : "en"];
+export function getPlaceholder(
+  language: string,
+  variant: "default" | "dropdown" = "default",
+): string {
+  const lang = language === "zh" ? "zh" : "en";
+  return PLACEHOLDER_MAP[lang][variant];
 }
 
 // ---------------------------------------------------------------------------
