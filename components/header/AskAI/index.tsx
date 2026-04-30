@@ -40,8 +40,8 @@ const AskAI: React.FC<Props> = () => {
         onCloseHandle={onCloseHandle}
         currentTheme={theme}
         currentLanguage={currentLanguage}
-        currentGroup={currentGroupLabel}
-        currentPlatform={currentPlatform}
+        // currentGroup={currentGroupLabel}
+        // currentPlatform={currentPlatform}
       />
     </div>
   );

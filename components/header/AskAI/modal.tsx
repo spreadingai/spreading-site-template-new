@@ -16,8 +16,8 @@ interface Props {
   rootClassName?: string;
   currentTheme: string;
   currentLanguage: string;
-  currentGroup: string;
-  currentPlatform: string;
+  // currentGroup: string;
+  // currentPlatform: string;
   isModalOpen: boolean;
   onCloseHandle: () => void;
   initialMessage?: string;
@@ -28,8 +28,8 @@ const AskAIModal: React.FC<Props> = ({
   rootClassName = '',
   currentTheme,
   currentLanguage,
-  currentGroup,
-  currentPlatform,
+  // currentGroup,
+  // currentPlatform,
   isModalOpen,
   onCloseHandle,
   initialMessage,
@@ -171,8 +171,8 @@ const AskAIModal: React.FC<Props> = ({
       await sendStreamRequest(
         {
           message: content,
-          product: currentGroup,
-          platform: currentPlatform,
+          // product: currentGroup,
+          // platform: currentPlatform,
           language: currentLanguage,
           session_id: sessionId,
         },
@@ -324,7 +324,17 @@ const AskAIModal: React.FC<Props> = ({
         );
       }
     }
-  }, [isLoading, sessionId, currentGroup, currentPlatform, messageApi, updateFooterStyle, updateATagAttr]);
+  },
+  [
+    isLoading,
+    sessionId, 
+    // currentGroup,
+    // currentPlatform, 
+    messageApi,
+    updateFooterStyle,
+    updateATagAttr
+  ]
+);
 
   // 同步 ref，供 initialMessage 延迟发送使用
   handleSendMessageRef.current = handleSendMessage;
@@ -367,8 +377,8 @@ const AskAIModal: React.FC<Props> = ({
               setMessages={setMessages}
               onRequest={handleSendMessage}
               aiSearchData={aiSearchData}
-              currentGroup={currentGroup}
-              currentPlatform={currentPlatform}
+              // currentGroup={currentGroup}
+              // currentPlatform={currentPlatform}
               currentLanguage={currentLanguage}
               sessionId={sessionId}
               defaultQuestions={defaultQuestions}

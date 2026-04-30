@@ -137,8 +137,8 @@ export interface MessageListProps {
   onRequest: (content: string) => void; // 重新发送消息的函数
   aiSearchData: any;
   // 添加评分需要的参数
-  currentGroup: string;
-  currentPlatform: string;
+  // currentGroup: string;
+  // currentPlatform: string;
   currentLanguage: string;
   sessionId: string;
   // 外部传入默认问题（如搜索页），传入时跳过 API 获取
@@ -153,8 +153,8 @@ const MessageList: React.FC<MessageListProps> = ({
   setMessages,
   onRequest,
   aiSearchData,
-  currentGroup,
-  currentPlatform,
+  // currentGroup,
+  // currentPlatform,
   currentLanguage,
   sessionId,
   defaultQuestions: externalDefaultQuestions,
@@ -181,8 +181,8 @@ const MessageList: React.FC<MessageListProps> = ({
         setIsLoadingQuestions(true);
 
         const params: WelcomePromptsRequest = {
-          product: currentGroup,
-          platform: currentPlatform,
+          // product: currentGroup,
+          // platform: currentPlatform,
           language: currentLanguage
         };
 
@@ -195,10 +195,15 @@ const MessageList: React.FC<MessageListProps> = ({
         setIsLoadingQuestions(false);
       }
     };
-    if (currentGroup && currentPlatform) {
+    // if (currentGroup && currentPlatform) {
       fetchPrompts();
-    }
-  }, [currentGroup, currentLanguage, currentPlatform, externalDefaultQuestions]);
+    // }
+  }, [
+    // currentGroup,
+    currentLanguage,
+    // currentPlatform,
+    externalDefaultQuestions
+  ]);
 
   // 复制 modal-new.tsx 的 updateScoreStyle 函数
   const updateScoreStyle = useCallback(

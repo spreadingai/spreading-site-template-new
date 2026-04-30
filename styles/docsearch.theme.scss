@@ -91,6 +91,9 @@ html {
   --docsearch-custom-pagination-selected-link-color: #0055ff;
   --docsearch-custom-pagination-link-border-color: #e6e8eb;
   --docsearch-custom-pagination-link-bg: none;
+
+  // Chat AI
+  --docsearch-custom-chat-ai-icon: url("~/assets/images/search/icon_chat_ai@2x.png");
 }
 
 html[data-theme="dark"] {
@@ -189,4 +192,7 @@ html[data-theme="dark"] {
   --docsearch-custom-pagination-selected-link-color: #266eff;
   --docsearch-custom-pagination-link-border-color: #333;
   --docsearch-custom-pagination-link-bg: rgba(242, 246, 255, 0.1);
+
+  // Chat AI
+  --docsearch-custom-chat-ai-icon: url("~/assets/images/search/icon_chat_ai_dark@2x.png");
 }

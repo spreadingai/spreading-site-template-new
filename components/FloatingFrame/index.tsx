@@ -14,6 +14,14 @@ import {
   // @ts-ignore
 } from "@ant-design/icons";
 import { useSearchParams } from "next/navigation";
+import ThemeContext from "@/components/header/Theme.context";
+import React from "react";
+import dynamic from "next/dynamic";
+import useLanguage from "@/components/hooks/useLanguage";
+
+const AskAIModal = dynamic(() => import("@/components/header/AskAI/modal"), {
+  ssr: false,
+});
 
 interface FloatingFrameProps {
   locale?: string;
@@ -22,6 +30,9 @@ interface FloatingFrameProps {
 const FloatingFrame = ({ locale = "zh" }: FloatingFrameProps) => {
   const searchParams = useSearchParams();
   const [isScrolledTop, setIsScrolledTop] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { theme } = React.useContext(ThemeContext);
+  const { currentLanguage } = useLanguage();
   const [isShowQrCode, setIsShowQrCode] = useState(false);
   const saveSource = useCallback(() => {
     const source = searchParams.get("source");
@@ -55,11 +66,11 @@ const FloatingFrame = ({ locale = "zh" }: FloatingFrameProps) => {
         url =
           url +
           `${url.includes("?") ? "&" : "?"}marketSource=${encodeURIComponent(
-            curUrl
+            curUrl,
           )}`;
       window.open(url);
     },
-    [getCurrSourceUrl]
+    [getCurrSourceUrl],
   );
 
   const handleGoToRegisterLogin = useCallback(
@@ -67,7 +78,7 @@ const FloatingFrame = ({ locale = "zh" }: FloatingFrameProps) => {
       lang: string,
       isLogin = false,
       accountInfo: any = null,
-      path: string = ""
+      path: string = "",
     ) => {
       if (accountInfo) {
         const consoleMainPageDomain =
@@ -84,7 +95,7 @@ const FloatingFrame = ({ locale = "zh" }: FloatingFrameProps) => {
         toLoginRegister(lang, isLogin);
       }
     },
-    [toLoginRegister]
+    [toLoginRegister],
   );
 
   const workOrderClick = useCallback(() => {
@@ -166,6 +177,12 @@ const FloatingFrame = ({ locale = "zh" }: FloatingFrameProps) => {
   return (
     <>
       <ul className={styles.floatingWrapper}>
+        {/* Ask AI 按钮 */}
+        <li
+          className={classNames(styles.aiChatBtn)}
+          onClick={() => setIsModalOpen(true)}
+        ></li>
+
         {locale === "zh" ? (
           <>
             {/* 免费试用按钮 */}
@@ -205,7 +222,7 @@ const FloatingFrame = ({ locale = "zh" }: FloatingFrameProps) => {
             {
               [styles.hidden]: isScrolledTop,
             },
-            styles.returnTop
+            styles.returnTop,
           )}
           onClick={() => document.body.scrollTo({ top: 0, behavior: "smooth" })}
         >
@@ -237,6 +254,12 @@ const FloatingFrame = ({ locale = "zh" }: FloatingFrameProps) => {
           </div>
         </div>
       ) : null}
+      <AskAIModal
+        isModalOpen={isModalOpen}
+        onCloseHandle={() => setIsModalOpen(false)}
+        currentTheme={theme || "light"}
+        currentLanguage={currentLanguage}
+      />
     </>
   );
 };

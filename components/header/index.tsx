@@ -17,7 +17,6 @@ import useLanguage from "@/components/hooks/useLanguage";
 import useGroup from "@/components/hooks/useGroup";
 import usePlatform from "@/components/hooks/usePlatform";
 import useSet from "@/components/hooks/useSet";
-import AskAI from "./AskAI";
 import SearchDropdown from "@/components/search/new/SearchDropdown";
 
 interface Props {
@@ -197,7 +196,6 @@ const Header = (props: Props) => {
         </div>
         <div className={styles["fixed-menus"]}>
           {!isSearchPage ? searchDropdownComponent : null}
-          {!isSearchPage && themeConfig.showAskAI !== false ? <AskAI /> : null}
         </div>
         {isMobile ? (
           <div className={styles["menus"]}>
