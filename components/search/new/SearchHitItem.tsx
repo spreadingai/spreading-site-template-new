@@ -79,7 +79,7 @@ function buildTitleParts(
     }
   }
 
-  const endIdx = shouldTruncate ? lastHighlightedIdx : LVL_KEYS.length - 1;
+  const endIdx = shouldTruncate && lastHighlightedIdx >= 0 ? lastHighlightedIdx : LVL_KEYS.length - 1;
 
   const hierarchyParts: string[] = [];
   for (let i = 0; i <= endIdx; i++) {
