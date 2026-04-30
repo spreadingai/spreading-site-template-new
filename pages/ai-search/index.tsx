@@ -87,8 +87,8 @@ const AISearchPage = (props: Props) => {
       onCloseHandle={onCloseHandle}
       currentTheme="light"
       currentLanguage={iframeData.language}
-      currentGroup={iframeData.product}
-      currentPlatform={iframeData.platform}
+      // currentGroup={iframeData.product}
+      // currentPlatform={iframeData.platform}
     />
   );
 };

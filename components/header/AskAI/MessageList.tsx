@@ -14,6 +14,9 @@ import { Markdown } from "@ant-design/pro-editor";
 // @ts-ignore
 // import MarkdownIt from "markdown-it";
 import Robot from "@/assets/icons/ai-search/Robot.svg";
+import Image from "next/image";
+import iconSuggestion from "@/assets/images/search/ai_suggestion_icon@2x.png";
+import iconSuggestionDark from "@/assets/images/search/ai_suggestion_icon_dark@2x.png";
 import EventStatus from './EventStatus';
 import outStyles from './MessageList.module.scss';
 import { fetchWelcomePrompts, WelcomePromptsRequest, scoreFetch, ScoreType, Reference, Question } from './api';
@@ -352,11 +355,7 @@ const MessageList: React.FC<MessageListProps> = ({
     assistant: {
       // typing: { step: 5, interval: 10 },
       placement: 'start' as const,
-      avatar: (
-        <div className={outStyles["user-avatar-wrap"]}>
-          {currentTheme === "light" ? <Robot /> : <Robot />}
-        </div>
-      ),
+      avatar: null,
       loadingRender: () => (
         <Space>
           <Spin size="small" className={outStyles.queryLoading} />
@@ -370,11 +369,7 @@ const MessageList: React.FC<MessageListProps> = ({
     },
     user: {
       placement: 'end' as const,
-      avatar: (
-        <div className={outStyles["user-avatar-wrap"]}>
-          <UserOutlined />
-        </div>
-      ),
+      avatar: null,
       classNames: {
         content: outStyles.customBubbleContent,
       },
@@ -387,7 +382,14 @@ const MessageList: React.FC<MessageListProps> = ({
       key: "1",
       children: defaultQuestions.map((question, index) => ({
         key: `1-${index}`,
-        icon: <CommentOutlined />,
+        icon: (
+          <Image
+            src={currentTheme === 'dark' ? iconSuggestionDark.src : iconSuggestion.src}
+            alt=""
+            width={20}
+            height={20}
+          />
+        ),
         description: question,
       })),
     },
@@ -477,6 +479,7 @@ const MessageList: React.FC<MessageListProps> = ({
           toolArgs={message.eventInfo.toolArgs}
           isLoading={message.eventInfo.isLoading || false}
           aiSearchData={aiSearchData}
+          currentTheme={currentTheme}
         />
       );
     }

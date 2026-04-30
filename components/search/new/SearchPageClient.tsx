@@ -134,8 +134,6 @@ const SearchPageClient: React.FC<Props> = ({ instanceGroups = [] }) => {
         onCloseHandle={() => setAiModalOpen(false)}
         currentTheme={theme}
         currentLanguage={currentLanguage}
-        currentGroup=""
-        currentPlatform=""
         initialMessage={aiInitialMessage}
         defaultQuestions={
           hasQuery ? getSuggestions(query, currentLanguage) : undefined

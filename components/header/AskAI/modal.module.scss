@@ -1,23 +1,14 @@
-// 页面模式样式（全屏）
-.ai-search-page {
-    :global(.ant-modal-mask) {
-        display: none;
-    }
-    .ask-ai-dialog {
-        width: 100% !important;
-        height: 100% !important;
-        max-width: unset;
-        top: 0;
-        padding-bottom: 0;
-    }
-}
-
-// 主对话框样式
+// 主对话框样式（仅移动端布局）
 .ask-ai-dialog {
-    width: 80% !important;
-    height: 80% !important;
-    min-height: 580px !important;
-    max-width: 1000px;
+    width: 420px !important;
+    height: 660px !important;
+    min-height: unset !important;
+    max-width: unset !important;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    top: unset;
+    padding-bottom: 0;
     & > div {
         height: 100%;
     }
@@ -29,19 +20,36 @@
         color: var(--docuo-color-primary);
         background: var(--docuo-background-primary);
         border: var(--docsearch-searchbox-border);
+        padding: 15px 20px 10px 20px;
+        position: relative;
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 289px;
+            background-image: var(--docsearch-custom-chat-ai-mask-bg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
     }
     :global(.ant-modal-close) {
-        color: var(--docuo-color-primary);
         transition: all 0.3s;
+        background: unset;
+        top: 15px;
+        right: 8px;
         &:hover {
-            color: var(--docuo-color-primary);
-            background: var(--docsearch-searchbox-background-hover);
+            background: unset;
+            opacity: 0.8;
         }
     }
     :global(.ant-modal-header) {
         color: var(--docuo-color-primary);
         background: var(--docuo-background-primary);
-        border-bottom: 1px solid var(--docsearch-searchbox-border);
+        border-bottom: none;
         flex-shrink: 0;
     }
     :global(.ant-modal-title) {
@@ -58,6 +66,35 @@
     }
     :global(.ant-sender-content) {
         padding-block: 8px;
+    }
+    :global(.ant-pro-chat-list-item) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    :global(.ant-select-single.ant-pro-chat-input-area-component textarea) {
+        padding-right: 40px;
+        max-height: 68px !important;
+        overflow-y: auto;
+    }
+    :global(.zcss-49fjj) {
+        max-height: 400px !important;
+    }
+}
+
+.modal-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    position: relative;
+}
+
+.modal-title-reset {
+    position: absolute;
+    cursor: pointer;
+    transition: all 0.3s;
+    right: 24px;
+    &:hover {
+        opacity: 0.8;
     }
 }
 
@@ -86,113 +123,11 @@
     align-items: flex-end;
 }
 
-// 重置对话按钮样式 - 复制自 modal-new.tsx
-.custom-converse-reset {
-    cursor: pointer;
-    font-size: 16px;
-    color: var(--docuo-text-color);
-    transition: all 0.3s;
-    height: 42px;
-    width: 42px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    opacity: 0.6;
-    &:hover {
-        opacity: 1 !important;
-        background: var(--docuo-ai-search-operate-btn-bg-hover);
-    }
-}
-
-@media screen and (max-width: 750px) {
-    .ask-ai-dialog {
-        min-height: 480px !important;
-        :global(.ant-modal-content) {
-            padding: 20px 16px;
-        }
-        :global(.ant-pro-chat-list-item) {
-            padding-left: 0px;
-            padding-right: 0px;
-        }
-        :global(.ant-select-single.ant-pro-chat-input-area-component textarea) {
-            padding-right: 40px;
-            max-height: 68px !important;
-            overflow-y: auto;
-        }
-        :global(.zcss-49fjj) {
-            max-height: 400px !important;
-        }
-        .welcomeTitle {
-            font-size: 22px;
-        }
-        :global(.ant-welcome-title) {
-            font-size: 22px;
-        }
-        .welcomeDescription {
-            font-size: 22px;
-        }
-        .welcomeWrap {
-            margin-bottom: 25px;
-        }
-    }
-}
-@media screen and (max-width: 576px) {
-    .ask-ai-dialog {
-        :global(.ant-modal-content) {
-            padding: 20px 16px;
-        }
-        .question-tips {
-            font-size: 10px;
-        }
-        .welcomeTitle {
-            font-size: 20px;
-        }
-        :global(.ant-welcome-title) {
-            font-size: 20px;
-        }
-        .welcomeDescription {
-            font-size: 20px;
-        }
-        :global(.ant-bubble-list) {
-            padding: 0 5px;
-        }
-        .user-avatar-wrap {
-            width: 36px;
-            height: 36px;
-        }
-        .welcomeWrap {
-            margin-bottom: 20px;
-        }
-    }
-}
-@media screen and (max-width: 500px) {
-    .ask-ai-dialog {
-        .welcomeIcon {
-            display: none;
-        }
-        :global(.ant-welcome-icon) {
-            display: none;
-        }
-        :global(.ant-bubble-list) {
-            padding: 0;
-        }
-        .user-avatar-wrap {
-            width: 30px;
-            height: 30px;
-        }
-    }
-}
-@media screen and (max-width: 375px) {
-    .ask-ai-dialog {
-        .welcomeTitle {
-            font-size: 17px;
-        }
-        :global(.ant-welcome-title) {
-            font-size: 17px;
-        }
-        .welcomeDescription {
-            font-size: 17px;
-        }
-    }
+.ai-disclaimer {
+    font-family: var(--font-inter);
+    font-weight: 400;
+    font-size: 11px;
+    color: var(--docsearch-custom-chat-ai-disclaimer-color);
+    line-height: 20px;
+    margin-top: 10px;
 }

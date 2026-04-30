@@ -94,6 +94,11 @@ html {
 
   // Chat AI
   --docsearch-custom-chat-ai-icon: url("~/assets/images/search/icon_chat_ai@2x.png");
+  --docsearch-custom-chat-ai-mask-bg: url("~/assets/images/search/icon_ai_chat_mask_bg@2x.png");
+  --docsearch-custom-chat-ai-disclaimer-color: rgba(151,151,151,0.8);
+  --docsearch-custom-chat-ai-first-p-color: rgba(40,41,46,0.6);
+  --docuo-background-secondary: #F3F5F8;
+  --docuo-color-secondary: rgba(40,41,46,0.7);
 }
 
 html[data-theme="dark"] {
@@ -195,4 +200,9 @@ html[data-theme="dark"] {
 
   // Chat AI
   --docsearch-custom-chat-ai-icon: url("~/assets/images/search/icon_chat_ai_dark@2x.png");
+  --docsearch-custom-chat-ai-mask-bg: url("~/assets/images/search/icon_ai_chat_mask_bg_dark@2x.png");
+  --docsearch-custom-chat-ai-disclaimer-color: rgba(151,151,151,0.6);
+  --docsearch-custom-chat-ai-first-p-color: #909090;
+  --docuo-background-secondary: rgba(243,245,248,0.2);
+  --docuo-color-secondary: #B6B6B6;
 }
