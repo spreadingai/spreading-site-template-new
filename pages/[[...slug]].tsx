@@ -251,6 +251,9 @@ interface Props {
     firstImgSrc: string;
   };
   curr: PaginationData;
+  currentTabServerApi?: string;
+  currentTabClientApi?: string;
+  currentTabFaq?: string;
 }
 
 export const getStaticProps = async ({ params }: SlugData) => {
@@ -330,11 +333,26 @@ export const getStaticProps = async ({ params }: SlugData) => {
     instanceGroups
   );
 
+  // 从 instanceGroups 中找到当前 instance，提取 tab.serverApi
+  const currentInstanceGroupItem = instanceGroups
+    .flatMap((g: any) => g.instances || [])
+    .find((inst: any) => inst.id === instanceID);
+  const currentTabServerApi = typeof currentInstanceGroupItem?.tab === 'object'
+    ? (currentInstanceGroupItem.tab as Record<string, string>)?.serverApi || ''
+    : '';
+  const currentTabClientApi = typeof currentInstanceGroupItem?.tab === 'object'
+  ? (currentInstanceGroupItem.tab as Record<string, string>)?.clientApi || ''
+  : '';
+  const currentTabFaq = instanceID.toUpperCase().includes("FAQ") ? currentLanguage === defaultLanguage ? "FAQ" : "常见问题" : "" 
+
   return {
     props: {
       ...postData,
       instanceID,
       currentInstanceLabel: currentInstance.instance.label,
+      currentTabServerApi,
+      currentTabClientApi,
+      currentTabFaq,
       docVersion: docVersion || slugVersion || DEFAULT_CURRENT_SLUG_VERSION,
       slugVersion,
       folderTreeData,
@@ -419,6 +437,9 @@ function PageHead(props: Props) {
     currentGroupLabel,
     currentPlatformLabel,
     curr,
+    currentTabServerApi,
+    currentTabClientApi,
+    currentTabFaq
   } = props;
   const frontmatter = mdxSource.frontmatter as DocFrontMatter;
   const str = `${currentInstanceLabel ? currentInstanceLabel + " " : ""}${
@@ -470,7 +491,9 @@ function PageHead(props: Props) {
   const ogImageWidth = frontmatter["og:image:width"] || "";
   const ogImageHeight = frontmatter["og:image:height"] || "";
   const searchDocType =
-    frontmatter["docType"] ||
+    ((frontmatter["docType"] || "").toUpperCase() === "API" ? currentLanguage === defaultLanguage ? "Client API" : "客户端 API" : frontmatter["docType"]) ||
+    currentTabServerApi ||
+    currentTabFaq ||
     (currentLanguage === defaultLanguage ? "Docs" : "技术文档");
 
   if (currentLanguage !== defaultLanguage) {
