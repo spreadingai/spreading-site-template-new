@@ -10,6 +10,7 @@ interface Props {
   onOpenAI?: (message?: string) => void;
   language?: string;
   variant?: Variant;
+  hasNoResults?: boolean;
 }
 
 const AISuggestion: React.FC<Props> = ({
@@ -17,6 +18,7 @@ const AISuggestion: React.FC<Props> = ({
   onOpenAI,
   language = "zh",
   variant = "default",
+  hasNoResults = false,
 }) => {
   const [apiSuggestions, setApiSuggestions] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(USE_API_SUGGESTIONS);
@@ -46,7 +48,7 @@ const AISuggestion: React.FC<Props> = ({
   const visibleSuggestions = suggestions.slice(0, maxItems);
 
   return (
-    <div className={`${styles.aiSuggestion} ${variant === "dropdown" ? styles.aiSuggestionDropdown : ""}`}>
+    <div className={`${styles.aiSuggestion} ${variant === "dropdown" ? styles.aiSuggestionDropdown : ""} ${hasNoResults ? styles.aiSuggestionHasNoResults : ""}`}>
       <p className={styles.aiSuggestionHeader}>
         {prefix}
         <span

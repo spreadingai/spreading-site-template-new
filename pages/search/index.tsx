@@ -39,7 +39,7 @@ const ATTRIBUTES_TO_SNIPPET = [
   "hierarchy.lvl4:30",
   "hierarchy.lvl5:30",
   "hierarchy.lvl6:30",
-  "content:160",
+  "content:120",
 ];
 // 限制 Algolia 只在可见字段中搜索
 const RESTRICT_SEARCHABLE_ATTRIBUTES = [
@@ -88,7 +88,7 @@ export default function SearchPage({
         future={{ preserveSharedStateOnUnmount: true }}
       >
         <Configure
-          hitsPerPage={30}
+          hitsPerPage={10}
           restrictSearchableAttributes={RESTRICT_SEARCHABLE_ATTRIBUTES}
           attributesToRetrieve={ATTRIBUTES_TO_RETRIEVE}
           attributesToSnippet={ATTRIBUTES_TO_SNIPPET}

@@ -373,7 +373,22 @@
   }
 }
 .hitsLoading {
-  color: var(--docuo-color-primary-active);
+  color: var(--docsearch-custom-hits-loading-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.hitsLoadingIcon {
+  display: block;
+  background-image: var(--docsearch-custom-hits-loading-icon);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  animation: hitsLoadingSpin 1s linear infinite;
+}
+@keyframes hitsLoadingSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 .emptyFeedbackLink {
   color: var(--docsearch-custom-feedback-link-color);
@@ -446,10 +461,18 @@
   text-decoration: none;
   border: 1px solid var(--docsearch-custom-feedback-btn-border);
   display: flex;
+  align-items: center;
   transition: all 0.3s;
   &:hover {
     opacity: 0.8;
   }
+}
+.feedbackBtnIcon {
+  display: block;
+  background-image: var(--docsearch-custom-feedback-btn-icon);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 // Hit item card ---------------------------------------------------
@@ -509,10 +532,6 @@
     text-decoration: none;
     white-space: nowrap;
     transition: all 0.3s;
-    svg {
-      position: relative;
-      top: -1px;
-    }
     &:hover {
       color: var(--docsearch-custom-tab-hover-color);
     }
@@ -559,6 +578,9 @@
     border: 1px solid var(--docsearch-custom-panel-ai-item-border);
   }
 }
+.aiSuggestionHasNoResults {
+  border: none;
+}
 
 // ==================================================================
 // >= 1025px (desktop)
@@ -566,8 +588,8 @@
 @media (min-width: 1025px) {
   .pageRoot {
     max-width: 1200px;
-    padding: 34px 16px 76px;
-    gap: 20px;
+    padding: 29px 16px 76px;
+    gap: 16px;
   }
 
   .criteria {
@@ -619,13 +641,14 @@
 
   // DocTypeTabs
   .docTypeTabsWrapper {
-    margin-top: 16px;
+    margin-top: 18px;
   }
   .docTypeTabs {
-    gap: 28px;
+    gap: 47px;
+    padding-left: 10px;
   }
   .docTypeTab {
-    padding: 8px 14px;
+    padding: 8px 0 14px;
     font-size: 14px;
   }
   .docTypeTabActive {
@@ -667,7 +690,7 @@
 
   // Hits
   .body {
-    gap: 30px;
+    gap: 25px;
   }
   .hitsList {
     padding: 0;
@@ -693,6 +716,11 @@
   }
   .hitsLoading {
     padding: 60px 0 90px;
+    gap: 10px;
+  }
+  .hitsLoadingIcon {
+    width: 36px;
+    height: 36px;
   }
 
   // AI Suggestion
@@ -706,7 +734,7 @@
     font-size: 14px;
   }
   .aiSuggestionLink {
-    margin: 0 4px;
+    margin: 0 2px;
   }
   .aiSuggestionGrid {
     grid-template-columns: 1fr 1fr;
@@ -719,7 +747,7 @@
     &::before {
       width: 20px;
       height: 20px;
-      left: 10px;
+      left: 7px;
     }
   }
 
@@ -727,16 +755,20 @@
   .feedbackBar {
     padding: 20px 20px 20px 30px;
     border-radius: 4px;
-    margin-bottom: 10px;
+    margin-bottom: 18px;
   }
   .feedbackText {
     font-size: 18px;
   }
   .feedbackBtn {
-    padding: 9px 24px 8px;
+    padding: 9px 23px 8px;
     border-radius: 4px;
     font-size: 14px;
-    gap: 8px;
+    gap: 6px;
+  }
+  .feedbackBtnIcon {
+    width: 20px;
+    height: 20px;
   }
 
   // Hit item card
@@ -793,10 +825,12 @@
 
   // 适配 Dropdown
   .docTypeTabsWrapperWithMore {
-    height: 40px;
+    height: 38px;
     padding-right: 80px;
     .docTypeTabs {
       padding-bottom: 20px;
+      padding-left: 0;
+      gap: 28px;
     }
   }
   .docTypeTabsDropdown {
@@ -817,7 +851,7 @@
     }
     .docTypeTab {
       font-size: 13px;
-      padding: 6px 0 12px;
+      padding: 6px 0 10px;
     }
   }
   .hitsListDropdown {
@@ -846,7 +880,7 @@
     margin-top: 0;
     border-radius: unset;
     .aiSuggestionGrid {
-      gap: 8px;
+      gap: 10px;
     }
     .aiSuggestionHeader {
       font-size: 13px;
@@ -855,6 +889,18 @@
       padding: 8px 10px 9px 40px;
       border-radius: 8px;
     }
+  }
+  .aiSuggestionHasNoResults {
+    padding-top: 8px;
+  }
+}
+
+// ==================================================================
+// >= 1200px (desktop)
+// ==================================================================
+@media (min-width: 1201px) {
+  .pageRoot {
+    padding: 29px 0 76px;
   }
 }
 
@@ -919,13 +965,14 @@
 
   // DocTypeTabs
   .docTypeTabsWrapper {
-    margin-top: 16px;
+    margin-top: 18px;
   }
   .docTypeTabs {
-    gap: 28px;
+    gap: 47px;
+    padding-left: 10px;
   }
   .docTypeTab {
-    padding: 8px 14px;
+    padding: 8px 0 14px;
     font-size: 14px;
   }
   .docTypeTabActive {
@@ -967,7 +1014,7 @@
 
   // Hits
   .body {
-    gap: 28px;
+    gap: 25px;
     padding: 20px;
   }
   .hitsList {
@@ -994,7 +1041,13 @@
   }
   .hitsLoading {
     padding: 60px 0 90px;
+    gap: 10px;
   }
+  .hitsLoadingIcon {
+    width: 36px;
+    height: 36px;
+  }
+
 
   // AI Suggestion
   .aiSuggestion {
@@ -1007,7 +1060,7 @@
     font-size: 14px;
   }
   .aiSuggestionLink {
-    margin: 0 4px;
+    margin: 0 2px;
   }
   .aiSuggestionGrid {
     grid-template-columns: 1fr 1fr;
@@ -1020,7 +1073,7 @@
     &::before {
       width: 20px;
       height: 20px;
-      left: 10px;
+      left: 7px;
     }
   }
 
@@ -1028,16 +1081,20 @@
   .feedbackBar {
     padding: 20px 20px 20px 30px;
     border-radius: 4px;
-    margin-bottom: 10px;
+    margin-bottom: 18px;
   }
   .feedbackText {
     font-size: 18px;
   }
   .feedbackBtn {
-    padding: 9px 24px 8px;
+    padding: 9px 23px 8px;
     border-radius: 4px;
     font-size: 14px;
-    gap: 8px;
+    gap: 6px;
+  }
+  .feedbackBtnIcon {
+    width: 20px;
+    height: 20px;
   }
 
   // Hit item card
@@ -1094,10 +1151,12 @@
 
   // 适配 Dropdown
   .docTypeTabsWrapperWithMore {
-    height: 40px;
+    height: 38px;
     padding-right: 80px;
     .docTypeTabs {
       padding-bottom: 20px;
+      padding-left: 0;
+      gap: 28px;
     }
   }
   .docTypeTabsDropdown {
@@ -1118,7 +1177,7 @@
     }
     .docTypeTab {
       font-size: 13px;
-      padding: 6px 0 12px;
+      padding: 6px 0 10px;
     }
   }
   .hitsListDropdown {
@@ -1147,7 +1206,7 @@
     margin-top: 0;
     border-radius: unset;
     .aiSuggestionGrid {
-      gap: 8px;
+      gap: 10px;
     }
     .aiSuggestionHeader {
       font-size: 13px;
@@ -1156,6 +1215,9 @@
       padding: 8px 10px 9px 40px;
       border-radius: 8px;
     }
+  }
+  .aiSuggestionHasNoResults {
+    padding-top: 8px;
   }
 }
 
@@ -1206,10 +1268,14 @@
     font-size: 14px;
   }
   .feedbackBtn {
-    font-size: 13px;
-    padding: 7px 22px 6px;
-    width: 98px;
+    font-size: 12px;
+    padding: 5px 12px 4px;
     flex: none;
+    gap: 4px;
+  }
+  .feedbackBtnIcon {
+    width: 16px;
+    height: 16px;
   }
 
   .facetRow {
@@ -1238,9 +1304,9 @@
     grid-template-columns: 1fr;
     gap: 8px;
     // Mobile: only show first 2 items
-    .aiSuggestionItem:nth-child(n + 3) {
-      display: none;
-    }
+    // .aiSuggestionItem:nth-child(n + 3) {
+    //   display: none;
+    // }
   }
   .aiSuggestion {
     border-radius: 12px;

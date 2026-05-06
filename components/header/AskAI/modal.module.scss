@@ -20,7 +20,7 @@
         color: var(--docuo-color-primary);
         background: var(--docuo-background-primary);
         border: var(--docsearch-searchbox-border);
-        padding: 15px 20px 10px 20px;
+        padding: 15px 20px 8px 20px;
         position: relative;
         &::before {
             content: '';
@@ -40,7 +40,7 @@
         transition: all 0.3s;
         background: unset;
         top: 15px;
-        right: 8px;
+        right: 12px;
         &:hover {
             background: unset;
             opacity: 0.8;
@@ -84,7 +84,7 @@
 .modal-title-wrap {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 2px;
     position: relative;
 }
 
@@ -92,7 +92,7 @@
     position: absolute;
     cursor: pointer;
     transition: all 0.3s;
-    right: 24px;
+    right: 26px;
     &:hover {
         opacity: 0.8;
     }
@@ -129,7 +129,7 @@
     font-size: 11px;
     color: var(--docsearch-custom-chat-ai-disclaimer-color);
     line-height: 20px;
-    margin-top: 10px;
+    margin-top: 9px;
 }
 
 @media screen and (max-width: 750px) {

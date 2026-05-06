@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
+import { DeleteOutlined } from "@ant-design/icons";
 import { getSearchHistoryText } from "./facetMapping";
 import styles from "./searchDropdown.module.scss";
 
@@ -56,6 +57,7 @@ const SearchHistory: React.FC<Props> = ({ language = "zh", onSelect }) => {
           className={styles.searchHistoryClear}
           onClick={handleClear}
         >
+          <DeleteOutlined />
           {clear}
         </button>
       </div>

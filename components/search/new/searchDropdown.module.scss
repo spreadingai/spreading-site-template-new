@@ -190,6 +190,8 @@
   background: none;
   border: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
   &:hover {
     color: var(--docsearch-custom-search-history-clear-hover-color);
   }
@@ -292,13 +294,13 @@
   }
   .searchHistoryClear {
     font-size: 12px;
-    line-height: 18px;
+    gap: 5px;
   }
   .searchHistoryList {
     gap: 12px;
   }
   .searchHistoryItem {
-    font-size: 13px;
+    font-size: 14px;
     padding: 5px 10px;
     border-radius: 4px;
     max-width: 160px;

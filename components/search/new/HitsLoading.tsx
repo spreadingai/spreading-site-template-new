@@ -9,6 +9,7 @@ interface Props {
 const HitsLoading: React.FC<Props> = ({ language = "zh" }) => {
   return (
     <div className={styles.hitsLoading}>
+      <span className={styles.hitsLoadingIcon} />
       <span>{getLoadingText(language)}</span>
     </div>
   );

@@ -36,11 +36,11 @@ const FacetLabelList: React.FC<Props> = ({
 
   // Detect if items overflow 1 row
   useEffect(() => {
-    const list = listRef.current;
+    const list: any = listRef.current;
     if (!list || list.children.length < 2) return;
     const firstTop = list.children[0].offsetTop;
     const overflow = Array.from(list.children).some(
-      (child) => child.offsetTop > firstTop
+      (child: any) => child.offsetTop > firstTop
     );
     setHasOverflow(overflow);
   }, [items]);

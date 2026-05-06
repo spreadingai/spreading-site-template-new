@@ -44,6 +44,8 @@ html {
   --docsearch-custom-hits-empty-color: #28292e;
   --docsearch-custom-feedback-link-color: #0055ff;
   --docsearch-custom-hits-empty-pic: url("~/assets/images/search/search_pic@2x.png");
+  --docsearch-custom-hits-loading-icon: url("~/assets/images/search/icon_search_loading@2x.png");
+  --docsearch-custom-hits-loading-color: #0055ff;
 
   // Hit item card
   --docsearch-custom-hit-item-color: #46474d;
@@ -84,6 +86,7 @@ html {
   --docsearch-custom-feedback-btn-bg: #fff;
   --docsearch-custom-feedback-btn-border: #e5ebf7;
   --docsearch-custom-feedback-btn-color: #28292e;
+  --docsearch-custom-feedback-btn-icon: url("~/assets/images/search/icon_feedback@2x.png");
 
   // Pagination
   --docsearch-custom-pagination-link-color: rgb(70, 71, 77);
@@ -146,6 +149,8 @@ html[data-theme="dark"] {
   --docsearch-custom-hits-empty-color: #b6b6b6;
   --docsearch-custom-feedback-link-color: #266eff;
   --docsearch-custom-hits-empty-pic: url("~/assets/images/search/search_pic_dark@2x.png");
+  --docsearch-custom-hits-loading-icon: url("~/assets/images/search/icon_search_loading_dark@2x.png");
+  --docsearch-custom-hits-loading-color: #F0F0F0;
 
   // Hit item card
   --docsearch-custom-hit-item-color: #b6b6b6;
@@ -190,6 +195,7 @@ html[data-theme="dark"] {
   --docsearch-custom-feedback-btn-bg: rgba(242, 246, 255, 0.2);
   --docsearch-custom-feedback-btn-border: rgba(63, 63, 63, 0.5);
   --docsearch-custom-feedback-btn-color: #f0f0f0;
+  --docsearch-custom-feedback-btn-icon: url("~/assets/images/search/icon_feedback_dark@2x.png");
 
   // Pagination
   --docsearch-custom-pagination-link-color: rgb(240, 240, 240);

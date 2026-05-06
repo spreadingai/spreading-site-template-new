@@ -148,9 +148,7 @@ const DropdownContent: React.FC<DropdownContentProps> = ({
           </div>
         </>
       )}
-      {query && (
-        <AISuggestion query={query} language={language} variant="dropdown" onOpenAI={onOpenAI} />
-      )}
+      <AISuggestion query={query} language={language} variant="dropdown" onOpenAI={onOpenAI} hasNoResults={ !hasQuery } />
     </div>
   );
 };

@@ -17,6 +17,7 @@ const FeedbackBar: React.FC<Props> = ({ language = "zh" }) => {
         target="_blank"
         rel="noopener noreferrer"
       >
+        <span className={styles.feedbackBtnIcon} />
         {btn}
       </a>
     </div>

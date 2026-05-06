@@ -174,7 +174,7 @@ const EMPTY_TEXT_MAP: Record<
   zh: {
     main: "未能检索到相关内容，建议您尝试其他关键词",
     feedback: "提交反馈",
-    suffix: "进行",
+    suffix: "进行反映",
   },
   en: {
     main: "No results found. Please try other keywords.",

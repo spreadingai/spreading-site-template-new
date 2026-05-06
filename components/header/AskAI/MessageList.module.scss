@@ -38,11 +38,14 @@
     font-size: 12px;
   }
 
+  :global(.ant-bubble.ant-bubble-end) {
+    padding-left: 16px;
+  }
   :global(.ant-bubble.ant-bubble-end .ant-bubble-content) {
     background: var(--docuo-color-primary-active);
     border-radius: 8px 8px 0px 8px;
     color: #fff;
-    padding: 8px 10px;
+    padding: 6px 10px;
     font-size: 13px;
   }
   :global(.ant-bubble.ant-bubble-start .ant-bubble-content) {
@@ -130,8 +133,9 @@
 
   // 占位符相关样式 - 与 modal-new.tsx 完全一致
   .placeholderContent {
-    margin: 30px auto 0;
+    margin: 35px auto 0;
     width: 100%;
+    padding: 0 2px!important;
     & > div {
       width: 100%;
     }
@@ -161,6 +165,9 @@
     background: unset;
     border: unset;
     padding: 0;
+    :global(.ant-prompts-list) {
+      gap: 10px;
+    }
   }
   .questionSubItem {
     color: var(--docuo-color-primary);
@@ -168,14 +175,17 @@
     border: 1px solid var(--docsearch-custom-panel-ai-item-border) !important;
     padding-block: 8px;
     transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    padding-inline: 8px;
     &:hover {
       color: var(--docsearch-custom-ai-item-hover-color);
     }
   }
   .question-tips {
-    font-size: 12px;
+    font-size: 13px;
     color: var(--docsearch-searchbox-color);
-    margin-bottom: 5%;
+    margin-bottom: 2px;
   }
 
 }

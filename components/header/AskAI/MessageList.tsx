@@ -386,8 +386,8 @@ const MessageList: React.FC<MessageListProps> = ({
           <Image
             src={currentTheme === 'dark' ? iconSuggestionDark.src : iconSuggestion.src}
             alt=""
-            width={20}
-            height={20}
+            width={16}
+            height={16}
           />
         ),
         description: question,
