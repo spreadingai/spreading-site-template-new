@@ -9,7 +9,7 @@
   .eventText {
     color: var(--docuo-color-secondary);
     font-size: 13px;
-    line-height: 1;
+    line-height: 20px;
   }
   
   .anticon {
@@ -18,5 +18,8 @@
 
   :global(.ant-space .ant-space-item) {
     display: flex;
+    &:last-of-type {
+      flex: 1;
+    }
   }
 }

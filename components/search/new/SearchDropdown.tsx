@@ -92,6 +92,7 @@ interface DropdownContentProps {
   indexName: string;
   currentGroup?: string;
   currentPlatform?: string;
+  onOpenAI?: (message?: string) => void;
 }
 
 type GroupMap = Map<string, string>;
@@ -102,6 +103,7 @@ const DropdownContent: React.FC<DropdownContentProps> = ({
   indexName,
   currentGroup,
   currentPlatform,
+  onOpenAI,
 }) => {
   const { query, refine } = useSearchBox();
   const hasQuery = !!query && query.trim().length > 0;
@@ -147,7 +149,7 @@ const DropdownContent: React.FC<DropdownContentProps> = ({
         </>
       )}
       {!loading && (
-        <AISuggestion query={query} language={language} variant="dropdown" />
+        <AISuggestion query={query} language={language} variant="dropdown" onOpenAI={onOpenAI} />
       )}
     </div>
   );
@@ -271,6 +273,11 @@ const SearchDropdown: React.FC<Props> = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  const handleOpenAI = useCallback((message?: string) => {
+    setIsOpen(false);
+    window.dispatchEvent(new CustomEvent("open-ask-ai", { detail: { message } }));
+  }, []);
+
   return (
     <div className={styles.searchDropdowncontainer} ref={containerRef}>
       <InstantSearch
@@ -308,6 +315,7 @@ const SearchDropdown: React.FC<Props> = ({
             indexName={indexName}
             currentGroup={currentGroup}
             currentPlatform={currentPlatform}
+            onOpenAI={handleOpenAI}
           />
         </div>
       </InstantSearch>

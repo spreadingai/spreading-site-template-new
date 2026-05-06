@@ -477,7 +477,6 @@ const MessageList: React.FC<MessageListProps> = ({
           eventName={message.eventInfo.eventName}
           toolName={message.eventInfo.toolName}
           toolArgs={message.eventInfo.toolArgs}
-          isLoading={message.eventInfo.isLoading || false}
           aiSearchData={aiSearchData}
           currentTheme={currentTheme}
         />
