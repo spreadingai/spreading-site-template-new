@@ -14,7 +14,7 @@ import SearchHits from "./SearchHits";
 import AISuggestion from "./AISuggestion";
 import FeedbackBar from "./FeedbackBar";
 import type { AlgoliaHit } from "./SearchHitItem";
-import { buildGroupMap, getSuggestions, getPlaceholder } from "./facetMapping";
+import { buildGroupMap, getSuggestions, getPlaceholder, USE_API_SUGGESTIONS } from "./facetMapping";
 import useLanguage from "@/components/hooks/useLanguage";
 import ThemeContext from "@/components/header/Theme.context";
 import type { InstanceGroup } from "@/lib/types";
@@ -136,7 +136,9 @@ const SearchPageClient: React.FC<Props> = ({ instanceGroups = [] }) => {
         currentLanguage={currentLanguage}
         initialMessage={aiInitialMessage}
         defaultQuestions={
-          hasQuery ? getSuggestions(query, currentLanguage) : undefined
+          !USE_API_SUGGESTIONS && hasQuery
+            ? getSuggestions(query, currentLanguage)
+            : undefined
         }
       />
     </div>

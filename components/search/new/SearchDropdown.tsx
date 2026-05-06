@@ -148,7 +148,7 @@ const DropdownContent: React.FC<DropdownContentProps> = ({
           </div>
         </>
       )}
-      {!loading && (
+      {query && (
         <AISuggestion query={query} language={language} variant="dropdown" onOpenAI={onOpenAI} />
       )}
     </div>

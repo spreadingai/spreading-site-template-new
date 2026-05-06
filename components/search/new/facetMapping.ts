@@ -223,6 +223,11 @@ export function getAISuggestionText(language: string): {
   return AI_SUGGESTION_MAP[language === "zh" ? "zh" : "en"];
 }
 
+// ---------------------------------------------------------------------------
+// 问题来源开关：true 走 /prompts/welcome API，false 走本地模板
+// ---------------------------------------------------------------------------
+export const USE_API_SUGGESTIONS = true;
+
 const AI_SUGGESTION_TEMPLATES: Record<string, string[]> = {
   zh: [
     "{query}是什么",

@@ -32,6 +32,11 @@ const SearchHits: React.FC<Props> = ({
     return <HitsLoading language={language} />;
   }
 
+  // loading 期间不渲染结果，避免样式闪烁
+  if (loading) {
+    return <HitsLoading language={language} />;
+  }
+
   if (variant === "default" && !loading && totalCount === 0) {
     return <HitsEmpty language={language} />;
   }
