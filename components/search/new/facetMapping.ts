@@ -305,20 +305,20 @@ export function getAISuggestionText(language: string): {
 // ---------------------------------------------------------------------------
 // 问题来源开关：true 走 /prompts/welcome API，false 走本地模板
 // ---------------------------------------------------------------------------
-export const USE_API_SUGGESTIONS = true;
+export const USE_API_SUGGESTIONS = false;
 
 const AI_SUGGESTION_TEMPLATES: Record<string, string[]> = {
   zh: [
-    "{query}是什么",
-    "{query} SDK 的集成文档",
-    "怎么下载{query} SDK",
-    "{query} 支持哪些平台",
+    "{query} 是什么",
+    "{query} 快速入门教程",
+    "如何接入 {query}",
+    "{query} 如何解决",
   ],
   en: [
     "What is {query}",
-    "{query} SDK integration guide",
-    "How to download {query} SDK",
-    "Which platforms does {query} support",
+    "{query} quick start tutorial",
+    "How to connect {query}",
+    "How to solve {query}",
   ],
 };
 

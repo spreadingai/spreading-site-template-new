@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAISuggestionText, getRandomGroupId, getSuggestions, USE_API_SUGGESTIONS } from "./facetMapping";
+import { getAISuggestionText, getRandomGroupId, getSuggestions } from "./facetMapping";
 import { fetchWelcomePrompts } from "@/components/header/AskAI/api";
 import styles from "./index.module.scss";
 
@@ -7,7 +7,7 @@ type Variant = "default" | "dropdown";
 
 interface Props {
   query: string;
-  onOpenAI?: (message?: string) => void;
+  onOpenAI?: (message?: string, defaultQuestions?: string[]) => void;
   language?: string;
   variant?: Variant;
   hasNoResults?: boolean;
@@ -21,10 +21,12 @@ const AISuggestion: React.FC<Props> = ({
   hasNoResults = false,
 }) => {
   const [apiSuggestions, setApiSuggestions] = useState<string[]>([]);
-  const [isLoading, setIsLoading] = useState(USE_API_SUGGESTIONS);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const shouldUseApi = !query.trim();
 
   useEffect(() => {
-    if (!USE_API_SUGGESTIONS) return;
+    if (!shouldUseApi) return;
     let cancelled = false;
     setIsLoading(true);
     fetchWelcomePrompts({ language, product: getRandomGroupId(language) })
@@ -38,9 +40,9 @@ const AISuggestion: React.FC<Props> = ({
         if (!cancelled) setIsLoading(false);
       });
     return () => { cancelled = true; };
-  }, [language]);
+  }, [language, shouldUseApi]);
 
-  const suggestions = USE_API_SUGGESTIONS ? apiSuggestions : getSuggestions(query, language);
+  const suggestions = shouldUseApi ? apiSuggestions : getSuggestions(query, language);
   if (isLoading || !suggestions.length) return null;
 
   const { prefix, link, suffix } = getAISuggestionText(language);
@@ -53,7 +55,7 @@ const AISuggestion: React.FC<Props> = ({
         {prefix}
         <span
           className={styles.aiSuggestionLink}
-          onClick={() => onOpenAI?.()}
+          onClick={() => onOpenAI?.(undefined, suggestions)}
         >
           {link}
         </span>
@@ -65,7 +67,7 @@ const AISuggestion: React.FC<Props> = ({
             key={idx}
             type="button"
             className={styles.aiSuggestionItem}
-            onClick={() => onOpenAI?.(text)}
+            onClick={() => onOpenAI?.(text, suggestions)}
           >
             {text}
           </button>

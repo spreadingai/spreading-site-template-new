@@ -14,7 +14,7 @@ import SearchHits from "./SearchHits";
 import AISuggestion from "./AISuggestion";
 import FeedbackBar from "./FeedbackBar";
 import type { AlgoliaHit } from "./SearchHitItem";
-import { buildGroupMap, getSuggestions, getPlaceholder, USE_API_SUGGESTIONS } from "./facetMapping";
+import { buildGroupMap, getPlaceholder } from "./facetMapping";
 import useLanguage from "@/components/hooks/useLanguage";
 import ThemeContext from "@/components/header/Theme.context";
 import type { InstanceGroup } from "@/lib/types";
@@ -37,6 +37,7 @@ const SearchPageClient: React.FC<Props> = ({ instanceGroups = [] }) => {
   // AI 弹框状态
   const [aiModalOpen, setAiModalOpen] = useState(false);
   const [aiInitialMessage, setAiInitialMessage] = useState<string>();
+  const [aiDefaultQuestions, setAiDefaultQuestions] = useState<string[]>();
   const [paginationPadding, setPaginationPadding] = useState(3);
   const bodyRef = useRef<HTMLDivElement>(null);
 
@@ -50,8 +51,9 @@ const SearchPageClient: React.FC<Props> = ({ instanceGroups = [] }) => {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  const handleOpenAI = (message?: string) => {
+  const handleOpenAI = (message?: string, defaultQuestions?: string[]) => {
     setAiInitialMessage(message);
+    setAiDefaultQuestions(defaultQuestions);
     setAiModalOpen(true);
   };
 
@@ -135,11 +137,7 @@ const SearchPageClient: React.FC<Props> = ({ instanceGroups = [] }) => {
         currentTheme={theme}
         currentLanguage={currentLanguage}
         initialMessage={aiInitialMessage}
-        defaultQuestions={
-          !USE_API_SUGGESTIONS && hasQuery
-            ? getSuggestions(query, currentLanguage)
-            : undefined
-        }
+        defaultQuestions={aiDefaultQuestions}
       />
     </div>
   );

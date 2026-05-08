@@ -92,7 +92,7 @@ interface DropdownContentProps {
   indexName: string;
   currentGroup?: string;
   currentPlatform?: string;
-  onOpenAI?: (message?: string) => void;
+  onOpenAI?: (message?: string, defaultQuestions?: string[]) => void;
 }
 
 type GroupMap = Map<string, string>;
@@ -271,9 +271,9 @@ const SearchDropdown: React.FC<Props> = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleOpenAI = useCallback((message?: string) => {
+  const handleOpenAI = useCallback((message?: string, defaultQuestions?: string[]) => {
     setIsOpen(false);
-    window.dispatchEvent(new CustomEvent("open-ask-ai", { detail: { message } }));
+    window.dispatchEvent(new CustomEvent("open-ask-ai", { detail: { message, defaultQuestions } }));
   }, []);
 
   return (

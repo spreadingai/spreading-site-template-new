@@ -32,6 +32,7 @@ const FloatingFrame = ({ locale = "zh" }: FloatingFrameProps) => {
   const [isScrolledTop, setIsScrolledTop] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [initialMessage, setInitialMessage] = useState<string | undefined>();
+  const [defaultQuestions, setDefaultQuestions] = useState<string[] | undefined>();
   const { theme } = React.useContext(ThemeContext);
   const { currentLanguage } = useLanguage();
   const [isShowQrCode, setIsShowQrCode] = useState(false);
@@ -39,8 +40,9 @@ const FloatingFrame = ({ locale = "zh" }: FloatingFrameProps) => {
   // 监听来自 SearchDropdown 的打开 AI 弹窗事件
   useEffect(() => {
     const handler = (e: Event) => {
-      const { message } = (e as CustomEvent).detail || {};
+      const { message, defaultQuestions } = (e as CustomEvent).detail || {};
       setInitialMessage(message);
+      setDefaultQuestions(defaultQuestions);
       setIsModalOpen(true);
     };
     window.addEventListener("open-ask-ai", handler);
@@ -272,10 +274,12 @@ const FloatingFrame = ({ locale = "zh" }: FloatingFrameProps) => {
         onCloseHandle={() => {
           setIsModalOpen(false);
           setInitialMessage(undefined);
+          setDefaultQuestions(undefined);
         }}
         currentTheme={theme || "light"}
         currentLanguage={currentLanguage}
         initialMessage={initialMessage}
+        defaultQuestions={defaultQuestions}
       />
     </>
   );
