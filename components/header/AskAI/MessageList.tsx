@@ -20,6 +20,7 @@ import iconSuggestionDark from "@/assets/images/search/ai_suggestion_icon_dark@2
 import EventStatus from './EventStatus';
 import outStyles from './MessageList.module.scss';
 import { fetchWelcomePrompts, WelcomePromptsRequest, scoreFetch, ScoreType, Reference, Question } from './api';
+import { getRandomGroupId } from '@/components/search/new/facetMapping';
 
 // const md = MarkdownIt({ html: true, breaks: true });
 
@@ -184,11 +185,9 @@ const MessageList: React.FC<MessageListProps> = ({
         setIsLoadingQuestions(true);
 
         const params: WelcomePromptsRequest = {
-          // product: currentGroup,
-          // platform: currentPlatform,
+          product: getRandomGroupId(currentLanguage),
           language: currentLanguage
         };
-
         const response = await fetchWelcomePrompts(params);
         setFetchedQuestions(response.data.prompts);
       } catch (error) {

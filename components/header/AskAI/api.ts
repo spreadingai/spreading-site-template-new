@@ -60,8 +60,8 @@ export interface StreamCallbacks {
  * 欢迎提示请求参数
  */
 export interface WelcomePromptsRequest {
-  // product: string;
-  // platform: string;
+  product?: string;
+  platform?: string;
   language?: string;
 }
 
@@ -377,7 +377,7 @@ export const fetchWelcomePrompts = async (params: WelcomePromptsRequest): Promis
     const url = new URL(AI_API_CONFIG.WELCOME_PROMPTS_ENDPOINT, baseUrl);
 
     // 添加查询参数
-    // url.searchParams.append('product', params.product);
+    url.searchParams.append('product', params.product);
     // url.searchParams.append('platform', params.platform);
     if (params.language) {
       url.searchParams.append('language', params.language);

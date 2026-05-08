@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { getAISuggestionText, getSuggestions, USE_API_SUGGESTIONS } from "./facetMapping";
+import { getAISuggestionText, getRandomGroupId, getSuggestions, USE_API_SUGGESTIONS } from "./facetMapping";
 import { fetchWelcomePrompts } from "@/components/header/AskAI/api";
 import styles from "./index.module.scss";
 
@@ -27,7 +27,7 @@ const AISuggestion: React.FC<Props> = ({
     if (!USE_API_SUGGESTIONS) return;
     let cancelled = false;
     setIsLoading(true);
-    fetchWelcomePrompts({ language })
+    fetchWelcomePrompts({ language, product: getRandomGroupId(language) })
       .then((res) => {
         if (!cancelled) setApiSuggestions(res.data?.prompts ?? []);
       })

@@ -1,6 +1,85 @@
 import type { InstanceGroup } from "@/lib/types";
 
 // ---------------------------------------------------------------------------
+// InstanceGroup IDs（从 docuo.config.zh.json / docuo.config.en.json 提取）
+// ---------------------------------------------------------------------------
+
+export const INSTANCE_GROUP_IDS: Record<string, string[]> = {
+  zh: [
+    "real_time_video_zh",
+    "real_time_voice_zh",
+    "live_streaming_zh",
+    "zim_zh",
+    "aiagent_zh",
+    "aigc_digital_human_zh",
+    "super_board_zh",
+    "cloud_player_zh",
+    "ai_effects_zh",
+    "cloud_recording_zh",
+    "local-recording",
+    "analytics_dashboard_zh",
+    "cloud_realtime_asr_zh",
+    "callkit_zh",
+    "live_streaming_kit_zh",
+    "live_audio_room_kit_zh",
+    "imkit_zh",
+    "shumei-moderation-zh",
+    "ai-voice-changer-zh",
+    "real-time-translation-zh",
+    "solution_audio_room_zh",
+    "solution_live_streaming_zh",
+    "solution_ktv_zh",
+    "solution_online_fitness_zh",
+    "solution_interactive_podcast_zh",
+    "solution_large_class_ai_zh",
+    "solution_large_class_zh",
+    "solution_small_class_zh",
+    "solution_online_music_lessons_zh",
+    "solution_online_painting_lessons_zh",
+    "solution_online_programming_lessons_zh",
+    "solution_voice_call_zh",
+    "solution_video_call_zh",
+    "solution_meeting_zh",
+    "solution_telemedicine_zh",
+    // "console-zh",
+    // "policies_and_agreements_zh",
+    // "glossary_zh",
+    "faq-zh",
+  ],
+  en: [
+    "real_time_video",
+    "real_time_voice",
+    "live_streaming",
+    "zim",
+    "callkit",
+    "live_streaming_kit",
+    "live_audio_room_kit",
+    "imkit",
+    "video_conference_kit",
+    "super_board",
+    "cloud_realtime_asr",
+    "cloud_player",
+    "ai_effects",
+    "cloud_recording",
+    // "console",
+    "analytics_dashboard",
+    "aiagent_en",
+    "aigc_digital_human",
+    "faq-en",
+  ],
+};
+
+// ---------------------------------------------------------------------------
+// 随机获取一个 InstanceGroup ID
+// ---------------------------------------------------------------------------
+
+export function getRandomGroupId(language: string): string {
+  const lang = language === "zh" ? "zh" : "en";
+  const ids = INSTANCE_GROUP_IDS[lang];
+  return ids[Math.floor(Math.random() * ids.length)];
+}
+
+// ---------------------------------------------------------------------------
 // Group 映射：从 instanceGroups 构建 id → name
 // ---------------------------------------------------------------------------
 
