@@ -3,8 +3,8 @@ import IconNavMore from "@/assets/icons/IconNavMore.svg";
 import IconNavMoreActive from "@/assets/icons/IconNavMoreActive.svg";
 import IconNavMoreDark from "@/assets/icons/IconNavMore@dark.svg";
 import IconNavMoreActiveDark from "@/assets/icons/IconNavMoreActive@dark.svg";
-import IconMenuSearch from "@/assets/icons/iconMenuSearch.svg";
-import IconMenuSearchDark from "@/assets/icons/iconMenuSearch@dark.svg";
+import IconMenuSearch from "@/assets/images/search/iconMenuSearch.svg";
+import IconMenuSearchDark from "@/assets/images/search/iconMenuSearch@dark.svg";
 import IconMenuSearchClose from "@/assets/images/search/iconMenuSearchClose.svg";
 import IconMenuSearchCloseDark from "@/assets/images/search/iconMenuSearchClose@dark.svg";
 import IconArrowRight from "@/assets/icons/iconArrowRight.svg";
@@ -152,7 +152,8 @@ const Mobile: FC<Props> = ({
   const NavMoreActive =
     theme === "dark" ? IconNavMoreActiveDark : IconNavMoreActive;
   const SEARCH_NAV_KEY = "search_from_nav";
-  const navigatedFromApp = isSearchPage && sessionStorage.getItem(SEARCH_NAV_KEY) === "true";
+  const navigatedFromApp =
+    isSearchPage && sessionStorage.getItem(SEARCH_NAV_KEY) === "true";
 
   const MenuSearchIcon = isSearchPage
     ? theme === "dark"
