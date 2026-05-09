@@ -21,7 +21,15 @@ const AISearchPage = (props: Props) => {
     language: string;
     product: string;
     platform: string;
-  }>({ language: "zh", product: "", platform: "" });
+    message: string;
+    defaultQuestions: [];
+  }>({
+    language: "zh",
+    product: "",
+    platform: "",
+    message: "",
+    defaultQuestions: [],
+  });
 
   const showModal = () => {
     setIsModalOpen(true);
@@ -89,6 +97,8 @@ const AISearchPage = (props: Props) => {
       currentLanguage={iframeData.language}
       // currentGroup={iframeData.product}
       // currentPlatform={iframeData.platform}
+      initialMessage={iframeData.message}
+      defaultQuestions={iframeData.defaultQuestions}
     />
   );
 };

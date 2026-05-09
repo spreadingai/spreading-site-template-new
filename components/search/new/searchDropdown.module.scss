@@ -26,6 +26,7 @@
 
 .searchDropdowncontainer {
   position: relative;
+  width: max-content;
   .searchBoxWrap {
     z-index: 1000;
     position: relative;
@@ -51,6 +52,7 @@
 
 // Dropdown panel
 .searchDropdownPanel {
+  overflow: hidden;
   position: absolute;
   top: 100%;
   left: 0;
@@ -89,7 +91,7 @@
   visibility: hidden;
   .searchDropdownPanel {
     opacity: 0;
-    transition: none;
+    transition: unset;
   }
 }
 .dropdownPanelVisible {
@@ -98,6 +100,17 @@
     opacity: 1;
     transition: opacity 0.3s ease-in-out;
     transition-delay: 0.3s;
+  }
+}
+.searchDropdowncontainerEmbed {
+  .dropdownPanel {
+    display: none;
+  }
+  .dropdownPanelVisible {
+    display: flex;
+    .searchDropdownPanel {
+      transition-delay: unset;
+    }
   }
 }
 
@@ -168,6 +181,15 @@
     }
   }
 }
+.searchDropdowncontainerEmbed {
+  :global {
+    .ais-SearchBox-form {
+      &::after {
+        background-image: var(--docsearch-custom-algolia-searchbox-ai-btn-image);
+      }
+    }
+  }
+}
 
 // Search History ---------------------------------------------------
 .searchHistory {
@@ -214,18 +236,6 @@
 // >= 1025px  Desktop
 // ---------------------------------------------------------------------------
 @media (min-width: 1025px) {
-  .searchDropdownPanel {
-    width: 580px;
-    left: -10px;
-    top: -15px;
-    padding-top: 53px;
-    max-height: 590px;
-    border-radius: 0px 0px 8px 8px;
-    &::before {
-      max-height: 346px;
-      height: 100%;
-    }
-  }
   .searchDropdowncontainer {
     .searchBoxWrap {
       width: 274px;
@@ -282,6 +292,45 @@
       }
     }
   }
+  .searchDropdowncontainerEmbed {
+    .searchBoxWrap {
+      width: 530px;
+    }
+    .searchBoxWrapExpand {
+      width: 530px;
+    }
+    :global {
+      .ais-SearchBox-form {
+        &::after {
+          width: 34px;
+          height: 30px;
+          right: 6px;
+        }
+      }
+    }
+  }
+  .searchDropdownPanel {
+    width: 580px;
+    left: -10px;
+    top: -15px;
+    padding-top: 53px;
+    max-height: 590px;
+    border-radius: 0px 0px 8px 8px;
+    &::before {
+      max-height: 346px;
+      height: 100%;
+    }
+  }
+  .searchDropdowncontainerEmbed {
+    .searchDropdownPanel {
+      width: 530px;
+      left: 0;
+      top: 40px;
+      padding-top: 0;
+      max-height: 550px;
+      border-radius: 8px;
+    }
+  }
   .searchHistory {
     padding: 16px 16px 16px;
   }
@@ -311,8 +360,99 @@
 // <= 1024px  Tablet
 // ---------------------------------------------------------------------------
 @media (max-width: 1024px) {
-  .searchDropdowncontainer {
+  .searchDropdowncontainer:not(.searchDropdowncontainerEmbed) {
     display: none;
+  }
+  .searchDropdowncontainerEmbed {
+    .searchBoxWrap {
+      width: 530px;
+    }
+    .searchBoxWrapExpand {
+      width: 530px;
+      :global {
+        .ais-SearchBox-form {
+          &::after {
+            width: 34px;
+            height: 30px;
+            right: 6px;
+          }
+        }
+      }
+    }
+    .searchBoxAfterBtn {
+      width: 34px;
+      height: 30px;
+      right: 6px;
+    }
+    :global {
+      .ais-SearchBox-form {
+        height: 38px;
+        line-height: 38px;
+        padding: 1px;
+        border-radius: 8px;
+        &::after {
+          width: 34px;
+          height: 30px;
+          right: 6px;
+        }
+      }
+      .ais-SearchBox-input {
+        border-radius: 7px;
+        padding-left: 14px;
+        padding-right: 68px;
+        font-size: 14px;
+      }
+      .ais-SearchBox-submit {
+      }
+      .ais-SearchBox-submitIcon {
+      }
+      .ais-SearchBox-reset {
+        right: 50px;
+        width: 18px;
+        height: 18px;
+      }
+      .ais-SearchBox-resetIcon {
+      }
+      .ais-SearchBox-loadingIndicator {
+      }
+      .ais-SearchBox-loadingIcon {
+      }
+    }
+    .searchDropdownPanel {
+      width: 530px;
+      left: 0;
+      top: 40px;
+      padding-top: 0;
+      max-height: 550px;
+      border-radius: 8px;
+      &::before {
+        max-height: 346px;
+        height: 100%;
+      }
+    }
+    .searchHistory {
+      padding: 16px 16px 16px;
+    }
+    .searchHistoryHeader {
+      margin-bottom: 12px;
+    }
+    .searchHistoryTitle {
+      font-size: 13px;
+      line-height: 18px;
+    }
+    .searchHistoryClear {
+      font-size: 12px;
+      gap: 5px;
+    }
+    .searchHistoryList {
+      gap: 12px;
+    }
+    .searchHistoryItem {
+      font-size: 14px;
+      padding: 5px 10px;
+      border-radius: 4px;
+      max-width: 160px;
+    }
   }
 }
 

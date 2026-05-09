@@ -148,7 +148,13 @@ const DropdownContent: React.FC<DropdownContentProps> = ({
           </div>
         </>
       )}
-      <AISuggestion query={query} language={language} variant="dropdown" onOpenAI={onOpenAI} hasNoResults={ !hasQuery } />
+      <AISuggestion
+        query={query}
+        language={language}
+        variant="dropdown"
+        onOpenAI={onOpenAI}
+        hasNoResults={!hasQuery}
+      />
     </div>
   );
 };
@@ -215,12 +221,14 @@ interface Props {
   instanceGroups?: InstanceGroup[];
   currentGroup?: string;
   currentPlatform?: string;
+  isEmbed?: boolean;
 }
 
 const SearchDropdown: React.FC<Props> = ({
   instanceGroups = [],
   currentGroup = "",
   currentPlatform = "",
+  isEmbed = false,
 }) => {
   const { currentLanguage } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
@@ -271,13 +279,30 @@ const SearchDropdown: React.FC<Props> = ({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleOpenAI = useCallback((message?: string, defaultQuestions?: string[]) => {
-    setIsOpen(false);
-    window.dispatchEvent(new CustomEvent("open-ask-ai", { detail: { message, defaultQuestions } }));
+  // 监听自定义事件：收起面板（embed 页面通过 postMessage 触发）
+  useEffect(() => {
+    const handler = () => setIsOpen(false);
+    window.addEventListener("collapse-search-panel", handler);
+    return () => window.removeEventListener("collapse-search-panel", handler);
   }, []);
 
+  const handleOpenAI = useCallback(
+    (message?: string, defaultQuestions?: string[]) => {
+      setIsOpen(false);
+      window.dispatchEvent(
+        new CustomEvent("open-ask-ai", {
+          detail: { message, defaultQuestions },
+        }),
+      );
+    },
+    [],
+  );
+
   return (
-    <div className={styles.searchDropdowncontainer} ref={containerRef}>
+    <div
+      className={`${styles.searchDropdowncontainer} ${isEmbed ? styles.searchDropdowncontainerEmbed : ""}`}
+      ref={containerRef}
+    >
       <InstantSearch
         key={lang}
         searchClient={searchClient}

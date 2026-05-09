@@ -1225,177 +1225,180 @@
 // <= 750px (mobile)
 // ==================================================================
 @media (max-width: 750px) {
-  // DocTypeTabs - mobile horizontal scroll with hidden scrollbar
-  .docTypeTabsWrapper {
-    overflow: hidden;
-    height: 43px;
-    margin-top: 10px;
-  }
-  .docTypeTabs {
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
-    padding-bottom: 20px;
-    gap: 22px;
-  }
-  .docTypeTab {
-    flex: none;
-    padding: 8px 2px 12px;
-    font-size: 13px;
-  }
-
-  .hitsList {
-    gap: 28px;
-    margin-bottom: 8px;
-  }
-  .hitTitle {
-    word-wrap: break-word;
-  }
-  .hitSnippet {
-    word-wrap: break-word;
-  }
-  .hitsEmpty,
-  .hitsLoading {
-    font-size: 13px;
-    line-height: 18px;
-  }
-
-  .feedbackBar {
-    padding: 8px 20px 8px 20px;
-    margin-bottom: 2px;
-  }
-  .feedbackText {
-    font-size: 14px;
-  }
-  .feedbackBtn {
-    font-size: 12px;
-    padding: 5px 12px 4px;
-    flex: none;
-    gap: 4px;
-  }
-  .feedbackBtnIcon {
-    width: 16px;
-    height: 16px;
-  }
-
-  .facetRow {
-    margin-top: 16px;
-    gap: 0;
-  }
-  .facetRowTitle {
-    font-size: 12px;
-    width: 90px;
-  }
-  .facetLabel {
-    font-size: 12px;
-  }
-  .facetRowListCollapsed {
-    max-height: 26px;
-  }
-  .facetRowToggle {
-    font-size: 12px;
-    gap: 4px;
-    padding: 3px 6px 2px;
-    margin-left: 4px;
-  }
-
-  // AI Suggestion
-  .aiSuggestionGrid {
-    grid-template-columns: 1fr;
-    gap: 8px;
-    // Mobile: only show first 2 items
-    // .aiSuggestionItem:nth-child(n + 3) {
-    //   display: none;
-    // }
-  }
-  .aiSuggestion {
-    border-radius: 12px;
-    padding: 12px;
-  }
-  .aiSuggestionHeader {
-    font-size: 13px;
-    margin-bottom: 10px;
-  }
-  .aiSuggestionItem {
-    font-size: 13px;
-    padding-left: 36px;
-    &::before {
-      width: 18px;
-      height: 18px;
+  // embed 页面设置 data-embed 属性后，移动端样式不生效
+  :global(html:not([data-embed])) {
+    // DocTypeTabs - mobile horizontal scroll with hidden scrollbar
+    .docTypeTabsWrapper {
+      overflow: hidden;
+      height: 43px;
+      margin-top: 10px;
     }
-  }
+    .docTypeTabs {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding-bottom: 20px;
+      gap: 22px;
+    }
+    .docTypeTab {
+      flex: none;
+      padding: 8px 2px 12px;
+      font-size: 13px;
+    }
 
-  .criteria {
-    padding-bottom: 0;
-    :global {
-      .ais-SearchBox-form {
-        height: 44px;
-        line-height: 44px;
-        &::after {
-          width: 40px;
-          height: 34px;
-          right: 5px;
-        }
-      }
-      .ais-SearchBox-input {
-        font-size: 14px;
-        padding-left: 14px;
-        padding-right: 80px;
-      }
-      .ais-SearchBox-submit {
-        // non-sizing base
-      }
-      .ais-SearchBox-submitIcon {
-        // non-sizing base
-      }
-      .ais-SearchBox-reset {
-        // non-sizing base
-        right: 50px;
-        width: 30px;
-        height: 30px;
-      }
-      .ais-SearchBox-resetIcon {
-        // non-sizing base
-      }
-      .ais-SearchBox-loadingIndicator {
-        // non-sizing base
-        fill: var(--docsearch-custom-algolia-searchbox-clear-color);
-      }
-      .ais-SearchBox-loadingIcon {
-        // non-sizing base
+    .hitsList {
+      gap: 28px;
+      margin-bottom: 8px;
+    }
+    .hitTitle {
+      word-wrap: break-word;
+    }
+    .hitSnippet {
+      word-wrap: break-word;
+    }
+    .hitsEmpty,
+    .hitsLoading {
+      font-size: 13px;
+      line-height: 18px;
+    }
+
+    .feedbackBar {
+      padding: 8px 20px 8px 20px;
+      margin-bottom: 2px;
+    }
+    .feedbackText {
+      font-size: 14px;
+    }
+    .feedbackBtn {
+      font-size: 12px;
+      padding: 5px 12px 4px;
+      flex: none;
+      gap: 4px;
+    }
+    .feedbackBtnIcon {
+      width: 16px;
+      height: 16px;
+    }
+
+    .facetRow {
+      margin-top: 16px;
+      gap: 0;
+    }
+    .facetRowTitle {
+      font-size: 12px;
+      width: 90px;
+    }
+    .facetLabel {
+      font-size: 12px;
+    }
+    .facetRowListCollapsed {
+      max-height: 26px;
+    }
+    .facetRowToggle {
+      font-size: 12px;
+      gap: 4px;
+      padding: 3px 6px 2px;
+      margin-left: 4px;
+    }
+
+    // AI Suggestion
+    .aiSuggestionGrid {
+      grid-template-columns: 1fr;
+      gap: 8px;
+      // Mobile: only show first 2 items
+      // .aiSuggestionItem:nth-child(n + 3) {
+      //   display: none;
+      // }
+    }
+    .aiSuggestion {
+      border-radius: 12px;
+      padding: 12px;
+    }
+    .aiSuggestionHeader {
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+    .aiSuggestionItem {
+      font-size: 13px;
+      padding-left: 36px;
+      &::before {
+        width: 18px;
+        height: 18px;
       }
     }
-  }
 
-  // Pagination (react-instantsearch built-in)
-  .body {
-    :global {
-      .ais-Pagination {
-        .ais-Pagination-list {
-          // sizing
+    .criteria {
+      padding-bottom: 0;
+      :global {
+        .ais-SearchBox-form {
+          height: 44px;
+          line-height: 44px;
+          &::after {
+            width: 40px;
+            height: 34px;
+            right: 5px;
+          }
         }
-        .ais-Pagination-item {
-          // sizing
+        .ais-SearchBox-input {
+          font-size: 14px;
+          padding-left: 14px;
+          padding-right: 80px;
         }
-        .ais-Pagination-item--selected {
-          // sizing
+        .ais-SearchBox-submit {
+          // non-sizing base
         }
-        .ais-Pagination-item--disabled {
-          // sizing
+        .ais-SearchBox-submitIcon {
+          // non-sizing base
         }
-        .ais-Pagination-link {
-          // sizing
-          width: 36px;
+        .ais-SearchBox-reset {
+          // non-sizing base
+          right: 50px;
+          width: 30px;
+          height: 30px;
         }
-        .ais-Pagination-item--selected .ais-Pagination-link {
-          // sizing
+        .ais-SearchBox-resetIcon {
+          // non-sizing base
         }
-        .ais-Pagination-item--disabled .ais-Pagination-link {
-          // sizing
+        .ais-SearchBox-loadingIndicator {
+          // non-sizing base
+          fill: var(--docsearch-custom-algolia-searchbox-clear-color);
+        }
+        .ais-SearchBox-loadingIcon {
+          // non-sizing base
         }
       }
     }
-  }
 
-  // 适配 Dropdown
+    // Pagination (react-instantsearch built-in)
+    .body {
+      :global {
+        .ais-Pagination {
+          .ais-Pagination-list {
+            // sizing
+          }
+          .ais-Pagination-item {
+            // sizing
+          }
+          .ais-Pagination-item--selected {
+            // sizing
+          }
+          .ais-Pagination-item--disabled {
+            // sizing
+          }
+          .ais-Pagination-link {
+            // sizing
+            width: 36px;
+          }
+          .ais-Pagination-item--selected .ais-Pagination-link {
+            // sizing
+          }
+          .ais-Pagination-item--disabled .ais-Pagination-link {
+            // sizing
+          }
+        }
+      }
+    }
+
+    // 适配 Dropdown
+  }
 }
