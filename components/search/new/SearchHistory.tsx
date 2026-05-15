@@ -1,6 +1,9 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { DeleteOutlined } from "@ant-design/icons";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import { getSearchHistoryText } from "./facetMapping";
+import ThemeContext from "@/components/header/Theme.context";
+import iconDel from "@/assets/images/search/icon_del@2x.png";
+import iconDelDark from "@/assets/images/search/icon_del_dark@2x.png";
+import Image from "next/image";
 import styles from "./searchDropdown.module.scss";
 
 const STORAGE_KEY = "search_history";
@@ -30,10 +33,16 @@ export function addSearchHistory(query: string) {
 interface Props {
   language?: string;
   onSelect?: (query: string) => void;
+  variant?: "default" | "dropdown";
 }
 
-const SearchHistory: React.FC<Props> = ({ language = "zh", onSelect }) => {
+const SearchHistory: React.FC<Props> = ({
+  language = "zh",
+  onSelect,
+  variant = "default",
+}) => {
   const [items, setItems] = useState<string[]>([]);
+  const { theme } = useContext(ThemeContext);
 
   useEffect(() => {
     setItems(getHistory());
@@ -49,7 +58,9 @@ const SearchHistory: React.FC<Props> = ({ language = "zh", onSelect }) => {
   const { title, clear } = getSearchHistoryText(language);
 
   return (
-    <div className={styles.searchHistory}>
+    <div
+      className={`${styles.searchHistory} ${variant !== "dropdown" ? styles.searchHistoryPage : ""}`}
+    >
       <div className={styles.searchHistoryHeader}>
         <span className={styles.searchHistoryTitle}>{title}</span>
         <button
@@ -57,7 +68,12 @@ const SearchHistory: React.FC<Props> = ({ language = "zh", onSelect }) => {
           className={styles.searchHistoryClear}
           onClick={handleClear}
         >
-          <DeleteOutlined />
+          <Image
+            src={theme === "dark" ? iconDelDark.src : iconDel.src}
+            alt="delete"
+            width={14}
+            height={14}
+          />
           {clear}
         </button>
       </div>

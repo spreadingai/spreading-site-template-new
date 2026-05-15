@@ -351,10 +351,12 @@ export function getSuggestions(query: string, language: string): string[] {
 const PLACEHOLDER_MAP: Record<string, Record<string, string>> = {
   zh: {
     default: "你可以输入文档关键词、开发问题、错误码",
+    defaultMobile: "请输入文档关键词",
     dropdown: "请输入文档关键词",
   },
   en: {
     default: "Enter keywords, issues, and error codes",
+    defaultMobile: "Enter keywords",
     dropdown: "Enter keywords",
   },
 };
@@ -362,8 +364,12 @@ const PLACEHOLDER_MAP: Record<string, Record<string, string>> = {
 export function getPlaceholder(
   language: string,
   variant: "default" | "dropdown" = "default",
+  isMobile = false,
 ): string {
   const lang = language === "zh" ? "zh" : "en";
+  if (variant === "default" && isMobile) {
+    return PLACEHOLDER_MAP[lang].defaultMobile;
+  }
   return PLACEHOLDER_MAP[lang][variant];
 }
 

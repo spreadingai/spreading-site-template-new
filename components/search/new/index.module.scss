@@ -39,7 +39,6 @@
 // --docsearch-custom-feedback-btn-bg                              反馈按钮背景
 // --docsearch-custom-feedback-btn-color                           反馈按钮文字颜色
 // --docsearch-custom-feedback-btn-border                          反馈按钮边框
-// --docsearch-custom-ai-border-color                              AI 区块边框
 // --docsearch-custom-ai-bg                                        AI 区块背景
 // --docsearch-custom-ai-header-color                              AI 标题颜色
 // --docsearch-custom-ai-link-color                                AI 链接颜色
@@ -147,6 +146,7 @@
       // non-sizing base
       fill: var(--docsearch-custom-algolia-searchbox-clear-color);
       transition: all 0.3s;
+      background: unset !important;
       &:hover {
         opacity: 0.8;
       }
@@ -157,6 +157,7 @@
     .ais-SearchBox-loadingIndicator {
       // non-sizing base
       fill: var(--docsearch-custom-algolia-searchbox-clear-color);
+      display: none !important;
     }
     .ais-SearchBox-loadingIcon {
       // non-sizing base
@@ -175,6 +176,7 @@
       .ais-Pagination-item {
         // non-sizing base
         .ais-Pagination-link {
+          font-size: 14px;
           color: var(--docsearch-custom-pagination-link-color);
           box-shadow: none;
           background: var(--docsearch-custom-pagination-link-bg);
@@ -189,20 +191,32 @@
         }
         &:not(.ais-Pagination-item--disabled):hover {
           .ais-Pagination-link {
-            color: var(--docsearch-custom-pagination-selected-link-color);
+            color: var(--docsearch-custom-pagination-selected-bg-color);
           }
         }
         &:not(.ais-Pagination-item--selected):not(.ais-Pagination-item--disabled) .ais-Pagination-link:hover {
           border: 1px solid var(--docsearch-custom-pagination-link-border-color);
           background: var(--docsearch-custom-pagination-link-bg);
         }
+        &.ais-Pagination-item--selected {
+          .ais-Pagination-link {
+            border: 1px solid var(--docsearch-custom-pagination-selected-bg-color);
+            color: var(--docsearch-custom-pagination-selected-link-color);
+            background: var(--docsearch-custom-pagination-selected-bg-color);
+          }
+          &:hover {
+            .ais-Pagination-link {
+              color: var(--docsearch-custom-pagination-selected-link-color);
+            }
+          }
+        }
       }
       .ais-Pagination-item--selected {
         // non-sizing base
         .ais-Pagination-link {
           box-shadow: none;
-          background: var(--docsearch-custom-pagination-link-bg);
-          color: var(--docsearch-custom-pagination-selected-link-color);
+          background: var(--docsearch-custom-pagination-selected-link-color);
+          border: var(--docsearch-custom-pagination-selected-link-color);
         }
       }
       .ais-Pagination-item--disabled {
@@ -258,7 +272,6 @@
   font-size: inherit;
   font-family: inherit;
   font-weight: inherit;
-  opacity: 0.7;
 }
 
 // FacetLabelList --------------------------------------------------
@@ -387,8 +400,12 @@
   animation: hitsLoadingSpin 1s linear infinite;
 }
 @keyframes hitsLoadingSpin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 .emptyFeedbackLink {
   color: var(--docsearch-custom-feedback-link-color);
@@ -400,8 +417,12 @@
 
 // AI Suggestion ---------------------------------------------------
 .aiSuggestion {
-  border: 1px solid var(--docsearch-custom-ai-border-color);
   background: var(--docsearch-custom-ai-bg);
+  padding: 1px;
+  overflow: hidden;
+}
+.aiSuggestionCon {
+  background: var(--docsearch-custom-ai-bg-con);
 }
 .aiSuggestionHeader {
   color: var(--docsearch-custom-ai-header-color);
@@ -409,7 +430,11 @@
   font-weight: 500;
 }
 .aiSuggestionLink {
-  color: var(--docsearch-custom-ai-link-color);
+  background: var(--docsearch-custom-ai-link-color);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
   cursor: pointer;
   &:hover {
     text-decoration: underline;
@@ -427,6 +452,10 @@
   cursor: pointer;
   transition: all 0.3s;
   position: relative;
+  border: 1px solid var(--docsearch-custom-panel-ai-item-border);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   &:hover {
     color: var(--docsearch-custom-ai-item-hover-color);
   }
@@ -558,6 +587,9 @@
   }
   .hitTitle {
     color: var(--docsearch-custom-panel-hit-title-color);
+    overflow: hidden; /* 溢出隐藏 */
+    white-space: nowrap; /* 强制不换行 */
+    text-overflow: ellipsis; /* 超出显示省略号 */
   }
   .hitTags {
     display: none;
@@ -694,7 +726,7 @@
   }
   .hitsList {
     padding: 0;
-    gap: 40px;
+    gap: 30px;
     margin-bottom: 30px;
   }
   .hitsEmpty,
@@ -702,11 +734,11 @@
     font-size: 14px;
   }
   .hitsEmpty {
-    padding: 286px 0 40px;
+    padding: 466px 0 40px;
     &::before {
       width: 150px;
       height: 150px;
-      top: 100px;
+      top: 280px;
     }
     p {
       & + p {
@@ -719,13 +751,16 @@
     gap: 10px;
   }
   .hitsLoadingIcon {
-    width: 36px;
-    height: 36px;
+    width: 28px;
+    height: 28px;
   }
 
   // AI Suggestion
   .aiSuggestion {
     margin-top: 12px;
+    border-radius: 8px;
+  }
+  .aiSuggestionCon {
     padding: 16px;
     border-radius: 8px;
   }
@@ -747,7 +782,7 @@
     &::before {
       width: 20px;
       height: 20px;
-      left: 7px;
+      left: 9px;
     }
   }
 
@@ -799,6 +834,7 @@
       .ais-Pagination {
         .ais-Pagination-list {
           // sizing
+          gap: 8px;
         }
         .ais-Pagination-item {
           // sizing
@@ -810,8 +846,9 @@
           // sizing
         }
         .ais-Pagination-link {
-          width: 42px;
+          width: 32px;
           // sizing
+          border-radius: 4px;
         }
         .ais-Pagination-item--selected .ais-Pagination-link {
           // sizing
@@ -856,7 +893,7 @@
   }
   .hitsListDropdown {
     &.hitsList {
-      gap: 14px;
+      gap: 8px;
       padding: 16px 10px;
     }
     .hitsListItem {
@@ -1015,11 +1052,11 @@
   // Hits
   .body {
     gap: 25px;
-    padding: 20px;
+    padding: 16px;
   }
   .hitsList {
     padding: 0;
-    gap: 40px;
+    gap: 30px;
     margin-bottom: 30px;
   }
   .hitsEmpty,
@@ -1027,11 +1064,11 @@
     font-size: 14px;
   }
   .hitsEmpty {
-    padding: 286px 0 40px;
+    padding: 466px 0 40px;
     &::before {
       width: 150px;
       height: 150px;
-      top: 100px;
+      top: 280px;
     }
     p {
       & + p {
@@ -1044,14 +1081,16 @@
     gap: 10px;
   }
   .hitsLoadingIcon {
-    width: 36px;
-    height: 36px;
+    width: 28px;
+    height: 28px;
   }
-
 
   // AI Suggestion
   .aiSuggestion {
     margin-top: 0;
+    border-radius: 8px;
+  }
+  .aiSuggestionCon {
     padding: 16px;
     border-radius: 8px;
   }
@@ -1073,7 +1112,7 @@
     &::before {
       width: 20px;
       height: 20px;
-      left: 7px;
+      left: 9px;
     }
   }
 
@@ -1125,6 +1164,7 @@
       .ais-Pagination {
         .ais-Pagination-list {
           // sizing
+          gap: 8px;
         }
         .ais-Pagination-item {
           // sizing
@@ -1136,8 +1176,9 @@
           // sizing
         }
         .ais-Pagination-link {
-          width: 42px;
+          width: 32px;
           // sizing
+          border-radius: 4px;
         }
         .ais-Pagination-item--selected .ais-Pagination-link {
           // sizing
@@ -1182,7 +1223,7 @@
   }
   .hitsListDropdown {
     &.hitsList {
-      gap: 14px;
+      gap: 8px;
       padding: 16px 10px;
     }
     .hitsListItem {
@@ -1261,6 +1302,14 @@
       font-size: 13px;
       line-height: 18px;
     }
+    .hitsEmpty {
+      padding: 186px 0 40px;
+      &::before {
+        top: 40px;
+        width: 108px;
+        height: 108px;
+      }
+    }
 
     .feedbackBar {
       padding: 8px 20px 8px 20px;
@@ -1312,7 +1361,10 @@
     }
     .aiSuggestion {
       border-radius: 12px;
+    }
+    .aiSuggestionCon {
       padding: 12px;
+      border-radius: 12px;
     }
     .aiSuggestionHeader {
       font-size: 13px;
@@ -1375,6 +1427,7 @@
         .ais-Pagination {
           .ais-Pagination-list {
             // sizing
+            gap: 8px;
           }
           .ais-Pagination-item {
             // sizing
@@ -1388,6 +1441,7 @@
           .ais-Pagination-link {
             // sizing
             width: 36px;
+            border-radius: 4px;
           }
           .ais-Pagination-item--selected .ais-Pagination-link {
             // sizing

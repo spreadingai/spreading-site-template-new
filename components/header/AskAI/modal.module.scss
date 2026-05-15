@@ -23,7 +23,7 @@
         padding: 15px 20px 8px 20px;
         position: relative;
         &::before {
-            content: '';
+            content: "";
             position: absolute;
             top: 0;
             left: 0;
@@ -37,13 +37,14 @@
         }
     }
     :global(.ant-modal-close) {
+        width: 30px;
+        height: 30px;
         transition: all 0.3s;
-        background: unset;
         top: 15px;
         right: 12px;
+        background: transparent;
         &:hover {
-            background: unset;
-            opacity: 0.8;
+            background: var(--docsearch-custom-modal-reset-hover-bg);
         }
     }
     :global(.ant-modal-header) {
@@ -51,6 +52,7 @@
         background: var(--docuo-background-primary);
         border-bottom: none;
         flex-shrink: 0;
+        margin-bottom: 20px;
     }
     :global(.ant-modal-title) {
         color: var(--docuo-color-primary);
@@ -93,8 +95,10 @@
     cursor: pointer;
     transition: all 0.3s;
     right: 26px;
+    border-radius: 6px;
+    background: transparent;
     &:hover {
-        opacity: 0.8;
+        background: var(--docsearch-custom-modal-reset-hover-bg);
     }
 }
 

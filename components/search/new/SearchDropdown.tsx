@@ -56,7 +56,7 @@ const ATTRIBUTES_TO_SNIPPET = [
   "hierarchy.lvl4:10",
   "hierarchy.lvl5:10",
   "hierarchy.lvl6:10",
-  "content:30",
+  "content:15",
 ];
 
 // restrictSearchableAttributes：限制只在哪些字段中搜索/匹配关键词。
@@ -93,6 +93,7 @@ interface DropdownContentProps {
   currentGroup?: string;
   currentPlatform?: string;
   onOpenAI?: (message?: string, defaultQuestions?: string[]) => void;
+  clearQueryRef?: React.MutableRefObject<() => void>;
 }
 
 type GroupMap = Map<string, string>;
@@ -104,8 +105,14 @@ const DropdownContent: React.FC<DropdownContentProps> = ({
   currentGroup,
   currentPlatform,
   onOpenAI,
+  clearQueryRef,
 }) => {
   const { query, refine } = useSearchBox();
+
+  // 暴露 clearQuery 方法给父组件
+  if (clearQueryRef) {
+    clearQueryRef.current = () => refine("");
+  }
   const hasQuery = !!query && query.trim().length > 0;
   const { results, status } = useInstantSearch();
   const { items } = useHits<AlgoliaHit>();
@@ -126,7 +133,11 @@ const DropdownContent: React.FC<DropdownContentProps> = ({
   return (
     <div className={styles.searchDropdownPanel}>
       {!hasQuery && (
-        <SearchHistory language={language} onSelect={(q) => refine(q)} />
+        <SearchHistory
+          language={language}
+          onSelect={(q) => refine(q)}
+          variant="dropdown"
+        />
       )}
       {hasQuery && (
         <>
@@ -233,6 +244,7 @@ const SearchDropdown: React.FC<Props> = ({
   const { currentLanguage } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const clearQueryRef = useRef<() => void>(() => {});
 
   const lang = currentLanguage === "zh" ? "zh" : "en";
   const { appId, apiKey, indexName } = ALGOLIA_CONFIG[lang];
@@ -273,6 +285,7 @@ const SearchDropdown: React.FC<Props> = ({
         !containerRef.current.contains(e.target as Node)
       ) {
         setIsOpen(false);
+        clearQueryRef.current();
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -281,7 +294,10 @@ const SearchDropdown: React.FC<Props> = ({
 
   // 监听自定义事件：收起面板（embed 页面通过 postMessage 触发）
   useEffect(() => {
-    const handler = () => setIsOpen(false);
+    const handler = () => {
+      setIsOpen(false);
+      clearQueryRef.current();
+    };
     window.addEventListener("collapse-search-panel", handler);
     return () => window.removeEventListener("collapse-search-panel", handler);
   }, []);
@@ -289,6 +305,7 @@ const SearchDropdown: React.FC<Props> = ({
   const handleOpenAI = useCallback(
     (message?: string, defaultQuestions?: string[]) => {
       setIsOpen(false);
+      clearQueryRef.current();
       window.dispatchEvent(
         new CustomEvent("open-ask-ai", {
           detail: { message, defaultQuestions },
@@ -339,6 +356,7 @@ const SearchDropdown: React.FC<Props> = ({
             currentGroup={currentGroup}
             currentPlatform={currentPlatform}
             onOpenAI={handleOpenAI}
+            clearQueryRef={clearQueryRef}
           />
         </div>
       </InstantSearch>

@@ -47,6 +47,9 @@ body {
 html > body {
   overflow: auto;
   scroll-padding-top: var(--preview-header-height);
+  &:has(.search-screen) {
+    scrollbar-gutter: stable;
+  }
 }
 
 @media screen and (min-width: 1025px) {
@@ -160,6 +163,10 @@ html > body {
   width: 100%;
   max-width: 1440px;
   margin: var(--preview-header-height) auto 0;
+  background-image: var(--docsearch-custom-search-page-bg);
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: 100% 1080px;
 }
 
 .preview-sider {

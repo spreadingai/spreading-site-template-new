@@ -12,6 +12,7 @@ import DocTypeTabs from "./DocTypeTabs";
 import FacetLabelList from "./FacetLabelList";
 import SearchHits from "./SearchHits";
 import AISuggestion from "./AISuggestion";
+import SearchHistory, { addSearchHistory } from "./SearchHistory";
 import FeedbackBar from "./FeedbackBar";
 import type { AlgoliaHit } from "./SearchHitItem";
 import { buildGroupMap, getPlaceholder } from "./facetMapping";
@@ -29,7 +30,7 @@ interface Props {
 }
 
 const SearchPageClient: React.FC<Props> = ({ instanceGroups = [] }) => {
-  const { query } = useSearchBox();
+  const { query, refine } = useSearchBox();
   const hasQuery = !!query && query.trim().length > 0;
   const { currentLanguage } = useLanguage();
   const { theme } = useContext(ThemeContext);
@@ -39,12 +40,14 @@ const SearchPageClient: React.FC<Props> = ({ instanceGroups = [] }) => {
   const [aiInitialMessage, setAiInitialMessage] = useState<string>();
   const [aiDefaultQuestions, setAiDefaultQuestions] = useState<string[]>();
   const [paginationPadding, setPaginationPadding] = useState(3);
+  const [isMobile, setIsMobile] = useState(false);
   const bodyRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const check = () => {
       const w = window.innerWidth;
       setPaginationPadding(w <= 375 ? 1 : w <= 750 ? 2 : 3);
+      setIsMobile(w <= 750);
     };
     check();
     window.addEventListener("resize", check);
@@ -87,12 +90,25 @@ const SearchPageClient: React.FC<Props> = ({ instanceGroups = [] }) => {
     [instanceGroups],
   );
 
+  // 输入停顿 800ms 后且有搜索结果时保存历史
+  useEffect(() => {
+    if (!hasQuery || !query.trim()) return;
+    const timer = setTimeout(() => {
+      if (totalCount > 0) {
+        addSearchHistory(query);
+      }
+    }, 800);
+    return () => clearTimeout(timer);
+  }, [query, hasQuery, totalCount]);
+
   return (
     <div className={styles.pageRoot}>
       <div
         className={`${styles.criteria} ${hasQuery ? styles.criteriaHasQuery : ""}`}
       >
-        <ISSearchBox placeholder={getPlaceholder(currentLanguage)} />
+        <ISSearchBox
+          placeholder={getPlaceholder(currentLanguage, "default", isMobile)}
+        />
         {hasQuery && (
           <>
             <DocTypeTabs language={currentLanguage} />
@@ -110,27 +126,33 @@ const SearchPageClient: React.FC<Props> = ({ instanceGroups = [] }) => {
           </>
         )}
       </div>
-      {hasQuery && (
-        <div className={styles.body} ref={bodyRef}>
-          {totalCount > 0 && (
-            <AISuggestion
-              query={query}
-              onOpenAI={handleOpenAI}
-              language={currentLanguage}
-            />
-          )}
-          <SearchHits
-            items={items}
-            totalCount={totalCount}
+      <div className={styles.body} ref={bodyRef}>
+        {!hasQuery && (
+          <SearchHistory
             language={currentLanguage}
-            groupMap={groupMap}
+            onSelect={(q) => refine(q)}
           />
-          {totalCount > 0 && <FeedbackBar language={currentLanguage} />}
-          {/* Algolia 分页最多支持 1000 条结果（paginationLimitedTo 默认值），
+        )}
+        <AISuggestion
+          query={query}
+          onOpenAI={handleOpenAI}
+          language={currentLanguage}
+        />
+        {hasQuery && (
+          <>
+            <SearchHits
+              items={items}
+              totalCount={totalCount}
+              language={currentLanguage}
+              groupMap={groupMap}
+            />
+            {totalCount > 0 && <FeedbackBar language={currentLanguage} />}
+            {/* Algolia 分页最多支持 1000 条结果（paginationLimitedTo 默认值），
               超出部分无法翻页访问，但 facet counts 显示的是真实总数，两者可能不一致 */}
-          {totalCount > 0 && <Pagination padding={paginationPadding} />}
-        </div>
-      )}
+            {totalCount > 0 && <Pagination padding={paginationPadding} />}
+          </>
+        )}
+      </div>
       <AskAIModal
         isModalOpen={aiModalOpen}
         onCloseHandle={() => setAiModalOpen(false)}

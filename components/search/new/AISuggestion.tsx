@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { getAISuggestionText, getRandomGroupId, getSuggestions } from "./facetMapping";
+import {
+  getAISuggestionText,
+  getRandomGroupId,
+  getSuggestions,
+} from "./facetMapping";
 import { fetchWelcomePrompts } from "@/components/header/AskAI/api";
 import styles from "./index.module.scss";
 
@@ -39,39 +43,49 @@ const AISuggestion: React.FC<Props> = ({
       .finally(() => {
         if (!cancelled) setIsLoading(false);
       });
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, [language, shouldUseApi]);
 
-  const suggestions = shouldUseApi ? apiSuggestions : getSuggestions(query, language);
+  const suggestions = shouldUseApi
+    ? apiSuggestions
+    : getSuggestions(query, language);
   if (isLoading || !suggestions.length) return null;
 
   const { prefix, link, suffix } = getAISuggestionText(language);
-  const maxItems = variant === "dropdown" ? 3 : suggestions.length;
+  const isMobile = typeof window !== "undefined" && window.innerWidth <= 750;
+  const maxItems =
+    variant === "dropdown" ? 3 : isMobile ? 2 : suggestions.length;
   const visibleSuggestions = suggestions.slice(0, maxItems);
 
   return (
-    <div className={`${styles.aiSuggestion} ${variant === "dropdown" ? styles.aiSuggestionDropdown : ""} ${hasNoResults ? styles.aiSuggestionHasNoResults : ""}`}>
-      <p className={styles.aiSuggestionHeader}>
-        {prefix}
-        <span
-          className={styles.aiSuggestionLink}
-          onClick={() => onOpenAI?.(undefined, suggestions)}
-        >
-          {link}
-        </span>
-        {suffix}
-      </p>
-      <div className={styles.aiSuggestionGrid}>
-        {visibleSuggestions.map((text, idx) => (
-          <button
-            key={idx}
-            type="button"
-            className={styles.aiSuggestionItem}
-            onClick={() => onOpenAI?.(text, suggestions)}
+    <div
+      className={`${styles.aiSuggestion} ${variant === "dropdown" ? styles.aiSuggestionDropdown : ""} ${hasNoResults ? styles.aiSuggestionHasNoResults : ""}`}
+    >
+      <div className={styles.aiSuggestionCon}>
+        <p className={styles.aiSuggestionHeader}>
+          {prefix}
+          <span
+            className={styles.aiSuggestionLink}
+            onClick={() => onOpenAI?.(undefined, suggestions)}
           >
-            {text}
-          </button>
-        ))}
+            {link}
+          </span>
+          {suffix}
+        </p>
+        <div className={styles.aiSuggestionGrid}>
+          {visibleSuggestions.map((text, idx) => (
+            <button
+              key={idx}
+              type="button"
+              className={styles.aiSuggestionItem}
+              onClick={() => onOpenAI?.(text, suggestions)}
+            >
+              {text}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );

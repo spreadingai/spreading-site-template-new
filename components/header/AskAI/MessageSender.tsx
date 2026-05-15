@@ -52,7 +52,7 @@ const MessageSender: React.FC<MessageSenderProps> = ({
       disabled={disabled}
       onCancel={handleCancel}
       placeholder={placeholder}
-      className={outStyles.sender}
+      className={`${outStyles.sender} ${value? outStyles['sender-ing'] : ''}`}
       classNames={{
         actions: outStyles.senderActions,
       }}
