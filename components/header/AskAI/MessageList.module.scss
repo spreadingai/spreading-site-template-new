@@ -60,11 +60,16 @@
         color: var(--docsearch-custom-chat-ai-first-p-color);
       }
     }
-    h2 {}
-    h3 {}
-    h4 {}
-    h5 {}
-    h6 {}
+    h2 {
+    }
+    h3 {
+    }
+    h4 {
+    }
+    h5 {
+    }
+    h6 {
+    }
   }
 
   // 文档聚合样式 - 与 modal-new.tsx 完全一致
@@ -85,8 +90,8 @@
   .custom-chat-item-operation {
     display: none;
     align-items: center;
-    margin-inline-start: 12px;
-    margin-inline-end: 12px;
+    // margin-inline-start: 12px;
+    // margin-inline-end: 12px;
     margin-top: 12px;
     margin-bottom: 12px;
     .custom-chat-item-operation-btn {
@@ -135,7 +140,7 @@
   .placeholderContent {
     margin: 35px auto 0;
     width: 100%;
-    padding: 0 2px!important;
+    padding: 0 2px !important;
     & > div {
       width: 100%;
     }
@@ -146,7 +151,7 @@
     margin-bottom: 25px;
   }
   .welcomeIcon {
-      display: none;
+    display: none;
   }
   .welcomeTitle {
     font-weight: normal;
@@ -187,7 +192,6 @@
     color: var(--docsearch-searchbox-color);
     margin-bottom: 2px;
   }
-
 }
 
 // 骨架屏样式
@@ -217,12 +221,7 @@
     border-radius: 16px !important;
 
     &::after {
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.6),
-        transparent
-      ) !important;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent) !important;
     }
   }
 }

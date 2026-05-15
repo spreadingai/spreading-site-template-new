@@ -1,6 +1,6 @@
 import React from "react";
 import AISearchView from "@/components/header/AskAI/AISearchView";
 
-const AISearchPage = () => <AISearchView language="zh" />;
+const AISearchEnPage = () => <AISearchView language="en" />;
 
-export default AISearchPage;
+export default AISearchEnPage;

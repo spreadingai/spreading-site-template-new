@@ -300,7 +300,7 @@ const SearchDropdown: React.FC<Props> = ({
 
   return (
     <div
-      className={`${styles.searchDropdowncontainer} ${isEmbed ? styles.searchDropdowncontainerEmbed : ""}`}
+      className={`${styles.searchDropdowncontainer} ${isEmbed ? (currentLanguage === "en" ? styles.searchDropdowncontainerEmbedEn : styles.searchDropdowncontainerEmbed) : ""}`}
       ref={containerRef}
     >
       <InstantSearch

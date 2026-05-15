@@ -417,7 +417,7 @@ const AskAIModal: React.FC<Props> = ({
               />
             </div>
             <div className={outStyles["ai-disclaimer"]}>
-              回复内容由即构 AI 文档助手生成，仅供参考
+              {aiSearchData.disclaimer}
             </div>
           </div>
         </div>
