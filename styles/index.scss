@@ -120,7 +120,7 @@ html > body {
   color: var(--docuo-color-primary);
   background: var(--docuo-background-primary);
 }
-.search-screen {
+body:has(.search-screen) {
   background-image: var(--docsearch-custom-search-page-bg);
   background-position: center top;
   background-repeat: no-repeat;
