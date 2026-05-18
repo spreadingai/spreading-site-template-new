@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import ThemeContext, { Theme } from "@/components/header/Theme.context";
 import { LanguageContext } from "@/components/context/languageContext";
@@ -38,6 +38,7 @@ interface Props {
 const SearchEmbedView: React.FC<Props> = ({ language }) => {
   const theme: Theme = "light";
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   // 设置 #__next 样式 & 标记 embed 模式（阻止子组件移动端媒体查询生效）
   useEffect(() => {
@@ -109,7 +110,10 @@ const SearchEmbedView: React.FC<Props> = ({ language }) => {
       const containerTop = container.getBoundingClientRect().top;
       const panelRect = panel.getBoundingClientRect();
       const height = panelRect.top - containerTop + panelRect.height;
-      postToParent({ type: "resize", height: height || 38 }, language);
+      postToParent(
+        { type: "resize", isOpen: isOpen, height: height || 38 },
+        language,
+      );
     };
 
     const observePanel = (panel: Element) => {
@@ -134,7 +138,7 @@ const SearchEmbedView: React.FC<Props> = ({ language }) => {
       resizeObserver?.disconnect();
       mutationObserver.disconnect();
     };
-  }, []);
+  }, [isOpen]);
 
   // LanguageContext value
   const languageValue = useCallback(
@@ -152,7 +156,7 @@ const SearchEmbedView: React.FC<Props> = ({ language }) => {
     <ThemeContext.Provider value={{ theme, setTheme: () => {} }}>
       <LanguageContext.Provider value={languageValue(language)}>
         <div ref={containerRef}>
-          <SearchDropdown isEmbed={true} />
+          <SearchDropdown isEmbed={true} onOpenChange={setIsOpen} />
         </div>
       </LanguageContext.Provider>
     </ThemeContext.Provider>

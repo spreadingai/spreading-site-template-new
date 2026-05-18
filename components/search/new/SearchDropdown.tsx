@@ -233,6 +233,7 @@ interface Props {
   currentGroup?: string;
   currentPlatform?: string;
   isEmbed?: boolean;
+  onOpenChange?: (isOpen: boolean) => void;
 }
 
 const SearchDropdown: React.FC<Props> = ({
@@ -240,11 +241,20 @@ const SearchDropdown: React.FC<Props> = ({
   currentGroup = "",
   currentPlatform = "",
   isEmbed = false,
+  onOpenChange,
 }) => {
   const { currentLanguage } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const clearQueryRef = useRef<() => void>(() => {});
+
+  const updateOpen = useCallback(
+    (value: boolean) => {
+      setIsOpen(value);
+      onOpenChange?.(value);
+    },
+    [onOpenChange],
+  );
 
   const lang = currentLanguage === "zh" ? "zh" : "en";
   const { appId, apiKey, indexName } = ALGOLIA_CONFIG[lang];
@@ -284,7 +294,7 @@ const SearchDropdown: React.FC<Props> = ({
         containerRef.current &&
         !containerRef.current.contains(e.target as Node)
       ) {
-        setIsOpen(false);
+        updateOpen(false);
         clearQueryRef.current();
       }
     };
@@ -295,7 +305,7 @@ const SearchDropdown: React.FC<Props> = ({
   // 监听自定义事件：收起面板（embed 页面通过 postMessage 触发）
   useEffect(() => {
     const handler = () => {
-      setIsOpen(false);
+      updateOpen(false);
       clearQueryRef.current();
     };
     window.addEventListener("collapse-search-panel", handler);
@@ -304,7 +314,7 @@ const SearchDropdown: React.FC<Props> = ({
 
   const handleOpenAI = useCallback(
     (message?: string, defaultQuestions?: string[]) => {
-      setIsOpen(false);
+      updateOpen(false);
       clearQueryRef.current();
       window.dispatchEvent(
         new CustomEvent("open-ask-ai", {
@@ -341,7 +351,7 @@ const SearchDropdown: React.FC<Props> = ({
         <SearchBoxWrap
           placeholder={getPlaceholder(currentLanguage, "dropdown")}
           queryHook={queryHook}
-          onFocus={() => setIsOpen(true)}
+          onFocus={() => updateOpen(true)}
           indexName={indexName}
           extraParams={{ group: currentGroup, platform: currentPlatform }}
           isOpen={isOpen}

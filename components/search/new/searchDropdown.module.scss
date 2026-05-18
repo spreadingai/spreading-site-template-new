@@ -104,13 +104,9 @@
     transition-delay: 0.3s;
   }
 }
-.searchDropdowncontainerEmbed,
-.searchDropdowncontainerEmbedEn {
-  .dropdownPanel {
-    display: none;
-  }
+
+.searchDropdowncontainerEmbed {
   .dropdownPanelVisible {
-    display: flex;
     .searchDropdownPanel {
       transition-delay: unset;
     }
@@ -458,7 +454,7 @@
   .searchDropdowncontainerEmbedEn {
     padding-top: 16px;
     .searchBoxWrap {
-      width: 560px;
+      width: 274px;
       margin-left: 10px;
     }
     .searchBoxWrapExpand {
