@@ -127,7 +127,7 @@ const SearchPageClient: React.FC<Props> = ({ instanceGroups = [] }) => {
         )}
       </div>
       <div className={styles.body} ref={bodyRef}>
-        {!hasQuery && (
+        {!hasQuery && isMobile && (
           <SearchHistory
             language={currentLanguage}
             onSelect={(q) => refine(q)}

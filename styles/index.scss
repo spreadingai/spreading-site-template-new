@@ -120,6 +120,12 @@ html > body {
   color: var(--docuo-color-primary);
   background: var(--docuo-background-primary);
 }
+.search-screen {
+  background-image: var(--docsearch-custom-search-page-bg);
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: 100% 1080px;
+}
 
 .preview-main {
   min-height: calc(100vh - var(--preview-header-height));
@@ -163,10 +169,6 @@ html > body {
   width: 100%;
   max-width: 1440px;
   margin: var(--preview-header-height) auto 0;
-  background-image: var(--docsearch-custom-search-page-bg);
-  background-position: center top;
-  background-repeat: no-repeat;
-  background-size: 100% 1080px;
 }
 
 .preview-sider {
