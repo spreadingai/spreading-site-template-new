@@ -1095,10 +1095,11 @@
   .aiSuggestion {
     margin-top: 0;
     border-radius: 8px;
+    background: unset;
   }
   .aiSuggestionCon {
     padding: 16px;
-    border-radius: 8px;
+    background: unset;
   }
   .aiSuggestionHeader {
     margin: 0 0 12px;
@@ -1115,6 +1116,8 @@
     border-radius: 8px;
     font-size: 14px;
     padding: 10px 10px 10px 40px;
+    background: var(--docsearch-custom-panel-ai-item-bg);
+    border: 1px solid var(--docsearch-custom-panel-ai-item-border);
     &::before {
       width: 20px;
       height: 20px;
