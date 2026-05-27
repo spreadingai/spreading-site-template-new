@@ -11,6 +11,7 @@ import {
   UrlMap,
   ParsedShortLink,
   InstanceWithClientApi,
+  ClientApiPathData,
   ProcessedInstanceData,
   ParentType,
   PARENT_TYPES,
@@ -63,15 +64,40 @@ export class ApiShortLinkTransController {
   }
 
   /**
-   * 构建单个 instance 的数据
+   * 构建单个 instance 的数据（支持多路径）
    */
   private buildInstanceData(instance: InstanceWithClientApi): ProcessedInstanceData {
-    const clientApiDir = path.join(this.docsRoot, instance.path, instance.clientApiPath);
-    const urlMap = this.buildUrlMap(instance);
-    const headingData = parseHeadingData(clientApiDir);
-    const methodAttrData = parseMethodAttrData(clientApiDir);
+    const paths = this.buildClientApiPathsData(instance);
 
-    return { instance, urlMap, headingData, methodAttrData };
+    return { instance, paths };
+  }
+
+  /**
+   * 为每个 clientApiPath 构建数据
+   */
+  private buildClientApiPathsData(instance: InstanceWithClientApi): ClientApiPathData[] {
+    const pathsData: ClientApiPathData[] = [];
+    const pathsArray = Array.isArray(instance.clientApiPath)
+      ? instance.clientApiPath
+      : [instance.clientApiPath];
+
+    for (const apiPath of pathsArray) {
+      const dirPath = path.join(this.docsRoot, instance.path, apiPath);
+
+      if (!fs.existsSync(dirPath)) {
+        console.warn(`⚠️  clientApiPath 目录不存在，跳过: ${dirPath}`);
+        continue;
+      }
+
+      const normalizedPath = this.normalizePathToId(apiPath);
+      const urlMap = this.buildUrlMapForPath(instance.routeBasePath, normalizedPath);
+      const headingData = parseHeadingData(dirPath);
+      const methodAttrData = parseMethodAttrData(dirPath);
+
+      pathsData.push({ urlMap, headingData, methodAttrData });
+    }
+
+    return pathsData;
   }
 
   /**
@@ -84,20 +110,17 @@ export class ApiShortLinkTransController {
   }
 
   /**
-   * 构建 URL 映射
+   * 为指定路径构建 URL 映射
    */
-  private buildUrlMap(instance: InstanceWithClientApi): UrlMap {
-    // 将 clientApiPath 转换为标准 ID 格式
-    const normalizedClientApiPath = this.normalizePathToId(instance.clientApiPath);
-    const baseUrl = `/${instance.routeBasePath}/${normalizedClientApiPath}`.replace(/\/+/g, '/');
-    const urlMap: UrlMap = {
+  private buildUrlMapForPath(routeBasePath: string, normalizedClientApiPath: string): UrlMap {
+    const baseUrl = `/${routeBasePath}/${normalizedClientApiPath}`.replace(/\/+/g, '/');
+    return {
       class: `${baseUrl}/class`,
       interface: `${baseUrl}/interface`,
       enum: `${baseUrl}/enum`,
       protocol: `${baseUrl}/protocol`,
       struct: `${baseUrl}/struct`,
     };
-    return urlMap;
   }
 
   /**
@@ -174,16 +197,22 @@ export class ApiShortLinkTransController {
   }
 
   /**
-   * 解析短链接为完整 URL
+   * 解析短链接为完整 URL（遍历所有路径，按数组顺序优先）
    */
   private resolveShortLink(shortLink: string, data: ProcessedInstanceData): string | null {
     const parsed = this.parseShortLink(shortLink);
-    const { urlMap, headingData, methodAttrData } = data;
 
-    if (parsed.type === 'heading') {
-      return this.resolveHeadingLink(parsed, urlMap, headingData);
+    for (const pathData of data.paths) {
+      if (parsed.type === 'heading') {
+        const result = this.resolveHeadingLink(parsed, pathData.urlMap, pathData.headingData);
+        if (result) return result;
+      } else {
+        const result = this.resolveMethodLink(parsed, pathData.urlMap, pathData.methodAttrData);
+        if (result) return result;
+      }
     }
-    return this.resolveMethodLink(parsed, urlMap, methodAttrData);
+
+    return null;
   }
 
   /**

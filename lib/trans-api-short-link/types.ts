@@ -71,7 +71,16 @@ export interface InstanceWithClientApi {
   id: string;
   path: string;
   routeBasePath: string;
-  clientApiPath: string;
+  clientApiPath: string | string[];
+}
+
+/**
+ * 单个 clientApiPath 路径的处理数据
+ */
+export interface ClientApiPathData {
+  urlMap: UrlMap;
+  headingData: HeadingData;
+  methodAttrData: MethodAttrData;
 }
 
 /**
@@ -79,9 +88,7 @@ export interface InstanceWithClientApi {
  */
 export interface ProcessedInstanceData {
   instance: InstanceWithClientApi;
-  urlMap: UrlMap;
-  headingData: HeadingData;
-  methodAttrData: MethodAttrData;
+  paths: ClientApiPathData[];
 }
 
 /**
