@@ -10,6 +10,7 @@ const SearchDropdown = dynamic(
 
 // --- 域名白名单 ---
 const WHITE_LIST_EN = [
+  "https://dev-beta.zegocloud.com",
   "http://localhost:5668",
   "https://www.zegocloud.com",
   "https://docs.zegocloud.com",
