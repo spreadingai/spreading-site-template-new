@@ -10,7 +10,8 @@ const AI_API_CONFIG = {
   QA_VOTE_ENDPOINT: '/qa/vote',
   // 服务器地址
   SERVERS: {
-    DEVELOPMENT: 'http://localhost:8765',
+    // DEVELOPMENT: 'http://localhost:8765',
+    DEVELOPMENT: 'https://zego-doc-ai.spreading.cc:8000',
     PRODUCTION: 'https://zego-doc-ai.spreading.cc:8000'
   }
 } as const;
@@ -41,8 +42,8 @@ export interface StreamEvent {
 
 export interface RequestParams {
   message: string;
-  product: string;
-  platform: string;
+  // product: string;
+  // platform: string;
   language?: string;
   user_id?: string;
   session_id?: string;
@@ -59,8 +60,8 @@ export interface StreamCallbacks {
  * 欢迎提示请求参数
  */
 export interface WelcomePromptsRequest {
-  product: string;
-  platform: string;
+  product?: string;
+  platform?: string;
   language?: string;
 }
 
@@ -220,8 +221,8 @@ export const sendStreamRequest = async (
   formData.set('session_id', session_id);
   formData.set('stream', 'true');
   formData.set('dependencies', JSON.stringify({
-    product: params.product,
-    platform: params.platform,
+    // product: params.product,
+    // platform: params.platform,
     language: params.language,
   }));
 
@@ -377,7 +378,7 @@ export const fetchWelcomePrompts = async (params: WelcomePromptsRequest): Promis
 
     // 添加查询参数
     url.searchParams.append('product', params.product);
-    url.searchParams.append('platform', params.platform);
+    // url.searchParams.append('platform', params.platform);
     if (params.language) {
       url.searchParams.append('language', params.language);
     }

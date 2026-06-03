@@ -14,9 +14,13 @@ import { Markdown } from "@ant-design/pro-editor";
 // @ts-ignore
 // import MarkdownIt from "markdown-it";
 import Robot from "@/assets/icons/ai-search/Robot.svg";
+import Image from "next/image";
+import iconSuggestion from "@/assets/images/search/ai_suggestion_icon@2x.png";
+import iconSuggestionDark from "@/assets/images/search/ai_suggestion_icon_dark@2x.png";
 import EventStatus from './EventStatus';
 import outStyles from './MessageList.module.scss';
 import { fetchWelcomePrompts, WelcomePromptsRequest, scoreFetch, ScoreType, Reference, Question } from './api';
+import { getRandomGroupId } from '@/components/search/new/facetMapping';
 
 // const md = MarkdownIt({ html: true, breaks: true });
 
@@ -137,10 +141,12 @@ export interface MessageListProps {
   onRequest: (content: string) => void; // 重新发送消息的函数
   aiSearchData: any;
   // 添加评分需要的参数
-  currentGroup: string;
-  currentPlatform: string;
+  // currentGroup: string;
+  // currentPlatform: string;
   currentLanguage: string;
   sessionId: string;
+  // 外部传入默认问题（如搜索页），传入时跳过 API 获取
+  defaultQuestions?: string[];
 }
 
 const MessageList: React.FC<MessageListProps> = ({
@@ -151,43 +157,55 @@ const MessageList: React.FC<MessageListProps> = ({
   setMessages,
   onRequest,
   aiSearchData,
-  currentGroup,
-  currentPlatform,
+  // currentGroup,
+  // currentPlatform,
   currentLanguage,
   sessionId,
+  defaultQuestions: externalDefaultQuestions,
 }) => {
   // 仿照 modal-new.tsx 的 customIDMap 实现
   const customIDMap = useRef<Record<string, AnswerData>>({});
 
   // 默认问题状态
-  const [defaultQuestions, setDefaultQuestions] = useState<string[]>([]);
+  const [fetchedQuestions, setFetchedQuestions] = useState<string[]>([]);
   const [isLoadingQuestions, setIsLoadingQuestions] = useState<boolean>(true);
 
-  // 组件挂载时获取默认问题
+  // 优先使用外部传入的问题，否则使用 API 获取的
+  const defaultQuestions = externalDefaultQuestions ?? fetchedQuestions;
+
+  // 组件挂载时获取默认问题（外部传入时跳过）
   useEffect(() => {
+    if (externalDefaultQuestions) {
+      setIsLoadingQuestions(false);
+      return;
+    }
+
     const fetchPrompts = async () => {
       try {
         setIsLoadingQuestions(true);
 
         const params: WelcomePromptsRequest = {
-          product: currentGroup,
-          platform: currentPlatform,
+          product: getRandomGroupId(currentLanguage),
           language: currentLanguage
         };
-
         const response = await fetchWelcomePrompts(params);
-        setDefaultQuestions(response.data.prompts);
+        setFetchedQuestions(response.data.prompts);
       } catch (error) {
         console.error('Failed to fetch welcome prompts:', error);
-        setDefaultQuestions([]);
+        setFetchedQuestions([]);
       } finally {
         setIsLoadingQuestions(false);
       }
     };
-    if (currentGroup && currentPlatform) {
+    // if (currentGroup && currentPlatform) {
       fetchPrompts();
-    }
-  }, [currentGroup, currentLanguage, currentPlatform]);
+    // }
+  }, [
+    // currentGroup,
+    currentLanguage,
+    // currentPlatform,
+    externalDefaultQuestions
+  ]);
 
   // 复制 modal-new.tsx 的 updateScoreStyle 函数
   const updateScoreStyle = useCallback(
@@ -336,11 +354,7 @@ const MessageList: React.FC<MessageListProps> = ({
     assistant: {
       // typing: { step: 5, interval: 10 },
       placement: 'start' as const,
-      avatar: (
-        <div className={outStyles["user-avatar-wrap"]}>
-          {currentTheme === "light" ? <Robot /> : <Robot />}
-        </div>
-      ),
+      avatar: null,
       loadingRender: () => (
         <Space>
           <Spin size="small" className={outStyles.queryLoading} />
@@ -354,11 +368,7 @@ const MessageList: React.FC<MessageListProps> = ({
     },
     user: {
       placement: 'end' as const,
-      avatar: (
-        <div className={outStyles["user-avatar-wrap"]}>
-          <UserOutlined />
-        </div>
-      ),
+      avatar: null,
       classNames: {
         content: outStyles.customBubbleContent,
       },
@@ -371,7 +381,14 @@ const MessageList: React.FC<MessageListProps> = ({
       key: "1",
       children: defaultQuestions.map((question, index) => ({
         key: `1-${index}`,
-        icon: <CommentOutlined />,
+        icon: (
+          <Image
+            src={currentTheme === 'dark' ? iconSuggestionDark.src : iconSuggestion.src}
+            alt=""
+            width={16}
+            height={16}
+          />
+        ),
         description: question,
       })),
     },
@@ -459,8 +476,8 @@ const MessageList: React.FC<MessageListProps> = ({
           eventName={message.eventInfo.eventName}
           toolName={message.eventInfo.toolName}
           toolArgs={message.eventInfo.toolArgs}
-          isLoading={message.eventInfo.isLoading || false}
           aiSearchData={aiSearchData}
+          currentTheme={currentTheme}
         />
       );
     }

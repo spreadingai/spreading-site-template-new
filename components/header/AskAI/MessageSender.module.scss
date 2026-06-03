@@ -1,16 +1,23 @@
 // Sender 样式 - 与 modal-new.tsx 完全一致
 .sender {
   box-shadow: unset !important;
-  border: var(--docsearch-searchbox-border);
-  border-width: 0;
-  &:focus-within {
-    border-color: var(--docuo-color-primary-active);
+  border: none;
+  padding: 1px;
+  background: var(--docsearch-custom-algolia-searchbox-border-bg);
+  border-radius: 9px;
+  transition: all 0.3s;
+  &.sender-ing {
+    background: var(--docuo-color-primary-hover);
+  }
+  :global(.ant-sender-content) {
+    background: var(--docsearch-custom-algolia-searchbox-background);
+    border-radius: 8px;
   }
   :global(.ant-input) {
     color: var(--docuo-color-primary);
     &::placeholder {
-      color: var(--docuo-text-color);
-      opacity: 0.3;
+      color: var(--docsearch-custom-algolia-searchbox-placeholder-color);
+      opacity: 1;
     }
   }
 }
@@ -29,23 +36,30 @@
     background: unset;
     color: var(--docuo-text-color);
     box-shadow: unset;
-    opacity: 0.6;
     padding-left: 2px;
-    &:hover {
-      background: var(--docuo-ai-search-operate-btn-bg-hover)!important;
-      opacity: 1;
-      color: var(--docuo-text-color)!important;
-      border-radius: 4px;
+    outline: none !important;
+    border: unset;
+    &:not(:disabled):not(.ant-btn-disabled) {
+      &:hover {
+        color: var(--docuo-text-color);
+        background: unset;
+        opacity: 0.6;
+      }
     }
   }
-  :global(.ant-btn-variant-solid.ant-sender-actions-btn-disabled) {
+  :global(.ant-btn-variant-solid.ant-sender-actions-btn-disabled),
+  :global(.ant-btn-variant-solid.ant-btn-disabled),
+  :global(.ant-btn-variant-solid:disabled) {
+    border: unset;
+    opacity: 1;
     &:hover {
-      opacity: 0.6;
       background: unset;
       color: var(--docuo-text-color);
       box-shadow: unset;
-      cursor: not-allowed;
     }
+  }
+  :global(.ant-sender-actions-btn-loading-button .ant-sender-actions-btn-loading-icon) {
+    display: none;
   }
   :global(.ant-btn-color-primary.ant-btn-variant-text) {
     color: var(--docuo-color-primary-active);

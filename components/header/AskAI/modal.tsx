@@ -11,32 +11,42 @@ import { generateSessionId, generateUUID } from './utils';
 import { copywriting } from "@/components/constant/language";
 import outStyles from './modal.module.scss';
 import { defaultLanguage } from '@/components/context/languageContext';
+import iconChatAI from '@/assets/images/search/icon_ai_chat@2x.png';
+import iconChatAIDark from '@/assets/images/search/icon_ai_chat_dark@2x.png';
+import iconReset from '@/assets/images/search/icon_reset@2x.png';
+import iconResetDark from '@/assets/images/search/icon_reset_dark@2x.png';
+import iconClose from '@/assets/images/search/icon_close@2x.png';
+import iconCloseDark from '@/assets/images/search/icon_close_dark@2x.png';
+import Image from "next/image";
 
 interface Props {
   rootClassName?: string;
   currentTheme: string;
   currentLanguage: string;
-  currentGroup: string;
-  currentPlatform: string;
+  // currentGroup: string;
+  // currentPlatform: string;
   isModalOpen: boolean;
   onCloseHandle: () => void;
+  initialMessage?: string;
+  defaultQuestions?: string[];
 }
 
 const AskAIModal: React.FC<Props> = ({
   rootClassName = '',
   currentTheme,
   currentLanguage,
-  currentGroup,
-  currentPlatform,
+  // currentGroup,
+  // currentPlatform,
   isModalOpen,
   onCloseHandle,
+  initialMessage,
+  defaultQuestions,
 }) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [sessionId, setSessionId] = useState<string>('');
   const [streamingMessageId, setStreamingMessageId] = useState<string>('');
   const [messageApi, contextHolder] = message.useMessage();
-  const [screenType, setScreenType] = useState<0 | 1 | 2>(0); // 0: > 700, 1: 400 ~ 700, 2: < 400
 
   // 更新底部样式 - 复制自 modal-new.tsx
   const updateFooterStyle = useCallback(() => {
@@ -92,6 +102,9 @@ const AskAIModal: React.FC<Props> = ({
     // 可以在这里添加其他需要重置的状态
   }, []);
 
+  // 保持 handleSendMessage 的最新引用，用于 initialMessage 延迟发送
+  const handleSendMessageRef = useRef<typeof handleSendMessage>();
+
   // 每次打开模态框时生成新的session ID
   useEffect(() => {
     if (isModalOpen) {
@@ -99,29 +112,16 @@ const AskAIModal: React.FC<Props> = ({
       setMessages([]);
       setIsLoading(false);
       setStreamingMessageId('');
-    }
-  }, [isModalOpen]);
 
-  useEffect(() => {
-    const sizeChangeHandle = () => {
-      console.log("sizeChangeHandle");
-      const clientWidth = document.documentElement.clientWidth;
-      if (!clientWidth || clientWidth > 700) {
-        setScreenType(0);
-      } else if (clientWidth > 400) {
-        setScreenType(1);
-      } else {
-        setScreenType(2);
+      // 如果传入了 initialMessage，延迟发送以确保 sessionId 已更新
+      if (initialMessage) {
+        const timer = setTimeout(() => {
+          handleSendMessageRef.current?.(initialMessage);
+        }, 100);
+        return () => clearTimeout(timer);
       }
-    };
-    sizeChangeHandle();
-    typeof window !== "undefined" &&
-      window.addEventListener("resize", sizeChangeHandle);
-    return () => {
-      typeof window !== "undefined" &&
-        window.removeEventListener("resize", sizeChangeHandle);
-    };
-  }, []);
+    }
+  }, [isModalOpen]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSendMessage = useCallback(async (content: string) => {
     if (isLoading) return;
@@ -156,8 +156,8 @@ const AskAIModal: React.FC<Props> = ({
       await sendStreamRequest(
         {
           message: content,
-          product: currentGroup,
-          platform: currentPlatform,
+          // product: currentGroup,
+          // platform: currentPlatform,
           language: currentLanguage,
           session_id: sessionId,
         },
@@ -309,7 +309,20 @@ const AskAIModal: React.FC<Props> = ({
         );
       }
     }
-  }, [isLoading, sessionId, currentGroup, currentPlatform, messageApi, updateFooterStyle, updateATagAttr]);
+  },
+  [
+    isLoading,
+    sessionId, 
+    // currentGroup,
+    // currentPlatform, 
+    messageApi,
+    updateFooterStyle,
+    updateATagAttr
+  ]
+);
+
+  // 同步 ref，供 initialMessage 延迟发送使用
+  handleSendMessageRef.current = handleSendMessage;
 
   const cancelHandle = () => {
     if (streamingMessageId) {
@@ -320,13 +333,35 @@ const AskAIModal: React.FC<Props> = ({
 
   return (
     <Modal
-      title={aiSearchData?.modalTitle}
+      title={
+        <div className={outStyles["modal-title-wrap"]}>
+          <Image src={currentTheme === 'dark' ? iconChatAIDark.src : iconChatAI.src} alt="AI" width={32} height={32} />
+          <span>{aiSearchData?.modalTitle}</span>
+          <Image
+            className={outStyles["modal-title-reset"]}
+            src={currentTheme === 'dark' ? iconResetDark.src : iconReset.src}
+            alt="Reset"
+            width={30}
+            height={30}
+            onClick={resetConverse}
+          />
+        </div>
+      }
       open={isModalOpen}
       onCancel={cancelHandle}
       footer={null}
       className={outStyles["ask-ai-dialog"]}
       keyboard={false}
-      maskClosable={false}
+      // maskClosable={false}
+      mask={false}
+      closeIcon={
+        <Image
+          src={currentTheme === 'dark' ? iconCloseDark.src : iconClose.src}
+          alt="Close"
+          width={30}
+          height={30}
+        />
+      }
       rootClassName={outStyles[rootClassName]}
     >
       {contextHolder}
@@ -349,10 +384,11 @@ const AskAIModal: React.FC<Props> = ({
               setMessages={setMessages}
               onRequest={handleSendMessage}
               aiSearchData={aiSearchData}
-              currentGroup={currentGroup}
-              currentPlatform={currentPlatform}
+              // currentGroup={currentGroup}
+              // currentPlatform={currentPlatform}
               currentLanguage={currentLanguage}
               sessionId={sessionId}
+              defaultQuestions={defaultQuestions}
             />
 
             {/* 输入框区域 - 与 modal-new.tsx 结构一致 */}
@@ -360,13 +396,8 @@ const AskAIModal: React.FC<Props> = ({
               <MessageSender
                 onSubmit={handleSendMessage}
                 loading={isLoading}
-                placeholder={
-                  screenType === 0
-                    ? aiSearchData.inputPlaceholder
-                    : screenType === 1
-                    ? aiSearchData.inputPlaceholderM1
-                    : aiSearchData.inputPlaceholderM2
-                }
+                placeholder={aiSearchData.inputPlaceholder}
+                currentTheme={currentTheme}
                 onCancel={() => {
                   if (streamingMessageId) {
                     cancelRun(streamingMessageId);
@@ -384,15 +415,9 @@ const AskAIModal: React.FC<Props> = ({
                   }
                 }}
               />
-              {/* 重置对话按钮 - 复制自 modal-new.tsx */}
-              {messages.length ? (
-                <div
-                  className={outStyles["custom-converse-reset"]}
-                  onClick={resetConverse}
-                >
-                  <ReloadOutlined />
-                </div>
-              ) : null}
+            </div>
+            <div className={outStyles["ai-disclaimer"]}>
+              {aiSearchData.disclaimer}
             </div>
           </div>
         </div>

@@ -1,0 +1,528 @@
+// SearchDropdown styles.
+// A dropdown search panel that sits below the Header search input.
+
+// ---------------------------------------------------------------------------
+// 已配置主题变量（CSS 变量）
+// ---------------------------------------------------------------------------
+// --docsearch-custom-algolia-searchbox-active-background          搜索框激活态背景
+// --docsearch-custom-algolia-searchbox-ai-btn-image               AI 按钮图标
+// --docsearch-custom-algolia-searchbox-border-bg                  搜索框边框/背景
+// --docsearch-custom-ai-item-icon                                 AI 图标
+// --docsearch-custom-algolia-searchbox-background                 搜索框默认背景
+// --docuo-color-primary                                           主文字颜色
+// --docsearch-custom-algolia-searchbox-placeholder-color          占位符颜色
+// --docsearch-custom-algolia-searchbox-clear-color                清除按钮颜色
+// --docsearch-custom-search-dropdown-panel-bg                     面板背景
+// --docsearch-custom-search-dropdown-panel-mask-bg                面板遮罩背景
+// --docsearch-custom-search-history-title-color                   历史标题颜色
+// --docsearch-custom-search-history-clear-color                   清空按钮颜色
+// --docsearch-custom-search-history-clear-hover-color             清空按钮悬停颜色
+// --docsearch-custom-search-history-item-bg-color                 历史标签背景
+// --docsearch-custom-search-history-item-color                    历史标签文字颜色
+
+// ---------------------------------------------------------------------------
+// 公共样式（非尺寸相关）
+// ---------------------------------------------------------------------------
+
+.searchDropdowncontainer {
+  position: relative;
+  width: max-content;
+  .searchBoxWrap {
+    z-index: 1000;
+    position: relative;
+    transition: width 0.3s ease-in-out;
+    transition-delay: 0;
+    overflow: hidden;
+  }
+  .searchBoxWrapExpand {
+    transition: width 0.3s ease-in-out;
+    transition-delay: 0;
+  }
+  .searchBoxAfterBtn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    z-index: 1;
+  }
+}
+
+// Dropdown panel
+.searchDropdownPanel {
+  overflow: hidden;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 999;
+  background: var(--docsearch-custom-search-dropdown-panel-bg);
+  box-shadow:
+    0px 4px 16px 2px rgba(8, 55, 84, 0.06),
+    0px 0px 10px 0px rgba(0, 0, 0, 0.05);
+  border: var(--docsearch-custom-search-dropdown-panel-border);
+  border-top: none;
+  &::before {
+    position: absolute;
+    z-index: -1;
+    content: "";
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-image: var(--docsearch-custom-search-dropdown-panel-mask-bg);
+  }
+}
+
+// Scrollable area (wraps SearchHits)
+.scrollable {
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+
+// Dropdown panel visibility
+.dropdownPanel {
+  visibility: hidden;
+  .searchDropdownPanel {
+    opacity: 0;
+    transition: unset;
+  }
+}
+.dropdownPanelVisible {
+  visibility: visible;
+  .searchDropdownPanel {
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+    transition-delay: 0.3s;
+  }
+}
+
+.searchDropdowncontainerEmbed {
+  .dropdownPanelVisible {
+    .searchDropdownPanel {
+      transition-delay: unset;
+    }
+  }
+}
+
+// SearchBox inside Header — override the page-level styles
+.searchDropdowncontainer {
+  .searchBoxWrapExpand {
+    :global {
+      .ais-SearchBox-form {
+        .ais-SearchBox-input {
+          background: var(--docsearch-custom-algolia-searchbox-active-background);
+        }
+        &::after {
+          background-image: var(--docsearch-custom-algolia-searchbox-ai-btn-image);
+        }
+      }
+    }
+  }
+  :global {
+    .ais-SearchBox-form {
+      background: var(--docsearch-custom-algolia-searchbox-border-bg);
+      &::before {
+        display: none;
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-image: var(--docsearch-custom-ai-item-icon);
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        cursor: pointer;
+      }
+    }
+    .ais-SearchBox-input {
+      border: none;
+      background: var(--docsearch-custom-algolia-searchbox-background);
+      box-shadow: none;
+      font-family: var(--font-inter);
+      font-weight: 400;
+      color: var(--docuo-color-primary);
+      cursor: pointer;
+      &::placeholder {
+        font-family: var(--font-inter);
+        font-weight: inherit;
+        font-size: inherit;
+        color: var(--docsearch-custom-algolia-searchbox-placeholder-color);
+      }
+    }
+    .ais-SearchBox-submit {
+    }
+    .ais-SearchBox-submitIcon {
+    }
+    .ais-SearchBox-reset {
+      fill: var(--docsearch-custom-algolia-searchbox-clear-color);
+      transition: all 0.3s;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+    .ais-SearchBox-resetIcon {
+    }
+    .ais-SearchBox-loadingIndicator {
+      display: none;
+    }
+    .ais-SearchBox-loadingIcon {
+    }
+  }
+}
+.searchDropdowncontainerEmbed {
+  :global {
+    .ais-SearchBox-form {
+      &::after {
+        background-image: var(--docsearch-custom-algolia-searchbox-ai-btn-image);
+      }
+    }
+  }
+}
+
+// Search History ---------------------------------------------------
+.searchHistory {
+}
+.searchHistoryHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.searchHistoryTitle {
+  font-family: var(--font-inter);
+  font-weight: 500;
+  color: var(--docsearch-custom-search-history-title-color);
+}
+.searchHistoryClear {
+  font-family: var(--font-inter);
+  font-weight: 500;
+  color: var(--docsearch-custom-search-history-clear-color);
+  transition: all 0.3s;
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  opacity: 0.8;
+  &:hover {
+    color: var(--docsearch-custom-search-history-clear-hover-color);
+    opacity: 1;
+  }
+}
+.searchHistoryList {
+  display: flex;
+  flex-wrap: wrap;
+}
+.searchHistoryItem {
+  background: var(--docsearch-custom-search-history-item-bg-color);
+  color: var(--docsearch-custom-search-history-item-color);
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  border: none;
+  transition: all 0.3s;
+  &:hover {
+    color: var(--docsearch-custom-search-history-item-hover-color);
+  }
+}
+
+// ---------------------------------------------------------------------------
+// >= 1025px  Desktop
+// ---------------------------------------------------------------------------
+@media (min-width: 1025px) {
+  .searchDropdowncontainer {
+    .searchBoxWrap {
+      width: 274px;
+    }
+    .searchBoxWrapExpand {
+      width: 560px;
+      :global {
+        .ais-SearchBox-form {
+          &::after {
+            width: 34px;
+            height: 30px;
+            right: 6px;
+          }
+        }
+      }
+    }
+    .searchBoxAfterBtn {
+      width: 34px;
+      height: 30px;
+      right: 6px;
+    }
+    :global {
+      .ais-SearchBox-form {
+        height: 38px;
+        line-height: 38px;
+        padding: 1px;
+        border-radius: 8px;
+        &::after {
+          width: 17px;
+          height: 17px;
+          right: 14px;
+        }
+      }
+      .ais-SearchBox-input {
+        border-radius: 7px;
+        padding-left: 14px;
+        padding-right: 68px;
+        font-size: 14px;
+      }
+      .ais-SearchBox-submit {
+      }
+      .ais-SearchBox-submitIcon {
+      }
+      .ais-SearchBox-reset {
+        right: 50px;
+        width: 18px;
+        height: 18px;
+      }
+      .ais-SearchBox-resetIcon {
+      }
+      .ais-SearchBox-loadingIndicator {
+      }
+      .ais-SearchBox-loadingIcon {
+      }
+    }
+  }
+  .searchDropdowncontainerEmbed {
+    .searchBoxWrap {
+      width: 530px;
+    }
+    .searchBoxWrapExpand {
+      width: 530px;
+    }
+    :global {
+      .ais-SearchBox-form {
+        &::after {
+          width: 34px;
+          height: 30px;
+          right: 6px;
+        }
+      }
+    }
+  }
+  .searchDropdownPanel {
+    width: 580px;
+    left: -10px;
+    top: -15px;
+    padding-top: 53px;
+    max-height: 715px;
+    border-radius: 0px 0px 8px 8px;
+    &::before {
+      max-height: 346px;
+      height: 100%;
+    }
+  }
+  .searchDropdowncontainerEmbed {
+    .searchDropdownPanel {
+      width: 580px;
+      left: 0;
+      top: 0;
+      padding-top: 53px;
+      max-height: 715px;
+      border-radius: 0px 0px 8px 8px;
+    }
+  }
+  .searchDropdowncontainerEmbedEn {
+    padding-top: 16px;
+    .searchBoxWrap {
+      margin-left: 10px;
+    }
+    .searchDropdownPanel {
+      padding-top: 54px;
+    }
+  }
+
+  // Search History ---------------------------------------------------
+  .searchHistory {
+    padding: 16px 16px 16px;
+    &.searchHistoryPage {
+      padding: 0;
+    }
+  }
+  .searchHistoryHeader {
+    margin-bottom: 12px;
+  }
+  .searchHistoryTitle {
+    font-size: 13px;
+    line-height: 18px;
+  }
+  .searchHistoryClear {
+    font-size: 12px;
+    gap: 5px;
+  }
+  .searchHistoryList {
+    gap: 12px;
+  }
+  .searchHistoryItem {
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    max-width: 160px;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// <= 1024px  Tablet
+// ---------------------------------------------------------------------------
+@media (max-width: 1024px) {
+  .searchDropdowncontainer:not(.searchDropdowncontainerEmbed):not(.searchDropdowncontainerEmbedEn) {
+    display: none;
+  }
+  .searchDropdowncontainerEmbed,
+  .searchDropdowncontainerEmbedEn {
+    .searchBoxWrap {
+      width: 530px;
+    }
+    .searchBoxWrapExpand {
+      width: 530px;
+      :global {
+        .ais-SearchBox-form {
+          &::after {
+            width: 34px;
+            height: 30px;
+            right: 6px;
+          }
+        }
+      }
+    }
+    .searchBoxAfterBtn {
+      width: 34px;
+      height: 30px;
+      right: 6px;
+    }
+    :global {
+      .ais-SearchBox-form {
+        height: 38px;
+        line-height: 38px;
+        padding: 1px;
+        border-radius: 8px;
+        &::after {
+          width: 34px;
+          height: 30px;
+          right: 6px;
+        }
+      }
+      .ais-SearchBox-input {
+        border-radius: 7px;
+        padding-left: 14px;
+        padding-right: 68px;
+        font-size: 14px;
+      }
+      .ais-SearchBox-submit {
+      }
+      .ais-SearchBox-submitIcon {
+      }
+      .ais-SearchBox-reset {
+        right: 50px;
+        width: 18px;
+        height: 18px;
+      }
+      .ais-SearchBox-resetIcon {
+      }
+      .ais-SearchBox-loadingIndicator {
+      }
+      .ais-SearchBox-loadingIcon {
+      }
+    }
+    .searchDropdownPanel {
+      width: 530px;
+      left: 0;
+      top: 40px;
+      padding-top: 0;
+      max-height: 715px;
+      border-radius: 8px;
+      &::before {
+        max-height: 346px;
+        height: 100%;
+      }
+    }
+  }
+  .searchDropdowncontainerEmbedEn {
+    padding-top: 16px;
+    .searchBoxWrap {
+      width: 274px;
+      margin-left: 10px;
+    }
+    .searchBoxWrapExpand {
+      width: 560px;
+      :global {
+        .ais-SearchBox-form {
+          &::after {
+            width: 34px;
+            height: 30px;
+            right: 6px;
+          }
+        }
+      }
+    }
+    :global {
+      .ais-SearchBox-form {
+        height: 38px;
+        line-height: 38px;
+        padding: 1px;
+        border-radius: 8px;
+        &::after {
+          width: 17px;
+          height: 17px;
+          right: 14px;
+        }
+      }
+    }
+    .searchDropdownPanel {
+      width: 580px;
+      left: 0;
+      top: 0;
+      padding-top: 54px;
+      max-height: 715px;
+      border-radius: 0px 0px 8px 8px;
+    }
+  }
+
+  // Search History ---------------------------------------------------
+  .searchHistory {
+    padding: 16px 16px 16px;
+    &.searchHistoryPage {
+      padding: 0;
+    }
+  }
+  .searchHistoryHeader {
+    margin-bottom: 12px;
+  }
+  .searchHistoryTitle {
+    font-size: 13px;
+    line-height: 18px;
+  }
+  .searchHistoryClear {
+    font-size: 12px;
+    gap: 5px;
+  }
+  .searchHistoryList {
+    gap: 12px;
+  }
+  .searchHistoryItem {
+    font-size: 14px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    max-width: 160px;
+  }
+}
+
+// ---------------------------------------------------------------------------
+// <= 750px  Mobile
+// ---------------------------------------------------------------------------
+@media (max-width: 750px) {
+}

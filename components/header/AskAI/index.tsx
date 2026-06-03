@@ -6,7 +6,7 @@ import useGroup from "@/components/hooks/useGroup";
 import usePlatform from "@/components/hooks/usePlatform";
 import iconAshAI from "@/assets/icons/ai-search/icon_ask_ai.png";
 import Image from "next/image";
-import { useRouter } from "next/router";
+
 import dynamic from "next/dynamic";
 
 const AskAIModal = dynamic(() => import("./modal"), {
@@ -20,7 +20,6 @@ const AskAI: React.FC<Props> = () => {
   const { currentLanguage } = useLanguage();
   const { currentGroupLabel } = useGroup();
   const { currentPlatform } = usePlatform();
-  const router = useRouter();
   const { theme } = React.useContext(ThemeContext);
 
   const showModal = () => {
@@ -41,8 +40,8 @@ const AskAI: React.FC<Props> = () => {
         onCloseHandle={onCloseHandle}
         currentTheme={theme}
         currentLanguage={currentLanguage}
-        currentGroup={currentGroupLabel}
-        currentPlatform={currentPlatform}
+        // currentGroup={currentGroupLabel}
+        // currentPlatform={currentPlatform}
       />
     </div>
   );

@@ -9,21 +9,15 @@ import IconMenu from "@/assets/icons/iconMenu.svg";
 import AnChorMobile from "../Anchor/AnchorMobile";
 
 import { DocuoConfig, NavBarItemType } from "@/lib/types";
-import { DocSearch } from "@docsearch/react";
 import AnchorNode from "../Anchor/Anchor";
 import ThemeSwitch from "./ThemeSwitch";
 import ThemeContext from "@/components/header/Theme.context";
 import LanguageSwitch from "./LanguageSwitch";
-import { copywriting } from "@/components/constant/language";
 import useLanguage from "@/components/hooks/useLanguage";
-import useInstance from "@/components/hooks/useInstance";
 import useGroup from "@/components/hooks/useGroup";
-import useVersion from "@/components/hooks/useVersion";
 import usePlatform from "@/components/hooks/usePlatform";
 import useSet from "@/components/hooks/useSet";
-import { defaultLanguage } from "../context/languageContext";
-import AISearch from "./AISearch";
-// import "@docsearch/css";
+import SearchDropdown from "@/components/search/new/SearchDropdown";
 
 interface Props {
   docuoConfig: DocuoConfig;
@@ -33,24 +27,16 @@ interface Props {
 }
 
 const Header = (props: Props) => {
-  const router = useRouter();
   const { docuoConfig, tocFormatData, setDrawerOpen, isSearchPage } = props;
   const { handleLanguageChanged } = useSet();
-  const {
-    currentLanguage,
-    currentLanguageLabel,
-    displayLanguages,
-    setCurrentLanguage,
-  } = useLanguage();
-  const { instanceIDs } = useInstance();
-  const { currentGroup, currentGroupLabel } = useGroup();
-  const { docVersion } = useVersion();
-  const { currentPlatform, currentPlatformLabel } = usePlatform();
+  const { currentLanguage, displayLanguages } = useLanguage();
+  const { currentGroup } = useGroup();
+  const { currentPlatform } = usePlatform();
   const { themeConfig, search } = docuoConfig;
   const navbar = Object.assign(
     {},
     themeConfig.navbar,
-    themeConfig[`navbar.${currentLanguage}`]
+    themeConfig[`navbar.${currentLanguage}`],
   );
   const { items } = navbar;
   const { algolia } = search || {};
@@ -77,7 +63,7 @@ const Header = (props: Props) => {
     }
     const handleScroll = () => {
       setScrollLength(
-        () => document.documentElement.scrollTop || document.body.scrollTop
+        () => document.documentElement.scrollTop || document.body.scrollTop,
       );
     };
     window.addEventListener("scroll", handleScroll, true);
@@ -89,47 +75,18 @@ const Header = (props: Props) => {
     // return window.removeEventListener("scroll", handleScroll, true);
   }, []);
 
-  const DocSearchComponent = useMemo(() => {
-    if (!algolia || searchHidden) return null;
+  const searchDropdownComponent = useMemo(() => {
+    if (searchHidden) return null;
     return (
-      <>
-        <DocSearch
-          {...algolia}
-          {...(copywriting[currentLanguage]
-            ? copywriting[currentLanguage].search
-            : copywriting.en.search)}
-          searchParameters={{
-            facetFilters: [
-              `version:${docVersion}`,
-              `group:${currentGroup}`,
-              `language:${currentLanguage}`,
-              `platform:${currentPlatform}`,
-            ],
-          }}
-          maxResultsPerGroup={20}
-          resultsFooterComponent={(props: any) => {
-            const { state } = props;
-            const { query, context } = state;
-            const { nbHits } = context;
-            return (
-              <Link href={`/search?k=${query}`}>
-                {currentLanguage === defaultLanguage
-                  ? `See all ${nbHits} results`
-                  : `查看全部 ${nbHits} 条结果`}
-              </Link>
-            );
-          }}
-          getMissingResultsUrl={({ query }) => {
-            return `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/search`;
-          }}
-        />
-      </>
+      <SearchDropdown
+        instanceGroups={themeConfig?.instanceGroups || []}
+        currentGroup={currentGroup}
+        currentPlatform={currentPlatform}
+      />
     );
   }, [
-    algolia,
     searchHidden,
-    currentLanguage,
-    docVersion,
+    themeConfig?.instanceGroups,
     currentGroup,
     currentPlatform,
   ]);
@@ -169,7 +126,10 @@ const Header = (props: Props) => {
   const devCenterNav = useMemo(() => {
     return currentLanguage === "zh"
       ? [
-          { label: "SDK 中心", href: "https://doc-zh.zego.im/sdk-download/2968" },
+          {
+            label: "SDK 中心",
+            href: "https://doc-zh.zego.im/sdk-download/2968",
+          },
           { label: "API 中心", href: "https://doc-zh.zego.im/api-center" },
           { label: "常见问题", href: "https://doc-zh.zego.im/faq/overview" },
         ]
@@ -198,7 +158,7 @@ const Header = (props: Props) => {
       <div
         className={`container-wrap ${styles.container} ${currentLanguage === "zh" ? styles.zh : ""}`}
       >
-        <div className="flex items-center">
+        <div className="flex items-center fixed">
           {logo ? (
             <div className="flex items-center">
               <a
@@ -235,66 +195,67 @@ const Header = (props: Props) => {
           </div>
         </div>
         <div className={styles["fixed-menus"]}>
-          {!isSearchPage ? DocSearchComponent : null}
-          {!isSearchPage && themeConfig.showAskAI !== false ? (
-            <AISearch />
-          ) : null}
+          {!isSearchPage ? searchDropdownComponent : null}
         </div>
         {isMobile ? (
           <div className={styles["menus"]}>
             <Mobile
               // @ts-ignore
-              menus={([...(navbar.title ? [
-                { label: navbar.title, href: navbar.iconRedirectUrl },
-              ] : []), ...devCenterNav, ...items] || []).map((item) => {
+              menus={[
+                ...(navbar.title
+                  ? [{ label: navbar.title, href: navbar.iconRedirectUrl }]
+                  : []),
+                ...devCenterNav,
+                ...items,
+              ].map((item) => {
                 if (item.label) {
                   return item;
                 }
               })}
               renderThemeSwitch={renderThemeSwitch}
               renderLanguageSwitch={renderLanguageSwitch}
-              isShowSearchIcon={!!algolia && !searchHidden && !isSearchPage}
+              isShowSearchIcon={!!algolia && !searchHidden}
               isSearchPage={isSearchPage}
             />
           </div>
         ) : (
           <div className={styles["menus"]} ref={menusRef}>
-              {(items || []).map((menu, index) => {
-                if (!menu) return null;
-                if (
-                  menu?.type === NavBarItemType.Dropdown ||
-                  Array.isArray(menu.items)
-                ) {
-                  // @ts-ignore
-                  return <DropdownItem menu={menu} key={index} />;
-                }
-                if (menu?.type === NavBarItemType.Button) {
-                  return (
-                    <a
-                      key={index}
-                      className={styles["button-item"]}
-                      href={menu.href || menu.to || menu.defaultLink || "/"}
-                      target={menu.href ? "_blank" : "_self"}
-                    >
-                      {menu.label}
-                    </a>
-                  );
-                }
+            {(items || []).map((menu, index) => {
+              if (!menu) return null;
+              if (
+                menu?.type === NavBarItemType.Dropdown ||
+                Array.isArray(menu.items)
+              ) {
+                // @ts-ignore
+                return <DropdownItem menu={menu} key={index} />;
+              }
+              if (menu?.type === NavBarItemType.Button) {
                 return (
-                  <Link
+                  <a
                     key={index}
-                    className={styles["item"]}
+                    className={styles["button-item"]}
                     href={menu.href || menu.to || menu.defaultLink || "/"}
                     target={menu.href ? "_blank" : "_self"}
                   >
                     {menu.label}
-                  </Link>
+                  </a>
                 );
-              })}
-              <div className={styles["menus__btn-list"]}>
-                {renderLanguageSwitch()}
-                {renderThemeSwitch()}
-              </div>
+              }
+              return (
+                <Link
+                  key={index}
+                  className={styles["item"]}
+                  href={menu.href || menu.to || menu.defaultLink || "/"}
+                  target={menu.href ? "_blank" : "_self"}
+                >
+                  {menu.label}
+                </Link>
+              );
+            })}
+            <div className={styles["menus__btn-list"]}>
+              {renderLanguageSwitch()}
+              {renderThemeSwitch()}
+            </div>
           </div>
         )}
       </div>

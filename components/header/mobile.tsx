@@ -3,12 +3,15 @@ import IconNavMore from "@/assets/icons/IconNavMore.svg";
 import IconNavMoreActive from "@/assets/icons/IconNavMoreActive.svg";
 import IconNavMoreDark from "@/assets/icons/IconNavMore@dark.svg";
 import IconNavMoreActiveDark from "@/assets/icons/IconNavMoreActive@dark.svg";
-import IconMenuSearch from "@/assets/icons/iconMenuSearch.svg";
-import IconMenuSearchDark from "@/assets/icons/iconMenuSearch@dark.svg";
+import IconMenuSearch from "@/assets/images/search/iconMenuSearch.svg";
+import IconMenuSearchDark from "@/assets/images/search/iconMenuSearch@dark.svg";
+import IconMenuSearchClose from "@/assets/images/search/iconMenuSearchClose.svg";
+import IconMenuSearchCloseDark from "@/assets/images/search/iconMenuSearchClose@dark.svg";
 import IconArrowRight from "@/assets/icons/iconArrowRight.svg";
 import styles from "./mobile.module.scss";
 import { Collapse } from "antd";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { NavbarLink } from "./@types";
 import { createPortal } from "react-dom";
 import ThemeContext from "@/components/header/Theme.context";
@@ -30,6 +33,7 @@ const Mobile: FC<Props> = ({
 }) => {
   const [open, setOpen] = useState(false);
   const { theme } = React.useContext(ThemeContext);
+  const router = useRouter();
 
   const DropdownList = useMemo(() => {
     return (
@@ -73,7 +77,7 @@ const Mobile: FC<Props> = ({
                           >
                             {child.label}
                           </Link>
-                        )
+                        ),
                       )}
                     </div>
                   ),
@@ -147,20 +151,34 @@ const Mobile: FC<Props> = ({
   const NavMoreNormal = theme === "dark" ? IconNavMoreDark : IconNavMore;
   const NavMoreActive =
     theme === "dark" ? IconNavMoreActiveDark : IconNavMoreActive;
-  const MenuSearch = theme === "dark" ? IconMenuSearchDark : IconMenuSearch;
+  const SEARCH_NAV_KEY = "search_from_nav";
+  const navigatedFromApp =
+    isSearchPage && sessionStorage.getItem(SEARCH_NAV_KEY) === "true";
+
+  const MenuSearchIcon = isSearchPage
+    ? theme === "dark"
+      ? IconMenuSearchCloseDark
+      : IconMenuSearchClose
+    : theme === "dark"
+      ? IconMenuSearchDark
+      : IconMenuSearch;
 
   return (
     <div>
       <div className={`cursor-pointer flex gap-4`}>
-        {isShowSearchIcon && (
-          <MenuSearch
+        {(isShowSearchIcon && !isSearchPage) || navigatedFromApp ? (
+          <MenuSearchIcon
             onClick={() => {
-              const el: HTMLButtonElement =
-                document.querySelector(".DocSearch-Button");
-              el && el.click();
+              if (isSearchPage) {
+                sessionStorage.removeItem(SEARCH_NAV_KEY);
+                router.back();
+              } else {
+                sessionStorage.setItem(SEARCH_NAV_KEY, "true");
+                router.push("/search");
+              }
             }}
           />
-        )}
+        ) : null}
         <span onClick={() => setOpen((value) => !value)}>
           {open ? <NavMoreActive /> : <NavMoreNormal />}
         </span>

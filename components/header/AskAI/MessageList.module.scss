@@ -12,23 +12,10 @@
   :global(.ant-bubble-list) {
     width: 100%;
     flex: 1;
-    padding: 0 20px;
-  }
-  :global(.ant-bubble-start) {
-    &:not(:has(.placeholderContent)) {
-      padding-right: 52px;
-    }
-  }
-  :global(.ant-bubble-end) {
-    &:not(:has(.placeholderContent)) {
-      padding-left: 52px;
-    }
+    gap: 20px;
   }
   :global(.ant-bubble-content-wrapper) {
     color: var(--docuo-color-primary);
-    background: var(--docuo-m-drawer-btn-bg);
-    border: var(--docuo-m-drawer-btn-border);
-    border-radius: 8px;
   }
   :global(.ant-bubble-avatar + .ant-bubble-content) {
     color: var(--docuo-color-primary);
@@ -36,14 +23,59 @@
     border: var(--docuo-m-drawer-btn-border);
     border-radius: 8px;
   }
+  :global(.ant-prompts .ant-prompts-item .ant-prompts-desc) {
+    font-size: 13px;
+  }
 
   // 气泡内容样式 - 与 modal-new.tsx 完全一致
   .customBubbleContent {
     background: unset;
+    min-height: 34px;
   }
   .customBubbleFooter {
     width: 100%;
     margin-top: 0;
+    font-size: 12px;
+  }
+
+  :global(.ant-bubble.ant-bubble-end) {
+    padding-left: 16px;
+  }
+  :global(.ant-bubble.ant-bubble-end .ant-bubble-content) {
+    background: var(--docuo-color-primary-active);
+    border-radius: 8px 8px 0px 8px;
+    color: #fff;
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+  :global(.ant-bubble.ant-bubble-start .ant-bubble-content) {
+    padding: 0;
+  }
+
+  :global(.ant-typography) {
+    font-family: var(--font-inter);
+    p {
+      font-size: 12px;
+      color: var(--docsearch-custom-modal-primary-color);
+      &:first-of-type {
+        color: var(--docsearch-custom-chat-ai-first-p-color);
+      }
+    }
+    h2 {
+      color: var(--docsearch-custom-modal-primary-color);
+    }
+    h3 {
+      color: var(--docsearch-custom-modal-primary-color);
+    }
+    h4 {
+      color: var(--docsearch-custom-modal-primary-color);
+    }
+    h5 {
+      color: var(--docsearch-custom-modal-primary-color);
+    }
+    h6 {
+      color: var(--docsearch-custom-modal-primary-color);
+    }
   }
 
   // 文档聚合样式 - 与 modal-new.tsx 完全一致
@@ -53,8 +85,7 @@
     background: var(--docsearch-searchbox-background);
     border-radius: 8px;
     padding: 12px;
-    margin-inline-start: 16px;
-    margin-inline-end: 16px;
+    margin-top: 16px;
     a {
       color: var(--docuo-color-primary-active);
       &:hover {
@@ -65,8 +96,8 @@
   .custom-chat-item-operation {
     display: none;
     align-items: center;
-    margin-inline-start: 12px;
-    margin-inline-end: 12px;
+    // margin-inline-start: 12px;
+    // margin-inline-end: 12px;
     margin-top: 12px;
     margin-bottom: 12px;
     .custom-chat-item-operation-btn {
@@ -93,24 +124,13 @@
   .custom-chat-item-doc-agg-title {
     font-size: 11px;
     color: var(--docsearch-searchbox-color);
-    margin-bottom: 10px;
+    margin-bottom: 6px;
   }
   .custom-chat-item-doc-agg-item {
-    line-height: 20px;
+    line-height: 18px;
     & + .custom-chat-item-doc-agg-item {
-      margin-top: 10px;
+      margin-top: 6px;
     }
-  }
-
-  // 用户头像样式 - 与 modal-new.tsx 完全一致
-  .user-avatar-wrap {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    color: var(--docuo-text-color);
-    width: 40px;
-    height: 40px;
   }
 
   // 查询状态样式 - 与 modal-new.tsx 完全一致
@@ -118,149 +138,68 @@
     color: var(--docuo-color-primary-active);
   }
   .queryTips {
+    font-size: 13px;
     color: var(--docuo-color-primary);
   }
 
   // 占位符相关样式 - 与 modal-new.tsx 完全一致
   .placeholderContent {
-    margin: 10% auto 0;
+    margin: 35px auto 0;
+    width: 100%;
+    padding: 0 2px !important;
+    & > div {
+      width: 100%;
+    }
   }
   .placeholderNode {
   }
   .welcomeWrap {
-    margin-bottom: 30px;
+    margin-bottom: 25px;
   }
   .welcomeIcon {
-  }
-  :global(.ant-welcome-icon) {
+    display: none;
   }
   .welcomeTitle {
     font-weight: normal;
-    font-size: 28px;
+    font-size: 22px;
     color: var(--docuo-color-primary);
-  }
-  :global(.ant-welcome-title) {
-    font-weight: normal;
-    font-size: 28px;
-    color: var(--docuo-color-primary);
+    font-family: var(--font-inter-medium);
   }
   .welcomeDescription {
-    font-size: 28px;
+    font-size: 22px;
     color: var(--docuo-color-primary);
+    font-family: var(--font-inter-medium);
   }
   .questionList {
   }
   .questionItem {
-    background: var(--docuo-background-primary);
-    border: var(--docsearch-searchbox-border);
+    background: unset;
+    border: unset;
+    padding: 0;
+    :global(.ant-prompts-list) {
+      gap: 10px;
+    }
   }
   .questionSubItem {
     color: var(--docuo-color-primary);
-    background: var(--docsearch-searchbox-background) !important;
+    background: var(--docsearch-custom-panel-ai-item-bg) !important;
+    border: 1px solid var(--docsearch-custom-panel-ai-item-border) !important;
     padding-block: 8px;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    padding-inline: 8px;
     &:hover {
-      background: var(--docsearch-searchbox-background-hover) !important;
+      color: var(--docsearch-custom-ai-item-hover-color);
     }
   }
   .question-tips {
-    font-size: 12px;
+    font-size: 13px;
     color: var(--docsearch-searchbox-color);
-    margin-bottom: 5%;
+    margin-bottom: 2px;
   }
-
-}
-
-// 响应式样式 - 与 modal-new.tsx 完全一致
-@media screen and (max-width: 750px) {
-  .messageList {
-    .welcomeTitle {
-      font-size: 22px;
-    }
-    :global(.ant-welcome-title) {
-      font-size: 22px;
-    }
-    .welcomeDescription {
-      font-size: 22px;
-    }
-    .welcomeWrap {
-      margin-bottom: 25px;
-    }
-  }
-}
-
-@media screen and (max-width: 576px) {
-  .messageList {
-    .welcomeTitle {
-      font-size: 20px;
-    }
-    :global(.ant-welcome-title) {
-      font-size: 20px;
-    }
-    .welcomeDescription {
-      font-size: 20px;
-    }
-    :global(.ant-bubble-list) {
-      padding: 0 5px;
-    }
-    .user-avatar-wrap {
-      width: 36px;
-      height: 36px;
-    }
-    :global(.ant-bubble-start) {
-      &:not(:has(.placeholderContent)) {
-        padding-right: 48px;
-      }
-    }
-    :global(.ant-bubble-end) {
-      &:not(:has(.placeholderContent)) {
-        padding-left: 48px;
-      }
-    }
-    .welcomeWrap {
-      margin-bottom: 20px;
-    }
-  }
-}
-
-@media screen and (max-width: 500px) {
-  .messageList {
-    .welcomeIcon {
-      display: none;
-    }
-    :global(.ant-welcome-icon) {
-      display: none;
-    }
-    :global(.ant-bubble-list) {
-      padding: 0;
-    }
-    .user-avatar-wrap {
-      width: 30px;
-      height: 30px;
-    }
-    :global(.ant-bubble-start) {
-      &:not(:has(.placeholderContent)) {
-        padding-right: 42px;
-      }
-    }
-    :global(.ant-bubble-end) {
-      &:not(:has(.placeholderContent)) {
-        padding-left: 42px;
-      }
-    }
-  }
-}
-
-@media screen and (max-width: 375px) {
-  .messageList {
-    .welcomeTitle {
-      font-size: 17px;
-    }
-    :global(.ant-welcome-title) {
-      font-size: 17px;
-    }
-    .welcomeDescription {
-      font-size: 17px;
-    }
+  :global(.ant-prompts .ant-prompts-item .ant-prompts-content) {
+    flex: 1;
   }
 }
 
@@ -287,16 +226,11 @@
   justify-content: flex-start;
 
   :global(.ant-skeleton-input) {
-    background: var(--docuo-background-secondary, #f5f5f5) !important;
+    background: var(--docuo-background-secondary) !important;
     border-radius: 16px !important;
 
     &::after {
-      background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.6),
-        transparent
-      ) !important;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent) !important;
     }
   }
 }

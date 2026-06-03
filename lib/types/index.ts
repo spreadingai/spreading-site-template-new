@@ -23,6 +23,7 @@ export interface DocuoConfig {
     colors?: Colors;
     removeWatermark?: boolean;
     showAskAI?: boolean;
+    instanceGroups: [];
   };
   search?: {
     hidden?: boolean;

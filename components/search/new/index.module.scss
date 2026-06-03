@@ -1,0 +1,1470 @@
+// Search page styles.
+// Color values use CSS variables from styles/docsearch.theme.scss (light / dark).
+// Layout sizing is inside media queries; non-sizing properties stay outside.
+
+// ---------------------------------------------------------------------------
+// 已配置主题变量（CSS 变量）
+// ---------------------------------------------------------------------------
+// --docsearch-custom-algolia-searchbox-active-background          搜索框激活态背景
+// --docsearch-custom-algolia-searchbox-border-bg                  搜索框边框/背景
+// --docsearch-custom-algolia-searchbox-ai-btn-image               AI 按钮图标
+// --docsearch-custom-algolia-searchbox-background                 搜索框默认背景
+// --docuo-color-primary                                           主文字颜色
+// --docsearch-custom-algolia-searchbox-placeholder-color          占位符颜色
+// --docsearch-custom-algolia-searchbox-clear-color                清除/加载图标颜色
+// --docsearch-custom-pagination-link-color                        分页链接颜色
+// --docsearch-custom-pagination-link-bg                           分页链接背景
+// --docsearch-custom-pagination-link-border-color                 分页链接边框
+// --docsearch-custom-pagination-link-disabled-color               分页禁用颜色
+// --docsearch-custom-pagination-selected-link-color               分页选中颜色
+// --docsearch-custom-tabs-border-bottom-color                     Tabs 下边框颜色
+// --docsearch-custom-tab-color                                    Tab 默认颜色
+// --docsearch-custom-tab-hover-color                              Tab 悬停颜色
+// --docsearch-custom-tab-active-color                             Tab 激活颜色
+// --docsearch-custom-tab-active-border-bottom-color               Tab 激活下边框
+// --docsearch-custom-facet-title-color                            Facet 标题颜色
+// --docsearch-custom-facet-label-bg                               Facet 标签背景
+// --docsearch-custom-facet-label-color                            Facet 标签颜色
+// --docsearch-custom-facet-label-hover-color                      Facet 标签悬停颜色
+// --docsearch-custom-facet-label-active-bg                        Facet 激活标签背景
+// --docsearch-custom-facet-label-active-color                     Facet 激活标签颜色
+// --docsearch-custom-facet-toggle-color                           Facet 展开/收起颜色
+// --docsearch-custom-facet-toggle-border-color                    Facet 展开按钮边框
+// --docsearch-custom-hits-empty-color                             空结果文字颜色
+// --docsearch-custom-hits-empty-pic                               空结果图片
+// --docuo-color-primary-active                                    加载中文字颜色
+// --docsearch-custom-feedback-link-color                          反馈链接颜色
+// --docsearch-custom-feedback-bg                                  反馈条背景
+// --docsearch-custom-feedback-text-color                          反馈条文字颜色
+// --docsearch-custom-feedback-btn-bg                              反馈按钮背景
+// --docsearch-custom-feedback-btn-color                           反馈按钮文字颜色
+// --docsearch-custom-feedback-btn-border                          反馈按钮边框
+// --docsearch-custom-ai-bg                                        AI 区块背景
+// --docsearch-custom-ai-header-color                              AI 标题颜色
+// --docsearch-custom-ai-link-color                                AI 链接颜色
+// --docsearch-custom-ai-item-bg                                   AI 推荐项背景
+// --docsearch-custom-ai-item-color                                AI 推荐项颜色
+// --docsearch-custom-ai-item-hover-color                          AI 推荐项悬停颜色
+// --docsearch-custom-ai-item-icon                                 AI 推荐项图标
+// --docsearch-custom-hit-item-color                               Hit 卡片颜色
+// --docsearch-custom-hit-title-color                              Hit 标题颜色
+// --docsearch-custom-hit-highlight-color                          高亮文字颜色
+// --docsearch-custom-hit-snippet-color                            Hit 摘要颜色
+// --docsearch-custom-hit-tag-color                                Hit 标签颜色
+// --docsearch-custom-hit-tag-bg                                   Hit 标签背景
+// --docsearch-custom-panel-hit-item-hover-bg-color                 下拉列表项悬停背景
+// --docsearch-custom-panel-hit-snippet-color                       下拉摘要颜色
+// --docsearch-custom-panel-hit-title-color                         下拉标题颜色
+// --docsearch-custom-panel-ai-border-color                         下拉AI区块上边框
+// --docsearch-custom-panel-ai-header-color                         下拉AI标题颜色
+// --docsearch-custom-panel-ai-item-bg                              下拉AI推荐项背景
+// --docsearch-custom-panel-ai-item-border                          下拉AI推荐项边框
+
+// ==================================================================
+// Base styles (non-sizing: colors, display, cursor, overflow, etc.)
+// ==================================================================
+
+.pageRoot {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.criteria {
+  display: flex;
+  flex-direction: column;
+}
+.criteriaHasQuery {
+  // has query input
+}
+
+// SearchBox (react-instantsearch built-in) ------------------------------------
+// ais-SearchBox DOM 结构:
+//   .ais-SearchBox-form
+//     .ais-SearchBox-input
+//     .ais-SearchBox-submit
+//       .ais-SearchBox-submitIcon
+//     .ais-SearchBox-reset
+//       .ais-SearchBox-resetIcon
+//     .ais-SearchBox-loadingIndicator
+//       .ais-SearchBox-loadingIcon
+
+.criteria {
+  &.criteriaHasQuery {
+    :global {
+      .ais-SearchBox-form {
+        .ais-SearchBox-input {
+          background: var(--docsearch-custom-algolia-searchbox-active-background);
+        }
+      }
+    }
+  }
+  :global {
+    .ais-SearchBox-form {
+      // non-sizing base — 渐变边框容器
+      background: var(--docsearch-custom-algolia-searchbox-border-bg);
+      &::before {
+        display: none;
+      }
+      &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-image: var(--docsearch-custom-algolia-searchbox-ai-btn-image);
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        cursor: pointer;
+      }
+    }
+    .ais-SearchBox-input {
+      // non-sizing base — 纯色背景覆盖中间
+      border: none;
+      background: var(--docsearch-custom-algolia-searchbox-background);
+      box-shadow: none;
+      font-family: PingFang SC;
+      font-weight: 400;
+      color: var(--docuo-color-primary);
+      &::placeholder {
+        font-family: PingFang SC;
+        font-weight: inherit;
+        font-size: inherit;
+        color: var(--docsearch-custom-algolia-searchbox-placeholder-color);
+      }
+      &:focus {
+        background: var(--docsearch-custom-algolia-searchbox-active-background);
+      }
+    }
+    .ais-SearchBox-submit {
+      // non-sizing base
+    }
+    .ais-SearchBox-submitIcon {
+      // non-sizing base
+    }
+    .ais-SearchBox-reset {
+      // non-sizing base
+      fill: var(--docsearch-custom-algolia-searchbox-clear-color);
+      transition: all 0.3s;
+      background: unset !important;
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+    .ais-SearchBox-resetIcon {
+      // non-sizing base
+    }
+    .ais-SearchBox-loadingIndicator {
+      // non-sizing base
+      fill: var(--docsearch-custom-algolia-searchbox-clear-color);
+      display: none !important;
+    }
+    .ais-SearchBox-loadingIcon {
+      // non-sizing base
+    }
+  }
+}
+.body {
+  :global {
+    .ais-Pagination {
+      display: flex;
+      justify-content: center;
+
+      .ais-Pagination-list {
+        // non-sizing base
+      }
+      .ais-Pagination-item {
+        // non-sizing base
+        .ais-Pagination-link {
+          font-size: 14px;
+          color: var(--docsearch-custom-pagination-link-color);
+          box-shadow: none;
+          background: var(--docsearch-custom-pagination-link-bg);
+          border: 1px solid var(--docsearch-custom-pagination-link-border-color);
+          transition: all 0.3s;
+          font-family: PingFang SC;
+        }
+        &.ais-Pagination-item--disabled {
+          .ais-Pagination-link {
+            color: var(--docsearch-custom-pagination-link-disabled-color);
+          }
+        }
+        &:not(.ais-Pagination-item--disabled):hover {
+          .ais-Pagination-link {
+            color: var(--docsearch-custom-pagination-selected-bg-color);
+          }
+        }
+        &:not(.ais-Pagination-item--selected):not(.ais-Pagination-item--disabled) .ais-Pagination-link:hover {
+          border: 1px solid var(--docsearch-custom-pagination-link-border-color);
+          background: var(--docsearch-custom-pagination-link-bg);
+        }
+        &.ais-Pagination-item--selected {
+          .ais-Pagination-link {
+            border: 1px solid var(--docsearch-custom-pagination-selected-bg-color);
+            color: var(--docsearch-custom-pagination-selected-link-color);
+            background: var(--docsearch-custom-pagination-selected-bg-color);
+          }
+          &:hover {
+            .ais-Pagination-link {
+              color: var(--docsearch-custom-pagination-selected-link-color);
+            }
+          }
+        }
+      }
+      .ais-Pagination-item--selected {
+        // non-sizing base
+        .ais-Pagination-link {
+          box-shadow: none;
+          background: var(--docsearch-custom-pagination-selected-link-color);
+          border: var(--docsearch-custom-pagination-selected-link-color);
+        }
+      }
+      .ais-Pagination-item--disabled {
+        // non-sizing base
+      }
+
+      .ais-Pagination-link {
+        // non-sizing base
+      }
+      .ais-Pagination-item--selected .ais-Pagination-link {
+        // non-sizing base
+      }
+      .ais-Pagination-item--disabled .ais-Pagination-link {
+        // non-sizing base
+      }
+    }
+  }
+}
+
+// DocTypeTabs -----------------------------------------------------
+.docTypeTabsWrapper {
+  // wrapper for mobile scroll hiding
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  border-bottom: 1px solid var(--docsearch-custom-tabs-border-bottom-color);
+}
+.docTypeTabs {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1;
+}
+.docTypeTab {
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  color: var(--docsearch-custom-tab-color);
+  border-bottom: 2px solid transparent;
+  font-family: PingFang SC;
+  transition: all 0.3s;
+  &:hover {
+    color: var(--docsearch-custom-tab-hover-color);
+  }
+}
+.docTypeTabActive {
+  color: var(--docsearch-custom-tab-active-color);
+  border-bottom-color: var(--docsearch-custom-tab-active-border-bottom-color);
+  font-weight: 500;
+}
+.docTypeTabCount {
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+}
+
+// FacetLabelList --------------------------------------------------
+.facetRow {
+  display: flex;
+  align-items: flex-start;
+}
+.facetRowTitle {
+  font-family: PingFang SC;
+  font-weight: 400;
+  flex: 0 0 auto;
+  color: var(--docsearch-custom-facet-title-color);
+}
+.facetRowList {
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+.facetRowListCollapsed {
+  overflow: hidden;
+}
+.facetLabel {
+  font-family: PingFang SC;
+  font-weight: 400;
+  background: var(--docsearch-custom-facet-label-bg);
+  color: var(--docsearch-custom-facet-label-color);
+  cursor: pointer;
+  transition: all 0.3s;
+  &:hover {
+    color: var(--docsearch-custom-facet-label-hover-color);
+  }
+}
+.facetLabelActive {
+  background: var(--docsearch-custom-facet-label-active-bg);
+  color: var(--docsearch-custom-facet-label-active-color);
+  &:hover {
+    color: var(--docsearch-custom-facet-label-active-color);
+  }
+}
+.facetLabelCount {
+  opacity: 0.7;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+}
+.facetRowToggle {
+  font-family: PingFang SC;
+  font-weight: 400;
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  border: 0;
+  background: transparent;
+  color: var(--docsearch-custom-facet-toggle-color);
+  cursor: pointer;
+  border: 1px solid var(--docsearch-custom-facet-toggle-border-color);
+  transition: all 0.3s;
+  &:hover {
+    opacity: 0.8;
+  }
+  svg {
+    transition: all 0.3s;
+    position: relative;
+    top: -1px;
+    transform: rotate(90deg);
+  }
+}
+.facetRowToggleExpanded {
+  // expanded state
+  svg {
+    transform: rotate(-90deg);
+  }
+}
+.facetRowToggleCollapsed {
+  // collapsed state
+}
+
+// Hits ------------------------------------------------------------
+.body {
+  display: flex;
+  flex-direction: column;
+}
+.hitsList {
+  list-style: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+.hitsListItem {
+  display: block;
+}
+.hitsEmpty,
+.hitsLoading {
+  font-family: PingFang SC;
+  font-weight: 500;
+  text-align: center;
+  color: var(--docsearch-custom-hits-empty-color);
+}
+.hitsEmpty {
+  position: relative;
+  &::before {
+    content: "";
+    background-image: var(--docsearch-custom-hits-empty-pic);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+.hitsLoading {
+  color: var(--docsearch-custom-hits-loading-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.hitsLoadingIcon {
+  display: block;
+  background-image: var(--docsearch-custom-hits-loading-icon);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  animation: hitsLoadingSpin 1s linear infinite;
+}
+@keyframes hitsLoadingSpin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.emptyFeedbackLink {
+  color: var(--docsearch-custom-feedback-link-color);
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// AI Suggestion ---------------------------------------------------
+.aiSuggestion {
+  background: var(--docsearch-custom-ai-bg);
+  padding: 1px;
+  overflow: hidden;
+}
+.aiSuggestionCon {
+  background: var(--docsearch-custom-ai-bg-con);
+}
+.aiSuggestionHeader {
+  color: var(--docsearch-custom-ai-header-color);
+  font-family: PingFang SC;
+  font-weight: 500;
+}
+.aiSuggestionLink {
+  background: var(--docsearch-custom-ai-link-color);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+.aiSuggestionGrid {
+  display: grid;
+}
+.aiSuggestionItem {
+  font-family: PingFang SC;
+  font-weight: 400;
+  background: var(--docsearch-custom-ai-item-bg);
+  color: var(--docsearch-custom-ai-item-color);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  border: 1px solid var(--docsearch-custom-panel-ai-item-border);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  &:hover {
+    color: var(--docsearch-custom-ai-item-hover-color);
+  }
+  &::before {
+    position: absolute;
+    content: "";
+    top: 50%;
+    transform: translateY(-50%);
+    background-image: var(--docsearch-custom-ai-item-icon);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+}
+
+// Feedback bar ----------------------------------------------------
+.feedbackBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--docsearch-custom-feedback-bg);
+}
+.feedbackText {
+  color: var(--docsearch-custom-feedback-text-color);
+  font-family: PingFang SC;
+  font-weight: 500;
+}
+.feedbackBtn {
+  display: inline-block;
+  background: var(--docsearch-custom-feedback-btn-bg);
+  color: var(--docsearch-custom-feedback-btn-color);
+  text-decoration: none;
+  border: 1px solid var(--docsearch-custom-feedback-btn-border);
+  display: flex;
+  align-items: center;
+  transition: all 0.3s;
+  &:hover {
+    opacity: 0.8;
+  }
+}
+.feedbackBtnIcon {
+  display: block;
+  background-image: var(--docsearch-custom-feedback-btn-icon);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+// Hit item card ---------------------------------------------------
+.hitItem {
+  display: flex;
+  flex-direction: column;
+  color: var(--docsearch-custom-hit-item-color);
+}
+.hitTitle {
+  font-weight: 500;
+  color: var(--docsearch-custom-hit-title-color);
+}
+.hitTitle :global(mark) {
+  background: transparent;
+  color: var(--docsearch-custom-hit-highlight-color);
+  font-weight: 600;
+}
+.hitSnippet {
+  color: var(--docsearch-custom-hit-snippet-color);
+}
+.hitSnippet :global(mark) {
+  background: transparent;
+  color: var(--docsearch-custom-hit-highlight-color);
+  font-weight: 600;
+}
+.hitTags {
+  display: flex;
+  flex-wrap: wrap;
+}
+.hitTag {
+  color: var(--docsearch-custom-hit-tag-color);
+  background: var(--docsearch-custom-hit-tag-bg);
+}
+
+// 适配 Dropdown
+.docTypeTabsWrapperWithMore {
+  overflow: hidden;
+  flex: none;
+  .docTypeTabs {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .docTypeTab {
+    flex: none;
+  }
+}
+.docTypeTabsDropdown {
+  .docTypeTabsViewMore {
+    position: absolute;
+    right: 0;
+    display: flex;
+    align-items: center;
+    font-family: PingFang SC;
+    font-weight: 400;
+    color: var(--docsearch-custom-facet-toggle-color);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.3s;
+    &:hover {
+      color: var(--docsearch-custom-tab-hover-color);
+    }
+  }
+}
+.hitsListDropdown {
+  &.hitsList {
+    margin-bottom: 0;
+  }
+  .hitsListItem {
+    transition: all 0.3s;
+    background: transparent;
+    &:hover {
+      background: var(--docsearch-custom-panel-hit-item-hover-bg-color);
+    }
+  }
+}
+.hitItemDropdown {
+  .hitSnippet {
+    order: -1;
+    font-weight: 500;
+    color: var(--docsearch-custom-panel-hit-snippet-color);
+    font-family: PingFang SC-Medium;
+  }
+  .hitTitle {
+    color: var(--docsearch-custom-panel-hit-title-color);
+    overflow: hidden; /* 溢出隐藏 */
+    white-space: nowrap; /* 强制不换行 */
+    text-overflow: ellipsis; /* 超出显示省略号 */
+  }
+  .hitTags {
+    display: none;
+  }
+}
+.aiSuggestionDropdown {
+  border: none;
+  border-top: 1px solid var(--docsearch-custom-panel-ai-border-color);
+  background: transparent;
+  .aiSuggestionCon {
+    background: transparent;
+  }
+  .aiSuggestionGrid {
+    grid-template-columns: 1fr;
+  }
+  .aiSuggestionHeader {
+    color: var(--docsearch-custom-panel-ai-header-color);
+  }
+  .aiSuggestionItem {
+    background: var(--docsearch-custom-panel-ai-item-bg);
+    border: 1px solid var(--docsearch-custom-panel-ai-item-border);
+  }
+}
+.aiSuggestionHasNoResults {
+  border: none;
+}
+
+// ==================================================================
+// >= 1025px (desktop)
+// ==================================================================
+@media (min-width: 1025px) {
+  .pageRoot {
+    max-width: 1200px;
+    padding: 29px 16px 76px;
+    gap: 16px;
+  }
+
+  .criteria {
+    // SearchBox (react-instantsearch built-in)
+    :global {
+      .ais-SearchBox-form {
+        // sizing
+        height: 50px;
+        line-height: 50px;
+        padding: 1px;
+        border-radius: 8px;
+        &::after {
+          width: 48px;
+          height: 42px;
+          right: 6px;
+        }
+      }
+      .ais-SearchBox-input {
+        // sizing
+        border-radius: 7px;
+        padding-left: 16px;
+        padding-right: 104px;
+        font-size: 14px;
+      }
+      .ais-SearchBox-submit {
+        // sizing
+      }
+      .ais-SearchBox-submitIcon {
+        // sizing
+      }
+      .ais-SearchBox-reset {
+        // sizing
+        right: 65px;
+        width: 30px;
+        height: 30px;
+      }
+      .ais-SearchBox-resetIcon {
+        // sizing
+      }
+      .ais-SearchBox-loadingIndicator {
+        // sizing
+        right: 70px;
+      }
+      .ais-SearchBox-loadingIcon {
+        // sizing
+      }
+    }
+  }
+
+  // DocTypeTabs
+  .docTypeTabsWrapper {
+    margin-top: 18px;
+  }
+  .docTypeTabs {
+    gap: 47px;
+    padding-left: 10px;
+  }
+  .docTypeTab {
+    padding: 8px 0 14px;
+    font-size: 14px;
+  }
+  .docTypeTabActive {
+  }
+  .docTypeTabCount {
+    margin-left: 4px;
+  }
+
+  // FacetLabelList
+  .facetRow {
+    gap: 14px;
+    margin-top: 24px;
+  }
+  .facetRowTitle {
+    font-size: 14px;
+    padding-top: 4px;
+    width: 105px;
+  }
+  .facetRowListCollapsed {
+    max-height: 28px;
+  }
+  .facetRowList {
+    gap: 6px;
+  }
+  .facetLabel {
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  .facetLabelCount {
+    margin-left: 4px;
+  }
+  .facetRowToggle {
+    font-size: 14px;
+    padding: 3px 10px 2px;
+    border-radius: 4px;
+    gap: 6px;
+  }
+
+  // Hits
+  .body {
+    gap: 25px;
+  }
+  .hitsList {
+    padding: 0;
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+  .hitsEmpty,
+  .hitsLoading {
+    font-size: 14px;
+  }
+  .hitsEmpty {
+    padding: 466px 0 40px;
+    &::before {
+      width: 150px;
+      height: 150px;
+      top: 280px;
+    }
+    p {
+      & + p {
+        margin-top: 8px;
+      }
+    }
+  }
+  .hitsLoading {
+    padding: 60px 0 90px;
+    gap: 10px;
+  }
+  .hitsLoadingIcon {
+    width: 28px;
+    height: 28px;
+  }
+
+  // AI Suggestion
+  .aiSuggestion {
+    margin-top: 12px;
+    border-radius: 8px;
+  }
+  .aiSuggestionCon {
+    padding: 16px;
+    border-radius: 8px;
+  }
+  .aiSuggestionHeader {
+    margin: 0 0 12px;
+    font-size: 14px;
+  }
+  .aiSuggestionLink {
+    margin: 0 2px;
+  }
+  .aiSuggestionGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .aiSuggestionItem {
+    border-radius: 8px;
+    font-size: 14px;
+    padding: 10px 10px 10px 40px;
+    &::before {
+      width: 20px;
+      height: 20px;
+      left: 9px;
+    }
+  }
+
+  // Feedback bar
+  .feedbackBar {
+    padding: 20px 20px 20px 30px;
+    border-radius: 4px;
+    margin-bottom: 18px;
+  }
+  .feedbackText {
+    font-size: 18px;
+  }
+  .feedbackBtn {
+    padding: 9px 23px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    gap: 6px;
+  }
+  .feedbackBtnIcon {
+    width: 20px;
+    height: 20px;
+  }
+
+  // Hit item card
+  .hitItem {
+  }
+  .hitTitle {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 7px;
+  }
+  .hitSnippet {
+    font-size: 14px;
+    line-height: 21px;
+    margin-bottom: 12px;
+  }
+  .hitTags {
+    gap: 10px;
+  }
+  .hitTag {
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+
+  // Pagination (react-instantsearch built-in)
+  .body {
+    :global {
+      .ais-Pagination {
+        .ais-Pagination-list {
+          // sizing
+          gap: 8px;
+        }
+        .ais-Pagination-item {
+          // sizing
+        }
+        .ais-Pagination-item--selected {
+          // sizing
+        }
+        .ais-Pagination-item--disabled {
+          // sizing
+        }
+        .ais-Pagination-link {
+          width: 32px;
+          // sizing
+          border-radius: 4px;
+        }
+        .ais-Pagination-item--selected .ais-Pagination-link {
+          // sizing
+        }
+        .ais-Pagination-item--disabled .ais-Pagination-link {
+          // sizing
+        }
+      }
+    }
+  }
+
+  // 适配 Dropdown
+  .docTypeTabsWrapperWithMore {
+    height: 38px;
+    padding-right: 80px;
+    .docTypeTabs {
+      padding-bottom: 20px;
+      padding-left: 0;
+      gap: 28px;
+    }
+  }
+  .docTypeTabsDropdown {
+    padding: 0 80px 0 20px;
+    margin-top: 12px;
+    .docTypeTabsViewMore {
+      right: 16px;
+      top: 6px;
+      font-size: 13px;
+      gap: 2px;
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+    .docTypeTab {
+      gap: 24px;
+    }
+    .docTypeTab {
+      font-size: 13px;
+      padding: 6px 0 10px;
+    }
+  }
+  .hitsListDropdown {
+    &.hitsList {
+      gap: 8px;
+      padding: 16px 10px;
+    }
+    .hitsListItem {
+      border-radius: 6px;
+      padding: 6px 10px;
+    }
+  }
+  .hitItemDropdown {
+    .hitSnippet {
+      line-height: 24px;
+      margin-bottom: 1px;
+    }
+    .hitTitle {
+      margin-bottom: 0;
+      font-size: 13px;
+      line-height: 24px;
+    }
+  }
+  .aiSuggestionDropdown {
+    padding: 16px 16px 22px 16px;
+    margin-top: 0;
+    border-radius: unset;
+    .aiSuggestionCon {
+      padding: 0;
+    }
+    .aiSuggestionGrid {
+      gap: 10px;
+    }
+    .aiSuggestionHeader {
+      font-size: 13px;
+    }
+    .aiSuggestionItem {
+      padding: 8px 10px 9px 40px;
+      border-radius: 8px;
+    }
+  }
+  .aiSuggestionHasNoResults {
+    padding-top: 8px;
+  }
+}
+
+// ==================================================================
+// >= 1200px (desktop)
+// ==================================================================
+@media (min-width: 1201px) {
+  .pageRoot {
+    padding: 29px 0 76px;
+  }
+}
+
+// ==================================================================
+// <= 1024px (mobile)
+// ==================================================================
+@media (max-width: 1024px) {
+  .pageRoot {
+    width: 100%;
+    max-width: unset;
+    padding: 0;
+    gap: 0;
+  }
+
+  .criteria {
+    padding: 16px;
+    // SearchBox (react-instantsearch built-in)
+    :global {
+      .ais-SearchBox-form {
+        // sizing
+        height: 50px;
+        line-height: 50px;
+        padding: 1px;
+        border-radius: 8px;
+        &::after {
+          width: 48px;
+          height: 42px;
+          right: 6px;
+        }
+      }
+      .ais-SearchBox-input {
+        // sizing
+        border-radius: 7px;
+        padding-left: 16px;
+        padding-right: 104px;
+        font-size: 14px;
+      }
+      .ais-SearchBox-submit {
+        // sizing
+      }
+      .ais-SearchBox-submitIcon {
+        // sizing
+      }
+      .ais-SearchBox-reset {
+        // sizing
+        right: 65px;
+        width: 30px;
+        height: 30px;
+      }
+      .ais-SearchBox-resetIcon {
+        // sizing
+      }
+      .ais-SearchBox-loadingIndicator {
+        // sizing
+        right: 70px;
+      }
+      .ais-SearchBox-loadingIcon {
+        // sizing
+      }
+    }
+  }
+
+  // DocTypeTabs
+  .docTypeTabsWrapper {
+    margin-top: 18px;
+  }
+  .docTypeTabs {
+    gap: 47px;
+    padding-left: 10px;
+  }
+  .docTypeTab {
+    padding: 8px 0 14px;
+    font-size: 14px;
+  }
+  .docTypeTabActive {
+  }
+  .docTypeTabCount {
+    margin-left: 4px;
+  }
+
+  // FacetLabelList
+  .facetRow {
+    gap: 14px;
+    margin-top: 24px;
+  }
+  .facetRowTitle {
+    font-size: 14px;
+    padding-top: 4px;
+    width: 105px;
+  }
+  .facetRowListCollapsed {
+    max-height: 28px;
+  }
+  .facetRowList {
+    gap: 6px;
+  }
+  .facetLabel {
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  .facetLabelCount {
+    margin-left: 4px;
+  }
+  .facetRowToggle {
+    font-size: 14px;
+    padding: 3px 10px 2px;
+    border-radius: 4px;
+    gap: 6px;
+  }
+
+  // Hits
+  .body {
+    gap: 25px;
+    padding: 16px;
+  }
+  .hitsList {
+    padding: 0;
+    gap: 30px;
+    margin-bottom: 30px;
+  }
+  .hitsEmpty,
+  .hitsLoading {
+    font-size: 14px;
+  }
+  .hitsEmpty {
+    padding: 466px 0 40px;
+    &::before {
+      width: 150px;
+      height: 150px;
+      top: 280px;
+    }
+    p {
+      & + p {
+        margin-top: 8px;
+      }
+    }
+  }
+  .hitsLoading {
+    padding: 60px 0 90px;
+    gap: 10px;
+  }
+  .hitsLoadingIcon {
+    width: 28px;
+    height: 28px;
+  }
+
+  // AI Suggestion
+  .aiSuggestion {
+    margin-top: 0;
+    border-radius: 8px;
+    background: unset;
+  }
+  .aiSuggestionCon {
+    padding: 16px;
+    background: unset;
+  }
+  .aiSuggestionHeader {
+    margin: 0 0 12px;
+    font-size: 14px;
+  }
+  .aiSuggestionLink {
+    margin: 0 2px;
+  }
+  .aiSuggestionGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .aiSuggestionItem {
+    border-radius: 8px;
+    font-size: 14px;
+    padding: 10px 10px 10px 40px;
+    background: var(--docsearch-custom-panel-ai-item-bg);
+    border: 1px solid var(--docsearch-custom-panel-ai-item-border);
+    &::before {
+      width: 20px;
+      height: 20px;
+      left: 9px;
+    }
+  }
+
+  // Feedback bar
+  .feedbackBar {
+    padding: 20px 20px 20px 30px;
+    border-radius: 4px;
+    margin-bottom: 18px;
+  }
+  .feedbackText {
+    font-size: 18px;
+  }
+  .feedbackBtn {
+    padding: 9px 23px 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    gap: 6px;
+  }
+  .feedbackBtnIcon {
+    width: 20px;
+    height: 20px;
+  }
+
+  // Hit item card
+  .hitItem {
+  }
+  .hitTitle {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 7px;
+  }
+  .hitSnippet {
+    font-size: 14px;
+    line-height: 21px;
+    margin-bottom: 12px;
+  }
+  .hitTags {
+    gap: 10px;
+  }
+  .hitTag {
+    font-size: 12px;
+    padding: 4px 8px;
+    border-radius: 4px;
+  }
+
+  // Pagination (react-instantsearch built-in)
+  .body {
+    :global {
+      .ais-Pagination {
+        .ais-Pagination-list {
+          // sizing
+          gap: 8px;
+        }
+        .ais-Pagination-item {
+          // sizing
+        }
+        .ais-Pagination-item--selected {
+          // sizing
+        }
+        .ais-Pagination-item--disabled {
+          // sizing
+        }
+        .ais-Pagination-link {
+          width: 32px;
+          // sizing
+          border-radius: 4px;
+        }
+        .ais-Pagination-item--selected .ais-Pagination-link {
+          // sizing
+        }
+        .ais-Pagination-item--disabled .ais-Pagination-link {
+          // sizing
+        }
+      }
+    }
+  }
+
+  // 适配 Dropdown
+  .docTypeTabsWrapperWithMore {
+    height: 38px;
+    padding-right: 80px;
+    .docTypeTabs {
+      padding-bottom: 20px;
+      padding-left: 0;
+      gap: 28px;
+    }
+  }
+  .docTypeTabsDropdown {
+    padding: 0 80px 0 20px;
+    margin-top: 12px;
+    .docTypeTabsViewMore {
+      right: 16px;
+      top: 6px;
+      font-size: 13px;
+      gap: 2px;
+      svg {
+        width: 16px;
+        height: 16px;
+      }
+    }
+    .docTypeTab {
+      gap: 24px;
+    }
+    .docTypeTab {
+      font-size: 13px;
+      padding: 6px 0 10px;
+    }
+  }
+  .hitsListDropdown {
+    &.hitsList {
+      gap: 8px;
+      padding: 16px 10px;
+    }
+    .hitsListItem {
+      border-radius: 6px;
+      padding: 6px 10px;
+    }
+  }
+  .hitItemDropdown {
+    .hitSnippet {
+      line-height: 24px;
+      margin-bottom: 1px;
+    }
+    .hitTitle {
+      margin-bottom: 0;
+      font-size: 13px;
+      line-height: 24px;
+    }
+  }
+  .aiSuggestionDropdown {
+    padding: 16px 16px 22px 16px;
+    margin-top: 0;
+    border-radius: unset;
+    .aiSuggestionCon {
+      padding: 0;
+    }
+    .aiSuggestionGrid {
+      gap: 10px;
+    }
+    .aiSuggestionHeader {
+      font-size: 13px;
+    }
+    .aiSuggestionItem {
+      padding: 8px 10px 9px 40px;
+      border-radius: 8px;
+    }
+  }
+  .aiSuggestionHasNoResults {
+    padding-top: 8px;
+  }
+}
+
+// ==================================================================
+// <= 750px (mobile)
+// ==================================================================
+@media (max-width: 750px) {
+  // embed 页面设置 data-embed 属性后，移动端样式不生效
+  :global(html:not([data-embed])) {
+    // DocTypeTabs - mobile horizontal scroll with hidden scrollbar
+    .docTypeTabsWrapper {
+      overflow: hidden;
+      height: 43px;
+      margin-top: 10px;
+    }
+    .docTypeTabs {
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding-bottom: 20px;
+      gap: 22px;
+    }
+    .docTypeTab {
+      flex: none;
+      padding: 8px 2px 12px;
+      font-size: 13px;
+    }
+
+    .hitsList {
+      gap: 28px;
+      margin-bottom: 8px;
+    }
+    .hitTitle {
+      word-wrap: break-word;
+    }
+    .hitSnippet {
+      word-wrap: break-word;
+    }
+    .hitsEmpty,
+    .hitsLoading {
+      font-size: 13px;
+      line-height: 18px;
+    }
+    .hitsEmpty {
+      padding: 186px 0 40px;
+      &::before {
+        top: 40px;
+        width: 108px;
+        height: 108px;
+      }
+    }
+
+    .feedbackBar {
+      padding: 8px 20px 8px 20px;
+      margin-bottom: 2px;
+    }
+    .feedbackText {
+      font-size: 14px;
+    }
+    .feedbackBtn {
+      font-size: 12px;
+      padding: 5px 12px 4px;
+      flex: none;
+      gap: 4px;
+    }
+    .feedbackBtnIcon {
+      width: 16px;
+      height: 16px;
+    }
+
+    .facetRow {
+      margin-top: 16px;
+      gap: 0;
+    }
+    .facetRowTitle {
+      font-size: 12px;
+      width: 90px;
+    }
+    .facetLabel {
+      font-size: 12px;
+    }
+    .facetRowListCollapsed {
+      max-height: 26px;
+    }
+    .facetRowToggle {
+      font-size: 12px;
+      gap: 4px;
+      padding: 3px 6px 2px;
+      margin-left: 4px;
+    }
+
+    // AI Suggestion
+    .aiSuggestionGrid {
+      grid-template-columns: 1fr;
+      gap: 8px;
+      // Mobile: only show first 2 items
+      // .aiSuggestionItem:nth-child(n + 3) {
+      //   display: none;
+      // }
+    }
+    .aiSuggestion {
+      border-radius: 12px;
+    }
+    .aiSuggestionCon {
+      padding: 12px;
+      border-radius: 12px;
+    }
+    .aiSuggestionHeader {
+      font-size: 13px;
+      margin-bottom: 10px;
+    }
+    .aiSuggestionItem {
+      font-size: 13px;
+      padding-left: 36px;
+      &::before {
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+    .criteria {
+      padding-bottom: 0;
+      :global {
+        .ais-SearchBox-form {
+          height: 44px;
+          line-height: 44px;
+          &::after {
+            width: 40px;
+            height: 34px;
+            right: 5px;
+          }
+        }
+        .ais-SearchBox-input {
+          font-size: 14px;
+          padding-left: 14px;
+          padding-right: 80px;
+        }
+        .ais-SearchBox-submit {
+          // non-sizing base
+        }
+        .ais-SearchBox-submitIcon {
+          // non-sizing base
+        }
+        .ais-SearchBox-reset {
+          // non-sizing base
+          right: 50px;
+          width: 30px;
+          height: 30px;
+        }
+        .ais-SearchBox-resetIcon {
+          // non-sizing base
+        }
+        .ais-SearchBox-loadingIndicator {
+          // non-sizing base
+          fill: var(--docsearch-custom-algolia-searchbox-clear-color);
+        }
+        .ais-SearchBox-loadingIcon {
+          // non-sizing base
+        }
+      }
+    }
+
+    // Pagination (react-instantsearch built-in)
+    .body {
+      :global {
+        .ais-Pagination {
+          .ais-Pagination-list {
+            // sizing
+            gap: 8px;
+          }
+          .ais-Pagination-item {
+            // sizing
+          }
+          .ais-Pagination-item--selected {
+            // sizing
+          }
+          .ais-Pagination-item--disabled {
+            // sizing
+          }
+          .ais-Pagination-link {
+            // sizing
+            width: 36px;
+            border-radius: 4px;
+          }
+          .ais-Pagination-item--selected .ais-Pagination-link {
+            // sizing
+          }
+          .ais-Pagination-item--disabled .ais-Pagination-link {
+            // sizing
+          }
+        }
+      }
+    }
+
+    // 适配 Dropdown
+  }
+}

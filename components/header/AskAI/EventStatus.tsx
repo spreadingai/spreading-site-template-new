@@ -2,47 +2,59 @@ import React from 'react';
 import { Space, Spin } from 'antd';
 import {
   DatabaseOutlined,
-  SearchOutlined,
   LoadingOutlined
   // @ts-ignore
 } from "@ant-design/icons";
+import Image from "next/image";
+import iconSearch from '@/assets/images/search/icon_search@2x.png';
+import iconSearchDark from '@/assets/images/search/icon_search_dark@2x.png';
 import styles from './EventStatus.module.scss';
 
 export interface EventStatusProps {
   eventName: string;
   toolName?: string;
   toolArgs?: any;
-  isLoading: boolean;
   aiSearchData: any;
+  currentTheme?: string;
 }
 
 const EventStatus: React.FC<EventStatusProps> = ({
   eventName,
   toolName,
   toolArgs,
-  isLoading,
-  aiSearchData
+  aiSearchData,
+  currentTheme = 'light',
 }) => {
+  const isDark = currentTheme === 'dark';
+  const searchIcon = (
+    <Image
+      src={isDark ? iconSearchDark.src : iconSearch.src}
+      alt=""
+      width={16}
+      height={16}
+    />
+  );
+
   const getEventDisplay = () => {
     switch (toolName) {
       case 'list_datasets':
         return {
-          icon: <DatabaseOutlined />,
+          icon: searchIcon,
           text: aiSearchData.event.list_datasets,
         };
       case 'set_dataset_ids':
         return {
-          icon: <DatabaseOutlined />,
+          icon: searchIcon,
           text: aiSearchData.event.set_dataset_ids,
         };
       case 'search_knowledge_base':
         return {
-          icon: <SearchOutlined />,
+          icon: searchIcon,
           text: `${aiSearchData.event.search}: ${toolArgs?.query || ''}`,
         };
       case 'validate_error_codes':
         return {
-          icon: <SearchOutlined />,
+          icon: searchIcon,
           text: aiSearchData.event.validate_error_codes,
         };
       default:
@@ -61,12 +73,6 @@ const EventStatus: React.FC<EventStatusProps> = ({
       <Space size="small">
         {eventDisplay.icon}
         <span className={styles.eventText}>{eventDisplay.text}</span>
-        {isLoading && (
-          <Spin
-            indicator={<LoadingOutlined style={{ fontSize: 14 }} spin />}
-            size="small"
-          />
-        )}
       </Space>
     </div>
   );

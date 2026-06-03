@@ -1,0 +1,928 @@
+{
+  "results": [
+    {
+      "hits": [
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes#2201-%E7%89%88%E6%9C%AC-",
+          "content": null,
+          "type": "lvl2",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "2.20.1 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "99-https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes",
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 <mark>S</mark>DK",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["s"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "2.20.1 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes#2202-%E7%89%88%E6%9C%AC-",
+          "content": "发布日期： 2022-06-20\r\n问题修复\r\n修复了在初始化 SDK 前设置音频设备模式不生效的问题\r\n修复了在初始化 SDK 前设置音频设备模式不生效的问题",
+          "type": "content",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "2.20.2 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "98-https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes",
+          "_snippetResult": {
+            "content": {
+              "value": "发布日期： 2022-06-20\r\n问题修复\r\n修复了在初始化 <mark>S</mark>DK 前设置音频设备模式不生 …",
+              "matchLevel": "full"
+            }
+          },
+          "_highlightResult": {
+            "content": {
+              "value": "发布日期： 2022-06-20\r\n问题修复\r\n修复了在初始化 <mark>S</mark>DK 前设置音频设备模式不生效的问题\r\n修复了在初始化 <mark>S</mark>DK 前设置音频设备模式不生效的问题",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": ["s"]
+            },
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 <mark>S</mark>DK",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["s"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "2.20.2 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes#2210-%E7%89%88%E6%9C%AC-",
+          "content": "发布日期： 2022-07-08\r\n新增功能\r\n范围语音支持自定义距离更新频率\nSDK 默认的距离更新频率由 1s 改为 100ms，能够基本满足大部分开发者使用范围语音时的平滑衰减效果，优化了使用范围语音时声音衰减的体验，可以实现更平滑、自然的衰减效果。\n若希望与实际的业务效果进行更优的匹配，可调用 [setPositionUpdateFrequency] 接口自行进行修改频率。\n相关 API 请参考 ZegoRangeAudio &gt; setPositionUpdateFrequency\r\n范围语音支持自定义距离更新频率\r\nSDK 默认的距离更新频率由 1s 改为 100ms，能够基本满足大部分开发者使用范围语音时的平滑衰减效果，优化了使用范围语音时声音衰减的体验，可以实现更平滑、自然的衰减效果。\r\n若希望与实际的业务效果进行更优的匹配，可调用 [setPositionUpdateFrequency] 接口自行进行修改频率。\r\n相关 API 请参考 ZegoRangeAudio &gt; setPositionUpdateFrequency\r\n支持设置低照度增强\n注意：应在调用 [createEngine] 接口创建引擎后，再调用 [setLowlightEnhancement] 接口。\n当推流端用户周围环境较暗、或摄像头设置的帧率较高，导致直播画面比较暗，无法正常显示或识别主体的情况下，可调用 [setLowlightEnhancement] 接口，设置低照度增强，提升视频画面亮度。低照度增强功能包含三种模式：1：不开启低照度增强（默认）、2：开启低照度增强 、3：自动开关低照度增强。\n开发者可以根据业务场景选择不同的低照度增强模式：当希望自行判断是否需要进行低照度增强时，可以通过切模式 1 和 2 来控制；当希望 SDK 自动增强时，可以使用模式 3 ，SDK 将自动判断用户所处的光照环境，开启或关闭低照度增强。\n相关 API 请参考 setLowlightEnhancement\r\n支持设置低照度增强\r\n注意：应在调用 [createEngine] 接口创建引擎后，再调用 [setLowlightEnhancement] 接口。\r\n当推流端用户周围环境较暗、或摄像头设置的帧率较高，导致直播画面比较暗，无法正常显示或识别主体的情况下，可调用 [setLowlightEnhancement] 接口，设置低照度增强，提升视频画面亮度。低照度增强功能包含三种模式：1：不开启低照度增强（默认）、2：开启低照度增强 、3：自动开关低照度增强。\r\n开发者可以根据业务场景选择不同的低照度增强模式：当希望自行判断是否需要进行低照度增强时，可以通过切模式 1 和 2 来控制；当希望 SDK 自动增强时，可以使用模式 3 ，SDK 将自动判断用户所处的光照环境，开启或关闭低照度增强。\r\n相关 API 请参考 setLowlightEnhancement\r\n混流支持设置视频边框为圆角\n在调用 [startMixerTask] 接口混流时，开发者可以通过 [ZegoMixerInput] 类型参数，设置 [cornerRadius]（视频画面圆角半径），将视频边框设置为圆角。[cornerRadius] 的单位为 px，取值不得超过视频画面宽高中较短者的一半。\n相关 API 请参考 startMixerTask\r\n混流支持设置视频边框为圆角\r\n在调用 [startMixerTask] 接口混流时，开发者可以通过 [ZegoMixerInput] 类型参数，设置 [cornerRadius]（视频画面圆角半径），将视频边框设置为圆角。[cornerRadius] 的单位为 px，取值不得超过视频画面宽高中较短者的一半。\r\n相关 API 请参考 startMixerTask\r\n拉流接口增加 CDN Plus 拉流配置项\n注意：若希望通过地区、用户等更多维度，从云端控制拉流方式，请联系 ZEGO 技术支持进行相关配置。\n拉流接口新增 CDN_PLUS 的拉流资源模式（ZegoStreamResourceMode），开发者可按流维度自行开启使用CDN_PLUS 拉流。CDN Plus 拉流是比 CDN 拉流直播质量更高，但是价格接近 CDN 的一种性价比高的拉流方式，详情请参考 CDN Plus 拉流。\n相关 API 请参考 startPlayingStream\r\n拉流接口增加 CDN Plus 拉流配置项\r\n注意：若希望通过地区、用户等更多维度，从云端控制拉流方式，请联系 ZEGO 技术支持进行相关配置。\r\n拉流接口新增 CDN_PLUS 的拉流资源模式（ZegoStreamResourceMode），开发者可按流维度自行开启使用CDN_PLUS 拉流。CDN Plus 拉流是比 CDN 拉流直播质量更高，但是价格接近 CDN 的一种性价比高的拉流方式，详情请参考 CDN Plus 拉流。\r\n相关 API 请参考 startPlayingStream\r\n改进优化\r\n优化开启强制登录鉴权时，Token 异常的相关错误码\n新增 1002074、1002075、1002076、1002077、1002078、1002079、1002080 等错误码。开启强制登录鉴权后，如果 Token 错误时，会返回这些错误码，详情请参考 常见错误码 中的详细解释和处理建议。\r\n优化开启强制登录鉴权时，Token 异常的相关错误码\r\n新增 1002074、1002075、1002076、1002077、1002078、1002079、1002080 等错误码。开启强制登录鉴权后，如果 Token 错误时，会返回这些错误码，详情请参考 常见错误码 中的详细解释和处理建议。\r\n问题修复\r\n修复当关闭自定义视频前处理功能时，会触发多次 [onStop] 回调的问题\n相关 API 请参考 enableCustomVideoProcessing\r\n修复当关闭自定义视频前处理功能时，会触发多次 [onStop] 回调的问题\r\n相关 API 请参考 enableCustomVideoProcessing\r\n修复一个 L3 拉流失败的问题\n修复 2.20.0 ~ 2.20.2 版本 SDK 采用 L3 拉流时，如果拉到的流是 2.15.0 及之前版本 SDK 推送的流，可能会失败的问题。\r\n修复一个 L3 拉流失败的问题\r\n修复 2.20.0 ~ 2.20.2 版本 SDK 采用 L3 拉流时，如果拉到的流是 2.15.0 及之前版本 SDK 推送的流，可能会失败的问题。",
+          "type": "content",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "2.21.0 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "96-https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes",
+          "_snippetResult": {
+            "content": {
+              "value": "… 以通过切模式 1 和 2 来控制；当希望 <mark>S</mark>DK 自动增强时，可以使用模式 3 ，<mark>S</mark>DK 将 …",
+              "matchLevel": "full"
+            }
+          },
+          "_highlightResult": {
+            "content": {
+              "value": "发布日期： 2022-07-08\r\n新增功能\r\n范围语音支持自定义距离更新频率\n<mark>S</mark>DK 默认的距离更新频率由 1s 改为 100ms，能够基本满足大部分开发者使用范围语音时的平滑衰减效果，优化了使用范围语音时声音衰减的体验，可以实现更平滑、自然的衰减效果。\n若希望与实际的业务效果进行更优的匹配，可调用 [<mark>s</mark>etPositionUpdateFrequency] 接口自行进行修改频率。\n相关 API 请参考 ZegoRangeAudio &gt; <mark>s</mark>etPositionUpdateFrequency\r\n范围语音支持自定义距离更新频率\r\n<mark>S</mark>DK 默认的距离更新频率由 1s 改为 100ms，能够基本满足大部分开发者使用范围语音时的平滑衰减效果，优化了使用范围语音时声音衰减的体验，可以实现更平滑、自然的衰减效果。\r\n若希望与实际的业务效果进行更优的匹配，可调用 [<mark>s</mark>etPositionUpdateFrequency] 接口自行进行修改频率。\r\n相关 API 请参考 ZegoRangeAudio &gt; <mark>s</mark>etPositionUpdateFrequency\r\n支持设置低照度增强\n注意：应在调用 [createEngine] 接口创建引擎后，再调用 [<mark>s</mark>etLowlightEnhancement] 接口。\n当推流端用户周围环境较暗、或摄像头设置的帧率较高，导致直播画面比较暗，无法正常显示或识别主体的情况下，可调用 [<mark>s</mark>etLowlightEnhancement] 接口，设置低照度增强，提升视频画面亮度。低照度增强功能包含三种模式：1：不开启低照度增强（默认）、2：开启低照度增强 、3：自动开关低照度增强。\n开发者可以根据业务场景选择不同的低照度增强模式：当希望自行判断是否需要进行低照度增强时，可以通过切模式 1 和 2 来控制；当希望 <mark>S</mark>DK 自动增强时，可以使用模式 3 ，<mark>S</mark>DK 将自动判断用户所处的光照环境，开启或关闭低照度增强。\n相关 API 请参考 <mark>s</mark>etLowlightEnhancement\r\n支持设置低照度增强\r\n注意：应在调用 [createEngine] 接口创建引擎后，再调用 [<mark>s</mark>etLowlightEnhancement] 接口。\r\n当推流端用户周围环境较暗、或摄像头设置的帧率较高，导致直播画面比较暗，无法正常显示或识别主体的情况下，可调用 [<mark>s</mark>etLowlightEnhancement] 接口，设置低照度增强，提升视频画面亮度。低照度增强功能包含三种模式：1：不开启低照度增强（默认）、2：开启低照度增强 、3：自动开关低照度增强。\r\n开发者可以根据业务场景选择不同的低照度增强模式：当希望自行判断是否需要进行低照度增强时，可以通过切模式 1 和 2 来控制；当希望 <mark>S</mark>DK 自动增强时，可以使用模式 3 ，<mark>S</mark>DK 将自动判断用户所处的光照环境，开启或关闭低照度增强。\r\n相关 API 请参考 <mark>s</mark>etLowlightEnhancement\r\n混流支持设置视频边框为圆角\n在调用 [<mark>s</mark>tartMixerTask] 接口混流时，开发者可以通过 [ZegoMixerInput] 类型参数，设置 [cornerRadius]（视频画面圆角半径），将视频边框设置为圆角。[cornerRadius] 的单位为 px，取值不得超过视频画面宽高中较短者的一半。\n相关 API 请参考 <mark>s</mark>tartMixerTask\r\n混流支持设置视频边框为圆角\r\n在调用 [<mark>s</mark>tartMixerTask] 接口混流时，开发者可以通过 [ZegoMixerInput] 类型参数，设置 [cornerRadius]（视频画面圆角半径），将视频边框设置为圆角。[cornerRadius] 的单位为 px，取值不得超过视频画面宽高中较短者的一半。\r\n相关 API 请参考 <mark>s</mark>tartMixerTask\r\n拉流接口增加 CDN Plus 拉流配置项\n注意：若希望通过地区、用户等更多维度，从云端控制拉流方式，请联系 ZEGO 技术支持进行相关配置。\n拉流接口新增 CDN_PLUS 的拉流资源模式（Zego<mark>S</mark>treamResourceMode），开发者可按流维度自行开启使用CDN_PLUS 拉流。CDN Plus 拉流是比 CDN 拉流直播质量更高，但是价格接近 CDN 的一种性价比高的拉流方式，详情请参考 CDN Plus 拉流。\n相关 API 请参考 <mark>s</mark>tartPlaying<mark>S</mark>tream\r\n拉流接口增加 CDN Plus 拉流配置项\r\n注意：若希望通过地区、用户等更多维度，从云端控制拉流方式，请联系 ZEGO 技术支持进行相关配置。\r\n拉流接口新增 CDN_PLUS 的拉流资源模式（Zego<mark>S</mark>treamResourceMode），开发者可按流维度自行开启使用CDN_PLUS 拉流。CDN Plus 拉流是比 CDN 拉流直播质量更高，但是价格接近 CDN 的一种性价比高的拉流方式，详情请参考 CDN Plus 拉流。\r\n相关 API 请参考 <mark>s</mark>tartPlaying<mark>S</mark>tream\r\n改进优化\r\n优化开启强制登录鉴权时，Token 异常的相关错误码\n新增 1002074、1002075、1002076、1002077、1002078、1002079、1002080 等错误码。开启强制登录鉴权后，如果 Token 错误时，会返回这些错误码，详情请参考 常见错误码 中的详细解释和处理建议。\r\n优化开启强制登录鉴权时，Token 异常的相关错误码\r\n新增 1002074、1002075、1002076、1002077、1002078、1002079、1002080 等错误码。开启强制登录鉴权后，如果 Token 错误时，会返回这些错误码，详情请参考 常见错误码 中的详细解释和处理建议。\r\n问题修复\r\n修复当关闭自定义视频前处理功能时，会触发多次 [on<mark>S</mark>top] 回调的问题\n相关 API 请参考 enableCustomVideoProcessing\r\n修复当关闭自定义视频前处理功能时，会触发多次 [on<mark>S</mark>top] 回调的问题\r\n相关 API 请参考 enableCustomVideoProcessing\r\n修复一个 L3 拉流失败的问题\n修复 2.20.0 ~ 2.20.2 版本 <mark>S</mark>DK 采用 L3 拉流时，如果拉到的流是 2.15.0 及之前版本 <mark>S</mark>DK 推送的流，可能会失败的问题。\r\n修复一个 L3 拉流失败的问题\r\n修复 2.20.0 ~ 2.20.2 版本 <mark>S</mark>DK 采用 L3 拉流时，如果拉到的流是 2.15.0 及之前版本 <mark>S</mark>DK 推送的流，可能会失败的问题。",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": ["s"]
+            },
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 <mark>S</mark>DK",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["s"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "2.21.0 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes#2211-%E7%89%88%E6%9C%AC-",
+          "content": "发布日期： 2022-07-14\r\n问题修复\r\n修复纯音频场景发送 SEI 失败的问题\r\n修复纯音频场景发送 SEI 失败的问题",
+          "type": "content",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "2.21.1 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "94-https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes",
+          "_snippetResult": {
+            "content": {
+              "value": "… 修复纯音频场景发送 <mark>S</mark>EI 失败的问题\r\n修复纯音频场景发送 <mark>S</mark>EI 失败的问题",
+              "matchLevel": "full"
+            }
+          },
+          "_highlightResult": {
+            "content": {
+              "value": "发布日期： 2022-07-14\r\n问题修复\r\n修复纯音频场景发送 <mark>S</mark>EI 失败的问题\r\n修复纯音频场景发送 <mark>S</mark>EI 失败的问题",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": ["s"]
+            },
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 <mark>S</mark>DK",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["s"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "2.21.1 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes#2220-%E7%89%88%E6%9C%AC-",
+          "content": "发布日期： 2022-08-09\r\n新增功能\r\n新增支持 SOCKS5 本地代理\n若在内网或防火墙场景下，您可以通过代理服务器与公网交互，并通过 [setEngineConfig] 设置代理服务器地址，保证 ZEGO 音视频云服务正常，目前仅支持 SOCKS5 协议，详情请参考 本地代理。\n相关 API 请参考 setEngineConfig\r\n新增支持 SOCKS5 本地代理\r\n若在内网或防火墙场景下，您可以通过代理服务器与公网交互，并通过 [setEngineConfig] 设置代理服务器地址，保证 ZEGO 音视频云服务正常，目前仅支持 SOCKS5 协议，详情请参考 本地代理。\r\n相关 API 请参考 setEngineConfig\r\n低照度增强功能支持 Metal\n注意：低照度增强功能默认使用 OpenGL，如果您需要指定使用 Metal，请联系 ZEGO 技术支持。\r\n低照度增强功能支持 Metal\r\n注意：低照度增强功能默认使用 OpenGL，如果您需要指定使用 Metal，请联系 ZEGO 技术支持。\r\n自定义视频采集功能支持 H.265 码流\n注意：1. 推荐每 2s 一个 GOP，每个 I 帧必须携带 SPS 和 PPS，且放在最前面。调用 [enableCustomVideoCapture] 时，传递的参数类型必须为 [ZegoVideoBufferTypeEncodedData]。2. 不支持输入 B 帧。\n相关 API 请参考 enableCustomVideoCapture\r\n自定义视频采集功能支持 H.265 码流\r\n注意：1. 推荐每 2s 一个 GOP，每个 I 帧必须携带 SPS 和 PPS，且放在最前面。调用 [enableCustomVideoCapture] 时，传递的参数类型必须为 [ZegoVideoBufferTypeEncodedData]。2. 不支持输入 B 帧。\r\n相关 API 请参考 enableCustomVideoCapture\r\n支持动态修改 AudioDeviceMode\n新增 [setAudioDeviceMode] 接口进行动态修改设备的音频模式，该配置决定设备的音量模式、前处理模式以及 Mic 占用逻辑，您可以根据具体场景进行选择，详情请参考 如何设置音频设备模式 ZegoAudioDeviceMode？\n相关 API 请参考 setAudioDeviceMode\r\n支持动态修改 AudioDeviceMode\r\n新增 [setAudioDeviceMode] 接口进行动态修改设备的音频模式，该配置决定设备的音量模式、前处理模式以及 Mic 占用逻辑，您可以根据具体场景进行选择，详情请参考 如何设置音频设备模式 ZegoAudioDeviceMode？\r\n相关 API 请参考 setAudioDeviceMode\r\n支持回调已对齐人声的媒体播放器的 PCM 数据\n注意：1. 在使用媒体播放器播放伴奏时，需要同时使用 [enableAux] 接口。\r\n支持回调已对齐人声的媒体播放器的 PCM 数据\r\n注意：1. 在使用媒体播放器播放伴奏时，需要同时使用 [enableAux] 接口。\r\n启动 [enableAlignedAudioAuxData] 接口后，媒体播放器的数据不会被推出去。如果在录唱场景下，您需要对伴奏进行调音并对齐人声时，可先通过 [enableAux] 接口将伴奏混入主路，再通过 [enableAlignedAudioAuxData] 接口开启开关，最后通过 [onAlignedAudioAuxData] 回调获取媒体播放器的 PCM 数据，此时媒体播放器及 Mic 采集数据已对齐，且数据帧一一对应。\n相关 API 请参考 enableAlignedAudioAuxData, onAlignedAudioAuxData, enableAux\r\n启动 [enableAlignedAudioAuxData] 接口后，媒体播放器的数据不会被推出去。如果在录唱场景下，您需要对伴奏进行调音并对齐人声时，可先通过 [enableAux] 接口将伴奏混入主路，再通过 [enableAlignedAudioAuxData] 接口开启开关，最后通过 [onAlignedAudioAuxData] 回调获取媒体播放器的 PCM 数据，此时媒体播放器及 Mic 采集数据已对齐，且数据帧一一对应。\r\n相关 API 请参考 enableAlignedAudioAuxData, onAlignedAudioAuxData, enableAux\r\n支持查询当前 SDK 具备的功能特性\n由于 SDK 支持特性裁包，部分特性可能已被裁剪；可以使用此函数快速判断当前 SDK 是否支持指定的功能特性。\n相关 API 请参考 isFeatureSupported\r\n支持查询当前 SDK 具备的功能特性\r\n由于 SDK 支持特性裁包，部分特性可能已被裁剪；可以使用此函数快速判断当前 SDK 是否支持指定的功能特性。\r\n相关 API 请参考 isFeatureSupported\r\n改进优化\r\n优化网络质量回调，感知远端用户异常状态\n当远端用户异常时，[onNetworkQuality] 每 2s 回调一次质量未知状态（ZegoStreamQualityLevelUnknown 状态），当用户该状态持续 8s 后，则认为远端用户已异常断开，此时回调质量异常状态（ZegoStreamQualityLevelDie 状态）。\n相关 API 请参考 onNetworkQuality\r\n优化网络质量回调，感知远端用户异常状态\r\n当远端用户异常时，[onNetworkQuality] 每 2s 回调一次质量未知状态（ZegoStreamQualityLevelUnknown 状态），当用户该状态持续 8s 后，则认为远端用户已异常断开，此时回调质量异常状态（ZegoStreamQualityLevelDie 状态）。\r\n相关 API 请参考 onNetworkQuality\r\n优化网络质量回调，网络质量反馈更灵敏\n推拉流质量回调会每隔 3s 回调一次质量最差的结果，当周期内出现严重的抖动或丢包时，能够立刻反馈出流质量差。\n相关 API 请参考 onPlayerQualityUpdate, onPublisherQualityUpdate, onNetworkQuality\r\n优化网络质量回调，网络质量反馈更灵敏\r\n推拉流质量回调会每隔 3s 回调一次质量最差的结果，当周期内出现严重的抖动或丢包时，能够立刻反馈出流质量差。\r\n相关 API 请参考 onPlayerQualityUpdate, onPublisherQualityUpdate, onNetworkQuality\r\n优化日志上报策略\n优化日志上报策略，提高日志上传效率。\r\n优化日志上报策略\r\n优化日志上报策略，提高日志上传效率。\r\n优化 AGC 的谐波检测算法\nAGC 新改进的谐波检测算法存在崩溃问题，现回退至老版本的谐波检测算法。\r\n优化 AGC 的谐波检测算法\r\nAGC 新改进的谐波检测算法存在崩溃问题，现回退至老版本的谐波检测算法。\r\n问题修复\r\n修复网络模块极低概率崩溃的问题\r\n修复网络模块极低概率崩溃的问题",
+          "type": "content",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "2.22.0 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "92-https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes",
+          "_snippetResult": {
+            "content": {
+              "value": "… 相关 API 请参考 isFeature<mark>S</mark>upported\r\n支持查询当前 <mark>S</mark>DK 具备的功能特性\r\n由于 <mark>S</mark>DK 支持特性 …",
+              "matchLevel": "full"
+            }
+          },
+          "_highlightResult": {
+            "content": {
+              "value": "发布日期： 2022-08-09\r\n新增功能\r\n新增支持 <mark>S</mark>OCKS5 本地代理\n若在内网或防火墙场景下，您可以通过代理服务器与公网交互，并通过 [<mark>s</mark>etEngineConfig] 设置代理服务器地址，保证 ZEGO 音视频云服务正常，目前仅支持 <mark>S</mark>OCKS5 协议，详情请参考 本地代理。\n相关 API 请参考 <mark>s</mark>etEngineConfig\r\n新增支持 <mark>S</mark>OCKS5 本地代理\r\n若在内网或防火墙场景下，您可以通过代理服务器与公网交互，并通过 [<mark>s</mark>etEngineConfig] 设置代理服务器地址，保证 ZEGO 音视频云服务正常，目前仅支持 <mark>S</mark>OCKS5 协议，详情请参考 本地代理。\r\n相关 API 请参考 <mark>s</mark>etEngineConfig\r\n低照度增强功能支持 Metal\n注意：低照度增强功能默认使用 OpenGL，如果您需要指定使用 Metal，请联系 ZEGO 技术支持。\r\n低照度增强功能支持 Metal\r\n注意：低照度增强功能默认使用 OpenGL，如果您需要指定使用 Metal，请联系 ZEGO 技术支持。\r\n自定义视频采集功能支持 H.265 码流\n注意：1. 推荐每 2s 一个 GOP，每个 I 帧必须携带 <mark>S</mark>PS 和 PPS，且放在最前面。调用 [enableCustomVideoCapture] 时，传递的参数类型必须为 [ZegoVideoBufferTypeEncodedData]。2. 不支持输入 B 帧。\n相关 API 请参考 enableCustomVideoCapture\r\n自定义视频采集功能支持 H.265 码流\r\n注意：1. 推荐每 2s 一个 GOP，每个 I 帧必须携带 <mark>S</mark>PS 和 PPS，且放在最前面。调用 [enableCustomVideoCapture] 时，传递的参数类型必须为 [ZegoVideoBufferTypeEncodedData]。2. 不支持输入 B 帧。\r\n相关 API 请参考 enableCustomVideoCapture\r\n支持动态修改 AudioDeviceMode\n新增 [<mark>s</mark>etAudioDeviceMode] 接口进行动态修改设备的音频模式，该配置决定设备的音量模式、前处理模式以及 Mic 占用逻辑，您可以根据具体场景进行选择，详情请参考 如何设置音频设备模式 ZegoAudioDeviceMode？\n相关 API 请参考 <mark>s</mark>etAudioDeviceMode\r\n支持动态修改 AudioDeviceMode\r\n新增 [<mark>s</mark>etAudioDeviceMode] 接口进行动态修改设备的音频模式，该配置决定设备的音量模式、前处理模式以及 Mic 占用逻辑，您可以根据具体场景进行选择，详情请参考 如何设置音频设备模式 ZegoAudioDeviceMode？\r\n相关 API 请参考 <mark>s</mark>etAudioDeviceMode\r\n支持回调已对齐人声的媒体播放器的 PCM 数据\n注意：1. 在使用媒体播放器播放伴奏时，需要同时使用 [enableAux] 接口。\r\n支持回调已对齐人声的媒体播放器的 PCM 数据\r\n注意：1. 在使用媒体播放器播放伴奏时，需要同时使用 [enableAux] 接口。\r\n启动 [enableAlignedAudioAuxData] 接口后，媒体播放器的数据不会被推出去。如果在录唱场景下，您需要对伴奏进行调音并对齐人声时，可先通过 [enableAux] 接口将伴奏混入主路，再通过 [enableAlignedAudioAuxData] 接口开启开关，最后通过 [onAlignedAudioAuxData] 回调获取媒体播放器的 PCM 数据，此时媒体播放器及 Mic 采集数据已对齐，且数据帧一一对应。\n相关 API 请参考 enableAlignedAudioAuxData, onAlignedAudioAuxData, enableAux\r\n启动 [enableAlignedAudioAuxData] 接口后，媒体播放器的数据不会被推出去。如果在录唱场景下，您需要对伴奏进行调音并对齐人声时，可先通过 [enableAux] 接口将伴奏混入主路，再通过 [enableAlignedAudioAuxData] 接口开启开关，最后通过 [onAlignedAudioAuxData] 回调获取媒体播放器的 PCM 数据，此时媒体播放器及 Mic 采集数据已对齐，且数据帧一一对应。\r\n相关 API 请参考 enableAlignedAudioAuxData, onAlignedAudioAuxData, enableAux\r\n支持查询当前 <mark>S</mark>DK 具备的功能特性\n由于 <mark>S</mark>DK 支持特性裁包，部分特性可能已被裁剪；可以使用此函数快速判断当前 <mark>S</mark>DK 是否支持指定的功能特性。\n相关 API 请参考 isFeature<mark>S</mark>upported\r\n支持查询当前 <mark>S</mark>DK 具备的功能特性\r\n由于 <mark>S</mark>DK 支持特性裁包，部分特性可能已被裁剪；可以使用此函数快速判断当前 <mark>S</mark>DK 是否支持指定的功能特性。\r\n相关 API 请参考 isFeature<mark>S</mark>upported\r\n改进优化\r\n优化网络质量回调，感知远端用户异常状态\n当远端用户异常时，[onNetworkQuality] 每 2s 回调一次质量未知状态（Zego<mark>S</mark>treamQualityLevelUnknown 状态），当用户该状态持续 8s 后，则认为远端用户已异常断开，此时回调质量异常状态（Zego<mark>S</mark>treamQualityLevelDie 状态）。\n相关 API 请参考 onNetworkQuality\r\n优化网络质量回调，感知远端用户异常状态\r\n当远端用户异常时，[onNetworkQuality] 每 2s 回调一次质量未知状态（Zego<mark>S</mark>treamQualityLevelUnknown 状态），当用户该状态持续 8s 后，则认为远端用户已异常断开，此时回调质量异常状态（Zego<mark>S</mark>treamQualityLevelDie 状态）。\r\n相关 API 请参考 onNetworkQuality\r\n优化网络质量回调，网络质量反馈更灵敏\n推拉流质量回调会每隔 3s 回调一次质量最差的结果，当周期内出现严重的抖动或丢包时，能够立刻反馈出流质量差。\n相关 API 请参考 onPlayerQualityUpdate, onPublisherQualityUpdate, onNetworkQuality\r\n优化网络质量回调，网络质量反馈更灵敏\r\n推拉流质量回调会每隔 3s 回调一次质量最差的结果，当周期内出现严重的抖动或丢包时，能够立刻反馈出流质量差。\r\n相关 API 请参考 onPlayerQualityUpdate, onPublisherQualityUpdate, onNetworkQuality\r\n优化日志上报策略\n优化日志上报策略，提高日志上传效率。\r\n优化日志上报策略\r\n优化日志上报策略，提高日志上传效率。\r\n优化 AGC 的谐波检测算法\nAGC 新改进的谐波检测算法存在崩溃问题，现回退至老版本的谐波检测算法。\r\n优化 AGC 的谐波检测算法\r\nAGC 新改进的谐波检测算法存在崩溃问题，现回退至老版本的谐波检测算法。\r\n问题修复\r\n修复网络模块极低概率崩溃的问题\r\n修复网络模块极低概率崩溃的问题",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": ["s"]
+            },
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 <mark>S</mark>DK",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["s"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "2.22.0 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes#2230-%E7%89%88%E6%9C%AC-",
+          "content": "发布日期： 2022-09-09\r\n新增功能\r\n移动端视频采集旋转功能新增 3 种模式\n由于移动端摄像头具备角度、分辨率、旋转等特性，开发者需要做许多复杂的适配。\n当前 SDK 对各种配置进行封装，对外提供简单的模式选择，在原有自定义模式基础上，新增固定比例模式、自适应模式及对齐模式，可有效降低开发者接入成本，详情请参考 视频采集旋转。\n相关 API 请参考 setAppOrientationMode\r\n移动端视频采集旋转功能新增 3 种模式\r\n由于移动端摄像头具备角度、分辨率、旋转等特性，开发者需要做许多复杂的适配。\r\n当前 SDK 对各种配置进行封装，对外提供简单的模式选择，在原有自定义模式基础上，新增固定比例模式、自适应模式及对齐模式，可有效降低开发者接入成本，详情请参考 视频采集旋转。\r\n相关 API 请参考 setAppOrientationMode\r\n改进优化\r\nObjective-C SDK 现在同时附带 C++ 接口头文件\n为了方便跨平台框架开发者，我们给 Objective-C SDK 附带了 C++ 接口头文件。由于 C++ 接口是 Header Only 形式，仅使用 Objective-C 接口时不会增大集成 SDK 后的包大小，另外请勿同时使用两套 API 以避免 SDK 生命周期错乱。\r\nObjective-C SDK 现在同时附带 C++ 接口头文件\r\n为了方便跨平台框架开发者，我们给 Objective-C SDK 附带了 C++ 接口头文件。由于 C++ 接口是 Header Only 形式，仅使用 Objective-C 接口时不会增大集成 SDK 后的包大小，另外请勿同时使用两套 API 以避免 SDK 生命周期错乱。\r\n问题修复\r\n修复多房间模式下，在网络切换（Wi-Fi 或蜂窝网络）期间调用 [loginRoom] 可能无回调的问题\r\n修复多房间模式下，在网络切换（Wi-Fi 或蜂窝网络）期间调用 [loginRoom] 可能无回调的问题\r\n修复范围语音功能在退出小队后，在范围距离外还能听到原小队内的人的声音的问题\r\n修复范围语音功能在退出小队后，在范围距离外还能听到原小队内的人的声音的问题",
+          "type": "content",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "2.23.0 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "90-https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes",
+          "_snippetResult": {
+            "content": {
+              "value": "… 请参考 视频采集旋转。\r\n相关 API 请参考 <mark>s</mark>etAppOrientationMode\r\n改进优化\r\nObjective-C <mark>S</mark>DK 现在同时 …",
+              "matchLevel": "full"
+            }
+          },
+          "_highlightResult": {
+            "content": {
+              "value": "发布日期： 2022-09-09\r\n新增功能\r\n移动端视频采集旋转功能新增 3 种模式\n由于移动端摄像头具备角度、分辨率、旋转等特性，开发者需要做许多复杂的适配。\n当前 <mark>S</mark>DK 对各种配置进行封装，对外提供简单的模式选择，在原有自定义模式基础上，新增固定比例模式、自适应模式及对齐模式，可有效降低开发者接入成本，详情请参考 视频采集旋转。\n相关 API 请参考 <mark>s</mark>etAppOrientationMode\r\n移动端视频采集旋转功能新增 3 种模式\r\n由于移动端摄像头具备角度、分辨率、旋转等特性，开发者需要做许多复杂的适配。\r\n当前 <mark>S</mark>DK 对各种配置进行封装，对外提供简单的模式选择，在原有自定义模式基础上，新增固定比例模式、自适应模式及对齐模式，可有效降低开发者接入成本，详情请参考 视频采集旋转。\r\n相关 API 请参考 <mark>s</mark>etAppOrientationMode\r\n改进优化\r\nObjective-C <mark>S</mark>DK 现在同时附带 C++ 接口头文件\n为了方便跨平台框架开发者，我们给 Objective-C <mark>S</mark>DK 附带了 C++ 接口头文件。由于 C++ 接口是 Header Only 形式，仅使用 Objective-C 接口时不会增大集成 <mark>S</mark>DK 后的包大小，另外请勿同时使用两套 API 以避免 <mark>S</mark>DK 生命周期错乱。\r\nObjective-C <mark>S</mark>DK 现在同时附带 C++ 接口头文件\r\n为了方便跨平台框架开发者，我们给 Objective-C <mark>S</mark>DK 附带了 C++ 接口头文件。由于 C++ 接口是 Header Only 形式，仅使用 Objective-C 接口时不会增大集成 <mark>S</mark>DK 后的包大小，另外请勿同时使用两套 API 以避免 <mark>S</mark>DK 生命周期错乱。\r\n问题修复\r\n修复多房间模式下，在网络切换（Wi-Fi 或蜂窝网络）期间调用 [loginRoom] 可能无回调的问题\r\n修复多房间模式下，在网络切换（Wi-Fi 或蜂窝网络）期间调用 [loginRoom] 可能无回调的问题\r\n修复范围语音功能在退出小队后，在范围距离外还能听到原小队内的人的声音的问题\r\n修复范围语音功能在退出小队后，在范围距离外还能听到原小队内的人的声音的问题",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": ["s"]
+            },
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 <mark>S</mark>DK",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["s"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "2.23.0 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/upgrade-guide/upgrade-to-v3#setdebugverbose",
+          "content": null,
+          "type": "lvl3",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK > 升级指南",
+            "lvl1": "3.0.0及以上版本升级指南",
+            "lvl2": "变更示例代码",
+            "lvl3": "setDebugVerbose",
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "9-https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/upgrade-guide/upgrade-to-v3",
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 <mark>S</mark>DK > 升级指南",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["s"]
+              },
+              "lvl1": {
+                "value": "3.0.0及以上版本升级指南",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "变更示例代码",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl3": {
+                "value": "<mark>s</mark>etDebugVerbose",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["s"]
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes#3210-%E7%89%88%E6%9C%AC-",
+          "content": null,
+          "type": "lvl2",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "3.21.0 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "9-https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes",
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 <mark>S</mark>DK",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["s"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "3.21.0 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/error-code#1004xxx-%E6%8B%89%E6%B5%81%E7%9B%B8%E5%85%B3%E7%9A%84%E9%94%99%E8%AF%AF%E7%A0%81",
+          "content": null,
+          "type": "lvl2",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "常见错误码",
+            "lvl2": "1004xxx 拉流相关的错误码",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "9-https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/error-code",
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 <mark>S</mark>DK",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["s"]
+              },
+              "lvl1": {
+                "value": "常见错误码",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "1004xxx 拉流相关的错误码",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/download-demo#%E8%AF%AD%E8%81%8A%E6%88%BF",
+          "content": "语聊房是指在线语音连麦虚拟房间，每个房间设有 4-8 个麦位，主播在麦上聊天，同时向房间内其他用户推流，其他听众可以进入房间收听。主播也可邀请听众上麦互动，不同房型的麦位数量和房间内最大听众数量不同。\r\n场景介绍\r\nApp 下载",
+          "type": "content",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "体验 App",
+            "lvl2": "语聊房",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "9-https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/download-demo",
+          "_snippetResult": {
+            "content": {
+              "value": "语聊房是指在线语音连麦虚拟房间，每个房间设有 4-8 个麦位，主播在麦 …",
+              "matchLevel": "none"
+            }
+          },
+          "_highlightResult": {
+            "content": {
+              "value": "语聊房是指在线语音连麦虚拟房间，每个房间设有 4-8 个麦位，主播在麦上聊天，同时向房间内其他用户推流，其他听众可以进入房间收听。主播也可邀请听众上麦互动，不同房型的麦位数量和房间内最大听众数量不同。\r\n场景介绍\r\nApp 下载",
+              "matchLevel": "none",
+              "matchedWords": []
+            },
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 <mark>S</mark>DK",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["s"]
+              },
+              "lvl1": {
+                "value": "体验 App",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "语聊房",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes#300-%E7%89%88%E6%9C%AC-",
+          "content": "发布日期： 2022-10-28\r\n本次更新包含不兼容改动，详情请参考 v3.0.0 升级指南。\r\n新增功能\r\n新增视频超分辨率能力\n注意：如需使用该功能，请联系 ZEGO 技术支持。\n新增 [enableVideoSuperResolution] 接口支持对某一条视频流进行超分辨率处理，从而得到更好的画质。超分辨率，简称超分，是客户端对拉取的视频流的宽和高进行实时倍增处理的技术，例如，从 640x360 超分为 1280x720，详情请参考 超分辨率。\n相关 API 请参考 enableVideoSuperResolution, onPlayerVideoSuperResolutionUpdate\r\n新增视频超分辨率能力\r\n注意：如需使用该功能，请联系 ZEGO 技术支持。\r\n新增 [enableVideoSuperResolution] 接口支持对某一条视频流进行超分辨率处理，从而得到更好的画质。超分辨率，简称超分，是客户端对拉取的视频流的宽和高进行实时倍增处理的技术，例如，从 640x360 超分为 1280x720，详情请参考 超分辨率。\r\n相关 API 请参考 enableVideoSuperResolution, onPlayerVideoSuperResolutionUpdate\r\n场景化 AI 降噪新增在音乐场景下降噪的能力\n注意：如需使用该功能，请联系 ZEGO 技术支持。\n场景化 AI 降噪功能，在之前针对所有非人声进行降噪的基础上，新增支持在音乐场景下的降噪能力，通过识别音乐，智能调整降噪效果还原音乐音质。SDK 会实时对麦克风输入内容进行音乐检测，在声卡、弹唱或近场音乐场景下，自动调整降噪等级，保证音乐的高保真音质，详情请参考 场景化 AI 降噪。\r\n场景化 AI 降噪新增在音乐场景下降噪的能力\r\n注意：如需使用该功能，请联系 ZEGO 技术支持。\r\n场景化 AI 降噪功能，在之前针对所有非人声进行降噪的基础上，新增支持在音乐场景下的降噪能力，通过识别音乐，智能调整降噪效果还原音乐音质。SDK 会实时对麦克风输入内容进行音乐检测，在声卡、弹唱或近场音乐场景下，自动调整降噪等级，保证音乐的高保真音质，详情请参考 场景化 AI 降噪。\r\n新增多人状态实时同步功能\n注意：如需使用该功能，请联系 ZEGO 技术支持。\nSDK 面向虚拟场景提供有序、高频、低延时、大规模的状态同步云服务，帮助客户快速实现玩家位置、动作、形象等实时信息同步能力，同时单场景中支持 1 万个用户同时在线。\n大型虚拟世界中，用户一般不需要感知较远的场景或远端用户，ZEGO 提供 AOI（Area Of Interest）能力，减免用户可见范围外的信息，极大减少客户流量成本以及用户端流量及性能消耗，详情请参考 多人状态实时同步。\n相关 API 请参考 createRangeScene\r\n新增多人状态实时同步功能\r\n注意：如需使用该功能，请联系 ZEGO 技术支持。\r\nSDK 面向虚拟场景提供有序、高频、低延时、大规模的状态同步云服务，帮助客户快速实现玩家位置、动作、形象等实时信息同步能力，同时单场景中支持 1 万个用户同时在线。\r\n大型虚拟世界中，用户一般不需要感知较远的场景或远端用户，ZEGO 提供 AOI（Area Of Interest）能力，减免用户可见范围外的信息，极大减少客户流量成本以及用户端流量及性能消耗，详情请参考 多人状态实时同步。\r\n相关 API 请参考 createRangeScene\r\n新增万人范围音视频\n注意：如需使用该功能，请联系 ZEGO 技术支持。\n万人范围音视频功能支持超大规模的范围音视频互动，云端服务基于用户位置动态选路，在大型虚拟场景中保持沉浸式互动体验的同时大量减少客户音视频成本。\n依赖多人状态实时同步服务，根据云端用户位置自动拉取收听范用内的远端音视频并提供空间音效。单场景内最大支持 1 万用户同时开启麦克风及摄像头，用户默认拉取距离最近的 12 路（可配置）音视频，详情请参考 万人范围音视频。\n相关 API 请参考 createRangeScene\r\n新增万人范围音视频\r\n注意：如需使用该功能，请联系 ZEGO 技术支持。\r\n万人范围音视频功能支持超大规模的范围音视频互动，云端服务基于用户位置动态选路，在大型虚拟场景中保持沉浸式互动体验的同时大量减少客户音视频成本。\r\n依赖多人状态实时同步服务，根据云端用户位置自动拉取收听范用内的远端音视频并提供空间音效。单场景内最大支持 1 万用户同时开启麦克风及摄像头，用户默认拉取距离最近的 12 路（可配置）音视频，详情请参考 万人范围音视频。\r\n相关 API 请参考 createRangeScene\r\n新增房间维度的场景 Scenario\n为方便开发者快速接入，降低开发者接入门槛，SDK 提供多种预设场景。开发者可根据所需场景，选择对应的房间模式 [ZegoScenario]，SDK 将自动应用适合该场景的音视频编解码器、音视频参数、流控策略等配置，从而快速实现该场景下的最佳效果。\n当前支持场景包括秀场直播、KTV、标准 1v1 音视频通话、高画质 1v1 音视频通话、标准语聊房、高音质语聊房，详情请参考 场景化音视频配置。\n相关 API 请参考 setRoomScenario\r\n新增房间维度的场景 Scenario\r\n为方便开发者快速接入，降低开发者接入门槛，SDK 提供多种预设场景。开发者可根据所需场景，选择对应的房间模式 [ZegoScenario]，SDK 将自动应用适合该场景的音视频编解码器、音视频参数、流控策略等配置，从而快速实现该场景下的最佳效果。\r\n当前支持场景包括秀场直播、KTV、标准 1v1 音视频通话、高画质 1v1 音视频通话、标准语聊房、高音质语聊房，详情请参考 场景化音视频配置。\r\n相关 API 请参考 setRoomScenario\r\n支持获取当前设备指定视频编解码器的编解码能力支持情况\nSDK 支持获取当前设备指定视频编解码器的编解码模式的支持情况，从而更好的帮助开发者选择使用的编码器及编码模式并获得更好的效果。\n通过 [isVideoEncoderSupported] 接口，可获取当前编码器的硬件或软件编码支持情况。\n通过 [isVideoDecoderSupported] 接口。可获取当前解码器的硬件或软件解码支持情况。以上两个接口均包含三个枚举值：支持硬件或软件，支持硬件，支持软件。\n以 Android 端为例，isVideoEncoderSupported(ZegoVideoCodecID.H265, ZegoVideoCodecBackend.HARDWARE)，即表示检查当前设备是否支持 H265 的硬编，若支持，则返回 true。\n相关 API 请参考 isVideoEncoderSupported, isVideoDecoderSupported\r\n支持获取当前设备指定视频编解码器的编解码能力支持情况\r\nSDK 支持获取当前设备指定视频编解码器的编解码模式的支持情况，从而更好的帮助开发者选择使用的编码器及编码模式并获得更好的效果。\r\n通过 [isVideoEncoderSupported] 接口，可获取当前编码器的硬件或软件编码支持情况。\r\n通过 [isVideoDecoderSupported] 接口。可获取当前解码器的硬件或软件解码支持情况。以上两个接口均包含三个枚举值：支持硬件或软件，支持硬件，支持软件。\r\n以 Android 端为例，isVideoEncoderSupported(ZegoVideoCodecID.H265, ZegoVideoCodecBackend.HARDWARE)，即表示检查当前设备是否支持 H265 的硬编，若支持，则返回 true。\r\n相关 API 请参考 isVideoEncoderSupported, isVideoDecoderSupported\r\n新增获取 GPS 信息开关接口\n注意：该功能默认开启，如需关闭该功能，请联系 ZEGO 技术支持。\n在 App 有获取地理位置权限的情况下，开发者可以选择是否允许 ZEGO SDK 获取系统缓存的 GPS 信息，默认进行获取。当开发者希望关闭该功能时，需要联系 ZEGO 技术支持进行设置。\r\n新增获取 GPS 信息开关接口\r\n注意：该功能默认开启，如需关闭该功能，请联系 ZEGO 技术支持。\r\n在 App 有获取地理位置权限的情况下，开发者可以选择是否允许 ZEGO SDK 获取系统缓存的 GPS 信息，默认进行获取。当开发者希望关闭该功能时，需要联系 ZEGO 技术支持进行设置。\r\n新增基于摄像头打开后的视频首帧回调\n支持每次开启远端摄像头后，SDK 拉流并渲染完第一帧远端摄像头视频数据后进行回调，开发者可利用该回调统计首帧耗时，或更新播放流的 UI 组件。\n相关 API 请参考 onPlayerRenderCameraVideoFirstFrame\r\n新增基于摄像头打开后的视频首帧回调\r\n支持每次开启远端摄像头后，SDK 拉流并渲染完第一帧远端摄像头视频数据后进行回调，开发者可利用该回调统计首帧耗时，或更新播放流的 UI 组件。\r\n相关 API 请参考 onPlayerRenderCameraVideoFirstFrame\r\n改进优化\r\n针对 1v1 纯 RTC 通话场景进行优化\n注意：如需使用该功能，请联系 ZEGO 技术支持。\n针对 1v1 通话场景进行了优化，适用在纯 RTC 场景下使用。\r\n针对 1v1 纯 RTC 通话场景进行优化\r\n注意：如需使用该功能，请联系 ZEGO 技术支持。\r\n针对 1v1 通话场景进行了优化，适用在纯 RTC 场景下使用。\r\n优化空间音频功能\n对空间音频能力进行了优化，用户可以区分前后音源，从而达到更好的沉浸感。\r\n优化空间音频功能\r\n对空间音频能力进行了优化，用户可以区分前后音源，从而达到更好的沉浸感。\r\n优化采集音量过大会造成破音的情况\n优化 AGC 自动增益控制算法，当采集音量过大时，不会造成破音情况。\r\n优化采集音量过大会造成破音的情况\r\n优化 AGC 自动增益控制算法，当采集音量过大时，不会造成破音情况。\r\n优化极端弱网下的音视频体验\nSDK 优化了内部策略，在音视频的场景下，支持最小下行 50 kbps 拉流不卡顿，保障更好的极端弱网下的体验。\r\n优化极端弱网下的音视频体验\r\nSDK 优化了内部策略，在音视频的场景下，支持最小下行 50 kbps 拉流不卡顿，保障更好的极端弱网下的体验。\r\n问题修复\r\n修复了 Mac M1 芯片电脑在部分系统版本下，Web 端开启硬件编码推流，并采用多 SPS（Sequence Paramater Set，又称序列参数集）、PPS（Picture Paramater Set，又称图像参数集）的输出形式 ，Native SDK 拉流会出现解码花屏的问题\r\n修复了 Mac M1 芯片电脑在部分系统版本下，Web 端开启硬件编码推流，并采用多 SPS（Sequence Paramater Set，又称序列参数集）、PPS（Picture Paramater Set，又称图像参数集）的输出形式 ，Native SDK 拉流会出现解码花屏的问题\r\n修复了网络状态从有网络切换到无网络时，当前正在上传的日志有可能出现崩溃的问题\r\n修复了网络状态从有网络切换到无网络时，当前正在上传的日志有可能出现崩溃的问题\r\n修复了 GetCallbackController 非线程安全问题​\r\n修复了 GetCallbackController 非线程安全问题​\r\n修复了 SDK 在没有 View 的情况下，没有触发 [onPlayerRenderVideoFirstFrame] 的问题\r\n修复了 SDK 在没有 View 的情况下，没有触发 [onPlayerRenderVideoFirstFrame] 的问题\r\n废弃删除\r\n废弃了 [ZegoScenario] 的三种旧版本场景\n废弃 [ZegoScenario] 场景枚举中的 [General]，[Communication]， [Live] 三种场景，详情请参考 场景化音视频配置。\r\n废弃了 [ZegoScenario] 的三种旧版本场景\r\n废弃 [ZegoScenario] 场景枚举中的 [General]，[Communication]， [Live] 三种场景，详情请参考 场景化音视频配置。\r\n废弃了对 bitcode 的支持\n从 3.0.0 版本开始，iOS SDK 不再支持 bitcode，请参考 Xcode 14 Release Notes 中关于废弃 bitcode 的说明。\r\n废弃了对 bitcode 的支持\r\n从 3.0.0 版本开始，iOS SDK 不再支持 bitcode，请参考 Xcode 14 Release Notes 中关于废弃 bitcode 的说明。\r\n删除了 [setDebugVerbose]、[setPlayStreamVideoLayer]、[enableAudioDataCallback] 等接口，详情请参考 v3.0.0升级指南。\r\n删除了 [setDebugVerbose]、[setPlayStreamVideoLayer]、[enableAudioDataCallback] 等接口，详情请参考 v3.0.0升级指南。",
+          "type": "content",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "3.0.0 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "88-https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes",
+          "_snippetResult": {
+            "content": {
+              "value": "… 多 <mark>S</mark>PS（<mark>S</mark>equence Paramater <mark>S</mark>et，又称序列参数集）、PPS（Picture Paramater <mark>S</mark>et，又称图像参数集）的输出形式 ，Native <mark>S</mark>DK …",
+              "matchLevel": "full"
+            }
+          },
+          "_highlightResult": {
+            "content": {
+              "value": "发布日期： 2022-10-28\r\n本次更新包含不兼容改动，详情请参考 v3.0.0 升级指南。\r\n新增功能\r\n新增视频超分辨率能力\n注意：如需使用该功能，请联系 ZEGO 技术支持。\n新增 [enableVideo<mark>S</mark>uperResolution] 接口支持对某一条视频流进行超分辨率处理，从而得到更好的画质。超分辨率，简称超分，是客户端对拉取的视频流的宽和高进行实时倍增处理的技术，例如，从 640x360 超分为 1280x720，详情请参考 超分辨率。\n相关 API 请参考 enableVideo<mark>S</mark>uperResolution, onPlayerVideo<mark>S</mark>uperResolutionUpdate\r\n新增视频超分辨率能力\r\n注意：如需使用该功能，请联系 ZEGO 技术支持。\r\n新增 [enableVideo<mark>S</mark>uperResolution] 接口支持对某一条视频流进行超分辨率处理，从而得到更好的画质。超分辨率，简称超分，是客户端对拉取的视频流的宽和高进行实时倍增处理的技术，例如，从 640x360 超分为 1280x720，详情请参考 超分辨率。\r\n相关 API 请参考 enableVideo<mark>S</mark>uperResolution, onPlayerVideo<mark>S</mark>uperResolutionUpdate\r\n场景化 AI 降噪新增在音乐场景下降噪的能力\n注意：如需使用该功能，请联系 ZEGO 技术支持。\n场景化 AI 降噪功能，在之前针对所有非人声进行降噪的基础上，新增支持在音乐场景下的降噪能力，通过识别音乐，智能调整降噪效果还原音乐音质。<mark>S</mark>DK 会实时对麦克风输入内容进行音乐检测，在声卡、弹唱或近场音乐场景下，自动调整降噪等级，保证音乐的高保真音质，详情请参考 场景化 AI 降噪。\r\n场景化 AI 降噪新增在音乐场景下降噪的能力\r\n注意：如需使用该功能，请联系 ZEGO 技术支持。\r\n场景化 AI 降噪功能，在之前针对所有非人声进行降噪的基础上，新增支持在音乐场景下的降噪能力，通过识别音乐，智能调整降噪效果还原音乐音质。<mark>S</mark>DK 会实时对麦克风输入内容进行音乐检测，在声卡、弹唱或近场音乐场景下，自动调整降噪等级，保证音乐的高保真音质，详情请参考 场景化 AI 降噪。\r\n新增多人状态实时同步功能\n注意：如需使用该功能，请联系 ZEGO 技术支持。\n<mark>S</mark>DK 面向虚拟场景提供有序、高频、低延时、大规模的状态同步云服务，帮助客户快速实现玩家位置、动作、形象等实时信息同步能力，同时单场景中支持 1 万个用户同时在线。\n大型虚拟世界中，用户一般不需要感知较远的场景或远端用户，ZEGO 提供 AOI（Area Of Interest）能力，减免用户可见范围外的信息，极大减少客户流量成本以及用户端流量及性能消耗，详情请参考 多人状态实时同步。\n相关 API 请参考 createRange<mark>S</mark>cene\r\n新增多人状态实时同步功能\r\n注意：如需使用该功能，请联系 ZEGO 技术支持。\r\n<mark>S</mark>DK 面向虚拟场景提供有序、高频、低延时、大规模的状态同步云服务，帮助客户快速实现玩家位置、动作、形象等实时信息同步能力，同时单场景中支持 1 万个用户同时在线。\r\n大型虚拟世界中，用户一般不需要感知较远的场景或远端用户，ZEGO 提供 AOI（Area Of Interest）能力，减免用户可见范围外的信息，极大减少客户流量成本以及用户端流量及性能消耗，详情请参考 多人状态实时同步。\r\n相关 API 请参考 createRange<mark>S</mark>cene\r\n新增万人范围音视频\n注意：如需使用该功能，请联系 ZEGO 技术支持。\n万人范围音视频功能支持超大规模的范围音视频互动，云端服务基于用户位置动态选路，在大型虚拟场景中保持沉浸式互动体验的同时大量减少客户音视频成本。\n依赖多人状态实时同步服务，根据云端用户位置自动拉取收听范用内的远端音视频并提供空间音效。单场景内最大支持 1 万用户同时开启麦克风及摄像头，用户默认拉取距离最近的 12 路（可配置）音视频，详情请参考 万人范围音视频。\n相关 API 请参考 createRange<mark>S</mark>cene\r\n新增万人范围音视频\r\n注意：如需使用该功能，请联系 ZEGO 技术支持。\r\n万人范围音视频功能支持超大规模的范围音视频互动，云端服务基于用户位置动态选路，在大型虚拟场景中保持沉浸式互动体验的同时大量减少客户音视频成本。\r\n依赖多人状态实时同步服务，根据云端用户位置自动拉取收听范用内的远端音视频并提供空间音效。单场景内最大支持 1 万用户同时开启麦克风及摄像头，用户默认拉取距离最近的 12 路（可配置）音视频，详情请参考 万人范围音视频。\r\n相关 API 请参考 createRange<mark>S</mark>cene\r\n新增房间维度的场景 <mark>S</mark>cenario\n为方便开发者快速接入，降低开发者接入门槛，<mark>S</mark>DK 提供多种预设场景。开发者可根据所需场景，选择对应的房间模式 [Zego<mark>S</mark>cenario]，<mark>S</mark>DK 将自动应用适合该场景的音视频编解码器、音视频参数、流控策略等配置，从而快速实现该场景下的最佳效果。\n当前支持场景包括秀场直播、KTV、标准 1v1 音视频通话、高画质 1v1 音视频通话、标准语聊房、高音质语聊房，详情请参考 场景化音视频配置。\n相关 API 请参考 <mark>s</mark>etRoom<mark>S</mark>cenario\r\n新增房间维度的场景 <mark>S</mark>cenario\r\n为方便开发者快速接入，降低开发者接入门槛，<mark>S</mark>DK 提供多种预设场景。开发者可根据所需场景，选择对应的房间模式 [Zego<mark>S</mark>cenario]，<mark>S</mark>DK 将自动应用适合该场景的音视频编解码器、音视频参数、流控策略等配置，从而快速实现该场景下的最佳效果。\r\n当前支持场景包括秀场直播、KTV、标准 1v1 音视频通话、高画质 1v1 音视频通话、标准语聊房、高音质语聊房，详情请参考 场景化音视频配置。\r\n相关 API 请参考 <mark>s</mark>etRoom<mark>S</mark>cenario\r\n支持获取当前设备指定视频编解码器的编解码能力支持情况\n<mark>S</mark>DK 支持获取当前设备指定视频编解码器的编解码模式的支持情况，从而更好的帮助开发者选择使用的编码器及编码模式并获得更好的效果。\n通过 [isVideoEncoder<mark>S</mark>upported] 接口，可获取当前编码器的硬件或软件编码支持情况。\n通过 [isVideoDecoder<mark>S</mark>upported] 接口。可获取当前解码器的硬件或软件解码支持情况。以上两个接口均包含三个枚举值：支持硬件或软件，支持硬件，支持软件。\n以 Android 端为例，isVideoEncoder<mark>S</mark>upported(ZegoVideoCodecID.H265, ZegoVideoCodecBackend.HARDWARE)，即表示检查当前设备是否支持 H265 的硬编，若支持，则返回 true。\n相关 API 请参考 isVideoEncoder<mark>S</mark>upported, isVideoDecoder<mark>S</mark>upported\r\n支持获取当前设备指定视频编解码器的编解码能力支持情况\r\n<mark>S</mark>DK 支持获取当前设备指定视频编解码器的编解码模式的支持情况，从而更好的帮助开发者选择使用的编码器及编码模式并获得更好的效果。\r\n通过 [isVideoEncoder<mark>S</mark>upported] 接口，可获取当前编码器的硬件或软件编码支持情况。\r\n通过 [isVideoDecoder<mark>S</mark>upported] 接口。可获取当前解码器的硬件或软件解码支持情况。以上两个接口均包含三个枚举值：支持硬件或软件，支持硬件，支持软件。\r\n以 Android 端为例，isVideoEncoder<mark>S</mark>upported(ZegoVideoCodecID.H265, ZegoVideoCodecBackend.HARDWARE)，即表示检查当前设备是否支持 H265 的硬编，若支持，则返回 true。\r\n相关 API 请参考 isVideoEncoder<mark>S</mark>upported, isVideoDecoder<mark>S</mark>upported\r\n新增获取 GPS 信息开关接口\n注意：该功能默认开启，如需关闭该功能，请联系 ZEGO 技术支持。\n在 App 有获取地理位置权限的情况下，开发者可以选择是否允许 ZEGO <mark>S</mark>DK 获取系统缓存的 GPS 信息，默认进行获取。当开发者希望关闭该功能时，需要联系 ZEGO 技术支持进行设置。\r\n新增获取 GPS 信息开关接口\r\n注意：该功能默认开启，如需关闭该功能，请联系 ZEGO 技术支持。\r\n在 App 有获取地理位置权限的情况下，开发者可以选择是否允许 ZEGO <mark>S</mark>DK 获取系统缓存的 GPS 信息，默认进行获取。当开发者希望关闭该功能时，需要联系 ZEGO 技术支持进行设置。\r\n新增基于摄像头打开后的视频首帧回调\n支持每次开启远端摄像头后，<mark>S</mark>DK 拉流并渲染完第一帧远端摄像头视频数据后进行回调，开发者可利用该回调统计首帧耗时，或更新播放流的 UI 组件。\n相关 API 请参考 onPlayerRenderCameraVideoFirstFrame\r\n新增基于摄像头打开后的视频首帧回调\r\n支持每次开启远端摄像头后，<mark>S</mark>DK 拉流并渲染完第一帧远端摄像头视频数据后进行回调，开发者可利用该回调统计首帧耗时，或更新播放流的 UI 组件。\r\n相关 API 请参考 onPlayerRenderCameraVideoFirstFrame\r\n改进优化\r\n针对 1v1 纯 RTC 通话场景进行优化\n注意：如需使用该功能，请联系 ZEGO 技术支持。\n针对 1v1 通话场景进行了优化，适用在纯 RTC 场景下使用。\r\n针对 1v1 纯 RTC 通话场景进行优化\r\n注意：如需使用该功能，请联系 ZEGO 技术支持。\r\n针对 1v1 通话场景进行了优化，适用在纯 RTC 场景下使用。\r\n优化空间音频功能\n对空间音频能力进行了优化，用户可以区分前后音源，从而达到更好的沉浸感。\r\n优化空间音频功能\r\n对空间音频能力进行了优化，用户可以区分前后音源，从而达到更好的沉浸感。\r\n优化采集音量过大会造成破音的情况\n优化 AGC 自动增益控制算法，当采集音量过大时，不会造成破音情况。\r\n优化采集音量过大会造成破音的情况\r\n优化 AGC 自动增益控制算法，当采集音量过大时，不会造成破音情况。\r\n优化极端弱网下的音视频体验\n<mark>S</mark>DK 优化了内部策略，在音视频的场景下，支持最小下行 50 kbps 拉流不卡顿，保障更好的极端弱网下的体验。\r\n优化极端弱网下的音视频体验\r\n<mark>S</mark>DK 优化了内部策略，在音视频的场景下，支持最小下行 50 kbps 拉流不卡顿，保障更好的极端弱网下的体验。\r\n问题修复\r\n修复了 Mac M1 芯片电脑在部分系统版本下，Web 端开启硬件编码推流，并采用多 <mark>S</mark>PS（<mark>S</mark>equence Paramater <mark>S</mark>et，又称序列参数集）、PPS（Picture Paramater <mark>S</mark>et，又称图像参数集）的输出形式 ，Native <mark>S</mark>DK 拉流会出现解码花屏的问题\r\n修复了 Mac M1 芯片电脑在部分系统版本下，Web 端开启硬件编码推流，并采用多 <mark>S</mark>PS（<mark>S</mark>equence Paramater <mark>S</mark>et，又称序列参数集）、PPS（Picture Paramater <mark>S</mark>et，又称图像参数集）的输出形式 ，Native <mark>S</mark>DK 拉流会出现解码花屏的问题\r\n修复了网络状态从有网络切换到无网络时，当前正在上传的日志有可能出现崩溃的问题\r\n修复了网络状态从有网络切换到无网络时，当前正在上传的日志有可能出现崩溃的问题\r\n修复了 GetCallbackController 非线程安全问题​\r\n修复了 GetCallbackController 非线程安全问题​\r\n修复了 <mark>S</mark>DK 在没有 View 的情况下，没有触发 [onPlayerRenderVideoFirstFrame] 的问题\r\n修复了 <mark>S</mark>DK 在没有 View 的情况下，没有触发 [onPlayerRenderVideoFirstFrame] 的问题\r\n废弃删除\r\n废弃了 [Zego<mark>S</mark>cenario] 的三种旧版本场景\n废弃 [Zego<mark>S</mark>cenario] 场景枚举中的 [General]，[Communication]， [Live] 三种场景，详情请参考 场景化音视频配置。\r\n废弃了 [Zego<mark>S</mark>cenario] 的三种旧版本场景\r\n废弃 [Zego<mark>S</mark>cenario] 场景枚举中的 [General]，[Communication]， [Live] 三种场景，详情请参考 场景化音视频配置。\r\n废弃了对 bitcode 的支持\n从 3.0.0 版本开始，iOS <mark>S</mark>DK 不再支持 bitcode，请参考 Xcode 14 Release Notes 中关于废弃 bitcode 的说明。\r\n废弃了对 bitcode 的支持\r\n从 3.0.0 版本开始，iOS <mark>S</mark>DK 不再支持 bitcode，请参考 Xcode 14 Release Notes 中关于废弃 bitcode 的说明。\r\n删除了 [<mark>s</mark>etDebugVerbose]、[<mark>s</mark>etPlay<mark>S</mark>treamVideoLayer]、[enableAudioDataCallback] 等接口，详情请参考 v3.0.0升级指南。\r\n删除了 [<mark>s</mark>etDebugVerbose]、[<mark>s</mark>etPlay<mark>S</mark>treamVideoLayer]、[enableAudioDataCallback] 等接口，详情请参考 v3.0.0升级指南。",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": ["s"]
+            },
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 <mark>S</mark>DK",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["s"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "3.0.0 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes#301-%E7%89%88%E6%9C%AC-",
+          "content": "发布日期： 2022-10-31\r\n问题修复\r\n修复 iOS 硬件解码失效的问题\n相关 API 请参考 enableHardwareDecoder\r\n修复 iOS 硬件解码失效的问题\r\n相关 API 请参考 enableHardwareDecoder",
+          "type": "content",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "3.0.1 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "86-https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes",
+          "_snippetResult": {
+            "content": {
+              "value": "发布日期： 2022-10-31\r\n问题修复\r\n修复 iOS 硬件解码失效的问题\n相关 API 请参考 enable …",
+              "matchLevel": "none"
+            }
+          },
+          "_highlightResult": {
+            "content": {
+              "value": "发布日期： 2022-10-31\r\n问题修复\r\n修复 iOS 硬件解码失效的问题\n相关 API 请参考 enableHardwareDecoder\r\n修复 iOS 硬件解码失效的问题\r\n相关 API 请参考 enableHardwareDecoder",
+              "matchLevel": "none",
+              "matchedWords": []
+            },
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 <mark>S</mark>DK",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["s"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "3.0.1 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes#302-%E7%89%88%E6%9C%AC-",
+          "content": "发布日期： 2022-11-15\r\n问题修复\r\n修复多房间模式下，停止推流时，房间内其他人收不到流删除通知的问题\r\n修复多房间模式下，停止推流时，房间内其他人收不到流删除通知的问题",
+          "type": "content",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "3.0.2 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "84-https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes",
+          "_snippetResult": {
+            "content": {
+              "value": "发布日期： 2022-11-15\r\n问题修复\r\n修复多房间模式下，停止推流时，房间内其他人 …",
+              "matchLevel": "none"
+            }
+          },
+          "_highlightResult": {
+            "content": {
+              "value": "发布日期： 2022-11-15\r\n问题修复\r\n修复多房间模式下，停止推流时，房间内其他人收不到流删除通知的问题\r\n修复多房间模式下，停止推流时，房间内其他人收不到流删除通知的问题",
+              "matchLevel": "none",
+              "matchedWords": []
+            },
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 <mark>S</mark>DK",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["s"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "3.0.2 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes#303-%E7%89%88%E6%9C%AC-",
+          "content": "发布日期： 2022-11-25\r\n问题修复\r\n修复 iOS、macOS、Windows 平台硬件解码可能会崩溃的问题\r\n修复 iOS、macOS、Windows 平台硬件解码可能会崩溃的问题",
+          "type": "content",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "3.0.3 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "82-https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes",
+          "_snippetResult": {
+            "content": {
+              "value": "发布日期： 2022-11-25\r\n问题修复\r\n修复 iOS、macOS、Windows 平台硬件解码可能会崩溃的问 …",
+              "matchLevel": "none"
+            }
+          },
+          "_highlightResult": {
+            "content": {
+              "value": "发布日期： 2022-11-25\r\n问题修复\r\n修复 iOS、macOS、Windows 平台硬件解码可能会崩溃的问题\r\n修复 iOS、macOS、Windows 平台硬件解码可能会崩溃的问题",
+              "matchLevel": "none",
+              "matchedWords": []
+            },
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 <mark>S</mark>DK",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["s"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "3.0.3 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes#310-%E7%89%88%E6%9C%AC-",
+          "content": "发布日期： 2022-12-09\r\n新增功能\r\n“多人实时状态同步”功能支持物品状态同步与物品锁能力\n注意：如需使用该功能，请联系 ZEGO 技术支持。\n通过该能力可快速实现移动及放置物品、抢占物品等互动玩法。以“抢椅子”玩法为例：\r\n“多人实时状态同步”功能支持物品状态同步与物品锁能力\r\n注意：如需使用该功能，请联系 ZEGO 技术支持。\r\n通过该能力可快速实现移动及放置物品、抢占物品等互动玩法。以“抢椅子”玩法为例：\r\n首先您需要提前通过 [createItem] 接口创建您视野范围内的“椅子”。\r\n首先您需要提前通过 [createItem] 接口创建您视野范围内的“椅子”。\r\n当您靠近“椅子”时，通过 [bindItem] 抢占“椅子”，获得其使用权。\r\n当您靠近“椅子”时，通过 [bindItem] 抢占“椅子”，获得其使用权。\r\n假设您只允许 1 个用户抢占”椅子“，在您通过 [unbindItem] 释放权限前，其他用户都将无法抢占。\r\n假设您只允许 1 个用户抢占”椅子“，在您通过 [unbindItem] 释放权限前，其他用户都将无法抢占。\r\n当您“坐在椅子上”时，可以通过 [updateItemStatus] 及 [updateItemCommand] 更新“椅子”的状态/指令，通知其他用户“您正坐在椅子上”。\n相关 API 请参考 createItem, bindItem, unbindItem, updateItemStatus, updateItemCommand\r\n当您“坐在椅子上”时，可以通过 [updateItemStatus] 及 [updateItemCommand] 更新“椅子”的状态/指令，通知其他用户“您正坐在椅子上”。\r\n相关 API 请参考 createItem, bindItem, unbindItem, updateItemStatus, updateItemCommand\r\n“万人范围音视频”及“多人实时状态同步”功能支持使用场景模板\n注意：如需使用该功能，请联系 ZEGO 技术支持。\n虚拟场景中，由于每个场景的地图大小、音视频互动玩法及规模不同，需要针对每个场景进行自定义配置。3.1.0 版本后，“万人范围音视频”及“多人实时状态同步”支持通过 SDK 接口，并使用模板 ID 指定场景。模板 ID 对应的配置项只能通过服务器 API 进行配置，详情请参考 服务端 API - 场景模版配置。\n相关 API 请参考 templateID\r\n“万人范围音视频”及“多人实时状态同步”功能支持使用场景模板\r\n注意：如需使用该功能，请联系 ZEGO 技术支持。\r\n虚拟场景中，由于每个场景的地图大小、音视频互动玩法及规模不同，需要针对每个场景进行自定义配置。3.1.0 版本后，“万人范围音视频”及“多人实时状态同步”支持通过 SDK 接口，并使用模板 ID 指定场景。模板 ID 对应的配置项只能通过服务器 API 进行配置，详情请参考 服务端 API - 场景模版配置。\r\n相关 API 请参考 templateID\r\n“万人范围音视频”及“多人实时状态同步”功能支持使用 Token 基础鉴权\n注意：如需使用该功能，请联系 ZEGO 技术支持。\n用户在登录场景时，可以带上 Token 参数，以验证合法性。\n相关 API 请参考 ZegoSceneParam &gt; token, ZegoRangeScene &gt; renewToken\r\n“万人范围音视频”及“多人实时状态同步”功能支持使用 Token 基础鉴权\r\n注意：如需使用该功能，请联系 ZEGO 技术支持。\r\n用户在登录场景时，可以带上 Token 参数，以验证合法性。\r\n相关 API 请参考 ZegoSceneParam &gt; token, ZegoRangeScene &gt; renewToken\r\n支持多源采集能力\n面向在线 KTV、一起看电影、看比赛等、视频会议、在线教育等音视频源丰富多样的互动场景，多源采集提供了灵活易用的音视频采集源与通道管理能力，大量减少开发者的开发及维护成本。\n多源采集能力对屏幕共享、混音等常见能力的实现路径，进行缩短优化及归一化设计，从 3.1.0 版本后，您可以不用再通过自定义采集实现上述复杂的能力，详情请参考 多源采集 。\n主要能力特性如下：\r\n支持多源采集能力\r\n面向在线 KTV、一起看电影、看比赛等、视频会议、在线教育等音视频源丰富多样的互动场景，多源采集提供了灵活易用的音视频采集源与通道管理能力，大量减少开发者的开发及维护成本。\r\n多源采集能力对屏幕共享、混音等常见能力的实现路径，进行缩短优化及归一化设计，从 3.1.0 版本后，您可以不用再通过自定义采集实现上述复杂的能力，详情请参考 多源采集 。\r\n主要能力特性如下：\r\n推流通道支持设置或切换多种音视频源。\r\n推流通道支持设置或切换多种音视频源。\r\n支持屏幕共享、混音等常见能力。\r\n支持屏幕共享、混音等常见能力。\r\nSDK 支持设置云代理\n注意：如需使用该功能，请联系 ZEGO 技术支持。\n通过设置 SDK 的云代理接口，将 SDK 对应的所有流量通过云端的代理服务器进行中转，实现与 RTC 通信，详情请参考 云代理 。\n相关 API 请参考 setCloudProxyConfig\r\nSDK 支持设置云代理\r\n注意：如需使用该功能，请联系 ZEGO 技术支持。\r\n通过设置 SDK 的云代理接口，将 SDK 对应的所有流量通过云端的代理服务器进行中转，实现与 RTC 通信，详情请参考 云代理 。\r\n相关 API 请参考 setCloudProxyConfig\r\n改进优化\r\n大幅度提升极端弱网地区的音视频连通率，并降低连通耗时\nZEGO 自研调度系统针对网络质量极差地区进行了深度优化。\r\n大幅度提升极端弱网地区的音视频连通率，并降低连通耗时\r\nZEGO 自研调度系统针对网络质量极差地区进行了深度优化。\r\n问题修复\r\n修复发送房间 [Logout] 信令可能失败的问题\r\n修复发送房间 [Logout] 信令可能失败的问题\r\n修复自定义视频采集在内存模式下，偶现的访问野指针崩溃的问题\r\n修复自定义视频采集在内存模式下，偶现的访问野指针崩溃的问题\r\n修复视频硬解故障后，偶现的重启访问空指针崩溃的问题\r\n修复视频硬解故障后，偶现的重启访问空指针崩溃的问题",
+          "type": "content",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "3.1.0 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "80-https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes",
+          "_snippetResult": {
+            "content": {
+              "value": "… 参数，以验证合法性。\n相关 API 请参考 Zego<mark>S</mark>ceneParam &gt; token, ZegoRange<mark>S</mark>cene &gt; renewToken\r\n“万人范围音视频 …",
+              "matchLevel": "full"
+            }
+          },
+          "_highlightResult": {
+            "content": {
+              "value": "发布日期： 2022-12-09\r\n新增功能\r\n“多人实时状态同步”功能支持物品状态同步与物品锁能力\n注意：如需使用该功能，请联系 ZEGO 技术支持。\n通过该能力可快速实现移动及放置物品、抢占物品等互动玩法。以“抢椅子”玩法为例：\r\n“多人实时状态同步”功能支持物品状态同步与物品锁能力\r\n注意：如需使用该功能，请联系 ZEGO 技术支持。\r\n通过该能力可快速实现移动及放置物品、抢占物品等互动玩法。以“抢椅子”玩法为例：\r\n首先您需要提前通过 [createItem] 接口创建您视野范围内的“椅子”。\r\n首先您需要提前通过 [createItem] 接口创建您视野范围内的“椅子”。\r\n当您靠近“椅子”时，通过 [bindItem] 抢占“椅子”，获得其使用权。\r\n当您靠近“椅子”时，通过 [bindItem] 抢占“椅子”，获得其使用权。\r\n假设您只允许 1 个用户抢占”椅子“，在您通过 [unbindItem] 释放权限前，其他用户都将无法抢占。\r\n假设您只允许 1 个用户抢占”椅子“，在您通过 [unbindItem] 释放权限前，其他用户都将无法抢占。\r\n当您“坐在椅子上”时，可以通过 [updateItem<mark>S</mark>tatus] 及 [updateItemCommand] 更新“椅子”的状态/指令，通知其他用户“您正坐在椅子上”。\n相关 API 请参考 createItem, bindItem, unbindItem, updateItem<mark>S</mark>tatus, updateItemCommand\r\n当您“坐在椅子上”时，可以通过 [updateItem<mark>S</mark>tatus] 及 [updateItemCommand] 更新“椅子”的状态/指令，通知其他用户“您正坐在椅子上”。\r\n相关 API 请参考 createItem, bindItem, unbindItem, updateItem<mark>S</mark>tatus, updateItemCommand\r\n“万人范围音视频”及“多人实时状态同步”功能支持使用场景模板\n注意：如需使用该功能，请联系 ZEGO 技术支持。\n虚拟场景中，由于每个场景的地图大小、音视频互动玩法及规模不同，需要针对每个场景进行自定义配置。3.1.0 版本后，“万人范围音视频”及“多人实时状态同步”支持通过 <mark>S</mark>DK 接口，并使用模板 ID 指定场景。模板 ID 对应的配置项只能通过服务器 API 进行配置，详情请参考 服务端 API - 场景模版配置。\n相关 API 请参考 templateID\r\n“万人范围音视频”及“多人实时状态同步”功能支持使用场景模板\r\n注意：如需使用该功能，请联系 ZEGO 技术支持。\r\n虚拟场景中，由于每个场景的地图大小、音视频互动玩法及规模不同，需要针对每个场景进行自定义配置。3.1.0 版本后，“万人范围音视频”及“多人实时状态同步”支持通过 <mark>S</mark>DK 接口，并使用模板 ID 指定场景。模板 ID 对应的配置项只能通过服务器 API 进行配置，详情请参考 服务端 API - 场景模版配置。\r\n相关 API 请参考 templateID\r\n“万人范围音视频”及“多人实时状态同步”功能支持使用 Token 基础鉴权\n注意：如需使用该功能，请联系 ZEGO 技术支持。\n用户在登录场景时，可以带上 Token 参数，以验证合法性。\n相关 API 请参考 Zego<mark>S</mark>ceneParam &gt; token, ZegoRange<mark>S</mark>cene &gt; renewToken\r\n“万人范围音视频”及“多人实时状态同步”功能支持使用 Token 基础鉴权\r\n注意：如需使用该功能，请联系 ZEGO 技术支持。\r\n用户在登录场景时，可以带上 Token 参数，以验证合法性。\r\n相关 API 请参考 Zego<mark>S</mark>ceneParam &gt; token, ZegoRange<mark>S</mark>cene &gt; renewToken\r\n支持多源采集能力\n面向在线 KTV、一起看电影、看比赛等、视频会议、在线教育等音视频源丰富多样的互动场景，多源采集提供了灵活易用的音视频采集源与通道管理能力，大量减少开发者的开发及维护成本。\n多源采集能力对屏幕共享、混音等常见能力的实现路径，进行缩短优化及归一化设计，从 3.1.0 版本后，您可以不用再通过自定义采集实现上述复杂的能力，详情请参考 多源采集 。\n主要能力特性如下：\r\n支持多源采集能力\r\n面向在线 KTV、一起看电影、看比赛等、视频会议、在线教育等音视频源丰富多样的互动场景，多源采集提供了灵活易用的音视频采集源与通道管理能力，大量减少开发者的开发及维护成本。\r\n多源采集能力对屏幕共享、混音等常见能力的实现路径，进行缩短优化及归一化设计，从 3.1.0 版本后，您可以不用再通过自定义采集实现上述复杂的能力，详情请参考 多源采集 。\r\n主要能力特性如下：\r\n推流通道支持设置或切换多种音视频源。\r\n推流通道支持设置或切换多种音视频源。\r\n支持屏幕共享、混音等常见能力。\r\n支持屏幕共享、混音等常见能力。\r\n<mark>S</mark>DK 支持设置云代理\n注意：如需使用该功能，请联系 ZEGO 技术支持。\n通过设置 <mark>S</mark>DK 的云代理接口，将 <mark>S</mark>DK 对应的所有流量通过云端的代理服务器进行中转，实现与 RTC 通信，详情请参考 云代理 。\n相关 API 请参考 <mark>s</mark>etCloudProxyConfig\r\n<mark>S</mark>DK 支持设置云代理\r\n注意：如需使用该功能，请联系 ZEGO 技术支持。\r\n通过设置 <mark>S</mark>DK 的云代理接口，将 <mark>S</mark>DK 对应的所有流量通过云端的代理服务器进行中转，实现与 RTC 通信，详情请参考 云代理 。\r\n相关 API 请参考 <mark>s</mark>etCloudProxyConfig\r\n改进优化\r\n大幅度提升极端弱网地区的音视频连通率，并降低连通耗时\nZEGO 自研调度系统针对网络质量极差地区进行了深度优化。\r\n大幅度提升极端弱网地区的音视频连通率，并降低连通耗时\r\nZEGO 自研调度系统针对网络质量极差地区进行了深度优化。\r\n问题修复\r\n修复发送房间 [Logout] 信令可能失败的问题\r\n修复发送房间 [Logout] 信令可能失败的问题\r\n修复自定义视频采集在内存模式下，偶现的访问野指针崩溃的问题\r\n修复自定义视频采集在内存模式下，偶现的访问野指针崩溃的问题\r\n修复视频硬解故障后，偶现的重启访问空指针崩溃的问题\r\n修复视频硬解故障后，偶现的重启访问空指针崩溃的问题",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": ["s"]
+            },
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 <mark>S</mark>DK",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["s"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "3.1.0 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/upgrade-guide/upgrade-to-v3#setaudiodevicemode",
+          "content": null,
+          "type": "lvl3",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK > 升级指南",
+            "lvl1": "3.0.0及以上版本升级指南",
+            "lvl2": "变更示例代码",
+            "lvl3": "setAudioDeviceMode",
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "8-https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/upgrade-guide/upgrade-to-v3",
+          "_highlightResult": {
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 <mark>S</mark>DK > 升级指南",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["s"]
+              },
+              "lvl1": {
+                "value": "3.0.0及以上版本升级指南",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "变更示例代码",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl3": {
+                "value": "<mark>s</mark>etAudioDeviceMode",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["s"]
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes#3220-%E7%89%88%E6%9C%AC",
+          "content": "发布日期： 2025-08-26\r\n新增功能\r\n支持主路设置麦克风音频源混入屏幕采集音频源\nZegoAudioSourceMixConfig 新增 enableMixScreenCapture 参数，用于在主路设置麦克风音频源时，支持混入屏幕共享音频数据一起推流。调用 [setAudioSource] 可以动态开启或关闭此功能。\n相关 API 请参考：setAudioSource、startScreenCapture、updateScreenCaptureConfig\r\n支持主路设置麦克风音频源混入屏幕采集音频源\r\nZegoAudioSourceMixConfig 新增 enableMixScreenCapture 参数，用于在主路设置麦克风音频源时，支持混入屏幕共享音频数据一起推流。调用 [setAudioSource] 可以动态开启或关闭此功能。\r\n相关 API 请参考：setAudioSource、startScreenCapture、updateScreenCaptureConfig\r\n屏幕共享提供启动回调和异常中断回调\n启动屏幕共享时，可通过 onMobileScreenCaptureStart 监听屏幕共享是否启动成功和 onMobileScreenCaptureExceptionOccurred 监听屏幕共享启动失败或中途断开异常。\n相关 API 请参考：onMobileScreenCaptureStart、onMobileScreenCaptureExceptionOccurred\r\n屏幕共享提供启动回调和异常中断回调\r\n启动屏幕共享时，可通过 onMobileScreenCaptureStart 监听屏幕共享是否启动成功和 onMobileScreenCaptureExceptionOccurred 监听屏幕共享启动失败或中途断开异常。\r\n相关 API 请参考：onMobileScreenCaptureStart、onMobileScreenCaptureExceptionOccurred\r\n屏幕共享支持设置画面固定横竖屏朝向\nZegoScreenCaptureConfig 新增了 ZegoScreenCaptureOrientation 参数，用于设置屏幕共享画面固定横竖屏朝向。\n相关 API 请参考：startScreenCapture、updateScreenCaptureConfig\r\n屏幕共享支持设置画面固定横竖屏朝向\r\nZegoScreenCaptureConfig 新增了 ZegoScreenCaptureOrientation 参数，用于设置屏幕共享画面固定横竖屏朝向。\r\n相关 API 请参考：startScreenCapture、updateScreenCaptureConfig\r\n屏幕共享支持音频包共享系统声音\n注意如需使用本功能，请联系 ZEGO 技术支持。\r\n屏幕共享支持音频包共享系统声音\r\n如需使用本功能，请联系 ZEGO 技术支持。\r\n支持使用指定音量模式启动屏幕共享\nZegoScreenCaptureConfig 新增了 ZegoScreenCaptureAudioDeviceMode 参数，用于指定音频设备模式(通话音量或媒体音量)启动屏幕采集。\n注意\n只有当主路设置麦克风音频源时，音频设备模式才生效。\n仅对开启屏幕采集的 [startScreenCapture] 接口生效，对更新屏幕采集的 [updateScreenCapture] 接口没有作用。\n采集过程中音频设备模式发生变化导致屏幕采集音频输出异常，可以通过 [onMobileScreenCaptureExceptionOccurred] 回调监听 AudioDeviceException，如有必要，需要重启采集。\n停止采集后会恢复采集之前的音频设备模式。 相关 API 请参考：startScreenCapture、updateScreenCaptureConfig\r\n支持使用指定音量模式启动屏幕共享\r\nZegoScreenCaptureConfig 新增了 ZegoScreenCaptureAudioDeviceMode 参数，用于指定音频设备模式(通话音量或媒体音量)启动屏幕采集。\r\n只有当主路设置麦克风音频源时，音频设备模式才生效。\r\n仅对开启屏幕采集的 [startScreenCapture] 接口生效，对更新屏幕采集的 [updateScreenCapture] 接口没有作用。\r\n采集过程中音频设备模式发生变化导致屏幕采集音频输出异常，可以通过 [onMobileScreenCaptureExceptionOccurred] 回调监听 AudioDeviceException，如有必要，需要重启采集。\r\n停止采集后会恢复采集之前的音频设备模式。\r\n相关 API 请参考：startScreenCapture、updateScreenCaptureConfig\r\n新增静态图片采集视频源\n通过设置 setVideoSource 视频源为 Picture，即可推流一张指定的图片。\n相关 API 请参考：setVideoSource\r\n新增静态图片采集视频源\r\n通过设置 setVideoSource 视频源为 Picture，即可推流一张指定的图片。\r\n相关 API 请参考：setVideoSource\r\n半自动混流支持混流对齐能力\n相关 API 请参考：ZegoAutoMixerTask\r\n半自动混流支持混流对齐能力\r\n相关 API 请参考：ZegoAutoMixerTask\r\n媒体播放器实例个数限制放开至 10 个\n详细请参考 媒体播放器。\r\n媒体播放器实例个数限制放开至 10 个\r\n详细请参考 媒体播放器。\r\n媒体播放器边下边播支持分片文件存储，避免一次性申请内存过大\n注意如需使用本功能，请联系 ZEGO 技术支持。\r\n媒体播放器边下边播支持分片文件存储，避免一次性申请内存过大\r\n如需使用本功能，请联系 ZEGO 技术支持。\r\n拉流切换功能支持强制切换模式\n启用强制切换模式，可避免在弱网环境下，从高码率档位切换至低码率档位时长时间拉不到流的情况。\n相关 API 请参考：SwitchPlayingStream\r\n拉流切换功能支持强制切换模式\r\n启用强制切换模式，可避免在弱网环境下，从高码率档位切换至低码率档位时长时间拉不到流的情况。\r\n相关 API 请参考：SwitchPlayingStream\r\n支持主动切到非系统默认网络\n当无线网络质量较差时（未断开），可以主动切换到移动数据。\r\n支持主动切到非系统默认网络\r\n当无线网络质量较差时（未断开），可以主动切换到移动数据。\r\n新增非主线程（ UI 线程）的音视频首帧耗时回调接口，可在主线程阻塞时更准确地统计首帧耗时\n相关 API 请参考：onPlayerSyncRecvAudioFirstFrame、onPlayerSyncRecvVideoFirstFrame、onPlayerSyncRecvRenderVideoFirstFrame\r\n新增非主线程（ UI 线程）的音视频首帧耗时回调接口，可在主线程阻塞时更准确地统计首帧耗时\r\n相关 API 请参考：onPlayerSyncRecvAudioFirstFrame、onPlayerSyncRecvVideoFirstFrame、onPlayerSyncRecvRenderVideoFirstFrame\r\n支持接入微帧264编码器\n注意如需使用本功能，请联系 ZEGO 技术支持。\r\n支持接入微帧264编码器\r\n如需使用本功能，请联系 ZEGO 技术支持。\r\n新增拉流链路上各环节数据指标的回调\n注意如需使用本功能，请联系 ZEGO 技术支持。\r\n新增拉流链路上各环节数据指标的回调\r\n如需使用本功能，请联系 ZEGO 技术支持。\r\nSDK 播放器支持 HLS 协议 拉流且支持分辨率自适应\n注意如需使用本功能，请联系 ZEGO 技术支持。\n相关 API 请参考：SwitchPlayingStream\r\nSDK 播放器支持 HLS 协议 拉流且支持分辨率自适应\r\n如需使用本功能，请联系 ZEGO 技术支持。\r\n相关 API 请参考：SwitchPlayingStream\r\n拉取视频流时支持将视频流同时渲染到多个视图上\n相关 API 请参考：setPlayingCanvas\r\n拉取视频流时支持将视频流同时渲染到多个视图上\r\n相关 API 请参考：setPlayingCanvas\r\n播放器拉混流可以将混流拆分成多个原始流渲染到多个画面\n注意如需使用本功能，请联系 ZEGO 技术支持。\r\n播放器拉混流可以将混流拆分成多个原始流渲染到多个画面\r\n如需使用本功能，请联系 ZEGO 技术支持。\r\n支持通过云端控制的方式下发云代理配置\n支持通过云端控制的方式下发云代理配置。当云端控制配置完成且SDK 拉取到最新的云端控制信息，新的云代理配置能够立即生效。\n注意如需使用本功能，请联系 ZEGO 技术支持。\r\n支持通过云端控制的方式下发云代理配置\r\n支持通过云端控制的方式下发云代理配置。当云端控制配置完成且SDK 拉取到最新的云端控制信息，新的云代理配置能够立即生效。\r\n如需使用本功能，请联系 ZEGO 技术支持。\r\n推拉流功能新增国密算法加密\n注意如需使用本功能，请联系 ZEGO 技术支持。\r\n推拉流功能新增国密算法加密\r\n如需使用本功能，请联系 ZEGO 技术支持。\r\n混流 SEI 中的 uid 支持 string 类型\n相关 API 请参考：onPlayerRecvSEI、onPlayerSyncRecvSEI\r\n混流 SEI 中的 uid 支持 string 类型\r\n相关 API 请参考：onPlayerRecvSEI、onPlayerSyncRecvSEI\r\n支持 WMA 编码器\n媒体播放器，音效播放器支持播放 wma 格式的音频文件\r\n支持 WMA 编码器\r\n媒体播放器，音效播放器支持播放 wma 格式的音频文件\r\n改进优化\r\nSDK 内的 curl 库升级为 8.14.1 版本\r\nSDK 内的 curl 库升级为 8.14.1 版本\r\n优化开启主体分割切换背景类型为视频时占用内存过大的问题\r\n优化开启主体分割切换背景类型为视频时占用内存过大的问题\r\n优化自然背景分割效果\r\n优化自然背景分割效果\r\n优化 AI 超分锯齿\r\n优化 AI 超分锯齿\r\n优化低照度增强效果\r\n优化低照度增强效果",
+          "type": "content",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "3.22.0 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "8-https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes",
+          "_snippetResult": {
+            "content": {
+              "value": "… uid 支持 <mark>s</mark>tring 类型\n相关 API 请参考：onPlayerRecv<mark>S</mark>EI、onPlayer<mark>S</mark>yncRecv<mark>S</mark>EI\r\n混流 <mark>S</mark>EI 中的 uid 支持 <mark>s</mark>tring …",
+              "matchLevel": "full"
+            }
+          },
+          "_highlightResult": {
+            "content": {
+              "value": "发布日期： 2025-08-26\r\n新增功能\r\n支持主路设置麦克风音频源混入屏幕采集音频源\nZegoAudio<mark>S</mark>ourceMixConfig 新增 enableMix<mark>S</mark>creenCapture 参数，用于在主路设置麦克风音频源时，支持混入屏幕共享音频数据一起推流。调用 [<mark>s</mark>etAudio<mark>S</mark>ource] 可以动态开启或关闭此功能。\n相关 API 请参考：<mark>s</mark>etAudio<mark>S</mark>ource、<mark>s</mark>tart<mark>S</mark>creenCapture、update<mark>S</mark>creenCaptureConfig\r\n支持主路设置麦克风音频源混入屏幕采集音频源\r\nZegoAudio<mark>S</mark>ourceMixConfig 新增 enableMix<mark>S</mark>creenCapture 参数，用于在主路设置麦克风音频源时，支持混入屏幕共享音频数据一起推流。调用 [<mark>s</mark>etAudio<mark>S</mark>ource] 可以动态开启或关闭此功能。\r\n相关 API 请参考：<mark>s</mark>etAudio<mark>S</mark>ource、<mark>s</mark>tart<mark>S</mark>creenCapture、update<mark>S</mark>creenCaptureConfig\r\n屏幕共享提供启动回调和异常中断回调\n启动屏幕共享时，可通过 onMobile<mark>S</mark>creenCapture<mark>S</mark>tart 监听屏幕共享是否启动成功和 onMobile<mark>S</mark>creenCaptureExceptionOccurred 监听屏幕共享启动失败或中途断开异常。\n相关 API 请参考：onMobile<mark>S</mark>creenCapture<mark>S</mark>tart、onMobile<mark>S</mark>creenCaptureExceptionOccurred\r\n屏幕共享提供启动回调和异常中断回调\r\n启动屏幕共享时，可通过 onMobile<mark>S</mark>creenCapture<mark>S</mark>tart 监听屏幕共享是否启动成功和 onMobile<mark>S</mark>creenCaptureExceptionOccurred 监听屏幕共享启动失败或中途断开异常。\r\n相关 API 请参考：onMobile<mark>S</mark>creenCapture<mark>S</mark>tart、onMobile<mark>S</mark>creenCaptureExceptionOccurred\r\n屏幕共享支持设置画面固定横竖屏朝向\nZego<mark>S</mark>creenCaptureConfig 新增了 Zego<mark>S</mark>creenCaptureOrientation 参数，用于设置屏幕共享画面固定横竖屏朝向。\n相关 API 请参考：<mark>s</mark>tart<mark>S</mark>creenCapture、update<mark>S</mark>creenCaptureConfig\r\n屏幕共享支持设置画面固定横竖屏朝向\r\nZego<mark>S</mark>creenCaptureConfig 新增了 Zego<mark>S</mark>creenCaptureOrientation 参数，用于设置屏幕共享画面固定横竖屏朝向。\r\n相关 API 请参考：<mark>s</mark>tart<mark>S</mark>creenCapture、update<mark>S</mark>creenCaptureConfig\r\n屏幕共享支持音频包共享系统声音\n注意如需使用本功能，请联系 ZEGO 技术支持。\r\n屏幕共享支持音频包共享系统声音\r\n如需使用本功能，请联系 ZEGO 技术支持。\r\n支持使用指定音量模式启动屏幕共享\nZego<mark>S</mark>creenCaptureConfig 新增了 Zego<mark>S</mark>creenCaptureAudioDeviceMode 参数，用于指定音频设备模式(通话音量或媒体音量)启动屏幕采集。\n注意\n只有当主路设置麦克风音频源时，音频设备模式才生效。\n仅对开启屏幕采集的 [<mark>s</mark>tart<mark>S</mark>creenCapture] 接口生效，对更新屏幕采集的 [update<mark>S</mark>creenCapture] 接口没有作用。\n采集过程中音频设备模式发生变化导致屏幕采集音频输出异常，可以通过 [onMobile<mark>S</mark>creenCaptureExceptionOccurred] 回调监听 AudioDeviceException，如有必要，需要重启采集。\n停止采集后会恢复采集之前的音频设备模式。 相关 API 请参考：<mark>s</mark>tart<mark>S</mark>creenCapture、update<mark>S</mark>creenCaptureConfig\r\n支持使用指定音量模式启动屏幕共享\r\nZego<mark>S</mark>creenCaptureConfig 新增了 Zego<mark>S</mark>creenCaptureAudioDeviceMode 参数，用于指定音频设备模式(通话音量或媒体音量)启动屏幕采集。\r\n只有当主路设置麦克风音频源时，音频设备模式才生效。\r\n仅对开启屏幕采集的 [<mark>s</mark>tart<mark>S</mark>creenCapture] 接口生效，对更新屏幕采集的 [update<mark>S</mark>creenCapture] 接口没有作用。\r\n采集过程中音频设备模式发生变化导致屏幕采集音频输出异常，可以通过 [onMobile<mark>S</mark>creenCaptureExceptionOccurred] 回调监听 AudioDeviceException，如有必要，需要重启采集。\r\n停止采集后会恢复采集之前的音频设备模式。\r\n相关 API 请参考：<mark>s</mark>tart<mark>S</mark>creenCapture、update<mark>S</mark>creenCaptureConfig\r\n新增静态图片采集视频源\n通过设置 <mark>s</mark>etVideo<mark>S</mark>ource 视频源为 Picture，即可推流一张指定的图片。\n相关 API 请参考：<mark>s</mark>etVideo<mark>S</mark>ource\r\n新增静态图片采集视频源\r\n通过设置 <mark>s</mark>etVideo<mark>S</mark>ource 视频源为 Picture，即可推流一张指定的图片。\r\n相关 API 请参考：<mark>s</mark>etVideo<mark>S</mark>ource\r\n半自动混流支持混流对齐能力\n相关 API 请参考：ZegoAutoMixerTask\r\n半自动混流支持混流对齐能力\r\n相关 API 请参考：ZegoAutoMixerTask\r\n媒体播放器实例个数限制放开至 10 个\n详细请参考 媒体播放器。\r\n媒体播放器实例个数限制放开至 10 个\r\n详细请参考 媒体播放器。\r\n媒体播放器边下边播支持分片文件存储，避免一次性申请内存过大\n注意如需使用本功能，请联系 ZEGO 技术支持。\r\n媒体播放器边下边播支持分片文件存储，避免一次性申请内存过大\r\n如需使用本功能，请联系 ZEGO 技术支持。\r\n拉流切换功能支持强制切换模式\n启用强制切换模式，可避免在弱网环境下，从高码率档位切换至低码率档位时长时间拉不到流的情况。\n相关 API 请参考：<mark>S</mark>witchPlaying<mark>S</mark>tream\r\n拉流切换功能支持强制切换模式\r\n启用强制切换模式，可避免在弱网环境下，从高码率档位切换至低码率档位时长时间拉不到流的情况。\r\n相关 API 请参考：<mark>S</mark>witchPlaying<mark>S</mark>tream\r\n支持主动切到非系统默认网络\n当无线网络质量较差时（未断开），可以主动切换到移动数据。\r\n支持主动切到非系统默认网络\r\n当无线网络质量较差时（未断开），可以主动切换到移动数据。\r\n新增非主线程（ UI 线程）的音视频首帧耗时回调接口，可在主线程阻塞时更准确地统计首帧耗时\n相关 API 请参考：onPlayer<mark>S</mark>yncRecvAudioFirstFrame、onPlayer<mark>S</mark>yncRecvVideoFirstFrame、onPlayer<mark>S</mark>yncRecvRenderVideoFirstFrame\r\n新增非主线程（ UI 线程）的音视频首帧耗时回调接口，可在主线程阻塞时更准确地统计首帧耗时\r\n相关 API 请参考：onPlayer<mark>S</mark>yncRecvAudioFirstFrame、onPlayer<mark>S</mark>yncRecvVideoFirstFrame、onPlayer<mark>S</mark>yncRecvRenderVideoFirstFrame\r\n支持接入微帧264编码器\n注意如需使用本功能，请联系 ZEGO 技术支持。\r\n支持接入微帧264编码器\r\n如需使用本功能，请联系 ZEGO 技术支持。\r\n新增拉流链路上各环节数据指标的回调\n注意如需使用本功能，请联系 ZEGO 技术支持。\r\n新增拉流链路上各环节数据指标的回调\r\n如需使用本功能，请联系 ZEGO 技术支持。\r\n<mark>S</mark>DK 播放器支持 HLS 协议 拉流且支持分辨率自适应\n注意如需使用本功能，请联系 ZEGO 技术支持。\n相关 API 请参考：<mark>S</mark>witchPlaying<mark>S</mark>tream\r\n<mark>S</mark>DK 播放器支持 HLS 协议 拉流且支持分辨率自适应\r\n如需使用本功能，请联系 ZEGO 技术支持。\r\n相关 API 请参考：<mark>S</mark>witchPlaying<mark>S</mark>tream\r\n拉取视频流时支持将视频流同时渲染到多个视图上\n相关 API 请参考：<mark>s</mark>etPlayingCanvas\r\n拉取视频流时支持将视频流同时渲染到多个视图上\r\n相关 API 请参考：<mark>s</mark>etPlayingCanvas\r\n播放器拉混流可以将混流拆分成多个原始流渲染到多个画面\n注意如需使用本功能，请联系 ZEGO 技术支持。\r\n播放器拉混流可以将混流拆分成多个原始流渲染到多个画面\r\n如需使用本功能，请联系 ZEGO 技术支持。\r\n支持通过云端控制的方式下发云代理配置\n支持通过云端控制的方式下发云代理配置。当云端控制配置完成且<mark>S</mark>DK 拉取到最新的云端控制信息，新的云代理配置能够立即生效。\n注意如需使用本功能，请联系 ZEGO 技术支持。\r\n支持通过云端控制的方式下发云代理配置\r\n支持通过云端控制的方式下发云代理配置。当云端控制配置完成且<mark>S</mark>DK 拉取到最新的云端控制信息，新的云代理配置能够立即生效。\r\n如需使用本功能，请联系 ZEGO 技术支持。\r\n推拉流功能新增国密算法加密\n注意如需使用本功能，请联系 ZEGO 技术支持。\r\n推拉流功能新增国密算法加密\r\n如需使用本功能，请联系 ZEGO 技术支持。\r\n混流 <mark>S</mark>EI 中的 uid 支持 <mark>s</mark>tring 类型\n相关 API 请参考：onPlayerRecv<mark>S</mark>EI、onPlayer<mark>S</mark>yncRecv<mark>S</mark>EI\r\n混流 <mark>S</mark>EI 中的 uid 支持 <mark>s</mark>tring 类型\r\n相关 API 请参考：onPlayerRecv<mark>S</mark>EI、onPlayer<mark>S</mark>yncRecv<mark>S</mark>EI\r\n支持 WMA 编码器\n媒体播放器，音效播放器支持播放 wma 格式的音频文件\r\n支持 WMA 编码器\r\n媒体播放器，音效播放器支持播放 wma 格式的音频文件\r\n改进优化\r\n<mark>S</mark>DK 内的 curl 库升级为 8.14.1 版本\r\n<mark>S</mark>DK 内的 curl 库升级为 8.14.1 版本\r\n优化开启主体分割切换背景类型为视频时占用内存过大的问题\r\n优化开启主体分割切换背景类型为视频时占用内存过大的问题\r\n优化自然背景分割效果\r\n优化自然背景分割效果\r\n优化 AI 超分锯齿\r\n优化 AI 超分锯齿\r\n优化低照度增强效果\r\n优化低照度增强效果",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": ["s"]
+            },
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 <mark>S</mark>DK",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["s"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "3.22.0 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/error-code#1003xxx-%E6%8E%A8%E6%B5%81%E7%9B%B8%E5%85%B3%E7%9A%84%E9%94%99%E8%AF%AF%E7%A0%81",
+          "content": "调用推流接口后，或者在推流中途出现异常，开发者可从 onPublisherStateUpdate 获取相关错误码，请根据以下错误码进行相应的处理。\r\n调用转推 CDN 或更新流附加信息等接口后，开发者可从 API 的 callback 参数(java为匿名类，oc为block，c++为lambda)中获取相关错误码。\r\n处理推流回调错误码非 0 的情况：\r\n当 state 为 PUBLISHER_STATE_NO_PUBLISH 时，且 errcode 非 0，表示推流失败，同时不会再进行重试推流了，此时可在界面作出推流失败提示；\r\n当 state 为 PUBLISHER_STATE_PUBLISH_REQUESTING 时，且 errcode 非 0，表示在重试推流，此时如果超出重试时间未成功推流会抛出推流失败通知。\r\n错误码枚举值\r\n说明\r\n1003001\r\n描述：推流没有数据导致推流失败。可能原因：推流没有数据。处理建议：检查视频、音频采集模块是否正常工作。\r\n1003002\r\n描述：码率设置错误导致推流失败。可能原因：设置的视频码率、音频码率或者流量控制的最低视频码率阈值超过上限。处理建议：请检查单位(kbps)是否有误。调整码率的设置。\r\n1003005\r\n描述：流量控制的属性参数设置有误。可能原因：设置的流量控制的属性小于 0 或者超过所有组合。处理建议：检查流量控制的属性参数的设置。\r\n1003010\r\n描述：推流失败，不支持 H.265 编码。可能原因：硬件设备不支持 H.265 编码，或 SDK 未包含 H.265 编码模块。处理建议：联系 ZEGO 技术支持确认 SDK 是否包含 H.265 编码模块，如果硬件设备不支持，建议升级硬件。\r\n1003011\r\n描述：主体分割设备性能不足。可能原因：设备性能不足。处理建议：更换设备。\r\n1003012\r\n描述：该设备不支持主体分割。可能原因：设备不支持，或者开启了多个通道的主体分割。处理建议：更换设备或者只开启一个通道的主体分割。\r\n1003013\r\n描述：主体分割未授权。可能原因：该 appid 未配置主体分割功能。处理建议：请联系 ZEGO 技术支持配置主体分割功能。\r\n1003014\r\n描述：主体分割参数错误。可能原因：主体分割设置为绿幕类型，不允许设置背景虚化。处理建议：请使用正确的参数开启主体分割。\r\n1003015\r\n描述：主体分割背景加载错误。可能原因：背景视频或图片的路径不正确，或者内容错误。处理建议：请设置正确的背景图片或视频。\r\n1003020\r\n描述：推流临时中断，正在重试.可能原因：网络波动或者网络信号不好。处理建议：请稍等或检查网络是否正常。\r\n1003021\r\n描述：重试推流超过最大的重试时间。可能原因：网络信号不好，超过了最大的重试时间。处理建议：检查网络状态或者切换其他网络。\r\n1003023\r\n描述：推流失败，该通道已在推流。可能原因：该通道已在推流。处理建议：请检查业务逻辑，避免让正在推流的通道重复推流。切换推流通道进行推流。\r\n1003025\r\n描述：推流失败，该流被后台系统配置为禁止推送。可能原因：该流被后台系统配置为禁止推送。处理建议：联系即构技术支持处理。\r\n1003028\r\n描述：推流失败，房间内已有相同的流。可能原因：房间内已有相同的流。处理建议：更换新的流 ID。调整流名生成策略，保证唯一性。\r\n1003029\r\n描述：推流失败，与 RTMP 服务器连接中断。可能原因：推流地址异常，网络信号不好。处理建议：请检查网络或推流地址是否异常。\r\n1003030\r\n描述：推流画面截图失败。可能原因：停止预览且推流异常。 处理建议：开启预览或重新推流。\r\n1003040\r\n描述：更新转推 CDN 状态失败。 可能原因：转推地址 URL 不正确。 处理建议：检查输入的 URL 是否有效。\r\n1003043\r\n描述：发送 SEI 失败。 可能原因：data 为空。 处理建议：传入非空数据。\r\n1003044\r\n描述：发送 SEI 失败。 可能原因：输入 data 超过长度限制。 处理建议：发送的 SEI 数据长度应小于 4096 字节。\r\n1003045\r\n描述：发送音频次要信息失败。 可能原因：data 为空。 处理建议：传入非空数据。\r\n1003046\r\n描述：发送音频次要信息失败。 可能原因：输入 data 超过长度限制。 处理建议：发送的音频次要信息数据长度应小于 1024 字节。\r\n1003050\r\n流附加信息为空 (该错误码已废弃)\r\n1003051\r\n流附加信息超长，最大长度应小于 1024 字节 (该错误码已废弃)\r\n1003053\r\n更新流附加信息失败，请检查网络连接 (该错误码已废弃)\r\n1003055\r\n描述：设置推流水印失败。 可能原因：传入的水印路径为空。 处理建议：传入非空水印路径。\r\n1003056\r\n描述：设置推流水印失败。 可能原因：传入的水印路径超过字节大小限制。 处理建议：传入的水印路径应小于 512 字节。\r\n1003057\r\n描述：设置推流水印失败。可能原因：推流水印路径输入有误或者图片格式不支持。 处理建议：输入正确的水印路径，仅支持 jpg 和 png 图片格式。\r\n1003058\r\n描述：水印布局有误。可能原因：水印布局区域超出编码分辨率大小。处理建议：在设置水印时需要确保水印的布局区域不能超过编码分辨率的大小。\r\n1003060\r\n描述：推流加密密钥不合法。可能原因：设置的加密密钥长度不支持。处理建议：推流加密密钥长度需要为16/24/32字节。\r\n1003070\r\n描述：推流函数调用失败。可能原因：多房间模式下，调用的推流函数有误。处理建议：调用带有参数 [ZegoPublisherConfig] 的推流函数。\r\n1003071\r\n描述：推流函数调用错误。可能原因：多房间模式下，推流函数的 [roomID] 不能为空。处理建议：多房间模式下，推流函数参数 [roomID] 不能为空。\r\n1003072\r\n描述：推拉流鉴权错误。可能原因：创建引擎时传递的[appSign]错误，或者登录房间传递的[Token]错误或超时。处理建议：登录时传递正确的[Token],或收到[onRoomTokenWillExpire] 回调时及时调用[renewToken更新Token。\r\n1003073\r\n描述：指定的关闭摄像头时所推静态图片的路径错误。可能原因：路径拼写错误，或者没有读权限。处理建议：检查设置的图片路径是否正确，以及是否有读权限。\r\n1003080\r\n描述：不支持的视频编码器。可能原因：当前 SDK 无所选编码器。处理建议：请联系 ZEGO 技术支持。\r\n1003081\r\n描述：编码失败。可能原因：所选编码器编码失败。处理建议：请联系 ZEGO 技术支持。\r\n1003099\r\n描述：系统内部异常导致推流失败。可能原因：系统内部异常导致推流失败。处理建议：请联系技术支持解决。",
+          "type": "content",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "常见错误码",
+            "lvl2": "1003xxx 推流相关的错误码",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "8-https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/error-code",
+          "_snippetResult": {
+            "content": {
+              "value": "… 处理推流回调错误码非 0 的情况：\r\n当 <mark>s</mark>tate 为 PUBLISHER_<mark>S</mark>TATE_NO_PUBLISH 时，且 errcode 非 0，表示推流 …",
+              "matchLevel": "full"
+            }
+          },
+          "_highlightResult": {
+            "content": {
+              "value": "调用推流接口后，或者在推流中途出现异常，开发者可从 onPublisher<mark>S</mark>tateUpdate 获取相关错误码，请根据以下错误码进行相应的处理。\r\n调用转推 CDN 或更新流附加信息等接口后，开发者可从 API 的 callback 参数(java为匿名类，oc为block，c++为lambda)中获取相关错误码。\r\n处理推流回调错误码非 0 的情况：\r\n当 <mark>s</mark>tate 为 PUBLISHER_<mark>S</mark>TATE_NO_PUBLISH 时，且 errcode 非 0，表示推流失败，同时不会再进行重试推流了，此时可在界面作出推流失败提示；\r\n当 <mark>s</mark>tate 为 PUBLISHER_<mark>S</mark>TATE_PUBLISH_REQUESTING 时，且 errcode 非 0，表示在重试推流，此时如果超出重试时间未成功推流会抛出推流失败通知。\r\n错误码枚举值\r\n说明\r\n1003001\r\n描述：推流没有数据导致推流失败。可能原因：推流没有数据。处理建议：检查视频、音频采集模块是否正常工作。\r\n1003002\r\n描述：码率设置错误导致推流失败。可能原因：设置的视频码率、音频码率或者流量控制的最低视频码率阈值超过上限。处理建议：请检查单位(kbps)是否有误。调整码率的设置。\r\n1003005\r\n描述：流量控制的属性参数设置有误。可能原因：设置的流量控制的属性小于 0 或者超过所有组合。处理建议：检查流量控制的属性参数的设置。\r\n1003010\r\n描述：推流失败，不支持 H.265 编码。可能原因：硬件设备不支持 H.265 编码，或 <mark>S</mark>DK 未包含 H.265 编码模块。处理建议：联系 ZEGO 技术支持确认 <mark>S</mark>DK 是否包含 H.265 编码模块，如果硬件设备不支持，建议升级硬件。\r\n1003011\r\n描述：主体分割设备性能不足。可能原因：设备性能不足。处理建议：更换设备。\r\n1003012\r\n描述：该设备不支持主体分割。可能原因：设备不支持，或者开启了多个通道的主体分割。处理建议：更换设备或者只开启一个通道的主体分割。\r\n1003013\r\n描述：主体分割未授权。可能原因：该 appid 未配置主体分割功能。处理建议：请联系 ZEGO 技术支持配置主体分割功能。\r\n1003014\r\n描述：主体分割参数错误。可能原因：主体分割设置为绿幕类型，不允许设置背景虚化。处理建议：请使用正确的参数开启主体分割。\r\n1003015\r\n描述：主体分割背景加载错误。可能原因：背景视频或图片的路径不正确，或者内容错误。处理建议：请设置正确的背景图片或视频。\r\n1003020\r\n描述：推流临时中断，正在重试.可能原因：网络波动或者网络信号不好。处理建议：请稍等或检查网络是否正常。\r\n1003021\r\n描述：重试推流超过最大的重试时间。可能原因：网络信号不好，超过了最大的重试时间。处理建议：检查网络状态或者切换其他网络。\r\n1003023\r\n描述：推流失败，该通道已在推流。可能原因：该通道已在推流。处理建议：请检查业务逻辑，避免让正在推流的通道重复推流。切换推流通道进行推流。\r\n1003025\r\n描述：推流失败，该流被后台系统配置为禁止推送。可能原因：该流被后台系统配置为禁止推送。处理建议：联系即构技术支持处理。\r\n1003028\r\n描述：推流失败，房间内已有相同的流。可能原因：房间内已有相同的流。处理建议：更换新的流 ID。调整流名生成策略，保证唯一性。\r\n1003029\r\n描述：推流失败，与 RTMP 服务器连接中断。可能原因：推流地址异常，网络信号不好。处理建议：请检查网络或推流地址是否异常。\r\n1003030\r\n描述：推流画面截图失败。可能原因：停止预览且推流异常。 处理建议：开启预览或重新推流。\r\n1003040\r\n描述：更新转推 CDN 状态失败。 可能原因：转推地址 URL 不正确。 处理建议：检查输入的 URL 是否有效。\r\n1003043\r\n描述：发送 <mark>S</mark>EI 失败。 可能原因：data 为空。 处理建议：传入非空数据。\r\n1003044\r\n描述：发送 <mark>S</mark>EI 失败。 可能原因：输入 data 超过长度限制。 处理建议：发送的 <mark>S</mark>EI 数据长度应小于 4096 字节。\r\n1003045\r\n描述：发送音频次要信息失败。 可能原因：data 为空。 处理建议：传入非空数据。\r\n1003046\r\n描述：发送音频次要信息失败。 可能原因：输入 data 超过长度限制。 处理建议：发送的音频次要信息数据长度应小于 1024 字节。\r\n1003050\r\n流附加信息为空 (该错误码已废弃)\r\n1003051\r\n流附加信息超长，最大长度应小于 1024 字节 (该错误码已废弃)\r\n1003053\r\n更新流附加信息失败，请检查网络连接 (该错误码已废弃)\r\n1003055\r\n描述：设置推流水印失败。 可能原因：传入的水印路径为空。 处理建议：传入非空水印路径。\r\n1003056\r\n描述：设置推流水印失败。 可能原因：传入的水印路径超过字节大小限制。 处理建议：传入的水印路径应小于 512 字节。\r\n1003057\r\n描述：设置推流水印失败。可能原因：推流水印路径输入有误或者图片格式不支持。 处理建议：输入正确的水印路径，仅支持 jpg 和 png 图片格式。\r\n1003058\r\n描述：水印布局有误。可能原因：水印布局区域超出编码分辨率大小。处理建议：在设置水印时需要确保水印的布局区域不能超过编码分辨率的大小。\r\n1003060\r\n描述：推流加密密钥不合法。可能原因：设置的加密密钥长度不支持。处理建议：推流加密密钥长度需要为16/24/32字节。\r\n1003070\r\n描述：推流函数调用失败。可能原因：多房间模式下，调用的推流函数有误。处理建议：调用带有参数 [ZegoPublisherConfig] 的推流函数。\r\n1003071\r\n描述：推流函数调用错误。可能原因：多房间模式下，推流函数的 [roomID] 不能为空。处理建议：多房间模式下，推流函数参数 [roomID] 不能为空。\r\n1003072\r\n描述：推拉流鉴权错误。可能原因：创建引擎时传递的[app<mark>S</mark>ign]错误，或者登录房间传递的[Token]错误或超时。处理建议：登录时传递正确的[Token],或收到[onRoomTokenWillExpire] 回调时及时调用[renewToken更新Token。\r\n1003073\r\n描述：指定的关闭摄像头时所推静态图片的路径错误。可能原因：路径拼写错误，或者没有读权限。处理建议：检查设置的图片路径是否正确，以及是否有读权限。\r\n1003080\r\n描述：不支持的视频编码器。可能原因：当前 <mark>S</mark>DK 无所选编码器。处理建议：请联系 ZEGO 技术支持。\r\n1003081\r\n描述：编码失败。可能原因：所选编码器编码失败。处理建议：请联系 ZEGO 技术支持。\r\n1003099\r\n描述：系统内部异常导致推流失败。可能原因：系统内部异常导致推流失败。处理建议：请联系技术支持解决。",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": ["s"]
+            },
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 <mark>S</mark>DK",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["s"]
+              },
+              "lvl1": {
+                "value": "常见错误码",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "1003xxx 推流相关的错误码",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes#320-%E7%89%88%E6%9C%AC-",
+          "content": "发布日期： 2023-01-13\r\n新增功能\r\n范围场景支持设置推拉流模式\n范围场景支持设置推拉流模式，推拉流模式包括：是否允许拉取范围内的流、是否允许推流到世界。\n相关 API 请参考 enablePlayInRange, enablePublishToWorld\r\n范围场景支持设置推拉流模式\r\n范围场景支持设置推拉流模式，推拉流模式包括：是否允许拉取范围内的流、是否允许推流到世界。\r\n相关 API 请参考 enablePlayInRange, enablePublishToWorld\r\n支持视频大小流功能\n通过视频大小流编码（H.264 DualStream）对视频进行码流分层时，相比较于分层视频编码（H.264 SVC），视频大小流编码（H.264 DualStream）支持使用硬件编码，即 [ZegoVideoCodecID] 新增 [ZegoVideoCodecIDH264DualStream] 字段，详情请参考 设置视频编码方式。\n相关 API 请参考 ZegoVideoCodecIDH264DualStream\r\n支持视频大小流功能\r\n通过视频大小流编码（H.264 DualStream）对视频进行码流分层时，相比较于分层视频编码（H.264 SVC），视频大小流编码（H.264 DualStream）支持使用硬件编码，即 [ZegoVideoCodecID] 新增 [ZegoVideoCodecIDH264DualStream] 字段，详情请参考 设置视频编码方式。\r\n相关 API 请参考 ZegoVideoCodecIDH264DualStream\r\n主体分割支持实景分割与绿幕分割，内部渲染支持 Alpha 通道\n注意：本功能为内测功能，如需接入体验，请联系 ZEGO 商务人员。\r\n主体分割支持实景分割与绿幕分割，内部渲染支持 Alpha 通道\r\n注意：本功能为内测功能，如需接入体验，请联系 ZEGO 商务人员。\r\nAndroid、iOS、Windows、macOS（暂只支持 Apple 芯片）四端支持实景分割与绿幕分割。\r\nAndroid、iOS、Windows、macOS（暂只支持 Apple 芯片）四端支持实景分割与绿幕分割。\r\n内部渲染支持 Alpha 通道，开发者不需要使用自定义渲染，即可实现主体与背景的混合。\r\n内部渲染支持 Alpha 通道，开发者不需要使用自定义渲染，即可实现主体与背景的混合。\r\n改进优化\r\n自定义信令配置支持扩展到 4KB\n注意：自定义信令配置默认大小为 1KB，如需扩展到 4KB，请联系 ZEGO 技术支持进行处理。\r\n自定义信令配置支持扩展到 4KB\r\n注意：自定义信令配置默认大小为 1KB，如需扩展到 4KB，请联系 ZEGO 技术支持进行处理。\r\n从此版本开始 Express 实时音视频 Video SDK 的 CocoaPods 的项目名称由 ZegoExpressEngine/Video 变更为 ZegoExpressEngine，详情请查看 集成 SDK 文档。\r\n从此版本开始 Express 实时音视频 Video SDK 的 CocoaPods 的项目名称由 ZegoExpressEngine/Video 变更为 ZegoExpressEngine，详情请查看 集成 SDK 文档。\r\n问题修复\r\n修复当硬件解码故障后重启时，访问空指针崩溃的问题\r\n修复当硬件解码故障后重启时，访问空指针崩溃的问题\r\n修复由于读取图片宽高不正确，导致调用 [setDummyCaptureImagePath] 设置关闭摄像头推静态图片无效的问题\r\n修复由于读取图片宽高不正确，导致调用 [setDummyCaptureImagePath] 设置关闭摄像头推静态图片无效的问题\r\n修复当 iOS 14 启动引擎后，访问不存在的 API 时，导致崩溃的问题\r\n修复当 iOS 14 启动引擎后，访问不存在的 API 时，导致崩溃的问题\r\n修复网络时间模块重试失败的问题\r\n修复网络时间模块重试失败的问题",
+          "type": "content",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "3.2.0 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "78-https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes",
+          "_snippetResult": {
+            "content": {
+              "value": "… 分层时，相比较于分层视频编码（H.264 <mark>S</mark>VC），视频大小流编码（H.264 Dual<mark>S</mark>tream）支持使 …",
+              "matchLevel": "full"
+            }
+          },
+          "_highlightResult": {
+            "content": {
+              "value": "发布日期： 2023-01-13\r\n新增功能\r\n范围场景支持设置推拉流模式\n范围场景支持设置推拉流模式，推拉流模式包括：是否允许拉取范围内的流、是否允许推流到世界。\n相关 API 请参考 enablePlayInRange, enablePublishToWorld\r\n范围场景支持设置推拉流模式\r\n范围场景支持设置推拉流模式，推拉流模式包括：是否允许拉取范围内的流、是否允许推流到世界。\r\n相关 API 请参考 enablePlayInRange, enablePublishToWorld\r\n支持视频大小流功能\n通过视频大小流编码（H.264 Dual<mark>S</mark>tream）对视频进行码流分层时，相比较于分层视频编码（H.264 <mark>S</mark>VC），视频大小流编码（H.264 Dual<mark>S</mark>tream）支持使用硬件编码，即 [ZegoVideoCodecID] 新增 [ZegoVideoCodecIDH264Dual<mark>S</mark>tream] 字段，详情请参考 设置视频编码方式。\n相关 API 请参考 ZegoVideoCodecIDH264Dual<mark>S</mark>tream\r\n支持视频大小流功能\r\n通过视频大小流编码（H.264 Dual<mark>S</mark>tream）对视频进行码流分层时，相比较于分层视频编码（H.264 <mark>S</mark>VC），视频大小流编码（H.264 Dual<mark>S</mark>tream）支持使用硬件编码，即 [ZegoVideoCodecID] 新增 [ZegoVideoCodecIDH264Dual<mark>S</mark>tream] 字段，详情请参考 设置视频编码方式。\r\n相关 API 请参考 ZegoVideoCodecIDH264Dual<mark>S</mark>tream\r\n主体分割支持实景分割与绿幕分割，内部渲染支持 Alpha 通道\n注意：本功能为内测功能，如需接入体验，请联系 ZEGO 商务人员。\r\n主体分割支持实景分割与绿幕分割，内部渲染支持 Alpha 通道\r\n注意：本功能为内测功能，如需接入体验，请联系 ZEGO 商务人员。\r\nAndroid、iOS、Windows、macOS（暂只支持 Apple 芯片）四端支持实景分割与绿幕分割。\r\nAndroid、iOS、Windows、macOS（暂只支持 Apple 芯片）四端支持实景分割与绿幕分割。\r\n内部渲染支持 Alpha 通道，开发者不需要使用自定义渲染，即可实现主体与背景的混合。\r\n内部渲染支持 Alpha 通道，开发者不需要使用自定义渲染，即可实现主体与背景的混合。\r\n改进优化\r\n自定义信令配置支持扩展到 4KB\n注意：自定义信令配置默认大小为 1KB，如需扩展到 4KB，请联系 ZEGO 技术支持进行处理。\r\n自定义信令配置支持扩展到 4KB\r\n注意：自定义信令配置默认大小为 1KB，如需扩展到 4KB，请联系 ZEGO 技术支持进行处理。\r\n从此版本开始 Express 实时音视频 Video <mark>S</mark>DK 的 CocoaPods 的项目名称由 ZegoExpressEngine/Video 变更为 ZegoExpressEngine，详情请查看 集成 <mark>S</mark>DK 文档。\r\n从此版本开始 Express 实时音视频 Video <mark>S</mark>DK 的 CocoaPods 的项目名称由 ZegoExpressEngine/Video 变更为 ZegoExpressEngine，详情请查看 集成 <mark>S</mark>DK 文档。\r\n问题修复\r\n修复当硬件解码故障后重启时，访问空指针崩溃的问题\r\n修复当硬件解码故障后重启时，访问空指针崩溃的问题\r\n修复由于读取图片宽高不正确，导致调用 [<mark>s</mark>etDummyCaptureImagePath] 设置关闭摄像头推静态图片无效的问题\r\n修复由于读取图片宽高不正确，导致调用 [<mark>s</mark>etDummyCaptureImagePath] 设置关闭摄像头推静态图片无效的问题\r\n修复当 iOS 14 启动引擎后，访问不存在的 API 时，导致崩溃的问题\r\n修复当 iOS 14 启动引擎后，访问不存在的 API 时，导致崩溃的问题\r\n修复网络时间模块重试失败的问题\r\n修复网络时间模块重试失败的问题",
+              "matchLevel": "full",
+              "fullyHighlighted": false,
+              "matchedWords": ["s"]
+            },
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 <mark>S</mark>DK",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["s"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "3.2.0 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        },
+        {
+          "url": "https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes#321-%E7%89%88%E6%9C%AC-",
+          "content": "发布日期： 2023-02-23\r\n问题修复\r\n修复某些场景下，重新登录房间后，自定义音频采集及音频采集源需重新设置才能生效的问题\r\n修复某些场景下，重新登录房间后，自定义音频采集及音频采集源需重新设置才能生效的问题",
+          "type": "content",
+          "hierarchy": {
+            "lvl0": "文档 > 客户端 SDK",
+            "lvl1": "发布日志",
+            "lvl2": "3.2.1 版本",
+            "lvl3": null,
+            "lvl4": null,
+            "lvl5": null,
+            "lvl6": null
+          },
+          "objectID": "76-https://doc-zh.zego.im/real-time-video-ios-oc/client-sdk/release-notes",
+          "_snippetResult": {
+            "content": {
+              "value": "发布日期： 2023-02-23\r\n问题修复\r\n修复某些场景下，重新登录房间后，自定义音频 …",
+              "matchLevel": "none"
+            }
+          },
+          "_highlightResult": {
+            "content": {
+              "value": "发布日期： 2023-02-23\r\n问题修复\r\n修复某些场景下，重新登录房间后，自定义音频采集及音频采集源需重新设置才能生效的问题\r\n修复某些场景下，重新登录房间后，自定义音频采集及音频采集源需重新设置才能生效的问题",
+              "matchLevel": "none",
+              "matchedWords": []
+            },
+            "hierarchy": {
+              "lvl0": {
+                "value": "文档 > 客户端 <mark>S</mark>DK",
+                "matchLevel": "full",
+                "fullyHighlighted": false,
+                "matchedWords": ["s"]
+              },
+              "lvl1": {
+                "value": "发布日志",
+                "matchLevel": "none",
+                "matchedWords": []
+              },
+              "lvl2": {
+                "value": "3.2.1 版本",
+                "matchLevel": "none",
+                "matchedWords": []
+              }
+            }
+          }
+        }
+      ],
+      "nbHits": 2459,
+      "page": 0,
+      "nbPages": 50,
+      "hitsPerPage": 20,
+      "exhaustiveNbHits": false,
+      "exhaustiveTypo": true,
+      "exhaustive": {
+        "nbHits": false,
+        "typo": true
+      },
+      "query": "s",
+      "params": "query=s&attributesToRetrieve=%5B%22hierarchy.lvl0%22%2C%22hierarchy.lvl1%22%2C%22hierarchy.lvl2%22%2C%22hierarchy.lvl3%22%2C%22hierarchy.lvl4%22%2C%22hierarchy.lvl5%22%2C%22hierarchy.lvl6%22%2C%22content%22%2C%22type%22%2C%22url%22%5D&attributesToSnippet=%5B%22content%3A30%22%5D&snippetEllipsisText=%E2%80%A6&highlightPreTag=%3Cmark%3E&highlightPostTag=%3C%2Fmark%3E&hitsPerPage=20&clickAnalytics=false&facetFilters=%5B%22version%3Anext%22%2C%22group%3Areal_time_video_zh%22%2C%22language%3Azh%22%2C%22platform%3AiOS%3A+Objective-C%22%5D",
+      "index": "zh-zego",
+      "renderingContent": {},
+      "processingTimeMS": 4,
+      "processingTimingsMS": {
+        "_request": {
+          "roundTrip": 31
+        },
+        "afterFetch": {
+          "format": {
+            "highlighting": 6,
+            "snippeting": 12,
+            "total": 19
+          }
+        },
+        "fetch": {
+          "scanning": 2,
+          "total": 3
+        },
+        "total": 4
+      },
+      "serverTimeMS": 25
+    }
+  ]
+}

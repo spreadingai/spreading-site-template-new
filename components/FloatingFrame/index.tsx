@@ -14,6 +14,14 @@ import {
   // @ts-ignore
 } from "@ant-design/icons";
 import { useSearchParams } from "next/navigation";
+import ThemeContext from "@/components/header/Theme.context";
+import React from "react";
+import dynamic from "next/dynamic";
+import useLanguage from "@/components/hooks/useLanguage";
+
+const AskAIModal = dynamic(() => import("@/components/header/AskAI/modal"), {
+  ssr: false,
+});
 
 interface FloatingFrameProps {
   locale?: string;
@@ -22,7 +30,25 @@ interface FloatingFrameProps {
 const FloatingFrame = ({ locale = "zh" }: FloatingFrameProps) => {
   const searchParams = useSearchParams();
   const [isScrolledTop, setIsScrolledTop] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [initialMessage, setInitialMessage] = useState<string | undefined>();
+  const [defaultQuestions, setDefaultQuestions] = useState<string[] | undefined>();
+  const { theme } = React.useContext(ThemeContext);
+  const { currentLanguage } = useLanguage();
   const [isShowQrCode, setIsShowQrCode] = useState(false);
+
+  // 监听来自 SearchDropdown 的打开 AI 弹窗事件
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const { message, defaultQuestions } = (e as CustomEvent).detail || {};
+      setInitialMessage(message);
+      setDefaultQuestions(defaultQuestions);
+      setIsModalOpen(true);
+    };
+    window.addEventListener("open-ask-ai", handler);
+    return () => window.removeEventListener("open-ask-ai", handler);
+  }, []);
+
   const saveSource = useCallback(() => {
     const source = searchParams.get("source");
     if (source) sessionStorage.setItem("source", source);
@@ -55,11 +81,11 @@ const FloatingFrame = ({ locale = "zh" }: FloatingFrameProps) => {
         url =
           url +
           `${url.includes("?") ? "&" : "?"}marketSource=${encodeURIComponent(
-            curUrl
+            curUrl,
           )}`;
       window.open(url);
     },
-    [getCurrSourceUrl]
+    [getCurrSourceUrl],
   );
 
   const handleGoToRegisterLogin = useCallback(
@@ -67,7 +93,7 @@ const FloatingFrame = ({ locale = "zh" }: FloatingFrameProps) => {
       lang: string,
       isLogin = false,
       accountInfo: any = null,
-      path: string = ""
+      path: string = "",
     ) => {
       if (accountInfo) {
         const consoleMainPageDomain =
@@ -84,7 +110,7 @@ const FloatingFrame = ({ locale = "zh" }: FloatingFrameProps) => {
         toLoginRegister(lang, isLogin);
       }
     },
-    [toLoginRegister]
+    [toLoginRegister],
   );
 
   const workOrderClick = useCallback(() => {
@@ -166,6 +192,12 @@ const FloatingFrame = ({ locale = "zh" }: FloatingFrameProps) => {
   return (
     <>
       <ul className={styles.floatingWrapper}>
+        {/* Ask AI 按钮 */}
+        <li
+          className={classNames(styles.aiChatBtn)}
+          onClick={() => setIsModalOpen(true)}
+        ></li>
+
         {locale === "zh" ? (
           <>
             {/* 免费试用按钮 */}
@@ -205,7 +237,7 @@ const FloatingFrame = ({ locale = "zh" }: FloatingFrameProps) => {
             {
               [styles.hidden]: isScrolledTop,
             },
-            styles.returnTop
+            styles.returnTop,
           )}
           onClick={() => document.body.scrollTo({ top: 0, behavior: "smooth" })}
         >
@@ -237,6 +269,18 @@ const FloatingFrame = ({ locale = "zh" }: FloatingFrameProps) => {
           </div>
         </div>
       ) : null}
+      <AskAIModal
+        isModalOpen={isModalOpen}
+        onCloseHandle={() => {
+          setIsModalOpen(false);
+          setInitialMessage(undefined);
+          setDefaultQuestions(undefined);
+        }}
+        currentTheme={theme || "light"}
+        currentLanguage={currentLanguage}
+        initialMessage={initialMessage}
+        defaultQuestions={defaultQuestions}
+      />
     </>
   );
 };
