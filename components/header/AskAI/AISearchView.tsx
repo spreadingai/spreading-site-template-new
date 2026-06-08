@@ -77,6 +77,14 @@ const AISearchView = ({ language }: Props) => {
           ...event.data,
         });
       }
+      // 父页面指令：关闭弹框
+      // 1) 通过事件让 Modal 内部取消正在进行的流式请求
+      // 2) 直接 setIsModalOpen(false) 关闭弹框
+      // 不调用 onCloseHandle，避免向父页面回传 close 消息造成循环
+      if (event.data.close) {
+        window.dispatchEvent(new CustomEvent("cancel-ask-ai-stream"));
+        setIsModalOpen(false);
+      }
     };
     window.addEventListener("message", receiveMessage, false);
     return () => {

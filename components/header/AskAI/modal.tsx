@@ -331,6 +331,21 @@ const AskAIModal: React.FC<Props> = ({
     onCloseHandle();
   };
 
+  // 监听全局 cancel-ask-ai-stream 事件：仅取消正在进行的流式请求
+  // 触发方：AISearchView 收到父页面 postMessage({ close: true }) 时 dispatch 此事件
+  // 关闭弹框由外部直接控制 isModalOpen，这里只负责 Modal 内部才能做的清理
+  const streamingMessageIdRef = useRef(streamingMessageId);
+  streamingMessageIdRef.current = streamingMessageId;
+  useEffect(() => {
+    const handler = () => {
+      if (streamingMessageIdRef.current) {
+        void cancelRun(streamingMessageIdRef.current);
+      }
+    };
+    window.addEventListener("cancel-ask-ai-stream", handler);
+    return () => window.removeEventListener("cancel-ask-ai-stream", handler);
+  }, []);
+
   return (
     <Modal
       title={

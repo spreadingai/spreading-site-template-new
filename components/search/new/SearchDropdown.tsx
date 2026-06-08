@@ -49,14 +49,15 @@ const ATTRIBUTES_TO_RETRIEVE = [
 // 格式为 "字段名:字数"，比如 "content:30" 表示 content 最多返回 30 个词的摘要。
 // 匹配部分会用 <mark> 标签包裹，超出部分用 snippetEllipsisText 替代。
 // 结果通过 hit._snippetResult.字段名.value 获取。
-const ATTRIBUTES_TO_SNIPPET = [
+// 注意：中文以单字为词、信息密度高，content 摘要词数需更大才能展示足够上下文。
+const getAttributesToSnippet = (lang: "zh" | "en") => [
   "hierarchy.lvl1:10",
   "hierarchy.lvl2:10",
   "hierarchy.lvl3:10",
   "hierarchy.lvl4:10",
   "hierarchy.lvl5:10",
   "hierarchy.lvl6:10",
-  "content:15",
+  lang === "zh" ? "content:15" : "content:10",
 ];
 
 // restrictSearchableAttributes：限制只在哪些字段中搜索/匹配关键词。
@@ -262,6 +263,7 @@ const SearchDropdown: React.FC<Props> = ({
     () => algoliasearch(appId, apiKey),
     [appId, apiKey],
   );
+  const attributesToSnippet = useMemo(() => getAttributesToSnippet(lang), [lang]);
   const groupMap = useMemo(
     () => buildGroupMap(instanceGroups),
     [instanceGroups],
@@ -340,7 +342,7 @@ const SearchDropdown: React.FC<Props> = ({
           hitsPerPage={5}
           restrictSearchableAttributes={RESTRICT_SEARCHABLE_ATTRIBUTES}
           attributesToRetrieve={ATTRIBUTES_TO_RETRIEVE}
-          attributesToSnippet={ATTRIBUTES_TO_SNIPPET}
+          attributesToSnippet={attributesToSnippet}
           snippetEllipsisText="…"
           highlightPreTag="<mark>"
           highlightPostTag="</mark>"
