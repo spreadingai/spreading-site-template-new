@@ -14,6 +14,7 @@ export interface EventStatusProps {
   eventName: string;
   toolName?: string;
   toolArgs?: any;
+  isLoading?: boolean;
   aiSearchData: any;
   currentTheme?: string;
 }
@@ -22,6 +23,7 @@ const EventStatus: React.FC<EventStatusProps> = ({
   eventName,
   toolName,
   toolArgs,
+  isLoading = false,
   aiSearchData,
   currentTheme = 'light',
 }) => {
@@ -70,7 +72,9 @@ const EventStatus: React.FC<EventStatusProps> = ({
 
   return (
     <div className={styles.eventStatus}>
+      {isLoading}
       <Space size="small">
+        {isLoading && <LoadingOutlined className={styles.loadingIcon} />}
         {eventDisplay.icon}
         <span className={styles.eventText}>{eventDisplay.text}</span>
       </Space>

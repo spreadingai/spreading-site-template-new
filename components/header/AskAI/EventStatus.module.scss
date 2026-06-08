@@ -16,6 +16,11 @@
     color: var(--docuo-color-primary, #1677ff);
   }
 
+  .loadingIcon {
+    font-size: 16px;
+    color: var(--docuo-color-primary, #1677ff);
+  }
+
   :global(.ant-space .ant-space-item) {
     display: flex;
     &:last-of-type {
