@@ -34,7 +34,7 @@ export const copywriting = {
       defaultRemarks: ["Hello", "What can I do for you?"],
       modalTitle: "AI document assistant",
       referenceSource: "Reference source:",
-      inputPlaceholder: "Welcome to ask any questions about ZEGOCLOUD products",
+      inputPlaceholder: "Questions about ZEGOCLOUD products",
       backToBottomText: "Back to bottom",
       askAI: "Ask AI",
       guessText: "Guess you want to know:",
