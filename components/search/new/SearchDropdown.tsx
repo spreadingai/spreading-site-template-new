@@ -194,7 +194,7 @@ const SearchBoxWrap: React.FC<{
     if (extraParams?.platform)
       params.set(`${prefix}[menu][platform]`, extraParams.platform);
     const qs = params.toString();
-    return `/search${qs ? `?${qs}` : ""}`;
+    return `${process.env.NEXT_PUBLIC_BASE_PATH || ''}/search${qs ? `?${qs}` : ""}`;
   };
 
   // const handleKeyDown = (e: React.KeyboardEvent) => {
