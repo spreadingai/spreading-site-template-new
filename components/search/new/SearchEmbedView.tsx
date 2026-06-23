@@ -21,6 +21,11 @@ const WHITE_LIST_ZH = [
   "http://localhost:5666",
   "https://doc-zh.zego.im",
   "https://zegoim.spreading.io",
+  // 控制台
+  "https://console.zego.im",
+  "https://console-preview.zego.im",
+  "https://console-beta.zego.im",
+  "https://balala.zego.im:8989",
 ];
 
 // --- postMessage 工具 ---
