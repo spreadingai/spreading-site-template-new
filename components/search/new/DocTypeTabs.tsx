@@ -50,7 +50,7 @@ const DocTypeTabs: React.FC<Props> = ({
     if (extraParams?.platform)
       params.set(`${prefix}[menu][platform]`, extraParams.platform);
     const qs = params.toString();
-    return `${process.env.NEXT_PUBLIC_BASE_PATH || ""}/search${qs ? `?${qs}` : ""}`;
+    return `${language === "zh" ? "https://doc-zh.zego.im" : "https://www.zegocloud.com"}${process.env.NEXT_PUBLIC_BASE_PATH || ""}/search${qs ? `?${qs}` : ""}`;
   };
 
   return (
