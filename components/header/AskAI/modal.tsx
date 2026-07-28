@@ -367,7 +367,7 @@ const AskAIModal: React.FC<Props> = ({
       footer={null}
       className={outStyles["ask-ai-dialog"]}
       keyboard={false}
-      // maskClosable={false}
+      maskClosable={false}
       mask={false}
       closeIcon={
         <Image
