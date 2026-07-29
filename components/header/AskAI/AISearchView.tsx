@@ -18,6 +18,11 @@ const WHITE_LIST_ZH = [
   "http://localhost:5666",
   "https://doc-zh.zego.im",
   "https://zegoim.spreading.io",
+  "https://doc-zh.zegotech.cn",
+  "https://www.zego.im",
+  "https://www.zegotech.cn",
+  "https://zego.im",
+  "https://zegotech.cn",
   // 控制台
   "https://console.zego.im",
   "https://console-preview.zego.im",
