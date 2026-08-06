@@ -8,7 +8,7 @@
 import React, { useEffect, useRef } from "react";
 
 // import CodeBlock from "@theme/CodeBlock";
-import { Code } from "@/components/mdx";
+import { Callout, Code } from "@/components/mdx";
 /* eslint-disable import/no-extraneous-dependencies*/
 import clsx from "clsx";
 import { createDescription } from "@/components/docuoOpenapi/markdown/createDescription";
@@ -18,6 +18,7 @@ import ReactMarkdown from "react-markdown";
 import rehypeRaw from "rehype-raw";
 import useLanguage from "@/components/hooks/useLanguage";
 import { copywriting } from "@/components/constant/language";
+import { normalizeDescriptionCallouts } from "@/components/docuoOpenapi/theme/ParamsItem/descriptionCallouts";
 
 
 function SchemaItem({
@@ -60,9 +61,23 @@ function SchemaItem({
     <div>
       <ReactMarkdown
         // eslint-disable-next-line react/no-children-prop
-        children={createDescription(description)}
+        children={createDescription(normalizeDescriptionCallouts(description))}
         components={{
           pre: "div",
+          div({ node, children, ...props }) {
+            if (props["data-docuo-callout"] === "warning") {
+              const calloutProps = { ...props };
+              const title = calloutProps["data-title"] || "注意";
+              delete calloutProps["data-docuo-callout"];
+              delete calloutProps["data-title"];
+              return (
+                <Callout.Warning title={title} {...calloutProps}>
+                  {children}
+                </Callout.Warning>
+              );
+            }
+            return <div {...props}>{children}</div>;
+          },
           a({ href, children, ...props }) {
             const raw = href || "";
             const isExternal = raw.startsWith("http") || raw.startsWith("mailto:") || raw.startsWith("tel:");

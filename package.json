@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "test:openapi-query": "node --test components/docuoOpenapi/theme/ApiExplorer/querySerialization.test.js components/docuoOpenapi/theme/ApiExplorer/parameterValue.test.js components/docuoOpenapi/theme/ApiExplorer/ParamOptions/selectInitialValue.test.js components/docuoOpenapi/theme/ApiExplorer/ParamOptions/schemaEditorValue.test.js components/docuoOpenapi/theme/ParamsItem/parameterDisplay.test.js components/docuoOpenapi/theme/ParamsItem/descriptionCallouts.test.js",
     "clear": "sh ./clear.sh",
     "trans-api-short-link": "node ./lib/trans-api-short-link/init.mjs",
     "dev": "node ./lib/trans-short-link/init.mjs && next dev",

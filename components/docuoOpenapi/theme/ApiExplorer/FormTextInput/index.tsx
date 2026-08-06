@@ -17,6 +17,8 @@ import { copywriting } from "@/components/constant/language";
 
 export interface Props {
   prefix?: ReactNode;
+  isRequired?: boolean;
+  paramName?: string;
   value?: string;
   placeholder?: string;
   password?: boolean;

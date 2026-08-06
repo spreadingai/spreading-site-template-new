@@ -39,7 +39,8 @@
     }
   }
   .openapi-params_example,
-  .openapi-params_examples {
+  .openapi-params_examples,
+  .openapi-params_query_example {
     & > div {
       & > strong {
         font-family: var(--font-inter-semibold);
@@ -48,6 +49,40 @@
         margin-right: 8px;
       }
     }
+  }
+  .openapi-params__recursive-structure {
+    margin-top: 12px;
+  }
+  .openapi-params__array-container {
+    & > .opening-array-bracket-container:first-child {
+      padding-top: 0 !important;
+    }
+  }
+  .openapi-params__array-value {
+    padding: 0 0 16px 16px;
+    border-left: 1px solid var(--docuo-openapi-list-item-leading-line-color);
+
+    & > .openapi-schema__name {
+      display: inline-flex;
+      margin-bottom: 8px;
+    }
+  }
+  .openapi-params__recursive-children {
+    margin-top: 12px;
+    margin-left: 8px;
+  }
+  .openapi-params__query-name {
+    margin-top: 8px;
+
+    & > strong {
+      font-family: var(--font-inter);
+      font-weight: 400;
+      margin-right: 8px;
+    }
+  }
+  .openapi-params_query_example .code-block-wrapper,
+  .openapi-params_example .code-block-wrapper {
+    margin-top: 8px;
   }
 }
 

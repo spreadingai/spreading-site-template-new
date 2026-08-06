@@ -36,6 +36,7 @@ import {
 import { parseByInfoPath } from "@/components/docuoOpenapi/utils";
 import useInstance from "@/components/hooks/useInstance";
 import useVersion from "@/components/hooks/useVersion";
+import { restoreParameterValue } from "@/components/docuoOpenapi/theme/ApiExplorer/parameterValue";
 
 interface Props {
   mdxSource: any;
@@ -196,21 +197,8 @@ export default function ApiItem(props: Props): JSX.Element {
             const val = map[key];
             if (val === undefined) return p;
 
-            const isArrayType = p?.schema?.type === "array";
             try {
-              if (isArrayType) {
-                if (Array.isArray(val)) {
-                  return { ...p, value: val.map((v: any) => String(v)) };
-                } else {
-                  return { ...p, value: [String(val)] };
-                }
-              } else {
-                if (Array.isArray(val)) {
-                  return { ...p, value: String(val[0]) };
-                } else {
-                  return { ...p, value: String(val) };
-                }
-              }
+              return { ...p, value: restoreParameterValue(p, val) };
             } catch {
               return p;
             }

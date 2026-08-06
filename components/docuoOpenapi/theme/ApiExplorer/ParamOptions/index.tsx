@@ -9,6 +9,7 @@ import React, { useState } from "react";
 
 import FormItem from "@/components/docuoOpenapi/theme/ApiExplorer/FormItem";
 import ParamArrayFormItem from "@/components/docuoOpenapi/theme/ApiExplorer/ParamOptions/ParamFormItems/ParamArrayFormItem";
+import ParamObjectArrayFormItem from "@/components/docuoOpenapi/theme/ApiExplorer/ParamOptions/ParamFormItems/ParamObjectArrayFormItem";
 import ParamBooleanFormItem from "@/components/docuoOpenapi/theme/ApiExplorer/ParamOptions/ParamFormItems/ParamBooleanFormItem";
 import ParamMultiSelectFormItem from "@/components/docuoOpenapi/theme/ApiExplorer/ParamOptions/ParamFormItems/ParamMultiSelectFormItem";
 import ParamSelectFormItem from "@/components/docuoOpenapi/theme/ApiExplorer/ParamOptions/ParamFormItems/ParamSelectFormItem";
@@ -25,6 +26,13 @@ export interface ParamProps {
 }
 
 function ParamOption({ param }: ParamProps) {
+  if (
+    param.schema?.type === "array" &&
+    param.schema.items?.type === "object"
+  ) {
+    return <ParamObjectArrayFormItem param={param} />;
+  }
+
   if (param.schema?.type === "array" && param.schema.items?.enum) {
     return <ParamMultiSelectFormItem param={param} />;
   }

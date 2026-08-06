@@ -114,3 +114,30 @@
   display: none;
   visibility: hidden;
 }
+
+.openapi-explorer__object-array-item {
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 1px solid var(--openapi-input-border);
+  border-radius: var(--ifm-pre-border-radius);
+}
+
+.openapi-explorer__object-array-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.openapi-explorer__object-array-header .openapi-explorer__delete-btn {
+  min-width: 32px;
+  min-height: 32px;
+  margin-left: 8px;
+  font-size: 20px;
+}
+
+.openapi-explorer__delete-btn:disabled,
+.openapi-explorer__thin-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}

@@ -19,53 +19,19 @@ import {
   ServerObject,
 } from "@/components/docuoOpenapi/docuo-plugin-openapi-docs/src/openapi/types";
 import cloneDeep from "lodash/cloneDeep";
+import { serializeQueryParams } from "./querySerialization";
+import type { ParameterValue } from "./ParamOptions/slice";
 
 type Param = {
-  value?: string | string[];
+  value?: ParameterValue;
 } & ParameterObject;
 
 function setQueryParams(postman: sdk.Request, queryParams: Param[]) {
   postman.url.query.clear();
 
-  const qp: sdk.QueryParam[] = [];
-  queryParams.forEach((param) => {
-    if (param.value === undefined || param.value === null) {
-      return;
-    }
-
-    // 数组参数采用 bracket 风格：name[]=v1&name[]=v2
-    if (Array.isArray(param.value)) {
-      param.value.forEach((v) => {
-        qp.push(
-          new sdk.QueryParam({
-            key: `${param.name}[]`,
-            value: String(v),
-          })
-        );
-      });
-      return;
-    }
-
-    // Parameter allows empty value: only meaningful for boolean flags
-    if (param.allowEmptyValue && param.schema?.type === "boolean") {
-      if (param.value === "true") {
-        qp.push(
-          new sdk.QueryParam({
-            key: param.name,
-            value: null,
-          })
-        );
-      }
-      return;
-    }
-
-    qp.push(
-      new sdk.QueryParam({
-        key: param.name,
-        value: String(param.value),
-      })
-    );
-  });
+  const qp = serializeQueryParams(queryParams).map(
+    ({ key, value }) => new sdk.QueryParam({ key, value })
+  );
 
   if (qp.length > 0) {
     postman.addQueryParams(qp);

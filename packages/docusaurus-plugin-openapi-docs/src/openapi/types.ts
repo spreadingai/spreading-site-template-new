@@ -194,6 +194,12 @@ export interface ParameterObject {
   //
   content?: Map<MediaTypeObject>;
   param?: Object;
+  "x-docuo-display-name"?: string;
+  "x-docuo-query-serialization"?: {
+    style: "recursive-indexed-dot";
+    indexStart?: number;
+    indexLabels?: string[];
+  };
   // ignoring stylings: matrix, label, form, simple, spaceDelimited,
   // pipeDelimited and deepObject
 }
@@ -214,6 +220,12 @@ export interface ParameterObjectWithRef {
   examples?: Map<ExampleObject | ReferenceObject>;
   //
   content?: Map<MediaTypeObjectWithRef>;
+  "x-docuo-display-name"?: string;
+  "x-docuo-query-serialization"?: {
+    style: "recursive-indexed-dot";
+    indexStart?: number;
+    indexLabels?: string[];
+  };
   // ignoring stylings: matrix, label, form, simple, spaceDelimited,
   // pipeDelimited and deepObject
 }

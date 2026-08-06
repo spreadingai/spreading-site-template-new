@@ -8,7 +8,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ParameterObject } from "@/components/docuoOpenapi/docuo-plugin-openapi-docs/src/openapi/types";
 
-export type Param = ParameterObject & { value?: string[] | string };
+export type ParameterValue =
+  | string
+  | ParameterValue[]
+  | { [key: string]: ParameterValue };
+
+export type Param = ParameterObject & {
+  // Keep the Redux/Immer boundary shallow; recursive values are validated by
+  // sanitizeParameterValue before they are stored or serialized.
+  value?: any;
+};
 
 export interface State {
   path: Param[];

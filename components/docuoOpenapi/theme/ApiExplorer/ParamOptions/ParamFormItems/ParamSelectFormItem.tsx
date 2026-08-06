@@ -17,6 +17,7 @@ import { useTypedDispatch } from "@/components/docuoOpenapi/theme/ApiItem/hooks"
 import { Controller, useFormContext } from "react-hook-form";
 import useLanguage from "@/components/hooks/useLanguage";
 import { copywriting } from "@/components/constant/language";
+import { getSelectInitialValue } from "../selectInitialValue";
 
 
 export interface ParamProps {
@@ -42,6 +43,7 @@ export default function ParamSelectFormItem({ param }: ParamProps) {
 
   // 用于追踪是否已自动选择唯一选项，避免重复触发
   const hasAutoSelectedRef = useRef(false);
+  const initialValue = getSelectInitialValue(param);
 
   // 当 options 变化时（如切换页面），重置自动选择标记
   useEffect(() => {
@@ -50,8 +52,8 @@ export default function ParamSelectFormItem({ param }: ParamProps) {
 
   // 当只有一个选项时，自动选择该选项
   useEffect(() => {
-    if (options.length === 1 && !hasAutoSelectedRef.current) {
-      const singleOption = options[0];
+    if (initialValue !== undefined && !hasAutoSelectedRef.current) {
+      const value = initialValue;
 
       // 标记已自动选择，避免重复触发
       hasAutoSelectedRef.current = true;
@@ -60,16 +62,16 @@ export default function ParamSelectFormItem({ param }: ParamProps) {
       dispatch(
         setParam({
           ...param,
-          value: singleOption,
+          value,
         })
       );
 
       // 更新 React Hook Form 的字段值并触发验证
-      setValue("paramSelect", singleOption, { shouldValidate: true });
+      setValue("paramSelect", value, { shouldValidate: true });
 
-      console.log(`Auto-selected single option: ${singleOption}`);
+      console.log(`Auto-selected parameter value: ${value}`);
     }
-  }, [options, param, dispatch, setValue]);
+  }, [initialValue, options, param, dispatch, setValue]);
 
   return (
     <>
