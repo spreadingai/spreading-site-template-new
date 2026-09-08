@@ -16,37 +16,42 @@ const InsVersionDropdown = ({ type, menu }: InsVersionDropdownProps) => {
 
   const DropdownList = useMemo(() => {
     return menu.items.map((item, index) => {
+      const isExternal = !!item.href || /^https?:/i.test(item.defaultLink);
+      const content = (
+        <>
+          <span
+            className={`mr-[6px] zgfont ${platformList[item.key] || ""}`}
+          ></span>
+          {item.label}
+        </>
+      );
       return {
         key: index,
-        label: (
-          <div className="flex items-center">
-            <span
-              className={`mr-[6px] zgfont ${platformList[item.key] || ""}`}
-            ></span>
-            {item.href || /^https?:/i.test(item.defaultLink) ? (
-              <a
-                href={item.href || item.defaultLink || "/"}
-                target="_blank"
-                className="flex-1"
-              >
-                {item.label}
-              </a>
-            ) : (
-              <Link
-                href={item.to || item.defaultLink || "/"}
-                className="flex-1"
-              >
-                {item.label}
-              </Link>
-            )}
-          </div>
+        // 注意：<a>/<Link> 必须是 label 的根节点（ant-dropdown-menu-title-content 的直接子元素），
+        // antd 才会用 a::after{position:absolute;inset:0} 把点击热区扩展成整个列表项
+        label: isExternal ? (
+          <a
+            href={item.href || item.defaultLink || "/"}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center"
+          >
+            {content}
+          </a>
+        ) : (
+          <Link
+            href={item.to || item.defaultLink || "/"}
+            className="flex items-center"
+          >
+            {content}
+          </Link>
         ),
         className: `${styles["popup-list-item"]} ${
           menu.key === item.key ? styles.active : ""
         }`,
       };
     });
-  }, [menu.items, menu.to]);
+  }, [menu.items, menu.key]);
 
   const handleOpenChange = (val: boolean) => {
     setOpen(val);
