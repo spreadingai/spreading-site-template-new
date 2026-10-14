@@ -19,6 +19,7 @@ import {
   Steps,
   QRCode,
   LastUpdated,
+  LastUpdatedProvider,
 } from "@/components/mdx";
 
 import LibControllerImpl from "@/lib";
@@ -416,9 +417,11 @@ export default function DocPage(props: Props) {
           {/* @ts-ignore */}
           {/* <MDXRemote {...mdxSource} components={components} /> */}
           {/* @ts-ignore */}
-          <MDXProvider components={components}>
-            <Component />
-          </MDXProvider>
+          <LastUpdatedProvider value={mdxSource.lastUpdatedDate ?? null}>
+            <MDXProvider components={components}>
+              <Component />
+            </MDXProvider>
+          </LastUpdatedProvider>
         </ApiItem>
       </article>
     </div>

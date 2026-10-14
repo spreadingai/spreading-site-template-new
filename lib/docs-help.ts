@@ -23,6 +23,7 @@ import {
   remarkEnhancedTable,
   remarkConditions,
   remarkLastUpdated,
+  resolveLastUpdatedDate,
   // remarkTest,
 } from "@/plugins";
 
@@ -141,6 +142,12 @@ class DocsController {
       passthroughPrefixes:
         LibControllerImpl.getDocuoConfig()?.passthroughPrefixes || [],
     };
+    // Keep the entry in MDX mode for both .md and .mdx source documents.
+    const entryFilePath = path.resolve(
+      mdxFileUrl ? path.dirname(mdxFileUrl) : rootUrl || process.cwd(),
+      "__docuo_entry__.mdx"
+    );
+    const lastUpdatedMetadata = { entryFilePath, dates: new Map<string, string>() };
     const remarkPlugins = [
       // remarkTest,
       remarkDirective,
@@ -157,7 +164,7 @@ class DocsController {
       }],
       [remarkToc, { exportRef: tocRef }],
       [remarkFrontmatter, { exportRef: frontmatterRef }],
-      remarkLastUpdated, // 在 frontmatter 处理后添加 LastUpdated 组件
+      [remarkLastUpdated, { exportRef: lastUpdatedMetadata }],
       remarkConditions,
       remarkEnhancedTable, // 在 Markdown 阶段处理表格
     ];
@@ -191,9 +198,9 @@ class DocsController {
         defaultExport: false,
       },
     };
-    const mdxSource = await bundleMDX({
+    const bundledSource = await bundleMDX({
       cwd,
-      source: originContent,
+      source: { value: originContent, path: entryFilePath },
       globals,
       mdxOptions: (opts) => {
         opts.remarkPlugins = [...(opts.remarkPlugins ?? []), ...remarkPlugins];
@@ -204,6 +211,10 @@ class DocsController {
         };
       },
     });
+    const mdxSource = {
+      ...bundledSource,
+      lastUpdatedDate: resolveLastUpdatedDate(lastUpdatedMetadata),
+    };
 
     // Copy frontmatter img
     mdxSource.frontmatter = mdxSource.frontmatter || {};

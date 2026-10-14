@@ -1,63 +1,50 @@
 import { visit } from "unist-util-visit";
 
-/**
- * remark 插件：自动在第一个标题后插入 LastUpdated 组件
- * 从 frontmatter 中读取 date 字段，在第一个 h1 标题后插入 <LastUpdated date="..." /> 组件
- */
-export function remarkLastUpdated() {
-  return function transformer(tree: any) {
-    // 1) 从 AST 的 yaml 节点中提取 frontmatter.date
+export interface LastUpdatedMetadata {
+  entryFilePath: string;
+  dates: Map<string, string>;
+}
+
+/** Resolve once per page, after all imported MDX files have been compiled. */
+export function resolveLastUpdatedDate(metadata: LastUpdatedMetadata): string | null {
+  const entryDate = metadata.dates.get(metadata.entryFilePath);
+  const importedDates = Array.from(metadata.dates.entries()).filter(
+    ([filePath, date]) => filePath !== metadata.entryFilePath && date !== "none"
+  );
+
+  // Ambiguous imports disable display even when the entry has its own date.
+  if (entryDate === "none" || importedDates.length > 1) return null;
+  return entryDate || importedDates[0]?.[1] || null;
+}
+
+/** Collect dates; the page's Heading component owns the display position. */
+export function remarkLastUpdated(options: { exportRef: LastUpdatedMetadata }) {
+  return function transformer(tree: any, file: { path: string }) {
     let dateStr = "";
     visit(tree, "yaml", (node: any) => {
-      if (dateStr) return; // 只取第一段 frontmatter
-      const yamlContent = String(node.value || "");
-      const lines = yamlContent.split("\n");
+      if (dateStr) return;
+      const lines = String(node.value || "").split("\n");
       for (const line of lines) {
-        const match = line.match(/^\s*([^:]+):\s*["']?([^"'\n]+)["']?\s*$/);
-        if (match && match[1].trim() === "date") {
-          dateStr = match[2].trim();
+        const match = line.match(/^date:\s*(?:"([^"]*)"|'([^']*)'|([^#]*?))\s*(?:#.*)?$/);
+        if (match) {
+          dateStr = (match[1] ?? match[2] ?? match[3]).trim();
           break;
         }
       }
     });
+    if (dateStr) options.exportRef.dates.set(file.path, dateStr);
 
-    if (!dateStr) return;
-
-    const root = tree as any;
-    const rootChildren = Array.isArray(root.children) ? root.children : [];
-
-    // 2) 定位第一个 H1 或 `Heading` 组件（默认视为主标题）
-    const isLevelOneHeading = (node: any): boolean => {
-      if (!node) return false;
-      if (node.type === "heading") return node.depth === 1;
-      if (node.type === "mdxJsxFlowElement" && node.name === "Heading") {
-        const levelAttr = (node.attributes || []).find((a: any) => a.name === "level");
-        const levelVal = typeof levelAttr?.value === "object" ? levelAttr?.value?.value : levelAttr?.value;
-        return levelAttr ? String(levelVal) === "1" : true;
-      }
-      return false;
-    };
-
-    const insertNode = {
-      type: "mdxJsxFlowElement",
-      name: "LastUpdated",
-      attributes: [{ type: "mdxJsxAttribute", name: "date", value: dateStr }],
-      children: [],
-    };
-
-    // 优先：在第一个主标题之后插入
-    const h1Index = rootChildren.findIndex(isLevelOneHeading);
-    if (h1Index >= 0) {
-      rootChildren.splice(h1Index + 1, 0, insertNode);
-      return;
-    }
-
-    // 兜底：在第一个非 yaml、非 mdxjsEsm 节点后插入
-    const firstNormalIndex = rootChildren.findIndex(
-      (n: any) => n && n.type !== "yaml" && n.type !== "mdxjsEsm"
-    );
-    if (firstNormalIndex >= 0) {
-      rootChildren.splice(firstNormalIndex + 1, 0, insertNode);
-    }
+    // Explicit JSX h1 tags must use the same date slot as Markdown headings.
+    visit(tree, (node: any) => {
+      if (
+        (node.type !== "mdxJsxFlowElement" && node.type !== "mdxJsxTextElement") ||
+        node.name !== "h1"
+      ) return;
+      node.name = "Heading";
+      node.attributes = [
+        ...(node.attributes || []),
+        { type: "mdxJsxAttribute", name: "level", value: "1" },
+      ];
+    });
   };
 }

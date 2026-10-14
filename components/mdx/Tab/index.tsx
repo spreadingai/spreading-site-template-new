@@ -2,6 +2,7 @@ import React from "react";
 import styles from "./index.module.scss";
 
 interface Props {
+  id?: string;
   children?: React.ReactNode;
   title?: string;
   // 与 Step 保持一致的标题尺寸定义
@@ -13,7 +14,8 @@ interface Props {
 }
 
 export const DocuoTab = (props: Props) => {
-  const { children, className, style, title = "", titleSize = "", defaultTitleSize = "p" } = props;
+  const { id, children, className, style, title = "", titleSize = "", defaultTitleSize = "p" } = props;
+  const finalTitleSize = titleSize || defaultTitleSize;
 
   const generateId = (text: string) => {
     // 简单的 slug 生成，支持中文字符
@@ -25,22 +27,20 @@ export const DocuoTab = (props: Props) => {
   };
 
   const renderTitle = () => {
-    const finalTitleSize = (titleSize as any) || defaultTitleSize;
-
     if (!title) return null;
 
     // finalTitleSize 为 heading 时生成 id；视觉上隐藏
     if (finalTitleSize !== "p") {
-      const id = generateId(title);
+      const headingId = id || generateId(title);
       switch (finalTitleSize) {
         case "h2":
-          return <h2 id={id} className={styles.visuallyHidden}>{title}</h2>;
+          return <h2 id={headingId} className={styles.visuallyHidden}>{title}</h2>;
         case "h3":
-          return <h3 id={id} className={styles.visuallyHidden}>{title}</h3>;
+          return <h3 id={headingId} className={styles.visuallyHidden}>{title}</h3>;
         case "h4":
-          return <h4 id={id} className={styles.visuallyHidden}>{title}</h4>;
+          return <h4 id={headingId} className={styles.visuallyHidden}>{title}</h4>;
         case "h5":
-          return <h5 id={id} className={styles.visuallyHidden}>{title}</h5>;
+          return <h5 id={headingId} className={styles.visuallyHidden}>{title}</h5>;
         default:
           return null;
       }
@@ -51,6 +51,7 @@ export const DocuoTab = (props: Props) => {
 
   return (
     <div
+      id={title && finalTitleSize !== "p" ? undefined : id}
       className={`${styles.customTab} customTab ${className || ""}`}
       style={style || null}
     >
