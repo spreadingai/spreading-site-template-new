@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useIsomorphicLayoutEffect } from "@/components/docuoOpenapi/theme-common/src/utils/reactUtils";
 import styles from "./index.module.scss";
 
@@ -9,11 +9,21 @@ interface Props {
 }
 
 interface TabItem {
+  id?: string;
   key: string;
   label: string;
   // Tab 自己的标题尺寸（优先级高于父级）
   titleSize?: "p" | "h2" | "h3" | "h4" | "h5";
   children: React.ReactNode;
+}
+
+// Nested Tabs populate their panels after mounting. Resolve their parent from
+// React children when the initial anchor's DOM element does not exist yet.
+function containsAnchor(children: React.ReactNode, id: string): boolean {
+  return React.Children.toArray(children).some(child =>
+    React.isValidElement<{ id?: string; children?: React.ReactNode }>(child) &&
+    (child.props.id === id || containsAnchor(child.props.children, id))
+  );
 }
 
 export const DocuoTabs = (props: Props) => {
@@ -22,10 +32,10 @@ export const DocuoTabs = (props: Props) => {
   const [items, setItems] = useState<TabItem[]>([]);
   const tabListRef = useRef<HTMLDivElement>(null);
   const tabRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
+  const paneRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
-  // 防止锚点跳转处理重入导致抖动
-  const navigatingRef = useRef(false);
+  const navigationTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   // 确保仅在首次挂载时处理一次初始 hash
   const initialHashHandledRef = useRef(false);
 
@@ -52,6 +62,7 @@ export const DocuoTabs = (props: Props) => {
           const visible = !style || !style.display || style.display !== "none";
           if (visible) {
             tabItems.push({
+              id: element.props?.id,
               key: index.toString(),
               label: element.props?.title,
               titleSize: element.props?.titleSize,
@@ -118,43 +129,6 @@ export const DocuoTabs = (props: Props) => {
     };
   }, [items]);
 
-  // 监听 URL 变化和锚点跳转
-  useEffect(() => {
-    // 检查初始 URL 的锚点（仅处理一次，且需等待 items 就绪）
-    if (!initialHashHandledRef.current && typeof window !== 'undefined' && window.location.hash && items.length > 0) {
-      initialHashHandledRef.current = true;
-      handleAnchorNavigation(window.location.hash);
-    }
-
-    // 监听锚点变化（同页面跳转）
-    const handleHashChange = () => {
-      if (!window.location.hash) return;
-      // 若用户主动点击了 Tab 导航（非 TOC），允许切换，不要被hash强行拉回
-      if (navigatingRef.current) return; // 仍在导航过程
-      handleAnchorNavigation(window.location.hash);
-    };
-
-    window.addEventListener('hashchange', handleHashChange);
-
-    // 监听页面内锚点链接点击
-    const handleAnchorClick = (e: Event) => {
-      const target = e.target as HTMLAnchorElement;
-      if (target.tagName === 'A' && target.hash) {
-        // 延迟处理，确保 URL 已更新
-        setTimeout(() => {
-          handleAnchorNavigation(target.hash);
-        }, 0);
-      }
-    };
-
-    document.addEventListener('click', handleAnchorClick);
-
-    return () => {
-      window.removeEventListener('hashchange', handleHashChange);
-      document.removeEventListener('click', handleAnchorClick);
-    };
-  }, [items, activeKey]); // 添加activeKey依赖
-
   // 箭头点击处理函数
   const handleLeftClick = () => {
     if (tabListRef.current) {
@@ -173,7 +147,7 @@ export const DocuoTabs = (props: Props) => {
   };
 
   // 检查元素是否真正可见（不被隐藏）
-  const isElementVisible = (element: HTMLElement): boolean => {
+  const isElementVisible = useCallback((element: HTMLElement): boolean => {
     if (!element) return false;
 
     // 检查元素本身的样式
@@ -189,15 +163,11 @@ export const DocuoTabs = (props: Props) => {
       if (parentStyle.display === 'none' || parentStyle.visibility === 'hidden' || parentStyle.opacity === '0') {
         return false;
       }
-      // 如果找到了tabPane容器，检查是否是活跃状态
-      if (parent.classList.contains('tabPane') || parent.className.includes('tabPane')) {
-        return !parent.classList.contains('tabPaneHidden') && !parent.className.includes('tabPaneHidden');
-      }
       parent = parent.parentElement;
     }
 
     return true;
-  };
+  }, []);
 
   const generateId = (text: string) => {
     return text
@@ -207,7 +177,7 @@ export const DocuoTabs = (props: Props) => {
       .trim();
   };
 
-  const renderTitle = (title?: string, tabTitleSize?: TabItem["titleSize"]) => {
+  const renderTitle = (title?: string, tabTitleSize?: TabItem["titleSize"], anchorId?: string) => {
     if (!title) return null;
     const size = (tabTitleSize as any) || finalTitleSize;
 
@@ -216,7 +186,7 @@ export const DocuoTabs = (props: Props) => {
       return null;
     }
 
-    const id = generateId(title);
+    const id = anchorId || generateId(title);
     switch (size) {
       case 'h2':
         return <h2 id={id} className={styles.visuallyHidden}>{title}</h2>;
@@ -232,7 +202,7 @@ export const DocuoTabs = (props: Props) => {
   };
 
   // 处理锚点跳转
-  const handleAnchorNavigation = (hash: string) => {
+  const handleAnchorNavigation = useCallback((hash: string) => {
     if (!hash) return;
 
     let targetId = hash.substring(1);
@@ -243,51 +213,77 @@ export const DocuoTabs = (props: Props) => {
       // 如果解码失败，使用原始值
     }
 
-    // 防抖：在一个导航流程内，不允许重复进入，避免抖动
-    if (navigatingRef.current) return;
-    navigatingRef.current = true;
+    const targetElement = document.getElementById(targetId);
+    const targetItem = items.find(item =>
+      item.id === targetId ||
+      (targetElement ? paneRefs.current[item.key]?.contains(targetElement) : containsAnchor(item.children, targetId))
+    );
+    // Other Tabs groups and unrelated page headings are handled by their owners.
+    if (!targetItem) return;
 
-    // 首先检查当前Tab中是否存在目标元素且可见
-    const currentElement = document.getElementById(targetId);
-    if (currentElement && isElementVisible(currentElement)) {
-      currentElement.scrollIntoView({ behavior: 'auto' });
-      // 导航完成，解除锁
-      setTimeout(() => { navigatingRef.current = false; }, 100);
-      return;
-    }
-
-    // 直接定位到目标元素所在的 Tab，一次性切换
-    const targetElement = currentElement || document.getElementById(targetId);
-    if (!targetElement) {
-      navigatingRef.current = false;
-      return;
-    }
-
-    const panes = Array.from(document.querySelectorAll(`.${styles.tabPane}`)) as HTMLElement[];
-    const paneIndex = panes.findIndex(p => p.contains(targetElement));
-
-    if (paneIndex !== -1) {
-      const targetKey = items[paneIndex]?.key;
-      if (targetKey && targetKey !== activeKey) {
-        setActiveKey(targetKey);
-        // 等待一帧，确保面板已可见后再滚动
-        setTimeout(() => {
-          const el = document.getElementById(targetId);
-          if (el) el.scrollIntoView({ behavior: 'auto' });
-          setTimeout(() => { navigatingRef.current = false; }, 50);
-        }, 50);
-      } else {
-        const el = document.getElementById(targetId);
-        if (el) el.scrollIntoView({ behavior: 'auto' });
-        setTimeout(() => { navigatingRef.current = false; }, 50);
+    if (navigationTimerRef.current) clearTimeout(navigationTimerRef.current);
+    setActiveKey(targetItem.key);
+    // Wait for React to show the panel before scrolling to its anchor.
+    navigationTimerRef.current = setTimeout(() => {
+      const currentTarget = document.getElementById(targetId);
+      if (currentTarget && isElementVisible(currentTarget)) {
+        currentTarget.scrollIntoView({ behavior: 'auto' });
       }
-    } else {
-      navigatingRef.current = false;
+      navigationTimerRef.current = null;
+    }, 50);
+  }, [items, isElementVisible]);
+
+  // 监听 URL 变化和锚点跳转
+  useEffect(() => {
+    // 检查初始 URL 的锚点（仅处理一次，且需等待 items 就绪）
+    if (!initialHashHandledRef.current && typeof window !== 'undefined' && window.location.hash && items.length > 0) {
+      initialHashHandledRef.current = true;
+      handleAnchorNavigation(window.location.hash);
     }
-  };
+
+    // 监听锚点变化（同页面跳转）
+    const handleHashChange = () => {
+      if (!window.location.hash) return;
+      handleAnchorNavigation(window.location.hash);
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+
+    // 监听页面内锚点链接点击
+    const handleAnchorClick = (e: Event) => {
+      const target = e.target instanceof Element ? e.target.closest<HTMLAnchorElement>('a[href]') : null;
+      if (target?.hash && target.origin === window.location.origin &&
+          target.pathname === window.location.pathname && target.search === window.location.search) {
+        // 延迟处理，确保 URL 已更新
+        setTimeout(() => {
+          handleAnchorNavigation(target.hash);
+        }, 0);
+      }
+    };
+
+    document.addEventListener('click', handleAnchorClick);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+      document.removeEventListener('click', handleAnchorClick);
+    };
+  }, [items, handleAnchorNavigation]);
+
+  useEffect(() => () => {
+    if (navigationTimerRef.current) clearTimeout(navigationTimerRef.current);
+  }, []);
 
   const handleTabClick = (key: string) => {
+    if (navigationTimerRef.current) {
+      clearTimeout(navigationTimerRef.current);
+      navigationTimerRef.current = null;
+    }
     setActiveKey(key);
+    const item = items.find(item => item.key === key);
+    if (item?.id) {
+      // Preserve Next.js history state and update the hash without native scrolling.
+      window.history.replaceState(window.history.state, "", `#${encodeURIComponent(item.id)}`);
+    }
 
     // 切换Tab后触发TOC更新，延迟确保内容已更新
     setTimeout(() => {
@@ -298,7 +294,7 @@ export const DocuoTabs = (props: Props) => {
           const anchorApi = (window as any).DocuoAnchorApi;
           if (anchorApi?.setActiveLink) {
             // 找到当前Tab面板内首个标题元素
-            const pane = document.querySelector(`.${styles.tabPane}.${styles.tabPaneActive}`) as HTMLElement;
+            const pane = paneRefs.current[key];
             const heading = pane?.querySelector('h1,h2,h3,h4,h5,h6');
             if (heading?.id) {
               anchorApi.setActiveLink(`#${heading.id}`);
@@ -355,9 +351,11 @@ export const DocuoTabs = (props: Props) => {
         {items.map((item: TabItem) => (
           <div
             key={item.key}
+            ref={(el) => { paneRefs.current[item.key] = el; }}
+            id={item.label && (item.titleSize || finalTitleSize) !== "p" ? undefined : item.id}
             className={`${styles.tabPane} ${activeKey === item.key ? styles.tabPaneActive : styles.tabPaneHidden}`}
           >
-            {renderTitle(item.label, item.titleSize)}
+            {renderTitle(item.label, item.titleSize, item.id)}
             {item.children}
           </div>
         ))}
