@@ -128,7 +128,7 @@ const Header = (props: Props) => {
       ? [
           {
             label: "SDK 中心",
-            href: "https://doc-zh.zego.im/sdk-download/2968",
+            href: "https://doc-zh.zego.im/sdk-center/real-time-voice-video",
           },
           { label: "API 中心", href: "https://doc-zh.zego.im/api-center" },
           { label: "常见问题", href: "https://doc-zh.zego.im/faq/overview" },
